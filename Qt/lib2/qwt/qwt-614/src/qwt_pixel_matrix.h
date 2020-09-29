@@ -11,7 +11,6 @@
 #define QWT_PIXEL_MATRIX_H
 
 #include "qwt_global.h"
-
 #include <qbitarray.h>
 #include <qrect.h>
 
@@ -24,7 +23,7 @@
 class QWT_EXPORT QwtPixelMatrix: public QBitArray
 {
 public:
-    explicit QwtPixelMatrix( const QRect& rect );
+    QwtPixelMatrix( const QRect& rect );
     ~QwtPixelMatrix();
 
     void setRect( const QRect& rect );

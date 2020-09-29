@@ -9,7 +9,6 @@
 
 #include "qwt_picker_machine.h"
 #include "qwt_event_pattern.h"
-
 #include <qevent.h>
 
 //! Constructor

@@ -8,10 +8,9 @@
  *****************************************************************************/
 
 #ifndef QWT_NULL_PAINT_DEVICE_H
-#define QWT_NULL_PAINT_DEVICE_H
+#define QWT_NULL_PAINT_DEVICE_H 1
 
 #include "qwt_global.h"
-
 #include <qpaintdevice.h>
 #include <qpaintengine.h>
 
@@ -75,9 +74,9 @@ public:
     void setMode( Mode );
     Mode mode() const;
 
-    virtual QPaintEngine *paintEngine() const QWT_OVERRIDE;
+    virtual QPaintEngine *paintEngine() const;
 
-    virtual int metric( PaintDeviceMetric ) const QWT_OVERRIDE;
+    virtual int metric( PaintDeviceMetric ) const;
 
     virtual void drawRects(const QRect *, int );
     virtual void drawRects(const QRectF *, int );
@@ -93,11 +92,11 @@ public:
     virtual void drawPoints(const QPointF *, int );
     virtual void drawPoints(const QPoint *, int );
 
-    virtual void drawPolygon( const QPointF *, int,
-        QPaintEngine::PolygonDrawMode );
+    virtual void drawPolygon(
+        const QPointF *, int , QPaintEngine::PolygonDrawMode );
 
-    virtual void drawPolygon( const QPoint *, int,
-        QPaintEngine::PolygonDrawMode );
+    virtual void drawPolygon(
+        const QPoint *, int , QPaintEngine::PolygonDrawMode );
 
     virtual void drawPixmap(const QRectF &,
         const QPixmap &, const QRectF &);
@@ -107,8 +106,8 @@ public:
     virtual void drawTiledPixmap(const QRectF &,
         const QPixmap &, const QPointF & );
 
-    virtual void drawImage(const QRectF &, const QImage &,
-        const QRectF &, Qt::ImageConversionFlags );
+    virtual void drawImage(const QRectF &,
+        const QImage &, const QRectF &, Qt::ImageConversionFlags );
 
     virtual void updateState( const QPaintEngineState & );
 

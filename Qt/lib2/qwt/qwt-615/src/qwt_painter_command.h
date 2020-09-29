@@ -11,7 +11,6 @@
 #define QWT_PAINTER_COMMAND_H
 
 #include "qwt_global.h"
-
 #include <qpaintengine.h>
 #include <qpixmap.h>
 #include <qimage.h>
@@ -95,7 +94,7 @@ public:
     QwtPainterCommand();
     QwtPainterCommand(const QwtPainterCommand &);
 
-    explicit QwtPainterCommand( const QPainterPath & );
+    QwtPainterCommand( const QPainterPath & );
 
     QwtPainterCommand( const QRectF &rect,
             const QPixmap &, const QRectF& subRect );
@@ -104,7 +103,7 @@ public:
             const QImage &, const QRectF& subRect,
             Qt::ImageConversionFlags );
 
-    explicit QwtPainterCommand( const QPaintEngineState & );
+    QwtPainterCommand( const QPaintEngineState & );
 
     ~QwtPainterCommand();
 

@@ -10,17 +10,17 @@
 #include "qwt_plot_rasteritem.h"
 #include "qwt_scale_map.h"
 #include "qwt_painter.h"
-#include "qwt_text.h"
-#include "qwt_interval.h"
-#include "qwt_math.h"
-
+#include <qapplication.h>
+#include <qdesktopwidget.h>
 #include <qpainter.h>
 #include <qpaintengine.h>
+#include <qmath.h>
+#if QT_VERSION >= 0x040400
 #include <qthread.h>
 #include <qfuture.h>
 #include <qtconcurrentrun.h>
-
-#include <limits>
+#endif
+#include <float.h>
 
 class QwtPlotRasterItem::PrivateData
 {
@@ -315,10 +315,10 @@ static QRectF qwtExpandToPixels(const QRectF &rect, const QRectF &pixelRect)
     const double dy2 = pixelRect.bottom() - rect.bottom();
 
     QRectF r;
-    r.setLeft( pixelRect.left() - qwtCeil( dx1 / pw ) * pw );
-    r.setTop( pixelRect.top() - qwtCeil( dy1 / ph ) * ph );
-    r.setRight( pixelRect.right() - qwtFloor( dx2 / pw ) * pw );
-    r.setBottom( pixelRect.bottom() - qwtFloor( dy2 / ph ) * ph );
+    r.setLeft( pixelRect.left() - qCeil( dx1 / pw ) * pw );
+    r.setTop( pixelRect.top() - qCeil( dy1 / ph ) * ph );
+    r.setRight( pixelRect.right() - qFloor( dx2 / pw ) * pw );
+    r.setBottom( pixelRect.bottom() - qFloor( dy2 / ph ) * ph );
 
     return r;
 }
@@ -798,10 +798,8 @@ QRectF QwtPlotRasterItem::boundingRect() const
     }
     else
     {
-        const float max = std::numeric_limits<float>::max();
-
-        r.setLeft( -0.5 * max );
-        r.setWidth( max );
+        r.setLeft(-0.5 * FLT_MAX);
+        r.setWidth(FLT_MAX);
     }
 
     if ( intervalY.isValid() )
@@ -811,10 +809,8 @@ QRectF QwtPlotRasterItem::boundingRect() const
     }
     else
     {
-        const float max = std::numeric_limits<float>::max();
-
-        r.setTop( -0.5 * max );
-        r.setHeight( max );
+        r.setTop(-0.5 * FLT_MAX);
+        r.setHeight(FLT_MAX);
     }
 
     return r.normalized();
@@ -869,7 +865,7 @@ QImage QwtPlotRasterItem::compose(
     {
         QImage alphaImage( image.size(), QImage::Format_ARGB32 );
 
-#if !defined(QT_NO_QFUTURE)
+#if QT_VERSION >= 0x040400 && !defined(QT_NO_QFUTURE)
         uint numThreads = renderThreadCount();
 
         if ( numThreads <= 0 )
@@ -880,9 +876,7 @@ QImage QwtPlotRasterItem::compose(
 
         const int numRows = image.height() / numThreads;
 
-        QVector< QFuture<void> > futures;
-        futures.reserve( numThreads - 1 );
-
+        QList< QFuture<void> > futures;
         for ( uint i = 0; i < numThreads; i++ )
         {
             QRect tile( 0, i * numRows, image.width(), numRows );

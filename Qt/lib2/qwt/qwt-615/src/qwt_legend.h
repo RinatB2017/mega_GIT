@@ -12,8 +12,6 @@
 
 #include "qwt_global.h"
 #include "qwt_abstract_legend.h"
-#include "qwt_legend_data.h"
-
 #include <qvariant.h>
 
 class QScrollBar;
@@ -50,22 +48,22 @@ public:
 
     QVariant itemInfo( const QWidget * ) const;
 
-    virtual bool eventFilter( QObject *, QEvent * ) QWT_OVERRIDE;
+    virtual bool eventFilter( QObject *, QEvent * );
 
-    virtual QSize sizeHint() const QWT_OVERRIDE;
-    virtual int heightForWidth( int w ) const QWT_OVERRIDE;
+    virtual QSize sizeHint() const;
+    virtual int heightForWidth( int width ) const;
 
     QScrollBar *horizontalScrollBar() const;
     QScrollBar *verticalScrollBar() const;
 
     virtual void renderLegend( QPainter *,
-        const QRectF &, bool fillBackground ) const QWT_OVERRIDE;
+        const QRectF &, bool fillBackground ) const;
 
     virtual void renderItem( QPainter *,
         const QWidget *, const QRectF &, bool fillBackground ) const;
 
-    virtual bool isEmpty() const QWT_OVERRIDE;
-    virtual int scrollExtent( Qt::Orientation ) const QWT_OVERRIDE;
+    virtual bool isEmpty() const;
+    virtual int scrollExtent( Qt::Orientation ) const;
 
 Q_SIGNALS:
     /*!
@@ -99,7 +97,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     virtual void updateLegend( const QVariant &,
-        const QList<QwtLegendData> & ) QWT_OVERRIDE;
+        const QList<QwtLegendData> & );
 
 protected Q_SLOTS:
     void itemClicked();
@@ -107,7 +105,7 @@ protected Q_SLOTS:
 
 protected:
     virtual QWidget *createWidget( const QwtLegendData & ) const;
-    virtual void updateWidget( QWidget *, const QwtLegendData & );
+    virtual void updateWidget( QWidget *widget, const QwtLegendData & );
 
 private:
     void updateTabOrder();

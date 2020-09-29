@@ -12,9 +12,9 @@
 #include "qwt_plot.h"
 #include "qwt_plot_canvas.h"
 #include "qwt_plot_seriesitem.h"
-
 #include <qpainter.h>
 #include <qevent.h>
+#include <qapplication.h>
 #include <qpixmap.h>
 
 static inline void qwtRenderItem(

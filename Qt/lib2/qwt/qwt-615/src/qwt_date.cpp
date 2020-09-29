@@ -8,12 +8,11 @@
  *****************************************************************************/
 
 #include "qwt_date.h"
-#include "qwt_math.h"
-
 #include <qdebug.h>
 #include <qlocale.h>
-
+#include <math.h>
 #include <limits>
+#include <limits.h>
 
 #if QT_VERSION >= 0x050000
 
@@ -24,9 +23,8 @@ static const QwtJulianDay maxJulianDayD = Q_INT64_C( 784354017364 );
 #else
 
 // QDate stores the Julian day as unsigned int, but
-// there is QDate::fromJulianDay( int ). That's why
+// but it is QDate::fromJulianDay( int ). That's why
 // we have the range [ 1, INT_MAX ]
-
 typedef int QwtJulianDay;
 static const QwtJulianDay minJulianDayD = 1;
 static const QwtJulianDay maxJulianDayD = std::numeric_limits<int>::max();
@@ -43,20 +41,20 @@ static QString qwtExpandedFormat( const QString & format,
 
     QString weekNoWW;
     if ( weekNo.length() == 1 )
-        weekNoWW += QLatin1Char( '0' );
+        weekNoWW += "0";
 
     weekNoWW += weekNo;
 
     QString fmt = format;
-    fmt.replace( QLatin1String( "ww" ), weekNoWW );
-    fmt.replace( QLatin1Char( 'w' ), weekNo );
+    fmt.replace( "ww", weekNoWW );
+    fmt.replace( "w", weekNo );
 
     if ( week == 1 && dateTime.date().month() != 1 )
     {
         // in case of week 1, we might need to increment the year
 
-        QLatin1String s_yyyy( "yyyy" );
-        QLatin1String s_yy( "yy" );
+        static QString s_yyyy = "yyyy";
+        static QString s_yy = "yy";
 
         // week 1 might start in the previous year
 
@@ -101,15 +99,14 @@ static QString qwtExpandedFormat( const QString & format,
         if ( doReplaceYear )
         {
             const QDate dt( dateTime.date().year() + 1, 1, 1 );
-            const QString dtString = QLocale().toString( dt, s_yyyy );
 
             if ( fmt.contains( s_yyyy ) )
             {
-                fmt.replace( s_yyyy, dtString );
+                fmt.replace( s_yyyy, dt.toString( s_yyyy ) );
             }
             else
             {
-                fmt.replace( s_yy, dtString );
+                fmt.replace( s_yy, dt.toString( s_yyyy ) );
             }
         }
     }
@@ -242,7 +239,7 @@ static inline QDateTime qwtToTimeSpec(
         return dt;
 
     const qint64 jd = dt.date().toJulianDay();
-    if ( jd < 0 || jd >= std::numeric_limits<int>::max() )
+    if ( jd < 0 || jd >= INT_MAX )
     {
         // the conversion between local time and UTC
         // is internally limited. To avoid
@@ -266,10 +263,10 @@ static inline double qwtToJulianDay( int year, int month, int day )
 
     const int m1 = ( month - 14 ) / 12;
     const int m2 = ( 367 * ( month - 2 - 12 * m1 ) ) / 12;
-    const double y1 = std::floor( ( 4900.0 + year + m1 ) / 100 );
+    const double y1 = ::floor( ( 4900.0 + year + m1 ) / 100 );
 
-    return std::floor( ( 1461.0 * ( year + 4800 + m1 ) ) / 4 ) + m2
-            - std::floor( ( 3 * y1 ) / 4 ) + day - 32075;
+    return ::floor( ( 1461.0 * ( year + 4800 + m1 ) ) / 4 ) + m2
+            - ::floor( ( 3 * y1 ) / 4 ) + day - 32075;
 }
 
 static inline qint64 qwtFloorDiv64( qint64 a, int b )
@@ -302,10 +299,10 @@ static inline QDate qwtToDate( int year, int month = 1, int day = 1 )
 
         const int m1 = ( month - 14 ) / 12;
         const int m2 = ( 367 * ( month - 2 - 12 * m1 ) ) / 12;
-        const double y1 = std::floor( ( 4900.0 + year + m1 ) / 100 );
+        const double y1 = ::floor( ( 4900.0 + year + m1 ) / 100 );
 
-        const double jd = std::floor( ( 1461.0 * ( year + 4800 + m1 ) ) / 4 ) + m2
-            - std::floor( ( 3 * y1 ) / 4 ) + day - 32075;
+        const double jd = ::floor( ( 1461.0 * ( year + 4800 + m1 ) ) / 4 ) + m2
+            - ::floor( ( 3 * y1 ) / 4 ) + day - 32075;
 
         if ( jd > maxJulianDayD )
         {
@@ -337,7 +334,7 @@ QDateTime QwtDate::toDateTime( double value, Qt::TimeSpec timeSpec )
 {
     const int msecsPerDay = 86400000;
 
-    const double days = static_cast<qint64>( std::floor( value / msecsPerDay ) );
+    const double days = static_cast<qint64>( ::floor( value / msecsPerDay ) );
 
     const double jd = QwtDate::JulianDayForEpoch + days;
     if ( ( jd > maxJulianDayD ) || ( jd < minJulianDayD ) )
@@ -697,7 +694,7 @@ int QwtDate::weekNumber( const QDate &date, Week0Type type )
    - Qt::UTC
      0, dateTime has no offset
    - Qt::OffsetFromUTC
-     returns dateTime.offsetFromUtc()
+     returns dateTime.utcOffset()
    - Qt::LocalTime:
      number of seconds from the UTC
 
@@ -719,11 +716,7 @@ int QwtDate::utcOffset( const QDateTime &dateTime )
         }
         case Qt::OffsetFromUTC:
         {
-#if QT_VERSION >= 0x050200
-            seconds = dateTime.offsetFromUtc();
-#else
             seconds = dateTime.utcOffset();
-#endif
             break;
         }
         default:
@@ -767,5 +760,5 @@ QString QwtDate::toString( const QDateTime &dateTime,
         fmt = qwtExpandedFormat( fmt, dateTime, week0Type );
     }
 
-    return QLocale().toString( dateTime, fmt );
+    return dateTime.toString( fmt );
 }

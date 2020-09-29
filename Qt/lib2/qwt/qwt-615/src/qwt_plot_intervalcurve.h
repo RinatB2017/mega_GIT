@@ -12,9 +12,9 @@
 
 #include "qwt_global.h"
 #include "qwt_plot_seriesitem.h"
+#include "qwt_series_data.h"
 
 class QwtIntervalSymbol;
-template <typename T> class QwtSeriesData;
 
 /*!
   \brief QwtPlotIntervalCurve represents a series of samples, where each value
@@ -81,7 +81,7 @@ public:
 
     virtual ~QwtPlotIntervalCurve();
 
-    virtual int rtti() const QWT_OVERRIDE;
+    virtual int rtti() const;
 
     void setPaintAttribute( PaintAttribute, bool on = true );
     bool testPaintAttribute( PaintAttribute ) const;
@@ -89,9 +89,7 @@ public:
     void setSamples( const QVector<QwtIntervalSample> & );
     void setSamples( QwtSeriesData<QwtIntervalSample> * );
 
-    void setPen( const QColor &,
-        qreal width = 0.0, Qt::PenStyle = Qt::SolidLine );
-
+    void setPen( const QColor &, qreal width = 0.0, Qt::PenStyle = Qt::SolidLine );
     void setPen( const QPen & );
     const QPen &pen() const;
 
@@ -106,12 +104,11 @@ public:
 
     virtual void drawSeries( QPainter *,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &canvasRect, int from, int to ) const QWT_OVERRIDE;
+        const QRectF &canvasRect, int from, int to ) const;
 
-    virtual QRectF boundingRect() const QWT_OVERRIDE;
+    virtual QRectF boundingRect() const;
 
-    virtual QwtGraphic legendIcon(
-        int index, const QSizeF & ) const QWT_OVERRIDE;
+    virtual QwtGraphic legendIcon( int index, const QSizeF & ) const;
 
 protected:
 

@@ -8,11 +8,8 @@
  *****************************************************************************/
 
 #include "qwt_matrix_raster_data.h"
-#include "qwt_interval.h"
-
-#include <qvector.h>
 #include <qnumeric.h>
-#include <qrect.h>
+#include <qmath.h>
 
 class QwtMatrixRasterData::PrivateData
 {
@@ -28,7 +25,6 @@ public:
         return values.data()[ row * numColumns + col ];
     }
 
-    QwtInterval intervals[3];
     QwtMatrixRasterData::ResampleMode resampleMode;
 
     QVector<double> values;
@@ -91,23 +87,8 @@ QwtMatrixRasterData::ResampleMode QwtMatrixRasterData::resampleMode() const
 void QwtMatrixRasterData::setInterval(
     Qt::Axis axis, const QwtInterval &interval )
 {
-    if ( axis >= 0 && axis <= 2 )
-    {
-        d_data->intervals[axis] = interval;
-        update();
-    }
-}
-
-/*!
-   \return Bounding interval for an axis
-   \sa setInterval
-*/
-QwtInterval QwtMatrixRasterData::interval( Qt::Axis axis ) const
-{
-    if ( axis >= 0 && axis <= 2 )
-        return d_data->intervals[ axis ];
-
-    return QwtInterval();
+    QwtRasterData::setInterval( axis, interval );
+    update();
 }
 
 /*!
@@ -245,12 +226,12 @@ double QwtMatrixRasterData::value( double x, double y ) const
 
             if ( col1 < 0 )
                 col1 = col2;
-            else if ( col2 >= d_data->numColumns )
+            else if ( col2 >= static_cast<int>( d_data->numColumns ) )
                 col2 = col1;
 
             if ( row1 < 0 )
                 row1 = row2;
-            else if ( row2 >= d_data->numRows )
+            else if ( row2 >= static_cast<int>( d_data->numRows ) )
                 row2 = row1;
 
             const double v11 = d_data->value( row1, col1 );

@@ -8,20 +8,16 @@
  *****************************************************************************/
 
 #include "qwt_thermo.h"
+#include "qwt_scale_engine.h"
 #include "qwt_scale_draw.h"
 #include "qwt_scale_map.h"
 #include "qwt_color_map.h"
-#include "qwt_math.h"
-
 #include <qpainter.h>
 #include <qevent.h>
 #include <qdrawutil.h>
 #include <qstyle.h>
 #include <qstyleoption.h>
-#include <qmargins.h>
-
-#include <algorithm>
-#include <functional>
+#include <qmath.h>
 
 static inline void qwtDrawLine( QPainter *painter, int pos,
     const QColor &color, const QRect &pipeRect, const QRect &liquidRect,
@@ -40,7 +36,7 @@ static inline void qwtDrawLine( QPainter *painter, int pos,
     }
 }
 
-static QVector<double> qwtTickList( const QwtScaleDiv &scaleDiv )
+QVector<double> qwtTickList( const QwtScaleDiv &scaleDiv )
 {
     QVector<double> values;
 
@@ -564,9 +560,9 @@ void QwtThermo::drawLiquid(
         QVector<double> values = qwtTickList( scaleDraw()->scaleDiv() );
 
         if ( scaleMap.isInverting() )
-            std::sort( values.begin(), values.end(), std::greater<double>() );
+            qSort( values.begin(), values.end(), qGreater<double>() );
         else
-            std::sort( values.begin(), values.end(), std::less<double>() );
+            qSort( values.begin(), values.end(), qLess<double>() );
 
         int from;
         if ( !values.isEmpty() )
@@ -859,7 +855,7 @@ QSize QwtThermo::minimumSizeHint() const
 
     if ( d_data->scalePosition != NoScale )
     {
-        const int sdExtent = qwtCeil( scaleDraw()->extent( font() ) );
+        const int sdExtent = qCeil( scaleDraw()->extent( font() ) );
         const int sdLength = scaleDraw()->minLength( font() );
 
         w = sdLength;
@@ -879,9 +875,10 @@ QSize QwtThermo::minimumSizeHint() const
     h += 2 * d_data->borderWidth;
 
     // finally add the margins
-    const QMargins m = contentsMargins();
-    w += m.left() + m.right();
-    h += m.top() + m.bottom();
+    int left, right, top, bottom;
+    getContentsMargins( &left, &top, &right, &bottom );
+    w += left + right;
+    h += top + bottom;
 
     return QSize( w, h );
 }
@@ -1006,7 +1003,3 @@ QRect QwtThermo::alarmRect( const QRect &fillRect ) const
 
     return alarmRect;
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_thermo.cpp"
-#endif

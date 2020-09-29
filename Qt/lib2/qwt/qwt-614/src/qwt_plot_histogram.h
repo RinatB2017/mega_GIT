@@ -12,12 +12,13 @@
 
 #include "qwt_global.h"
 #include "qwt_plot_seriesitem.h"
+#include "qwt_column_symbol.h"
+#include <qcolor.h>
+#include <qvector.h>
 
-class QwtColumnSymbol;
-class QwtColumnRect;
-class QColor;
+class QwtIntervalData;
+class QString;
 class QPolygonF;
-template <typename T> class QVector;
 
 /*!
   \brief QwtPlotHistogram represents a series of samples, where an interval
@@ -79,11 +80,9 @@ public:
     explicit QwtPlotHistogram( const QwtText &title );
     virtual ~QwtPlotHistogram();
 
-    virtual int rtti() const QWT_OVERRIDE;
+    virtual int rtti() const;
 
-    void setPen( const QColor &,
-        qreal width = 0.0, Qt::PenStyle = Qt::SolidLine );
-
+    void setPen( const QColor &, qreal width = 0.0, Qt::PenStyle = Qt::SolidLine );
     void setPen( const QPen & );
     const QPen &pen() const;
 
@@ -104,12 +103,11 @@ public:
 
     virtual void drawSeries( QPainter *,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &canvasRect, int from, int to ) const QWT_OVERRIDE;
+        const QRectF &canvasRect, int from, int to ) const;
 
-    virtual QRectF boundingRect() const QWT_OVERRIDE;
+    virtual QRectF boundingRect() const;
 
-    virtual QwtGraphic legendIcon(
-        int index, const QSizeF & ) const QWT_OVERRIDE;
+    virtual QwtGraphic legendIcon( int index, const QSizeF & ) const;
 
 protected:
     virtual QwtColumnRect columnRect( const QwtIntervalSample &,

@@ -8,12 +8,11 @@
  *****************************************************************************/
 
 #include "qwt_date_scale_draw.h"
-#include "qwt_text.h"
 
 class QwtDateScaleDraw::PrivateData
 {
 public:
-    explicit PrivateData( Qt::TimeSpec spec ):
+    PrivateData( Qt::TimeSpec spec ):
         timeSpec( spec ),
         utcOffset( 0 ),
         week0Type( QwtDate::FirstThursday )

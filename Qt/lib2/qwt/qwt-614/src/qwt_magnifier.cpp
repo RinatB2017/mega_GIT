@@ -9,7 +9,6 @@
 
 #include "qwt_magnifier.h"
 #include "qwt_math.h"
-
 #include <qevent.h>
 #include <qwidget.h>
 
@@ -28,8 +27,7 @@ public:
         zoomInKeyModifiers( Qt::NoModifier ),
         zoomOutKey( Qt::Key_Minus ),
         zoomOutKeyModifiers( Qt::NoModifier ),
-        mousePressed( false ),
-        hasMouseTracking( false )
+        mousePressed( false )
     {
     }
 
@@ -64,13 +62,6 @@ QwtMagnifier::QwtMagnifier( QWidget *parent ):
     QObject( parent )
 {
     d_data = new PrivateData();
-
-    if ( parent )
-    {
-        if ( parent->focusPolicy() == Qt::NoFocus )
-            parent->setFocusPolicy( Qt::WheelFocus );
-    }
-
     setEnabled( true );
 }
 
@@ -446,7 +437,7 @@ void QwtMagnifier::widgetWheelEvent( QWheelEvent *wheelEvent )
             in which case the delta value is a multiple
             of 120 (== 15 * 8).
          */
-        double f = std::pow( d_data->wheelFactor,
+        double f = qPow( d_data->wheelFactor,
             qAbs( wheelEvent->delta() / 120.0 ) );
 
         if ( wheelEvent->delta() > 0 )
@@ -499,6 +490,3 @@ const QWidget *QwtMagnifier::parentWidget() const
     return qobject_cast<const QWidget *>( parent() );
 }
 
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_magnifier.cpp"
-#endif

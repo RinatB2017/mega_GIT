@@ -12,7 +12,6 @@
 
 #include "qwt_global.h"
 #include "qwt_plot_item.h"
-
 #include <qstring.h>
 
 class QSvgRenderer;
@@ -35,13 +34,13 @@ public:
     bool loadFile( const QRectF&, const QString &fileName );
     bool loadData( const QRectF&, const QByteArray & );
 
-    virtual QRectF boundingRect() const QWT_OVERRIDE;
+    virtual QRectF boundingRect() const;
 
     virtual void draw( QPainter *,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &canvasRect ) const QWT_OVERRIDE;
+        const QRectF &canvasRect ) const;
 
-    virtual int rtti() const QWT_OVERRIDE;
+    virtual int rtti() const;
 
 protected:
     const QSvgRenderer &renderer() const;

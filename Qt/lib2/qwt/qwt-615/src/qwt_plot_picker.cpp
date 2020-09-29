@@ -9,8 +9,8 @@
 
 #include "qwt_plot_picker.h"
 #include "qwt_plot.h"
-#include "qwt_text.h"
 #include "qwt_scale_div.h"
+#include "qwt_painter.h"
 #include "qwt_scale_map.h"
 #include "qwt_picker_machine.h"
 
@@ -217,14 +217,13 @@ QwtText QwtPlotPicker::trackerTextF( const QPointF &pos ) const
     switch ( rubberBand() )
     {
         case HLineRubberBand:
-            text = QString::number( pos.y(), 'f', 4 );
+            text.sprintf( "%.4f", pos.y() );
             break;
         case VLineRubberBand:
-            text = QString::number( pos.x(), 'f', 4 );
+            text.sprintf( "%.4f", pos.x() );
             break;
         default:
-            text = QString::number( pos.x(), 'f', 4 )
-                + ", " + QString::number( pos.y(), 'f', 4 );
+            text.sprintf( "%.4f, %.4f", pos.x(), pos.y() );
     }
     return QwtText( text );
 }
@@ -380,7 +379,3 @@ QPoint QwtPlotPicker::transform( const QPointF &pos ) const
 
     return p.toPoint();
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_plot_picker.cpp"
-#endif

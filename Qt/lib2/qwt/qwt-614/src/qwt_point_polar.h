@@ -8,14 +8,15 @@
  *****************************************************************************/
 
 /*! \file */
-#ifndef QWT_POINT_POLAR_H
-#define QWT_POINT_POLAR_H
+#ifndef _QWT_POINT_POLAR_H_
+#define _QWT_POINT_POLAR_H_ 1
 
 #include "qwt_global.h"
 #include "qwt_math.h"
-
 #include <qpoint.h>
-#include <qmath.h>
+#ifndef QT_NO_DEBUG_STREAM
+#include <qdebug.h>
+#endif
 
 /*!
   \brief A point in polar coordinates
@@ -144,8 +145,8 @@ QWT_EXPORT QDebug operator<<( QDebug, const QwtPointPolar & );
 inline QPoint qwtPolar2Pos( const QPoint &pole,
     double radius, double angle )
 {
-    const double x = pole.x() + radius * std::cos( angle );
-    const double y = pole.y() - radius * std::sin( angle );
+    const double x = pole.x() + radius * qCos( angle );
+    const double y = pole.y() - radius * qSin( angle );
 
     return QPoint( qRound( x ), qRound( y ) );
 }
@@ -159,8 +160,8 @@ inline QPoint qwtDegree2Pos( const QPoint &pole,
 inline QPointF qwtPolar2Pos( const QPointF &pole,
     double radius, double angle )
 {
-    const double x = pole.x() + radius * std::cos( angle );
-    const double y = pole.y() - radius * std::sin( angle );
+    const double x = pole.x() + radius * qCos( angle );
+    const double y = pole.y() - radius * qSin( angle );
 
     return QPointF( x, y);
 }
@@ -175,13 +176,14 @@ inline QPointF qwtFastPolar2Pos( const QPointF &pole,
     double radius, double angle )
 {
 #if QT_VERSION < 0x040601
-    return qwtPolar2Pos( pole, radius, angle );
+    const double x = pole.x() + radius * ::cos( angle );
+    const double y = pole.y() - radius * ::sin( angle );
 #else
     const double x = pole.x() + radius * qFastCos( angle );
     const double y = pole.y() - radius * qFastSin( angle );
+#endif
 
     return QPointF( x, y);
-#endif
 }
 
 inline QPointF qwtFastDegree2Pos( const QPointF &pole,

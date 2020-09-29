@@ -21,7 +21,8 @@
 #ifndef GRAPHERBOX_HPP
 #define GRAPHERBOX_HPP
 //--------------------------------------------------------------------------------
-//#include <qwt_spline_curve_fitter.h>
+//#include "qwt_spline_curve_fitter.h"
+
 #include "qwt_plot_renderer.h"
 #include "qwt_plot_magnifier.h"
 #include "qwt_picker_machine.h"

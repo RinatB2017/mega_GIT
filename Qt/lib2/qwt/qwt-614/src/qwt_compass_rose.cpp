@@ -9,7 +9,7 @@
 
 #include "qwt_compass_rose.h"
 #include "qwt_point_polar.h"
-
+#include "qwt_painter.h"
 #include <qpainter.h>
 
 static QPointF qwtIntersection(
@@ -23,28 +23,6 @@ static QPointF qwtIntersection(
         return QPointF();
 
     return pos;
-}
-
-//! Constructor
-QwtCompassRose::QwtCompassRose()
-{
-}
-
-//! Destructor
-QwtCompassRose::~QwtCompassRose()
-{
-}
-
-//! Assign a palette
-void QwtCompassRose::setPalette( const QPalette &p )
-{
-    d_palette = p;
-}
-
-//! \return Current palette
-const QPalette &QwtCompassRose::palette() const
-{
-    return d_palette;
 }
 
 class QwtSimpleCompassRose::PrivateData
@@ -173,7 +151,7 @@ void QwtSimpleCompassRose::drawRose(
 
     for ( int j = 1; j <= numThornLevels; j++ )
     {
-        double step =  std::pow( 2.0, j ) * M_PI / numThorns;
+        double step =  qPow( 2.0, j ) * M_PI / numThorns;
         if ( step > M_PI_2 )
             break;
 

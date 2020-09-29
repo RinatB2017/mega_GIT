@@ -62,7 +62,7 @@ class QWT_EXPORT QwtThermo: public QwtAbstractScale
     Q_PROPERTY( int spacing READ spacing WRITE setSpacing )
     Q_PROPERTY( int borderWidth READ borderWidth WRITE setBorderWidth )
     Q_PROPERTY( int pipeWidth READ pipeWidth WRITE setPipeWidth )
-    Q_PROPERTY( double value READ value WRITE setValue USER true )
+    Q_PROPERTY( double value READ value WRITE setValue )
 
 public:
 
@@ -145,8 +145,8 @@ public:
 
     double value() const;
 
-    virtual QSize sizeHint() const QWT_OVERRIDE;
-    virtual QSize minimumSizeHint() const QWT_OVERRIDE;
+    virtual QSize sizeHint() const;
+    virtual QSize minimumSizeHint() const;
 
     void setScaleDraw( QwtScaleDraw * );
     const QwtScaleDraw *scaleDraw() const;
@@ -156,11 +156,11 @@ public Q_SLOTS:
 
 protected:
     virtual void drawLiquid( QPainter *, const QRect & ) const;
-    virtual void scaleChange() QWT_OVERRIDE;
+    virtual void scaleChange();
 
-    virtual void paintEvent( QPaintEvent * ) QWT_OVERRIDE;
-    virtual void resizeEvent( QResizeEvent * ) QWT_OVERRIDE;
-    virtual void changeEvent( QEvent * ) QWT_OVERRIDE;
+    virtual void paintEvent( QPaintEvent * );
+    virtual void resizeEvent( QResizeEvent * );
+    virtual void changeEvent( QEvent * );
 
     QwtScaleDraw *scaleDraw();
 

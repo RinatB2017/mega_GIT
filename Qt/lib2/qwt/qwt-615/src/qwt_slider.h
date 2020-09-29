@@ -89,8 +89,8 @@ public:
     void setSpacing( int );
     int spacing() const;
 
-    virtual QSize sizeHint() const QWT_OVERRIDE;
-    virtual QSize minimumSizeHint() const QWT_OVERRIDE;
+    virtual QSize sizeHint() const;
+    virtual QSize minimumSizeHint() const;
 
     void setScaleDraw( QwtScaleDraw * );
     const QwtScaleDraw *scaleDraw() const;
@@ -99,22 +99,20 @@ public:
     int updateInterval() const;
 
 protected:
-    virtual double scrolledTo( const QPoint & ) const QWT_OVERRIDE;
-    virtual bool isScrollPosition( const QPoint & ) const QWT_OVERRIDE;
+    virtual double scrolledTo( const QPoint & ) const;
+    virtual bool isScrollPosition( const QPoint & ) const;
 
     virtual void drawSlider ( QPainter *, const QRect & ) const;
     virtual void drawHandle( QPainter *, const QRect &, int pos ) const;
 
-    virtual void mousePressEvent( QMouseEvent * ) QWT_OVERRIDE;
-    virtual void mouseReleaseEvent( QMouseEvent * ) QWT_OVERRIDE;
-    virtual void resizeEvent( QResizeEvent * ) QWT_OVERRIDE;
-    virtual void paintEvent ( QPaintEvent * ) QWT_OVERRIDE;
-    virtual void changeEvent( QEvent * ) QWT_OVERRIDE;
-    virtual void timerEvent( QTimerEvent * ) QWT_OVERRIDE;
+    virtual void mousePressEvent( QMouseEvent * );
+    virtual void mouseReleaseEvent( QMouseEvent * );
+    virtual void resizeEvent( QResizeEvent * );
+    virtual void paintEvent ( QPaintEvent * );
+    virtual void changeEvent( QEvent * );
+    virtual void timerEvent( QTimerEvent * );
 
-    virtual bool event( QEvent * ) QWT_OVERRIDE;
-
-    virtual void scaleChange() QWT_OVERRIDE;
+    virtual void scaleChange();
 
     QRect sliderRect() const;
     QRect handleRect() const;

@@ -9,11 +9,14 @@
 
 #include "qwt_legend_label.h"
 #include "qwt_legend_data.h"
+#include "qwt_math.h"
+#include "qwt_painter.h"
+#include "qwt_symbol.h"
 #include "qwt_graphic.h"
-
 #include <qpainter.h>
 #include <qdrawutil.h>
 #include <qstyle.h>
+#include <qpen.h>
 #include <qevent.h>
 #include <qstyleoption.h>
 #include <qapplication.h>
@@ -63,8 +66,7 @@ void QwtLegendLabel::setData( const QwtLegendData &legendData )
     d_data->legendData = legendData;
 
     const bool doUpdate = updatesEnabled();
-    if ( doUpdate )
-        setUpdatesEnabled( false );
+    setUpdatesEnabled( false );
 
     setText( legendData.title() );
     setIcon( legendData.icon().toPixmap() );
@@ -73,7 +75,10 @@ void QwtLegendLabel::setData( const QwtLegendData &legendData )
         setItemMode( legendData.mode() );
 
     if ( doUpdate )
+    {
         setUpdatesEnabled( true );
+        update();
+    }
 }
 
 /*!
@@ -414,7 +419,3 @@ void QwtLegendLabel::keyReleaseEvent( QKeyEvent *e )
 
     QwtTextLabel::keyReleaseEvent( e );
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_legend_label.cpp"
-#endif

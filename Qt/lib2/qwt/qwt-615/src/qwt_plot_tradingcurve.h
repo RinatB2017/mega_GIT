@@ -12,6 +12,7 @@
 
 #include "qwt_global.h"
 #include "qwt_plot_seriesitem.h"
+#include "qwt_series_data.h"
 
 /*!
   \brief QwtPlotTradingCurve illustrates movements in the price of a
@@ -105,7 +106,7 @@ public:
 
     virtual ~QwtPlotTradingCurve();
 
-    virtual int rtti() const QWT_OVERRIDE;
+    virtual int rtti() const;
 
     void setPaintAttribute( PaintAttribute, bool on = true );
     bool testPaintAttribute( PaintAttribute ) const;
@@ -133,13 +134,13 @@ public:
     void setMaxSymbolWidth( double );
     double maxSymbolWidth() const;
 
-    virtual void drawSeries( QPainter *,
+    virtual void drawSeries( QPainter *painter,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &canvasRect, int from, int to ) const QWT_OVERRIDE;
+        const QRectF &canvasRect, int from, int to ) const;
 
-    virtual QRectF boundingRect() const QWT_OVERRIDE;
+    virtual QRectF boundingRect() const;
 
-    virtual QwtGraphic legendIcon( int index, const QSizeF & ) const QWT_OVERRIDE;
+    virtual QwtGraphic legendIcon( int index, const QSizeF & ) const;
 
 protected:
 
@@ -153,7 +154,7 @@ protected:
         SymbolStyle, const QwtOHLCSample &,
         Qt::Orientation, bool inverted, double symbolWidth ) const;
 
-    void drawBar( QPainter *, const QwtOHLCSample &,
+    void drawBar( QPainter *painter, const QwtOHLCSample &,
         Qt::Orientation, bool inverted, double width ) const;
 
     void drawCandleStick( QPainter *, const QwtOHLCSample &,

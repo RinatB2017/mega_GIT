@@ -23,11 +23,10 @@
 */
 class QwtAbstractSeriesStore
 {
-public:
+protected:
     //! Destructor
     virtual ~QwtAbstractSeriesStore() {}
 
-protected:
 #ifndef QWT_PYTHON_WRAPPER
     //! dataChanged() indicates, that the series has been changed.
     virtual void dataChanged() = 0;
@@ -100,7 +99,7 @@ public:
       \return Number of samples of the series
       \sa setData(), QwtSeriesData<T>::size()
     */
-    virtual size_t dataSize() const QWT_OVERRIDE;
+    virtual size_t dataSize() const;
 
     /*!
       \return Bounding rectangle of the series
@@ -108,7 +107,7 @@ public:
 
       \sa QwtSeriesData<T>::boundingRect()
     */
-    virtual QRectF dataRect() const QWT_OVERRIDE;
+    virtual QRectF dataRect() const;
 
     /*!
       Set a the "rect of interest" for the series
@@ -116,7 +115,7 @@ public:
       \param rect Rectangle of interest
       \sa QwtSeriesData<T>::setRectOfInterest()
     */
-    virtual void setRectOfInterest( const QRectF &rect ) QWT_OVERRIDE;
+    virtual void setRectOfInterest( const QRectF &rect );
 
     /*!
       Replace a series without deleting the previous one

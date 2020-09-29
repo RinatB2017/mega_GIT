@@ -9,12 +9,10 @@
 
 #include "qwt_plot_textlabel.h"
 #include "qwt_painter.h"
-#include "qwt_text.h"
-#include "qwt_math.h"
-
+#include "qwt_scale_map.h"
 #include <qpainter.h>
-#include <qpaintengine.h>
 #include <qpixmap.h>
+#include <qmath.h>
 
 static QRect qwtItemRect( int renderFlags,
     const QRectF &rect, const QSizeF &itemSize )
@@ -213,23 +211,24 @@ void QwtPlotTextLabel::draw( QPainter *painter,
             pw = qMax( d_data->text.borderPen().width(), 1 );
 
         QRect pixmapRect;
-        pixmapRect.setLeft( qwtFloor( rect.left() ) - pw );
-        pixmapRect.setTop( qwtFloor( rect.top() ) - pw );
-        pixmapRect.setRight( qwtCeil( rect.right() ) + pw );
-        pixmapRect.setBottom( qwtCeil( rect.bottom() ) + pw );
+        pixmapRect.setLeft( qFloor( rect.left() ) - pw );
+        pixmapRect.setTop( qFloor( rect.top() ) - pw );
+        pixmapRect.setRight( qCeil( rect.right() ) + pw );
+        pixmapRect.setBottom( qCeil( rect.bottom() ) + pw );
 
-#if QT_VERSION >= 0x050000
-        const qreal pixelRatio = QwtPainter::devicePixelRatio( painter->device() );
+#define QWT_HIGH_DPI 1
+
+#if QT_VERSION >= 0x050100 && QWT_HIGH_DPI
+        const qreal pixelRatio = painter->device()->devicePixelRatio();
         const QSize scaledSize = pixmapRect.size() * pixelRatio;
 #else
         const QSize scaledSize = pixmapRect.size();
 #endif
-
         if ( d_data->pixmap.isNull() ||
             ( scaledSize != d_data->pixmap.size() )  )
         {
             d_data->pixmap = QPixmap( scaledSize );
-#if QT_VERSION >= 0x050000
+#if QT_VERSION >= 0x050100 && QWT_HIGH_DPI
             d_data->pixmap.setDevicePixelRatio( pixelRatio );
 #endif
             d_data->pixmap.fill( Qt::transparent );

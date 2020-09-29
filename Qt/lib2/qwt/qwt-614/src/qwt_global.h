@@ -10,12 +10,14 @@
 #ifndef QWT_GLOBAL_H
 #define QWT_GLOBAL_H
 
+#include <QPainterPath>
+
 #include <qglobal.h>
 
 // QWT_VERSION is (major << 16) + (minor << 8) + patch.
 
-#define QWT_VERSION       0x060300
-#define QWT_VERSION_STR   "6.3.0"
+#define QWT_VERSION       0x060104
+#define QWT_VERSION_STR   "6.1.4"
 
 #if defined(_MSC_VER) /* MSVC Compiler */
 /* template-class specialization 'identifier' is already instantiated */
@@ -36,27 +38,6 @@
 
 #ifndef QWT_EXPORT
 #define QWT_EXPORT
-#endif
-
-#if QT_VERSION >= 0x040800
-#define QWT_CONSTEXPR Q_DECL_CONSTEXPR
-#endif
-
-#if QT_VERSION >= 0x050000
-#define QWT_OVERRIDE Q_DECL_OVERRIDE
-#define QWT_FINAL Q_DECL_FINAL
-#endif
-
-#ifndef QWT_CONSTEXPR
-#define QWT_CONSTEXPR
-#endif
-
-#ifndef QWT_OVERRIDE
-#define QWT_OVERRIDE
-#endif
-
-#ifndef QWT_FINAL
-#define QWT_FINAL
 #endif
 
 #endif

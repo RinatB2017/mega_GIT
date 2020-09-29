@@ -10,7 +10,6 @@
 #include "qwt_wheel.h"
 #include "qwt_math.h"
 #include "qwt_painter.h"
-
 #include <qevent.h>
 #include <qdrawutil.h>
 #include <qpainter.h>
@@ -18,10 +17,11 @@
 #include <qstyleoption.h>
 #include <qapplication.h>
 #include <qdatetime.h>
-#include <qmath.h>
 
 #if QT_VERSION < 0x040601
-#define qFastSin(x) std::sin(x)
+#define qFabs(x) ::fabs(x)
+#define qFastSin(x) ::sin(x)
+#define qExp(x) ::exp(x)
 #endif
 
 class QwtWheel::PrivateData
@@ -253,7 +253,7 @@ void QwtWheel::mouseReleaseEvent( QMouseEvent *event )
     if ( d_data->mass > 0.0 )
     {
         const int ms = d_data->time.elapsed();
-        if ( ( std::fabs( d_data->speed ) > 0.0 ) && ( ms < 50 ) )
+        if ( ( qFabs( d_data->speed ) > 0.0 ) && ( ms < 50 ) )
             startFlying = true;
     }
 
@@ -293,7 +293,7 @@ void QwtWheel::timerEvent( QTimerEvent *event )
         return;
     }
 
-    d_data->speed *= std::exp( -d_data->updateInterval * 0.001 / d_data->mass );
+    d_data->speed *= qExp( -d_data->updateInterval * 0.001 / d_data->mass );
 
     d_data->flyingValue += d_data->speed * d_data->updateInterval;
     d_data->flyingValue = boundedValue( d_data->flyingValue );
@@ -302,7 +302,7 @@ void QwtWheel::timerEvent( QTimerEvent *event )
     if ( d_data->stepAlignment )
         value = alignedValue( value );
 
-    if ( std::fabs( d_data->speed ) < 0.001 * d_data->singleStep )
+    if ( qFabs( d_data->speed ) < 0.001 * d_data->singleStep )
     {
         // stop if d_data->speed < one step per second
         stopFlying();
@@ -847,7 +847,7 @@ void QwtWheel::drawTicks( QPainter *painter, const QRectF &rect )
         const double minpos = rect.left() + 2;
 
         // draw tick marks
-        for ( double tickValue = std::ceil( loValue / tickWidth ) * tickWidth;
+        for ( double tickValue = ::ceil( loValue / tickWidth ) * tickWidth;
             tickValue < hiValue; tickValue += tickWidth )
         {
             const double angle = qwtRadians( tickValue - value() );
@@ -888,7 +888,7 @@ void QwtWheel::drawTicks( QPainter *painter, const QRectF &rect )
         const double maxpos = rect.bottom() - 2;
         const double minpos = rect.top() + 2;
 
-        for ( double tickValue = std::ceil( loValue / tickWidth ) * tickWidth;
+        for ( double tickValue = ::ceil( loValue / tickWidth ) * tickWidth;
             tickValue < hiValue; tickValue += tickWidth )
         {
             const double angle = qwtRadians( tickValue - value() );
@@ -973,7 +973,7 @@ QSize QwtWheel::minimumSizeHint() const
 */
 void QwtWheel::setSingleStep( double stepSize )
 {
-    d_data->singleStep = qwtMaxF( stepSize, 0.0 );
+    d_data->singleStep = qMax( stepSize, 0.0 );
 }
 
 /*!
@@ -1052,7 +1052,7 @@ int QwtWheel::pageStepCount() const
  */
 void QwtWheel::setRange( double min, double max )
 {
-    max = qwtMaxF( min, max );
+    max = qMax( min, max );
 
     if ( d_data->minimum == min && d_data->maximum == max )
         return;
@@ -1220,7 +1220,7 @@ void QwtWheel::setMass( double mass )
     }
     else
     {
-        d_data->mass = qwtMinF( 100.0, mass );
+        d_data->mass = qMin( 100.0, mass );
     }
 
     if ( d_data->mass <= 0.0 )
@@ -1255,11 +1255,11 @@ double QwtWheel::boundedValue( double value ) const
     {
         if ( value < d_data->minimum )
         {
-            value += std::ceil( ( d_data->minimum - value ) / range ) * range;
+            value += ::ceil( ( d_data->minimum - value ) / range ) * range;
         }
         else if ( value > d_data->maximum )
         {
-            value -= std::ceil( ( value - d_data->maximum ) / range ) * range;
+            value -= ::ceil( ( value - d_data->maximum ) / range ) * range;
         }
     }
     else
@@ -1297,6 +1297,3 @@ double QwtWheel::alignedValue( double value ) const
     return value;
 }
 
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_wheel.cpp"
-#endif

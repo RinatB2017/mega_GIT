@@ -9,14 +9,11 @@
 
 #include "qwt_widget_overlay.h"
 #include "qwt_painter.h"
-
 #include <qpainter.h>
 #include <qpaintengine.h>
 #include <qpainterpath.h>
 #include <qimage.h>
 #include <qevent.h>
-
-#include <cstdlib>
 
 static QImage::Format qwtMaskImageFormat()
 {
@@ -26,27 +23,19 @@ static QImage::Format qwtMaskImageFormat()
     return QImage::Format_ARGB32_Premultiplied;
 }
 
-static QRegion qwtAlphaMask( const QImage& image, const QRegion &region )
+static QRegion qwtAlphaMask(
+    const QImage& image, const QVector<QRect> &rects )
 {
     const int w = image.width();
     const int h = image.height();
 
-    QRegion mask;
+    QRegion region;
     QRect rect;
 
-#if QT_VERSION >= 0x050800
-    for ( QRegion::const_iterator it = region.cbegin();
-        it != region.cend(); ++it )
-    {
-        const QRect& r = *it;
-#else
-    const QVector<QRect> rects = region.rects();
     for ( int i = 0; i < rects.size(); i++ )
     {
-        const QRect& r = rects[i];
-#endif
         int x1, x2, y1, y2;
-        r.getCoords( &x1, &y1, &x2, &y2 );
+        rects[i].getCoords( &x1, &y1, &x2, &y2 );
 
         x1 = qMax( x1, 0 );
         x2 = qMin( x2, w - 1 );
@@ -68,7 +57,7 @@ static QRegion qwtAlphaMask( const QImage& image, const QRegion &region )
                     if ( inRect  )
                     {
                         rect.setCoords( rx0, y, x - 1, y );
-                        mask += rect;
+                        region += rect;
                     }
                     else
                     {
@@ -82,12 +71,12 @@ static QRegion qwtAlphaMask( const QImage& image, const QRegion &region )
             if ( inRect )
             {
                 rect.setCoords( rx0, y, x2, y );
-                mask = mask.united( rect );
+                region = region.united( rect );
             }
         }
     }
 
-    return mask;
+    return region;
 }
 
 class QwtWidgetOverlay::PrivateData
@@ -109,7 +98,7 @@ public:
     {
         if ( rgbaBuffer )
         {
-            std::free( rgbaBuffer );
+            ::free( rgbaBuffer );
             rgbaBuffer = NULL;
         }
     }
@@ -230,7 +219,7 @@ void QwtWidgetOverlay::updateMask()
         draw( &painter );
         painter.end();
 
-        mask = qwtAlphaMask( image, hint );
+        mask = qwtAlphaMask( image, hint.rects() );
 
         if ( d_data->renderMode == QwtWidgetOverlay::DrawOverlay )
         {
@@ -280,33 +269,22 @@ void QwtWidgetOverlay::paintEvent( QPaintEvent* event )
         const QImage image( d_data->rgbaBuffer,
             width(), height(), qwtMaskImageFormat() );
 
-        const int rectCount = clipRegion.rectCount();
-
-        if ( rectCount > 2000 )
+        QVector<QRect> rects;
+        if ( clipRegion.rects().size() > 2000 )
         {
             // the region is to complex
             painter.setClipRegion( clipRegion );
-
-            const QRect r = clipRegion.boundingRect();
-            painter.drawImage( r.topLeft(), image, r );
+            rects += clipRegion.boundingRect();
         }
         else
         {
-#if QT_VERSION >= 0x050800
-            for ( QRegion::const_iterator it = clipRegion.cbegin();
-                it != clipRegion.cend(); ++it )
-            {
-                const QRect& r = *it;
-                painter.drawImage( r.topLeft(), image, r );
-            }
-#else
-            const QVector<QRect> rects = clipRegion.rects();
-            for ( int i = 0; i < rects.size(); i++ )
-            {
-                const QRect& r = rects[i];
-                painter.drawImage( r.topLeft(), image, r );
-            }
-#endif
+            rects = clipRegion.rects();
+        }
+
+        for ( int i = 0; i < rects.size(); i++ )
+        {
+            const QRect r = rects[i];
+            painter.drawImage( r.topLeft(), image, r );
         }
     }
     else
@@ -329,9 +307,10 @@ void QwtWidgetOverlay::resizeEvent( QResizeEvent* event )
 
 void QwtWidgetOverlay::draw( QPainter *painter ) const
 {
-    if ( QWidget *widget = parentWidget() )
+    QWidget *widget = const_cast< QWidget *>( parentWidget() );
+    if ( widget )
     {
-        painter->setClipRect( widget->contentsRect() );
+        painter->setClipRect( parentWidget()->contentsRect() );
 
         // something special for the plot canvas
 

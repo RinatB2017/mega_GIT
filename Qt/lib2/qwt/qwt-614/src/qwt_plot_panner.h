@@ -8,7 +8,7 @@
  *****************************************************************************/
 
 #ifndef QWT_PLOT_PANNER_H
-#define QWT_PLOT_PANNER_H
+#define QWT_PLOT_PANNER_H 1
 
 #include "qwt_global.h"
 #include "qwt_panner.h"
@@ -49,8 +49,8 @@ protected Q_SLOTS:
     virtual void moveCanvas( int dx, int dy );
 
 protected:
-    virtual QBitmap contentsMask() const QWT_OVERRIDE;
-    virtual QPixmap grab() const QWT_OVERRIDE;
+    virtual QBitmap contentsMask() const;
+    virtual QPixmap grab() const;
 
 private:
     class PrivateData;

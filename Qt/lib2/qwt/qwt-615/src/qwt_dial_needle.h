@@ -8,12 +8,13 @@
  *****************************************************************************/
 
 #ifndef QWT_DIAL_NEEDLE_H
-#define QWT_DIAL_NEEDLE_H
+#define QWT_DIAL_NEEDLE_H 1
 
 #include "qwt_global.h"
 #include <qpalette.h>
 
 class QPainter;
+class QPoint;
 
 /*!
   \brief Base class for needles that can be used in a QwtDial.
@@ -33,7 +34,7 @@ public:
     virtual void setPalette( const QPalette & );
     const QPalette &palette() const;
 
-    virtual void draw( QPainter *, const QPointF &center,
+    virtual void draw( QPainter *painter, const QPointF &center,
         double length, double direction,
         QPalette::ColorGroup = QPalette::Active ) const;
 
@@ -60,8 +61,6 @@ protected:
         const QBrush &, bool sunken ) const;
 
 private:
-    Q_DISABLE_COPY(QwtDialNeedle)
-
     QPalette d_palette;
 };
 
@@ -99,7 +98,7 @@ public:
 
 protected:
     virtual void drawNeedle( QPainter *, double length,
-        QPalette::ColorGroup ) const QWT_OVERRIDE;
+        QPalette::ColorGroup ) const;
 
 private:
     Style d_style;
@@ -142,7 +141,7 @@ public:
 
 protected:
     virtual void drawNeedle( QPainter *,
-        double length, QPalette::ColorGroup ) const QWT_OVERRIDE;
+        double length, QPalette::ColorGroup ) const;
 
 private:
     Style d_style;
@@ -179,7 +178,7 @@ public:
 
 protected:
     virtual void drawNeedle( QPainter *,
-        double length, QPalette::ColorGroup ) const QWT_OVERRIDE;
+        double length, QPalette::ColorGroup ) const;
 
 private:
     Style d_style;

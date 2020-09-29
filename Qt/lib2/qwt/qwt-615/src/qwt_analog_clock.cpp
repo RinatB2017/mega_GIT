@@ -8,41 +8,34 @@
  *****************************************************************************/
 
 #include "qwt_analog_clock.h"
-#include "qwt_dial_needle.h"
 #include "qwt_round_scale_draw.h"
-#include "qwt_text.h"
-#include "qwt_math.h"
-
+#include <qmath.h>
 #include <qlocale.h>
-#include <qdatetime.h>
 
-namespace
+class QwtAnalogClockScaleDraw: public QwtRoundScaleDraw
 {
-    class QwtAnalogClockScaleDraw QWT_FINAL : public QwtRoundScaleDraw
+public:
+    QwtAnalogClockScaleDraw()
     {
-    public:
-        QwtAnalogClockScaleDraw()
-        {
-            setSpacing( 8 );
+        setSpacing( 8 );
 
-            enableComponent( QwtAbstractScaleDraw::Backbone, false );
+        enableComponent( QwtAbstractScaleDraw::Backbone, false );
 
-            setTickLength( QwtScaleDiv::MinorTick, 2 );
-            setTickLength( QwtScaleDiv::MediumTick, 4 );
-            setTickLength( QwtScaleDiv::MajorTick, 8 );
+        setTickLength( QwtScaleDiv::MinorTick, 2 );
+        setTickLength( QwtScaleDiv::MediumTick, 4 );
+        setTickLength( QwtScaleDiv::MajorTick, 8 );
 
-            setPenWidthF( 1.0 );
-        }
+        setPenWidth( 1 );
+    }
 
-        virtual QwtText label( double value ) const QWT_OVERRIDE
-        {
-            if ( qFuzzyCompare( value + 1.0, 1.0 ) )
-                value = 60.0 * 60.0 * 12.0;
+    virtual QwtText label( double value ) const
+    {
+        if ( qFuzzyCompare( value + 1.0, 1.0 ) )
+            value = 60.0 * 60.0 * 12.0;
 
-            return QLocale().toString( qRound( value / ( 60.0 * 60.0 ) ) );
-        }
-    };
-}
+        return QLocale().toString( qRound( value / ( 60.0 * 60.0 ) ) );
+    }
+};
 
 /*!
   Constructor
@@ -194,23 +187,23 @@ void QwtAnalogClock::setTime( const QTime &time )
   \param painter Painter
   \param center Center of the clock
   \param radius Maximum length for the hands
-  \param direction Dummy, not used.
+  \param dir Dummy, not used.
   \param colorGroup ColorGroup
 
   \sa drawHand()
 */
 void QwtAnalogClock::drawNeedle( QPainter *painter, const QPointF &center,
-    double radius, double direction, QPalette::ColorGroup colorGroup ) const
+    double radius, double dir, QPalette::ColorGroup colorGroup ) const
 {
-    Q_UNUSED( direction );
+    Q_UNUSED( dir );
 
     if ( isValid() )
     {
         const double hours = value() / ( 60.0 * 60.0 );
         const double minutes =
-            ( value() - std::floor(hours) * 60.0 * 60.0 ) / 60.0;
-        const double seconds = value() - std::floor(hours) * 60.0 * 60.0
-            - std::floor(minutes) * 60.0;
+            ( value() - qFloor(hours) * 60.0 * 60.0 ) / 60.0;
+        const double seconds = value() - qFloor(hours) * 60.0 * 60.0
+            - qFloor(minutes) * 60.0;
 
         double angle[NHands];
         angle[HourHand] = 360.0 * hours / 12.0;
@@ -249,7 +242,3 @@ void QwtAnalogClock::drawHand( QPainter *painter, Hand hd,
         needle->draw( painter, center, radius, direction, cg );
     }
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_analog_clock.cpp"
-#endif

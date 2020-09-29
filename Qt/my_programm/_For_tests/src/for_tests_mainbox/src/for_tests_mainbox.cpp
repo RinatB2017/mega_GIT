@@ -421,7 +421,7 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
     QFuture <void> local_thread;
     local_thread = QtConcurrent::run(this, &MainBox::heavy_function);
 #endif

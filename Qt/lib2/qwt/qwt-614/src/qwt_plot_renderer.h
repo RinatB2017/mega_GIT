@@ -11,7 +11,6 @@
 #define QWT_PLOT_RENDERER_H
 
 #include "qwt_global.h"
-
 #include <qobject.h>
 #include <qsize.h>
 
@@ -27,9 +26,7 @@ class QPrinter;
 
 #ifndef QWT_NO_SVG
 #ifdef QT_SVG_LIB
-#if QT_VERSION >= 0x040500
 class QSvgGenerator;
-#endif
 #endif
 #endif
 

@@ -8,16 +8,15 @@
  *****************************************************************************/
 
 #ifndef QWT_COMPASS_H
-#define QWT_COMPASS_H
+#define QWT_COMPASS_H 1
 
 #include "qwt_global.h"
 #include "qwt_dial.h"
 #include "qwt_round_scale_draw.h"
+#include <qstring.h>
+#include <qmap.h>
 
 class QwtCompassRose;
-class QString;
-template <class Key, class T> class QMap;
-
 
 /*!
   \brief A special scale draw made for QwtCompass
@@ -35,16 +34,13 @@ public:
     explicit QwtCompassScaleDraw();
     explicit QwtCompassScaleDraw( const QMap<double, QString> &map );
 
-    virtual ~QwtCompassScaleDraw();
-
     void setLabelMap( const QMap<double, QString> &map );
     QMap<double, QString> labelMap() const;
 
-    virtual QwtText label( double value ) const QWT_OVERRIDE;
+    virtual QwtText label( double value ) const;
 
 private:
-    class PrivateData;
-    PrivateData *d_data;
+    QMap<double, QString> d_labelMap;
 };
 
 /*!
@@ -75,9 +71,9 @@ protected:
         double radius, double north, QPalette::ColorGroup ) const;
 
     virtual void drawScaleContents( QPainter *,
-        const QPointF &center, double radius ) const QWT_OVERRIDE;
+        const QPointF &center, double radius ) const;
 
-    virtual void keyPressEvent( QKeyEvent * ) QWT_OVERRIDE;
+    virtual void keyPressEvent( QKeyEvent * );
 
 private:
     class PrivateData;

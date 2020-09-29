@@ -10,8 +10,6 @@
 #include "qwt_text.h"
 #include "qwt_painter.h"
 #include "qwt_text_engine.h"
-#include "qwt_math.h"
-
 #include <qmap.h>
 #include <qfont.h>
 #include <qcolor.h>
@@ -20,34 +18,32 @@
 #include <qpainter.h>
 #include <qapplication.h>
 #include <qdesktopwidget.h>
+#include <qmath.h>
 
-namespace
+class QwtTextEngineDict
 {
-    class QwtTextEngineDict
+public:
+    static QwtTextEngineDict &dict();
+
+    void setTextEngine( QwtText::TextFormat, QwtTextEngine * );
+
+    const QwtTextEngine *textEngine( QwtText::TextFormat ) const;
+    const QwtTextEngine *textEngine( const QString &,
+        QwtText::TextFormat ) const;
+
+private:
+    QwtTextEngineDict();
+    ~QwtTextEngineDict();
+
+    typedef QMap<int, QwtTextEngine *> EngineMap;
+
+    inline const QwtTextEngine *engine( EngineMap::const_iterator &it ) const
     {
-    public:
-        static QwtTextEngineDict &dict();
+        return it.value();
+    }
 
-        void setTextEngine( QwtText::TextFormat, QwtTextEngine * );
-
-        const QwtTextEngine *textEngine( QwtText::TextFormat ) const;
-        const QwtTextEngine *textEngine( const QString &,
-            QwtText::TextFormat ) const;
-
-    private:
-        QwtTextEngineDict();
-        ~QwtTextEngineDict();
-
-        typedef QMap<int, QwtTextEngine *> EngineMap;
-
-        inline const QwtTextEngine *engine( EngineMap::const_iterator &it ) const
-        {
-            return it.value();
-        }
-
-        EngineMap d_map;
-    };
-}
+    EngineMap d_map;
+};
 
 QwtTextEngineDict &QwtTextEngineDict::dict()
 {
@@ -142,6 +138,8 @@ public:
         borderRadius( 0 ),
         borderPen( Qt::NoPen ),
         backgroundBrush( Qt::NoBrush ),
+        paintAttributes( 0 ),
+        layoutAttributes( 0 ),
         textEngine( NULL )
     {
     }
@@ -171,17 +169,6 @@ public:
     QFont font;
     QSizeF textSize;
 };
-
-/*!
-   Constructor
-*/
-QwtText::QwtText()
-{
-    d_data = new PrivateData;
-    d_data->textEngine = textEngine( d_data->text, PlainText );
-
-    d_layoutCache = new LayoutCache;
-}
 
 /*!
    Constructor
@@ -376,7 +363,7 @@ QColor QwtText::usedColor( const QColor &defaultColor ) const
 */
 void QwtText::setBorderRadius( double radius )
 {
-    d_data->borderRadius = qwtMaxF( 0.0, radius );
+    d_data->borderRadius = qMax( 0.0, radius );
 }
 
 /*!
@@ -492,18 +479,6 @@ bool QwtText::testLayoutAttribute( LayoutAttribute attribute ) const
 /*!
    Find the height for a given width
 
-   \param width Width
-   \return Calculated height
-*/
-
-double QwtText::heightForWidth( double width ) const
-{
-    return heightForWidth( width, QFont() );
-}
-
-/*!
-   Find the height for a given width
-
    \param defaultFont Font, used for the calculation if the text has no font
    \param width Width
 
@@ -537,16 +512,6 @@ double QwtText::heightForWidth( double width, const QFont &defaultFont ) const
     }
 
     return h;
-}
-
-/*!
-   Returns the size, that is needed to render text
-
-   \return Calculated size
-*/
-QSizeF QwtText::textSize() const
-{
-    return textSize( QFont() );
 }
 
 /*!
@@ -706,16 +671,3 @@ const QwtTextEngine *QwtText::textEngine( QwtText::TextFormat format )
 {
     return  QwtTextEngineDict::dict().textEngine( format );
 }
-
-//! \return text().isNull()
-bool QwtText::isNull() const
-{
-    return d_data->text.isNull();
-}
-
-//! \return text().isEmpty()
-bool QwtText::isEmpty() const
-{
-    return d_data->text.isEmpty();
-}
-

@@ -12,11 +12,9 @@
 
 #include "qwt_global.h"
 #include "qwt_plot_item.h"
+#include "qwt_scale_div.h"
+#include "qwt_series_data.h"
 #include "qwt_series_store.h"
-
-#include <qstring.h>
-
-class QwtScaleDiv;
 
 /*!
   \brief Base class for plot items representing a series of samples
@@ -35,7 +33,7 @@ public:
 
     virtual void draw( QPainter *,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &canvasRect ) const QWT_OVERRIDE;
+        const QRectF & ) const;
 
     /*!
       Draw a subset of the samples
@@ -52,13 +50,13 @@ public:
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
         const QRectF &canvasRect, int from, int to ) const = 0;
 
-    virtual QRectF boundingRect() const QWT_OVERRIDE;
+    virtual QRectF boundingRect() const;
 
     virtual void updateScaleDiv(
-        const QwtScaleDiv &, const QwtScaleDiv & ) QWT_OVERRIDE;
+        const QwtScaleDiv &, const QwtScaleDiv & );
 
 protected:
-    virtual void dataChanged() QWT_OVERRIDE;
+    virtual void dataChanged();
 
 private:
     class PrivateData;

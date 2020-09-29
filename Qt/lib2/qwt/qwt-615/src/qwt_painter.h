@@ -12,21 +12,24 @@
 
 #include "qwt_global.h"
 
-#include <qpalette.h>
-#include <qpolygon.h>
+#include <qpoint.h>
+#include <qrect.h>
 #include <qpen.h>
+#include <qline.h>
+#include <qpalette.h>
 
+class QPainter;
+class QBrush;
+class QColor;
+class QWidget;
+class QPolygonF;
+class QRectF;
+class QImage;
+class QPixmap;
 class QwtScaleMap;
 class QwtColorMap;
 class QwtInterval;
 
-class QPainter;
-class QBrush;
-class QWidget;
-class QImage;
-class QPixmap;
-class QFontMetrics;
-class QFontMetricsF;
 class QTextDocument;
 class QPainterPath;
 
@@ -41,11 +44,11 @@ public:
 
     static void setRoundingAlignment( bool );
     static bool roundingAlignment();
-    static bool roundingAlignment( const QPainter * );
+    static bool roundingAlignment(QPainter *);
 
-    static void drawText( QPainter *, qreal x, qreal y, const QString & );
+    static void drawText( QPainter *, double x, double y, const QString & );
     static void drawText( QPainter *, const QPointF &, const QString & );
-    static void drawText( QPainter *, qreal x, qreal y, qreal w, qreal h,
+    static void drawText( QPainter *, double x, double y, double w, double h,
         int flags, const QString & );
     static void drawText( QPainter *, const QRectF &,
         int flags, const QString & );
@@ -55,14 +58,14 @@ public:
         int flags, const QTextDocument & );
 #endif
 
-    static void drawRect( QPainter *, qreal x, qreal y, qreal w, qreal h );
+    static void drawRect( QPainter *, double x, double y, double w, double h );
     static void drawRect( QPainter *, const QRectF &rect );
     static void fillRect( QPainter *, const QRectF &, const QBrush & );
 
     static void drawEllipse( QPainter *, const QRectF & );
-    static void drawPie( QPainter *, const QRectF & r, int a, int alen );
+    static void drawPie( QPainter *, const QRectF &, int a, int alen );
 
-    static void drawLine( QPainter *, qreal x1, qreal y1, qreal x2, qreal y2 );
+    static void drawLine( QPainter *, double x1, double y1, double x2, double y2 );
     static void drawLine( QPainter *, const QPointF &p1, const QPointF &p2 );
     static void drawLine( QPainter *, const QLineF & );
 
@@ -78,7 +81,7 @@ public:
     static void drawPoints( QPainter *, const QPolygon & );
     static void drawPoints( QPainter *, const QPoint *, int pointCount );
 
-    static void drawPoint( QPainter *, qreal x, qreal y );
+    static void drawPoint( QPainter *, double x, double y );
     static void drawPoint( QPainter *, const QPointF & );
     static void drawPoints( QPainter *, const QPolygonF & );
     static void drawPoints( QPainter *, const QPointF *, int pointCount );
@@ -91,39 +94,30 @@ public:
         const QRectF &, const QPalette &, int lineWidth, int frameStyle );
 
     static void drawRoundedFrame( QPainter *,
-        const QRectF &, qreal xRadius, qreal yRadius,
+        const QRectF &, double xRadius, double yRadius,
         const QPalette &, int lineWidth, int frameStyle );
 
     static void drawFrame( QPainter *, const QRectF &rect,
         const QPalette &palette, QPalette::ColorRole foregroundRole,
-        int lineWidth, int midLineWidth, int frameStyle );
+        int frameWidth, int midLineWidth, int frameStyle );
 
     static void drawFocusRect( QPainter *, const QWidget * );
     static void drawFocusRect( QPainter *, const QWidget *, const QRect & );
 
-    static void drawColorBar( QPainter *,
+    static void drawColorBar( QPainter *painter,
         const QwtColorMap &, const QwtInterval &,
         const QwtScaleMap &, Qt::Orientation, const QRectF & );
 
-    static bool isAligning( const QPainter *);
+    static bool isAligning( QPainter *painter );
     static bool isX11GraphicsSystem();
 
     static void fillPixmap( const QWidget *,
         QPixmap &, const QPoint &offset = QPoint() );
 
-    static void drawBackgound( QPainter *,
-        const QRectF &, const QWidget * );
+    static void drawBackgound( QPainter *painter,
+        const QRectF &rect, const QWidget *widget );
 
     static QPixmap backingStore( QWidget *, const QSize & );
-    static qreal devicePixelRatio( const QPaintDevice * );
-
-    static qreal effectivePenWidth( const QPen & );
-
-    static int horizontalAdvance( const QFontMetrics&, const QString& );
-    static qreal horizontalAdvance( const QFontMetricsF&, const QString& );
-
-    static int horizontalAdvance( const QFontMetrics&, QChar );
-    static qreal horizontalAdvance( const QFontMetricsF&, QChar );
 
 private:
     static bool d_polylineSplitting;
@@ -131,7 +125,7 @@ private:
 };
 
 //!  Wrapper for QPainter::drawPoint()
-inline void QwtPainter::drawPoint( QPainter *painter, qreal x, qreal y )
+inline void QwtPainter::drawPoint( QPainter *painter, double x, double y )
 {
     QwtPainter::drawPoint( painter, QPointF( x, y ) );
 }
@@ -150,7 +144,7 @@ inline void QwtPainter::drawPoints( QPainter *painter, const QPolygonF &polygon 
 
 //!  Wrapper for QPainter::drawLine()
 inline void QwtPainter::drawLine( QPainter *painter,
-    qreal x1, qreal y1, qreal x2, qreal y2 )
+    double x1, double y1, double x2, double y2 )
 {
     QwtPainter::drawLine( painter, QPointF( x1, y1 ), QPointF( x2, y2 ) );
 }
@@ -187,19 +181,8 @@ inline bool QwtPainter::roundingAlignment()
   \return roundingAlignment() && isAligning(painter);
   \param painter Painter
 */
-inline bool QwtPainter::roundingAlignment( const QPainter *painter )
+inline bool QwtPainter::roundingAlignment(QPainter *painter)
 {
     return d_roundingAlignment && isAligning(painter);
 }
-
-/*!
-  \return pen.widthF() expanded to at least 1.0
-  \param pen Pen
-*/
-inline qreal QwtPainter::effectivePenWidth( const QPen &pen )
-{
-    const qreal width = pen.widthF();
-    return ( width < 1.0 ) ? 1.0 : width;
-}
-
 #endif

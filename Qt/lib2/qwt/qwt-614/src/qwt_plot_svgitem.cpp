@@ -10,8 +10,7 @@
 #include "qwt_plot_svgitem.h"
 #include "qwt_scale_map.h"
 #include "qwt_painter.h"
-#include "qwt_text.h"
-
+#include <qpainter.h>
 #include <qsvgrenderer.h>
 
 class QwtPlotSvgItem::PrivateData

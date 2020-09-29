@@ -10,19 +10,32 @@
 #include "qwt_plot_panner.h"
 #include "qwt_scale_div.h"
 #include "qwt_plot.h"
-#include "qwt_scale_map.h"
 #include "qwt_painter.h"
-
 #include <qbitmap.h>
 #include <qstyle.h>
 #include <qstyleoption.h>
-#include <qpainter.h>
 #include <qpainterpath.h>
+
+#if QT_VERSION >= 0x050000
+#if QT_VERSION < 0x050100
+#define QWT_USE_WINDOW_HANDLE 1
+#endif
+#endif
+
+#ifdef QWT_USE_WINDOW_HANDLE
+#include <qwindow.h>
+#endif
 
 static QBitmap qwtBorderMask( const QWidget *canvas, const QSize &size )
 {
 #if QT_VERSION >= 0x050000
-    const qreal pixelRatio = QwtPainter::devicePixelRatio( canvas );
+    qreal pixelRatio = 1.0;
+
+#ifdef QWT_USE_WINDOW_HANDLE
+    pixelRatio = canvas->windowHandle()->devicePixelRatio();
+#else
+    pixelRatio = canvas->devicePixelRatio();
+#endif
 #endif
 
     const QRect r( 0, 0, size.width(), size.height() );
@@ -291,6 +304,3 @@ QPixmap QwtPlotPanner::grab() const
     return QwtPanner::grab();
 }
 
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_plot_panner.cpp"
-#endif

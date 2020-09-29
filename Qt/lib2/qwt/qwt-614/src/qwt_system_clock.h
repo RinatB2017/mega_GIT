@@ -43,8 +43,6 @@ public:
     double elapsed() const;
 
 private:
-    Q_DISABLE_COPY(QwtSystemClock)
-
     class PrivateData;
     PrivateData *d_data;
 };

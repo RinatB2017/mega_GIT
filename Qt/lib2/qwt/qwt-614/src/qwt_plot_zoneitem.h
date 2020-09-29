@@ -12,10 +12,8 @@
 
 #include "qwt_global.h"
 #include "qwt_plot_item.h"
+#include "qwt_interval.h"
 
-#include <qnamespace.h>
-
-class QwtInterval;
 class QPen;
 class QBrush;
 
@@ -37,10 +35,10 @@ public:
     explicit QwtPlotZoneItem();
     virtual ~QwtPlotZoneItem();
 
-    virtual int rtti() const QWT_OVERRIDE;
+    virtual int rtti() const;
 
     void setOrientation( Qt::Orientation );
-    Qt::Orientation orientation() const;
+    Qt::Orientation orientation();
 
     void setInterval( double min, double max );
     void setInterval( const QwtInterval & );
@@ -55,9 +53,9 @@ public:
 
     virtual void draw( QPainter *,
         const QwtScaleMap &, const QwtScaleMap &,
-        const QRectF &canvasRect ) const QWT_OVERRIDE;
+        const QRectF &) const;
 
-    virtual QRectF boundingRect() const QWT_OVERRIDE;
+    virtual QRectF boundingRect() const;
 
 private:
     class PrivateData;

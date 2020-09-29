@@ -12,6 +12,7 @@
 
 #include "qwt_global.h"
 #include "qwt_plot_item.h"
+#include "qwt_legend_data.h"
 
 class QFont;
 
@@ -63,13 +64,10 @@ public:
     explicit QwtPlotLegendItem();
     virtual ~QwtPlotLegendItem();
 
-    virtual int rtti() const QWT_OVERRIDE;
+    virtual int rtti() const;
 
-    void setAlignmentInCanvas( Qt::Alignment );
-    Qt::Alignment alignmentInCanvas() const;
-
-    void setOffsetInCanvas( Qt::Orientations, int numPixels );
-    int offsetInCanvas( Qt::Orientation ) const;
+    void setAlignment( Qt::Alignment );
+    Qt::Alignment alignment() const;
 
     void setMaxColumns( uint );
     uint maxColumns() const;
@@ -89,6 +87,9 @@ public:
     void setFont( const QFont& );
     QFont font() const;
 
+    void setBorderDistance( int );
+    int borderDistance() const;
+
     void setBorderRadius( double );
     double borderRadius() const;
 
@@ -106,12 +107,12 @@ public:
 
     virtual void draw( QPainter *,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &canvasRect ) const QWT_OVERRIDE;
+        const QRectF &canvasRect ) const;
 
     void clearLegend();
 
     virtual void updateLegend( const QwtPlotItem *,
-        const QList<QwtLegendData> & ) QWT_OVERRIDE;
+        const QList<QwtLegendData> & );
 
     virtual QRect geometry( const QRectF &canvasRect ) const;
 
@@ -122,7 +123,7 @@ public:
     QList< QRect > legendGeometries( const QwtPlotItem * ) const;
 
 protected:
-    virtual void drawLegendData( QPainter *,
+    virtual void drawLegendData( QPainter *painter,
         const QwtPlotItem *, const QwtLegendData &, const QRectF & ) const;
 
     virtual void drawBackground( QPainter *, const QRectF &rect ) const;

@@ -10,11 +10,8 @@
 #include "qwt_plot_zoomer.h"
 #include "qwt_plot.h"
 #include "qwt_scale_div.h"
-#include "qwt_scale_map.h"
-#include "qwt_interval.h"
 #include "qwt_picker_machine.h"
-
-#include <qstack.h>
+#include <qalgorithms.h>
 
 static QwtInterval qwtExpandedZoomInterval( double v1, double v2,
     double minRange, const QwtTransform* transform )
@@ -180,12 +177,12 @@ void QwtPlotZoomer::setMaxStackDepth( int depth )
         // unzoom if the current depth is below d_data->maxStackDepth
 
         const int zoomOut =
-            d_data->zoomStack.count() - 1 - depth; // -1 for the zoom base
+            int( d_data->zoomStack.count() ) - 1 - depth; // -1 for the zoom base
 
         if ( zoomOut > 0 )
         {
             zoom( -zoomOut );
-            for ( int i = d_data->zoomStack.count() - 1;
+            for ( int i = int( d_data->zoomStack.count() ) - 1;
                 i > int( d_data->zoomRectIndex ); i-- )
             {
                 ( void )d_data->zoomStack.pop(); // remove trailing rects
@@ -318,7 +315,7 @@ void QwtPlotZoomer::zoom( const QRectF &rect )
     const QRectF zoomRect = rect.normalized();
     if ( zoomRect != d_data->zoomStack[d_data->zoomRectIndex] )
     {
-        for ( uint i = d_data->zoomStack.count() - 1;
+        for ( uint i = int( d_data->zoomStack.count() ) - 1;
            i > d_data->zoomRectIndex; i-- )
         {
             ( void )d_data->zoomStack.pop();
@@ -346,24 +343,20 @@ void QwtPlotZoomer::zoom( const QRectF &rect )
 */
 void QwtPlotZoomer::zoom( int offset )
 {
-    int newIndex;
-
     if ( offset == 0 )
-    {
-        newIndex = 0;
-    }
+        d_data->zoomRectIndex = 0;
     else
     {
-        newIndex = d_data->zoomRectIndex + offset;
-        newIndex = qBound( 0, newIndex, d_data->zoomStack.count() - 1 );
+        int newIndex = d_data->zoomRectIndex + offset;
+        newIndex = qMax( 0, newIndex );
+        newIndex = qMin( int( d_data->zoomStack.count() ) - 1, newIndex );
+
+        d_data->zoomRectIndex = uint( newIndex );
     }
 
-    if ( newIndex != static_cast<int>( d_data->zoomRectIndex ) )
-    {
-        d_data->zoomRectIndex = newIndex;
-        rescale();
-        Q_EMIT zoomed( zoomRect() );
-    }
+    rescale();
+
+    Q_EMIT zoomed( zoomRect() );
 }
 
 /*!
@@ -387,12 +380,12 @@ void QwtPlotZoomer::setZoomStack(
         return;
 
     if ( d_data->maxStackDepth >= 0 &&
-        zoomStack.count() > d_data->maxStackDepth )
+        int( zoomStack.count() ) > d_data->maxStackDepth )
     {
         return;
     }
 
-    if ( zoomRectIndex < 0 || zoomRectIndex > zoomStack.count() )
+    if ( zoomRectIndex < 0 || zoomRectIndex > int( zoomStack.count() ) )
         zoomRectIndex = zoomStack.count() - 1;
 
     const bool doRescale = zoomStack[zoomRectIndex] != zoomRect();
@@ -569,7 +562,7 @@ bool QwtPlotZoomer::accept( QPolygon &pa ) const
     if ( pa.count() < 2 )
         return false;
 
-    QRect rect = QRect( pa.first(), pa.last() );
+    QRect rect = QRect( pa[0], pa[int( pa.count() ) - 1] );
     rect = rect.normalized();
 
     const int minSize = 2;
@@ -654,7 +647,7 @@ bool QwtPlotZoomer::end( bool ok )
     if ( pa.count() < 2 )
         return false;
 
-    QRect rect = QRect( pa.first(), pa.last() );
+    QRect rect = QRect( pa[0], pa[int( pa.count() - 1 )] );
     rect = rect.normalized();
 
     const QwtScaleMap xMap = plot->canvasMap( xAxis() );
@@ -669,7 +662,3 @@ bool QwtPlotZoomer::end( bool ok )
 
     return true;
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_plot_zoomer.cpp"
-#endif

@@ -11,9 +11,12 @@
 #define QWT_SCALE_DIV_H
 
 #include "qwt_global.h"
+#include "qwt_interval.h"
 #include <qlist.h>
 
-class QwtInterval;
+#ifndef QT_NO_DEBUG_STREAM
+#include <qdebug.h>
+#endif
 
 /*!
   \brief A class representing a scale division

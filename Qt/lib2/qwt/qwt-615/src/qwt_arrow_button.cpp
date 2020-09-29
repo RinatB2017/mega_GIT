@@ -8,12 +8,12 @@
  *****************************************************************************/
 
 #include "qwt_arrow_button.h"
-#include "qwt.h"
-
+#include "qwt_math.h"
 #include <qpainter.h>
 #include <qstyle.h>
 #include <qstyleoption.h>
 #include <qevent.h>
+#include <qapplication.h>
 
 static const int MaxNum = 3;
 static const int Margin = 2;
@@ -260,7 +260,7 @@ void QwtArrowButton::drawArrow( QPainter *painter,
 QSize QwtArrowButton::sizeHint() const
 {
     const QSize hint = minimumSizeHint();
-    return qwtExpandedToGlobalStrut( hint );
+    return hint.expandedTo( QApplication::globalStrut() );
 }
 
 /*!

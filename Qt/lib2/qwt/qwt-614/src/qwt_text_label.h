@@ -12,7 +12,6 @@
 
 #include "qwt_global.h"
 #include "qwt_text.h"
-
 #include <qframe.h>
 
 class QString;
@@ -55,16 +54,16 @@ public:
     int margin() const;
     void setMargin( int );
 
-    virtual QSize sizeHint() const QWT_OVERRIDE;
-    virtual QSize minimumSizeHint() const QWT_OVERRIDE;
-    virtual int heightForWidth( int ) const QWT_OVERRIDE;
+    virtual QSize sizeHint() const;
+    virtual QSize minimumSizeHint() const;
+    virtual int heightForWidth( int ) const;
 
     QRect textRect() const;
 
     virtual void drawText( QPainter *, const QRectF & );
 
 protected:
-    virtual void paintEvent( QPaintEvent * ) QWT_OVERRIDE;
+    virtual void paintEvent( QPaintEvent * );
     virtual void drawContents( QPainter * );
 
 private:

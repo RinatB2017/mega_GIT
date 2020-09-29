@@ -9,7 +9,6 @@
 
 #include "qwt_plot_abstract_barchart.h"
 #include "qwt_scale_map.h"
-#include "qwt_math.h"
 
 static inline double qwtTransformWidth(
     const QwtScaleMap &map, double value, double width )
@@ -101,7 +100,7 @@ QwtPlotAbstractBarChart::LayoutPolicy QwtPlotAbstractBarChart::layoutPolicy() co
  */
 void QwtPlotAbstractBarChart::setLayoutHint( double hint )
 {
-    hint = qwtMaxF( 0.0, hint );
+    hint = qMax( 0.0, hint );
     if ( hint != d_data->layoutHint )
     {
         d_data->layoutHint = hint;
@@ -257,7 +256,7 @@ double QwtPlotAbstractBarChart::sampleWidth( const QwtScaleMap &map,
 
             width = qwtTransformWidth( map, value, w );
             width -= d_data->spacing;
-            width = qwtMaxF( width, d_data->layoutHint );
+            width = qMax( width, d_data->layoutHint );
         }
     }
 
@@ -324,7 +323,7 @@ void QwtPlotAbstractBarChart::getCanvasMarginHint( const QwtScaleMap &xMap,
 
             if ( layoutPolicy() == ScaleSamplesToAxes )
             {
-                sampleWidthS = qwtMaxF( d_data->layoutHint, 0.0 );
+                sampleWidthS = qMax( d_data->layoutHint, 0.0 );
             }
             else
             {

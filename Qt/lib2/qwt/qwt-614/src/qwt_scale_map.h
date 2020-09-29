@@ -12,8 +12,12 @@
 
 #include "qwt_global.h"
 #include "qwt_transform.h"
+#include <qrect.h>
 
-class QPointF;
+#ifndef QT_NO_DEBUG_STREAM
+#include <qdebug.h>
+#endif
+
 class QRectF;
 
 /*!
@@ -53,13 +57,11 @@ public:
 
     static QRectF transform( const QwtScaleMap &,
         const QwtScaleMap &, const QRectF & );
-
     static QRectF invTransform( const QwtScaleMap &,
         const QwtScaleMap &, const QRectF & );
 
     static QPointF transform( const QwtScaleMap &,
         const QwtScaleMap &, const QPointF & );
-
     static QPointF invTransform( const QwtScaleMap &,
         const QwtScaleMap &, const QPointF & );
 

@@ -11,14 +11,14 @@
 #define QWT_TEXT_H
 
 #include "qwt_global.h"
+#include <qstring.h>
+#include <qsize.h>
+#include <qfont.h>
 #include <qmetatype.h>
 
-class QFont;
-class QString;
 class QColor;
 class QPen;
 class QBrush;
-class QSizeF;
 class QRectF;
 class QPainter;
 class QwtTextEngine;
@@ -142,10 +142,9 @@ public:
     //! Layout attributes
     typedef QFlags<LayoutAttribute> LayoutAttributes;
 
-    QwtText();
-    QwtText( const QString &, TextFormat textFormat = AutoText );
+    QwtText( const QString & = QString(),
+             TextFormat textFormat = AutoText );
     QwtText( const QwtText & );
-
     ~QwtText();
 
     QwtText &operator=( const QwtText & );
@@ -188,11 +187,8 @@ public:
     void setLayoutAttribute( LayoutAttribute, bool on = true );
     bool testLayoutAttribute( LayoutAttribute ) const;
 
-    double heightForWidth( double width ) const;
-    double heightForWidth( double width, const QFont & ) const;
-
-    QSizeF textSize() const;
-    QSizeF textSize( const QFont & ) const;
+    double heightForWidth( double width, const QFont & = QFont() ) const;
+    QSizeF textSize( const QFont & = QFont() ) const;
 
     void draw( QPainter *painter, const QRectF &rect ) const;
 
@@ -209,6 +205,18 @@ private:
     class LayoutCache;
     LayoutCache *d_layoutCache;
 };
+
+//! \return text().isNull()
+inline bool QwtText::isNull() const
+{
+    return text().isNull();
+}
+
+//! \return text().isEmpty()
+inline bool QwtText::isEmpty() const
+{
+    return text().isEmpty();
+}
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( QwtText::PaintAttributes )
 Q_DECLARE_OPERATORS_FOR_FLAGS( QwtText::LayoutAttributes )

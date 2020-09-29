@@ -8,11 +8,10 @@
  *****************************************************************************/
 
 #include "qwt_plot_histogram.h"
+#include "qwt_plot.h"
 #include "qwt_painter.h"
 #include "qwt_column_symbol.h"
 #include "qwt_scale_map.h"
-#include "qwt_graphic.h"
-
 #include <qstring.h>
 #include <qpainter.h>
 
@@ -685,7 +684,8 @@ void QwtPlotHistogram::drawColumn( QPainter *painter,
 
   \sa QwtPlotItem::setLegendIconSize(), QwtPlotItem::legendData()
 */
-QwtGraphic QwtPlotHistogram::legendIcon( int index, const QSizeF &size ) const
+QwtGraphic QwtPlotHistogram::legendIcon( int index,
+    const QSizeF &size ) const
 {
     Q_UNUSED( index );
     return defaultIcon( d_data->brush, size );

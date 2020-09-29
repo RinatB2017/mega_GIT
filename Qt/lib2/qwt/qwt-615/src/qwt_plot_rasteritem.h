@@ -12,10 +12,10 @@
 
 #include "qwt_global.h"
 #include "qwt_plot_item.h"
-
+#include "qwt_interval.h"
+#include <qglobal.h>
 #include <qstring.h>
-
-class QwtInterval;
+#include <qimage.h>
 
 /*!
   \brief A class, which displays raster data
@@ -100,12 +100,12 @@ public:
 
     virtual void draw( QPainter *,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &canvasRect ) const QWT_OVERRIDE;
+        const QRectF &canvasRect ) const;
 
     virtual QRectF pixelHint( const QRectF & ) const;
 
     virtual QwtInterval interval(Qt::Axis) const;
-    virtual QRectF boundingRect() const QWT_OVERRIDE;
+    virtual QRectF boundingRect() const;
 
 protected:
     /*!
@@ -133,7 +133,7 @@ protected:
         const QSize &imageSize, double pixelSize) const;
 
 private:
-    explicit QwtPlotRasterItem( const QwtPlotRasterItem & );
+    QwtPlotRasterItem( const QwtPlotRasterItem & );
     QwtPlotRasterItem &operator=( const QwtPlotRasterItem & );
 
     void init();

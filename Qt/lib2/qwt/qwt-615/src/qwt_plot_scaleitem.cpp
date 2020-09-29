@@ -11,8 +11,6 @@
 #include "qwt_plot.h"
 #include "qwt_scale_map.h"
 #include "qwt_interval.h"
-#include "qwt_text.h"
-
 #include <qpalette.h>
 #include <qpainter.h>
 

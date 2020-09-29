@@ -12,11 +12,9 @@
 
 #include "qwt_global.h"
 #include "qwt_picker.h"
+#include <qvector.h>
 
 class QwtPlot;
-class QPointF;
-class QRectF;
-template <typename T> class QVector;
 
 /*!
   \brief QwtPlotPicker provides selections on a plot canvas
@@ -98,12 +96,12 @@ protected:
     QPointF invTransform( const QPoint & ) const;
     QPoint transform( const QPointF & ) const;
 
-    virtual QwtText trackerText( const QPoint & ) const QWT_OVERRIDE;
+    virtual QwtText trackerText( const QPoint & ) const;
     virtual QwtText trackerTextF( const QPointF & ) const;
 
-    virtual void move( const QPoint & ) QWT_OVERRIDE;
-    virtual void append( const QPoint & ) QWT_OVERRIDE;
-    virtual bool end( bool ok = true ) QWT_OVERRIDE;
+    virtual void move( const QPoint & );
+    virtual void append( const QPoint & );
+    virtual bool end( bool ok = true );
 
 private:
     int d_xAxis;

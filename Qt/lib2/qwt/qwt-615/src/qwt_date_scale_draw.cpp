@@ -8,12 +8,11 @@
  *****************************************************************************/
 
 #include "qwt_date_scale_draw.h"
-#include "qwt_text.h"
 
 class QwtDateScaleDraw::PrivateData
 {
 public:
-    explicit PrivateData( Qt::TimeSpec spec ):
+    PrivateData( Qt::TimeSpec spec ):
         timeSpec( spec ),
         utcOffset( 0 ),
         week0Type( QwtDate::FirstThursday )
@@ -272,11 +271,7 @@ QDateTime QwtDateScaleDraw::toDateTime( double value ) const
     if ( d_data->timeSpec == Qt::OffsetFromUTC )
     {
         dt = dt.addSecs( d_data->utcOffset );
-#if QT_VERSION >= 0x050200
-        dt.setOffsetFromUtc( d_data->utcOffset );
-#else
         dt.setUtcOffset( d_data->utcOffset );
-#endif
     }
 
     return dt;

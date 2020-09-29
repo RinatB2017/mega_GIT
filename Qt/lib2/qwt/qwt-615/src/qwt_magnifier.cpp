@@ -9,7 +9,6 @@
 
 #include "qwt_magnifier.h"
 #include "qwt_math.h"
-
 #include <qevent.h>
 #include <qwidget.h>
 
@@ -28,8 +27,7 @@ public:
         zoomInKeyModifiers( Qt::NoModifier ),
         zoomOutKey( Qt::Key_Minus ),
         zoomOutKeyModifiers( Qt::NoModifier ),
-        mousePressed( false ),
-        hasMouseTracking( false )
+        mousePressed( false )
     {
     }
 
@@ -64,13 +62,6 @@ QwtMagnifier::QwtMagnifier( QWidget *parent ):
     QObject( parent )
 {
     d_data = new PrivateData();
-
-    if ( parent )
-    {
-        if ( parent->focusPolicy() == Qt::NoFocus )
-            parent->setFocusPolicy( Qt::WheelFocus );
-    }
-
     setEnabled( true );
 }
 
@@ -437,14 +428,6 @@ void QwtMagnifier::widgetWheelEvent( QWheelEvent *wheelEvent )
 
     if ( d_data->wheelFactor != 0.0 )
     {
-#if QT_VERSION < 0x050000
-        const int wheelDelta = wheelEvent->delta();
-#else
-        const QPoint delta = wheelEvent->angleDelta();
-        const int wheelDelta = ( qAbs( delta.x() ) > qAbs( delta.y() ) )
-            ? delta.x() : delta.y();
-#endif
-
         /*
             A positive delta indicates that the wheel was
             rotated forwards away from the user; a negative
@@ -454,10 +437,10 @@ void QwtMagnifier::widgetWheelEvent( QWheelEvent *wheelEvent )
             in which case the delta value is a multiple
             of 120 (== 15 * 8).
          */
-        double f = std::pow( d_data->wheelFactor,
-            qAbs( wheelDelta / 120.0 ) );
+        double f = qPow( d_data->wheelFactor,
+            qAbs( wheelEvent->delta() / 120.0 ) );
 
-        if ( wheelDelta > 0 )
+        if ( wheelEvent->delta() > 0 )
             f = 1 / f;
 
         rescale( f );
@@ -507,6 +490,3 @@ const QWidget *QwtMagnifier::parentWidget() const
     return qobject_cast<const QWidget *>( parent() );
 }
 
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_magnifier.cpp"
-#endif

@@ -10,12 +10,9 @@
 #include "qwt_text_label.h"
 #include "qwt_text.h"
 #include "qwt_painter.h"
-#include "qwt_math.h"
-
-#include <qstyle.h>
-#include <qstyleoption.h>
 #include <qpainter.h>
 #include <qevent.h>
+#include <qmath.h>
 
 class QwtTextLabel::PrivateData
 {
@@ -178,11 +175,8 @@ QSize QwtTextLabel::minimumSizeHint() const
 {
     QSizeF sz = d_data->text.textSize( font() );
 
-    int left, right, top, bottom;
-    getContentsMargins( &left, &top, &right, &bottom );
-
-    int mw = left + right + 2 * d_data->margin;
-    int mh = top + bottom + 2 * d_data->margin;
+    int mw = 2 * ( frameWidth() + d_data->margin );
+    int mh = mw;
 
     int indent = d_data->indent;
     if ( indent <= 0 )
@@ -199,7 +193,7 @@ QSize QwtTextLabel::minimumSizeHint() const
 
     sz += QSizeF( mw, mh );
 
-    return QSize( qwtCeil( sz.width() ), qwtCeil( sz.height() ) );
+    return QSize( qCeil( sz.width() ), qCeil( sz.height() ) );
 }
 
 /*!
@@ -214,18 +208,15 @@ int QwtTextLabel::heightForWidth( int width ) const
     if ( indent <= 0 )
         indent = defaultIndent();
 
-    int left, right, top, bottom;
-    getContentsMargins( &left, &top, &right, &bottom );
-
-    width -= left + right - 2 * d_data->margin;
+    width -= 2 * frameWidth();
     if ( renderFlags & Qt::AlignLeft || renderFlags & Qt::AlignRight )
         width -= indent;
 
-    int height = qwtCeil( d_data->text.heightForWidth( width, font() ) );
+    int height = qCeil( d_data->text.heightForWidth( width, font() ) );
     if ( ( renderFlags & Qt::AlignTop ) || ( renderFlags & Qt::AlignBottom ) )
         height += indent;
 
-    height += top + bottom + 2 * d_data->margin;
+    height += 2 * frameWidth();
 
     return height;
 }
@@ -237,16 +228,13 @@ int QwtTextLabel::heightForWidth( int width ) const
 void QwtTextLabel::paintEvent( QPaintEvent *event )
 {
     QPainter painter( this );
-    painter.setClipRegion( event->region() );
-
-    QStyleOption opt;
-    opt.init(this);
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &painter, this);
 
     if ( !contentsRect().contains( event->rect() ) )
     {
+        painter.save();
         painter.setClipRegion( event->region() & frameRect() );
         drawFrame( &painter );
+        painter.restore();
     }
 
     painter.setClipRegion( event->region() & contentsRect() );
@@ -292,8 +280,8 @@ QRect QwtTextLabel::textRect() const
 
     if ( !r.isEmpty() && d_data->margin > 0 )
     {
-        const int m = d_data->margin;
-        r.adjust( m, m, -m, -m );
+        r.setRect( r.x() + d_data->margin, r.y() + d_data->margin,
+            r.width() - 2 * d_data->margin, r.height() - 2 * d_data->margin );
     }
 
     if ( !r.isEmpty() )
@@ -307,21 +295,13 @@ QRect QwtTextLabel::textRect() const
             const int renderFlags = d_data->text.renderFlags();
 
             if ( renderFlags & Qt::AlignLeft )
-            {
                 r.setX( r.x() + indent );
-            }
             else if ( renderFlags & Qt::AlignRight )
-            {
                 r.setWidth( r.width() - indent );
-            }
             else if ( renderFlags & Qt::AlignTop )
-            {
                 r.setY( r.y() + indent );
-            }
             else if ( renderFlags & Qt::AlignBottom )
-            {
                 r.setHeight( r.height() - indent );
-            }
         }
     }
 
@@ -342,6 +322,3 @@ int QwtTextLabel::defaultIndent() const
     return QFontMetrics( fnt ).width( 'x' ) / 2;
 }
 
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_text_label.cpp"
-#endif

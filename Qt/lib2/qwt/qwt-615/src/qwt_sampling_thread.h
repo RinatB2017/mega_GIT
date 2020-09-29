@@ -7,8 +7,8 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
-#ifndef QWT_SAMPLING_THREAD_H
-#define QWT_SAMPLING_THREAD_H
+#ifndef _QWT_SAMPLING_THREAD_H_
+#define _QWT_SAMPLING_THREAD_H_
 
 #include "qwt_global.h"
 #include <qthread.h>
@@ -42,7 +42,7 @@ public Q_SLOTS:
 protected:
     explicit QwtSamplingThread( QObject *parent = NULL );
 
-    virtual void run() QWT_OVERRIDE;
+    virtual void run();
 
     /*!
        Collect a sample

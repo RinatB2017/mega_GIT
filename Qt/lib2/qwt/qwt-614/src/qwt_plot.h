@@ -11,21 +11,21 @@
 #define QWT_PLOT_H
 
 #include "qwt_global.h"
+#include "qwt_text.h"
 #include "qwt_plot_dict.h"
-
+#include "qwt_scale_map.h"
+#include "qwt_interval.h"
 #include <qframe.h>
+#include <qlist.h>
+#include <qvariant.h>
 
 class QwtPlotLayout;
 class QwtAbstractLegend;
 class QwtScaleWidget;
 class QwtScaleEngine;
 class QwtScaleDiv;
-class QwtScaleMap;
 class QwtScaleDraw;
 class QwtTextLabel;
-class QwtInterval;
-class QwtText;
-template <typename T> class QList;
 
 /*!
   \brief A 2-D plotting widget
@@ -236,8 +236,8 @@ public:
 
     // Misc
 
-    virtual QSize sizeHint() const QWT_OVERRIDE;
-    virtual QSize minimumSizeHint() const QWT_OVERRIDE;
+    virtual QSize sizeHint() const;
+    virtual QSize minimumSizeHint() const;
 
     virtual void updateLayout();
     virtual void drawCanvas( QPainter * );
@@ -249,8 +249,8 @@ public:
         const QwtScaleMap maps[], const QRectF &canvasRect,
         double &left, double &top, double &right, double &bottom) const;
 
-    virtual bool event( QEvent * ) QWT_OVERRIDE;
-    virtual bool eventFilter( QObject *, QEvent * ) QWT_OVERRIDE;
+    virtual bool event( QEvent * );
+    virtual bool eventFilter( QObject *, QEvent * );
 
     virtual void drawItems( QPainter *, const QRectF &,
         const QwtScaleMap maps[axisCnt] ) const;
@@ -287,7 +287,7 @@ public Q_SLOTS:
 protected:
     static bool axisValid( int axisId );
 
-    virtual void resizeEvent( QResizeEvent * ) QWT_OVERRIDE;
+    virtual void resizeEvent( QResizeEvent *e );
 
 private Q_SLOTS:
     void updateLegendItems( const QVariant &itemInfo,

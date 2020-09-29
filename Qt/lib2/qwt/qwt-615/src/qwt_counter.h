@@ -49,7 +49,7 @@ class QWT_EXPORT QwtCounter : public QWidget
 {
     Q_OBJECT
 
-    Q_PROPERTY( double value READ value WRITE setValue NOTIFY valueChanged USER true )
+    Q_PROPERTY( double value READ value WRITE setValue )
     Q_PROPERTY( double minimum READ minimum WRITE setMinimum )
     Q_PROPERTY( double maximum READ maximum WRITE setMaximum )
     Q_PROPERTY( double singleStep READ singleStep WRITE setSingleStep )
@@ -97,7 +97,7 @@ public:
     void setIncSteps( QwtCounter::Button, int numSteps );
     int incSteps( QwtCounter::Button ) const;
 
-    virtual QSize sizeHint() const QWT_OVERRIDE;
+    virtual QSize sizeHint() const;
 
     double singleStep() const;
     void setSingleStep( double stepSize );
@@ -139,9 +139,9 @@ Q_SIGNALS:
     void valueChanged ( double value );
 
 protected:
-    virtual bool event( QEvent * ) QWT_OVERRIDE;
-    virtual void wheelEvent( QWheelEvent * ) QWT_OVERRIDE;
-    virtual void keyPressEvent( QKeyEvent * ) QWT_OVERRIDE;
+    virtual bool event( QEvent * );
+    virtual void wheelEvent( QWheelEvent * );
+    virtual void keyPressEvent( QKeyEvent * );
 
 private Q_SLOTS:
     void btnReleased();

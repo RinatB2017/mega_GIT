@@ -81,7 +81,7 @@ public:
     virtual QSize minimumSizeHint( const QwtPlot * ) const;
 
     virtual void activate( const QwtPlot *,
-        const QRectF &plotRect, Options options = Options() );
+        const QRectF &plotRect, Options options = 0x00 );
 
     virtual void invalidate();
 
@@ -112,9 +112,8 @@ protected:
         QRectF scaleRect[QwtPlot::axisCnt] ) const;
 
 private:
-    Q_DISABLE_COPY(QwtPlotLayout)
-
     class PrivateData;
+
     PrivateData *d_data;
 };
 

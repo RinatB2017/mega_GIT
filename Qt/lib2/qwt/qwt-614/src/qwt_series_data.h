@@ -8,16 +8,14 @@
  *****************************************************************************/
 
 #ifndef QWT_SERIES_DATA_H
-#define QWT_SERIES_DATA_H
+#define QWT_SERIES_DATA_H 1
 
 #include "qwt_global.h"
 #include "qwt_samples.h"
 #include "qwt_point_3d.h"
-
+#include "qwt_point_polar.h"
 #include <qvector.h>
 #include <qrect.h>
-
-class QwtPointPolar;
 
 /*!
    \brief Abstract interface for iterating over samples
@@ -142,7 +140,7 @@ public:
        Constructor
        \param samples Array of samples
     */
-    explicit QwtArraySeriesData( const QVector<T> &samples );
+    QwtArraySeriesData( const QVector<T> &samples );
 
     /*!
       Assign an array of samples
@@ -154,7 +152,7 @@ public:
     const QVector<T> samples() const;
 
     //! \return Number of samples
-    virtual size_t size() const QWT_OVERRIDE;
+    virtual size_t size() const;
 
     /*!
       \return Sample at a specific position
@@ -162,7 +160,7 @@ public:
       \param index Index
       \return Sample at position index
     */
-    virtual T sample( size_t index ) const QWT_OVERRIDE;
+    virtual T sample( size_t index ) const;
 
 protected:
     //! Vector of samples
@@ -212,7 +210,7 @@ public:
     QwtPointSeriesData(
         const QVector<QPointF> & = QVector<QPointF>() );
 
-    virtual QRectF boundingRect() const QWT_OVERRIDE;
+    virtual QRectF boundingRect() const;
 };
 
 //! Interface for iterating over an array of 3D points
@@ -221,8 +219,7 @@ class QWT_EXPORT QwtPoint3DSeriesData: public QwtArraySeriesData<QwtPoint3D>
 public:
     QwtPoint3DSeriesData(
         const QVector<QwtPoint3D> & = QVector<QwtPoint3D>() );
-
-    virtual QRectF boundingRect() const QWT_OVERRIDE;
+    virtual QRectF boundingRect() const;
 };
 
 //! Interface for iterating over an array of intervals
@@ -232,7 +229,7 @@ public:
     QwtIntervalSeriesData(
         const QVector<QwtIntervalSample> & = QVector<QwtIntervalSample>() );
 
-    virtual QRectF boundingRect() const QWT_OVERRIDE;
+    virtual QRectF boundingRect() const;
 };
 
 //! Interface for iterating over an array of samples
@@ -242,20 +239,7 @@ public:
     QwtSetSeriesData(
         const QVector<QwtSetSample> & = QVector<QwtSetSample>() );
 
-    virtual QRectF boundingRect() const QWT_OVERRIDE;
-};
-
-class QWT_EXPORT QwtVectorFieldData: public QwtArraySeriesData<QwtVectorSample>
-{
-public:
-    QwtVectorFieldData(
-        const QVector<QwtVectorSample> & = QVector<QwtVectorSample>() );
-
-    virtual QRectF boundingRect() const QWT_OVERRIDE;
-    virtual double maxMagnitude() const;
-
-protected:
-    mutable double d_maxMagnitude;
+    virtual QRectF boundingRect() const;
 };
 
 /*!
@@ -267,7 +251,7 @@ public:
     QwtTradingChartData(
         const QVector<QwtOHLCSample> & = QVector<QwtOHLCSample>() );
 
-    virtual QRectF boundingRect() const QWT_OVERRIDE;
+    virtual QRectF boundingRect() const;
 };
 
 QWT_EXPORT QRectF qwtBoundingRect(
@@ -287,9 +271,6 @@ QWT_EXPORT QRectF qwtBoundingRect(
 
 QWT_EXPORT QRectF qwtBoundingRect(
     const QwtSeriesData<QwtOHLCSample> &, int from = 0, int to = -1 );
-
-QWT_EXPORT QRectF qwtBoundingRect(
-    const QwtSeriesData<QwtVectorSample> &, int from = 0, int to = -1 );
 
 /*!
     Binary search for a sorted series of samples

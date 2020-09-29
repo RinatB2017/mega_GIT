@@ -11,12 +11,11 @@
 #define QWT_LEGEND_DATA_H
 
 #include "qwt_global.h"
-
+#include "qwt_text.h"
+#include "qwt_graphic.h"
 #include <qvariant.h>
+#include <qpixmap.h>
 #include <qmap.h>
-
-class QwtText;
-class QwtGraphic;
 
 /*!
   \brief Attributes of an entry on a legend

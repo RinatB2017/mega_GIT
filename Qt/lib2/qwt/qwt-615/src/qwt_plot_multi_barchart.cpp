@@ -10,11 +10,9 @@
 #include "qwt_plot_multi_barchart.h"
 #include "qwt_scale_map.h"
 #include "qwt_column_symbol.h"
-#include "qwt_text.h"
-#include "qwt_graphic.h"
-#include "qwt_legend_data.h"
-#include "qwt_math.h"
-
+#include "qwt_painter.h"
+#include <qpainter.h>
+#include <qpalette.h>
 #include <qmap.h>
 
 inline static bool qwtIsIncreasing(
@@ -102,8 +100,6 @@ void QwtPlotMultiBarChart::setSamples(
     const QVector< QVector<double> > &samples )
 {
     QVector<QwtSetSample> s;
-    s.reserve( samples.size() );
-
     for ( int i = 0; i < samples.size(); i++ )
         s += QwtSetSample( i, samples[ i ] );
 
@@ -340,14 +336,14 @@ QRectF QwtPlotMultiBarChart::boundingRect() const
             }
             else
             {
-                xMin = qwtMinF( xMin, sample.value );
-                xMax = qwtMaxF( xMax, sample.value );
+                xMin = qMin( xMin, sample.value );
+                xMax = qMax( xMax, sample.value );
             }
 
             const double y = baseLine + sample.added();
 
-            yMin = qwtMinF( yMin, y );
-            yMax = qwtMaxF( yMax, y );
+            yMin = qMin( yMin, y );
+            yMax = qMax( yMax, y );
         }
         rect.setRect( xMin, yMin, xMax - xMin, yMax - yMin );
     }
@@ -687,19 +683,22 @@ void QwtPlotMultiBarChart::drawBar( QPainter *painter,
 QList<QwtLegendData> QwtPlotMultiBarChart::legendData() const
 {
     QList<QwtLegendData> list;
-    list.reserve( d_data->barTitles.size() );
 
     for ( int i = 0; i < d_data->barTitles.size(); i++ )
     {
         QwtLegendData data;
 
-        data.setValue( QwtLegendData::TitleRole,
-            QVariant::fromValue( d_data->barTitles[i] ) );
+        QVariant titleValue;
+        qVariantSetValue( titleValue, d_data->barTitles[i] );
+        data.setValue( QwtLegendData::TitleRole, titleValue );
 
         if ( !legendIconSize().isEmpty() )
         {
-            data.setValue( QwtLegendData::IconRole,
-                QVariant::fromValue( legendIcon( i, legendIconSize() ) ) );
+            QVariant iconValue;
+            qVariantSetValue( iconValue,
+                legendIcon( i, legendIconSize() ) );
+
+            data.setValue( QwtLegendData::IconRole, iconValue );
         }
 
         list += data;

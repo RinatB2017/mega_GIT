@@ -11,15 +11,12 @@
 #define QWT_POINT_MAPPER_H
 
 #include "qwt_global.h"
+#include "qwt_series_data.h"
+#include <qimage.h>
 
 class QwtScaleMap;
-template <typename T> class QwtSeriesData;
 class QPolygonF;
-class QPointF;
-class QRectF;
 class QPolygon;
-class QPen;
-class QImage;
 
 /*!
   \brief A helper class for translating a series of points
@@ -45,27 +42,7 @@ public:
           Try to remove points, that are translated to the
           same position.
          */
-        WeedOutPoints = 0x02,
-
-        /*!
-          An even more aggressive weeding algorithm, that
-          can be used in toPolygon().
-
-          A consecutive chunk of points being mapped to the
-          same x coordinate is reduced to 4 points:
-
-              - first point
-              - point with the minimum y coordinate
-              - point with the maximum y coordinate
-              - last point
-
-          In the worst case ( first and last points are never one of the extremes )
-          the number of points will be 4 times the width.
-
-          As the algorithm is fast it can be used inside of
-          a polyline render cycle.
-         */
-        WeedOutIntermediatePoints = 0x04
+        WeedOutPoints = 0x02
     };
 
     /*!
@@ -103,8 +80,6 @@ public:
         const QPen &, bool antialiased, uint numThreads ) const;
 
 private:
-    Q_DISABLE_COPY(QwtPointMapper)
-
     class PrivateData;
     PrivateData *d_data;
 };

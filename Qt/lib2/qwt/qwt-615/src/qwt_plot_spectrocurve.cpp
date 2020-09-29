@@ -11,8 +11,6 @@
 #include "qwt_color_map.h"
 #include "qwt_scale_map.h"
 #include "qwt_painter.h"
-#include "qwt_text.h"
-
 #include <qpainter.h>
 
 class QwtPlotSpectroCurve::PrivateData
@@ -278,7 +276,7 @@ void QwtPlotSpectroCurve::drawDots( QPainter *painter,
 
     const QwtColorMap::Format format = d_data->colorMap->format();
     if ( format == QwtColorMap::Indexed )
-        d_data->colorTable = d_data->colorMap->colorTable256();
+        d_data->colorTable = d_data->colorMap->colorTable( d_data->colorRange );
 
     const QwtSeriesData<QwtPoint3D> *series = data();
 
@@ -310,7 +308,7 @@ void QwtPlotSpectroCurve::drawDots( QPainter *painter,
         else
         {
             const unsigned char index = d_data->colorMap->colorIndex(
-                256, d_data->colorRange, sample.z() );
+                d_data->colorRange, sample.z() );
 
             painter->setPen( QPen( QColor::fromRgba( d_data->colorTable[index] ),
                 d_data->penWidth ) );

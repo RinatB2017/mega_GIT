@@ -12,12 +12,11 @@
 
 #include "qwt_global.h"
 #include "qwt_null_paintdevice.h"
-
 #include <qmetatype.h>
+#include <qimage.h>
+#include <qpixmap.h>
 
 class QwtPainterCommand;
-class QPixmap;
-class QImage;
 
 /*!
     \brief A paint device for scalable graphics
@@ -101,29 +100,7 @@ public:
 
         The default setting is to disable all hints
      */
-    typedef QFlags< RenderHint > RenderHints;
-
-    /*!
-       Indicator if the graphic contains a specific type of painter command
-       \sa CommandTypes, commandTypes();
-     */
-    enum CommandType
-    {
-        //! The graphic contains scalable vector data
-        VectorData     = 1 << 0,
-
-        //! The graphic contains raster data ( QPixmap or QImage )
-        RasterData     = 1 << 1,
-
-        //! The graphic contains transformations beyond simple translations
-        Transformation = 1 << 2
-    };
-
-    /*! 
-       Flag indicating what types of painter commands are in a QskGraphic
-       \sa commandTypes();
-     */
-    typedef QFlags< CommandType > CommandTypes;
+    typedef QFlags<RenderHint> RenderHints;
 
     QwtGraphic();
     QwtGraphic( const QwtGraphic & );
@@ -137,66 +114,53 @@ public:
     bool isNull() const;
     bool isEmpty() const;
 
-    CommandTypes commandTypes() const;
-
     void render( QPainter * ) const;
 
     void render( QPainter *, const QSizeF &,
-        Qt::AspectRatioMode = Qt::IgnoreAspectRatio ) const;
+            Qt::AspectRatioMode = Qt::IgnoreAspectRatio  ) const;
+
+    void render( QPainter *, const QRectF &,
+            Qt::AspectRatioMode = Qt::IgnoreAspectRatio  ) const;
 
     void render( QPainter *, const QPointF &,
         Qt::Alignment = Qt::AlignTop | Qt::AlignLeft ) const;
 
-    void render( QPainter *, const QRectF &,
-        Qt::AspectRatioMode = Qt::IgnoreAspectRatio ) const;
-
-    QPixmap toPixmap( qreal devicePixelRatio = 0.0 ) const;
-
+    QPixmap toPixmap() const;
     QPixmap toPixmap( const QSize &,
-        Qt::AspectRatioMode = Qt::IgnoreAspectRatio,
-        qreal devicePixelRatio = 0.0 ) const;
+        Qt::AspectRatioMode = Qt::IgnoreAspectRatio  ) const;
 
-    QImage toImage( qreal devicePixelRatio = 0.0 ) const;
-
+    QImage toImage() const;
     QImage toImage( const QSize &,
-        Qt::AspectRatioMode = Qt::IgnoreAspectRatio,
-        qreal devicePixelRatio = 0.0 ) const;
+        Qt::AspectRatioMode = Qt::IgnoreAspectRatio  ) const;
 
-    QRectF scaledBoundingRect( qreal sx, qreal sy ) const;
+    QRectF scaledBoundingRect( double sx, double sy ) const;
 
     QRectF boundingRect() const;
     QRectF controlPointRect() const;
 
     const QVector< QwtPainterCommand > &commands() const;
-    void setCommands( const QVector< QwtPainterCommand > & );
+    void setCommands( QVector< QwtPainterCommand > & );
 
     void setDefaultSize( const QSizeF & );
     QSizeF defaultSize() const;
 
-    qreal heightForWidth( qreal width ) const;
-    qreal widthForHeight( qreal height ) const;
-
     void setRenderHint( RenderHint, bool on = true );
     bool testRenderHint( RenderHint ) const;
 
-    RenderHints renderHints() const;
-
 protected:
-    virtual QSize sizeMetrics() const QWT_OVERRIDE;
+    virtual QSize sizeMetrics() const;
 
-    virtual void drawPath( const QPainterPath & ) QWT_OVERRIDE;
+    virtual void drawPath( const QPainterPath & );
 
     virtual void drawPixmap( const QRectF &,
-        const QPixmap &, const QRectF & ) QWT_OVERRIDE;
+        const QPixmap &, const QRectF & );
 
-    virtual void drawImage( const QRectF &, const QImage &,
-        const QRectF &, Qt::ImageConversionFlags ) QWT_OVERRIDE;
+    virtual void drawImage( const QRectF &,
+        const QImage &, const QRectF &, Qt::ImageConversionFlags );
 
-    virtual void updateState( const QPaintEngineState & ) QWT_OVERRIDE;
+    virtual void updateState( const QPaintEngineState &state );
 
 private:
-    void renderGraphic( QPainter *, QTransform * ) const;
-
     void updateBoundingRect( const QRectF & );
     void updateControlPointRect( const QRectF & );
 
@@ -207,7 +171,6 @@ private:
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( QwtGraphic::RenderHints )
-Q_DECLARE_OPERATORS_FOR_FLAGS( QwtGraphic::CommandTypes )
 Q_DECLARE_METATYPE( QwtGraphic )
 
 #endif

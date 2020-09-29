@@ -9,6 +9,7 @@
 
 #include "qwt_null_paintdevice.h"
 #include <qpaintengine.h>
+#include <qpixmap.h>
 
 class QwtNullPaintDevice::PrivateData
 {
@@ -21,48 +22,44 @@ public:
     QwtNullPaintDevice::Mode mode;
 };
 
-class QwtNullPaintDevice::PaintEngine QWT_FINAL: public QPaintEngine
+class QwtNullPaintDevice::PaintEngine: public QPaintEngine
 {
 public:
     PaintEngine();
 
-    virtual bool begin( QPaintDevice * ) QWT_OVERRIDE;
-    virtual bool end() QWT_OVERRIDE;
+    virtual bool begin( QPaintDevice * );
+    virtual bool end();
 
-    virtual Type type () const QWT_OVERRIDE;
-    virtual void updateState(const QPaintEngineState &) QWT_OVERRIDE;
+    virtual Type type () const;
+    virtual void updateState(const QPaintEngineState &);
 
-    virtual void drawRects(const QRect *, int ) QWT_OVERRIDE;
-    virtual void drawRects(const QRectF *, int ) QWT_OVERRIDE;
+    virtual void drawRects(const QRect *, int );
+    virtual void drawRects(const QRectF *, int );
 
-    virtual void drawLines(const QLine *, int ) QWT_OVERRIDE;
-    virtual void drawLines(const QLineF *, int ) QWT_OVERRIDE;
+    virtual void drawLines(const QLine *, int );
+    virtual void drawLines(const QLineF *, int );
 
-    virtual void drawEllipse(const QRectF &) QWT_OVERRIDE;
-    virtual void drawEllipse(const QRect &) QWT_OVERRIDE;
+    virtual void drawEllipse(const QRectF &);
+    virtual void drawEllipse(const QRect &);
 
-    virtual void drawPath(const QPainterPath &) QWT_OVERRIDE;
+    virtual void drawPath(const QPainterPath &);
 
-    virtual void drawPoints(const QPointF *, int ) QWT_OVERRIDE;
-    virtual void drawPoints(const QPoint *, int ) QWT_OVERRIDE;
+    virtual void drawPoints(const QPointF *, int );
+    virtual void drawPoints(const QPoint *, int );
 
-    virtual void drawPolygon(
-        const QPointF *, int, PolygonDrawMode ) QWT_OVERRIDE;
-
-    virtual void drawPolygon(
-        const QPoint *, int, PolygonDrawMode ) QWT_OVERRIDE;
+    virtual void drawPolygon(const QPointF *, int , PolygonDrawMode );
+    virtual void drawPolygon(const QPoint *, int , PolygonDrawMode );
 
     virtual void drawPixmap(const QRectF &,
-        const QPixmap &, const QRectF &) QWT_OVERRIDE;
+        const QPixmap &, const QRectF &);
 
-    virtual void drawTextItem(
-        const QPointF &, const QTextItem &) QWT_OVERRIDE;
+    virtual void drawTextItem(const QPointF &, const QTextItem &);
 
     virtual void drawTiledPixmap(const QRectF &,
-        const QPixmap &, const QPointF &s) QWT_OVERRIDE;
+        const QPixmap &, const QPointF &s);
 
-    virtual void drawImage(const QRectF &, const QImage &,
-        const QRectF &, Qt::ImageConversionFlags ) QWT_OVERRIDE;
+    virtual void drawImage(const QRectF &,
+        const QImage &, const QRectF &, Qt::ImageConversionFlags );
 
 private:
     QwtNullPaintDevice *nullDevice();
@@ -87,12 +84,7 @@ bool QwtNullPaintDevice::PaintEngine::end()
 
 QPaintEngine::Type QwtNullPaintDevice::PaintEngine::type() const
 {
-    /*
-        How to avoid conflicts with other 3rd party pain engines ?
-        At least we don't use QPaintEngine::User what is known to
-        be the value of some print engines
-     */
-    return static_cast< QPaintEngine::Type >( QPaintEngine::MaxUser - 2 );
+    return QPaintEngine::User;
 }
 
 void QwtNullPaintDevice::PaintEngine::drawRects(

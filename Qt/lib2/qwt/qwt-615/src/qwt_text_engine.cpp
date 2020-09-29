@@ -8,8 +8,8 @@
  *****************************************************************************/
 
 #include "qwt_text_engine.h"
+#include "qwt_math.h"
 #include "qwt_painter.h"
-
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qimage.h>
@@ -26,59 +26,56 @@ static QString taggedRichText( const QString &text, int flags )
     // By default QSimpleRichText is Qt::AlignLeft
     if ( flags & Qt::AlignJustify )
     {
-        richText.prepend( QLatin1String( "<div align=\"justify\">" ) );
-        richText.append( QLatin1String ( "</div>" ) );
+        richText.prepend( QString::fromLatin1( "<div align=\"justify\">" ) );
+        richText.append( QString::fromLatin1( "</div>" ) );
     }
     else if ( flags & Qt::AlignRight )
     {
-        richText.prepend( QLatin1String ( "<div align=\"right\">" ) );
-        richText.append( QLatin1String ( "</div>" ) );
+        richText.prepend( QString::fromLatin1( "<div align=\"right\">" ) );
+        richText.append( QString::fromLatin1( "</div>" ) );
     }
     else if ( flags & Qt::AlignHCenter )
     {
-        richText.prepend( QLatin1String ( "<div align=\"center\">" ) );
-        richText.append( QLatin1String ( "</div>" ) );
+        richText.prepend( QString::fromLatin1( "<div align=\"center\">" ) );
+        richText.append( QString::fromLatin1( "</div>" ) );
     }
 
     return richText;
 }
 
-namespace
+class QwtRichTextDocument: public QTextDocument
 {
-    class QwtRichTextDocument: public QTextDocument
+public:
+    QwtRichTextDocument( const QString &text, int flags, const QFont &font )
     {
-    public:
-        QwtRichTextDocument( const QString &text, int flags, const QFont &font )
-        {
-            setUndoRedoEnabled( false );
-            setDefaultFont( font );
-            setHtml( text );
+        setUndoRedoEnabled( false );
+        setDefaultFont( font );
+        setHtml( text );
 
-            // make sure we have a document layout
-            ( void )documentLayout();
+        // make sure we have a document layout
+        ( void )documentLayout();
 
-            QTextOption option = defaultTextOption();
-            if ( flags & Qt::TextWordWrap )
-                option.setWrapMode( QTextOption::WordWrap );
-            else
-                option.setWrapMode( QTextOption::NoWrap );
+        QTextOption option = defaultTextOption();
+        if ( flags & Qt::TextWordWrap )
+            option.setWrapMode( QTextOption::WordWrap );
+        else
+            option.setWrapMode( QTextOption::NoWrap );
 
-            option.setAlignment( static_cast<Qt::Alignment>( flags ) );
-            setDefaultTextOption( option );
+        option.setAlignment( static_cast<Qt::Alignment>( flags ) );
+        setDefaultTextOption( option );
 
-            QTextFrame *root = rootFrame();
-            QTextFrameFormat fm = root->frameFormat();
-            fm.setBorder( 0 );
-            fm.setMargin( 0 );
-            fm.setPadding( 0 );
-            fm.setBottomMargin( 0 );
-            fm.setLeftMargin( 0 );
-            root->setFrameFormat( fm );
+        QTextFrame *root = rootFrame();
+        QTextFrameFormat fm = root->frameFormat();
+        fm.setBorder( 0 );
+        fm.setMargin( 0 );
+        fm.setPadding( 0 );
+        fm.setBottomMargin( 0 );
+        fm.setLeftMargin( 0 );
+        root->setFrameFormat( fm );
 
-            adjustSize();
-        }
-    };
-}
+        adjustSize();
+    }
+};
 
 class QwtPlainTextEngine::PrivateData
 {
@@ -100,14 +97,13 @@ public:
     }
 
 private:
-    static int findAscent( const QFont &font )
+    int findAscent( const QFont &font ) const
     {
         static const QString dummy( "E" );
         static const QColor white( Qt::white );
 
         const QFontMetrics fm( font );
-
-        QPixmap pm( QwtPainter::horizontalAdvance( fm, dummy ), fm.height() );
+        QPixmap pm( fm.width( dummy ), fm.height() );
         pm.fill( white );
 
         QPainter p( &pm );

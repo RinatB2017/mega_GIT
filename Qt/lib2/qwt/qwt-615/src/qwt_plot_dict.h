@@ -13,7 +13,6 @@
 
 #include "qwt_global.h"
 #include "qwt_plot_item.h"
-
 #include <qlist.h>
 
 /// \var typedef QList< QwtPlotItem *> QwtPlotItemList

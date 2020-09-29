@@ -33,7 +33,7 @@ class QWT_EXPORT QwtAbstractSlider: public QwtAbstractScale
 {
     Q_OBJECT
 
-    Q_PROPERTY( double value READ value WRITE setValue NOTIFY valueChanged USER true )
+    Q_PROPERTY( double value READ value WRITE setValue )
 
     Q_PROPERTY( uint totalSteps READ totalSteps WRITE setTotalSteps )
     Q_PROPERTY( uint singleSteps READ singleSteps WRITE setSingleSteps )
@@ -119,11 +119,11 @@ Q_SIGNALS:
     void sliderMoved( double value );
 
 protected:
-    virtual void mousePressEvent( QMouseEvent * ) QWT_OVERRIDE;
-    virtual void mouseReleaseEvent( QMouseEvent * ) QWT_OVERRIDE;
-    virtual void mouseMoveEvent( QMouseEvent * ) QWT_OVERRIDE;
-    virtual void keyPressEvent( QKeyEvent * ) QWT_OVERRIDE;
-    virtual void wheelEvent( QWheelEvent * ) QWT_OVERRIDE;
+    virtual void mousePressEvent( QMouseEvent * );
+    virtual void mouseReleaseEvent( QMouseEvent * );
+    virtual void mouseMoveEvent( QMouseEvent * );
+    virtual void keyPressEvent( QKeyEvent * );
+    virtual void wheelEvent( QWheelEvent * );
 
     /*!
       \brief Determine what to do when the user presses a mouse button.
@@ -148,7 +148,7 @@ protected:
 
     void incrementValue( int stepCount );
 
-    virtual void scaleChange() QWT_OVERRIDE;
+    virtual void scaleChange();
 
 protected:
     virtual void sliderChange();

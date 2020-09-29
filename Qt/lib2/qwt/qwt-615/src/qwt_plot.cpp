@@ -12,28 +12,33 @@
 #include "qwt_plot_layout.h"
 #include "qwt_scale_widget.h"
 #include "qwt_scale_engine.h"
-#include "qwt_scale_map.h"
 #include "qwt_text_label.h"
 #include "qwt_legend.h"
 #include "qwt_legend_data.h"
 #include "qwt_plot_canvas.h"
-#include "qwt_math.h"
-
+#include <qmath.h>
 #include <qpainter.h>
 #include <qpointer.h>
+#include <qpaintengine.h>
 #include <qapplication.h>
-#include <qcoreevent.h>
+#include <qevent.h>
 
 static inline void qwtEnableLegendItems( QwtPlot *plot, bool on )
 {
-    // gcc seems to have problems with const char sig[] in combination with certain options
-    const char* sig = SIGNAL(legendDataChanged(QVariant,QList<QwtLegendData>));
-    const char* slot = SLOT(updateLegendItems(QVariant,QList<QwtLegendData>));
-
     if ( on )
-        QObject::connect( plot, sig, plot, slot );
+    {
+        QObject::connect(
+            plot, SIGNAL(legendDataChanged(QVariant,QList<QwtLegendData>)),
+            plot, SLOT(updateLegendItems(QVariant,QList<QwtLegendData>))
+        );
+    }
     else
-        QObject::disconnect( plot, sig, plot, slot );
+    {
+        QObject::disconnect(
+            plot, SIGNAL(legendDataChanged(QVariant,QList<QwtLegendData>) ),
+            plot, SLOT( updateLegendItems(QVariant,QList<QwtLegendData>))
+        );
+    }
 }
 
 static void qwtSetTabOrder(
@@ -617,6 +622,22 @@ void QwtPlot::updateLayout()
                 scaleWidget->setBorderDist( startDist, endDist );
             }
 
+#if 1
+            if ( axisId == xBottom || axisId == xTop )
+            {
+                // do we need this code any longer ???
+
+                QRegion r( scaleRect[axisId] );
+                if ( axisEnabled( yLeft ) )
+                    r = r.subtracted( QRegion( scaleRect[yLeft] ) );
+                if ( axisEnabled( yRight ) )
+                    r = r.subtracted( QRegion( scaleRect[yRight] ) );
+                r.translate( -scaleRect[ axisId ].x(),
+                    -scaleRect[axisId].y() );
+
+                scaleWidget->setMask( r );
+            }
+#endif
             if ( !scaleWidget->isVisibleTo( this ) )
                 scaleWidget->show();
         }
@@ -675,10 +696,10 @@ void QwtPlot::getCanvasMarginsHint(
                 maps[ item->xAxis() ], maps[ item->yAxis() ],
                 canvasRect, m[yLeft], m[xTop], m[yRight], m[xBottom] );
 
-            left = qwtMaxF( left, m[yLeft] );
-            top = qwtMaxF( top, m[xTop] );
-            right = qwtMaxF( right, m[yRight] );
-            bottom = qwtMaxF( bottom, m[xBottom] );
+            left = qMax( left, m[yLeft] );
+            top = qMax( top, m[xTop] );
+            right = qMax( right, m[yRight] );
+            bottom = qMax( bottom, m[xBottom] );
         }
     }
 }
@@ -706,7 +727,7 @@ void QwtPlot::updateCanvasMargins()
     {
         if ( margins[axisId] >= 0.0 )
         {
-            const int m = qwtCeil( margins[axisId] );
+            const int m = qCeil( margins[axisId] );
             plotLayout()->setCanvasMargin( m, axisId);
             doUpdate = true;
         }
@@ -761,11 +782,8 @@ void QwtPlot::drawItems( QPainter *painter, const QRectF &canvasRect,
 
             painter->setRenderHint( QPainter::Antialiasing,
                 item->testRenderHint( QwtPlotItem::RenderAntialiased ) );
-
-#if QT_VERSION < 0x050100
             painter->setRenderHint( QPainter::HighQualityAntialiasing,
                 item->testRenderHint( QwtPlotItem::RenderAntialiased ) );
-#endif
 
             item->draw( painter,
                 maps[item->xAxis()], maps[item->yAxis()],
@@ -1123,13 +1141,21 @@ void QwtPlot::attachItem( QwtPlotItem *plotItem, bool on )
   into a QVariant object. When overloading itemToInfo()
   usually infoToItem() needs to reimplemeted too.
 
+\code
+    QVariant itemInfo;
+    qVariantSetValue( itemInfo, plotItem );
+\endcode
+
   \param plotItem Plot item
   \return Plot item embedded in a QVariant
   \sa infoToItem()
  */
 QVariant QwtPlot::itemToInfo( QwtPlotItem *plotItem ) const
 {
-    return QVariant::fromValue( plotItem );
+    QVariant itemInfo;
+    qVariantSetValue( itemInfo, plotItem );
+
+    return itemInfo;
 }
 
 /*!
@@ -1155,7 +1181,4 @@ QwtPlotItem *QwtPlot::infoToItem( const QVariant &itemInfo ) const
     return NULL;
 }
 
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_plot.cpp"
-#endif
 

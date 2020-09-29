@@ -25,11 +25,13 @@
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
+#define OFFSET  1.0
+#define W_PEN   2.0
 #define COLOR   Qt::black
-#define PEN     QPen(COLOR, 2, Qt::SolidLine)
-#define ELLIPSE QPointF(width()/2, height()/2), width()/8, height()/8
+#define PEN     QPen(COLOR, W_PEN, Qt::SolidLine)
+#define ELLIPSE QPointF(width()/2.0, height()/2.0), width()/8.0, height()/8.0
 
-#define W_SIZE 50
+#define W_SIZE 32
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -41,8 +43,9 @@ protected:
     void paintEvent(QPaintEvent *)
     {
         QPainter p(this);
+        p.setRenderHint(QPainter::Antialiasing);
         p.setPen(PEN);
-        p.drawLine(0, height()/2, width(), height()/2);
+        p.drawLine(0, height()/2.0, width(), height()/2.0);
     }
 };
 
@@ -52,8 +55,9 @@ protected:
     void paintEvent(QPaintEvent *)
     {
         QPainter p(this);
+        p.setRenderHint(QPainter::Antialiasing);
         p.setPen(PEN);
-        p.drawLine(width()/2, 0, width()/2, height());
+        p.drawLine(width()/2.0, 0, width()/2.0, height());
     }
 };
 
@@ -62,9 +66,10 @@ class LeftTopWidget : public QWidget
 protected:
     void paintEvent(QPaintEvent *)
     {
-        QRectF rectangle(0, 0, width(), height());
+        QRectF rectangle(OFFSET, OFFSET, width() - 2.0 * OFFSET, height() - 2.0 * OFFSET);
 
         QPainter p(this);
+        p.setRenderHint(QPainter::Antialiasing);
         p.setPen(PEN);
         p.drawArc(rectangle, 0, -90 * 16);
         p.drawEllipse(ELLIPSE);
@@ -76,9 +81,10 @@ class RightTopWidget : public QWidget
 protected:
     void paintEvent(QPaintEvent *)
     {
-        QRectF rectangle(0, 0, width(), height());
+        QRectF rectangle(OFFSET, OFFSET, width() - 2.0 * OFFSET, height() - 2.0 * OFFSET);
 
         QPainter p(this);
+        p.setRenderHint(QPainter::Antialiasing);
         p.setPen(PEN);
         p.drawArc(rectangle, 180 * 16, 90 * 16);
         p.drawEllipse(ELLIPSE);
@@ -90,9 +96,10 @@ class LeftBottomWidget : public QWidget
 protected:
     void paintEvent(QPaintEvent *)
     {
-        QRectF rectangle(0, 0, width(), height());
+        QRectF rectangle(OFFSET, OFFSET, width() - 2.0 * OFFSET, height() - 2.0 * OFFSET);
 
         QPainter p(this);
+        p.setRenderHint(QPainter::Antialiasing);
         p.setPen(PEN);
         p.drawArc(rectangle, 0, 90 * 16);
         p.drawEllipse(ELLIPSE);
@@ -104,9 +111,10 @@ class RightBottomWidget : public QWidget
 protected:
     void paintEvent(QPaintEvent *)
     {
-        QRectF rectangle(0, 0, width(), height());
+        QRectF rectangle(OFFSET, OFFSET, width() - 2.0 * OFFSET, height() - 2.0 * OFFSET);
 
         QPainter p(this);
+        p.setRenderHint(QPainter::Antialiasing);
         p.setPen(PEN);
         p.drawArc(rectangle, 180 * 16, -90 * 16);
         p.drawEllipse(ELLIPSE);

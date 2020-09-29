@@ -73,7 +73,7 @@ public:
     //! Paint attributes
     typedef QFlags<Attribute> Attributes;
 
-    explicit QwtPlotDirectPainter( QObject *parent = NULL );
+    QwtPlotDirectPainter( QObject *parent = NULL );
     virtual ~QwtPlotDirectPainter();
 
     void setAttribute( Attribute, bool on );
@@ -88,7 +88,7 @@ public:
     void drawSeries( QwtPlotSeriesItem *, int from, int to );
     void reset();
 
-    virtual bool eventFilter( QObject *, QEvent * ) QWT_OVERRIDE;
+    virtual bool eventFilter( QObject *, QEvent * );
 
 private:
     class PrivateData;

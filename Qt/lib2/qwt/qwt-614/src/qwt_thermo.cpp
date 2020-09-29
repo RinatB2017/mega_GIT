@@ -8,16 +8,16 @@
  *****************************************************************************/
 
 #include "qwt_thermo.h"
+#include "qwt_scale_engine.h"
 #include "qwt_scale_draw.h"
 #include "qwt_scale_map.h"
 #include "qwt_color_map.h"
-#include "qwt_math.h"
-
 #include <qpainter.h>
 #include <qevent.h>
 #include <qdrawutil.h>
 #include <qstyle.h>
 #include <qstyleoption.h>
+#include <qmath.h>
 
 static inline void qwtDrawLine( QPainter *painter, int pos,
     const QColor &color, const QRect &pipeRect, const QRect &liquidRect,
@@ -36,7 +36,7 @@ static inline void qwtDrawLine( QPainter *painter, int pos,
     }
 }
 
-static QVector<double> qwtTickList( const QwtScaleDiv &scaleDiv )
+QVector<double> qwtTickList( const QwtScaleDiv &scaleDiv )
 {
     QVector<double> values;
 
@@ -855,7 +855,7 @@ QSize QwtThermo::minimumSizeHint() const
 
     if ( d_data->scalePosition != NoScale )
     {
-        const int sdExtent = qwtCeil( scaleDraw()->extent( font() ) );
+        const int sdExtent = qCeil( scaleDraw()->extent( font() ) );
         const int sdLength = scaleDraw()->minLength( font() );
 
         w = sdLength;
@@ -1003,7 +1003,3 @@ QRect QwtThermo::alarmRect( const QRect &fillRect ) const
 
     return alarmRect;
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_thermo.cpp"
-#endif

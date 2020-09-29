@@ -8,9 +8,8 @@
  *****************************************************************************/
 
 #include "qwt_arrow_button.h"
-#include "qwt_counter.h"
 #include "qwt_math.h"
-
+#include "qwt_counter.h"
 #include <qlayout.h>
 #include <qlineedit.h>
 #include <qvalidator.h>
@@ -80,6 +79,7 @@ void QwtCounter::initCounter()
         QwtArrowButton *btn =
             new QwtArrowButton( i + 1, Qt::DownArrow, this );
         btn->setFocusPolicy( Qt::NoFocus );
+        btn->installEventFilter( this );
         layout->addWidget( btn );
 
         connect( btn, SIGNAL(released()), SLOT(btnReleased()) );
@@ -102,6 +102,7 @@ void QwtCounter::initCounter()
         QwtArrowButton *btn =
             new QwtArrowButton( i + 1, Qt::UpArrow, this );
         btn->setFocusPolicy( Qt::NoFocus );
+        btn->installEventFilter( this );
         layout->addWidget( btn );
 
         connect( btn, SIGNAL(released()), SLOT(btnReleased()) );
@@ -200,8 +201,8 @@ bool QwtCounter::isReadOnly() const
 
 void QwtCounter::setValue( double value )
 {
-    const double vmin = qwtMinF( d_data->minimum, d_data->maximum );
-    const double vmax = qwtMaxF( d_data->minimum, d_data->maximum );
+    const double vmin = qMin( d_data->minimum, d_data->maximum );
+    const double vmax = qMax( d_data->minimum, d_data->maximum );
 
     value = qBound( vmin, value, vmax );
 
@@ -239,7 +240,7 @@ double QwtCounter::value() const
  */
 void QwtCounter::setRange( double min, double max )
 {
-    max = qwtMaxF( min, max );
+    max = qMax( min, max );
 
     if ( d_data->maximum == max && d_data->minimum == min )
         return;
@@ -317,7 +318,7 @@ double QwtCounter::maximum() const
 */
 void QwtCounter::setSingleStep( double stepSize )
 {
-    d_data->singleStep = qwtMaxF( stepSize, 0.0 );
+    d_data->singleStep = qMax( stepSize, 0.0 );
 }
 
 /*!
@@ -635,7 +636,7 @@ void QwtCounter::incrementValue( int numSteps )
 
 
 #if 1
-    stepSize = qwtMaxF( stepSize, 1.0e-10 * ( max - min ) );
+    stepSize = qMax( stepSize, 1.0e-10 * ( max - min ) );
 #endif
 
     double value = d_data->value + numSteps * stepSize;
@@ -646,11 +647,11 @@ void QwtCounter::incrementValue( int numSteps )
 
         if ( value < min )
         {
-            value += std::ceil( ( min - value ) / range ) * range;
+            value += ::ceil( ( min - value ) / range ) * range;
         }
         else if ( value > max )
         {
-            value -= std::ceil( ( value - max ) / range ) * range;
+            value -= ::ceil( ( value - max ) / range ) * range;
         }
     }
     else
@@ -781,7 +782,3 @@ QSize QwtCounter::sizeHint() const
         d_data->valueEdit->minimumSizeHint().height() );
     return QSize( w, h );
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_counter.cpp"
-#endif

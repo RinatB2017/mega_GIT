@@ -10,17 +10,19 @@
 #include "qwt_dial.h"
 #include "qwt_dial_needle.h"
 #include "qwt_math.h"
+#include "qwt_scale_engine.h"
 #include "qwt_scale_map.h"
 #include "qwt_round_scale_draw.h"
 #include "qwt_painter.h"
-#include "qwt.h"
-
 #include <qpainter.h>
 #include <qpalette.h>
 #include <qpixmap.h>
 #include <qevent.h>
+#include <qalgorithms.h>
+#include <qmath.h>
 #include <qstyle.h>
 #include <qstyleoption.h>
+#include <qapplication.h>
 
 static inline double qwtAngleDist( double a1, double a2 )
 {
@@ -254,7 +256,7 @@ QRect QwtDial::scaleInnerRect() const
     const QwtAbstractScaleDraw *sd = scaleDraw();
     if ( sd )
     {
-        int scaleDist = qwtCeil( sd->extent( font() ) );
+        int scaleDist = qCeil( sd->extent( font() ) );
         scaleDist++; // margin
 
         rect.adjust( scaleDist, scaleDist, -scaleDist, -scaleDist );
@@ -488,7 +490,7 @@ void QwtDial::drawScale( QPainter *painter,
     pal.setColor( QPalette::WindowText, textColor ); // ticks, backbone
 
     painter->setFont( font() );
-    painter->setPen( QPen( textColor, sd->penWidthF() ) );
+    painter->setPen( QPen( textColor, sd->penWidth() ) );
 
     painter->setBrush( Qt::red );
     sd->draw( painter, pal );
@@ -588,12 +590,12 @@ void QwtDial::setScaleDraw( QwtRoundScaleDraw *scaleDraw )
 void QwtDial::setScaleArc( double minArc, double maxArc )
 {
     if ( minArc != 360.0 && minArc != -360.0 )
-        minArc = std::fmod( minArc, 360.0 );
+        minArc = ::fmod( minArc, 360.0 );
     if ( maxArc != 360.0 && maxArc != -360.0 )
-        maxArc = std::fmod( maxArc, 360.0 );
+        maxArc = ::fmod( maxArc, 360.0 );
 
-    double minScaleArc = qwtMinF( minArc, maxArc );
-    double maxScaleArc = qwtMaxF( minArc, maxArc );
+    double minScaleArc = qMin( minArc, maxArc );
+    double maxScaleArc = qMax( minArc, maxArc );
 
     if ( maxScaleArc - minScaleArc > 360.0 )
         maxScaleArc = minScaleArc + 360.0;
@@ -684,13 +686,13 @@ QSize QwtDial::sizeHint() const
 {
     int sh = 0;
     if ( scaleDraw() )
-        sh = qwtCeil( scaleDraw()->extent( font() ) );
+        sh = qCeil( scaleDraw()->extent( font() ) );
 
     const int d = 6 * sh + 2 * lineWidth();
 
     QSize hint( d, d );
     if ( !isReadOnly() )
-        hint = qwtExpandedToGlobalStrut( hint );
+        hint = hint.expandedTo( QApplication::globalStrut() );
 
     return hint;
 }
@@ -703,7 +705,7 @@ QSize QwtDial::minimumSizeHint() const
 {
     int sh = 0;
     if ( scaleDraw() )
-        sh = qwtCeil( scaleDraw()->extent( font() ) );
+        sh = qCeil( scaleDraw()->extent( font() ) );
 
     const int d = 3 * sh + 2 * lineWidth();
 
@@ -828,20 +830,15 @@ void QwtDial::changeEvent( QEvent *event )
 */
 void QwtDial::wheelEvent( QWheelEvent *event )
 {
-#if QT_VERSION < 0x050e00
-    const QPoint wheelPos = event->pos();
-#else
-    const QPoint wheelPos = event->position().toPoint();
-#endif
-
     const QRegion region( innerRect(), QRegion::Ellipse );
-    if ( region.contains( wheelPos ) )
+    if ( region.contains( event->pos() ) )
         QwtAbstractSlider::wheelEvent( event );
 }
 
 void QwtDial::setAngleRange( double angle, double span )
 {
-    if ( QwtRoundScaleDraw *sd = scaleDraw() )
+    QwtRoundScaleDraw *sd = const_cast<QwtRoundScaleDraw *>( scaleDraw() );
+    if ( sd  )
     {
         angle = qwtNormalizeDegrees( angle - 270.0 );
         sd->setAngleRange( angle, angle + span );
@@ -872,7 +869,3 @@ void QwtDial::sliderChange()
 
     QwtAbstractSlider::sliderChange();
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_dial.cpp"
-#endif

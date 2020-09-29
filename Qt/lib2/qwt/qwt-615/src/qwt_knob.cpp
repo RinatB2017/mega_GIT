@@ -9,18 +9,23 @@
 
 #include "qwt_knob.h"
 #include "qwt_round_scale_draw.h"
+#include "qwt_math.h"
 #include "qwt_painter.h"
 #include "qwt_scale_map.h"
-#include "qwt_math.h"
-#include "qwt.h"
-
 #include <qpainter.h>
 #include <qpalette.h>
 #include <qstyle.h>
 #include <qstyleoption.h>
 #include <qevent.h>
-#include <qmargins.h>
 #include <qmath.h>
+#include <qapplication.h>
+
+#if QT_VERSION < 0x040601
+#define qAtan2(y, x) ::atan2(y, x)
+#define qFabs(x) ::fabs(x)
+#define qFastCos(x) qCos(x)
+#define qFastSin(x) qSin(x)
+#endif
 
 static QSize qwtKnobSizeHint( const QwtKnob *knob, int min )
 {
@@ -29,11 +34,13 @@ static QSize qwtKnobSizeHint( const QwtKnob *knob, int min )
         knobWidth = qMax( 3 * knob->markerSize(), min );
 
     // Add the scale radial thickness to the knobWidth
-    const int extent = qwtCeil( knob->scaleDraw()->extent( knob->font() ) );
+    const int extent = qCeil( knob->scaleDraw()->extent( knob->font() ) );
     const int d = 2 * ( extent + 4 ) + knobWidth;
 
-    const QMargins m = knob->contentsMargins();
-    return QSize( d + m.left() + m.right(), d + m.top() + m.bottom() );
+    int left, right, top, bottom;
+    knob->getContentsMargins( &left, &top, &right, &bottom );
+
+    return QSize( d + left + right, d + top + bottom );
 }
 
 static inline double qwtToScaleAngle( double angle )
@@ -244,7 +251,7 @@ void QwtKnob::setNumTurns( int numTurns )
  */
 int QwtKnob::numTurns() const
 {
-    return qwtCeil( d_data->totalAngle / 360.0 );
+    return qCeil( d_data->totalAngle / 360.0 );
 }
 
 /*!
@@ -293,7 +300,7 @@ QRect QwtKnob::knobRect() const
 {
     const QRect cr = contentsRect();
 
-    const int extent = qwtCeil( scaleDraw()->extent( font() ) );
+    const int extent = qCeil( scaleDraw()->extent( font() ) );
     const int d = extent + d_data->scaleDist;
 
     int w = d_data->knobWidth;
@@ -381,7 +388,7 @@ double QwtKnob::scrolledTo( const QPoint &pos ) const
 
         const double v = scaleMap().transform( value() );
 
-        int numTurns = qwtFloor( ( v - scaleMap().p1() ) / 360.0 );
+        int numTurns = qFloor( ( v - scaleMap().p1() ) / 360.0 );
 
         double valueAngle = qwtNormalizeDegrees( v );
         if ( qAbs( valueAngle - angle ) > 180.0 )
@@ -535,8 +542,8 @@ void QwtKnob::drawKnob( QPainter *painter, const QRectF &knobRect ) const
 
             const QColor c = palette().color( QPalette::Button );
             gradient.setColorAt(0, c.lighter(110));
-            gradient.setColorAt( 0.5, c);
-            gradient.setColorAt( 0.501, c.darker(102));
+            gradient.setColorAt(qreal(0.5), c);
+            gradient.setColorAt(qreal(0.501), c.darker(102));
             gradient.setColorAt(1, c.darker(115));
 
             brush = QBrush( gradient );
@@ -591,7 +598,7 @@ void QwtKnob::drawMarker( QPainter *painter,
     if ( radius < 1.0 )
         radius = 1.0;
 
-    double markerSize = d_data->markerSize;
+    int markerSize = d_data->markerSize;
     if ( markerSize <= 0 )
         markerSize = qRound( 0.4 * radius );
 
@@ -600,7 +607,8 @@ void QwtKnob::drawMarker( QPainter *painter,
         case Notch:
         case Nub:
         {
-            const double dotWidth = qwtMinF( markerSize, radius );
+            const double dotWidth =
+                qMin( double( markerSize ), radius);
 
             const double dotCenterDist = radius - 0.5 * dotWidth;
             if ( dotCenterDist > 0.0 )
@@ -631,7 +639,8 @@ void QwtKnob::drawMarker( QPainter *painter,
         }
         case Dot:
         {
-            const double dotWidth = qwtMinF( markerSize, radius);
+            const double dotWidth =
+                qMin( double( markerSize ), radius);
 
             const double dotCenterDist = radius - 0.5 * dotWidth;
             if ( dotCenterDist > 0.0 )
@@ -651,7 +660,7 @@ void QwtKnob::drawMarker( QPainter *painter,
         }
         case Tick:
         {
-            const double rb = qwtMaxF( radius - markerSize, 1.0 );
+            const double rb = qMax( radius - markerSize, 1.0 );
             const double re = radius;
 
             const QLineF line( xm - sinA * rb, ym - cosA * rb,
@@ -666,7 +675,7 @@ void QwtKnob::drawMarker( QPainter *painter,
         }
         case Triangle:
         {
-            const double rb = qwtMaxF( radius - markerSize, 1.0 );
+            const double rb = qMax( radius - markerSize, 1.0 );
             const double re = radius;
 
             painter->translate( rect.center() );
@@ -833,7 +842,7 @@ int QwtKnob::markerSize() const
 QSize QwtKnob::sizeHint() const
 {
     const QSize hint = qwtKnobSizeHint( this, 50 );
-    return qwtExpandedToGlobalStrut( hint );
+    return hint.expandedTo( QApplication::globalStrut() );
 }
 
 /*!
@@ -844,7 +853,3 @@ QSize QwtKnob::minimumSizeHint() const
 {
     return qwtKnobSizeHint( this, 20 );
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_knob.cpp"
-#endif

@@ -12,10 +12,10 @@
 
 #include "qwt_global.h"
 #include "qwt_plot_abstract_barchart.h"
+#include "qwt_series_data.h"
 
 class QwtColumnRect;
 class QwtColumnSymbol;
-template <typename T> class QwtSeriesData;
 
 /*!
   \brief QwtPlotMultiBarChart displays a series of a samples that consist
@@ -66,7 +66,7 @@ public:
 
     virtual ~QwtPlotMultiBarChart();
 
-    virtual int rtti() const QWT_OVERRIDE;
+    virtual int rtti() const;
 
     void setBarTitles( const QList<QwtText> & );
     QList<QwtText> barTitles() const;
@@ -83,16 +83,15 @@ public:
 
     void resetSymbolMap();
 
-    virtual void drawSeries( QPainter *,
+    virtual void drawSeries( QPainter *painter,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &canvasRect, int from, int to ) const QWT_OVERRIDE;
+        const QRectF &canvasRect, int from, int to ) const;
 
-    virtual QRectF boundingRect() const QWT_OVERRIDE;
+    virtual QRectF boundingRect() const;
 
-    virtual QList<QwtLegendData> legendData() const QWT_OVERRIDE;
+    virtual QList<QwtLegendData> legendData() const;
 
-    virtual QwtGraphic legendIcon(
-        int index, const QSizeF & ) const QWT_OVERRIDE;
+    virtual QwtGraphic legendIcon( int index, const QSizeF & ) const;
 
 protected:
     QwtColumnSymbol *symbol( int valueIndex );
@@ -100,23 +99,23 @@ protected:
     virtual QwtColumnSymbol *specialSymbol(
         int sampleIndex, int valueIndex ) const;
 
-    virtual void drawSample( QPainter *,
+    virtual void drawSample( QPainter *painter,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
         const QRectF &canvasRect, const QwtInterval &boundingInterval,
-        int index, const QwtSetSample& ) const;
+        int index, const QwtSetSample& sample ) const;
 
     virtual void drawBar( QPainter *, int sampleIndex,
         int valueIndex, const QwtColumnRect & ) const;
 
-    void drawStackedBars( QPainter *,
+    void drawStackedBars( QPainter *painter,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
         const QRectF &canvasRect, int index,
-        double sampleWidth, const QwtSetSample& ) const;
+        double sampleWidth, const QwtSetSample& sample ) const;
 
-    void drawGroupedBars( QPainter *,
+    void drawGroupedBars( QPainter *painter,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
         const QRectF &canvasRect, int index,
-        double sampleWidth, const QwtSetSample& ) const;
+        double sampleWidth, const QwtSetSample& sample ) const;
 
 private:
     void init();

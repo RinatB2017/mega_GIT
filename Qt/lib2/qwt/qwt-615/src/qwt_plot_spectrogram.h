@@ -13,9 +13,9 @@
 #include "qwt_global.h"
 #include "qwt_raster_data.h"
 #include "qwt_plot_rasteritem.h"
+#include <qlist.h>
 
 class QwtColorMap;
-template <typename T> class QList;
 
 /*!
   \brief A plot item, which displays a spectrogram
@@ -68,11 +68,8 @@ public:
     void setColorMap( QwtColorMap * );
     const QwtColorMap *colorMap() const;
 
-    void setMaxRGBTableSize( int numColors );
-    int maxRGBTableSize() const;
-
-    virtual QwtInterval interval( Qt::Axis ) const QWT_OVERRIDE;
-    virtual QRectF pixelHint( const QRectF & ) const QWT_OVERRIDE;
+    virtual QwtInterval interval(Qt::Axis) const;
+    virtual QRectF pixelHint( const QRectF & ) const;
 
     void setDefaultContourPen( const QColor &,
         qreal width = 0.0, Qt::PenStyle = Qt::SolidLine );
@@ -87,16 +84,16 @@ public:
     void setContourLevels( const QList<double> & );
     QList<double> contourLevels() const;
 
-    virtual int rtti() const QWT_OVERRIDE;
+    virtual int rtti() const;
 
     virtual void draw( QPainter *,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &canvasRect ) const QWT_OVERRIDE;
+        const QRectF &canvasRect ) const;
 
 protected:
     virtual QImage renderImage(
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &area, const QSize &imageSize ) const QWT_OVERRIDE;
+        const QRectF &area, const QSize &imageSize ) const;
 
     virtual QSize contourRasterSize(
         const QRectF &, const QRect & ) const;

@@ -14,8 +14,6 @@
 #include "qwt_scale_map.h"
 #include "qwt_interval.h"
 
-#include <qcoreevent.h>
-
 class QwtAbstractScale::PrivateData
 {
 public:
@@ -444,31 +442,8 @@ void QwtAbstractScale::rescale(
     }
 }
 
-/*!
-  Change Event handler
-  \param event Change event
-
-  Invalidates internal caches if necessary
-*/
-void QwtAbstractScale::changeEvent( QEvent *event )
-{
-    if ( event->type() == QEvent::LocaleChange )
-    {
-        d_data->scaleDraw->invalidateCache();
-    }
-
-    QWidget::changeEvent( event );
-}
-
-/*!
-  Recalculate ticks and scale boundaries.
-*/
 void QwtAbstractScale::updateScaleDraw()
 {
     rescale( d_data->scaleDraw->scaleDiv().lowerBound(),
         d_data->scaleDraw->scaleDiv().upperBound(), d_data->stepSize );
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_abstract_scale.cpp"
-#endif

@@ -9,25 +9,13 @@
 
 #include "qwt_graphic.h"
 #include "qwt_painter_command.h"
-#include "qwt_math.h"
-
 #include <qvector.h>
 #include <qpainter.h>
 #include <qpaintengine.h>
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qpainterpath.h>
-
-#if QT_VERSION >= 0x050000
-
-#include <qguiapplication.h>
-
-static inline qreal qwtDevicePixelRatio()
-{
-    return qGuiApp ? qGuiApp->devicePixelRatio() : 1.0;
-}
-
-#endif
+#include <qmath.h>
 
 static bool qwtHasScalablePen( const QPainter *painter )
 {
@@ -38,14 +26,12 @@ static bool qwtHasScalablePen( const QPainter *painter )
     if ( pen.style() != Qt::NoPen && pen.brush().style() != Qt::NoBrush )
     {
         scalablePen = !pen.isCosmetic();
-#if QT_VERSION < 0x050000
         if ( !scalablePen && pen.widthF() == 0.0 )
         {
             const QPainter::RenderHints hints = painter->renderHints();
             if ( hints.testFlag( QPainter::NonCosmeticDefaultPen ) )
                 scalablePen = true;
         }
-#endif
     }
 
     return scalablePen;
@@ -63,12 +49,12 @@ static QRectF qwtStrokedPathRect(
     QRectF rect;
     if ( qwtHasScalablePen( painter ) )
     {
-        QPainterPath stroke = stroker.createStroke( path );
-        rect = painter->transform().map( stroke ).boundingRect();
+        QPainterPath stroke = stroker.createStroke(path);
+        rect = painter->transform().map(stroke).boundingRect();
     }
     else
     {
-        QPainterPath mappedPath = painter->transform().map( path );
+        QPainterPath mappedPath = painter->transform().map(path);
         mappedPath = stroker.createStroke( mappedPath );
 
         rect = mappedPath.boundingRect();
@@ -89,29 +75,18 @@ static inline void qwtExecCommand(
         {
             bool doMap = false;
 
-            if ( painter->transform().isScaling() )
+            if ( renderHints.testFlag( QwtGraphic::RenderPensUnscaled )
+                && painter->transform().isScaling() )
             {
                 bool isCosmetic = painter->pen().isCosmetic();
-#if QT_VERSION < 0x050000
                 if ( isCosmetic && painter->pen().widthF() == 0.0 )
                 {
                     QPainter::RenderHints hints = painter->renderHints();
                     if ( hints.testFlag( QPainter::NonCosmeticDefaultPen ) )
                         isCosmetic = false;
                 }
-#endif
 
-                if ( isCosmetic )
-                {
-                    // OpenGL2 seems to be buggy for cosmetic pens.
-                    // It interpolates curves in too rough steps then
-
-                    doMap = painter->paintEngine()->type() == QPaintEngine::OpenGL2;
-                }
-                else
-                {
-                    doMap = renderHints.testFlag( QwtGraphic::RenderPensUnscaled );
-                }
+                doMap = !isCosmetic;
             }
 
             if ( doMap )
@@ -180,7 +155,7 @@ static inline void qwtExecCommand(
             if ( data->flags & QPaintEngine::DirtyClipEnabled )
                 painter->setClipping( data->isClipEnabled );
 
-            if ( data->flags & QPaintEngine::DirtyClipRegion )
+            if ( data->flags & QPaintEngine::DirtyClipRegion)
             {
                 painter->setClipRegion( data->clipRegion,
                     data->clipOperation );
@@ -191,19 +166,30 @@ static inline void qwtExecCommand(
                 painter->setClipPath( data->clipPath, data->clipOperation );
             }
 
-            if ( data->flags & QPaintEngine::DirtyHints )
+            if ( data->flags & QPaintEngine::DirtyHints)
             {
-                for ( int i = 0; i < 8; i++ )
-                {
-                    const QPainter::RenderHint hint = static_cast< QPainter::RenderHint >( 1 << i );
-                    painter->setRenderHint( hint, data->renderHints.testFlag( hint ) );
-                }
+                const QPainter::RenderHints hints = data->renderHints;
+
+                painter->setRenderHint( QPainter::Antialiasing,
+                    hints.testFlag( QPainter::Antialiasing ) );
+
+                painter->setRenderHint( QPainter::TextAntialiasing,
+                    hints.testFlag( QPainter::TextAntialiasing ) );
+
+                painter->setRenderHint( QPainter::SmoothPixmapTransform,
+                    hints.testFlag( QPainter::SmoothPixmapTransform ) );
+
+                painter->setRenderHint( QPainter::HighQualityAntialiasing,
+                    hints.testFlag( QPainter::HighQualityAntialiasing ) );
+
+                painter->setRenderHint( QPainter::NonCosmeticDefaultPen,
+                    hints.testFlag( QPainter::NonCosmeticDefaultPen ) );
             }
 
-            if ( data->flags & QPaintEngine::DirtyCompositionMode )
+            if ( data->flags & QPaintEngine::DirtyCompositionMode)
                 painter->setCompositionMode( data->compositionMode );
 
-            if ( data->flags & QPaintEngine::DirtyOpacity )
+            if ( data->flags & QPaintEngine::DirtyOpacity)
                 painter->setOpacity( data->opacity );
 
             break;
@@ -211,6 +197,7 @@ static inline void qwtExecCommand(
         default:
             break;
     }
+
 }
 
 class QwtGraphic::PathInfo
@@ -230,7 +217,8 @@ public:
     {
     }
 
-    inline QRectF scaledBoundingRect( qreal sx, qreal sy, bool scalePens ) const
+    inline QRectF scaledBoundingRect( double sx, double sy,
+        bool scalePens ) const
     {
         if ( sx == 1.0 && sy == 1.0 )
             return d_boundingRect;
@@ -247,10 +235,10 @@ public:
         {
             rect = transform.mapRect( d_pointRect );
 
-            const qreal l = qAbs( d_pointRect.left() - d_boundingRect.left() );
-            const qreal r = qAbs( d_pointRect.right() - d_boundingRect.right() );
-            const qreal t = qAbs( d_pointRect.top() - d_boundingRect.top() );
-            const qreal b = qAbs( d_pointRect.bottom() - d_boundingRect.bottom() );
+            const double l = qAbs( d_pointRect.left() - d_boundingRect.left() );
+            const double r = qAbs( d_pointRect.right() - d_boundingRect.right() );
+            const double t = qAbs( d_pointRect.top() - d_boundingRect.top() );
+            const double b = qAbs( d_pointRect.bottom() - d_boundingRect.bottom() );
 
             rect.adjust( -l, -t, r, b );
         }
@@ -266,10 +254,10 @@ public:
 
         const QPointF p0 = d_pointRect.center();
 
-        const qreal l = qAbs( pathRect.left() - p0.x() );
-        const qreal r = qAbs( pathRect.right() - p0.x() );
+        const double l = qAbs( pathRect.left() - p0.x() );
+        const double r = qAbs( pathRect.right() - p0.x() );
 
-        const double w = 2.0 * qwtMinF( l, r )
+        const double w = 2.0 * qMin( l, r )
             * targetRect.width() / pathRect.width();
 
         double sx;
@@ -279,7 +267,7 @@ public:
         }
         else
         {
-            const qreal pw = qwtMaxF(
+            const double pw = qMax(
                 qAbs( d_boundingRect.left() - d_pointRect.left() ),
                 qAbs( d_boundingRect.right() - d_pointRect.right() ) );
 
@@ -297,10 +285,10 @@ public:
 
         const QPointF p0 = d_pointRect.center();
 
-        const qreal t = qAbs( pathRect.top() - p0.y() );
-        const qreal b = qAbs( pathRect.bottom() - p0.y() );
+        const double t = qAbs( pathRect.top() - p0.y() );
+        const double b = qAbs( pathRect.bottom() - p0.y() );
 
-        const qreal h = 2.0 * qwtMinF( t, b )
+        const double h = 2.0 * qMin( t, b )
             * targetRect.height() / pathRect.height();
 
         double sy;
@@ -310,8 +298,8 @@ public:
         }
         else
         {
-            const qreal pw = qwtMaxF(
-                qAbs( d_boundingRect.top() - d_pointRect.top() ),
+            const double pw =
+                qMax( qAbs( d_boundingRect.top() - d_pointRect.top() ),
                 qAbs( d_boundingRect.bottom() - d_pointRect.bottom() ) );
 
             sy = ( h - 2 * pw ) / d_pointRect.height();
@@ -331,19 +319,20 @@ class QwtGraphic::PrivateData
 public:
     PrivateData():
         boundingRect( 0.0, 0.0, -1.0, -1.0 ),
-        pointRect( 0.0, 0.0, -1.0, -1.0 )
+        pointRect( 0.0, 0.0, -1.0, -1.0 ),
+        initialTransform( NULL )
     {
     }
 
     QSizeF defaultSize;
-    QVector< QwtPainterCommand > commands;
-    QVector< QwtGraphic::PathInfo > pathInfos;
+    QVector<QwtPainterCommand> commands;
+    QVector<QwtGraphic::PathInfo> pathInfos;
 
     QRectF boundingRect;
     QRectF pointRect;
 
-    QwtGraphic::CommandTypes commandTypes;
     QwtGraphic::RenderHints renderHints;
+    QTransform *initialTransform;
 };
 
 /*!
@@ -384,7 +373,7 @@ QwtGraphic::~QwtGraphic()
   \param other Source
   \return A reference of this object
  */
-QwtGraphic& QwtGraphic::operator=( const QwtGraphic &other )
+QwtGraphic& QwtGraphic::operator=(const QwtGraphic &other)
 {
     setMode( other.mode() );
     *d_data = *other.d_data;
@@ -401,11 +390,10 @@ void QwtGraphic::reset()
     d_data->commands.clear();
     d_data->pathInfos.clear();
 
-    d_data->commandTypes = CommandTypes();
-
     d_data->boundingRect = QRectF( 0.0, 0.0, -1.0, -1.0 );
     d_data->pointRect = QRectF( 0.0, 0.0, -1.0, -1.0 );
     d_data->defaultSize = QSizeF();
+
 }
 
 /*!
@@ -424,14 +412,6 @@ bool QwtGraphic::isNull() const
 bool QwtGraphic::isEmpty() const
 {
     return d_data->boundingRect.isEmpty();
-}
-
-/*! 
-   \return Types of painter commands being used
- */
-QwtGraphic::CommandTypes QwtGraphic::commandTypes() const
-{
-    return d_data->commandTypes;
 }
 
 /*!
@@ -460,12 +440,6 @@ void QwtGraphic::setRenderHint( RenderHint hint, bool on )
 bool QwtGraphic::testRenderHint( RenderHint hint ) const
 {
     return d_data->renderHints.testFlag( hint );
-}
-
-//! \return Render hints
-QwtGraphic::RenderHints QwtGraphic::renderHints() const
-{
-    return d_data->renderHints;
 }
 
 /*!
@@ -513,12 +487,10 @@ QRectF QwtGraphic::controlPointRect() const
   \return Scaled bounding rectangle
   \sa boundingRect(), controlPointRect()
  */
-QRectF QwtGraphic::scaledBoundingRect( qreal sx, qreal sy ) const
+QRectF QwtGraphic::scaledBoundingRect( double sx, double sy ) const
 {
     if ( sx == 1.0 && sy == 1.0 )
         return d_data->boundingRect;
-
-    const bool scalePens = !( d_data->renderHints & RenderPensUnscaled );
 
     QTransform transform;
     transform.scale( sx, sy );
@@ -526,7 +498,10 @@ QRectF QwtGraphic::scaledBoundingRect( qreal sx, qreal sy ) const
     QRectF rect = transform.mapRect( d_data->pointRect );
 
     for ( int i = 0; i < d_data->pathInfos.size(); i++ )
-        rect |= d_data->pathInfos[i].scaledBoundingRect( sx, sy, scalePens );
+    {
+        rect |= d_data->pathInfos[i].scaledBoundingRect( sx, sy,
+            !d_data->renderHints.testFlag( RenderPensUnscaled ) );
+    }
 
     return rect;
 }
@@ -535,7 +510,7 @@ QRectF QwtGraphic::scaledBoundingRect( qreal sx, qreal sy ) const
 QSize QwtGraphic::sizeMetrics() const
 {
     const QSizeF sz = defaultSize();
-    return QSize( qwtCeil( sz.width() ), qwtCeil( sz.height() ) );
+    return QSize( qCeil( sz.width() ), qCeil( sz.height() ) );
 }
 
 /*!
@@ -554,8 +529,8 @@ QSize QwtGraphic::sizeMetrics() const
  */
 void QwtGraphic::setDefaultSize( const QSizeF &size )
 {
-    const double w = qwtMaxF( 0.0, size.width() );
-    const double h = qwtMaxF( 0.0, size.height() );
+    const double w = qMax( qreal( 0.0 ), size.width() );
+    const double h = qMax( qreal( 0.0 ), size.height() );
 
     d_data->defaultSize = QSizeF( w, h );
 }
@@ -582,53 +557,10 @@ QSizeF QwtGraphic::defaultSize() const
 }
 
 /*!
-   Find the height for a given width
-
-   The height is calculated using the aspect ratio of defaultSize().
-
-   \param width Width
-
-   \return Calculated height
-   \sa defaultSize()
-*/
-qreal QwtGraphic::heightForWidth( qreal width ) const
-{
-    const QSizeF sz = defaultSize();
-    if ( sz.isEmpty() )
-        return 0.0;
-
-    return sz.height() * width / sz.width();
-}
-
-/*!
-   Find the width for a given height
-
-   The width is calculated using the aspect ratio of defaultSize().
-
-   \param height Height
-
-   \return Calculated width
-   \sa defaultSize()
-*/
-qreal QwtGraphic::widthForHeight( qreal height ) const
-{
-    const QSizeF sz = defaultSize();
-    if ( sz.isEmpty() )
-        return 0.0;
-
-    return sz.width() * height / sz.height();
-}
-
-/*!
   \brief Replay all recorded painter commands
   \param painter Qt painter
  */
 void QwtGraphic::render( QPainter *painter ) const
-{
-    renderGraphic( painter, NULL );
-}
-
-void QwtGraphic::renderGraphic( QPainter* painter, QTransform *initialTransform ) const
 {
     if ( isNull() )
         return;
@@ -643,7 +575,7 @@ void QwtGraphic::renderGraphic( QPainter* painter, QTransform *initialTransform 
     for ( int i = 0; i < numCommands; i++ )
     {
         qwtExecCommand( painter, commands[i],
-            d_data->renderHints, transform, initialTransform );
+            d_data->renderHints, transform, d_data->initialTransform );
     }
 
     painter->restore();
@@ -690,34 +622,35 @@ void QwtGraphic::render( QPainter *painter, const QRectF &rect,
     if ( d_data->pointRect.height() > 0.0 )
         sy = rect.height() / d_data->pointRect.height();
 
-    const bool scalePens = !d_data->renderHints.testFlag( RenderPensUnscaled );
+    const bool scalePens =
+        !d_data->renderHints.testFlag( RenderPensUnscaled );
 
     for ( int i = 0; i < d_data->pathInfos.size(); i++ )
     {
-        const PathInfo &info = d_data->pathInfos[i];
+        const PathInfo info = d_data->pathInfos[i];
 
         const double ssx = info.scaleFactorX(
             d_data->pointRect, rect, scalePens );
 
         if ( ssx > 0.0 )
-            sx = qwtMinF( sx, ssx );
+            sx = qMin( sx, ssx );
 
         const double ssy = info.scaleFactorY(
             d_data->pointRect, rect, scalePens );
 
         if ( ssy > 0.0 )
-            sy = qwtMinF( sy, ssy );
+            sy = qMin( sy, ssy );
     }
 
     if ( aspectRatioMode == Qt::KeepAspectRatio )
     {
-        const qreal s = qwtMinF( sx, sy );
+        const double s = qMin( sx, sy );
         sx = s;
         sy = s;
     }
     else if ( aspectRatioMode == Qt::KeepAspectRatioByExpanding )
     {
-        const qreal s = qwtMaxF( sx, sy );
+        const double s = qMax( sx, sy );
         sx = s;
         sy = s;
     }
@@ -729,26 +662,23 @@ void QwtGraphic::render( QPainter *painter, const QRectF &rect,
     tr.translate( -d_data->pointRect.x(), -d_data->pointRect.y() );
 
     const QTransform transform = painter->transform();
-
-    painter->setTransform( tr, true );
-
     if ( !scalePens && transform.isScaling() )
     {
         // we don't want to scale pens according to sx/sy,
         // but we want to apply the scaling from the
         // painter transformation later
 
-        QTransform initialTransform;
-        initialTransform.scale( transform.m11(), transform.m22() );
+        d_data->initialTransform = new QTransform();
+        d_data->initialTransform->scale( transform.m11(), transform.m22() );
+    }
 
-        renderGraphic( painter, &initialTransform );
-    }
-    else
-    {
-        renderGraphic( painter, NULL );
-    }
+    painter->setTransform( tr, true );
+    render( painter );
 
     painter->setTransform( transform );
+
+    delete d_data->initialTransform;
+    d_data->initialTransform = NULL;
 }
 
 /*!
@@ -759,7 +689,8 @@ void QwtGraphic::render( QPainter *painter, const QRectF &rect,
 
   \param painter Qt painter
   \param pos Reference point, where to render
-  \param alignment Flags how to align the target rectangle to pos.
+  \param alignment Flags how to align the target rectangle
+                   to pos.
  */
 void QwtGraphic::render( QPainter *painter,
     const QPointF &pos, Qt::Alignment alignment ) const
@@ -804,34 +735,20 @@ void QwtGraphic::render( QPainter *painter,
   The size of the pixmap is the default size ( ceiled to integers )
   of the graphic.
 
-  \param devicePixelRatio Device pixel ratio for the pixmap.
-                          If devicePixelRatio <= 0.0 the pixmap
-                          is initialized with the system default.
-
   \return The graphic as pixmap in default size
   \sa defaultSize(), toImage(), render()
  */
-QPixmap QwtGraphic::toPixmap( qreal devicePixelRatio ) const
+QPixmap QwtGraphic::toPixmap() const
 {
     if ( isNull() )
         return QPixmap();
 
     const QSizeF sz = defaultSize();
 
-    const int w = qwtCeil( sz.width() );
-    const int h = qwtCeil( sz.height() );
+    const int w = qCeil( sz.width() );
+    const int h = qCeil( sz.height() );
 
     QPixmap pixmap( w, h );
-
-#if QT_VERSION >= 0x050000
-    if ( devicePixelRatio <= 0.0 )
-        devicePixelRatio = qwtDevicePixelRatio();
-
-    pixmap.setDevicePixelRatio( devicePixelRatio );
-#else
-    Q_UNUSED( devicePixelRatio )
-#endif
-
     pixmap.fill( Qt::transparent );
 
     const QRectF r( 0.0, 0.0, sz.width(), sz.height() );
@@ -851,26 +768,14 @@ QPixmap QwtGraphic::toPixmap( qreal devicePixelRatio ) const
 
   \param size Size of the image
   \param aspectRatioMode Aspect ratio how to scale the graphic
-  \param devicePixelRatio Device pixel ratio for the pixmap.
-                          If devicePixelRatio <= 0.0 the pixmap
-                          is initialized with the system default.
 
   \return The graphic as pixmap
   \sa toImage(), render()
  */
 QPixmap QwtGraphic::toPixmap( const QSize &size,
-    Qt::AspectRatioMode aspectRatioMode, qreal devicePixelRatio ) const
+    Qt::AspectRatioMode aspectRatioMode ) const
 {
     QPixmap pixmap( size );
-
-#if QT_VERSION >= 0x050000
-    if ( devicePixelRatio <= 0.0 )
-        devicePixelRatio = qwtDevicePixelRatio();
-
-    pixmap.setDevicePixelRatio( devicePixelRatio );
-#else
-    Q_UNUSED( devicePixelRatio )
-#endif
     pixmap.fill( Qt::transparent );
 
     const QRect r( 0, 0, size.width(), size.height() );
@@ -890,29 +795,16 @@ QPixmap QwtGraphic::toPixmap( const QSize &size,
 
   The format of the image is QImage::Format_ARGB32_Premultiplied.
 
-  \param size Size of the image ( will be multiplied by the devicePixelRatio )
+  \param size Size of the image
   \param aspectRatioMode Aspect ratio how to scale the graphic
-  \param devicePixelRatio Device pixel ratio for the image.
-                          If devicePixelRatio <= 0.0 the pixmap
-                          is initialized with the system default.
 
   \return The graphic as image
   \sa toPixmap(), render()
  */
 QImage QwtGraphic::toImage( const QSize &size,
-    Qt::AspectRatioMode aspectRatioMode, qreal devicePixelRatio  ) const
+    Qt::AspectRatioMode aspectRatioMode  ) const
 {
-#if QT_VERSION >= 0x050000
-    if ( devicePixelRatio <= 0.0 )
-        devicePixelRatio = qwtDevicePixelRatio();
-
-    QImage image( size * devicePixelRatio, QImage::Format_ARGB32_Premultiplied );
-    image.setDevicePixelRatio( devicePixelRatio );
-#else
-    Q_UNUSED( devicePixelRatio )
     QImage image( size, QImage::Format_ARGB32_Premultiplied );
-#endif
-
     image.fill( 0 );
 
     const QRect r( 0, 0, size.width(), size.height() );
@@ -933,39 +825,22 @@ QImage QwtGraphic::toImage( const QSize &size,
   The format of the image is QImage::Format_ARGB32_Premultiplied.
 
   The size of the image is the default size ( ceiled to integers )
-  of the graphic multiplied by the devicePixelRatio.
-
-  \param devicePixelRatio Device pixel ratio for the image.
-                          If devicePixelRatio <= 0.0 the pixmap
-                          is initialized with the system default.
+  of the graphic.
 
   \return The graphic as image in default size
   \sa defaultSize(), toPixmap(), render()
  */
-QImage QwtGraphic::toImage( qreal devicePixelRatio ) const
+QImage QwtGraphic::toImage() const
 {
     if ( isNull() )
         return QImage();
 
     const QSizeF sz = defaultSize();
 
-    int w = qwtCeil( sz.width() );
-    int h = qwtCeil( sz.height() );
-
-#if QT_VERSION >= 0x050000
-    if ( devicePixelRatio <= 0.0 )
-        devicePixelRatio = qwtDevicePixelRatio();
-
-    w *= devicePixelRatio;
-    h *= devicePixelRatio;
+    const int w = qCeil( sz.width() );
+    const int h = qCeil( sz.height() );
 
     QImage image( w, h, QImage::Format_ARGB32 );
-    image.setDevicePixelRatio( devicePixelRatio );
-#else
-    Q_UNUSED( devicePixelRatio )
-    QImage image( w, h, QImage::Format_ARGB32 );
-#endif
-
     image.fill( 0 );
 
     const QRect r( 0, 0, sz.width(), sz.height() );
@@ -990,7 +865,6 @@ void QwtGraphic::drawPath( const QPainterPath &path )
         return;
 
     d_data->commands += QwtPainterCommand( path );
-    d_data->commandTypes |= QwtGraphic::VectorData;
 
     if ( !path.isEmpty() )
     {
@@ -1030,7 +904,6 @@ void QwtGraphic::drawPixmap( const QRectF &rect,
         return;
 
     d_data->commands += QwtPainterCommand( rect, pixmap, subRect );
-    d_data->commandTypes |= QwtGraphic::RasterData;
 
     const QRectF r = painter->transform().mapRect( rect );
     updateControlPointRect( r );
@@ -1048,14 +921,13 @@ void QwtGraphic::drawPixmap( const QRectF &rect,
   \sa QPaintEngine::drawImage()
  */
 void QwtGraphic::drawImage( const QRectF &rect, const QImage &image,
-    const QRectF &subRect, Qt::ImageConversionFlags flags )
+    const QRectF &subRect, Qt::ImageConversionFlags flags)
 {
     const QPainter *painter = paintEngine()->painter();
     if ( painter == NULL )
         return;
 
     d_data->commands += QwtPainterCommand( rect, image, subRect, flags );
-    d_data->commandTypes |= QwtGraphic::RasterData;
 
     const QRectF r = painter->transform().mapRect( rect );
 
@@ -1069,23 +941,9 @@ void QwtGraphic::drawImage( const QRectF &rect, const QImage &image,
   \param state State to be stored
   \sa QPaintEngine::updateState()
  */
-void QwtGraphic::updateState( const QPaintEngineState &state )
+void QwtGraphic::updateState( const QPaintEngineState &state)
 {
     d_data->commands += QwtPainterCommand( state );
-
-    if ( state.state() & QPaintEngine::DirtyTransform )
-    {
-        if ( !( d_data->commandTypes & QwtGraphic::Transformation ) )
-        {
-            /*
-                QTransform::isScaling() returns true for all type
-                of transformations beside simple translations
-                even if it is f.e a rotation
-             */
-            if ( state.transform().isScaling() )
-                d_data->commandTypes |= QwtGraphic::Transformation;
-        }
-    }
 }
 
 void QwtGraphic::updateBoundingRect( const QRectF &rect )
@@ -1130,7 +988,7 @@ const QVector< QwtPainterCommand > &QwtGraphic::commands() const
   \param commands Paint commands
   \sa commands()
  */
-void QwtGraphic::setCommands( const QVector< QwtPainterCommand > &commands )
+void QwtGraphic::setCommands( QVector< QwtPainterCommand > &commands )
 {
     reset();
 
@@ -1143,12 +1001,9 @@ void QwtGraphic::setCommands( const QVector< QwtPainterCommand > &commands )
 
     const QwtPainterCommand *cmds = commands.constData();
 
-    const QTransform noTransform;
-    const RenderHints noRenderHints;
-
     QPainter painter( this );
     for ( int i = 0; i < numCommands; i++ )
-        qwtExecCommand( &painter, cmds[i], noRenderHints, noTransform, NULL );
+        qwtExecCommand( &painter, cmds[i], RenderHints(), QTransform(), NULL );
 
     painter.end();
 }

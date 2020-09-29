@@ -8,11 +8,14 @@
  *****************************************************************************/
 
 #include "qwt_abstract_slider.h"
-#include "qwt_scale_map.h"
-#include "qwt_scale_div.h"
+#include "qwt_abstract_scale_draw.h"
 #include "qwt_math.h"
-
+#include "qwt_scale_map.h"
 #include <qevent.h>
+
+#if QT_VERSION < 0x040601
+#define qFabs(x) ::fabs(x)
+#endif
 
 static double qwtAlignToScaleDiv(
     const QwtAbstractSlider *slider, double value )
@@ -304,14 +307,6 @@ void QwtAbstractSlider::wheelEvent( QWheelEvent *event )
     if ( !d_data->isValid || d_data->isScrolling )
         return;
 
-#if QT_VERSION < 0x050000
-    const int wheelDelta = event->delta();
-#else
-    const QPoint delta = event->angleDelta();
-    const int wheelDelta = ( qAbs( delta.x() ) > qAbs( delta.y() ) )
-        ? delta.x() : delta.y();
-#endif
-
     int numSteps = 0;
 
     if ( ( event->modifiers() & Qt::ControlModifier) ||
@@ -319,12 +314,12 @@ void QwtAbstractSlider::wheelEvent( QWheelEvent *event )
     {
         // one page regardless of delta
         numSteps = d_data->pageSteps;
-        if ( wheelDelta < 0 )
+        if ( event->delta() < 0 )
             numSteps = -numSteps;
     }
     else
     {
-        const int numTurns = ( wheelDelta / 120 );
+        const int numTurns = ( event->delta() / 120 );
         numSteps = numTurns * d_data->singleSteps;
     }
 
@@ -726,11 +721,11 @@ double QwtAbstractSlider::boundedValue( double value ) const
 
             if ( value < vmin )
             {
-                value += std::ceil( ( vmin - value ) / range ) * range;
+                value += ::ceil( ( vmin - value ) / range ) * range;
             }
             else if ( value > vmax )
             {
-                value -= std::ceil( ( value - vmax ) / range ) * range;
+                value -= ::ceil( ( value - vmax ) / range ) * range;
             }
         }
         else
@@ -825,7 +820,3 @@ void QwtAbstractSlider::sliderChange()
 {
     update();
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_abstract_slider.cpp"
-#endif

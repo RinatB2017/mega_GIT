@@ -31,8 +31,7 @@ class QWT_EXPORT QwtWheel: public QWidget
     Q_PROPERTY( Qt::Orientation orientation
                 READ orientation WRITE setOrientation )
 
-    Q_PROPERTY( double value READ value WRITE setValue NOTIFY valueChanged USER true  )
-
+    Q_PROPERTY( double value READ value WRITE setValue )
     Q_PROPERTY( double minimum READ minimum WRITE setMinimum )
     Q_PROPERTY( double maximum READ maximum WRITE setMaximum )
 
@@ -148,20 +147,20 @@ Q_SIGNALS:
     void wheelMoved( double value );
 
 protected:
-    virtual void paintEvent( QPaintEvent * ) QWT_OVERRIDE;
-    virtual void mousePressEvent( QMouseEvent * ) QWT_OVERRIDE;
-    virtual void mouseReleaseEvent( QMouseEvent * ) QWT_OVERRIDE;
-    virtual void mouseMoveEvent( QMouseEvent * ) QWT_OVERRIDE;
-    virtual void keyPressEvent( QKeyEvent * ) QWT_OVERRIDE;
-    virtual void wheelEvent( QWheelEvent * ) QWT_OVERRIDE;
-    virtual void timerEvent( QTimerEvent * ) QWT_OVERRIDE;
+    virtual void paintEvent( QPaintEvent * );
+    virtual void mousePressEvent( QMouseEvent * );
+    virtual void mouseReleaseEvent( QMouseEvent * );
+    virtual void mouseMoveEvent( QMouseEvent * );
+    virtual void keyPressEvent( QKeyEvent * );
+    virtual void wheelEvent( QWheelEvent * );
+    virtual void timerEvent( QTimerEvent * );
 
     void stopFlying();
 
     QRect wheelRect() const;
 
-    virtual QSize sizeHint() const QWT_OVERRIDE;
-    virtual QSize minimumSizeHint() const QWT_OVERRIDE;
+    virtual QSize sizeHint() const;
+    virtual QSize minimumSizeHint() const;
 
     virtual void drawTicks( QPainter *, const QRectF & );
     virtual void drawWheelBackground( QPainter *, const QRectF & );

@@ -10,10 +10,7 @@
 #include "qwt_plot_barchart.h"
 #include "qwt_scale_map.h"
 #include "qwt_column_symbol.h"
-#include "qwt_text.h"
-#include "qwt_graphic.h"
-#include "qwt_legend_data.h"
-
+#include "qwt_painter.h"
 #include <qpainter.h>
 
 class QwtPlotBarChart::PrivateData
@@ -98,8 +95,6 @@ void QwtPlotBarChart::setSamples(
     const QVector<double> &samples )
 {
     QVector<QPointF> points;
-    points.reserve( samples.size() );
-
     for ( int i = 0; i < samples.size(); i++ )
         points += QPointF( i, samples[ i ] );
 
@@ -249,20 +244,22 @@ void QwtPlotBarChart::drawSeries( QPainter *painter,
 }
 
 /*!
-  Calculate the geometry of a bar in widget coordinates
+  Draw a sample
 
+  \param painter Painter
   \param xMap x map
   \param yMap y map
   \param canvasRect Contents rect of the canvas
   \param boundingInterval Bounding interval of sample values
+  \param index Index of the sample
   \param sample Value of the sample
 
-  \return Geometry of the column
+  \sa drawSeries()
 */
-QwtColumnRect QwtPlotBarChart::columnRect(
+void QwtPlotBarChart::drawSample( QPainter *painter,
     const QwtScaleMap &xMap, const QwtScaleMap &yMap,
     const QRectF &canvasRect, const QwtInterval &boundingInterval,
-    const QPointF &sample ) const
+    int index, const QPointF &sample ) const
 {
     QwtColumnRect barRect;
 
@@ -302,30 +299,6 @@ QwtColumnRect QwtPlotBarChart::columnRect(
         barRect.hInterval = QwtInterval( x1, x2 );
         barRect.vInterval = QwtInterval( y1, y2 ).normalized();
     }
-
-    return barRect;
-}
-
-/*!
-  Draw a sample
-
-  \param painter Painter
-  \param xMap x map
-  \param yMap y map
-  \param canvasRect Contents rect of the canvas
-  \param boundingInterval Bounding interval of sample values
-  \param index Index of the sample
-  \param sample Value of the sample
-
-  \sa drawSeries()
-*/
-void QwtPlotBarChart::drawSample( QPainter *painter,
-    const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-    const QRectF &canvasRect, const QwtInterval &boundingInterval,
-    int index, const QPointF &sample ) const
-{
-    const QwtColumnRect barRect = columnRect( xMap, yMap,
-        canvasRect, boundingInterval, sample );
 
     drawBar( painter, index, sample, barRect );
 }
@@ -420,10 +393,6 @@ QList<QwtLegendData> QwtPlotBarChart::legendData() const
     if ( d_data->legendMode == LegendBarTitles )
     {
         const size_t numSamples = dataSize();
-#if QT_VERSION >= 0x040700
-        list.reserve( numSamples );
-#endif
-
         for ( size_t i = 0; i < numSamples; i++ )
         {
             QwtLegendData data;

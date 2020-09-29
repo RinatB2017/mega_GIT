@@ -8,7 +8,8 @@
  *****************************************************************************/
 
 #include "qwt_scale_div.h"
-#include "qwt_interval.h"
+#include "qwt_math.h"
+#include <qalgorithms.h>
 
 /*!
   Construct a division without ticks
@@ -291,32 +292,30 @@ QwtScaleDiv QwtScaleDiv::bounded(
 /*!
     Assign ticks
 
-   \param tickType MinorTick, MediumTick or MajorTick
+   \param type MinorTick, MediumTick or MajorTick
    \param ticks Values of the tick positions
 */
-void QwtScaleDiv::setTicks( int tickType, const QList<double> &ticks )
+void QwtScaleDiv::setTicks( int type, const QList<double> &ticks )
 {
-    if ( tickType >= 0 && tickType < NTickTypes )
-        d_ticks[tickType] = ticks;
+    if ( type >= 0 && type < NTickTypes )
+        d_ticks[type] = ticks;
 }
 
 /*!
    Return a list of ticks
 
-   \param tickType MinorTick, MediumTick or MajorTick
+   \param type MinorTick, MediumTick or MajorTick
    \return Tick list
 */
-QList<double> QwtScaleDiv::ticks( int tickType ) const
+QList<double> QwtScaleDiv::ticks( int type ) const
 {
-    if ( tickType >= 0 && tickType < NTickTypes )
-        return d_ticks[tickType];
+    if ( type >= 0 && type < NTickTypes )
+        return d_ticks[type];
 
     return QList<double>();
 }
 
 #ifndef QT_NO_DEBUG_STREAM
-
-#include <qdebug.h>
 
 QDebug operator<<( QDebug debug, const QwtScaleDiv &scaleDiv )
 {

@@ -11,45 +11,43 @@
 #include "qwt_legend_label.h"
 #include "qwt_dyngrid_layout.h"
 #include "qwt_math.h"
+#include "qwt_plot_item.h"
 #include "qwt_painter.h"
-#include "qwt_graphic.h"
-
 #include <qapplication.h>
 #include <qscrollbar.h>
 #include <qscrollarea.h>
 #include <qpainter.h>
+#include <qstyle.h>
+#include <qstyleoption.h>
 
-namespace
+class QwtLegendMap
 {
-    class QwtLegendMap
+public:
+    inline bool isEmpty() const { return d_entries.isEmpty(); }
+
+    void insert( const QVariant &, const QList<QWidget *> & );
+    void remove( const QVariant & );
+
+    void removeWidget( const QWidget * );
+
+    QList<QWidget *> legendWidgets( const QVariant & ) const;
+    QVariant itemInfo( const QWidget * ) const;
+
+private:
+    // we don't know anything about itemInfo and therefore don't have
+    // any key that can be used for a map or hashtab.
+    // But a simple linear list is o.k. here, as we will never have
+    // more than a few entries.
+
+    class Entry
     {
     public:
-        inline bool isEmpty() const { return d_entries.isEmpty(); }
-
-        void insert( const QVariant &, const QList<QWidget *> & );
-        void remove( const QVariant & );
-
-        void removeWidget( const QWidget * );
-
-        QList<QWidget *> legendWidgets( const QVariant & ) const;
-        QVariant itemInfo( const QWidget * ) const;
-
-    private:
-        // we don't know anything about itemInfo and therefore don't have
-        // any key that can be used for a map or hashtab.
-        // But a simple linear list is o.k. here, as we will never have
-        // more than a few entries.
-
-        class Entry
-        {
-        public:
-            QVariant itemInfo;
-            QList<QWidget *> widgets;
-        };
-
-        QList< Entry > d_entries;
+        QVariant itemInfo;
+        QList<QWidget *> widgets;
     };
-}
+
+    QList< Entry > d_entries;
+};
 
 void QwtLegendMap::insert( const QVariant &itemInfo,
     const QList<QWidget *> &widgets )
@@ -140,7 +138,7 @@ public:
     LegendView *view;
 };
 
-class QwtLegend::PrivateData::LegendView QWT_FINAL: public QScrollArea
+class QwtLegend::PrivateData::LegendView: public QScrollArea
 {
 public:
     explicit LegendView( QWidget *parent ):
@@ -160,7 +158,7 @@ public:
         viewport()->setAutoFillBackground( false );
     }
 
-    virtual bool event( QEvent *event ) QWT_OVERRIDE
+    virtual bool event( QEvent *event )
     {
         if ( event->type() == QEvent::PolishRequest )
         {
@@ -188,7 +186,7 @@ public:
         return QScrollArea::event( event );
     }
 
-    virtual bool viewportEvent( QEvent *event ) QWT_OVERRIDE
+    virtual bool viewportEvent( QEvent *event )
     {
         bool ok = QScrollArea::viewportEvent( event );
 
@@ -231,7 +229,7 @@ public:
 
         const QSize visibleSize = viewport()->contentsRect().size();
 
-        const int minW = tl->maxItemWidth() + 2 * tl->margin();
+        const int minW = int( tl->maxItemWidth() ) + 2 * tl->margin();
 
         int w = qMax( visibleSize.width(), minW );
         int h = qMax( tl->heightForWidth( w ), visibleSize.height() );
@@ -686,10 +684,10 @@ void QwtLegend::renderLegend( QPainter *painter,
     getContentsMargins( &left, &top, &right, &bottom );
 
     QRect layoutRect;
-    layoutRect.setLeft( qwtCeil( rect.left() ) + left );
-    layoutRect.setTop( qwtCeil( rect.top() ) + top );
-    layoutRect.setRight( qwtFloor( rect.right() ) - right );
-    layoutRect.setBottom( qwtFloor( rect.bottom() ) - bottom );
+    layoutRect.setLeft( qCeil( rect.left() ) + left );
+    layoutRect.setTop( qCeil( rect.top() ) + top );
+    layoutRect.setRight( qFloor( rect.right() ) - right );
+    layoutRect.setBottom( qFloor( rect.bottom() ) - bottom );
 
     uint numCols = legendLayout->columnsForWidth( layoutRect.width() );
     const QList<QRect> itemRects =
@@ -827,6 +825,3 @@ int QwtLegend::scrollExtent( Qt::Orientation orientation ) const
     return extent;
 }
 
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_legend.cpp"
-#endif

@@ -10,13 +10,12 @@
 #include "qwt_point_mapper.h"
 #include "qwt_scale_map.h"
 #include "qwt_pixel_matrix.h"
-#include "qwt_series_data.h"
-#include "qwt_math.h"
-
 #include <qpolygon.h>
 #include <qimage.h>
 #include <qpen.h>
 #include <qpainter.h>
+
+#if QT_VERSION >= 0x040400
 
 #include <qthread.h>
 #include <qfuture.h>
@@ -26,257 +25,9 @@
 #define QWT_USE_THREADS 1
 #endif
 
-static QRectF qwtInvalidRect( 0.0, 0.0, -1.0, -1.0 );
-
-static inline int qwtRoundValue( double value )
-{
-    return qRound( value );
-}
-
-static inline double qwtRoundValueF( double value )
-{
-#if 1
-    // MS Windows and at least IRIX does not have C99's nearbyint() function
-    return ( value >= 0.0 ) ? std::floor( value + 0.5 ) : std::ceil( value - 0.5 );
-#else
-    return nearbyint( value );
 #endif
-}
 
-static Qt::Orientation qwtProbeOrientation(
-    const QwtSeriesData<QPointF> *series, int from, int to )
-{
-    if ( to - from < 20 )
-    {
-        // not enough points to "have an orientation"
-        return Qt::Horizontal;
-    }
-
-    const double x0 = series->sample( from ).x();
-    const double xn = series->sample( to ).x();
-
-    if ( x0 == xn )
-        return Qt::Vertical;
-
-    const int step = ( to - from ) / 10;
-    const bool isIncreasing = xn > x0;
-
-    double x1 = x0;
-    for ( int i = from + step; i < to; i += step )
-    {
-        const double x2 = series->sample( i ).x();
-        if ( x2 != x1 )
-        {
-            if ( ( x2 > x1 ) != isIncreasing )
-                return Qt::Vertical;
-        }
-
-        x1 = x2;
-    }
-
-    return Qt::Horizontal;
-}
-
-namespace
-{
-    template <class Polygon, class Point>
-    class QwtPolygonQuadrupelX
-    {
-    public:
-        inline void start( int x, int y )
-        {
-            x0 = x;
-            y1 = yMin = yMax = y2 = y;
-        }
-
-        inline bool append( int x, int y )
-        {
-            if ( x0 != x )
-                return false;
-
-            if ( y < yMin )
-                yMin = y;
-            else if ( y > yMax )
-                yMax = y;
-
-            y2 = y;
-
-            return true;
-        }
-
-        inline void flush( Polygon &polyline )
-        {
-            appendTo( y1, polyline );
-
-            if ( y2 > y1 )
-                qSwap( yMin, yMax );
-
-            if ( yMax != y1 )
-                appendTo( yMax, polyline );
-
-            if ( yMin != yMax )
-                appendTo( yMin, polyline );
-
-            if ( y2 != yMin )
-                appendTo( y2, polyline );
-        }
-
-    private:
-        inline void appendTo( int y, Polygon &polyline )
-        {
-            polyline += Point( x0, y );
-        }
-
-    private:
-        int x0, y1, yMin, yMax, y2;
-    };
-
-    template <class Polygon, class Point>
-    class QwtPolygonQuadrupelY
-    {
-    public:
-        inline void start( int x, int y )
-        {
-            y0 = y;
-            x1 = xMin = xMax = x2 = x;
-        }
-
-        inline bool append( int x, int y )
-        {
-            if ( y0 != y )
-                return false;
-
-            if ( x < xMin )
-                xMin = x;
-            else if ( x > xMax )
-                xMax = x;
-
-            x2 = x;
-
-            return true;
-        }
-
-        inline void flush( Polygon &polyline )
-        {
-            appendTo( x1, polyline );
-
-            if ( x2 > x1 )
-                qSwap( xMin, xMax );
-
-            if ( xMax != x1 )
-                appendTo( xMax, polyline );
-
-            if ( xMin != xMax )
-                appendTo( xMin, polyline );
-
-            if ( x2 != xMin )
-                appendTo( x2, polyline );
-        }
-
-    private:
-        inline void appendTo( int x, Polygon &polyline )
-        {
-            polyline += Point( x, y0 );
-        }
-
-        int y0, x1, xMin, xMax, x2;
-    };
-}
-
-template <class Polygon, class Point, class PolygonQuadrupel>
-static Polygon qwtMapPointsQuad( const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-    const QwtSeriesData<QPointF> *series, int from, int to )
-{
-    const QPointF sample0 = series->sample( from );
-
-    PolygonQuadrupel q;
-    q.start( qwtRoundValue( xMap.transform( sample0.x() ) ),
-        qwtRoundValue( yMap.transform( sample0.y() ) ) );
-
-    Polygon polyline;
-    for ( int i = from; i <= to; i++ )
-    {
-        const QPointF sample = series->sample( i );
-
-        const int x = qwtRoundValue( xMap.transform( sample.x() ) );
-        const int y = qwtRoundValue( yMap.transform( sample.y() ) );
-
-        if ( !q.append( x, y ) )
-        {
-            q.flush( polyline );
-            q.start( x, y );
-        }
-    }
-    q.flush( polyline );
-
-    return polyline;
-}
-
-template <class Polygon, class Point, class PolygonQuadrupel>
-static Polygon qwtMapPointsQuad( const Polygon &polyline )
-{
-    const int numPoints = polyline.size();
-
-    if ( numPoints < 3 )
-        return polyline;
-
-    const Point *points = polyline.constData();
-
-    Polygon polylineXY;
-
-    PolygonQuadrupel q;
-    q.start( points[0].x(), points[0].y() );
-
-    for ( int i = 0; i < numPoints; i++ )
-    {
-        const int x = points[i].x();
-        const int y = points[i].y();
-
-        if ( !q.append( x, y ) )
-        {
-            q.flush( polylineXY );
-            q.start( x, y );
-        }
-    }
-    q.flush( polylineXY );
-
-    return polylineXY;
-}
-
-
-template <class Polygon, class Point>
-static Polygon qwtMapPointsQuad( const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-    const QwtSeriesData<QPointF> *series, int from, int to )
-{
-    Polygon polyline;
-    if ( from > to )
-        return polyline;
-
-    /*
-        probing some values, to decide if it is better
-        to start with x or y coordinates
-     */
-    const Qt::Orientation orientation = qwtProbeOrientation( series, from, to );
-
-    if ( orientation == Qt::Horizontal )
-    {
-        polyline = qwtMapPointsQuad< Polygon, Point,
-            QwtPolygonQuadrupelY<Polygon, Point> >( xMap, yMap, series, from, to );
-
-        polyline = qwtMapPointsQuad< Polygon, Point,
-            QwtPolygonQuadrupelX<Polygon, Point> >( polyline );
-    }
-    else
-    {
-        polyline = qwtMapPointsQuad< Polygon, Point,
-            QwtPolygonQuadrupelX<Polygon, Point> >( xMap, yMap, series, from, to );
-
-        polyline = qwtMapPointsQuad< Polygon, Point,
-            QwtPolygonQuadrupelY<Polygon, Point> >( polyline );
-    }
-
-    return polyline;
-}
+static QRectF qwtInvalidRect( 0.0, 0.0, -1.0, -1.0 );
 
 // Helper class to work around the 5 parameters
 // limitation of QtConcurrent::run()
@@ -291,7 +42,7 @@ public:
 
 static void qwtRenderDots(
     const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-    const QwtDotsCommand &command, const QPoint &pos, QImage *image )
+    const QwtDotsCommand command, const QPoint &pos, QImage *image )
 {
     const QRgb rgb = command.rgb;
     QRgb *bits = reinterpret_cast<QRgb *>( image->bits() );
@@ -314,10 +65,15 @@ static void qwtRenderDots(
     }
 }
 
+static inline int qwtRoundValue( double value )
+{
+    return qRound( value );
+}
+
 // some functors, so that the compile can inline
 struct QwtRoundI
 {
-    inline int operator()( double value ) const
+    inline int operator()( double value )
     {
         return qwtRoundValue( value );
     }
@@ -325,15 +81,21 @@ struct QwtRoundI
 
 struct QwtRoundF
 {
-    inline double operator()( double value ) const
+    inline double operator()( double value )
     {
-        return qwtRoundValueF( value );
+#if 1
+        // MS Windows and at least IRIX does not have C99's nearbyint() function
+        return ( value >= 0.0 ) ? ::floor( value + 0.5 ) : ::ceil( value - 0.5 );
+#else
+        // slightly faster than the code above
+        return nearbyint( value );
+#endif
     }
 };
 
 struct QwtNoRoundF
 {
-    inline double operator()( double value ) const
+    inline double operator()( double value )
     {
         return value;
     }
@@ -633,9 +395,6 @@ QRectF QwtPointMapper::boundingRect() const
   but returned as PolygonF - what only makes sense
   when the further processing of the values need a QPolygonF.
 
-  When RoundPoints & WeedOutIntermediatePoints is enabled an even more
-  aggressive weeding algorithm is enabled.
-
   \param xMap x map
   \param yMap y map
   \param series Series of points to be mapped
@@ -650,30 +409,25 @@ QPolygonF QwtPointMapper::toPolygonF(
 {
     QPolygonF polyline;
 
-    if ( d_data->flags & RoundPoints )
+    if ( d_data->flags & WeedOutPoints )
     {
-        if ( d_data->flags & WeedOutIntermediatePoints )
-        {
-            polyline = qwtMapPointsQuad<QPolygonF, QPointF>(
-                xMap, yMap, series, from, to );
-        }
-        else if ( d_data->flags & WeedOutPoints )
+        if ( d_data->flags & RoundPoints )
         {
             polyline = qwtToPolylineFilteredF(
                 xMap, yMap, series, from, to, QwtRoundF() );
         }
         else
         {
-            polyline = qwtToPointsF( qwtInvalidRect,
-                xMap, yMap, series, from, to, QwtRoundF() );
+            polyline = qwtToPolylineFilteredF(
+                xMap, yMap, series, from, to, QwtNoRoundF() );
         }
     }
     else
     {
-        if ( d_data->flags & WeedOutPoints )
+        if ( d_data->flags & RoundPoints )
         {
-            polyline = qwtToPolylineFilteredF(
-                xMap, yMap, series, from, to, QwtNoRoundF() );
+            polyline = qwtToPointsF( qwtInvalidRect,
+                xMap, yMap, series, from, to, QwtRoundF() );
         }
         else
         {
@@ -705,13 +459,7 @@ QPolygon QwtPointMapper::toPolygon(
 {
     QPolygon polyline;
 
-    if ( d_data->flags & WeedOutIntermediatePoints )
-    {
-        // TODO WeedOutIntermediatePointsY ...
-        polyline = qwtMapPointsQuad<QPolygon, QPoint>(
-            xMap, yMap, series, from, to );
-    }
-    else if ( d_data->flags & WeedOutPoints )
+    if ( d_data->flags & WeedOutPoints )
     {
         polyline = qwtToPolylineFilteredI(
             xMap, yMap, series, from, to );

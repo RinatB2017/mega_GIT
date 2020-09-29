@@ -8,8 +8,6 @@
  *****************************************************************************/
 
 #include "qwt_legend_data.h"
-#include "qwt_text.h"
-#include "qwt_graphic.h"
 
 //! Constructor
 QwtLegendData::QwtLegendData()

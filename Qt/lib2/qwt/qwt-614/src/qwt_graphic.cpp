@@ -9,14 +9,13 @@
 
 #include "qwt_graphic.h"
 #include "qwt_painter_command.h"
-#include "qwt_math.h"
-
 #include <qvector.h>
 #include <qpainter.h>
 #include <qpaintengine.h>
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qpainterpath.h>
+#include <qmath.h>
 
 static bool qwtHasScalablePen( const QPainter *painter )
 {
@@ -258,7 +257,7 @@ public:
         const double l = qAbs( pathRect.left() - p0.x() );
         const double r = qAbs( pathRect.right() - p0.x() );
 
-        const double w = 2.0 * qwtMinF( l, r )
+        const double w = 2.0 * qMin( l, r )
             * targetRect.width() / pathRect.width();
 
         double sx;
@@ -268,7 +267,7 @@ public:
         }
         else
         {
-            const double pw = qwtMaxF(
+            const double pw = qMax(
                 qAbs( d_boundingRect.left() - d_pointRect.left() ),
                 qAbs( d_boundingRect.right() - d_pointRect.right() ) );
 
@@ -289,7 +288,7 @@ public:
         const double t = qAbs( pathRect.top() - p0.y() );
         const double b = qAbs( pathRect.bottom() - p0.y() );
 
-        const double h = 2.0 * qwtMinF( t, b )
+        const double h = 2.0 * qMin( t, b )
             * targetRect.height() / pathRect.height();
 
         double sy;
@@ -299,8 +298,8 @@ public:
         }
         else
         {
-            const double pw = qwtMaxF(
-                qAbs( d_boundingRect.top() - d_pointRect.top() ),
+            const double pw =
+                qMax( qAbs( d_boundingRect.top() - d_pointRect.top() ),
                 qAbs( d_boundingRect.bottom() - d_pointRect.bottom() ) );
 
             sy = ( h - 2 * pw ) / d_pointRect.height();
@@ -511,7 +510,7 @@ QRectF QwtGraphic::scaledBoundingRect( double sx, double sy ) const
 QSize QwtGraphic::sizeMetrics() const
 {
     const QSizeF sz = defaultSize();
-    return QSize( qwtCeil( sz.width() ), qwtCeil( sz.height() ) );
+    return QSize( qCeil( sz.width() ), qCeil( sz.height() ) );
 }
 
 /*!
@@ -530,8 +529,8 @@ QSize QwtGraphic::sizeMetrics() const
  */
 void QwtGraphic::setDefaultSize( const QSizeF &size )
 {
-    const double w = qwtMaxF( 0.0, size.width() );
-    const double h = qwtMaxF( 0.0, size.height() );
+    const double w = qMax( qreal( 0.0 ), size.width() );
+    const double h = qMax( qreal( 0.0 ), size.height() );
 
     d_data->defaultSize = QSizeF( w, h );
 }
@@ -634,24 +633,24 @@ void QwtGraphic::render( QPainter *painter, const QRectF &rect,
             d_data->pointRect, rect, scalePens );
 
         if ( ssx > 0.0 )
-            sx = qwtMinF( sx, ssx );
+            sx = qMin( sx, ssx );
 
         const double ssy = info.scaleFactorY(
             d_data->pointRect, rect, scalePens );
 
         if ( ssy > 0.0 )
-            sy = qwtMinF( sy, ssy );
+            sy = qMin( sy, ssy );
     }
 
     if ( aspectRatioMode == Qt::KeepAspectRatio )
     {
-        const double s = qwtMinF( sx, sy );
+        const double s = qMin( sx, sy );
         sx = s;
         sy = s;
     }
     else if ( aspectRatioMode == Qt::KeepAspectRatioByExpanding )
     {
-        const double s = qwtMaxF( sx, sy );
+        const double s = qMax( sx, sy );
         sx = s;
         sy = s;
     }
@@ -746,8 +745,8 @@ QPixmap QwtGraphic::toPixmap() const
 
     const QSizeF sz = defaultSize();
 
-    const int w = qwtCeil( sz.width() );
-    const int h = qwtCeil( sz.height() );
+    const int w = qCeil( sz.width() );
+    const int h = qCeil( sz.height() );
 
     QPixmap pixmap( w, h );
     pixmap.fill( Qt::transparent );
@@ -838,8 +837,8 @@ QImage QwtGraphic::toImage() const
 
     const QSizeF sz = defaultSize();
 
-    const int w = qwtCeil( sz.width() );
-    const int h = qwtCeil( sz.height() );
+    const int w = qCeil( sz.width() );
+    const int h = qCeil( sz.height() );
 
     QImage image( w, h, QImage::Format_ARGB32 );
     image.fill( 0 );

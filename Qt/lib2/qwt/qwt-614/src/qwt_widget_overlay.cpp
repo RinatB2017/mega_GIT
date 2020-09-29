@@ -9,13 +9,10 @@
 
 #include "qwt_widget_overlay.h"
 #include "qwt_painter.h"
-
 #include <qpainter.h>
 #include <qpaintengine.h>
 #include <qimage.h>
 #include <qevent.h>
-
-#include <cstdlib>
 
 static QImage::Format qwtMaskImageFormat()
 {
@@ -100,7 +97,7 @@ public:
     {
         if ( rgbaBuffer )
         {
-            std::free( rgbaBuffer );
+            ::free( rgbaBuffer );
             rgbaBuffer = NULL;
         }
     }
@@ -309,9 +306,10 @@ void QwtWidgetOverlay::resizeEvent( QResizeEvent* event )
 
 void QwtWidgetOverlay::draw( QPainter *painter ) const
 {
-    if ( QWidget *widget = parentWidget() )
+    QWidget *widget = const_cast< QWidget *>( parentWidget() );
+    if ( widget )
     {
-        painter->setClipRect( widget->contentsRect() );
+        painter->setClipRect( parentWidget()->contentsRect() );
 
         // something special for the plot canvas
 

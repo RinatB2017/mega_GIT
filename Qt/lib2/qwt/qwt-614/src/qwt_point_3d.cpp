@@ -11,8 +11,6 @@
 
 #ifndef QT_NO_DEBUG_STREAM
 
-#include <qdebug.h>
-
 QDebug operator<<( QDebug debug, const QwtPoint3D &point )
 {
     debug.nospace() << "QwtPoint3D(" << point.x()

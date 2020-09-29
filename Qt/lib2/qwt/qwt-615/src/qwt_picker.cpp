@@ -12,13 +12,15 @@
 #include "qwt_painter.h"
 #include "qwt_math.h"
 #include "qwt_widget_overlay.h"
-#include "qwt_text.h"
-
+#include <qapplication.h>
 #include <qevent.h>
 #include <qpainter.h>
-#include <qpainterpath.h>
+#include <qframe.h>
 #include <qcursor.h>
+#include <qbitmap.h>
 #include <qpointer.h>
+#include <qpaintengine.h>
+#include <qmath.h>
 
 static inline QRegion qwtMaskRegion( const QRect &r, int penWidth )
 {
@@ -62,32 +64,30 @@ static inline QRegion qwtMaskRegion( const QLine &l, int penWidth )
     return region;
 }
 
-namespace
+class QwtPickerRubberband: public QwtWidgetOverlay
 {
-    class QwtPickerRubberband QWT_FINAL : public QwtWidgetOverlay
-    {
-    public:
-        QwtPickerRubberband( QwtPicker *, QWidget * );
+public:
+    QwtPickerRubberband( QwtPicker *, QWidget * );
 
-    protected:
-        virtual void drawOverlay( QPainter * ) const QWT_OVERRIDE;
-        virtual QRegion maskHint() const QWT_OVERRIDE;
+protected:
+    virtual void drawOverlay( QPainter * ) const;
+    virtual QRegion maskHint() const;
 
-        QwtPicker *d_picker;
-    };
+    QwtPicker *d_picker;
+};
 
-    class QwtPickerTracker QWT_FINAL : public QwtWidgetOverlay
-    {
-    public:
-        QwtPickerTracker( QwtPicker *, QWidget * );
+class QwtPickerTracker: public QwtWidgetOverlay
+{
+public:
+    QwtPickerTracker( QwtPicker *, QWidget * );
 
-    protected:
-        virtual void drawOverlay( QPainter * ) const QWT_OVERRIDE;
-        virtual QRegion maskHint() const QWT_OVERRIDE;
+protected:
+    virtual void drawOverlay( QPainter * ) const;
+    virtual QRegion maskHint() const;
 
-        QwtPicker *d_picker;
-    };
-}
+    QwtPicker *d_picker;
+};
+
 
 class QwtPicker::PrivateData
 {
@@ -159,7 +159,7 @@ QwtPickerTracker::QwtPickerTracker(
 
 QRegion QwtPickerTracker::maskHint() const
 {
-    return d_picker->trackerMask();
+    return d_picker->trackerRect( font() );
 }
 
 void QwtPickerTracker::drawOverlay( QPainter *painter ) const
@@ -506,26 +506,15 @@ QwtText QwtPicker::trackerText( const QPoint &pos ) const
     switch ( rubberBand() )
     {
         case HLineRubberBand:
-            label = QString::number( pos.y() );
+            label.sprintf( "%d", pos.y() );
             break;
         case VLineRubberBand:
-            label = QString::number( pos.x() );
+            label.sprintf( "%d", pos.x() );
             break;
         default:
-            label = QString::number( pos.x() ) + ", " + QString::number( pos.y() );
+            label.sprintf( "%d, %d", pos.x(), pos.y() );
     }
     return label;
-}
-
-/*!
-  Calculate the mask for the tracker overlay
-
-  \return Region with one rectangle: trackerRect( trackerFont() );
-  \sa QWidget::setMask(), trackerRect()
-*/
-QRegion QwtPicker::trackerMask() const
-{
-    return trackerRect( d_data->trackerFont );
 }
 
 /*!
@@ -838,7 +827,7 @@ QRect QwtPicker::trackerRect( const QFont &font ) const
         return QRect();
 
     const QSizeF textSize = text.textSize( font );
-    QRect textRect( 0, 0, qwtCeil( textSize.width() ), qwtCeil( textSize.height() ) );
+    QRect textRect( 0, 0, qCeil( textSize.width() ), qCeil( textSize.height() ) );
 
     const QPoint &pos = d_data->trackerPosition;
 
@@ -1093,13 +1082,8 @@ void QwtPicker::widgetMouseDoubleClickEvent( QMouseEvent *mouseEvent )
 */
 void QwtPicker::widgetWheelEvent( QWheelEvent *wheelEvent )
 {
-#if QT_VERSION < 0x050e00
-    const QPoint wheelPos = wheelEvent->pos();
-#else
-    const QPoint wheelPos = wheelEvent->position().toPoint();
-#endif
-    if ( pickArea().contains( wheelPos ) )
-        d_data->trackerPosition = wheelPos;
+    if ( pickArea().contains( wheelEvent->pos() ) )
+        d_data->trackerPosition = wheelEvent->pos();
     else
         d_data->trackerPosition = QPoint( -1, -1 );
 
@@ -1602,6 +1586,3 @@ const QwtWidgetOverlay *QwtPicker::trackerOverlay() const
     return d_data->trackerOverlay;
 }
 
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_picker.cpp"
-#endif

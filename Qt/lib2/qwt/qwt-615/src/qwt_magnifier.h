@@ -8,7 +8,7 @@
  *****************************************************************************/
 
 #ifndef QWT_MAGNIFIER_H
-#define QWT_MAGNIFIER_H
+#define QWT_MAGNIFIER_H 1
 
 #include "qwt_global.h"
 #include <qobject.h>
@@ -62,7 +62,7 @@ public:
     void setZoomOutKey( int key, Qt::KeyboardModifiers = Qt::NoModifier );
     void getZoomOutKey( int &key, Qt::KeyboardModifiers & ) const;
 
-    virtual bool eventFilter( QObject *, QEvent * ) QWT_OVERRIDE;
+    virtual bool eventFilter( QObject *, QEvent * );
 
 protected:
     /*!

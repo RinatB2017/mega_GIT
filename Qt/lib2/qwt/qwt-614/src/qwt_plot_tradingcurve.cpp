@@ -9,11 +9,8 @@
 
 #include "qwt_plot_tradingcurve.h"
 #include "qwt_scale_map.h"
+#include "qwt_clipper.h"
 #include "qwt_painter.h"
-#include "qwt_text.h"
-#include "qwt_graphic.h"
-#include "qwt_math.h"
-
 #include <qpainter.h>
 
 static inline bool qwtIsSampleInside( const QwtOHLCSample &sample,
@@ -283,7 +280,7 @@ QBrush QwtPlotTradingCurve::symbolBrush( Direction direction ) const
 */
 void QwtPlotTradingCurve::setSymbolExtent( double extent )
 {
-    extent = qwtMaxF( 0.0, extent );
+    extent = qMax( 0.0, extent );
     if ( extent != d_data->symbolExtent )
     {
         d_data->symbolExtent = extent;
@@ -311,7 +308,7 @@ double QwtPlotTradingCurve::symbolExtent() const
  */
 void QwtPlotTradingCurve::setMinSymbolWidth( double width )
 {
-    width = qwtMaxF( width, 0.0 );
+    width = qMax( width, 0.0 );
     if ( width != d_data->minSymbolWidth )
     {
         d_data->minSymbolWidth = width;
@@ -454,7 +451,7 @@ void QwtPlotTradingCurve::drawSymbols( QPainter *painter,
 
     double symbolWidth = scaledSymbolWidth( xMap, yMap, canvasRect );
     if ( doAlign )
-        symbolWidth = std::floor( 0.5 * symbolWidth ) * 2.0;
+        symbolWidth = qFloor( 0.5 * symbolWidth ) * 2.0;
 
     QPen pen = d_data->symbolPen;
     pen.setCapStyle( Qt::FlatCap );
@@ -603,10 +600,10 @@ void QwtPlotTradingCurve::drawCandleStick( QPainter *painter,
     double width ) const
 {
     const double t = sample.time;
-    const double v1 = qwtMinF( sample.low, sample.high );
-    const double v2 = qwtMinF( sample.open, sample.close );
-    const double v3 = qwtMaxF( sample.low, sample.high );
-    const double v4 = qwtMaxF( sample.open, sample.close );
+    const double v1 = qMin( sample.low, sample.high );
+    const double v2 = qMin( sample.open, sample.close );
+    const double v3 = qMax( sample.low, sample.high );
+    const double v4 = qMax( sample.open, sample.close );
 
     if ( orientation == Qt::Vertical )
     {
@@ -680,9 +677,9 @@ double QwtPlotTradingCurve::scaledSymbolWidth(
 
     double width = qAbs( pos - map->p1() );
 
-    width = qwtMaxF( width,  d_data->minSymbolWidth );
+    width = qMax( width,  d_data->minSymbolWidth );
     if ( d_data->maxSymbolWidth > 0.0 )
-        width = qwtMinF( width, d_data->maxSymbolWidth );
+        width = qMin( width, d_data->maxSymbolWidth );
 
     return width;
 }

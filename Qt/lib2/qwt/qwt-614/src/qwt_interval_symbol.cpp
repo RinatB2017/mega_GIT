@@ -10,13 +10,12 @@
 #include "qwt_interval_symbol.h"
 #include "qwt_painter.h"
 #include "qwt_math.h"
-
 #include <qpainter.h>
-#include <qmath.h>
 
 #if QT_VERSION < 0x040601
-#define qFastSin(x) std::sin(x)
-#define qFastCos(x) std::cos(x)
+#define qAtan2(y, x) ::atan2(y, x)
+#define qFastSin(x) qSin(x)
+#define qFastCos(x) qCos(x)
 #endif
 
 class QwtIntervalSymbol::PrivateData
@@ -205,7 +204,7 @@ const QPen& QwtIntervalSymbol::pen() const
 void QwtIntervalSymbol::draw( QPainter *painter, Qt::Orientation orientation,
     const QPointF &from, const QPointF &to ) const
 {
-    const qreal pw = QwtPainter::effectivePenWidth( painter->pen() );
+    const qreal pw = qMax( painter->pen().widthF(), qreal( 1.0 ) );
 
     QPointF p1 = from;
     QPointF p2 = to;
@@ -250,7 +249,7 @@ void QwtIntervalSymbol::draw( QPainter *painter, Qt::Orientation orientation,
 
                     const double dx = p2.x() - p1.x();
                     const double dy = p2.y() - p1.y();
-                    const double angle = std::atan2( dy, dx ) + M_PI_2;
+                    const double angle = qAtan2( dy, dx ) + M_PI_2;
                     double dw2 = sw / 2.0;
 
                     const double cx = qFastCos( angle ) * dw2;
@@ -298,7 +297,7 @@ void QwtIntervalSymbol::draw( QPainter *painter, Qt::Orientation orientation,
 
                     const double dx = p2.x() - p1.x();
                     const double dy = p2.y() - p1.y();
-                    const double angle = std::atan2( dy, dx ) + M_PI_2;
+                    const double angle = qAtan2( dy, dx ) + M_PI_2;
                     double dw2 = sw / 2.0;
 
                     const double cx = qFastCos( angle ) * dw2;

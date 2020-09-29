@@ -8,11 +8,14 @@
  *****************************************************************************/
 
 #include "qwt_abstract_slider.h"
-#include "qwt_scale_map.h"
-#include "qwt_scale_div.h"
+#include "qwt_abstract_scale_draw.h"
 #include "qwt_math.h"
-
+#include "qwt_scale_map.h"
 #include <qevent.h>
+
+#if QT_VERSION < 0x040601
+#define qFabs(x) ::fabs(x)
+#endif
 
 static double qwtAlignToScaleDiv(
     const QwtAbstractSlider *slider, double value )
@@ -718,11 +721,11 @@ double QwtAbstractSlider::boundedValue( double value ) const
 
             if ( value < vmin )
             {
-                value += std::ceil( ( vmin - value ) / range ) * range;
+                value += ::ceil( ( vmin - value ) / range ) * range;
             }
             else if ( value > vmax )
             {
-                value -= std::ceil( ( value - vmax ) / range ) * range;
+                value -= ::ceil( ( value - vmax ) / range ) * range;
             }
         }
         else
@@ -817,7 +820,3 @@ void QwtAbstractSlider::sliderChange()
 {
     update();
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_abstract_slider.cpp"
-#endif

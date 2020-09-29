@@ -8,7 +8,7 @@
  *****************************************************************************/
 
 #ifndef QWT_COMPASS_ROSE_H
-#define QWT_COMPASS_ROSE_H
+#define QWT_COMPASS_ROSE_H 1
 
 #include "qwt_global.h"
 #include <qpalette.h>
@@ -21,11 +21,20 @@ class QPainter;
 class QWT_EXPORT QwtCompassRose
 {
 public:
-    QwtCompassRose();
-    virtual ~QwtCompassRose();
+    //! Destructor
+    virtual ~QwtCompassRose() {};
 
-    virtual void setPalette( const QPalette & );
-    const QPalette &palette() const;
+    //! Assign a palette
+    virtual void setPalette( const QPalette &p )
+    {
+        d_palette = p;
+    }
+
+    //! \return Current palette
+    const QPalette &palette() const
+    {
+        return d_palette;
+    }
 
     /*!
         Draw the rose
@@ -41,8 +50,6 @@ public:
         QPalette::ColorGroup colorGroup = QPalette::Active ) const = 0;
 
 private:
-    Q_DISABLE_COPY(QwtCompassRose)
-
     QPalette d_palette;
 };
 
@@ -67,9 +74,8 @@ public:
     void setShrinkFactor( double factor );
     double shrinkFactor() const;
 
-    virtual void draw( QPainter *,
-        const QPointF &center, double radius, double north,
-        QPalette::ColorGroup = QPalette::Active ) const QWT_OVERRIDE;
+    virtual void draw( QPainter *, const QPointF &center, double radius,
+        double north, QPalette::ColorGroup = QPalette::Active ) const;
 
     static void drawRose( QPainter *, const QPalette &,
         const QPointF &center, double radius, double north, double width,

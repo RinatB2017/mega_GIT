@@ -11,9 +11,8 @@
 #include "qwt_text.h"
 #include "qwt_plot.h"
 #include "qwt_legend_data.h"
-#include "qwt_scale_map.h"
+#include "qwt_scale_div.h"
 #include "qwt_graphic.h"
-
 #include <qpainter.h>
 
 class QwtPlotItem::PrivateData
@@ -22,6 +21,9 @@ public:
     PrivateData():
         plot( NULL ),
         isVisible( true ),
+        attributes( 0 ),
+        interests( 0 ),
+        renderHints( 0 ),
         renderThreadCount( 1 ),
         z( 0.0 ),
         xAxis( QwtPlot::xBottom ),
@@ -48,24 +50,6 @@ public:
     QwtText title;
     QSize legendIconSize;
 };
-
-/*!
-   Constructor
-*/
-QwtPlotItem::QwtPlotItem()
-{
-    d_data = new PrivateData;
-}
-
-/*!
-   Constructor
-   \param title Title of the item
-*/
-QwtPlotItem::QwtPlotItem( const QString &title )
-{
-    d_data = new PrivateData;
-    d_data->title = title;
-}
 
 /*!
    Constructor
@@ -235,22 +219,7 @@ void QwtPlotItem::setItemAttribute( ItemAttribute attribute, bool on )
             d_data->attributes &= ~attribute;
 
         if ( attribute == QwtPlotItem::Legend )
-        {
-            if ( on )
-            {
-                legendChanged();
-            }
-            else
-            {
-                /*
-                    In the special case of taking an item from
-                    the legend we can't use legendChanged() as
-                    it depends on QwtPlotItem::Legend being enabled
-                 */
-                if ( d_data->plot )
-                    d_data->plot->updateLegend( this );
-            }
-        }
+            legendChanged();
 
         itemChanged();
     }
@@ -630,14 +599,16 @@ QList<QwtLegendData> QwtPlotItem::legendData() const
     QwtText label = title();
     label.setRenderFlags( label.renderFlags() & Qt::AlignLeft );
 
-    data.setValue( QwtLegendData::TitleRole,
-        QVariant::fromValue( label ));
+    QVariant titleValue;
+    qVariantSetValue( titleValue, label );
+    data.setValue( QwtLegendData::TitleRole, titleValue );
 
     const QwtGraphic graphic = legendIcon( 0, legendIconSize() );
     if ( !graphic.isNull() )
     {
-        data.setValue( QwtLegendData::IconRole,
-            QVariant::fromValue( graphic ) );
+        QVariant iconValue;
+        qVariantSetValue( iconValue, graphic );
+        data.setValue( QwtLegendData::IconRole, iconValue );
     }
 
     QList<QwtLegendData> list;

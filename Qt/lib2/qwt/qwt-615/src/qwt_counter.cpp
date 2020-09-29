@@ -8,10 +8,8 @@
  *****************************************************************************/
 
 #include "qwt_arrow_button.h"
-#include "qwt_counter.h"
-#include "qwt_painter.h"
 #include "qwt_math.h"
-
+#include "qwt_counter.h"
 #include <qlayout.h>
 #include <qlineedit.h>
 #include <qvalidator.h>
@@ -74,13 +72,14 @@ void QwtCounter::initCounter()
 
     QHBoxLayout *layout = new QHBoxLayout( this );
     layout->setSpacing( 0 );
-    layout->setContentsMargins( QMargins() );
+    layout->setMargin( 0 );
 
     for ( int i = ButtonCnt - 1; i >= 0; i-- )
     {
         QwtArrowButton *btn =
             new QwtArrowButton( i + 1, Qt::DownArrow, this );
         btn->setFocusPolicy( Qt::NoFocus );
+        btn->installEventFilter( this );
         layout->addWidget( btn );
 
         connect( btn, SIGNAL(released()), SLOT(btnReleased()) );
@@ -103,6 +102,7 @@ void QwtCounter::initCounter()
         QwtArrowButton *btn =
             new QwtArrowButton( i + 1, Qt::UpArrow, this );
         btn->setFocusPolicy( Qt::NoFocus );
+        btn->installEventFilter( this );
         layout->addWidget( btn );
 
         connect( btn, SIGNAL(released()), SLOT(btnReleased()) );
@@ -201,8 +201,8 @@ bool QwtCounter::isReadOnly() const
 
 void QwtCounter::setValue( double value )
 {
-    const double vmin = qwtMinF( d_data->minimum, d_data->maximum );
-    const double vmax = qwtMaxF( d_data->minimum, d_data->maximum );
+    const double vmin = qMin( d_data->minimum, d_data->maximum );
+    const double vmax = qMax( d_data->minimum, d_data->maximum );
 
     value = qBound( vmin, value, vmax );
 
@@ -240,7 +240,7 @@ double QwtCounter::value() const
  */
 void QwtCounter::setRange( double min, double max )
 {
-    max = qwtMaxF( min, max );
+    max = qMax( min, max );
 
     if ( d_data->maximum == max && d_data->minimum == min )
         return;
@@ -318,7 +318,7 @@ double QwtCounter::maximum() const
 */
 void QwtCounter::setSingleStep( double stepSize )
 {
-    d_data->singleStep = qwtMaxF( stepSize, 0.0 );
+    d_data->singleStep = qMax( stepSize, 0.0 );
 }
 
 /*!
@@ -486,9 +486,7 @@ bool QwtCounter::event( QEvent *event )
 {
     if ( event->type() == QEvent::PolishRequest )
     {
-        const QFontMetrics fm = d_data->valueEdit->fontMetrics();
-
-        const int w = QwtPainter::horizontalAdvance( fm, "W" ) + 8;
+        const int w = d_data->valueEdit->fontMetrics().width( "W" ) + 8;
         for ( int i = 0; i < ButtonCnt; i++ )
         {
             d_data->buttonDown[i]->setMinimumWidth( w );
@@ -607,27 +605,24 @@ void QwtCounter::wheelEvent( QWheelEvent *event )
             increment = d_data->increment[2];
     }
 
-#if QT_VERSION < 0x050e00
-    const QPoint wheelPos = event->pos();
-    const int wheelDelta = event->delta();
-#else
-    const QPoint wheelPos = event->position().toPoint();
-
-    const QPoint delta = event->angleDelta();
-    const int wheelDelta = ( qAbs( delta.x() ) > qAbs( delta.y() ) )
-        ? delta.x() : delta.y();
-#endif
-
     for ( int i = 0; i < d_data->numButtons; i++ )
     {
-        if ( d_data->buttonDown[i]->geometry().contains( wheelPos ) ||
-            d_data->buttonUp[i]->geometry().contains( wheelPos ) )
+        if ( d_data->buttonDown[i]->geometry().contains( event->pos() ) ||
+            d_data->buttonUp[i]->geometry().contains( event->pos() ) )
         {
             increment = d_data->increment[i];
         }
     }
 
-    incrementValue( wheelDelta / 120 * increment );
+    const int wheel_delta = 120;
+
+#if 1
+    int delta = event->delta();
+    if ( delta >= 2 * wheel_delta )
+        delta /= 2; // Never saw an abs(delta) < 240
+#endif
+
+    incrementValue( delta / wheel_delta * increment );
 }
 
 void QwtCounter::incrementValue( int numSteps )
@@ -641,7 +636,7 @@ void QwtCounter::incrementValue( int numSteps )
 
 
 #if 1
-    stepSize = qwtMaxF( stepSize, 1.0e-10 * ( max - min ) );
+    stepSize = qMax( stepSize, 1.0e-10 * ( max - min ) );
 #endif
 
     double value = d_data->value + numSteps * stepSize;
@@ -652,11 +647,11 @@ void QwtCounter::incrementValue( int numSteps )
 
         if ( value < min )
         {
-            value += std::ceil( ( min - value ) / range ) * range;
+            value += ::ceil( ( min - value ) / range ) * range;
         }
         else if ( value > max )
         {
-            value -= std::ceil( ( value - max ) / range ) * range;
+            value -= ::ceil( ( value - max ) / range ) * range;
         }
     }
     else
@@ -773,8 +768,8 @@ QSize QwtCounter::sizeHint() const
 
     tmp.fill( '9', w );
 
-    w = QwtPainter::horizontalAdvance( d_data->valueEdit->fontMetrics(), tmp ) + 2;
-
+    QFontMetrics fm( d_data->valueEdit->font() );
+    w = fm.width( tmp ) + 2;
     if ( d_data->valueEdit->hasFrame() )
         w += 2 * style()->pixelMetric( QStyle::PM_DefaultFrameWidth );
 
@@ -785,10 +780,5 @@ QSize QwtCounter::sizeHint() const
 
     const int h = qMin( QWidget::sizeHint().height(),
         d_data->valueEdit->minimumSizeHint().height() );
-
     return QSize( w, h );
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_counter.cpp"
-#endif

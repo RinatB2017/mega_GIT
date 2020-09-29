@@ -14,15 +14,13 @@
 #include "qwt_math.h"
 #include "qwt_scale_div.h"
 #include "qwt_text.h"
-#include "qwt_interval.h"
 #include "qwt_scale_engine.h"
-
 #include <qpainter.h>
 #include <qevent.h>
+#include <qmath.h>
 #include <qstyle.h>
 #include <qstyleoption.h>
 #include <qapplication.h>
-#include <qmargins.h>
 
 class QwtScaleWidget::PrivateData
 {
@@ -94,6 +92,7 @@ void QwtScaleWidget::initScale( QwtScaleDraw::Alignment align )
 {
     d_data = new PrivateData;
 
+    d_data->layoutFlags = 0;
     if ( align == QwtScaleDraw::RightScale )
         d_data->layoutFlags |= TitleInverted;
 
@@ -512,22 +511,6 @@ QRectF QwtScaleWidget::colorBarRect( const QRectF& rect ) const
 }
 
 /*!
-  Change Event handler
-  \param event Change event
-
-  Invalidates internal caches if necessary
-*/
-void QwtScaleWidget::changeEvent( QEvent *event )
-{
-    if ( event->type() == QEvent::LocaleChange )
-    {
-        d_data->scaleDraw->invalidateCache();
-    }
-
-    QWidget::changeEvent( event );
-}
-
-/*!
   Event handler for resize events
   \param event Resize event
 */
@@ -585,7 +568,7 @@ void QwtScaleWidget::layoutScale( bool update_geometry )
     d_data->scaleDraw->move( x, y );
     d_data->scaleDraw->setLength( length );
 
-    const int extent = qwtCeil( d_data->scaleDraw->extent( font() ) );
+    const int extent = qCeil( d_data->scaleDraw->extent( font() ) );
 
     d_data->titleOffset =
         d_data->margin + d_data->spacing + colorBarWidth + extent;
@@ -755,8 +738,9 @@ QSize QwtScaleWidget::minimumSizeHint() const
     if ( o == Qt::Vertical )
         size.transpose();
 
-    const QMargins m = contentsMargins();
-    return size + QSize( m.left() + m.right(), m.top() + m.bottom() );
+    int left, right, top, bottom;
+    getContentsMargins( &left, &top, &right, &bottom );
+    return size + QSize( left + right, top + bottom );
 }
 
 /*!
@@ -767,7 +751,7 @@ QSize QwtScaleWidget::minimumSizeHint() const
 
 int QwtScaleWidget::titleHeightForWidth( int width ) const
 {
-    return qwtCeil( d_data->title.heightForWidth( width, font() ) );
+    return qCeil( d_data->title.heightForWidth( width, font() ) );
 }
 
 /*!
@@ -781,7 +765,7 @@ int QwtScaleWidget::titleHeightForWidth( int width ) const
 
 int QwtScaleWidget::dimForLength( int length, const QFont &scaleFont ) const
 {
-    const int extent = qwtCeil( d_data->scaleDraw->extent( scaleFont ) );
+    const int extent = qCeil( d_data->scaleDraw->extent( scaleFont ) );
 
     int dim = d_data->margin + extent + 1;
 
@@ -976,7 +960,3 @@ const QwtColorMap *QwtScaleWidget::colorMap() const
 {
     return d_data->colorBar.colorMap;
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_scale_widget.cpp"
-#endif

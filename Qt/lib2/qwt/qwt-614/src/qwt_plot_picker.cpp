@@ -9,8 +9,8 @@
 
 #include "qwt_plot_picker.h"
 #include "qwt_plot.h"
-#include "qwt_text.h"
 #include "qwt_scale_div.h"
+#include "qwt_painter.h"
 #include "qwt_scale_map.h"
 #include "qwt_picker_machine.h"
 
@@ -379,7 +379,3 @@ QPoint QwtPlotPicker::transform( const QPointF &pos ) const
 
     return p.toPoint();
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_plot_picker.cpp"
-#endif

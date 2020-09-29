@@ -8,29 +8,23 @@
  *****************************************************************************/
 
 #ifndef QWT_PICKER
-#define QWT_PICKER
+#define QWT_PICKER 1
 
 #include "qwt_global.h"
+#include "qwt_text.h"
 #include "qwt_event_pattern.h"
-
 #include <qobject.h>
+#include <qpen.h>
+#include <qfont.h>
+#include <qrect.h>
+#include <qpainterpath.h>
 
-class QwtPickerMachine;
-class QwtWidgetOverlay;
-class QwtText;
 class QWidget;
 class QMouseEvent;
 class QWheelEvent;
 class QKeyEvent;
-class QPainter;
-class QPen;
-class QFont;
-class QRegion;
-class QPainterPath;
-class QPoint;
-class QRect;
-class QSize;
-class QPolygon;
+class QwtPickerMachine;
+class QwtWidgetOverlay;
 
 /*!
   \brief QwtPicker provides selections on a widget
@@ -219,7 +213,7 @@ public:
     bool isEnabled() const;
     bool isActive() const;
 
-    virtual bool eventFilter( QObject *, QEvent * ) QWT_OVERRIDE;
+    virtual bool eventFilter( QObject *, QEvent * );
 
     QWidget *parentWidget();
     const QWidget *parentWidget() const;
@@ -229,7 +223,6 @@ public:
     virtual void drawRubberBand( QPainter * ) const;
     virtual void drawTracker( QPainter * ) const;
 
-    virtual QRegion trackerMask() const;
     virtual QRegion rubberBandMask() const;
 
     virtual QwtText trackerText( const QPoint &pos ) const;

@@ -12,6 +12,7 @@
 
 #include "qwt_global.h"
 #include "qwt_plot_item.h"
+#include "qwt_scale_div.h"
 
 class QPainter;
 class QPen;
@@ -36,7 +37,7 @@ public:
     explicit QwtPlotGrid();
     virtual ~QwtPlotGrid();
 
-    virtual int rtti() const QWT_OVERRIDE;
+    virtual int rtti() const;
 
     void enableX( bool );
     bool xEnabled() const;
@@ -56,14 +57,10 @@ public:
     void setYDiv( const QwtScaleDiv & );
     const QwtScaleDiv &yScaleDiv() const;
 
-    void setPen( const QColor &,
-        qreal width = 0.0, Qt::PenStyle = Qt::SolidLine );
-
+    void setPen( const QColor &, qreal width = 0.0, Qt::PenStyle = Qt::SolidLine );
     void setPen( const QPen & );
 
-    void setMajorPen( const QColor &,
-        qreal width = 0.0, Qt::PenStyle = Qt::SolidLine );
-
+    void setMajorPen( const QColor &, qreal width = 0.0, Qt::PenStyle = Qt::SolidLine );
     void setMajorPen( const QPen & );
     const QPen& majorPen() const;
 
@@ -73,10 +70,10 @@ public:
 
     virtual void draw( QPainter *,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &canvasRect ) const QWT_OVERRIDE;
+        const QRectF &canvasRect ) const;
 
     virtual void updateScaleDiv(
-        const QwtScaleDiv &xScaleDiv, const QwtScaleDiv &yScaleDiv ) QWT_OVERRIDE;
+        const QwtScaleDiv &xScaleDiv, const QwtScaleDiv &yScaleDiv );
 
 private:
     void drawLines( QPainter *, const QRectF &,

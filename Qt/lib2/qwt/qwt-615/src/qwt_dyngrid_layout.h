@@ -12,8 +12,8 @@
 
 #include "qwt_global.h"
 #include <qlayout.h>
-
-template <typename T> class QList;
+#include <qsize.h>
+#include <qlist.h>
 
 /*!
   \brief The QwtDynGridLayout class lays out widgets in a grid,
@@ -33,7 +33,7 @@ public:
 
     virtual ~QwtDynGridLayout();
 
-    virtual void invalidate() QWT_OVERRIDE;
+    virtual void invalidate();
 
     void setMaxColumns( uint maxColumns );
     uint maxColumns() const;
@@ -41,26 +41,26 @@ public:
     uint numRows () const;
     uint numColumns () const;
 
-    virtual void addItem( QLayoutItem * ) QWT_OVERRIDE;
+    virtual void addItem( QLayoutItem * );
 
-    virtual QLayoutItem *itemAt( int index ) const QWT_OVERRIDE;
-    virtual QLayoutItem *takeAt( int index ) QWT_OVERRIDE;
-    virtual int count() const QWT_OVERRIDE;
+    virtual QLayoutItem *itemAt( int index ) const;
+    virtual QLayoutItem *takeAt( int index );
+    virtual int count() const;
 
     void setExpandingDirections( Qt::Orientations );
-    virtual Qt::Orientations expandingDirections() const QWT_OVERRIDE;
+    virtual Qt::Orientations expandingDirections() const;
     QList<QRect> layoutItems( const QRect &, uint numColumns ) const;
 
     virtual int maxItemWidth() const;
 
-    virtual void setGeometry( const QRect & ) QWT_OVERRIDE;
+    virtual void setGeometry( const QRect &rect );
 
-    virtual bool hasHeightForWidth() const QWT_OVERRIDE;
-    virtual int heightForWidth( int ) const QWT_OVERRIDE;
+    virtual bool hasHeightForWidth() const;
+    virtual int heightForWidth( int ) const;
 
-    virtual QSize sizeHint() const QWT_OVERRIDE;
+    virtual QSize sizeHint() const;
 
-    virtual bool isEmpty() const QWT_OVERRIDE;
+    virtual bool isEmpty() const;
     uint itemCount() const;
 
     virtual uint columnsForWidth( int width ) const;
@@ -69,7 +69,6 @@ protected:
 
     void layoutGrid( uint numColumns,
         QVector<int>& rowHeight, QVector<int>& colWidth ) const;
-
     void stretchGrid( const QRect &rect, uint numColumns,
         QVector<int>& rowHeight, QVector<int>& colWidth ) const;
 

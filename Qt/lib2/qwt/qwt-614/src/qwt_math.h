@@ -12,6 +12,7 @@
 
 #include "qwt_global.h"
 
+#if defined(_MSC_VER)
 /*
   Microsoft says:
 
@@ -19,138 +20,30 @@
   definitions for common math constants.  These are placed under an #ifdef
   since these commonly-defined names are not part of the C/C++ standards.
 */
-
-#ifndef _USE_MATH_DEFINES
-#define _USE_MATH_DEFINES
-#define undef_USE_MATH_DEFINES
+#define _USE_MATH_DEFINES 1
 #endif
 
-#include <cmath>
-
-#ifdef undef_USE_MATH_DEFINES
-#undef _USE_MATH_DEFINES
-#undef undef_USE_MATH_DEFINES
-#endif
-
-#ifndef M_E
-#define M_E (2.7182818284590452354)
-#endif
-
-#ifndef M_LOG2E
-#define M_LOG2E (1.4426950408889634074)
-#endif
-
-#ifndef M_LOG10E
-#define M_LOG10E (0.43429448190325182765)
-#endif
-
-#ifndef M_LN2
-#define M_LN2 (0.69314718055994530942)
-#endif
-
-#ifndef M_LN10
-#define M_LN10 (2.30258509299404568402)
-#endif
-
-#ifndef M_PI
-#define M_PI (3.14159265358979323846)
-#endif
+#include <qmath.h>
+#include "qwt_global.h"
 
 #ifndef M_PI_2
+// For Qt <= 4.8.4 M_PI_2 is not known by MinGW-w64
+// when compiling with -std=c++11
 #define M_PI_2 (1.57079632679489661923)
 #endif
 
-#ifndef M_PI_4
-#define M_PI_4 (0.78539816339744830962)
+#ifndef LOG_MIN
+//! Minimum value for logarithmic scales
+#define LOG_MIN 1.0e-100
 #endif
 
-#ifndef M_1_PI
-#define M_1_PI (0.31830988618379067154)
+#ifndef LOG_MAX
+//! Maximum value for logarithmic scales
+#define LOG_MAX 1.0e100
 #endif
 
-#ifndef M_2_PI
-#define M_2_PI (0.63661977236758134308)
-#endif
-
-#ifndef M_2_SQRTPI
-#define M_2_SQRTPI (1.12837916709551257390)
-#endif
-
-#ifndef M_SQRT2
-#define M_SQRT2 (1.41421356237309504880)
-#endif
-
-#ifndef M_SQRT1_2
-#define M_SQRT1_2 (0.70710678118654752440)
-#endif
-
-/*
-    On systems, where qreal is a float you often run into
-    compiler issues with qMin/qMax.
- */
-
-//! \return Minimum of a and b.
-QWT_CONSTEXPR inline float qwtMinF( float a, float b )
-{
-    return ( a < b ) ? a : b;
-}
-
-//! \return Minimum of a and b.
-QWT_CONSTEXPR inline double qwtMinF( double a, double b )
-{
-    return ( a < b ) ? a : b;
-}
-
-//! \return Minimum of a and b.
-QWT_CONSTEXPR inline qreal qwtMinF( float a, double b )
-{
-    return ( a < b ) ? a : b;
-}
-
-//! \return Minimum of a and b.
-QWT_CONSTEXPR inline qreal qwtMinF( double a, float b )
-{
-    return ( a < b ) ? a : b;
-}
-
-//! \return Maximum of a and b.
-QWT_CONSTEXPR inline float qwtMaxF( float a, float b )
-{
-    return ( a < b ) ? b : a;
-}
-
-//! \return Maximum of a and b.
-QWT_CONSTEXPR inline double qwtMaxF( double a, double b )
-{
-    return ( a < b ) ? b : a;
-}
-
-//! \return Maximum of a and b.
-QWT_CONSTEXPR inline qreal qwtMaxF( float a, double b )
-{
-    return ( a < b ) ? b : a;
-}
-
-//! \return Maximum of a and b.
-QWT_CONSTEXPR inline qreal qwtMaxF( double a, float b )
-{
-    return ( a < b ) ? b : a;
-}
-
-QWT_CONSTEXPR inline float qwtBoundF( double min, float value, double max)
-{
-    return qwtMaxF( min, qwtMinF( max, value ) );
-}
-
-QWT_CONSTEXPR inline double qwtBoundF( float min, double value, float max)
-{
-    return qwtMaxF( min, qwtMinF( max, value ) );
-}
-
-QWT_CONSTEXPR inline double qwtBoundF( double min, double value, double max)
-{
-    return qwtMaxF( min, qwtMinF( max, value ) );
-}
+QWT_EXPORT double qwtGetMin( const double *array, int size );
+QWT_EXPORT double qwtGetMax( const double *array, int size );
 
 QWT_EXPORT double qwtNormalizeRadians( double radians );
 QWT_EXPORT double qwtNormalizeDegrees( double degrees );
@@ -178,6 +71,17 @@ inline int qwtFuzzyCompare( double value1, double value2, double intervalSize )
         return 1;
 
     return 0;
+}
+
+
+inline bool qwtFuzzyGreaterOrEqual( double d1, double d2 )
+{
+    return ( d1 >= d2 ) || qFuzzyCompare( d1, d2 );
+}
+
+inline bool qwtFuzzyLessOrEqual( double d1, double d2 )
+{
+    return ( d1 <= d2 ) || qFuzzyCompare( d1, d2 );
 }
 
 //! Return the sign
@@ -230,23 +134,6 @@ inline double qwtFastAtan2( double y, double x )
     return 0.0;
 }
 
-/* !
-   \brief Calculate a value of a cubic polynom
-
-   \param x Value
-   \param a Cubic coefficient
-   \param b Quadratic coefficient
-   \param c Linear coefficient
-   \param d Connstant offset
-
-   \return Value of the polyonom for x
-*/
-inline double qwtCubicPolynom( double x,
-    double a, double b, double c, double d )
-{
-    return ( ( ( a * x ) + b ) * x + c ) * x + d;
-}
-
 //! Translate degrees into radians
 inline double qwtRadians( double degrees )
 {
@@ -257,25 +144,6 @@ inline double qwtRadians( double degrees )
 inline double qwtDegrees( double degrees )
 {
     return degrees * 180.0 / M_PI;
-}
-
-/*!
-    The same as qCeil, but avoids including qmath.h
-    \return Ceiling of value.
- */
-inline int qwtCeil( qreal value )
-{
-    using std::ceil;
-    return int( ceil( value ) );
-}
-/*!
-    The same as qFloor, but avoids including qmath.h
-    \return Floor of value.
- */
-inline int qwtFloor( qreal value )
-{
-    using std::floor;
-    return int( floor( value ) );
 }
 
 #endif

@@ -7,8 +7,8 @@
  * modify it under the terms of the Qwt License, Version 1.0
  *****************************************************************************/
 
-#ifndef QWT_DATE_SCALE_DRAW_H
-#define QWT_DATE_SCALE_DRAW_H
+#ifndef _QWT_DATE_SCALE_DRAW_H_
+#define _QWT_DATE_SCALE_DRAW_H_ 1
 
 #include "qwt_global.h"
 #include "qwt_scale_draw.h"
@@ -52,7 +52,7 @@
 class QWT_EXPORT QwtDateScaleDraw: public QwtScaleDraw
 {
 public:
-    explicit QwtDateScaleDraw( Qt::TimeSpec = Qt::LocalTime );
+    QwtDateScaleDraw( Qt::TimeSpec = Qt::LocalTime );
     virtual ~QwtDateScaleDraw();
 
     void setDateFormat( QwtDate::IntervalType, const QString & );
@@ -67,7 +67,7 @@ public:
     void setWeek0Type( QwtDate::Week0Type );
     QwtDate::Week0Type week0Type() const;
 
-    virtual QwtText label( double ) const QWT_OVERRIDE;
+    virtual QwtText label( double ) const;
 
     QDateTime toDateTime( double ) const;
 

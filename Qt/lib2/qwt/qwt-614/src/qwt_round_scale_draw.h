@@ -12,7 +12,6 @@
 
 #include "qwt_global.h"
 #include "qwt_abstract_scale_draw.h"
-
 #include <qpoint.h>
 
 /*!
@@ -43,19 +42,17 @@ public:
 
     void setAngleRange( double angle1, double angle2 );
 
-    virtual double extent( const QFont & ) const QWT_OVERRIDE;
+    virtual double extent( const QFont & ) const;
 
 protected:
-    virtual void drawTick( QPainter *,
-        double value, double len ) const QWT_OVERRIDE;
-
-    virtual void drawBackbone(
-        QPainter * ) const QWT_OVERRIDE;
-
-    virtual void drawLabel(
-        QPainter *, double value ) const QWT_OVERRIDE;
+    virtual void drawTick( QPainter *, double value, double len ) const;
+    virtual void drawBackbone( QPainter * ) const;
+    virtual void drawLabel( QPainter *, double val ) const;
 
 private:
+    QwtRoundScaleDraw( const QwtRoundScaleDraw & );
+    QwtRoundScaleDraw &operator=( const QwtRoundScaleDraw &other );
+
     class PrivateData;
     PrivateData *d_data;
 };

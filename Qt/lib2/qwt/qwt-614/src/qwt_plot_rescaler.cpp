@@ -12,8 +12,8 @@
 #include "qwt_scale_div.h"
 #include "qwt_interval.h"
 #include "qwt_plot_canvas.h"
-
 #include <qevent.h>
+#include <qalgorithms.h>
 
 class QwtPlotRescaler::AxisData
 {
@@ -629,7 +629,3 @@ void QwtPlotRescaler::updateScales(
         canvas->setPaintAttribute( QwtPlotCanvas::ImmediatePaint, true );
     }
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_plot_rescaler.cpp"
-#endif

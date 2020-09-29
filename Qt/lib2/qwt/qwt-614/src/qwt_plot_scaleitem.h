@@ -53,7 +53,7 @@ public:
 
     virtual ~QwtPlotScaleItem();
 
-    virtual int rtti() const QWT_OVERRIDE;
+    virtual int rtti() const;
 
     void setScaleDiv( const QwtScaleDiv& );
     const QwtScaleDiv& scaleDiv() const;
@@ -82,10 +82,9 @@ public:
 
     virtual void draw( QPainter *,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &canvasRect ) const QWT_OVERRIDE;
+        const QRectF &canvasRect ) const;
 
-    virtual void updateScaleDiv(
-        const QwtScaleDiv &, const QwtScaleDiv & ) QWT_OVERRIDE;
+    virtual void updateScaleDiv( const QwtScaleDiv &, const QwtScaleDiv & );
 
 private:
     class PrivateData;

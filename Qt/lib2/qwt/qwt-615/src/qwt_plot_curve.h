@@ -12,17 +12,16 @@
 
 #include "qwt_global.h"
 #include "qwt_plot_seriesitem.h"
-
+#include "qwt_series_data.h"
+#include "qwt_text.h"
+#include <qpen.h>
 #include <qstring.h>
 
+class QPainter;
+class QPolygonF;
 class QwtScaleMap;
 class QwtSymbol;
 class QwtCurveFitter;
-template <typename T> class QwtSeriesData;
-class QwtText;
-class QPainter;
-class QPolygonF;
-class QPen;
 
 /*!
   \brief A plot item, that represents a series of points
@@ -205,31 +204,7 @@ public:
           With a reasonable number of points QPainter::drawPoints()
           will be faster.
          */
-        ImageBuffer = 0x08,
-
-        /*!
-          More aggressive point filtering trying to filter out
-          intermediate points, accepting minor visual differences.
-
-          Has only an effect, when drawing the curve to a paint device
-          in integer coordinates ( f.e. all widgets on screen ) using the fact,
-          that consecutive points are often mapped to the same x or y coordinate.
-          Each chunk of samples mapped to the same coordinate can be reduced to
-          4 points ( first, min, max last ).
-
-          In the worst case the polygon to be rendered will be 4 times the width
-          of the plot canvas.
-
-          The algorithm is very fast and effective for huge datasets, and can be used
-          inside a replot cycle.
-
-          \note Implemented for QwtPlotCurve::Lines only
-          \note As this algo replaces many small lines by a long one
-                a nasty bug of the raster paint engine ( Qt 4.8, Qt 5.1 - 5.3 )
-                becomes more dominant. For these versions the bug can be
-                worked around by enabling the QwtPainter::polylineSplitting() mode.
-         */
-        FilterPointsAggressive = 0x10,
+        ImageBuffer = 0x08
     };
 
     //! Paint attributes
@@ -240,7 +215,7 @@ public:
 
     virtual ~QwtPlotCurve();
 
-    virtual int rtti() const QWT_OVERRIDE;
+    virtual int rtti() const;
 
     void setPaintAttribute( PaintAttribute, bool on = true );
     bool testPaintAttribute( PaintAttribute ) const;
@@ -248,31 +223,15 @@ public:
     void setLegendAttribute( LegendAttribute, bool on = true );
     bool testLegendAttribute( LegendAttribute ) const;
 
-    void setLegendAttributes( LegendAttributes );
-    LegendAttributes legendAttributes() const;
-
+#ifndef QWT_NO_COMPAT
     void setRawSamples( const double *xData, const double *yData, int size );
-    void setRawSamples( const float *xData, const float *yData, int size );
-
-    void setRawSamples( const double *yData, int size );
-    void setRawSamples( const float *yData, int size );
-
     void setSamples( const double *xData, const double *yData, int size );
-    void setSamples( const float *xData, const float *yData, int size );
-
-    void setSamples( const double *yData, int size );
-    void setSamples( const float *yData, int size );
-
-    void setSamples( const QVector<double> &yData );
-    void setSamples( const QVector<float> &yData );
-
     void setSamples( const QVector<double> &xData, const QVector<double> &yData );
-    void setSamples( const QVector<float> &xData, const QVector<float> &yData );
-
+#endif
     void setSamples( const QVector<QPointF> & );
     void setSamples( QwtSeriesData<QPointF> * );
 
-    virtual int closestPoint( const QPoint &pos, double *dist = NULL ) const;
+    int closestPoint( const QPoint &pos, double *dist = NULL ) const;
 
     double minXValue() const;
     double maxXValue() const;
@@ -303,9 +262,9 @@ public:
 
     virtual void drawSeries( QPainter *,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &canvasRect, int from, int to ) const QWT_OVERRIDE;
+        const QRectF &canvasRect, int from, int to ) const;
 
-    virtual QwtGraphic legendIcon( int index, const QSizeF & ) const QWT_OVERRIDE;
+    virtual QwtGraphic legendIcon( int index, const QSizeF & ) const;
 
 protected:
 

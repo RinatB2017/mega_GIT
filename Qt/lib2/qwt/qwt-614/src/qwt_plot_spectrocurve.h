@@ -12,7 +12,9 @@
 
 #include "qwt_global.h"
 #include "qwt_plot_seriesitem.h"
+#include "qwt_series_data.h"
 
+class QwtSymbol;
 class QwtColorMap;
 
 /*!
@@ -38,7 +40,7 @@ public:
 
     virtual ~QwtPlotSpectroCurve();
 
-    virtual int rtti() const QWT_OVERRIDE;
+    virtual int rtti() const;
 
     void setPaintAttribute( PaintAttribute, bool on = true );
     bool testPaintAttribute( PaintAttribute ) const;
@@ -55,7 +57,7 @@ public:
 
     virtual void drawSeries( QPainter *,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &canvasRect, int from, int to ) const QWT_OVERRIDE;
+        const QRectF &canvasRect, int from, int to ) const;
 
     void setPenWidth( double );
     double penWidth() const;

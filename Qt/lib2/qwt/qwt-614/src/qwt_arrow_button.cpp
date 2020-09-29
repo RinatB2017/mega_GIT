@@ -8,7 +8,7 @@
  *****************************************************************************/
 
 #include "qwt_arrow_button.h"
-
+#include "qwt_math.h"
 #include <qpainter.h>
 #include <qstyle.h>
 #include <qstyleoption.h>

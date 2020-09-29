@@ -8,11 +8,10 @@
  *****************************************************************************/
 
 #include "qwt_plot.h"
+#include "qwt_math.h"
 #include "qwt_scale_widget.h"
-#include "qwt_scale_map.h"
 #include "qwt_scale_div.h"
 #include "qwt_scale_engine.h"
-#include "qwt_interval.h"
 
 class QwtPlot::AxisData
 {

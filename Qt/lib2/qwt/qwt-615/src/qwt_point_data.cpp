@@ -8,6 +8,152 @@
  *****************************************************************************/
 
 #include "qwt_point_data.h"
+#include "qwt_math.h"
+#include <string.h>
+
+/*!
+  Constructor
+
+  \param x Array of x values
+  \param y Array of y values
+
+  \sa QwtPlotCurve::setData(), QwtPlotCurve::setSamples()
+*/
+QwtPointArrayData::QwtPointArrayData(
+        const QVector<double> &x, const QVector<double> &y ):
+    d_x( x ),
+    d_y( y )
+{
+}
+
+/*!
+  Constructor
+
+  \param x Array of x values
+  \param y Array of y values
+  \param size Size of the x and y arrays
+  \sa QwtPlotCurve::setData(), QwtPlotCurve::setSamples()
+*/
+QwtPointArrayData::QwtPointArrayData( const double *x,
+        const double *y, size_t size )
+{
+    d_x.resize( size );
+    ::memcpy( d_x.data(), x, size * sizeof( double ) );
+
+    d_y.resize( size );
+    ::memcpy( d_y.data(), y, size * sizeof( double ) );
+}
+
+/*!
+  \brief Calculate the bounding rectangle
+
+  The bounding rectangle is calculated once by iterating over all
+  points and is stored for all following requests.
+
+  \return Bounding rectangle
+*/
+QRectF QwtPointArrayData::boundingRect() const
+{
+    if ( d_boundingRect.width() < 0 )
+        d_boundingRect = qwtBoundingRect( *this );
+
+    return d_boundingRect;
+}
+
+//! \return Size of the data set
+size_t QwtPointArrayData::size() const
+{
+    return qMin( d_x.size(), d_y.size() );
+}
+
+/*!
+  Return the sample at position i
+
+  \param index Index
+  \return Sample at position i
+*/
+QPointF QwtPointArrayData::sample( size_t index ) const
+{
+    return QPointF( d_x[int( index )], d_y[int( index )] );
+}
+
+//! \return Array of the x-values
+const QVector<double> &QwtPointArrayData::xData() const
+{
+    return d_x;
+}
+
+//! \return Array of the y-values
+const QVector<double> &QwtPointArrayData::yData() const
+{
+    return d_y;
+}
+
+/*!
+  Constructor
+
+  \param x Array of x values
+  \param y Array of y values
+  \param size Size of the x and y arrays
+
+  \warning The programmer must assure that the memory blocks referenced
+           by the pointers remain valid during the lifetime of the
+           QwtPlotCPointer object.
+
+  \sa QwtPlotCurve::setData(), QwtPlotCurve::setRawSamples()
+*/
+QwtCPointerData::QwtCPointerData(
+        const double *x, const double *y, size_t size ):
+    d_x( x ),
+    d_y( y ),
+    d_size( size )
+{
+}
+
+/*!
+  \brief Calculate the bounding rectangle
+
+  The bounding rectangle is calculated once by iterating over all
+  points and is stored for all following requests.
+
+  \return Bounding rectangle
+*/
+QRectF QwtCPointerData::boundingRect() const
+{
+    if ( d_boundingRect.width() < 0 )
+        d_boundingRect = qwtBoundingRect( *this );
+
+    return d_boundingRect;
+}
+
+//! \return Size of the data set
+size_t QwtCPointerData::size() const
+{
+    return d_size;
+}
+
+/*!
+  Return the sample at position i
+
+  \param index Index
+  \return Sample at position i
+*/
+QPointF QwtCPointerData::sample( size_t index ) const
+{
+    return QPointF( d_x[int( index )], d_y[int( index )] );
+}
+
+//! \return Array of the x-values
+const double *QwtCPointerData::xData() const
+{
+    return d_x;
+}
+
+//! \return Array of the y-values
+const double *QwtCPointerData::yData() const
+{
+    return d_y;
+}
 
 /*!
    Constructor

@@ -8,8 +8,9 @@
  *****************************************************************************/
 
 #include "qwt_plot.h"
-#include "qwt_scale_map.h"
+#include "qwt_scale_div.h"
 #include "qwt_plot_magnifier.h"
+#include <qevent.h>
 
 class QwtPlotMagnifier::PrivateData
 {
@@ -162,7 +163,3 @@ void QwtPlotMagnifier::rescale( double factor )
     if ( doReplot )
         plt->replot();
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_plot_magnifier.cpp"
-#endif

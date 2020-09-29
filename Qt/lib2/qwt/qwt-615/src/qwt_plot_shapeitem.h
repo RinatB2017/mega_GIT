@@ -12,11 +12,7 @@
 
 #include "qwt_global.h"
 #include "qwt_plot_item.h"
-
-#include <qstring.h>
-
-class QPainterPath;
-class QPolygonF;
+#include <qpainterpath.h>
 
 /*!
   \brief A plot item, which displays any graphical shape,
@@ -30,10 +26,7 @@ class QPolygonF;
   These algorithms need to convert the painter path into polygons that might be
   less performant for paths built from curves and ellipses.
 
-  More complex shapes, that can't be expressed by a QPainterPath can be displayed
-  using QwtPlotGraphicItem.
-
-  \sa QwtPlotZone, QwtPlotGraphicItem
+  \sa QwtPlotZone
 */
 class QWT_EXPORT QwtPlotShapeItem: public QwtPlotItem
 {
@@ -98,16 +91,15 @@ public:
     void setRenderTolerance( double );
     double renderTolerance() const;
 
-    virtual QRectF boundingRect() const QWT_OVERRIDE;
+    virtual QRectF boundingRect() const;
 
     virtual void draw( QPainter *,
         const QwtScaleMap &xMap, const QwtScaleMap &yMap,
-        const QRectF &canvasRect ) const QWT_OVERRIDE;
+        const QRectF &canvasRect ) const;
 
-    virtual QwtGraphic legendIcon(
-        int index, const QSizeF & ) const QWT_OVERRIDE;
+    virtual QwtGraphic legendIcon( int index, const QSizeF & ) const;
 
-    virtual int rtti() const QWT_OVERRIDE;
+    virtual int rtti() const;
 
 private:
     void init();

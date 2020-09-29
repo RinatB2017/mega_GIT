@@ -11,15 +11,14 @@
 #include "qwt_painter.h"
 #include "qwt_scale_draw.h"
 #include "qwt_scale_map.h"
-#include "qwt_math.h"
-#include "qwt.h"
-
 #include <qevent.h>
 #include <qdrawutil.h>
 #include <qpainter.h>
+#include <qalgorithms.h>
+#include <qmath.h>
 #include <qstyle.h>
 #include <qstyleoption.h>
-#include <qmargins.h>
+#include <qapplication.h>
 
 static QSize qwtHandleSize( const QSize &size,
     Qt::Orientation orientation, bool hasTrough )
@@ -426,11 +425,11 @@ void QwtSlider::drawSlider(
         qDrawShadePanel( painter, sliderRect, palette(), true, bw, NULL );
     }
 
+    const QSize handleSize = qwtHandleSize( d_data->handleSize,
+        d_data->orientation, d_data->hasTrough );
+
     if ( d_data->hasGroove )
     {
-        const QSize handleSize = qwtHandleSize( d_data->handleSize,
-            d_data->orientation, d_data->hasTrough );
-
         const int slotExtent = 4;
         const int slotMargin = 4;
 
@@ -699,22 +698,9 @@ void QwtSlider::paintEvent( QPaintEvent *event )
 */
 void QwtSlider::resizeEvent( QResizeEvent *event )
 {
+    Q_UNUSED( event );
+
     layoutSlider( false );
-    QwtAbstractSlider::resizeEvent( event );
-}
-
-/*!
-   Qt event handler
-   \param event Event
-
-   \return true, if event was recognized and processed
-*/
-bool QwtSlider::event( QEvent *event )
-{
-    if ( event->type() == QEvent::PolishRequest )
-        layoutSlider( false );
-
-    return QwtAbstractSlider::event( event );
 }
 
 /*!
@@ -912,7 +898,7 @@ bool QwtSlider::hasGroove() const
 QSize QwtSlider::sizeHint() const
 {
     const QSize hint = minimumSizeHint();
-    return qwtExpandedToGlobalStrut( hint );
+    return hint.expandedTo( QApplication::globalStrut() );
 }
 
 /*!
@@ -955,7 +941,7 @@ QSize QwtSlider::minimumSizeHint() const
         }
 
         scaleExtent += d_data->spacing;
-        scaleExtent += qwtCeil( scaleDraw()->extent( font() ) );
+        scaleExtent += qCeil( scaleDraw()->extent( font() ) );
     }
 
     sliderLength = qMax( sliderLength, 84 ); // from QSlider
@@ -975,10 +961,11 @@ QSize QwtSlider::minimumSizeHint() const
     }
 
     // finally add margins
-    const QMargins m = contentsMargins();
+    int left, right, top, bottom;
+    getContentsMargins( &left, &top, &right, &bottom );
 
-    w += m.left() + m.right();
-    h += m.top() + m.bottom();
+    w += left + right;
+    h += top + bottom;
 
     d_data->sizeHintCache = QSize( w, h );
     return d_data->sizeHintCache;
@@ -1015,7 +1002,3 @@ QRect QwtSlider::sliderRect() const
 {
     return d_data->sliderRect;
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_slider.cpp"
-#endif

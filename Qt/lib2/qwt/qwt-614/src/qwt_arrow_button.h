@@ -29,12 +29,11 @@ public:
     Qt::ArrowType arrowType() const;
     int num() const;
 
-    virtual QSize sizeHint() const QWT_OVERRIDE;
-    virtual QSize minimumSizeHint() const QWT_OVERRIDE;
+    virtual QSize sizeHint() const;
+    virtual QSize minimumSizeHint() const;
 
 protected:
-    virtual void paintEvent( QPaintEvent *) QWT_OVERRIDE;
-    virtual void keyPressEvent( QKeyEvent * ) QWT_OVERRIDE;
+    virtual void paintEvent( QPaintEvent *event );
 
     virtual void drawButtonLabel( QPainter * );
     virtual void drawArrow( QPainter *,
@@ -42,6 +41,8 @@ protected:
     virtual QRect labelRect() const;
     virtual QSize arrowSize( Qt::ArrowType,
         const QSize &boundingSize ) const;
+
+    virtual void keyPressEvent( QKeyEvent * );
 
 private:
     class PrivateData;

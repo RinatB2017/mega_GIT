@@ -112,9 +112,8 @@ protected:
         QRectF scaleRect[QwtPlot::axisCnt] ) const;
 
 private:
-    Q_DISABLE_COPY(QwtPlotLayout)
-
     class PrivateData;
+
     PrivateData *d_data;
 };
 

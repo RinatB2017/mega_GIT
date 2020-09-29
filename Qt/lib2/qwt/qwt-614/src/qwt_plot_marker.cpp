@@ -12,9 +12,7 @@
 #include "qwt_scale_map.h"
 #include "qwt_symbol.h"
 #include "qwt_text.h"
-#include "qwt_graphic.h"
 #include "qwt_math.h"
-
 #include <qpainter.h>
 
 class QwtPlotMarker::PrivateData
@@ -48,13 +46,6 @@ public:
     double xValue;
     double yValue;
 };
-
-//! Sets alignment to Qt::AlignCenter, and style to QwtPlotMarker::NoLine
-QwtPlotMarker::QwtPlotMarker()
-{
-    d_data = new PrivateData;
-    setZ( 30.0 );
-}
 
 //! Sets alignment to Qt::AlignCenter, and style to QwtPlotMarker::NoLine
 QwtPlotMarker::QwtPlotMarker( const QString &title ):
@@ -146,8 +137,23 @@ void QwtPlotMarker::draw( QPainter *painter,
     const QPointF pos( xMap.transform( d_data->xValue ),
         yMap.transform( d_data->yValue ) );
 
+    // draw lines
+
     drawLines( painter, canvasRect, pos );
-    drawSymbol( painter, canvasRect, pos );
+
+    // draw symbol
+    if ( d_data->symbol &&
+        ( d_data->symbol->style() != QwtSymbol::NoSymbol ) )
+    {
+        const QSizeF sz = d_data->symbol->size();
+
+        const QRectF clipRect = canvasRect.adjusted(
+            -sz.width(), -sz.height(), sz.width(), sz.height() );
+
+        if ( clipRect.contains( pos ) )
+            d_data->symbol->drawSymbol( painter, pos );
+    }
+
     drawLabel( painter, canvasRect, pos );
 }
 
@@ -158,7 +164,7 @@ void QwtPlotMarker::draw( QPainter *painter,
   \param canvasRect Contents rectangle of the canvas in painter coordinates
   \param pos Position of the marker, translated into widget coordinates
 
-  \sa drawLabel(), drawSymbol()
+  \sa drawLabel(), QwtSymbol::drawSymbol()
 */
 void QwtPlotMarker::drawLines( QPainter *painter,
     const QRectF &canvasRect, const QPointF &pos ) const
@@ -192,42 +198,13 @@ void QwtPlotMarker::drawLines( QPainter *painter,
 }
 
 /*!
-  Draw the symbol of the marker
-
-  \param painter Painter
-  \param canvasRect Contents rectangle of the canvas in painter coordinates
-  \param pos Position of the marker, translated into widget coordinates
-
-  \sa drawLabel(), QwtSymbol::drawSymbol()
-*/
-void QwtPlotMarker::drawSymbol( QPainter *painter,
-    const QRectF &canvasRect, const QPointF &pos ) const
-{
-    if ( d_data->symbol == NULL )
-        return;
-
-    const QwtSymbol &symbol = *d_data->symbol;
-
-    if ( symbol.style() != QwtSymbol::NoSymbol )
-    {
-        const QSizeF sz = symbol.size();
-
-        const QRectF clipRect = canvasRect.adjusted(
-            -sz.width(), -sz.height(), sz.width(), sz.height() );
-
-        if ( clipRect.contains( pos ) )
-            symbol.drawSymbol( painter, pos );
-    }
-}
-
-/*!
   Align and draw the text label of the marker
 
   \param painter Painter
   \param canvasRect Contents rectangle of the canvas in painter coordinates
   \param pos Position of the marker, translated into widget coordinates
 
-  \sa drawLabel(), drawSymbol()
+  \sa drawLabel(), QwtSymbol::drawSymbol()
 */
 void QwtPlotMarker::drawLabel( QPainter *painter,
     const QRectF &canvasRect, const QPointF &pos ) const
@@ -305,8 +282,8 @@ void QwtPlotMarker::drawLabel( QPainter *painter,
 
     const int spacing = d_data->spacing;
 
-    const qreal xOff = qwtMaxF( pw2, symbolOff.width() );
-    const qreal yOff = qwtMaxF( pw2, symbolOff.height() );
+    const qreal xOff = qMax( pw2, symbolOff.width() );
+    const qreal yOff = qMax( pw2, symbolOff.height() );
 
     const QSizeF textSize = d_data->label.textSize( painter->font() );
 
@@ -595,7 +572,8 @@ QRectF QwtPlotMarker::boundingRect() const
 
    \sa setLegendIconSize(), legendData()
 */
-QwtGraphic QwtPlotMarker::legendIcon( int index, const QSizeF &size ) const
+QwtGraphic QwtPlotMarker::legendIcon( int index,
+    const QSizeF &size ) const
 {
     Q_UNUSED( index );
 

@@ -9,16 +9,13 @@
 
 #include "qwt_compass.h"
 #include "qwt_compass_rose.h"
-#include "qwt_text.h"
-
+#include "qwt_math.h"
+#include "qwt_scale_draw.h"
+#include "qwt_painter.h"
+#include "qwt_dial_needle.h"
+#include <qpainter.h>
+#include <qpixmap.h>
 #include <qevent.h>
-#include <qmap.h>
-
-class QwtCompassScaleDraw::PrivateData
-{
-public:
-    QMap<double, QString> labelMap;
-};
 
 /*!
   \brief Constructor
@@ -27,31 +24,27 @@ public:
  */
 QwtCompassScaleDraw::QwtCompassScaleDraw()
 {
-    d_data = new PrivateData;
-
     enableComponent( QwtAbstractScaleDraw::Backbone, false );
     enableComponent( QwtAbstractScaleDraw::Ticks, false );
 
-    QMap<double, QString> &map = d_data->labelMap;
-
-    map.insert( 0.0, QString::fromLatin1( "N" ) );
-    map.insert( 45.0, QString::fromLatin1( "NE" ) );
-    map.insert( 90.0, QString::fromLatin1( "E" ) );
-    map.insert( 135.0, QString::fromLatin1( "SE" ) );
-    map.insert( 180.0, QString::fromLatin1( "S" ) );
-    map.insert( 225.0, QString::fromLatin1( "SW" ) );
-    map.insert( 270.0, QString::fromLatin1( "W" ) );
-    map.insert( 315.0, QString::fromLatin1( "NW" ) );
+    d_labelMap.insert( 0.0, QString::fromLatin1( "N" ) );
+    d_labelMap.insert( 45.0, QString::fromLatin1( "NE" ) );
+    d_labelMap.insert( 90.0, QString::fromLatin1( "E" ) );
+    d_labelMap.insert( 135.0, QString::fromLatin1( "SE" ) );
+    d_labelMap.insert( 180.0, QString::fromLatin1( "S" ) );
+    d_labelMap.insert( 225.0, QString::fromLatin1( "SW" ) );
+    d_labelMap.insert( 270.0, QString::fromLatin1( "W" ) );
+    d_labelMap.insert( 315.0, QString::fromLatin1( "NW" ) );
 
 #if 0
-    map.insert( 22.5, QString::fromLatin1( "NNE" ) );
-    map.insert( 67.5, QString::fromLatin1( "NEE" ) );
-    map.insert( 112.5, QString::fromLatin1( "SEE" ) );
-    map.insert( 157.5, QString::fromLatin1( "SSE" ) );
-    map.insert( 202.5, QString::fromLatin1( "SSW" ) );
-    map.insert( 247.5, QString::fromLatin1( "SWW" ) );
-    map.insert( 292.5, QString::fromLatin1( "NWW" ) );
-    map.insert( 337.5, QString::fromLatin1( "NNW" ) );
+    d_labelMap.insert( 22.5, QString::fromLatin1( "NNE" ) );
+    d_labelMap.insert( 67.5, QString::fromLatin1( "NEE" ) );
+    d_labelMap.insert( 112.5, QString::fromLatin1( "SEE" ) );
+    d_labelMap.insert( 157.5, QString::fromLatin1( "SSE" ) );
+    d_labelMap.insert( 202.5, QString::fromLatin1( "SSW" ) );
+    d_labelMap.insert( 247.5, QString::fromLatin1( "SWW" ) );
+    d_labelMap.insert( 292.5, QString::fromLatin1( "NWW" ) );
+    d_labelMap.insert( 337.5, QString::fromLatin1( "NNW" ) );
 #endif
 }
 
@@ -60,19 +53,11 @@ QwtCompassScaleDraw::QwtCompassScaleDraw()
 
   \param map Value to label map
  */
-QwtCompassScaleDraw::QwtCompassScaleDraw( const QMap<double, QString> &map )
+QwtCompassScaleDraw::QwtCompassScaleDraw( const QMap<double, QString> &map ):
+    d_labelMap( map )
 {
-    d_data = new PrivateData;
-    d_data->labelMap = map;
-
     enableComponent( QwtAbstractScaleDraw::Backbone, false );
     enableComponent( QwtAbstractScaleDraw::Ticks, false );
-}
-
-//!  Destructor
-QwtCompassScaleDraw::~QwtCompassScaleDraw()
-{
-    delete d_data;
 }
 
 /*!
@@ -89,8 +74,9 @@ QwtCompassScaleDraw::~QwtCompassScaleDraw()
 */
 void QwtCompassScaleDraw::setLabelMap( const QMap<double, QString> &map )
 {
-    d_data->labelMap = map;
+    d_labelMap = map;
 }
+
 
 /*!
   \return map, mapping values to labels
@@ -98,7 +84,7 @@ void QwtCompassScaleDraw::setLabelMap( const QMap<double, QString> &map )
 */
 QMap<double, QString> QwtCompassScaleDraw::labelMap() const
 {
-    return d_data->labelMap;
+    return d_labelMap;
 }
 
 /*!
@@ -121,11 +107,8 @@ QwtText QwtCompassScaleDraw::label( double value ) const
     if ( value < 0.0 )
         value += 360.0;
 
-    QMap<double, QString>::const_iterator it =
-        d_data->labelMap.constFind( value );
-
-    if ( it != d_data->labelMap.constEnd() )
-        return *it;
+    if ( d_labelMap.contains( value ) )
+        return d_labelMap[value];
 
     return QwtText();
 }
@@ -323,7 +306,3 @@ void QwtCompass::keyPressEvent( QKeyEvent *kev )
         QwtDial::keyPressEvent( kev );
     }
 }
-
-#if QWT_MOC_INCLUDE
-#include "moc_qwt_compass.cpp"
-#endif

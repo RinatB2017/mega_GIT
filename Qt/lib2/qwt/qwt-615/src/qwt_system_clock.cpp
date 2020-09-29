@@ -77,44 +77,41 @@ double QwtSystemClock::elapsed() const
 
 #if defined(QWT_HIGH_RESOLUTION_CLOCK)
 
-namespace
+class QwtHighResolutionClock
 {
-    class QwtHighResolutionClock
-    {
-    public:
-        QwtHighResolutionClock();
+public:
+    QwtHighResolutionClock();
 
-        void start();
-        double restart();
-        double elapsed() const;
+    void start();
+    double restart();
+    double elapsed() const;
 
-        bool isNull() const;
+    bool isNull() const;
 
-        static double precision();
+    static double precision();
 
-    private:
+private:
 
 #if defined(Q_OS_MAC)
-        static double msecsTo( uint64_t, uint64_t );
+    static double msecsTo( uint64_t, uint64_t );
 
-        uint64_t d_timeStamp;
+    uint64_t d_timeStamp;
 #elif defined(_POSIX_TIMERS)
 
-        static double msecsTo( const struct timespec &,
-            const struct timespec & );
+    static double msecsTo( const struct timespec &,
+        const struct timespec & );
 
-        static bool isMonotonic();
+    static bool isMonotonic();
 
-        struct timespec d_timeStamp;
-        clockid_t d_clockId;
+    struct timespec d_timeStamp;
+    clockid_t d_clockId;
 
 #elif defined(Q_OS_WIN)
 
-        LARGE_INTEGER d_startTicks;
-        LARGE_INTEGER d_ticksPerSecond;
+    LARGE_INTEGER d_startTicks;
+    LARGE_INTEGER d_ticksPerSecond;
 #endif
-    };
-}
+};
 
 #if defined(Q_OS_MAC)
 QwtHighResolutionClock::QwtHighResolutionClock():

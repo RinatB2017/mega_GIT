@@ -107,8 +107,10 @@ void MainBox::init(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
-        mw->add_dock_widget("HTML", "frame_html",  Qt::LeftDockWidgetArea, reinterpret_cast<QWidget *>(ui->frame_html));
-        mw->add_dock_widget("JS",   "frame_js",    Qt::LeftDockWidgetArea, reinterpret_cast<QWidget *>(ui->frame_js));
+        mw->add_dock_widget("HTML", "frame_html",   Qt::LeftDockWidgetArea, reinterpret_cast<QWidget *>(ui->frame_html));
+        mw->add_dock_widget("JS",   "frame_js",     Qt::LeftDockWidgetArea, reinterpret_cast<QWidget *>(ui->frame_js));
+        mw->add_dock_widget("view", "frame_view",   Qt::LeftDockWidgetArea, reinterpret_cast<QWidget *>(ui->frame_view));
+        setVisible(false);
     }
 
     load_widgets();

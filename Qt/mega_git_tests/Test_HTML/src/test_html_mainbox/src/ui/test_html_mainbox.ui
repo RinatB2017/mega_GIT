@@ -30,24 +30,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_view">
-     <property name="title">
-      <string>View</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QWebEngineView" name="webEngineView">
-        <property name="url">
-         <url>
-          <string>about:blank</string>
-         </url>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
     <widget class="QFrame" name="frame_js">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -65,6 +47,27 @@
       </item>
       <item>
        <widget class="FileManager" name="widget_js" native="true"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="frame_view">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QWebEngineView" name="webEngineView">
+        <property name="url">
+         <url>
+          <string>about:blank</string>
+         </url>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

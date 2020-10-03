@@ -76,35 +76,55 @@ void MainBox::init(void)
 
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,   SLOT(read_data(QByteArray)));
 
-    connect(ui->btn_ul, SIGNAL(clicked(bool)),  this,   SLOT(move_ul()));
-    connect(ui->btn_u,  SIGNAL(clicked(bool)),  this,   SLOT(move_u()));
-    connect(ui->btn_ur, SIGNAL(clicked(bool)),  this,   SLOT(move_ur()));
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,   ui->btn_u,  &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,   ui->btn_d,  &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,   ui->btn_l,  &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,   ui->btn_r,  &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,   ui->btn_ul, &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,   ui->btn_ur, &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,   ui->btn_dl, &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,   ui->btn_dr, &QToolButton::setEnabled);
 
-    connect(ui->btn_l,  SIGNAL(clicked(bool)),  this,   SLOT(move_l()));
-    connect(ui->btn_r,  SIGNAL(clicked(bool)),  this,   SLOT(move_r()));
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,   ui->btn_send_test_data, &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,   ui->btn_load_pic,       &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,   ui->btn_load_ico,       &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,   ui->sb_brightness,      &QToolButton::setEnabled);
 
-    connect(ui->btn_dl, SIGNAL(clicked(bool)),  this,   SLOT(move_dl()));
-    connect(ui->btn_d,  SIGNAL(clicked(bool)),  this,   SLOT(move_d()));
-    connect(ui->btn_dr, SIGNAL(clicked(bool)),  this,   SLOT(move_dr()));
+    connect(ui->btn_ul,         &QToolButton::clicked,  this,   &MainBox::move_ul);
+    connect(ui->btn_u,          &QToolButton::clicked,  this,   &MainBox::move_u);
+    connect(ui->btn_ur,         &QToolButton::clicked,  this,   &MainBox::move_ur);
 
-    connect(ui->btn_load_ico,   SIGNAL(clicked(bool)),  ui->rgb_display,   SLOT(load_ico()));
-    connect(ui->btn_load_pic,   SIGNAL(clicked(bool)),  ui->rgb_display,   SLOT(load_pic()));
+    connect(ui->btn_l,          &QToolButton::clicked,  this,   &MainBox::move_l);
+    connect(ui->btn_r,          &QToolButton::clicked,  this,   &MainBox::move_r);
 
-    connect(this,   SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
-    connect(ui->serial_widget, SIGNAL(output(QByteArray)),  this,   SLOT(get_data(QByteArray)));
+    connect(ui->btn_dl,         &QToolButton::clicked,  this,   &MainBox::move_dl);
+    connect(ui->btn_d,          &QToolButton::clicked,  this,   &MainBox::move_d);
+    connect(ui->btn_dr,         &QToolButton::clicked,  this,   &MainBox::move_dr);
 
-    connect(ui->rgb_display,    SIGNAL(send(QString)),  this,   SLOT(send_data(QString)));
+    connect(ui->btn_load_ico,   &QPushButton::clicked,  ui->rgb_display,   &RGB_display::load_ico);
+    connect(ui->btn_load_pic,   &QPushButton::clicked,  ui->rgb_display,   &RGB_display::load_pic);
 
-    connect(ui->btn_send_test_data, SIGNAL(clicked(bool)),  this,   SLOT(send_test_data()));
+    connect(this,               &MainBox::send,
+            ui->serial_widget,  static_cast<int (SerialBox5_fix_baudrate::*)(const QByteArray&)>(&SerialBox5_fix_baudrate::input));
 
-    connect(ui->btn_get,        SIGNAL(clicked(bool)),  this,   SLOT(get_param()));
-    connect(ui->btn_set,        SIGNAL(clicked(bool)),  this,   SLOT(set_param()));
-    connect(ui->btn_default,    SIGNAL(clicked(bool)),  this,   SLOT(set_default()));
+    connect(ui->serial_widget, &SerialBox5_fix_baudrate::output,  this,   &MainBox::get_data);
+
+    connect(ui->rgb_display,    &RGB_display::send,     this,   &MainBox::send_data);
+
+    connect(ui->btn_send_test_data, &QPushButton::clicked,  this,   &MainBox::send_test_data);
+
+    connect(ui->btn_get,        &QPushButton::clicked,  this,   &MainBox::get_param);
+    connect(ui->btn_set,        &QPushButton::clicked,  this,   &MainBox::set_param);
+    connect(ui->btn_default,    &QPushButton::clicked,  this,   &MainBox::set_default);
 
     //setFixedSize(sizeHint());
 
-    load_widgets();
-    set_param();
+    QTimer::singleShot(0, [this]{
+        load_widgets();
+    });
+    QTimer::singleShot(100, [this]{
+        set_param();
+    });
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -297,7 +317,7 @@ void MainBox::move_d(void)
     ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
-void MainBox:: move_dr(void)
+void MainBox::move_dr(void)
 {
     emit trace(Q_FUNC_INFO);
 
@@ -374,8 +394,6 @@ void MainBox::send_test_data(void)
 //--------------------------------------------------------------------------------
 void MainBox::set_param(void)
 {
-    block_interface(true);
-
     int cnt_led_x = ui->sb_max_x->value();
     int cnt_led_y = ui->sb_max_y->value();
     double width_led = ui->sb_led_width->value();
@@ -393,13 +411,10 @@ void MainBox::set_param(void)
     {
         emit error("bad param");
     }
-    block_interface(false);
 }
 //--------------------------------------------------------------------------------
 void MainBox::get_param(void)
 {
-    block_interface(true);
-
     int cnt_led_x = 0;
     int cnt_led_y = 0;
     double width_led = 0;
@@ -424,8 +439,6 @@ void MainBox::get_param(void)
     ui->sb_led_height->setValue(height_led);
     ui->sb_led_left_border->setValue(l_border);
     ui->sb_led_up_border->setValue(u_border);
-
-    block_interface(false);
 }
 //--------------------------------------------------------------------------------
 void MainBox::set_default(void)

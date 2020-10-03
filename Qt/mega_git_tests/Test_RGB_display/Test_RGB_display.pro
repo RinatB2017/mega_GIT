@@ -8,9 +8,7 @@ TARGET   = Test_RGB_display
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_rgb_display_mainbox \
-    $$PWD/src/test_rgb_display_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -26,15 +24,11 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    test_rgb_display_mainbox.hpp \
     defines.hpp \
     version.hpp \
 
 SOURCES += \
-    test_rgb_display_mainbox.cpp \
     main.cpp
-
-FORMS   += test_rgb_display_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -61,6 +55,7 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
 
+include (src/test_rgb_display_mainbox/test_rgb_display_mainbox.pri)
 include (src/rgb_display/rgb_display.pri)
 
 !exists(OBJECTS_DIR) {

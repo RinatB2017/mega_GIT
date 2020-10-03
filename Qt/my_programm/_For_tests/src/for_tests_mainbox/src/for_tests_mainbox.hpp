@@ -87,6 +87,8 @@ private:
 
     //MyToolBar *bar = nullptr;
 
+    QPointer<QFileSystemModel> file_model;
+
     QPointer<QSpinBox>  sb_test;
     QPointer<QCheckBox> cb_block;
 

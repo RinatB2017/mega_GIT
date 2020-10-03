@@ -34,7 +34,7 @@ signals:
     void local_pos(QMouseEvent *);
 
 public:
-    MyQChartView(QWidget *parent = nullptr);
+    explicit MyQChartView(QWidget *parent = nullptr);
     ~MyQChartView();
 
 private:

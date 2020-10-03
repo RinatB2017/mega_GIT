@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="MyQChartView" name="chartView" native="true">
+    <widget class="QChartView" name="chartView" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -28,9 +28,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MyQChartView</class>
+   <class>QChartView</class>
    <extends>QWidget</extends>
-   <header>myqchartview.hpp</header>
+   <header>qchartview.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -52,7 +52,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>6</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="icon">
@@ -345,8 +345,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>576</width>
-               <height>234</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -362,8 +362,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>576</width>
-               <height>234</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -379,8 +379,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>576</width>
-               <height>234</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -397,7 +397,7 @@ p, li { white-space: pre-wrap; }
                <x>0</x>
                <y>0</y>
                <width>576</width>
-               <height>234</height>
+               <height>246</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -449,6 +449,11 @@ p, li { white-space: pre-wrap; }
  </widget>
  <customwidgets>
   <customwidget>
+   <class>MyListWidget</class>
+   <extends>QListWidget</extends>
+   <header>mylistwidget.hpp</header>
+  </customwidget>
+  <customwidget>
    <class>QLongLongSpinBox</class>
    <extends>QSpinBox</extends>
    <header>QLongLongSpinBox.hpp</header>
@@ -464,11 +469,6 @@ p, li { white-space: pre-wrap; }
    <extends>QWidget</extends>
    <header>controlexitwidget.hpp</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>MyListWidget</class>
-   <extends>QListWidget</extends>
-   <header>mylistwidget.hpp</header>
   </customwidget>
  </customwidgets>
  <tabstops>

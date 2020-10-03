@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>349</width>
+    <width>342</width>
     <height>450</height>
    </rect>
   </property>
@@ -38,10 +38,10 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
-         <widget class="MyQChartView" name="chartView" native="true"/>
+         <widget class="QChartView" name="chartView" native="true"/>
         </item>
         <item>
-         <widget class="MyQChartView" name="volumes_widget" native="true"/>
+         <widget class="QChartView" name="volumes_widget" native="true"/>
         </item>
         <item>
          <widget class="QLabel" name="lbl_volumes_grapher"/>
@@ -291,9 +291,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MyQChartView</class>
+   <class>QChartView</class>
    <extends>QWidget</extends>
-   <header>myqchartview.hpp</header>
+   <header>qchartview.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

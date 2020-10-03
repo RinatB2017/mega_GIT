@@ -130,7 +130,7 @@ void MainBox::init(void)
 #endif
 
     //---
-    QFileSystemModel *file_model = new QFileSystemModel(this);
+    file_model = new QFileSystemModel(this);
     file_model->setNameFilters(QStringList() << "*");
     file_model->setNameFilterDisables(false);
 

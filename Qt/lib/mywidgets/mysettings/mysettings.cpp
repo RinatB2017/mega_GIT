@@ -84,7 +84,7 @@ bool MySettings::save_combobox_property(QWidget *widget)
         {
             settings->setArrayIndex(n);
             dynamic_cast<QComboBox *>(widget)->setCurrentIndex(n);
-            settings->setValue("currentText", dynamic_cast<QComboBox *>(widget)->currentText());
+            settings->setValue("currentText", QVariant::fromValue(dynamic_cast<QComboBox *>(widget)->currentText()));
         }
         dynamic_cast<QComboBox *>(widget)->setCurrentIndex(temp_index);
         settings->endArray();
@@ -127,7 +127,7 @@ bool MySettings::save_listwidget_property(QWidget *widget)
         {
             settings->setArrayIndex(n);
             dynamic_cast<QListWidget *>(widget)->setCurrentRow(n);
-            settings->setValue("currentText", dynamic_cast<QListWidget *>(widget)->currentItem()->text());
+            settings->setValue("currentText", QVariant::fromValue(dynamic_cast<QListWidget *>(widget)->currentItem()->text()));
         }
         settings->endArray();
         settings->endGroup();
@@ -202,7 +202,7 @@ bool MySettings::save_property(QWidget *widget, const QString &property_name)
     {
         return false;
     }
-    settings->setValue(property_name, property);
+    settings->setValue(property_name, QVariant::fromValue(property));
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -220,7 +220,7 @@ bool MySettings::load_int(QString name, int *value)
 //--------------------------------------------------------------------------------
 void MySettings::save_int(QString name, int value)
 {
-    settings->setValue(name, value);
+    settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
 bool MySettings::load_ulonglong(QString name, qlonglong *value)
@@ -237,7 +237,7 @@ bool MySettings::load_ulonglong(QString name, qlonglong *value)
 //--------------------------------------------------------------------------------
 void MySettings::save_ulonglong(QString name, qlonglong value)
 {
-    settings->setValue(name, value);
+    settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
 bool MySettings::load_bool(QString name)
@@ -247,7 +247,7 @@ bool MySettings::load_bool(QString name)
 //--------------------------------------------------------------------------------
 void MySettings::save_bool(QString name, bool value)
 {
-    settings->setValue(name, value);
+    settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
 bool MySettings::load_uint(QString name, uint *value)
@@ -264,7 +264,7 @@ bool MySettings::load_uint(QString name, uint *value)
 //--------------------------------------------------------------------------------
 void MySettings::save_uint(QString name, uint value)
 {
-    settings->setValue(name, value);
+    settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
 QString MySettings::load_string(QString name)
@@ -274,7 +274,7 @@ QString MySettings::load_string(QString name)
 //--------------------------------------------------------------------------------
 void MySettings::save_string(QString name, QString value)
 {
-    settings->setValue(name, value);
+    settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
 QByteArray MySettings::load_bytearray(QString name)
@@ -295,7 +295,7 @@ void MySettings::save_bytearray(QString name, QByteArray value)
 {
     if(settings)
     {
-        settings->setValue(name, value);
+        settings->setValue(name, QVariant::fromValue(value));
     }
     else
     {
@@ -321,7 +321,7 @@ void MySettings::save_stringlist(QString name, QStringList value)
 {
     if(settings)
     {
-        settings->setValue(name, value);
+        settings->setValue(name, QVariant::fromValue(value));
     }
     else
     {
@@ -413,5 +413,10 @@ bool MySettings::compare_name(const char *widget_name, QString class_name)
                       class_name.toLocal8Bit(),
                       static_cast<size_t>(class_name.count()));
     return (res == 0);
+}
+//--------------------------------------------------------------------------------
+void MySettings::clear_all(void)
+{
+    settings->clear();
 }
 //--------------------------------------------------------------------------------

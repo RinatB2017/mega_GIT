@@ -83,6 +83,8 @@ public:
     void endArray(void);
     void setArrayIndex(int i);
 
+    void clear_all(void);
+
 private:
     QPointer<QSettings> settings;
 

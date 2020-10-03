@@ -82,11 +82,14 @@ void CandleStick_Box_adv::init(void)
     {
         btn->setProperty(NO_SAVE, true);
     }
+    ui->cb_rubberband->setProperty(NO_SAVE, true);
 
     ui->btn_show_frame->setFixedSize(24, 24);
     ui->frame->setVisible(false);
 
-    load_widgets();
+    QTimer::singleShot(0, [this]{
+        load_widgets();
+    });
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box_adv::init_candle_series(void)
@@ -170,7 +173,7 @@ void CandleStick_Box_adv::connect_widgets(void)
 
     connect(ui->btn_clear_data, &QPushButton::clicked,  this,   &CandleStick_Box_adv::clear_data);
 
-    connect(ui->chartView,      &MyQChartView::local_pos,   this,   &CandleStick_Box_adv::show_volumes);
+//    connect(ui->chartView,      &MyQChartView::local_pos,   this,   &CandleStick_Box_adv::show_volumes);
 
     connect(ui->btn_test,       &QPushButton::clicked,  this,   &CandleStick_Box_adv::test);
 

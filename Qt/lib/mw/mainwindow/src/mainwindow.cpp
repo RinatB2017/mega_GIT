@@ -694,7 +694,7 @@ void MainWindow::save_main(void)
     endGroup();
 
     save_value(P_GEOMETRY,      saveGeometry());
-    save_value(P_WINDOW_STATE,   saveState());
+    save_value(P_WINDOW_STATE,  saveState());
 }
 //--------------------------------------------------------------------------------
 void MainWindow::load_setting(void)

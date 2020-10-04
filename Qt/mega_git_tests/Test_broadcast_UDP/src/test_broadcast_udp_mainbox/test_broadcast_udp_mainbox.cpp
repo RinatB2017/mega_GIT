@@ -58,6 +58,8 @@ void MainBox::init(void)
 #ifdef QT_DEBUG
     createTestBar();
 #endif
+
+    setVisible(false);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -77,7 +79,7 @@ void MainBox::createTestBar(void)
                                        "test");
 
     
-    connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
+    connect(btn_test,   &QToolButton::clicked,  this,   &MainBox::test);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::create_server(void)

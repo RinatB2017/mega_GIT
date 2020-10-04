@@ -37,6 +37,8 @@
 #   include "test.hpp"
 #   include <QDebug>
 #endif
+
+#define SINGLE_APP
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {

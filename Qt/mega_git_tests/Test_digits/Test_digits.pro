@@ -8,9 +8,7 @@ TARGET   = Test_digits
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_digits_mainbox \
-    $$PWD/src/test_digits_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -19,15 +17,11 @@ DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_LOG
 
 HEADERS += \
-    test_digits_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_digits_mainbox.cpp \
     main.cpp
-
-FORMS   += test_digits_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 
@@ -40,6 +34,8 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
+
+include (src/test_digits_mainbox/test_digits_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

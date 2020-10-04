@@ -107,12 +107,7 @@ signals:
 
 private slots:
     void choice_test(void);
-    void test_0(void);
-    void test_1(void);
-    void test_2(void);
-    void test_3(void);
-    void test_4(void);
-    void test_5(void);
+    void f_test(void);
 
     //---
     void dev_list(void);
@@ -154,9 +149,6 @@ private:
     void load_setting(void);
     void save_setting(void);
     bool send_cmd(int cmd, int state);
-
-protected:
-    void changeEvent(QEvent *event);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

@@ -8,14 +8,12 @@ TARGET   = Test_CRC
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_CRC_mainbox \
-    $$PWD/src/test_CRC_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
-DEFINES += SHOW_SIZE
+#DEFINES += SHOW_SIZE
 
 #DEFINES += NO_TOOLBAR_BUTTON_EXIT
 #DEFINES += NO_TOOLBAR_BUTTON_FONT
@@ -28,15 +26,11 @@ DEFINES += SHOW_SIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    test_CRC_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_CRC_mainbox.cpp \
     main.cpp
-
-FORMS   += test_CRC_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -57,6 +51,8 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/crc/crc.pri)
+
+include (src/test_CRC_mainbox/test_CRC_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

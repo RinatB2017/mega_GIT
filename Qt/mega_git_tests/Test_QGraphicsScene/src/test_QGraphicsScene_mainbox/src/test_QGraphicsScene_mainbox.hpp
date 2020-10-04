@@ -48,10 +48,10 @@ private:
     bool is_blocked = false;
 
     //TODO не надо делать QPointer
-    QGraphicsScene *scene;
-    QGraphicsRectItem *rectangle_R;
-    QGraphicsRectItem *rectangle_G;
-    QGraphicsRectItem *rectangle_B;
+    QGraphicsScene *scene = nullptr;
+    QGraphicsRectItem *rectangle_R = nullptr;
+    QGraphicsRectItem *rectangle_G = nullptr;
+    QGraphicsRectItem *rectangle_B = nullptr;
 
     void init(void);
 

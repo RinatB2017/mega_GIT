@@ -21,7 +21,11 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -30,28 +34,19 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QCheckBox;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox();
 
 private slots:
     void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
+    bool test(void);
 
     void get_X(void);
     void get_Y(void);

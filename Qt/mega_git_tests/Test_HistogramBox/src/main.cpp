@@ -34,6 +34,8 @@
 #   include "test.hpp"
 #   include <QDebug>
 #endif
+
+#define SINGLE_APP
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -72,7 +74,6 @@ int main(int argc, char *argv[])
     
 #ifdef QT_DEBUG
     int test_result = QTest::qExec(new Test(), argc, argv);
-
     if (test_result != EXIT_SUCCESS)
     {
         return test_result;

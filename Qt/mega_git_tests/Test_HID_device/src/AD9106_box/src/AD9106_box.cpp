@@ -423,7 +423,7 @@ void AD9106_Box::read_xml(void)
     }
     //---
     ui->tw_main->clear();
-    int tw_main_width = 0;
+    //int tw_main_width = 0;
     //---
     do
     {
@@ -469,22 +469,22 @@ void AD9106_Box::read_xml(void)
                             int index = 2;  //TODO костыль
                             for(int n=15; n>=0; n--)
                             {
-                                QToolButton *btn = new QToolButton();
-                                btn->setCheckable(true);
-                                btn->setProperty("row", row);
-                                btn->setProperty("bit", n);
+                                QToolButton *t_btn = new QToolButton();
+                                t_btn->setCheckable(true);
+                                t_btn->setProperty("row", row);
+                                t_btn->setProperty("bit", n);
 
                                 if(ok)
                                 {
                                     bool flag = value & (1 << n);
                                     if(flag)
                                     {
-                                        btn->setChecked(true);
-                                        btn->setStyleSheet("background:green");
+                                        t_btn->setChecked(true);
+                                        t_btn->setStyleSheet("background:green");
                                     }
                                 }
-                                connect(btn, SIGNAL(clicked(bool)), this, SLOT(click(bool)));
-                                table->setCellWidget(row, index, btn);
+                                connect(t_btn, SIGNAL(clicked(bool)), this, SLOT(click(bool)));
+                                table->setCellWidget(row, index, t_btn);
                                 index++;
                             }
                             table->setItem(row, 0, name_reg);
@@ -493,7 +493,7 @@ void AD9106_Box::read_xml(void)
                         }
                     }
                     ok = get->rise();
-                    ok = get->rise();
+                    //ok = get->rise();
                 }
                 table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
                 table->setMinimumWidth(table->sizeHint().width());
@@ -501,13 +501,14 @@ void AD9106_Box::read_xml(void)
                 //table->setFixedWidth(table->width());
                 ui->tw_main->addTab(w, name);
 
-                tw_main_width = w->width();
+                //tw_main_width = w->width();
             }
         }
     } while(ok);
     //---
-    tw_main_width = 1000;
-    ui->tw_main->setFixedWidth(tw_main_width);
+//    if(tw_main_width == 0) tw_main_width = 1000;
+//    ui->tw_main->setFixedWidth(tw_main_width);
+    ui->tw_main->setFixedSize(sizeHint());
     //---
 }
 //--------------------------------------------------------------------------------
@@ -1079,7 +1080,7 @@ void AD9106_Box::convert_xml(void)
                                        .arg(cnt));
                         }
                     } while(ok);
-                    ok = get->rise();
+                    get->rise();
                     ok = get->rise();
 
                     put->rise();

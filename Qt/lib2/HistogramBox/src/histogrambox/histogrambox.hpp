@@ -21,25 +21,34 @@
 #ifndef HISTOGRAMBOX_HPP
 #define HISTOGRAMBOX_HPP
 //--------------------------------------------------------------------------------
+#ifdef HAVE_QT5
+#   include<QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #include "qwt_plot_histogram.h"
 #include "qwt_series_data.h"
 #include "qwt_legend_data.h"
+#include <qwt_plot_renderer.h>
+#include <qwt_plot_magnifier.h>
+#include <qwt_picker_machine.h>
+#include <qwt_plot_canvas.h>
+#include <qwt_plot_panner.h>
+#include <qwt_plot_picker.h>
+#include <qwt_scale_draw.h>
+#include <qwt_plot_histogram.h>
+#include <qwt_plot_grid.h>
+#include <qwt_symbol.h>
+#include <qwt_legend.h>
+#include <qwt_legend_label.h>
+#include <qwt_plot.h>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class HistogramBox;
 }
-//--------------------------------------------------------------------------------
-class QwtPlotHistogram;
-class QwtPlotPicker;
-class QwtPlotItem;
-class QToolButton;
-class SerialBox;
-class QwtLegend;
-class QwtSymbol;
-class QwtPlot;
-class Plot;
 //--------------------------------------------------------------------------------
 #define MAX_CHANNELS 10
 //--------------------------------------------------------------------------------

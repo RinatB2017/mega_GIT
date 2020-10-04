@@ -26,33 +26,10 @@
 //--------------------------------------------------------------------------------
 #pragma pack (push, 1)
 
-//union A_INT32
-//{
-//  uint32_t value;
-//  struct
-//  {
-//    uint8_t b0;
-//    uint8_t b1;
-//    uint8_t b2;
-//    uint8_t b3;
-//  } bytes;
-//};
-//union B_INT32
-//{
-//  uint32_t value;
-//  struct
-//  {
-//    uint8_t b3;
-//    uint8_t b2;
-//    uint8_t b1;
-//    uint8_t b0;
-//  } bytes;
-//};
-
 struct PACKET
 {
-  uint16_t  id;
-  uint32_t  num_card;
+    uint16_t  id;
+    uint32_t  num_card;
 };
 
 #pragma pack(pop)
@@ -68,8 +45,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox();
 
 signals:

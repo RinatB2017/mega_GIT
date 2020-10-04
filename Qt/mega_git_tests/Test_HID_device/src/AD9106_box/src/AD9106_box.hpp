@@ -134,7 +134,7 @@ private:
     Ui::AD9106_Box *ui;
 
     //---
-    hid_device *dev;
+    hid_device *dev = nullptr;
     bool AD9106_read(QString name_reg, uint16_t *data);
     bool AD9106_write(QString name_reg, uint16_t data);
     //---

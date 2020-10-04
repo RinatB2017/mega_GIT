@@ -98,12 +98,7 @@ void HID_device::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &HID_device::test_0 });
-    commands.append({ id++, "test 1", &HID_device::test_1 });
-    commands.append({ id++, "test 2", &HID_device::test_2 });
-    commands.append({ id++, "test 3", &HID_device::test_3 });
-    commands.append({ id++, "test 4", &HID_device::test_4 });
-    commands.append({ id++, "test 5", &HID_device::test_5 });
+    commands.append({ id++, "test", &HID_device::f_test });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -521,11 +516,11 @@ void HID_device::block_buttons(bool state)
     ui->btn_test->setDisabled(state);
 }
 //--------------------------------------------------------------------------------
-void HID_device::test_0(void)
+void HID_device::f_test(void)
 {
-    emit info("Test_0()");
+    emit info("Test");
 
-#if 1
+#if 0
     uint unixTime = 0xFFFFFFFF;
     QDateTime timestamp;
     timestamp.setTime_t(unixTime);
@@ -540,7 +535,7 @@ void HID_device::test_0(void)
     emit info(QString("MEASURES_DATA size = %1").arg(sizeof(MEASURES_DATA)));
 #endif
 
-#if 0
+#if 1
     AD9106_Box *box = new AD9106_Box();
     connect(box,    &AD9106_Box::info,  this,   &HID_device::info);
     connect(box,    &AD9106_Box::debug, this,   &HID_device::debug);
@@ -548,31 +543,6 @@ void HID_device::test_0(void)
     connect(box,    &AD9106_Box::trace, this,   &HID_device::trace);
     box->show();
 #endif
-}
-//--------------------------------------------------------------------------------
-void HID_device::test_1(void)
-{
-    emit info("Test_1()");
-}
-//--------------------------------------------------------------------------------
-void HID_device::test_2(void)
-{
-    emit info("Test_2()");
-}
-//--------------------------------------------------------------------------------
-void HID_device::test_3(void)
-{
-    emit info("Test_3()");
-}
-//--------------------------------------------------------------------------------
-void HID_device::test_4(void)
-{
-    emit info("Test_4()");
-}
-//--------------------------------------------------------------------------------
-void HID_device::test_5(void)
-{
-    emit info("Test_5()");
 }
 //--------------------------------------------------------------------------------
 void HID_device::updateText(void)
@@ -593,19 +563,5 @@ void HID_device::load_setting(void)
 void HID_device::save_setting(void)
 {
 
-}
-//--------------------------------------------------------------------------------
-void HID_device::changeEvent(QEvent *event)
-{
-    QWidget::changeEvent(event);
-    switch (event->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-
-    default:
-        break;
-    }
 }
 //--------------------------------------------------------------------------------

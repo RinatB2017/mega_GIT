@@ -8,9 +8,7 @@ TARGET   = Test_picture
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_picture_mainbox \
-    $$PWD/src/test_picture_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 #DEFINES += LOGO_GL
@@ -20,7 +18,7 @@ DEFINES += NO_STYLETOOLBAR
 #DEFINES += NO_STATUSBAR
 DEFINES += NO_TRAYICON
 #DEFINES += NO_TOOLBAR
-DEFINES += SHOW_SIZE
+#DEFINES += SHOW_SIZE
 #DEFINES += NO_MENU
 #DEFINES += NO_LOG
 
@@ -31,15 +29,11 @@ DEFINES += SHOW_SIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    test_picture_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_picture_mainbox.cpp \
     main.cpp
-
-FORMS   += test_picture_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -60,6 +54,8 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
+
+include (src/test_picture_mainbox/test_picture_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

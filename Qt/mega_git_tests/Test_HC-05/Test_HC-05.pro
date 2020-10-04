@@ -27,15 +27,11 @@ DEFINES += NO_RESIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    test_hc05_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_hc05_mainbox.cpp \
     main.cpp
-
-FORMS   += test_hc05_mainbox.ui
 
 win32 {
     RC_FILE = ico/myapp.rc
@@ -56,6 +52,8 @@ LIB_PATH  = "$$PWD/../../lib"
 LIB_PATH2 = "$$PWD/../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+
+include (src/test_hc05_mainbox/test_hc05_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

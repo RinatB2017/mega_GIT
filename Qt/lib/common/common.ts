@@ -79,10 +79,13 @@
         <source>Windows</source>
         <translation>Окна</translation>
     </message>
-
     <message>
         <source>Themes</source>
         <translation>Темы</translation>
+    </message>
+    <message>
+        <source>Fonts</source>
+        <translation>Шрифты</translation>
     </message>
     <message>
         <source>System theme</source>

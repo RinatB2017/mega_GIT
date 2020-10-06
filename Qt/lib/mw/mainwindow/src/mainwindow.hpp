@@ -309,11 +309,7 @@ private:
 
     void app_menu_add_separator(QMenu *menu);
     void app_menu_add_exit(QMenu *menu);
-    void app_menu_add_font_programm(QMenu *menu);
-
-#ifndef NO_LOG
-    void app_menu_add_font_log(QMenu *menu);
-#endif
+    void app_menu_add_fonts(QMenu *menu);
 
     void app_menu_add_theme(QMenu *menu);
     void app_menu_add_lang(QMenu *menu);

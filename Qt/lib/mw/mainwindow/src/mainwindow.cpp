@@ -405,10 +405,8 @@ void MainWindow::createMenus(void)
 
     app_menu_add_exit(m_app_filemenu);
 
-    app_menu_add_font_programm(m_app_optionsmenu);
-#ifndef NO_LOG
-    app_menu_add_font_log(m_app_optionsmenu);
-#endif
+    app_menu_add_fonts(m_app_optionsmenu);
+
     app_menu_add_separator(m_app_optionsmenu);
     app_menu_add_theme(m_app_optionsmenu);
     app_menu_add_separator(m_app_optionsmenu);
@@ -468,17 +466,17 @@ void MainWindow::setMenuLanguage(void)
 void MainWindow::setToolBarLanguage(void)
 {
 #ifndef ONLY_ENGLISH
-    QToolButton* button = reinterpret_cast<QToolButton*>(sender());
-    Q_CHECK_PTR(button);
+    QAction* action = reinterpret_cast<QAction*>(sender());
+    Q_CHECK_PTR(action);
 
-    if(!button)
+    if(!action)
     {
         emit error("setToolBarLanguage: button");
         return;
     }
 
     QString language;
-    language = button->text().remove("&");
+    language = action->text().remove("&");
     if(language.contains("Russian") || language.contains("Русский"))
     {
         if(translator_common) qApp->installTranslator(translator_common);
@@ -1667,41 +1665,40 @@ void MainWindow::app_menu_add_exit(QMenu *menu)
     menu->addAction(exit);
 }
 //--------------------------------------------------------------------------------
-void MainWindow::app_menu_add_font_programm(QMenu *menu)
+void MainWindow::app_menu_add_fonts(QMenu *menu)
 {
     Q_CHECK_PTR(menu);
 
-    QAction *font_programm = new QAction(menu);
-    font_programm->setProperty(P_APP_ENG_TEXT, "Select the font program");
-    font_programm->setText("Select the font program");
-    font_programm->setToolTip("Select the font program");
-    font_programm->setStatusTip("Select the font program");
-    font_programm->setIcon(QIcon(P_ICON_FONT));
-    connect(font_programm,   SIGNAL(triggered()),    this,   SLOT(set_app_font()));
+    //---
+    QMenu *m_fonts = new QMenu(menu);
+    m_fonts->setProperty(P_APP_ENG_TEXT, "Fonts");
+    m_fonts->setTitle("Fonts");
+    m_fonts->setToolTip("Fonts");
+    m_fonts->setStatusTip("Fonts");
+    m_fonts->setIcon(QIcon(P_ICON_FONT));
+    menu->addMenu(m_fonts);
+    app_menus.append(m_fonts);
 
-    app_actions.append(font_programm);
+    QAction *a_font_programm = new QAction(m_fonts);
+    a_font_programm->setProperty(P_APP_ENG_TEXT, "Select the font program");
+    a_font_programm->setText("Select the font program");
+    a_font_programm->setToolTip("Select the font program");
+    a_font_programm->setStatusTip("Select the font program");
+    m_fonts->addAction(a_font_programm);
+    connect(a_font_programm,    &QAction::triggered,    this,   &MainWindow::set_app_font);
+    app_actions.append(a_font_programm);
 
-    menu->addAction(font_programm);
-}
-//--------------------------------------------------------------------------------
 #ifndef NO_LOG
-void MainWindow::app_menu_add_font_log(QMenu *menu)
-{
-    Q_CHECK_PTR(menu);
-
-    QAction *font_log = new QAction(menu);
-    font_log->setProperty(P_APP_ENG_TEXT, "Select the font logging");
-    font_log->setText("Select the font logging");
-    font_log->setToolTip("Select the font logging");
-    font_log->setStatusTip("Select the font logging");
-    font_log->setIcon(QIcon(P_ICON_FONT));
-    connect(font_log,   SIGNAL(triggered()),    this,   SLOT(set_log_font()));
-
-    app_actions.append(font_log);
-
-    menu->addAction(font_log);
-}
+    QAction *a_font_log = new QAction(m_fonts);
+    a_font_log->setProperty(P_APP_ENG_TEXT, "Select the font logging");
+    a_font_log->setText("Select the font logging");
+    a_font_log->setToolTip("Select the font logging");
+    a_font_log->setStatusTip("Select the font logging");
+    m_fonts->addAction(a_font_log);
+    connect(a_font_log, &QAction::triggered,    this,   &MainWindow::set_log_font);
+    app_actions.append(a_font_log);
 #endif
+}
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_theme(QMenu *menu)
 {
@@ -1765,16 +1762,6 @@ void MainWindow::app_menu_add_lang(QMenu *menu)
     menu->addMenu(menu_language);
     app_menus.append(menu_language);
 
-    QAction *rus_language = new QAction(menu_language);
-    rus_language->setProperty(P_APP_ENG_TEXT, "Russian");
-    rus_language->setText("Russian");
-    rus_language->setToolTip("Russian");
-    rus_language->setStatusTip("Russian");
-    rus_language->setIcon(QIcon(P_ICON_RU));
-    connect(rus_language,   SIGNAL(triggered()),    this,   SLOT(setMenuLanguage()));
-    menu_language->addAction(rus_language);
-    app_actions.append(rus_language);
-
     QAction *eng_language = new QAction(menu_language);
     eng_language->setProperty(P_APP_ENG_TEXT, "English");
     eng_language->setText("English");
@@ -1784,6 +1771,16 @@ void MainWindow::app_menu_add_lang(QMenu *menu)
     connect(eng_language,   SIGNAL(triggered()),    this,   SLOT(setMenuLanguage()));
     menu_language->addAction(eng_language);
     app_actions.append(eng_language);
+
+    QAction *rus_language = new QAction(menu_language);
+    rus_language->setProperty(P_APP_ENG_TEXT, "Russian");
+    rus_language->setText("Russian");
+    rus_language->setToolTip("Russian");
+    rus_language->setStatusTip("Russian");
+    rus_language->setIcon(QIcon(P_ICON_RU));
+    connect(rus_language,   SIGNAL(triggered()),    this,   SLOT(setMenuLanguage()));
+    menu_language->addAction(rus_language);
+    app_actions.append(rus_language);
 }
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_style(QMenu *menu)
@@ -1933,62 +1930,77 @@ void MainWindow::app_toolbar_add_exit(void)
 #ifndef NO_LOG
 void MainWindow::app_toolbar_add_font(void)
 {
-    QToolButton *btnAppFont = new QToolButton(this);
-    QToolButton *btnLogFont = new QToolButton(this);
+    QMenu *menu_fonts = new QMenu();
 
-    btnAppFont->setObjectName("btnAppFont");
-    btnAppFont->setIcon(QPixmap(P_ICON_FONT));
-    btnAppFont->setToolTip("Select the font program");
-    btnAppFont->setStatusTip("Select the font program");
-    btnAppFont->setProperty(P_APP_ENG_TEXT, "Select the font program");
-    connect(btnAppFont,    SIGNAL(clicked(bool)),  this,   SLOT(set_app_font()));
+    QAction *a_app_font = new QAction();
+    a_app_font->setText("Select the font program");
+    a_app_font->setToolTip("Select the font program");
+    a_app_font->setStatusTip("Select the font program");
+    a_app_font->setProperty(P_APP_ENG_TEXT, "Select the font program");
+    connect(a_app_font, &QAction::triggered,  this,   &MainWindow::set_app_font);
 
-    btnLogFont->setObjectName("btnLogFont");
-    btnLogFont->setIcon(QPixmap(P_ICON_FONT));
-    btnLogFont->setToolTip("Select the font logging");
-    btnLogFont->setStatusTip("Select the font logging");
-    btnLogFont->setProperty(P_APP_ENG_TEXT, "Select the font logging");
-    connect(btnLogFont,    SIGNAL(clicked(bool)),  this,   SLOT(set_log_font()));
+    QAction *a_log_font = new QAction();
+    a_log_font->setText("Select the font logging");
+    a_log_font->setToolTip("Select the font logging");
+    a_log_font->setStatusTip("Select the font logging");
+    a_log_font->setProperty(P_APP_ENG_TEXT, "Select the font logging");
+    connect(a_log_font, &QAction::triggered,  this,   &MainWindow::set_log_font);
+
+    menu_fonts->addAction(a_app_font);
+    menu_fonts->addAction(a_log_font);
+
+    QToolButton *btn_font = new QToolButton(this);
+    btn_font->setObjectName("btn_font");
+    btn_font->setMenu(menu_fonts);
+    btn_font->setIcon(QPixmap(P_ICON_FONT));
+    btn_font->setPopupMode(QToolButton::MenuButtonPopup);
 
 #ifndef NO_TOOLBAR
-    toolbar->addWidget(btnAppFont);
-    toolbar->addWidget(btnLogFont);
+    toolbar->addWidget(btn_font);
 #endif
 
-    app_buttons.append(btnAppFont);
-    app_buttons.append(btnLogFont);
+    app_buttons.append(btn_font);
+    app_actions.append(a_app_font);
+    app_actions.append(a_log_font);
 }
 #endif
 //--------------------------------------------------------------------------------
 void MainWindow::app_toolbar_add_lang(void)
 {
-    QToolButton *btnRus = new QToolButton(this);
-    QToolButton *btnEng = new QToolButton(this);
+    QMenu *menu = new QMenu();
 
-    btnRus->setObjectName("btnRus");
-    btnEng->setObjectName("btnEng");
+    QAction *a_eng = new QAction(this);
+    a_eng->setObjectName("btnEng");
+    a_eng->setIcon(QPixmap(P_ICON_US));
+    a_eng->setToolTip("English");
+    a_eng->setStatusTip("English");
+    a_eng->setProperty(P_APP_ENG_TEXT, "English");
+    connect(a_eng,  &QAction::triggered,    this,   &MainWindow::setToolBarLanguage);
 
-    btnRus->setObjectName("btnRus");
-    btnRus->setIcon(QPixmap(P_ICON_RU));
-    btnRus->setToolTip("Russian");
-    btnRus->setStatusTip("Russian");
-    btnRus->setProperty(P_APP_ENG_TEXT, "Russian");
-    connect(btnRus,    SIGNAL(clicked(bool)),  this,   SLOT(setToolBarLanguage()));
+    QAction *a_rus = new QAction(this);
+    a_rus->setObjectName("btnRus");
+    a_rus->setIcon(QPixmap(P_ICON_RU));
+    a_rus->setToolTip("Russian");
+    a_rus->setStatusTip("Russian");
+    a_rus->setProperty(P_APP_ENG_TEXT, "Russian");
+    connect(a_rus,  &QAction::triggered,    this,   &MainWindow::setToolBarLanguage);
 
-    btnEng->setObjectName("btnEng");
-    btnEng->setIcon(QPixmap(P_ICON_US));
-    btnEng->setToolTip("English");
-    btnEng->setStatusTip("English");
-    btnEng->setProperty(P_APP_ENG_TEXT, "English");
-    connect(btnEng,    SIGNAL(clicked(bool)),  this,   SLOT(setToolBarLanguage()));
+    menu->addAction(a_eng);
+    menu->addAction(a_rus);
+
+    QToolButton *btn_lang = new QToolButton(this);
+    btn_lang->setMenu(menu);
+    btn_lang->setIcon(QIcon(P_ICON_LANG));
+    btn_lang->setPopupMode(QToolButton::MenuButtonPopup);
 
 #ifndef NO_TOOLBAR
-    toolbar->addWidget(btnRus);
-    toolbar->addWidget(btnEng);
+    toolbar->addWidget(btn_lang);
 #endif
 
-    app_buttons.append(btnRus);
-    app_buttons.append(btnEng);
+    app_buttons.append(btn_lang);
+
+    app_actions.append(a_eng);
+    app_actions.append(a_rus);
 }
 //--------------------------------------------------------------------------------
 void MainWindow::app_toolbar_add_style(void)

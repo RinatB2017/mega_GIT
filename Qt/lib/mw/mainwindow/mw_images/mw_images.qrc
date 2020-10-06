@@ -14,5 +14,6 @@
 	<file alias="kfontview.png">kfontview.png</file>
 	<file alias="style.png">style.png</file>
 	<file alias="ucoz_favicon.ico">ucoz_favicon.ico</file>
+        <file alias="worlwide.png">worlwide.png</file>
     </qresource>
 </RCC>

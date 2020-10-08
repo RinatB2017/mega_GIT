@@ -14,3 +14,6 @@ include ($$PWD/../time/time.pri)
 include ($$PWD/../locale.pri)
 include ($$PWD/../mw/mw.pri)
 include ($$PWD/../turbo.pri)
+
+RESOURCES += \
+    locale/lang.qrc

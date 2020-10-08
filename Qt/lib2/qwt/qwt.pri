@@ -25,7 +25,6 @@ win32 {
 #    QWT_PATH = "qwt-614"
 #    QWT_PRI  = "qwt-614.pri"
 
-# пока не проверил в linux
     QWT_PATH = "qwt-615"
     QWT_PRI  = "qwt-615.pri"
 

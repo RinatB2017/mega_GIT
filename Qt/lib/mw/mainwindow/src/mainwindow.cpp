@@ -341,32 +341,37 @@ void MainWindow::load_translations()
         qApp->installTranslator(translator_system);
     }
     //---
-    translator_common = new QTranslator(this);
-    res = translator_common->load(":/common");
+    translator_ru = new QTranslator(this);
+    res = translator_ru->load(QLocale(), ":/lang/lang_ru.qm");
     if(!res)
     {
-        QMessageBox::critical(nullptr, "Error", "appTranslator (common) not loaded!");
+        QMessageBox::critical(nullptr, "Error", "appTranslator (translator_ru) not loaded!");
 #ifdef QT_DEBUG
-        qDebug() << "translator_common not loaded!";
+        qDebug() << "translator_ru not loaded!";
 #endif
-    }
-    else
-    {
-        qApp->installTranslator(translator_common);
     }
     //---
-    translator_programm = new QTranslator(this);
-    res = translator_programm->load(":/programm");
+    translator_it = new QTranslator(this);
+    res = translator_it->load(QLocale(), ":/lang/lang_it.qm");
     if(!res)
     {
-        QMessageBox::critical(nullptr, "Error", "appTranslator (programm) not loaded!");
+        QMessageBox::critical(nullptr, "Error", "appTranslator (translator_it) not loaded!");
 #ifdef QT_DEBUG
-        qDebug() << "translator_programm not loaded!";
+        qDebug() << "translator_it not loaded!";
 #endif
     }
-    else
+    //---
+    QLocale locale = QLocale();
+#ifdef QT_DEBUG
+        qDebug() << "### locale" << locale.name();
+#endif
+    if(locale.name() == "ru_RU")
     {
-        qApp->installTranslator(translator_programm);
+        if(translator_ru) qApp->installTranslator(translator_ru);
+    }
+    if(locale.name() == "it_IT")
+    {
+        if(translator_it) qApp->installTranslator(translator_it);
     }
     //---
 #endif
@@ -438,61 +443,84 @@ void MainWindow::createMenus(void)
 void MainWindow::setMenuLanguage(void)
 {
 #ifndef ONLY_ENGLISH
+#if 0
+    if(translator_common)   qApp->installTranslator(translator_common);
+    if(translator_programm) qApp->installTranslator(translator_programm);
+    if(translator_system)   qApp->installTranslator(translator_system);
+    emit updateLanguage();
+#else
     QAction* menu = static_cast<QAction *>(sender());
     Q_CHECK_PTR(menu);
 
-    QString language;
-    language = menu->text();
-#ifdef QT_DEBUG
-    qDebug() << "language = " << language;
-#endif
-    if(language.contains("Russian") || language.contains("Русский"))
+    QString p_lang = menu->property(P_LANG).toString();
+    if(p_lang == P_US)
     {
-        if(translator_common)   qApp->installTranslator(translator_common);
-        if(translator_programm) qApp->installTranslator(translator_programm);
-        if(translator_system)   qApp->installTranslator(translator_system);
-        emit updateLanguage();
-    }
-    if(language.contains("English") || language.contains("Английский"))
-    {
-        if(translator_common)   qApp->removeTranslator(translator_common);
-        if(translator_programm) qApp->removeTranslator(translator_programm);
+//        if(translator_common)   qApp->removeTranslator(translator_common);
         if(translator_system)   qApp->removeTranslator(translator_system);
+        if(translator_ru) qApp->removeTranslator(translator_ru);
+        if(translator_it) qApp->removeTranslator(translator_it);
         emit updateLanguage();
+        return;
     }
+    if(p_lang == P_RU)
+    {
+//        if(translator_common)   qApp->installTranslator(translator_common);
+        if(translator_system)   qApp->installTranslator(translator_system);
+        if(translator_ru)       qApp->installTranslator(translator_ru);
+        emit updateLanguage();
+        return;
+    }
+    if(p_lang == P_IT)
+    {
+//        if(translator_common)   qApp->installTranslator(translator_common);
+        if(translator_system)   qApp->installTranslator(translator_system);
+        if(translator_it)       qApp->installTranslator(translator_it);
+        emit updateLanguage();
+        return;
+    }
+#endif
 #endif
 }
 //--------------------------------------------------------------------------------
 void MainWindow::setToolBarLanguage(void)
 {
 #ifndef ONLY_ENGLISH
-    QAction* action = reinterpret_cast<QAction*>(sender());
-    Q_CHECK_PTR(action);
+#if 0
+    if(translator_common)   qApp->installTranslator(translator_common);
+    if(translator_programm) qApp->installTranslator(translator_programm);
+    if(translator_system)   qApp->installTranslator(translator_system);
+    emit updateLanguage();
+#else
+    QAction* menu = reinterpret_cast<QAction*>(sender());
+    Q_CHECK_PTR(menu);
 
-    if(!action)
+    QString p_lang = menu->property(P_LANG).toString();
+    if(p_lang == P_US)
     {
-        emit error("setToolBarLanguage: button");
-        return;
-    }
-
-    QString language;
-    language = action->text().remove("&");
-    if(language.contains("Russian") || language.contains("Русский"))
-    {
-        if(translator_common) qApp->installTranslator(translator_common);
-        if(translator_programm) qApp->installTranslator(translator_programm);
-        if(translator_system) qApp->installTranslator(translator_system);
-        emit updateLanguage();
-        return;
-    }
-    if(language.contains("English") || language.contains("Английский"))
-    {
-        if(translator_common) qApp->removeTranslator(translator_common);
-        if(translator_programm) qApp->removeTranslator(translator_programm);
+//        if(translator_common) qApp->removeTranslator(translator_common);
         if(translator_system) qApp->removeTranslator(translator_system);
+        if(translator_ru) qApp->removeTranslator(translator_ru);
+        if(translator_it) qApp->removeTranslator(translator_it);
         emit updateLanguage();
         return;
     }
+    if(p_lang == P_RU)
+    {
+//        if(translator_common) qApp->installTranslator(translator_common);
+        if(translator_system)   qApp->installTranslator(translator_system);
+        if(translator_ru)       qApp->installTranslator(translator_ru);
+        emit updateLanguage();
+        return;
+    }
+    if(p_lang == P_IT)
+    {
+//        if(translator_common) qApp->installTranslator(translator_common);
+        if(translator_system)   qApp->installTranslator(translator_system);
+        if(translator_it)       qApp->installTranslator(translator_it);
+        emit updateLanguage();
+        return;
+    }
+#endif
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -1762,25 +1790,38 @@ void MainWindow::app_menu_add_lang(QMenu *menu)
     menu->addMenu(menu_language);
     app_menus.append(menu_language);
 
-    QAction *eng_language = new QAction(menu_language);
-    eng_language->setProperty(P_APP_ENG_TEXT, "English");
-    eng_language->setText("English");
-    eng_language->setToolTip("English");
-    eng_language->setStatusTip("English");
-    eng_language->setIcon(QIcon(P_ICON_US));
-    connect(eng_language,   SIGNAL(triggered()),    this,   SLOT(setMenuLanguage()));
-    menu_language->addAction(eng_language);
-    app_actions.append(eng_language);
+    QAction *a_us = new QAction(menu_language);
+    a_us->setProperty(P_APP_ENG_TEXT, "English");
+    a_us->setText("English");
+    a_us->setToolTip("English");
+    a_us->setStatusTip("English");
+    a_us->setIcon(QIcon(P_ICON_US));
+    a_us->setProperty(P_LANG, P_US);
+    connect(a_us,   &QAction::triggered,    this,   &MainWindow::setMenuLanguage);
+    menu_language->addAction(a_us);
+    app_actions.append(a_us);
 
-    QAction *rus_language = new QAction(menu_language);
-    rus_language->setProperty(P_APP_ENG_TEXT, "Russian");
-    rus_language->setText("Russian");
-    rus_language->setToolTip("Russian");
-    rus_language->setStatusTip("Russian");
-    rus_language->setIcon(QIcon(P_ICON_RU));
-    connect(rus_language,   SIGNAL(triggered()),    this,   SLOT(setMenuLanguage()));
-    menu_language->addAction(rus_language);
-    app_actions.append(rus_language);
+    QAction *a_ru = new QAction(menu_language);
+    a_ru->setProperty(P_APP_ENG_TEXT, "Russian");
+    a_ru->setText("Russian");
+    a_ru->setToolTip("Russian");
+    a_ru->setStatusTip("Russian");
+    a_ru->setIcon(QIcon(P_ICON_RU));
+    a_ru->setProperty(P_LANG, P_RU);
+    connect(a_ru,   &QAction::triggered,    this,   &MainWindow::setMenuLanguage);
+    menu_language->addAction(a_ru);
+    app_actions.append(a_ru);
+
+    QAction *a_it = new QAction(menu_language);
+    a_it->setProperty(P_APP_ENG_TEXT, "Italiano");
+    a_it->setText("Italiano");
+    a_it->setToolTip("Italiano");
+    a_it->setStatusTip("Italiano");
+    a_it->setIcon(QIcon(P_ICON_IT));
+    a_it->setProperty(P_LANG, P_IT);
+    connect(a_it,   &QAction::triggered,    this,   &MainWindow::setMenuLanguage);
+    menu_language->addAction(a_it);
+    app_actions.append(a_it);
 }
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_style(QMenu *menu)
@@ -1969,24 +2010,36 @@ void MainWindow::app_toolbar_add_lang(void)
 {
     QMenu *menu = new QMenu();
 
-    QAction *a_eng = new QAction(this);
-    a_eng->setObjectName("btnEng");
-    a_eng->setIcon(QPixmap(P_ICON_US));
-    a_eng->setToolTip("English");
-    a_eng->setStatusTip("English");
-    a_eng->setProperty(P_APP_ENG_TEXT, "English");
-    connect(a_eng,  &QAction::triggered,    this,   &MainWindow::setToolBarLanguage);
+    QAction *a_us = new QAction(this);
+    a_us->setObjectName("a_us");
+    a_us->setIcon(QPixmap(P_ICON_US));
+    a_us->setToolTip("English");
+    a_us->setStatusTip("English");
+    a_us->setProperty(P_APP_ENG_TEXT, "English");
+    a_us->setProperty(P_LANG, P_US);
+    connect(a_us,  &QAction::triggered,    this,   &MainWindow::setToolBarLanguage);
 
-    QAction *a_rus = new QAction(this);
-    a_rus->setObjectName("btnRus");
-    a_rus->setIcon(QPixmap(P_ICON_RU));
-    a_rus->setToolTip("Russian");
-    a_rus->setStatusTip("Russian");
-    a_rus->setProperty(P_APP_ENG_TEXT, "Russian");
-    connect(a_rus,  &QAction::triggered,    this,   &MainWindow::setToolBarLanguage);
+    QAction *a_ru = new QAction(this);
+    a_ru->setObjectName("a_ru");
+    a_ru->setIcon(QPixmap(P_ICON_RU));
+    a_ru->setToolTip("Russian");
+    a_ru->setStatusTip("Russian");
+    a_ru->setProperty(P_APP_ENG_TEXT, "Russian");
+    a_ru->setProperty(P_LANG, P_RU);
+    connect(a_ru,  &QAction::triggered,    this,   &MainWindow::setToolBarLanguage);
 
-    menu->addAction(a_eng);
-    menu->addAction(a_rus);
+    QAction *a_it = new QAction(this);
+    a_it->setObjectName("a_it");
+    a_it->setIcon(QPixmap(P_ICON_IT));
+    a_it->setToolTip("Italiano");
+    a_it->setStatusTip("Italiano");
+    a_it->setProperty(P_APP_ENG_TEXT, "Italiano");
+    a_it->setProperty(P_LANG, P_IT);
+    connect(a_it,  &QAction::triggered,    this,   &MainWindow::setToolBarLanguage);
+
+    menu->addAction(a_us);
+    menu->addAction(a_ru);
+    menu->addAction(a_it);
 
     QToolButton *btn_lang = new QToolButton(this);
     btn_lang->setMenu(menu);
@@ -1999,8 +2052,9 @@ void MainWindow::app_toolbar_add_lang(void)
 
     app_buttons.append(btn_lang);
 
-    app_actions.append(a_eng);
-    app_actions.append(a_rus);
+    app_actions.append(a_us);
+    app_actions.append(a_ru);
+    app_actions.append(a_it);
 }
 //--------------------------------------------------------------------------------
 void MainWindow::app_toolbar_add_style(void)

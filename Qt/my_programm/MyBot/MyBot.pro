@@ -37,7 +37,7 @@ win32 {
 RESOURCES += \
     images/images.qrc \
     cards/cards.qrc \
-    xml/xml.qrc
+    xml/xml.qrc 
 
 OTHER_FILES += doc/notebook.txt
 

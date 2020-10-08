@@ -673,6 +673,9 @@ void WebCamera::test(void)
 //--------------------------------------------------------------------------------
 void WebCamera::test2(void)
 {
+#if 1
+    emit error("Надо устранить ошибку");
+#else
     emit trace(Q_FUNC_INFO);
     IplImage src, templ, *result;
     double min, max;
@@ -712,6 +715,7 @@ void WebCamera::test2(void)
     cvReleaseImage(&result);
     cvDestroyWindow("Image");
     //---
+#endif
 }
 //--------------------------------------------------------------------------------
 void WebCamera::test3(void)
@@ -797,6 +801,9 @@ void WebCamera::test3(void)
 //--------------------------------------------------------------------------------
 void WebCamera::test4(void)
 {
+#if 1
+    emit error("Надо устранить ошибку");
+#else
     emit trace(Q_FUNC_INFO);
     block_this_button(true);
 
@@ -831,10 +838,14 @@ void WebCamera::test4(void)
     emit info("OK");
 
     block_this_button(false);
+#endif
 }
 //--------------------------------------------------------------------------------
 void WebCamera::test5(void)
 {
+#if 1
+    emit error("Надо устранить ошибку");
+#else
     emit trace(Q_FUNC_INFO);
     IplImage image; // = nullptr;
     IplImage templ; // = nullptr;
@@ -887,6 +898,7 @@ void WebCamera::test5(void)
     //cvReleaseImage( &templ );
     cvReleaseImage( &res );
     cvDestroyAllWindows();
+#endif
 }
 //--------------------------------------------------------------------------------
 bool WebCamera::searchObjectByTemplate(const char *imgName, const char *templName, QRect *rect)

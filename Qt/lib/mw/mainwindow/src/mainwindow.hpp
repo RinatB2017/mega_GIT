@@ -58,12 +58,14 @@
 #endif
 //--------------------------------------------------------------------------------
 #define P_ICON_HELP       ":/mainwindow/system-help.png"
-#define P_ICON_RU         ":/mainwindow/ru.png"
-#define P_ICON_US         ":/mainwindow/us.png"
 #define P_ICON_STYLE      ":/mainwindow/style.png"
 #define P_ICON_EXIT       ":/mainwindow/system-shutdown.png"
 #define P_ICON_FONT       ":/mainwindow/kfontview.png"
 #define P_ICON_LANG       ":/mainwindow/applications-education-language.png"
+
+#define P_ICON_RU         ":/flags/ru.png"
+#define P_ICON_US         ":/flags/us.png"
+#define P_ICON_IT         ":/flags/it.png"
 //--------------------------------------------------------------------------------
 #define P_APP_ENG_TEXT           "app_eng_text"
 #define P_DOCKWIDGET_ENG_TEXT    "dockwidget_eng_text"
@@ -99,6 +101,11 @@
 #define P_FLAG_TEXT_IS_WINDOWS    "flag_TextIsWindows"
 #define P_FLAG_AUTOSIZE           "flag_AutoSave"
 #define P_FILE_AUTOSIZE           "file_AutoSave"
+
+#define P_LANG  "Language"
+#define P_US    "US"
+#define P_IT    "IT"
+#define P_RU    "RU"
 //--------------------------------------------------------------------------------
 class MainWindow : public QMainWindow, public MySettings
 {
@@ -234,8 +241,8 @@ private:
                         b_saveSlot slot);
 
     QPointer<QTranslator> translator_system;
-    QPointer<QTranslator> translator_common;
-    QPointer<QTranslator> translator_programm;
+    QPointer<QTranslator> translator_ru;
+    QPointer<QTranslator> translator_it;
 
     QString orgName;
     QString appName;

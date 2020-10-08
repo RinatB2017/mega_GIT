@@ -150,24 +150,6 @@ void MainBox::init(void)
     ui->tableView->setModel(text_model);
     //---
 
-    //---
-    QAction *act1 = new QAction();
-    act1->setIcon(QIcon(ICON_PROGRAMM));
-    act1->setText("menu1");
-
-    qreal x = 1/2/3/4/5;
-    emit info(QString("%1").arg(x));
-
-    QMenu *menu = new QMenu();
-    menu->addAction(act1);
-    menu->addAction("menu 1");
-    menu->addAction("menu 2");
-
-    ui->btn_menu->setIcon(QIcon(P_ICON_FONT));
-    ui->btn_menu->setMenu(menu);
-    ui->btn_menu->setPopupMode(QToolButton::MenuButtonPopup);
-    //---
-
     load_widgets();
 }
 //--------------------------------------------------------------------------------

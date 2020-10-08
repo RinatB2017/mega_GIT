@@ -322,61 +322,6 @@ void MainWindow::kill2(void)
 }
 #endif
 //--------------------------------------------------------------------------------
-void MainWindow::load_translations()
-{
-#ifdef ONLY_ENGLISH
-    return;
-#else
-    translator_system = new QTranslator(this);
-    bool res = translator_system->load("qt_ru", ":/system");
-    if(!res)
-    {
-        QMessageBox::critical(nullptr, "Error", "sysTranslator not loaded");
-#ifdef QT_DEBUG
-        qDebug() << "translator_system not loaded!";
-#endif
-    }
-    else
-    {
-        qApp->installTranslator(translator_system);
-    }
-    //---
-    translator_ru = new QTranslator(this);
-    res = translator_ru->load(QLocale(), ":/lang/lang_ru.qm");
-    if(!res)
-    {
-        QMessageBox::critical(nullptr, "Error", "appTranslator (translator_ru) not loaded!");
-#ifdef QT_DEBUG
-        qDebug() << "translator_ru not loaded!";
-#endif
-    }
-    //---
-    translator_it = new QTranslator(this);
-    res = translator_it->load(QLocale(), ":/lang/lang_it.qm");
-    if(!res)
-    {
-        QMessageBox::critical(nullptr, "Error", "appTranslator (translator_it) not loaded!");
-#ifdef QT_DEBUG
-        qDebug() << "translator_it not loaded!";
-#endif
-    }
-    //---
-    QLocale locale = QLocale();
-#ifdef QT_DEBUG
-        qDebug() << "### locale" << locale.name();
-#endif
-    if(locale.name() == "ru_RU")
-    {
-        if(translator_ru) qApp->installTranslator(translator_ru);
-    }
-    if(locale.name() == "it_IT")
-    {
-        if(translator_it) qApp->installTranslator(translator_it);
-    }
-    //---
-#endif
-}
-//--------------------------------------------------------------------------------
 void MainWindow::createMenus(void)
 {
     app_mainBar = menuBar();
@@ -438,6 +383,63 @@ void MainWindow::createMenus(void)
 
     app_menu_add_about(m_app_helpmenu);
     app_menu_add_help(m_app_helpmenu);
+}
+//--------------------------------------------------------------------------------
+void MainWindow::load_translations()
+{
+#ifdef ONLY_ENGLISH
+    return;
+#else
+    translator_system = new QTranslator(this);
+    bool res = translator_system->load("qt_ru", ":/system");
+    if(!res)
+    {
+        QMessageBox::critical(nullptr, "Error", "sysTranslator not loaded");
+#ifdef QT_DEBUG
+        qDebug() << "translator_system not loaded!";
+#endif
+    }
+    else
+    {
+        qApp->installTranslator(translator_system);
+    }
+    //---
+    translator_ru = new QTranslator(this);
+    res = translator_ru->load(QLocale(), ":/lang/lang_ru.qm");
+    if(!res)
+    {
+        QMessageBox::critical(nullptr, "Error", "appTranslator (translator_ru) not loaded!");
+#ifdef QT_DEBUG
+        qDebug() << "translator_ru not loaded!";
+#endif
+    }
+    //---
+    translator_it = new QTranslator(this);
+    res = translator_it->load(QLocale(), ":/lang/lang_it.qm");
+    if(!res)
+    {
+        QMessageBox::critical(nullptr, "Error", "appTranslator (translator_it) not loaded!");
+#ifdef QT_DEBUG
+        qDebug() << "translator_it not loaded!";
+#endif
+    }
+    //---
+    QLocale locale = QLocale();
+#ifdef QT_DEBUG
+        qDebug() << "### locale" << locale.name();
+#endif
+    if(locale.name() == "ru_RU")
+    {
+        if(translator_ru) qApp->installTranslator(translator_ru);
+        emit updateLanguage();
+    }
+    if(locale.name() == "it_IT")
+    {
+        if(translator_it) qApp->installTranslator(translator_it);
+        emit updateLanguage();
+    }
+    //---
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainWindow::setMenuLanguage(void)

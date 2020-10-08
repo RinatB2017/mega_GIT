@@ -5,12 +5,15 @@
 DEPENDPATH  += $$PWD
 INCLUDEPATH = $$DEPENDPATH
 
-#TRANSLATIONS    += $$LIB_PATH/common/common.ts
-#TRANSLATIONS    += locale/programm.ts
-TRANSLATIONS    += locale/*.ts
+# почему то винде не работает *.
+linux {
+    TRANSLATIONS    += locale/*.ts
+}
 
-#RESOURCES       += locale/programm.qrc
-#RESOURCES       += locale/common.qrc
+win32 {
+    TRANSLATIONS    += locale/lang_ru.ts
+    TRANSLATIONS    += locale/lang_it.ts
+}
 
 isEmpty(QMAKE_LRELEASE) {
     win32|os2:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\\lrelease.exe

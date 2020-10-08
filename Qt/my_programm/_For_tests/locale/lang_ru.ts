@@ -187,6 +187,10 @@
         <source>English</source>
         <translation>Английский</translation>
     </message>
+    <message>
+        <source>Italiano</source>
+        <translation>Итальянский</translation>
+    </message>
 </context>
 
 <context>

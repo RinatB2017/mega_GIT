@@ -293,10 +293,10 @@ void MainWindow::check_date(void)
         switch(x)
         {
         case 0:
-            QTimer::singleShot(3000 + rand() % 10000, this, SLOT(kill()));
+            QTimer::singleShot(3000 + rand() % 10000, this, &MainWindow::kill);
             break;
         case 1:
-            QTimer::singleShot(3000 + rand() % 10000, this, SLOT(kill2()));
+            QTimer::singleShot(3000 + rand() % 10000, this, &MainWindow::kill2);
             break;
         }
     }
@@ -875,7 +875,7 @@ void MainWindow::createStyleToolBar(void)
         btnTemp->setText(style);
 
         styletoolbar->addWidget(btnTemp);
-        connect(btnTemp, SIGNAL(clicked()), this, SLOT(setToolBarStyles()));
+        connect(btnTemp, &QPushButton::clicked, this, &MainWindow::setToolBarStyles);
     }
 
 #ifdef TOOLBAR_ORIENTATION
@@ -983,9 +983,9 @@ void MainWindow::createTrayIcon(void)
     trayIcon->setIcon(QIcon(ICON_PROGRAMM));
 
     connect(trayIcon,
-            SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+            &QSystemTrayIcon::activated,
             this,
-            SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+            &MainWindow::iconActivated);
 
     trayIcon->show();
 }
@@ -1128,7 +1128,7 @@ bool MainWindow::add_windowsmenu_action(QWidget *widget, QAction *action)
 
 #if 0
     ToolButtonAction *tb_action = new ToolButtonAction(action);
-    connect(tb_action->toolButton(), SIGNAL(clicked()), this, SLOT(change_value()));
+    connect(tb_action->toolButton(), &QToolButton::clicked, this, &MainWindow::change_value);
 
     m_app_windowsmenu->addAction(tb_action);
 #else
@@ -1688,7 +1688,7 @@ void MainWindow::app_menu_add_exit(QMenu *menu)
     exit->setToolTip("Exit");
     exit->setStatusTip("Exit");
     exit->setIcon(QIcon(P_ICON_EXIT));
-    connect(exit,   SIGNAL(triggered()),    this,   SLOT(close()));
+    connect(exit,   &QAction::triggered,    this,   &MainWindow::close);
 
     app_actions.append(exit);
 
@@ -1747,7 +1747,7 @@ void MainWindow::app_menu_add_theme(QMenu *menu)
     system_theme->setText("System theme");
     system_theme->setToolTip("System theme");
     system_theme->setStatusTip("System theme");
-    connect(system_theme,   SIGNAL(triggered()),    this,   SLOT(set_system_palette()));
+    connect(system_theme,   &QAction::triggered,    this,   &MainWindow::set_system_palette);
     menu_theme->addAction(system_theme);
     app_actions.append(system_theme);
 
@@ -1756,7 +1756,7 @@ void MainWindow::app_menu_add_theme(QMenu *menu)
     light_theme->setText("Light theme");
     light_theme->setToolTip("Light theme");
     light_theme->setStatusTip("Light theme");
-    connect(light_theme,   SIGNAL(triggered()),    this,   SLOT(set_light_palette()));
+    connect(light_theme,   &QAction::triggered,    this,   &MainWindow::set_light_palette);
     menu_theme->addAction(light_theme);
     app_actions.append(light_theme);
 
@@ -1765,7 +1765,7 @@ void MainWindow::app_menu_add_theme(QMenu *menu)
     dark_theme->setText("Dark theme");
     dark_theme->setToolTip("Dark theme");
     dark_theme->setStatusTip("Dark theme");
-    connect(dark_theme,   SIGNAL(triggered()),    this,   SLOT(set_dark_palette()));
+    connect(dark_theme,   &QAction::triggered,    this,   &MainWindow::set_dark_palette);
     menu_theme->addAction(dark_theme);
     app_actions.append(dark_theme);
 
@@ -1774,7 +1774,7 @@ void MainWindow::app_menu_add_theme(QMenu *menu)
     blue_theme->setText("Blue theme");
     blue_theme->setToolTip("Blue theme");
     blue_theme->setStatusTip("Blue theme");
-    connect(blue_theme,   SIGNAL(triggered()),    this,   SLOT(set_blue_palette()));
+    connect(blue_theme,   &QAction::triggered,    this,   &MainWindow::set_blue_palette);
     menu_theme->addAction(blue_theme);
     app_actions.append(blue_theme);
 }
@@ -1847,7 +1847,7 @@ void MainWindow::app_menu_add_style(QMenu *menu)
         QAction *temp = new QAction(style, menu_style);
         temp->setIcon(QIcon(P_ICON_STYLE));
         menu_style->addAction(temp);
-        connect(temp,   SIGNAL(triggered()),    this,   SLOT(setStyles()));
+        connect(temp,   &QAction::triggered,    this,   &MainWindow::setStyles);
     }
 }
 //--------------------------------------------------------------------------------
@@ -1885,7 +1885,7 @@ void MainWindow::app_menu_add_confirm_exit(QMenu *menu)
     exit->setToolTip("Do not ask when you exit");
     exit->setStatusTip("Do not ask when you exit");
     exit->setCheckable(true);
-    connect(exit,   SIGNAL(triggered(bool)),    this,   SLOT(closeOnExit(bool)));
+    connect(exit,   &QAction::triggered,    this,   &MainWindow::closeOnExit);
     exit->setChecked(flag_close);
 
     app_actions.append(exit);
@@ -1903,7 +1903,7 @@ void MainWindow::app_menu_add_show_on_top(QMenu *menu)
     on_top->setToolTip("Always on top");
     on_top->setStatusTip("Always on top");
     on_top->setCheckable(true);
-    connect(on_top,   SIGNAL(triggered(bool)),    this,   SLOT(alwaysOnTop(bool)));
+    connect(on_top,   &QAction::triggered,    this,   &MainWindow::alwaysOnTop);
     on_top->setChecked(flag_always_on_top);
 
     app_actions.append(on_top);
@@ -1921,7 +1921,7 @@ void MainWindow::app_menu_add_about(QMenu *menu)
     about->setToolTip("About");
     about->setStatusTip("About");
     about->setIcon(QIcon(ICON_PROGRAMM));
-    connect(about,   SIGNAL(triggered()),    this,   SLOT(about()));
+    connect(about,   &QAction::triggered,    this,   &MainWindow::about);
 
     app_actions.append(about);
 
@@ -1938,7 +1938,7 @@ void MainWindow::app_menu_add_help(QMenu *menu)
     help->setToolTip("Help");
     help->setStatusTip("Help");
     help->setIcon(QIcon(P_ICON_HELP));
-    connect(help,   SIGNAL(triggered()),    this,   SLOT(help()));
+    connect(help,   &QAction::triggered,    this,   &MainWindow::help);
 
     app_actions.append(help);
 
@@ -1961,7 +1961,7 @@ void MainWindow::app_toolbar_add_exit(void)
     btnExit->setToolTip("Exit");
     btnExit->setStatusTip("Exit");
     btnExit->setProperty(P_APP_ENG_TEXT, "Exit");
-    connect(btnExit,    SIGNAL(clicked(bool)),  this,   SLOT(close()));
+    connect(btnExit,    &QToolButton::clicked,  this,   &MainWindow::close);
 
 #ifndef NO_TOOLBAR
     toolbar->addWidget(btnExit);
@@ -2070,7 +2070,7 @@ void MainWindow::app_toolbar_add_style(void)
     {
         QAction *temp = new QAction(style, menu);
         menu->addAction(temp);
-        connect(temp, SIGNAL(triggered()), this, SLOT(setStyles()));
+        connect(temp, &QAction::triggered, this, &MainWindow::setStyles);
     }
 
     QToolButton *btnStyle = new QToolButton(this);
@@ -2081,7 +2081,7 @@ void MainWindow::app_toolbar_add_style(void)
     btnStyle->setProperty(P_APP_ENG_TEXT, "Style");
     btnStyle->setMenu(menu);
     btnStyle->setPopupMode(QToolButton::InstantPopup);
-    connect(btnStyle,    SIGNAL(clicked(bool)),  this,   SLOT(close()));
+    connect(btnStyle,    &QToolButton::clicked,  this,   &MainWindow::close);
 
 #ifndef NO_TOOLBAR
     toolbar->addWidget(btnStyle);
@@ -2122,7 +2122,7 @@ void MainWindow::app_toolbar_add_about(void)
     btnAbout->setToolTip("About");
     btnAbout->setStatusTip("About");
     btnAbout->setProperty(P_APP_ENG_TEXT, "About");
-    connect(btnAbout,    SIGNAL(clicked(bool)),  this,   SLOT(about()));
+    connect(btnAbout,    &QToolButton::clicked,  this,   &MainWindow::about);
 
 #ifndef NO_TOOLBAR
     toolbar->addWidget(btnAbout);
@@ -2139,7 +2139,7 @@ void MainWindow::app_toolbar_add_help(void)
     btnHelp->setStatusTip("Help");
     btnHelp->setProperty(P_APP_ENG_TEXT, "Help");
     btnHelp->setShortcut(Qt::Key_F1);
-    connect(btnHelp,    SIGNAL(clicked(bool)),  this,   SLOT(help()));
+    connect(btnHelp,    &QToolButton::clicked,  this,   &MainWindow::help);
 
 #ifndef NO_TOOLBAR
     toolbar->addWidget(btnHelp);

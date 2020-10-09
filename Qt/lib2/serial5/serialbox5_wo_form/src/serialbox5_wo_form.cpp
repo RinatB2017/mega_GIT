@@ -81,7 +81,7 @@ void SerialBox5_wo_form::initSerial(void)
     connect(this,   &SerialBox5_wo_form::port_close,    this,   &SerialBox5_wo_form::setCloseState);
     connect(this,   &SerialBox5_wo_form::port_open,     this,   &SerialBox5_wo_form::setOpenState);
 
-    connect(this,   SIGNAL(output(QByteArray)), this,   SLOT(drawData(QByteArray)));
+    connect(this,   &SerialBox5_wo_form::output,        this,   &SerialBox5_wo_form::drawData);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_wo_form::getStatus(const QString &status, QDateTime current)
@@ -226,7 +226,7 @@ bool SerialBox5_wo_form::add_menu(int index)
     action_flag_byte_by_byte->setText("byte to byte");
     menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_byte_by_byte,   SIGNAL(triggered(bool)),    this,   SLOT(set_flag_byte_by_byte(bool)));
+    connect(action_flag_byte_by_byte,   &QAction::triggered,    this,   &SerialBox5_wo_form::set_flag_byte_by_byte);
 
     mw->add_optionsmenu_menu(index, menu);
 
@@ -246,7 +246,7 @@ bool SerialBox5_wo_form::add_menu(int index, const QString &title)
     action_flag_byte_by_byte->setText("byte to byte");
     menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_byte_by_byte, SIGNAL(triggered(bool)), this, SLOT(set_flag_byte_by_byte(bool)));
+    connect(action_flag_byte_by_byte, &QAction::triggered, this, &SerialBox5_wo_form::set_flag_byte_by_byte);
 
     mw->add_menu(index, menu);
 

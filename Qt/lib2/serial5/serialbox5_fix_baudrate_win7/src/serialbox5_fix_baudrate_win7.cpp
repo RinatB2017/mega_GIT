@@ -130,14 +130,14 @@ void SerialBox5_fix_baudrate_win7::createWidgets(void)
     ui->btn_refresh->setProperty(NO_BLOCK, true);
     ui->btn_refresh->setToolTip("Обновить список портов");
 
-    connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));
-    connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
+    connect(ui->btn_power,      &QPushButton::clicked,  this,   &SerialBox5_fix_baudrate_win7::btnOpenPortClicked);
+    connect(ui->btn_refresh,    &QToolButton::clicked,  this,   &SerialBox5_fix_baudrate_win7::refresh);
 
-    connect(this, SIGNAL(output(QByteArray)), this, SLOT(drawData(QByteArray)));
+    connect(this, &SerialBox5_fix_baudrate_win7::output, this, &SerialBox5_fix_baudrate_win7::drawData);
 
 #ifdef RS232_SEND
     sendBox5 = new SendBox5(this);
-    connect(sendBox5, SIGNAL(sendData(QByteArray)), this, SLOT(sendData(QByteArray)));
+    connect(sendBox5, &SendBox5::sendData, this, &SerialBox5_fix_baudrate_win7::sendData);
     ui->layout_SEND->addWidget(sendBox5);
 #endif
 }
@@ -303,7 +303,7 @@ void SerialBox5_fix_baudrate_win7::procSerialDataReceive(void)
     emit output(serial_data);
 
 //    if (!timer->isActive())
-//        timer->singleShot(MAX_TIME_MSEC, this, SLOT(timer_stop()));
+//        timer->singleShot(MAX_TIME_MSEC, this, &SerialBox5_fix_baudrate_win7::timer_stop));
 //    else
 //        timer->stop();
 }
@@ -383,8 +383,8 @@ bool SerialBox5_fix_baudrate_win7::add_menu(int index)
     menu->addAction(action_flag_in_hex);
     menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_in_hex,         SIGNAL(triggered(bool)),    this,   SLOT(set_flag_in_hex(bool)));
-    connect(action_flag_byte_by_byte,   SIGNAL(triggered(bool)),    this,   SLOT(set_flag_byte_by_byte(bool)));
+    connect(action_flag_in_hex,         &QAction::triggered,    this,   &SerialBox5_fix_baudrate_win7::set_flag_in_hex);
+    connect(action_flag_byte_by_byte,   &QAction::triggered,    this,   &SerialBox5_fix_baudrate_win7::set_flag_byte_by_byte);
 
     //---
     mw->add_optionsmenu_menu(index, menu);
@@ -413,8 +413,8 @@ bool SerialBox5_fix_baudrate_win7::add_menu(int index, const QString &title)
     menu->addAction(action_flag_in_hex);
     menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_in_hex, SIGNAL(triggered(bool)), this, SLOT(set_flag_in_hex(bool)));
-    connect(action_flag_byte_by_byte, SIGNAL(triggered(bool)), this, SLOT(set_flag_byte_by_byte(bool)));
+    connect(action_flag_in_hex, &QAction::triggered, this, &SerialBox5_fix_baudrate_win7::set_flag_in_hex);
+    connect(action_flag_byte_by_byte, &QAction::triggered, this, &SerialBox5_fix_baudrate_win7::set_flag_byte_by_byte);
 
     mw->add_menu(index, menu);
 
@@ -492,47 +492,51 @@ void SerialBox5_fix_baudrate_win7::initThread(void)
     worker = new SerialBox5_thread;
     worker->moveToThread(thread);
 
-    connect(worker, SIGNAL(info(QString)),      this, SIGNAL(info(QString)));
-    connect(worker, SIGNAL(debug(QString)),     this, SIGNAL(debug(QString)));
-    connect(worker, SIGNAL(error(QString)),     this, SIGNAL(error(QString)));
-    connect(worker, SIGNAL(trace(QString)),     this, SIGNAL(trace(QString)));
+    connect(worker, &SerialBox5_thread::info,      this, &SerialBox5_fix_baudrate_win7::info);
+    connect(worker, &SerialBox5_thread::debug,     this, &SerialBox5_fix_baudrate_win7::debug);
+    connect(worker, &SerialBox5_thread::error,     this, &SerialBox5_fix_baudrate_win7::error);
+    connect(worker, &SerialBox5_thread::trace,     this, &SerialBox5_fix_baudrate_win7::trace);
 
-    connect(this,   SIGNAL(port_open()),                                        worker, SLOT(port_open()),                                      Qt::DirectConnection);
-    connect(this,   SIGNAL(port_close()),                                       worker, SLOT(port_close()),                                     Qt::DirectConnection);
-    connect(this,   SIGNAL(port_set_name(QString)),                             worker, SLOT(port_set_name(QString)),                           Qt::DirectConnection);
-    connect(this,   SIGNAL(port_set_baudrate(qint32)),                          worker, SLOT(port_set_baudrate(qint32)),                        Qt::DirectConnection);
-    connect(this,   SIGNAL(port_set_bits(QSerialPort::DataBits)),               worker, SLOT(port_set_bits(QSerialPort::DataBits)),             Qt::DirectConnection);
-    connect(this,   SIGNAL(port_set_stop_bits(QSerialPort::StopBits)),          worker, SLOT(port_set_stop_bits(QSerialPort::StopBits)),        Qt::DirectConnection);
-    connect(this,   SIGNAL(port_set_parity(QSerialPort::Parity)),               worker, SLOT(port_set_parity(QSerialPort::Parity)),             Qt::DirectConnection);
-    connect(this,   SIGNAL(port_set_flow_control(QSerialPort::FlowControl)),    worker, SLOT(port_set_flow_control(QSerialPort::FlowControl)),  Qt::DirectConnection);
-    connect(this,   SIGNAL(port_write(const char *)),                           worker, SLOT(port_write(const char*)),                          Qt::DirectConnection);
-    connect(this,   SIGNAL(port_write(const char *, qint64)),                   worker, SLOT(port_write(const char *, qint64)),                 Qt::DirectConnection);
+    connect(this,   &SerialBox5_fix_baudrate_win7::port_open,               worker, &SerialBox5_thread::port_open,              Qt::DirectConnection);
+    connect(this,   &SerialBox5_fix_baudrate_win7::port_close,              worker, &SerialBox5_thread::port_close,             Qt::DirectConnection);
+    connect(this,   &SerialBox5_fix_baudrate_win7::port_set_name,           worker, &SerialBox5_thread::port_set_name,           Qt::DirectConnection);
+    connect(this,   &SerialBox5_fix_baudrate_win7::port_set_baudrate,       worker, &SerialBox5_thread::port_set_baudrate,       Qt::DirectConnection);
+    connect(this,   &SerialBox5_fix_baudrate_win7::port_set_bits,           worker, &SerialBox5_thread::port_set_bits,           Qt::DirectConnection);
+    connect(this,   &SerialBox5_fix_baudrate_win7::port_set_stop_bits,      worker, &SerialBox5_thread::port_set_stop_bits,      Qt::DirectConnection);
+    connect(this,   &SerialBox5_fix_baudrate_win7::port_set_parity,         worker, &SerialBox5_thread::port_set_parity,         Qt::DirectConnection);
+    connect(this,   &SerialBox5_fix_baudrate_win7::port_set_flow_control,   worker, &SerialBox5_thread::port_set_flow_control,   Qt::DirectConnection);
+    connect(this,   static_cast<void (SerialBox5_fix_baudrate_win7::*)(const char *)>(&SerialBox5_fix_baudrate_win7::port_write),
+            worker, static_cast<void (SerialBox5_thread::*)(const char *)>(&SerialBox5_thread::port_write),
+            Qt::DirectConnection);
+    connect(this,   static_cast<void (SerialBox5_fix_baudrate_win7::*)(const char *, qint64)>(&SerialBox5_fix_baudrate_win7::port_write),
+            worker, static_cast<void (SerialBox5_thread::*)(const char *, qint64)>(&SerialBox5_thread::port_write),
+            Qt::DirectConnection);
 
-    connect(worker, SIGNAL(port_bytes_avialable()),                             this,   SLOT(port_bytes_avialable(void)));
-    connect(worker, SIGNAL(port_get_state(bool)),                               this,   SLOT(port_get_state(bool)));
-    connect(worker, SIGNAL(port_get_name(QString)),                             this,   SLOT(port_get_name(QString)));
-    connect(worker, SIGNAL(port_get_baudrate(qint32)),                          this,   SLOT(port_get_baudrate(qint32)));
-    connect(worker, SIGNAL(port_get_bits(QSerialPort::DataBits)),               this,   SLOT(port_getbits(QSerialPort::DataBits)));
-    connect(worker, SIGNAL(port_get_stop_bits(QSerialPort::StopBits)),          this,   SLOT(port_get_stop_bits(QSerialPort::StopBits)));
-    connect(worker, SIGNAL(port_get_patity(QSerialPort::Parity)),               this,   SLOT(port_get_patity(QSerialPort::Parity)));
-    connect(worker, SIGNAL(port_get_flow_control(QSerialPort::FlowControl)),    this,   SLOT(port_get_flow_control(QSerialPort::FlowControl)));
-    connect(worker, SIGNAL(port_read_all(QByteArray)),                          this,   SLOT(port_read_all(QByteArray)));
-    connect(worker, SIGNAL(port_ready_read(bool)),                              this,   SLOT(port_ready_read(bool)));
-    connect(worker, SIGNAL(port_error(QSerialPort::SerialPortError)),           this,   SLOT(port_error(QSerialPort::SerialPortError)));
+    connect(worker, &SerialBox5_thread::port_bytes_avialable,   this,   &SerialBox5_fix_baudrate_win7::port_bytes_avialable);
+    connect(worker, &SerialBox5_thread::port_get_state,         this,   &SerialBox5_fix_baudrate_win7::port_get_state);
+    connect(worker, &SerialBox5_thread::port_get_name,          this,   &SerialBox5_fix_baudrate_win7::port_get_name);
+    connect(worker, &SerialBox5_thread::port_get_baudrate,      this,   &SerialBox5_fix_baudrate_win7::port_get_baudrate);
+    connect(worker, &SerialBox5_thread::port_get_bits,          this,   &SerialBox5_fix_baudrate_win7::port_getbits);
+    connect(worker, &SerialBox5_thread::port_get_stop_bits,     this,   &SerialBox5_fix_baudrate_win7::port_get_stop_bits);
+    connect(worker, &SerialBox5_thread::port_get_patity,        this,   &SerialBox5_fix_baudrate_win7::port_get_patity);
+    connect(worker, &SerialBox5_thread::port_get_flow_control,  this,   &SerialBox5_fix_baudrate_win7::port_get_flow_control);
+    connect(worker, &SerialBox5_thread::port_read_all,          this,   &SerialBox5_fix_baudrate_win7::port_read_all);
+    connect(worker, &SerialBox5_thread::port_ready_read,        this,   &SerialBox5_fix_baudrate_win7::port_ready_read);
+    connect(worker, &SerialBox5_thread::port_error,             this,   &SerialBox5_fix_baudrate_win7::port_error);
 
-    connect(thread, SIGNAL(started()),  worker, SLOT(process()));
+    connect(thread, &QThread::started,  worker, &SerialBox5_thread::process);
 
-    connect(worker, SIGNAL(readyRead()),            this,   SIGNAL(readyRead()));
-    connect(worker, SIGNAL(readChannelFinished()),  this,   SIGNAL(readChannelFinished()));
+    connect(worker, &SerialBox5_thread::readyRead,            this,   &SerialBox5_fix_baudrate_win7::readyRead);
+    connect(worker, &SerialBox5_thread::readChannelFinished,  this,   &SerialBox5_fix_baudrate_win7::readChannelFinished);
 
-    connect(worker, SIGNAL(readyRead()), this, SLOT(procSerialDataReceive()));
-//    connect(worker, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(serial5_error(QSerialPort::SerialPortError)));
+    connect(worker, &SerialBox5_thread::readyRead, this, &SerialBox5_fix_baudrate_win7::procSerialDataReceive);
+//    connect(worker, &SerialBox5_thread::error, this, &SerialBox5_fix_baudrate_win7::serial5_error);
 
-    connect(thread, SIGNAL(finished()), this, SLOT(thread_is_finished()));
+    connect(thread, &QThread::finished, this, &SerialBox5_fix_baudrate_win7::thread_is_finished);
 
     thread->start();
 
-    connect(ui->btn_power,  SIGNAL(toggled(bool)),  this,   SLOT(change_icon(bool)));
+    connect(ui->btn_power,  &QPushButton::toggled,  this,   &SerialBox5_fix_baudrate_win7::change_icon);
 
     //TODO refresh();
 }

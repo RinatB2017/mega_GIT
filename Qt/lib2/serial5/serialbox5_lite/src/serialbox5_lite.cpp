@@ -117,16 +117,16 @@ void SerialBox5_lite::createWidgets(void)
     ui->btn_refresh->setProperty(NO_BLOCK, true);
     ui->btn_refresh->setToolTip("Обновить список портов");
 
-    connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));
-    connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
+    connect(ui->btn_power,      &QPushButton::clicked,  this,   &SerialBox5_lite::btnOpenPortClicked);
+    connect(ui->btn_refresh,    &QPushButton::clicked,  this,   &SerialBox5_lite::refresh);
 
-    connect(ui->BaudBox,     SIGNAL(currentIndexChanged(int)),  this,   SLOT(setBaudBox(int)));
+    connect(ui->BaudBox,     static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5_lite::setBaudBox);
 
-    connect(this, SIGNAL(output(QByteArray)), this, SLOT(drawData(QByteArray)));
+    connect(this, &SerialBox5_lite::output, this, &SerialBox5_lite::drawData);
 
 #ifdef RS232_SEND
     sendBox5 = new SendBox5(this);
-    connect(sendBox5, SIGNAL(sendData(QByteArray)), this, SLOT(sendData(QByteArray)));
+    connect(sendBox5, &SendBox5::sendData, this, &SerialBox5_lite::sendData);
     ui->layout_SEND->addWidget(sendBox5);
 #endif
 }
@@ -174,7 +174,7 @@ void SerialBox5_lite::initSerial(void)
     ui->BaudBox->setProperty(NO_SAVE, true);
     ui->btn_refresh->setToolTip("Обновить список портов");
 
-    connect(ui->btn_power,  SIGNAL(toggled(bool)),  this,   SLOT(change_icon(bool)));
+    connect(ui->btn_power,  &QPushButton::toggled,  this,   &SerialBox5_lite::change_icon);
 
     connect(this,   &SerialBox5_lite::port_close,    this,   &SerialBox5_lite::setCloseState);
     connect(this,   &SerialBox5_lite::port_open,     this,   &SerialBox5_lite::setOpenState);
@@ -419,8 +419,8 @@ bool SerialBox5_lite::add_menu(int index)
     menu->addAction(action_flag_in_hex);
     menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_in_hex,         SIGNAL(triggered(bool)),    this,   SLOT(set_flag_in_hex(bool)));
-    connect(action_flag_byte_by_byte,   SIGNAL(triggered(bool)),    this,   SLOT(set_flag_byte_by_byte(bool)));
+    connect(action_flag_in_hex,         &QAction::triggered,    this,   &SerialBox5_lite::set_flag_in_hex);
+    connect(action_flag_byte_by_byte,   &QAction::triggered,    this,   &SerialBox5_lite::set_flag_byte_by_byte);
 
     //---
     mw->add_optionsmenu_menu(index, menu);
@@ -449,8 +449,8 @@ bool SerialBox5_lite::add_menu(int index, const QString &title)
     menu->addAction(action_flag_in_hex);
     menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_in_hex, SIGNAL(triggered(bool)), this, SLOT(set_flag_in_hex(bool)));
-    connect(action_flag_byte_by_byte, SIGNAL(triggered(bool)), this, SLOT(set_flag_byte_by_byte(bool)));
+    connect(action_flag_in_hex, &QAction::triggered, this, &SerialBox5_lite::set_flag_in_hex);
+    connect(action_flag_byte_by_byte, &QAction::triggered, this, &SerialBox5_lite::set_flag_byte_by_byte);
 
     mw->add_menu(index, menu);
 

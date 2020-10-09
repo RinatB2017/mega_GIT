@@ -98,7 +98,7 @@ void SerialBox5::init(void)
     setFixedSize(sizeHint());
 #endif
 
-    connect(ui->btn_default, SIGNAL(clicked()), this, SLOT(set_default()));
+    connect(ui->btn_default, &QPushButton::clicked, this, &SerialBox5::set_default);
 
 //FIXME надо разобраться
 //#ifdef RS232_LOG
@@ -207,10 +207,10 @@ void SerialBox5::initSerial(void)
     logBox = new LogBox(o_name, this);
     ui->layout_right_LOG->addWidget(logBox);
 
-    connect(this,   SIGNAL(info(QString)),  logBox, SLOT(infoLog(QString)));
-    connect(this,   SIGNAL(debug(QString)), logBox, SLOT(debugLog(QString)));
-    connect(this,   SIGNAL(error(QString)), logBox, SLOT(errorLog(QString)));
-    connect(this,   SIGNAL(trace(QString)), logBox, SLOT(traceLog(QString)));
+    connect(this,   &SerialBox5::info,  logBox, &LogBox::infoLog);
+    connect(this,   &SerialBox5::debug, logBox, &LogBox::debugLog);
+    connect(this,   &SerialBox5::error, logBox, &LogBox::errorLog);
+    connect(this,   &SerialBox5::trace, logBox, &LogBox::traceLog);
 #endif
 
 #ifdef RS232_SEND
@@ -250,8 +250,8 @@ void SerialBox5::initSerial(void)
     connect(this,   &SerialBox5::port_close,    this,   &SerialBox5::setCloseState);
     connect(this,   &SerialBox5::port_open,     this,   &SerialBox5::setOpenState);
 
-    connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));
-    connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
+    connect(ui->btn_power,      &QPushButton::clicked,  this,   &SerialBox5::btnOpenPortClicked);
+    connect(ui->btn_refresh,    &QPushButton::clicked,  this,   &SerialBox5::refresh);
 
     connect(ui->BaudBox,     static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setBaudBox);
     connect(ui->DataBitsBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setDataBox);
@@ -259,7 +259,7 @@ void SerialBox5::initSerial(void)
     connect(ui->StopBitsBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setStopBox);
     connect(ui->FlowBox,     static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setFlowBox);
 
-    connect(this,   SIGNAL(output(QByteArray)), this,   SLOT(drawData(QByteArray)));
+    connect(this,   &SerialBox5::output, this,   &SerialBox5::drawData);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::getStatus(const QString &status, QDateTime current)
@@ -561,7 +561,7 @@ bool SerialBox5::add_menu(int index)
     action_flag_byte_by_byte->setText("byte to byte");
     menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_byte_by_byte,   SIGNAL(triggered(bool)),    this,   SLOT(set_flag_byte_by_byte(bool)));
+    connect(action_flag_byte_by_byte,   &QAction::triggered,    this,   &SerialBox5::set_flag_byte_by_byte);
 
     mw->add_optionsmenu_menu(index, menu);
 
@@ -581,7 +581,7 @@ bool SerialBox5::add_menu(int index, const QString &title)
     action_flag_byte_by_byte->setText("byte to byte");
     menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_byte_by_byte, SIGNAL(triggered(bool)), this, SLOT(set_flag_byte_by_byte(bool)));
+    connect(action_flag_byte_by_byte, &QAction::triggered, this, &SerialBox5::set_flag_byte_by_byte);
 
     mw->add_menu(index, menu);
 

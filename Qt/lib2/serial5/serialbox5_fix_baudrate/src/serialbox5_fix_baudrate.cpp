@@ -144,14 +144,14 @@ void SerialBox5_fix_baudrate::createWidgets(void)
     ui->btn_refresh->setProperty(NO_BLOCK, true);
     ui->PortBox->setProperty(NO_BLOCK, true);
 
-    connect(ui->btn_power,      SIGNAL(clicked(bool)),  this,   SLOT(btnOpenPortClicked()));
-    connect(ui->btn_refresh,    SIGNAL(clicked(bool)),  this,   SLOT(refresh()));
+    connect(ui->btn_power,      &QPushButton::clicked,  this,   &SerialBox5_fix_baudrate::btnOpenPortClicked);
+    connect(ui->btn_refresh,    &QToolButton::clicked,  this,   &SerialBox5_fix_baudrate::refresh);
 
-    connect(this, SIGNAL(output(QByteArray)), this, SLOT(drawData(QByteArray)));
+    connect(this, &SerialBox5_fix_baudrate::output, this, &SerialBox5_fix_baudrate::drawData);
 
 #ifdef RS232_SEND
     sendBox5 = new SendBox5(this);
-    connect(sendBox5, SIGNAL(sendData(QByteArray)), this, SLOT(sendData(QByteArray)));
+    connect(sendBox5, &SendBox5::sendData, this, &SerialBox5_fix_baudrate::sendData);
     ui->layout_SEND->addWidget(sendBox5);
 #endif
 }
@@ -427,8 +427,8 @@ bool SerialBox5_fix_baudrate::add_menu(int index)
     menu->addAction(action_flag_in_hex);
     menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_in_hex,         SIGNAL(triggered(bool)),    this,   SLOT(set_flag_in_hex(bool)));
-    connect(action_flag_byte_by_byte,   SIGNAL(triggered(bool)),    this,   SLOT(set_flag_byte_by_byte(bool)));
+    connect(action_flag_in_hex,         &QAction::triggered,    this,   &SerialBox5_fix_baudrate::set_flag_in_hex);
+    connect(action_flag_byte_by_byte,   &QAction::triggered,    this,   &SerialBox5_fix_baudrate::set_flag_byte_by_byte);
 
     //---
     mw->add_optionsmenu_menu(index, menu);
@@ -457,8 +457,8 @@ bool SerialBox5_fix_baudrate::add_menu(int index, const QString &title)
     menu->addAction(action_flag_in_hex);
     menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_in_hex, SIGNAL(triggered(bool)), this, SLOT(set_flag_in_hex(bool)));
-    connect(action_flag_byte_by_byte, SIGNAL(triggered(bool)), this, SLOT(set_flag_byte_by_byte(bool)));
+    connect(action_flag_in_hex, &QAction::triggered, this, &SerialBox5_fix_baudrate::set_flag_in_hex);
+    connect(action_flag_byte_by_byte, &QAction::triggered, this, &SerialBox5_fix_baudrate::set_flag_byte_by_byte);
 
     mw->add_menu(index, menu);
 

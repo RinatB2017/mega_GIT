@@ -60,14 +60,14 @@ SendBox5::SendBox5(QWidget *parent) :
 
     ui->append_comboBox->setSizePolicy(QSizePolicy::Fixed,  QSizePolicy::Preferred);
 
-    connect(ui->btn_send_text,  SIGNAL(clicked()),  this,   SLOT(send_text()));
-    connect(ui->btn_send_bin,   SIGNAL(clicked()),  this,   SLOT(send_bin()));
+    connect(ui->btn_send_text,  &QToolButton::clicked,  this,   &SendBox5::send_text);
+    connect(ui->btn_send_bin,   &QToolButton::clicked,  this,   &SendBox5::send_bin);
 
-    connect(ui->btn_send_text_remove,  SIGNAL(clicked()),  this,   SLOT(send_text_remove()));
-    connect(ui->btn_send_bin_remove,   SIGNAL(clicked()),  this,   SLOT(send_bin_remove()));
+    connect(ui->btn_send_text_remove,  &QToolButton::clicked,  this,   &SendBox5::send_text_remove);
+    connect(ui->btn_send_bin_remove,   &QToolButton::clicked,  this,   &SendBox5::send_bin_remove);
 
-    connect(ui->cb_send_text->lineEdit(),   SIGNAL(returnPressed()),  this,   SLOT(send_text()));
-    connect(ui->cb_send_bin->lineEdit(),    SIGNAL(returnPressed()),  this,   SLOT(send_bin()));
+    connect(ui->cb_send_text->lineEdit(),   &QLineEdit::returnPressed,  this,   &SendBox5::send_text);
+    connect(ui->cb_send_bin->lineEdit(),    &QLineEdit::returnPressed,  this,   &SendBox5::send_bin);
 
     setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 }

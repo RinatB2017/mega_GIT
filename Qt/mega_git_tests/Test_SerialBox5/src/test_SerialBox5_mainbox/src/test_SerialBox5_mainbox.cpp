@@ -119,7 +119,7 @@ void MainBox::createTestBar(void)
                                        "test",
                                        "test");
 
-    connect(btn_test,   SIGNAL(clicked()),  this,   SLOT(test()));
+    connect(btn_test,   &QToolButton::clicked,  this,   &MainBox::test);
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------

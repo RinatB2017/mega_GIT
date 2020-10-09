@@ -543,7 +543,9 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
+#ifdef QT_DEBUG
     qDebug() << "MainBox::load_setting";
+#endif
 
     if(sb_test)
     {
@@ -563,7 +565,9 @@ void MainBox::load_setting(void)
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
+#ifdef QT_DEBUG
     qDebug() << "MainBox::save_setting";
+#endif
 
     if(sb_test)
     {

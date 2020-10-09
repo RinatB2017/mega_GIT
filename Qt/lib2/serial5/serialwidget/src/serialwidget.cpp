@@ -208,7 +208,7 @@ void SerialWidget::procSerialDataReceive(void)
     }
 
     if (!timer->isActive())
-        timer->singleShot(MAX_TIME_MSEC, this, SLOT(timer_stop()));
+        timer->singleShot(MAX_TIME_MSEC, this, &SerialWidget::timer_stop);
     else
         timer->stop();
 }

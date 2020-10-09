@@ -2,14 +2,9 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-TEMPLATE  = subdirs
-CONFIG   += ordered
+DEPENDPATH  += \
+    $$PWD/src 
+INCLUDEPATH = $$DEPENDPATH
 
-SUBDIRS += \
-    Template \
-    Template_GUI \
-    Template_game \
-    Template_main \
-    Template_old \
-    Template_RS232 \
-    Template_wo_MainBox
+HEADERS += template_mainbox.hpp
+SOURCES += template_mainbox.cpp

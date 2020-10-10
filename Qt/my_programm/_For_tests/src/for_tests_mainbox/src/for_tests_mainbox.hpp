@@ -30,6 +30,23 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+class MyDebug
+{
+public:
+    static void set_v(int v)
+    {
+        s_value = v;
+    }
+
+    static int get_v(void)
+    {
+        return s_value;
+    }
+
+private:
+    static int s_value;
+};
+//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }

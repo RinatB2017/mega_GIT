@@ -417,9 +417,16 @@ void MainBox::heavy_function(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
+int MyDebug::s_value = 0;
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 1
+    MyDebug::set_v(5);
+    emit info(QString("%1").arg(MyDebug::get_v()));
+#endif
 
 #if 0
     QFuture <void> local_thread;

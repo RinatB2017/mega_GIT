@@ -25,6 +25,7 @@
 #include "ui_sendbox5.h"
 //--------------------------------------------------------------------------------
 #include "sendbox5.hpp"
+#include "mywidget.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 SendBox5::SendBox5(QWidget *parent) :
@@ -56,9 +57,9 @@ SendBox5::SendBox5(QWidget *parent) :
     ui->cb_send_bin->setEditable(true);
     ui->cb_send_bin->setObjectName("le_send_bin");
 
-    ui->append_comboBox->setObjectName("append_comboBox");
+    ui->cb_append->setSizePolicy(QSizePolicy::Fixed,  QSizePolicy::Preferred);
 
-    ui->append_comboBox->setSizePolicy(QSizePolicy::Fixed,  QSizePolicy::Preferred);
+    ui->cb_append->setProperty(NO_SAVE, true);
 
     connect(ui->btn_send_text,  &QToolButton::clicked,  this,   &SendBox5::send_text);
     connect(ui->btn_send_bin,   &QToolButton::clicked,  this,   &SendBox5::send_bin);
@@ -91,7 +92,7 @@ void SendBox5::send_text(void)
     }
 
     QByteArray ba = data.toLatin1();
-    switch(ui->append_comboBox->currentIndex())
+    switch(ui->cb_append->currentIndex())
     {
     case 0: // tr("no add")
         break;
@@ -161,7 +162,7 @@ void SendBox5::block_interface(bool state)
 {
     ui->cb_send_text->setDisabled(state);
     ui->cb_send_bin->setDisabled(state);
-    ui->append_comboBox->setDisabled(state);
+    ui->cb_append->setDisabled(state);
 
     ui->btn_send_text->setDisabled(state);
     ui->btn_send_bin->setDisabled(state);
@@ -175,11 +176,11 @@ void SendBox5::updateText(void)
     ui->btn_send_text->setText(tr("send"));
     ui->btn_send_bin->setText(tr("send"));
 
-    ui->append_comboBox->clear();
-    ui->append_comboBox->addItems(QStringList() << tr("no add")
-                                  << tr("0x00")
-                                  << tr("0x0D")
-                                  << tr("0x0A")
-                                  << tr("0x0D 0x0A") );
+    ui->cb_append->clear();
+    ui->cb_append->addItems(QStringList() << tr("no add")
+                            << tr("0x00")
+                            << tr("0x0D")
+                            << tr("0x0A")
+                            << tr("0x0D 0x0A") );
 }
 //--------------------------------------------------------------------------------

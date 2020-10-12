@@ -67,6 +67,14 @@ void MainBox::init(void)
 #ifdef USE_RTSP
     rtsp_widget = new RTSP_widget(this);
     ui->layout_rtsp->addWidget(rtsp_widget);
+
+    connect(ui->tv_scan,    &QTreeView::doubleClicked,  this,   &MainBox::f_set_url);
+#endif
+
+#ifdef QT_DEBUG
+    createTestBar();
+#else
+    ui->gb_test->setVisible(false);
 #endif
 
     ui->sb_port->setRange(0, 0xFFFF);
@@ -76,11 +84,11 @@ void MainBox::init(void)
     model = new QStandardItemModel(0, 2, this);
     model->setHeaderData(0, Qt::Horizontal, tr("scan log"));
     model->setHorizontalHeaderLabels(QStringList() << "IP" << "Port");
-    ui->tv_scan->setModel(model);
 
     // выделение строки целиком и запрет редактирования
     ui->tv_scan->setSelectionBehavior( QAbstractItemView::SelectRows );
     ui->tv_scan->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tv_scan->setModel(model);
     //---
     ui->tv_scan->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     //ui->tv_scan->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
@@ -98,6 +106,66 @@ void MainBox::init(void)
     layout()->setMargin(0);
 
     load_widgets();
+}
+//--------------------------------------------------------------------------------
+void MainBox::createTestBar(void)
+{
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_CHECK_PTR(mw);
+
+    commands.clear(); int id = 0;
+    commands.append({ id++, "test",             &MainBox::f_test });
+
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
+
+    cb_test = new QComboBox(this);
+    cb_test->setObjectName("cb_test");
+    foreach (CMD command, commands)
+    {
+        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+    }
+
+    testbar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(testbar,
+                                              new QToolButton(this),
+                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                              "choice_test",
+                                              "choice_test");
+    btn_choice_test->setObjectName("btn_choice_test");
+
+    connect(btn_choice_test,    &QToolButton::clicked,  this,   &MainBox::choice_test);
+
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+}
+//--------------------------------------------------------------------------------
+void MainBox::choice_test(void)
+{
+    bool ok = false;
+    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok) return;
+
+    // QList<MainBox::CMD>::iterator cmd_it = std::find_if(
+    auto cmd_it = std::find_if(
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
+    if (cmd_it != commands.end())
+    {
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
+        {
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::scan(void)
@@ -233,6 +301,34 @@ void MainBox::f_disconnect(void)
     {
         m_pTcpSocket->close();
     }
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_set_url(const QModelIndex &index)
+{
+    auto url  = model->data(model->index(index.row(), 0, index.parent()), Qt::DisplayRole).toString();
+    auto port = model->data(model->index(index.row(), 1, index.parent()), Qt::DisplayRole).toString();
+    emit debug(QString("%1:%2")
+               .arg(url)
+               .arg(port));
+
+#ifdef USE_RTSP
+    rtsp_widget->set_address(QString("rtsp://admin:admin@%1:%2")
+                             .arg(url)
+                             .arg(port));
+    rtsp_widget->play();
+#endif
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_test(void)
+{
+    for(int n=1; n<5; n++)
+    {
+        model->insertRow(0);
+        model->setData(model->index(0, 0, QModelIndex()), QString("192.168.1.%1").arg(n));
+        model->setData(model->index(0, 1, QModelIndex()), QString("%1").arg(n));
+    }
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::slotReadyRead (void)

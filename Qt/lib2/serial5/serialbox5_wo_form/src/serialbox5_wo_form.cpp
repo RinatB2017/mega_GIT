@@ -29,7 +29,6 @@
 //--------------------------------------------------------------------------------
 SerialBox5_wo_form::SerialBox5_wo_form(QWidget *parent) :
     SerialWidget(parent),
-    parent(parent),
     caption("no name")
 {
     init();
@@ -39,7 +38,6 @@ SerialBox5_wo_form::SerialBox5_wo_form(QWidget *parent,
                        const QString &caption,
                        const QString &o_name) :
     SerialWidget(parent),
-    parent(parent),
     caption(caption),
     o_name(o_name)
 {

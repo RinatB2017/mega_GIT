@@ -23,7 +23,7 @@
       <widget class="QComboBox" name="cb_send_text"/>
      </item>
      <item row="0" column="2">
-      <widget class="QComboBox" name="append_comboBox"/>
+      <widget class="QComboBox" name="cb_append"/>
      </item>
      <item row="0" column="3">
       <widget class="QToolButton" name="btn_send_text">
@@ -60,7 +60,7 @@
  <tabstops>
   <tabstop>btn_send_text_remove</tabstop>
   <tabstop>cb_send_text</tabstop>
-  <tabstop>append_comboBox</tabstop>
+  <tabstop>cb_append</tabstop>
   <tabstop>btn_send_text</tabstop>
   <tabstop>btn_send_bin_remove</tabstop>
   <tabstop>cb_send_bin</tabstop>

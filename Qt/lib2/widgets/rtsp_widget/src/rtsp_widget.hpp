@@ -43,6 +43,8 @@ public:
     explicit RTSP_widget(QWidget *parent = nullptr);
     ~RTSP_widget();
 
+    void set_address(const QString &address);
+
 signals:
     void info(const QString &);
     void debug(const QString &);
@@ -60,7 +62,7 @@ private slots:
 
 private:
     Ui::RTSP_widget *ui;
-    QMediaPlayer *player;
+    QMediaPlayer *player = nullptr;
 
     void init(void);
 

@@ -33,6 +33,9 @@ class MainBox_GUI : public MyWidget
 {
     Q_OBJECT
 
+signals:
+    void push_btn_test(void);
+
 public:
     explicit MainBox_GUI(QWidget *parent,
                          MySplashScreen *splash);

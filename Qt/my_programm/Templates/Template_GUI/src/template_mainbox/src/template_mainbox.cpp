@@ -42,7 +42,7 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
-
+    connect(this,   &MainBox::push_btn_test,    this,   &MainBox::test);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)

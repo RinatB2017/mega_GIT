@@ -84,7 +84,7 @@ private:
     void set_flag_ErrorAsMessage(bool value);
     void set_flag_TextIsWindows(bool value);
     void set_flag_AutoSave(bool value);
-    void set_file_AutoSave(QString new_filename);
+    void set_file_AutoSave(const QString &new_filename);
 
     void choice_file(void);
 };

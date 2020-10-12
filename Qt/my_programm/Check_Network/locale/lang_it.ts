@@ -243,6 +243,38 @@
         <source>RadioButton</source>
         <translation>È necessario rinominare</translation>
     </message>
+    <message>
+        <source>scan</source>
+        <translation>scansione</translation>
+    </message>
+    <message>
+        <source>Begin</source>
+        <translation>Indirizzo inizialeс</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation>Indirizzo finale</translation>
+    </message>
+    <message>
+        <source>Port</source>
+        <translation>Porta</translation>
+    </message>
+    <message>
+        <source>Max wait, ms</source>
+        <translation>Max. aspettativa, msec</translation>
+    </message>
+    <message>
+        <source>GO</source>
+        <translation>PARTIRE</translation>
+    </message>
+    <message>
+        <source>connect</source>
+        <translation>collegare</translation>
+    </message>
+    <message>
+        <source>disconnect</source>
+        <translation>disconnettersi</translation>
+    </message>
 </context>
 
 </TS>

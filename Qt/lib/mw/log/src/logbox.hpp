@@ -75,7 +75,7 @@ public:
     void load_settings(void);
     void save_settings(void);
 
-    void set_o_name(QString value);
+    void set_o_name(const QString &value);
 
     void set_flagNoCRLF(bool state);
     void set_flagAddDateTime(bool state);

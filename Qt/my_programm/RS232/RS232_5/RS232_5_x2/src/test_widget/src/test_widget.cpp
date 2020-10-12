@@ -21,11 +21,43 @@
 #include "mainwindow.hpp"
 #include "test_widget.hpp"
 #include "serialbox5.hpp"
+
+#include "ui_testwidget.h"
 //--------------------------------------------------------------------------------
 TestWidget::TestWidget(QWidget *parent)
-    : QWidget(parent)
+    : MyWidget(parent),
+      ui(new Ui::TestWidget)
 {
+    init();
+}
+//--------------------------------------------------------------------------------
+TestWidget::~TestWidget()
+{
+    ui->serial_widget->save_widgets();
+    ui->serial_widget_2->save_widgets();
+
+    save_widgets();
+    delete ui;
+}
+//--------------------------------------------------------------------------------
+void TestWidget::init(void)
+{
+    ui->setupUi(this);
     createTestBar();
+
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        ui->serial_widget->load_widgets();
+        ui->serial_widget_2->load_widgets();
+
+        mw->add_dock_widget("RS232_1", "rs232_1", Qt::LeftDockWidgetArea,  reinterpret_cast<QWidget *>(ui->serial_widget));
+        mw->add_dock_widget("RS232_2", "rs232_2", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(ui->serial_widget_2));
+
+        setVisible(false);
+    }
+
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void TestWidget::createTestBar(void)
@@ -108,5 +140,25 @@ bool TestWidget::test(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test");
     return true;
+}
+//--------------------------------------------------------------------------------
+void TestWidget::updateText(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+bool TestWidget::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void TestWidget::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void TestWidget::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------

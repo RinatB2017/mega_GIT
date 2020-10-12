@@ -27,18 +27,19 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-class TestWidget : public QWidget
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
+namespace Ui {
+    class TestWidget;
+}
+//--------------------------------------------------------------------------------
+class TestWidget : public MyWidget
 {
     Q_OBJECT
 
 public:
     explicit TestWidget(QWidget *parent = nullptr);
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
+    ~TestWidget();
 
 public slots:
     void choice_test(void);
@@ -53,6 +54,7 @@ private:
     } CMD_t;
     QList<CMD> commands;
 
+    Ui::TestWidget *ui;
     QPointer<QComboBox> cb_test;
 
     void createTestBar(void);
@@ -62,6 +64,12 @@ private:
                             const QString &text,
                             const QString &tool_tip);
 
+    void init(void);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // TEST_WIDGET_HPP

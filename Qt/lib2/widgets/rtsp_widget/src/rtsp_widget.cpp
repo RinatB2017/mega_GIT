@@ -78,6 +78,11 @@ void RTSP_widget::init(void)
     connect(ui->btn_choice, SIGNAL(clicked(bool)),  this,   SLOT(choice()));
 }
 //--------------------------------------------------------------------------------
+void RTSP_widget::set_address(const QString &address)
+{
+    ui->le_address->setText(address);
+}
+//--------------------------------------------------------------------------------
 void RTSP_widget::f_error(QMediaPlayer::Error err)
 {
     switch (err)

@@ -48,26 +48,42 @@ private slots:
     void f_connect(void);
     void f_disconnect(void);
 
+    void f_set_url(const QModelIndex &index);
+    bool f_test(void);
+
+    void choice_test(void);
+
     void slotReadyRead   (void);
     void slotError       (QAbstractSocket::SocketError);
     void slotSendToServer(void);
     void slotConnected   (void);
 
 private:
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        bool (MainBox::*func)(void);
+    } *cmd_t;
+    QList<CMD> commands;
+
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
+
+    QPointer<QComboBox> cb_test;
 
     QString strHost;
     int nPort = 0;
     QPointer<QTcpSocket> m_pTcpSocket;
 
-    QStandardItemModel *model;
+    QStandardItemModel *model = nullptr;
 
 #ifdef USE_RTSP
     RTSP_widget *rtsp_widget = nullptr;
 #endif
 
     void init(void);
+    void createTestBar(void);
 
     void updateText(void);
     bool programm_is_exit(void);

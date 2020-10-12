@@ -79,7 +79,6 @@ public:
     bool power_off(void);
 
 private:
-    QWidget *parent;
     QString caption;
     QString o_name;
 

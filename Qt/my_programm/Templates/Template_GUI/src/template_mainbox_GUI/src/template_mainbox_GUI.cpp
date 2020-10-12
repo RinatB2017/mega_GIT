@@ -64,6 +64,8 @@ void MainBox_GUI::init(void)
 
     ui->sb_value->setRange(0, 1000);
 
+    connect(ui->btn_test,   &QPushButton::clicked,  this,   &MainBox_GUI::push_btn_test);
+
     load_widgets();
 }
 //--------------------------------------------------------------------------------

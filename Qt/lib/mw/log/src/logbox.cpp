@@ -938,7 +938,7 @@ void LogBox::save_settings(void)
     endGroup();
 }
 //--------------------------------------------------------------------------------
-void LogBox::set_o_name(QString value)
+void LogBox::set_o_name(const QString &value)
 {
     o_name = value;
 }

@@ -201,7 +201,7 @@ void Log_options::set_flag_AutoSave(bool value)
     ui->cb_AutoSave->setChecked(value);
 }
 //--------------------------------------------------------------------------------
-void Log_options::set_file_AutoSave(QString new_filename)
+void Log_options::set_file_AutoSave(const QString &new_filename)
 {
     autosave_filename = new_filename;
 }

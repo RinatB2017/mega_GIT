@@ -43,16 +43,16 @@ class SerialBox5_fix_baudrate : public SerialWidget
     Q_OBJECT
 
 public:
-    SerialBox5_fix_baudrate(QWidget *parent,
-                    const QString &caption,
-                    const QString &o_name);
-    SerialBox5_fix_baudrate(QWidget *parent = nullptr);
+    explicit SerialBox5_fix_baudrate(QWidget *parent,
+                                     const QString &caption,
+                                     const QString &o_name);
+    explicit SerialBox5_fix_baudrate(QWidget *parent = nullptr);
     ~SerialBox5_fix_baudrate();
 
     bool add_menu(int index);
     bool add_menu(int index, const QString &title);
 
-    void set_caption(QString value);
+    void set_caption(const QString &value);
 
     bool set_fix_baudrate(int value);
 

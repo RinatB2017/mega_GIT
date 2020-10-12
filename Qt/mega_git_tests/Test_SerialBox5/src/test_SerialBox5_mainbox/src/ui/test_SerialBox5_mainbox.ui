@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>233</width>
-    <height>190</height>
+    <height>202</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -172,9 +172,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SerialBox5_lite</class>
+   <class>SerialBox5</class>
    <extends>QWidget</extends>
-   <header>serialbox5_lite.hpp</header>
+   <header>serialbox5.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -184,9 +184,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>SerialBox5</class>
+   <class>SerialBox5_lite</class>
    <extends>QWidget</extends>
-   <header>serialbox5.hpp</header>
+   <header>serialbox5_lite.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>

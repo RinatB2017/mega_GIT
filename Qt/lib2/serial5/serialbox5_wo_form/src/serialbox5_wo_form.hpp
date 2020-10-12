@@ -30,9 +30,6 @@
 #include "serialwidget.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class QHBoxLayout;
-class QPushButton;
-//--------------------------------------------------------------------------------
 class SerialBox5_wo_form : public SerialWidget
 {
     Q_OBJECT
@@ -48,10 +45,10 @@ public:
         E_PORT_NOT_OPEN
     };
 
-    SerialBox5_wo_form(QWidget *parent,
-               const QString &caption,
-               const QString &o_name = "SerialBox5_wo_form");
-    SerialBox5_wo_form(QWidget *parent = nullptr);
+    explicit SerialBox5_wo_form(QWidget *parent,
+                                const QString &caption,
+                                const QString &o_name = "SerialBox5_wo_form");
+    explicit SerialBox5_wo_form(QWidget *parent = nullptr);
     ~SerialBox5_wo_form();
 
     bool add_menu(int index);
@@ -104,7 +101,7 @@ private slots:
     void dataTerminalReadyChanged(bool set);
     void requestToSendChanged(bool set);
 
-   void getStatus(const QString &status, QDateTime current);
+    void getStatus(const QString &status, QDateTime current);
 
     void get_parameter(void);
 

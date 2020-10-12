@@ -48,10 +48,10 @@ class SerialBox5_fix_baudrate_win7 : public MyWidget
     Q_OBJECT
 
 public:
-    SerialBox5_fix_baudrate_win7(QWidget *parent,
-                    const QString &caption,
-                    const QString &o_name);
-    SerialBox5_fix_baudrate_win7(QWidget *parent = nullptr);
+    explicit SerialBox5_fix_baudrate_win7(QWidget *parent,
+                                          const QString &caption,
+                                          const QString &o_name);
+    explicit SerialBox5_fix_baudrate_win7(QWidget *parent = nullptr);
     ~SerialBox5_fix_baudrate_win7();
 
     bool isOpen(void);
@@ -65,7 +65,7 @@ public:
     QSerialPort::StopBits       get_stopBits(void);
     QSerialPort::FlowControl    get_flowControl(void);
 
-    void set_caption(QString value);
+    void set_caption(const QString &value);
 
     void set_fix_baudrate(int value);
     void write(const char *data);

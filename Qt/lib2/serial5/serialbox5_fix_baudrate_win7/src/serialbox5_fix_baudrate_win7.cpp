@@ -78,7 +78,7 @@ SerialBox5_fix_baudrate_win7::~SerialBox5_fix_baudrate_win7()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate_win7::set_caption(QString value)
+void SerialBox5_fix_baudrate_win7::set_caption(const QString &value)
 {
     caption = value;
     o_name = value;

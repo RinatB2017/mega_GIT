@@ -30,8 +30,6 @@
 #include "serialwidget.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class QHBoxLayout;
-class QPushButton;
 class LogBox;
 class SendBox5;
 //--------------------------------------------------------------------------------
@@ -47,10 +45,10 @@ class SerialBox5_lite : public SerialWidget
     Q_PROPERTY(bool p_test      READ get_test       WRITE set_test)
 
 public:
-    SerialBox5_lite(QWidget *parent,
-                    const QString &caption,
-                    const QString &o_name);
-    SerialBox5_lite(QWidget *parent = nullptr);
+    explicit SerialBox5_lite(QWidget *parent,
+                             const QString &caption,
+                             const QString &o_name);
+    explicit SerialBox5_lite(QWidget *parent = nullptr);
     ~SerialBox5_lite();
 
     bool add_menu(int index);

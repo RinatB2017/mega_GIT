@@ -25,6 +25,7 @@ SUBDIRS += \
     $$PWD/Labyrinth \
     $$PWD/MCP4725 \
     $$PWD/MODBUS \
+    $$PWD/MyTerminal \
     $$PWD/show_films \
     $$PWD/test_serialport_win7 \
     $$PWD/Templates \

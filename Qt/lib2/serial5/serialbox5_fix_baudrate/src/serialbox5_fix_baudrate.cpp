@@ -79,7 +79,7 @@ SerialBox5_fix_baudrate::~SerialBox5_fix_baudrate()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::set_caption(QString value)
+void SerialBox5_fix_baudrate::set_caption(const QString &value)
 {
     caption = value;
     o_name = value;

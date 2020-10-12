@@ -21,8 +21,11 @@
 #ifndef RTSP_DIALOG_HPP
 #define RTSP_DIALOG_HPP
 //--------------------------------------------------------------------------------
-#include <QDialog>
-#include <QUrl>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
 namespace Ui {
     class RTSP_dialog;
@@ -35,6 +38,9 @@ class RTSP_dialog : public QDialog
 public:
     explicit RTSP_dialog(QWidget *parent = nullptr);
     ~RTSP_dialog();
+
+    void set_login(const QString &login);
+    void set_password(const QString &password);
 
     void set_url(QUrl url);
     QString get_address(void);

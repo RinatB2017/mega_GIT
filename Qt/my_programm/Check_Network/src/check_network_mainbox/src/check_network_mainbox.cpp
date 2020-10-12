@@ -312,9 +312,10 @@ void MainBox::f_set_url(const QModelIndex &index)
                .arg(port));
 
 #ifdef USE_RTSP
-    rtsp_widget->set_address(QString("rtsp://admin:admin@%1:%2")
-                             .arg(url)
-                             .arg(port));
+    rtsp_widget->set_address("admin",
+                             "admin",
+                             url,
+                             port);
     rtsp_widget->play();
 #endif
 }

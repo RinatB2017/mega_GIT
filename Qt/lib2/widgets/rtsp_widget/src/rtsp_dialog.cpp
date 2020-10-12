@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "rtsp_dialog.hpp"
 #include "ui_rtsp_dialog.h"
 //--------------------------------------------------------------------------------
@@ -43,21 +37,45 @@ void RTSP_dialog::init(void)
 {
     ui->setupUi(this);
 
+    ui->sb_port->setRange(0, 0xFFFF);
     ui->le_add->setText("av0_0");
+}
+//--------------------------------------------------------------------------------
+void RTSP_dialog::set_login(const QString &login)
+{
+    ui->le_login->setText(login);
+}
+//--------------------------------------------------------------------------------
+void RTSP_dialog::set_password(const QString &password)
+{
+    ui->le_password->setText(password);
 }
 //--------------------------------------------------------------------------------
 void RTSP_dialog::set_url(QUrl url)
 {
     ui->ip4_widget->set_url(url);
+    ui->sb_port->setValue(url.port());
 }
 //--------------------------------------------------------------------------------
 QString RTSP_dialog::get_address(void)
 {
     QString address;
     address.append("rtsp://");
-    address.append(QString("%1").arg(ui->ip4_widget->get_url().host()));
-    address.append("/");
-    address.append(ui->le_add->text());
+    if(ui->le_login->text().isEmpty() == false && ui->le_password->text().isEmpty() == false)
+    {
+        address.append(ui->le_login->text());
+        address.append(":");
+        address.append(ui->le_password->text());
+        address.append("@");
+    }
+    address.append(QString("%1:%2")
+                   .arg(ui->ip4_widget->get_url().host())
+                   .arg(ui->ip4_widget->get_url().port()));
+    if(ui->le_add->text().isEmpty() == false)
+    {
+        address.append("/");
+        address.append(ui->le_add->text());
+    }
 
     return address;
 }

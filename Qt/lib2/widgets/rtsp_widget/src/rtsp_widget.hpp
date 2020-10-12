@@ -21,12 +21,6 @@
 #ifndef RTSP_WIDGET_HPP
 #define RTSP_WIDGET_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <QMediaPlayer>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -43,13 +37,10 @@ public:
     explicit RTSP_widget(QWidget *parent = nullptr);
     ~RTSP_widget();
 
-    void set_address(const QString &address);
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
+    void set_address(const QString &login,
+                     const QString &password,
+                     const QString &ip,
+                     const QString &port);
 
 public slots:
     void play(void);
@@ -63,6 +54,10 @@ private slots:
 private:
     Ui::RTSP_widget *ui;
     QMediaPlayer *player = nullptr;
+
+    QString login = "admin";
+    QString password = "admin";
+    QUrl url;
 
     void init(void);
 

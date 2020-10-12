@@ -78,8 +78,23 @@ void RTSP_widget::init(void)
     connect(ui->btn_choice, SIGNAL(clicked(bool)),  this,   SLOT(choice()));
 }
 //--------------------------------------------------------------------------------
-void RTSP_widget::set_address(const QString &address)
+void RTSP_widget::set_address(const QString &login,
+                              const QString &password,
+                              const QString &ip,
+                              const QString &port)
 {
+    QString address = QString("rtsp://%1:%2@%3:%4")
+            .arg(login)
+            .arg(password)
+            .arg(ip)
+            .arg(port);
+
+    this->login = login;
+    this->password = password;
+    url.setUrl(QString("ip://%1:%2")
+               .arg(ip)
+               .arg(port));
+
     ui->le_address->setText(address);
 }
 //--------------------------------------------------------------------------------
@@ -157,7 +172,9 @@ void RTSP_widget::stop(void)
 void RTSP_widget::choice(void)
 {
     RTSP_dialog *dlg = new RTSP_dialog;
-    dlg->set_url(QUrl("ip://192.168.1.14"));
+    dlg->set_login(login);
+    dlg->set_password(password);
+    dlg->set_url(url);
     int btn = dlg->exec();
     if(btn == RTSP_dialog::Accepted)
     {

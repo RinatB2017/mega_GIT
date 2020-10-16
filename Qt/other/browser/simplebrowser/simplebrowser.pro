@@ -1,6 +1,7 @@
 
 TEMPLATE    = app
-TARGET      = simplebrowser
+#TARGET      = simplebrowser
+TARGET      = translatebrowser
 QT          += webenginewidgets
 CONFIG      += c++11
 

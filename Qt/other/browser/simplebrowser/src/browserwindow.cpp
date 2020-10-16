@@ -398,6 +398,7 @@ QMenu *BrowserWindow::createHelpMenu()
 QToolBar *BrowserWindow::createToolBar()
 {
     QToolBar *navigationBar = new QToolBar(tr("Navigation"));
+    navigationBar->setObjectName("Navigation");
     navigationBar->setMovable(false);
     navigationBar->toggleViewAction()->setEnabled(false);
 

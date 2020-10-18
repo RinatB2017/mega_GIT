@@ -7,6 +7,6 @@ DEPENDPATH  += \
     $$PWD/src/ui
 INCLUDEPATH = $$DEPENDPATH
 
-HEADERS += template_rs232_mainbox.hpp
-SOURCES += template_rs232_mainbox.cpp
-FORMS   += template_rs232_mainbox.ui
+HEADERS += myterminal_mainbox.hpp
+SOURCES += myterminal_mainbox.cpp
+FORMS   += myterminal_mainbox.ui

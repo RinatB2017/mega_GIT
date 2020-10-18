@@ -23,7 +23,7 @@
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "template_rs232_mainbox.hpp"
+#include "myterminal_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------

@@ -18,11 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "ui_template_rs232_mainbox.h"
+#include "ui_myterminal_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "template_rs232_mainbox.hpp"
+#include "myterminal_mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
@@ -59,15 +59,28 @@ void MainBox::init_serial(void)
     connect(ui->serial_widget,  &SerialBox5_fix_baudrate::output,
             this,               &MainBox::read_data);
 
-    connect(ui->le_command,     &QLineEdit::returnPressed,
+    connect(ui->cb_command,     &QComboBox::currentTextChanged,
             this,               &MainBox::send_command);
     connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,
-            ui->le_command,     &QLineEdit::setEnabled);
+            ui->cb_command,     &QComboBox::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,
+            ui->btn_send,       &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,
+            ui->btn_send_text_remove,       &QToolButton::setEnabled);
+    connect(ui->btn_send,       &QToolButton::clicked,
+            this,               &MainBox::send_command);
+
+    connect(ui->btn_send_text_remove, &QToolButton::clicked, [this]() {
+            ui->cb_command->removeItem(ui->cb_command->currentIndex());
+        });
+
 
     ui->serial_widget->set_fix_baudrate(115200);
     ui->te_terminal->setReadOnly(true);
     ui->te_terminal->setProperty(NO_SAVE, true);
-    ui->le_command->setProperty(NO_SAVE, true);
+
+    ui->btn_send_text_remove->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
+    ui->btn_send->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
@@ -78,7 +91,12 @@ void MainBox::read_data(QByteArray ba)
 //--------------------------------------------------------------------------------
 void MainBox::send_command(void)
 {
-    if(ui->le_command->text().isEmpty())
+    if(ui->serial_widget->isOpen() == false)
+    {
+        return;
+    }
+
+    if(ui->cb_command->currentText().isEmpty())
     {
         emit error("no data");
         return;
@@ -86,7 +104,7 @@ void MainBox::send_command(void)
 #if 0
     ui->serial_widget->input(ui->le_command->text());
 #else
-    ui->serial_widget->input(QString("%1\n").arg(ui->le_command->text()));
+    ui->serial_widget->input(QString("%1\n").arg(ui->cb_command->currentText()));
 #endif
 }
 //--------------------------------------------------------------------------------

@@ -71,6 +71,9 @@ private:
     void init(void);
     void createTestBar(void);
 
+    void parseEscapeSequence(int attribute, QListIterator< QString > & i, QTextCharFormat & textCharFormat, QTextCharFormat const & defaultTextCharFormat);
+    void setTextTermFormatting(QTextEdit * textEdit, QString const & text);
+
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);

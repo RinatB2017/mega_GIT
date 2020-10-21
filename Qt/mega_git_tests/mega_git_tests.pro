@@ -39,6 +39,7 @@ SUBDIRS += \
     $$PWD/Test_QGraphicsScene \
     $$PWD/Test_QListWidget \
     $$PWD/Test_QProcess \
+    $$PWD/Test_QTermWidget \
     $$PWD/Test_QsLog \
     $$PWD/Test_RadioGarden \
     $$PWD/Test_RGB_display \

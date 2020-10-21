@@ -707,11 +707,12 @@ bool MainBox::show_terminal(void)
 {
     QTermWidget *console = new QTermWidget();
 #if 1
-    console->sendText("echo \033[43mWARNING MESSAGE\033[0m \n");
+    console->sendText("echo -e \"\\033[43mWARNING MESSAGE\\033[0m\" \n");
 #else
     console->sendText("export TERM=xterm-256color\n");
     console->sendText("mc\n");
 #endif
+    connect(console, SIGNAL(finished()), console, SLOT(close()));
     console->show();
 
     return true;

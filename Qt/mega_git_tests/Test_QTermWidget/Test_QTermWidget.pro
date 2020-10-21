@@ -46,6 +46,7 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_qtermwidget_mainbox/test_qtermwidget_mainbox.pri)
+include (src/serialterm/serialterm.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

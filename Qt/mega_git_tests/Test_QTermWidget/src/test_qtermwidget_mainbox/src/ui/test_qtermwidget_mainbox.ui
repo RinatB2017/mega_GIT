@@ -15,15 +15,15 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QTermWidget" name="console_widget" native="true"/>
+    <widget class="SerialTerm" name="QTermWidget_widget" native="true"/>
    </item>
   </layout>
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QTermWidget</class>
+   <class>SerialTerm</class>
    <extends>QWidget</extends>
-   <header>qtermwidget.h</header>
+   <header>serialterm.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

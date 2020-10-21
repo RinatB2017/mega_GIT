@@ -33,12 +33,13 @@ public:
     Test();
 
 private slots:
-    void test_GUI(void);
-    void test_func(void);
-    void test_signals(void);
     
 private:
     MainWindow *mw;
+
+    void test_GUI(void);
+    void test_func(void);
+    void test_signals(void);
 };
 //--------------------------------------------------------------------------------
 #endif

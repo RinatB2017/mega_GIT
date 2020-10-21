@@ -62,13 +62,22 @@ void MainBox::init(void)
 #endif
     font.setPointSize(12);
 
-    ui->console_widget->setTerminalFont(font);
-    ui->console_widget->sendText("export TERM=xterm-256color\n");
+    ui->QTermWidget_widget->setPortName("/dev/ttyUSB1");
+    ui->QTermWidget_widget->setBaudRate(9600);
+    ui->QTermWidget_widget->setDataBits(QSerialPort::Data8);
+    ui->QTermWidget_widget->setParity(QSerialPort::NoParity);
+    ui->QTermWidget_widget->setStopBits(QSerialPort::OneStop);
+    ui->QTermWidget_widget->setFlowControl(QSerialPort::NoFlowControl);
+
+    ui->QTermWidget_widget->openSerialPort();
+
+    ui->QTermWidget_widget->setTerminalFont(font);
+//    ui->QTermWidget_widget->sendText("export TERM=xterm-256color\n");
 //    ui->console_widget->setScrollBarPosition(QTermWidget::ScrollBarRight);
 //    ui->console_widget->setColorScheme("GreenOnBlack");
 
     // real startup
-    connect(ui->console_widget, &QTermWidget::finished, qApp, &QApplication::quit);
+    connect(ui->QTermWidget_widget, &QTermWidget::finished, qApp, &QApplication::quit);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -140,12 +149,14 @@ void MainBox::choice_test(void)
 bool MainBox::test(void)
 {
     emit info("Test");
+    ui->QTermWidget_widget->s_write("test");
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test2(void)
 {
     emit info("Test2");
+    qDebug()<<"\033[37;1;41m Внимание \033[0m";
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -32,9 +32,11 @@ win32 {
 
 # не забыть при смене Qt изменить файлы в каталоге win
 RESOURCES += \
-    images/images.qrc
+    images/images.qrc \
+    data/CSI_codes.qrc
 
-OTHER_FILES += doc/notebook.txt
+OTHER_FILES += \
+    doc/notebook.txt
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)
@@ -45,6 +47,7 @@ LIB_PATH  = "$$PWD/../../lib"
 LIB_PATH2 = "$$PWD/../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+include ($$LIB_PATH/mywidgets/mycombobox.pri)
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
 

@@ -52,6 +52,9 @@ private slots:
     void read_data(QByteArray ba);
     void send_command(void);
 
+    void popup(QPoint);
+    void clear(void);
+
 private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
@@ -71,8 +74,12 @@ private:
     void init(void);
     void createTestBar(void);
 
-    void parseEscapeSequence(int attribute, QListIterator< QString > & i, QTextCharFormat & textCharFormat, QTextCharFormat const & defaultTextCharFormat);
-    void setTextTermFormatting(QTextEdit * textEdit, QString const & text);
+    void parseEscapeSequence(int attribute,
+                             QListIterator< QString > & i,
+                             QTextCharFormat & textCharFormat,
+                             QTextCharFormat const & defaultTextCharFormat);
+    void setTextTermFormatting(QTextEdit * textEdit,
+                               QString const & text);
 
     void updateText(void);
     bool programm_is_exit(void);

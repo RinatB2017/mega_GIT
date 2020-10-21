@@ -48,6 +48,9 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
+    ui->te_terminal->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->te_terminal, &MainBox::customContextMenuRequested,    this,   &MainBox::popup);
+
     init_serial();
     load_widgets();
 }
@@ -59,39 +62,25 @@ void MainBox::init_serial(void)
     connect(ui->serial_widget,  &SerialBox5_fix_baudrate::output,
             this,               &MainBox::read_data);
 
-    //    connect(ui->cb_command,     &QComboBox::editTextChanged,
-    //            this,               &MainBox::send_command);
-    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,
-            ui->cb_command,     &QComboBox::setEnabled);
-    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,
-            ui->btn_send,       &QToolButton::setEnabled);
-    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,
-            ui->btn_send_text_remove,       &QToolButton::setEnabled);
-    connect(ui->btn_send,       &QToolButton::clicked,
+    connect(ui->cb_widget,      &MyComboBox::send_command,
             this,               &MainBox::send_command);
-
-    connect(ui->btn_send_text_remove, &QToolButton::clicked, [this]() {
-        ui->cb_command->removeItem(ui->cb_command->currentIndex());
-    });
-
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::port_is_active,
+            ui->cb_widget,      &MyComboBox::setEnabled);
 
     ui->serial_widget->set_fix_baudrate(115200);
     ui->te_terminal->setReadOnly(true);
     ui->te_terminal->setProperty(NO_SAVE, true);
-
-    ui->btn_send_text_remove->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
-    ui->btn_send->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
 {
-#if 0
+#if 1
     setTextTermFormatting(ui->te_terminal, ba.data());
 #endif
 #if 0
     ui->te_terminal->insertPlainText(ba.data());
 #endif
-#if 1
+#if 0
     ui->te_terminal->append(ba.data());
 #endif
     ui->te_terminal->moveCursor(QTextCursor::End);
@@ -104,7 +93,8 @@ void MainBox::send_command(void)
         return;
     }
 
-    if(ui->cb_command->currentText().isEmpty())
+    QString command = ui->cb_widget->get_command();
+    if(command.isEmpty())
     {
         emit error("no data");
         return;
@@ -112,7 +102,7 @@ void MainBox::send_command(void)
 #if 0
     ui->serial_widget->input(ui->le_command->text());
 #else
-    ui->serial_widget->input(QString("%1\n").arg(ui->cb_command->currentText()));
+    ui->serial_widget->input(QString("%1\n").arg(command));
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -173,8 +163,14 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-// based on information: http://en.m.wikipedia.org/wiki/ANSI_escape_code http://misc.flogisoft.com/bash/tip_colors_and_formatting http://invisible-island.net/xterm/ctlseqs/ctlseqs.html
-void MainBox::parseEscapeSequence(int attribute, QListIterator< QString > & i, QTextCharFormat & textCharFormat, QTextCharFormat const & defaultTextCharFormat)
+// based on information:
+//    http://en.m.wikipedia.org/wiki/ANSI_escape_code
+//    http://misc.flogisoft.com/bash/tip_colors_and_formatting
+//    http://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+void MainBox::parseEscapeSequence(int attribute,
+                                  QListIterator< QString > & i,
+                                  QTextCharFormat & textCharFormat,
+                                  QTextCharFormat const & defaultTextCharFormat)
 {
     switch (attribute) {
     case 0 : { // Normal/Default (reset all attributes)
@@ -421,6 +417,7 @@ void MainBox::parseEscapeSequence(int attribute, QListIterator< QString > & i, Q
                 break;
             }
             default : {
+                Q_ASSERT(false);
                 break;
             }
             }
@@ -535,6 +532,7 @@ void MainBox::parseEscapeSequence(int attribute, QListIterator< QString > & i, Q
                 break;
             }
             default : {
+                Q_ASSERT(false);
                 break;
             }
             }
@@ -643,7 +641,8 @@ void MainBox::parseEscapeSequence(int attribute, QListIterator< QString > & i, Q
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::setTextTermFormatting(QTextEdit * textEdit, QString const & text)
+void MainBox::setTextTermFormatting(QTextEdit * textEdit,
+                                    QString const & text)
 {
     QTextDocument * document = textEdit->document();
     QRegExp const escapeSequenceExpression(R"(\x1B\[([\d;]+)m)");
@@ -685,8 +684,45 @@ bool MainBox::test(void)
 {
     qDebug() << "Test";
 
+#if 1
+    QFile file(":/data/CSI_codes.txt");
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        emit error("file not open");
+        return false;
+    }
+    read_data(file.readAll());
+    file.close();
+#else
     setTextTermFormatting(ui->te_terminal, "\033[43mWARNING MESSAGE\033[0m");
+#endif
     return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::popup(QPoint)
+{
+    QMenu *popup_menu = ui->te_terminal->createStandardContextMenu();
+    if(popup_menu == nullptr)
+    {
+        popup_menu = new QMenu;
+    }
+
+    popup_menu->setStyleSheet("background:white;color:black;");
+
+    QAction *clear_action = new QAction(tr("clear"),   this);
+    clear_action->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon)));
+
+    popup_menu->addSeparator();
+    popup_menu->addAction(clear_action);
+
+    connect(clear_action,               &QAction::triggered,    this, &MainBox::clear);
+
+    popup_menu->exec(QCursor::pos());
+}
+//--------------------------------------------------------------------------------
+void MainBox::clear(void)
+{
+    ui->te_terminal->clear();
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/data">
+        <file>CSI_codes.txt</file>
+    </qresource>
+</RCC>

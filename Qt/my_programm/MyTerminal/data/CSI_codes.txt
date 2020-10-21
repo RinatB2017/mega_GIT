@@ -1,0 +1,35 @@
+01-23-140617_1024x768_scrot.png  Music        Videos
+2015-01-24-161521_1024x768_scrot.png  Pictures     burn-image-to-emmc
+Desktop                               Programming  fix.sh
+Documents                             Public       fix_orig.sh
+Downloads                             Templates
+Press any key to continue.../Pictures[8Cx[m   4096x[mMar  1  2019xx[m/Pictures[8Cx[m   4096x[mMar  1  2019x[10;1Hx[m/Programming[5Cx[m   4096x[mJun 23 04:15xx[m/Programming[5Cx[m   4096x[mJun 23 04:15x[11;1Hx[m/Public[10Cx[m   4096x[mJan  1  2010xx[m/Public[10Cx[m   4096x[mJan  1  2010x[12;1Hx[m/Templates[7Cx[m   4096x[mJan  1  2010xx[m/Templates[7Cx[m   4096x[mJan  1  2010x[13;1Hx[m/Videos[10Cx[m   4096x[mJan  1  2010xx[m/Videos[10Cx[m   4096x[mJan  1  2010x[14;1Hx[m/burn-ima~to-emmcx[m   4096x[mJun 21  2015xx[m/burn-ima~to-emmcx[m   4096x[mJun 21  2015x[15;1Hx[m 2015-01-~rot.pngx[m 145620x[mJan 23  2015xx[m 2015-01-~rot.pngx[m 145620x[mJan 23  2015x[16;1Hx[m 2015-01-~rot.pngx[m  33272x[mJan 24  2015xx[m 2015-01-~rot.pngx[m  33272x[mJan 24  2015x[17;1Hx[m*fix.sh[10Cx[m   1662x[mOct 27  2017xx[m*fix.sh[10Cx[m   1662x[mOct 27  2017x[18;1Hx[m*fix_orig.sh[5Cx[m   1642x[mOct 27  2017xx[m*fix_orig.sh[5Cx[m   1642x[mOct 27  2017x[19;1Htqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqutqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqu[20;1Hx[mUP--DIR[31Cxx[mUP--DIR[31Cx[21;1Hmqqqqqqqqqqqqqqqqqqq[m 395M/3385M (11%) qjmqqqqqqqqqqqqqqqqqqq[m 395M/3385M (11%) qj[22;1H[mHint: You may specify the external viewer with the shell vars VIEWER or PAGER.
+orangepi@orangepi:~$[57C[^][24;2H1Help  [m 2Menu  [m 3View  [m 4Edit  [m 5Copy  [m 6RenMov[m 7Mkdir [m 8Delete[m 9PullDn[m10Quit [24;79H [4h [4l[23;22H[mls[54C[23;24H[1;1H[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[24;2H[K[1;80H[?2004l[?1l>[24;1H[m
+                                                                               
+
+
+orangepi@orangepi:~$ ls
+2015-
+[?2004h[1;24r[4l(B)0[?1h=[m[1;24r[H[J[1;1H  Left     File     Command     Options     Right                               [2;1H[ml[m<q[m ~ [mqqqqqqqqqqqqqqqqqqqqqqqqqqqq[m.[^]>kl[m<q[m ~ qqqqqqqqqqqqqqqqqqqqqqqqqqqq[m.[^]>k[3;1Hx[m'n[5CName[6Cx[m Size  x[mModify time xx[m'n[5CName[6Cx[m Size  x[mModify time x[4;1Hx[m/..              [mx[mUP--DIR[mx[mJan  1  2010[mxx[m/..[14Cx[mUP--DIRx[mJan  1  2010x[5;1Hx[m/Desktop[9Cx[m   4096x[mJun 21  2015xx[m/Desktop[9Cx[m   4096x[mJun 21  2015x[6;1Hx[m/Documents[7Cx[m   4096x[mJan  1  2010xx[m/Documents[7Cx[m   4096x[mJan  1  2010x[7;1Hx[m/Downloads[7Cx[m   4096x[mJul 14 03:24xx[m/Downloads[7Cx[m   4096x[mJul 14 03:24x[8;1Hx[m/Music[11Cx[m   4096x[mJan  1  2010xx[m/Music[11Cx[m   4096x[mJan  1  2010x[9;1Hx[m

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2017                                                       **
+**     Copyright (C) 2020                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -21,24 +21,34 @@
 #ifndef MYCOMBOBOX_HPP
 #define MYCOMBOBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QDebug>
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#include <QAbstractItemView>
-#include <QComboBox>
+namespace Ui {
+    class MyComboBox;
+}
 //--------------------------------------------------------------------------------
-class MyComboBox : public QComboBox
+class MyComboBox : public MyWidget
 {
-public:
-    explicit MyComboBox(QWidget *parent = nullptr) : QComboBox(parent)
-    {
-        setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLengthWithIcon);
-    }
+    Q_OBJECT
 
-    void showPopup(void)
-    {
-        this->view()->setMinimumWidth(this->view()->sizeHintForColumn(0));
-        QComboBox::showPopup();
-    }
+signals:
+    void send_command(void);
+
+public:
+    explicit MyComboBox(QWidget *parent = nullptr);
+    ~MyComboBox();
+
+    QString get_command(void);
+
+private:
+    Ui::MyComboBox *ui;
+
+    void init(void);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // MYCOMBOBOX_HPP

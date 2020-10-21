@@ -26,6 +26,8 @@ HEADERS += \
 SOURCES += \
     main.cpp
 
+LIBS    += -lqtermwidget5
+
 win32 {
     RC_ICONS = ico/computer.ico
 }
@@ -52,6 +54,7 @@ include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
 
 include (src/myterminal_mainbox/myterminal_mainbox.pri)
+#include (src/qtermwidget/qtermwidget.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

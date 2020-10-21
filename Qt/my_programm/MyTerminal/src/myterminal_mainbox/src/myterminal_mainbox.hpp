@@ -48,6 +48,7 @@ signals:
 private slots:
     void choice_test(void);
     bool test(void);
+    bool show_terminal(void);
 
     void read_data(QByteArray ba);
     void send_command(void);

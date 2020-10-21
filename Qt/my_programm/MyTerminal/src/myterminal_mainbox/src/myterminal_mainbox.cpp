@@ -24,6 +24,8 @@
 #include "mainwindow.hpp"
 #include "myterminal_mainbox.hpp"
 #include "defines.hpp"
+
+#include "qtermwidget.h"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
@@ -112,7 +114,8 @@ void MainBox::createTestBar(void)
     Q_CHECK_PTR(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test", &MainBox::test });
+    commands.append({ id++, "test",     &MainBox::test });
+    commands.append({ id++, "terminal", &MainBox::show_terminal });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -691,11 +694,26 @@ bool MainBox::test(void)
         emit error("file not open");
         return false;
     }
+
     read_data(file.readAll());
     file.close();
 #else
     setTextTermFormatting(ui->te_terminal, "\033[43mWARNING MESSAGE\033[0m");
 #endif
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::show_terminal(void)
+{
+    QTermWidget *console = new QTermWidget();
+#if 1
+    console->sendText("echo \033[43mWARNING MESSAGE\033[0m \n");
+#else
+    console->sendText("export TERM=xterm-256color\n");
+    console->sendText("mc\n");
+#endif
+    console->show();
+
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -41,7 +41,8 @@ public:
 private slots:
     void choice_test(void);
     bool test(void);
-    bool test2(void);
+
+    void serial_data(QByteArray data);
 
 private:
     typedef struct CMD
@@ -56,11 +57,12 @@ private:
 
     QPointer<QToolBar> testbar;
     QPointer<QComboBox> cb_test;
-    QPointer<QCheckBox> cb_block;
     QList<CMD> commands;
 
     void init(void);
     void createTestBar(void);
+
+    void send_data(void);
 
     void updateText(void);
     bool programm_is_exit(void);

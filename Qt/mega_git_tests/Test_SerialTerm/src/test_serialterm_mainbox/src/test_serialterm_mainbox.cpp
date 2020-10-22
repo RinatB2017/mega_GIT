@@ -41,6 +41,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -52,6 +53,9 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::output,   this,   &MainBox::serial_data);
+    connect(ui->le_send,        &QLineEdit::returnPressed,          this,   &MainBox::send_data);
+
     QFont font = QApplication::font();
 #ifdef Q_OS_MACOS
     font.setFamily(QStringLiteral("Monaco"));
@@ -62,14 +66,7 @@ void MainBox::init(void)
 #endif
     font.setPointSize(12);
 
-    ui->QTermWidget_widget->setPortName("/dev/ttyUSB1");
-    ui->QTermWidget_widget->setBaudRate(9600);
-    ui->QTermWidget_widget->setDataBits(QSerialPort::Data8);
-    ui->QTermWidget_widget->setParity(QSerialPort::NoParity);
-    ui->QTermWidget_widget->setStopBits(QSerialPort::OneStop);
-    ui->QTermWidget_widget->setFlowControl(QSerialPort::NoFlowControl);
-
-    ui->QTermWidget_widget->openSerialPort();
+    ui->serial_widget->set_fix_baudrate(115200);
 
     ui->QTermWidget_widget->setTerminalFont(font);
 //    ui->QTermWidget_widget->sendText("export TERM=xterm-256color\n");
@@ -78,6 +75,10 @@ void MainBox::init(void)
 
     // real startup
     connect(ui->QTermWidget_widget, &QTermWidget::finished, qApp, &QApplication::quit);
+
+    ui->serial_widget->set_caption("RS-232");
+
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -87,14 +88,10 @@ void MainBox::createTestBar(void)
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test",     &MainBox::test });
-    commands.append({ id++, "test2",    &MainBox::test2 });
 
     testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    cb_block = new QCheckBox("block", this);
-    testbar->addWidget(cb_block);
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
@@ -112,9 +109,6 @@ void MainBox::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
 
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
@@ -149,15 +143,19 @@ void MainBox::choice_test(void)
 bool MainBox::test(void)
 {
     emit info("Test");
-    ui->QTermWidget_widget->s_write("test");
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test2(void)
+void MainBox::send_data(void)
 {
-    emit info("Test2");
-    qDebug()<<"\033[37;1;41m Внимание \033[0m";
-    return true;
+    QString text = ui->le_send->text();
+    text.append("\n");
+    ui->serial_widget->input(text);
+}
+//--------------------------------------------------------------------------------
+void MainBox::serial_data(QByteArray data)
+{
+    ui->QTermWidget_widget->show_data(data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
@@ -172,19 +170,11 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-    if(cb_block)
-    {
-        bool is_checked = load_bool("cb_block");
-        cb_block->setChecked(is_checked);
-        cb_block->clicked(is_checked);
-    }
+
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-    if(cb_block)
-    {
-        save_int("cb_block", cb_block->isChecked());
-    }
+
 }
 //--------------------------------------------------------------------------------

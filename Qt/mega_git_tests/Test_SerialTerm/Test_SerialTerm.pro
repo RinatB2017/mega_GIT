@@ -12,9 +12,10 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
+DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
-DEFINES += PROGRAMM_IN_UTF8
+#DEFINES += RS232_SEND
 DEFINES += NO_LOG
 
 HEADERS += \
@@ -45,7 +46,7 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
-include ($$LIB_PATH2/serial5/serial5.pri)
+include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
 
 include (src/test_serialterm_mainbox/test_serialterm_mainbox.pri)
 include (src/serialterm/serialterm.pri)

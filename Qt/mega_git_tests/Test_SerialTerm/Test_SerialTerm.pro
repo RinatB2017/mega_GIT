@@ -3,7 +3,7 @@
 #**********************************************************************************
 
 TEMPLATE = app
-TARGET   = Test_QTermWidget
+TARGET   = Test_SerialTerm
 
 FOLDER  = tests
 
@@ -44,8 +44,11 @@ LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
+include ($$LIB_PATH2/serial5/serial5.pri)
 
-include (src/test_qtermwidget_mainbox/test_qtermwidget_mainbox.pri)
+include (src/test_serialterm_mainbox/test_serialterm_mainbox.pri)
+include (src/serialterm/serialterm.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

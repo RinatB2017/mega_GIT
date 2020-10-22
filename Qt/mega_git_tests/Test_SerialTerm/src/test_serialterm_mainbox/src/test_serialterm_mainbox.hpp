@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,30 +18,54 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef DEFINES_HPP
-#define DEFINES_HPP
+#ifndef MAINBOX_HPP
+#define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include "version.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#define ORGNAME "Work"
-#define APPNAME "Test_QTermWidget"
+namespace Ui {
+    class MainBox;
+}
 //--------------------------------------------------------------------------------
-#define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
-#define QMAKE_TARGET_COMPANY    ORGNAME
-#define QMAKE_TARGET_PRODUCT    APPNAME
-#define QMAKE_TARGET_COPYRIGHT  "Copyright 2020-2025"
-#define RC_ICONS                ":/images/computer.ico"
+class MySplashScreen;
 //--------------------------------------------------------------------------------
-#define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
-#define VER_FILEVERSION_STR         VER_STR
-#define VER_PRODUCTVERSION          VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
-#define VER_PRODUCTVERSION_STR      VER_STR
-#define VER_FILEDESCRIPTION_STR     APPNAME
-#define VER_INTERNALNAME_STR        APPNAME
-#define VER_LEGALCOPYRIGHT_STR      QMAKE_TARGET_COPYRIGHT
-#define VER_ORIGINALFILENAME_STR    APPNAME
-#define VER_PRODUCTNAME_STR         APPNAME
+class MainBox : public MyWidget
+{
+    Q_OBJECT
+
+public:
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
+    ~MainBox();
+
+private slots:
+    void choice_test(void);
+    bool test(void);
+    bool test2(void);
+
+private:
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        bool (MainBox::*func)(void);
+    } CMD_t;
+
+    QPointer<MySplashScreen> splash;
+    Ui::MainBox *ui;
+
+    QPointer<QToolBar> testbar;
+    QPointer<QComboBox> cb_test;
+    QPointer<QCheckBox> cb_block;
+    QList<CMD> commands;
+
+    void init(void);
+    void createTestBar(void);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
+};
 //--------------------------------------------------------------------------------
-#define ICON_PROGRAMM   ":/mainwindow/computer.png"
-//--------------------------------------------------------------------------------
-#endif
+#endif // MAINBOX_HPP

@@ -24,7 +24,7 @@
 #include "version.hpp"
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
-#define APPNAME "Test_QTermWidget"
+#define APPNAME "Test_SerialTerm"
 //--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME

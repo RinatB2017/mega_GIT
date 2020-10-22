@@ -46,6 +46,7 @@ SUBDIRS += \
     $$PWD/Test_RGB_Matrix \
     $$PWD/Test_RTSP_widget \
     $$PWD/Test_SerialBox5 \
+    $$PWD/Test_SerialTerm \
     $$PWD/Test_Simple_PTZ_widget \
     $$PWD/Test_libUSB \
     $$PWD/Test_model \

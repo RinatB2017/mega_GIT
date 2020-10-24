@@ -44,34 +44,17 @@ public:
     void set_value(int value);
     int  get_value(void);
 
-public slots:
-    void choice_test(void);
-    virtual bool test(void) = 0;
-    virtual bool test2(void) = 0;
+    void inc_value(void);
+    void dec_value(void);
+
+    void set_range(int min, int max);
 
 private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox_GUI::*func)(void);
-    } CMD_t;
-
     QPointer<MySplashScreen> splash;
     Ui::MainBox_GUI *ui;
 
-    QPointer<QToolBar> testbar;
-    QPointer<QComboBox> cb_test;
-    QPointer<QCheckBox> cb_block;
-    QList<CMD> commands;
-
     void init(void);
-    void createTestBar(void);
-
     void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MainBox_GUI_HPP

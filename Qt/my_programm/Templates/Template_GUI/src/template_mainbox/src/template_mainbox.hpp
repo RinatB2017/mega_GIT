@@ -34,11 +34,30 @@ public:
                      MySplashScreen *splash);
     ~MainBox();
 
-private:
-    void init(void);
-
+private slots:
+    void choice_test(void);
     bool test(void);
     bool test2(void);
+
+private:
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        bool (MainBox::*func)(void);
+    } CMD_t;
+    QList<CMD> commands;
+
+    QPointer<QToolBar> testbar;
+    QPointer<QComboBox> cb_test;
+    QPointer<QCheckBox> cb_block;
+
+    void init(void);
+    void createTestBar(void);
+
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

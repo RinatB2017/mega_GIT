@@ -18,7 +18,7 @@
     <widget class="QSpinBox" name="sb_value"/>
    </item>
    <item>
-    <widget class="QPushButton" name="btn_test">
+    <widget class="QPushButton" name="btn_plus">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -26,7 +26,20 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>PushButton</string>
+      <string>+</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btn_minus">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>-</string>
      </property>
     </widget>
    </item>

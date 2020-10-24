@@ -36,10 +36,6 @@ ControlExitWidget::~ControlExitWidget()
 void ControlExitWidget::init(void)
 {
     ui->setupUi(this);
-
-//    QTimer::singleShot(100, [this]{
-//        ui->label->setText(objectName());
-//    });
 }
 //--------------------------------------------------------------------------------
 void ControlExitWidget::updateText(void)

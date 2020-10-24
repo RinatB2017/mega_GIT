@@ -417,18 +417,47 @@ void MainBox::heavy_function(void)
 //--------------------------------------------------------------------------------
 int MyDebug::s_value = 0;
 
+#ifdef Q_OS_WIN
+#include <windows.h>
+QString MainBox::getWindowTitle(HWND hWindow)
+{
+    wchar_t wtitle[1024];
+    int len = GetWindowText(hWindow, LPWSTR(wtitle), sizeof (wtitle) - sizeof (wchar_t));
+
+    if (len <= 0)
+        return QString();
+    else
+        return QString::fromWCharArray(wtitle);
+}
+#endif
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 0
-    MyDebug::set_v(5);
-    emit info(QString("%1").arg(MyDebug::get_v()));
+#ifdef Q_OS_WIN
+    HWND hRoot = GetDesktopWindow();
+    HWND hWindow = GetWindow(hRoot, GW_CHILD);
+
+    int i = 25;
+    while (hWindow != nullptr)
+    {
+        QString win_title = getWindowTitle(hWindow);
+        //if (win_title.contains("Блокнот"))
+        if (win_title.contains("Calcolatrice"))
+        {
+            emit info("Found");
+            MoveWindow(hWindow, i, i, 500, 400, true);
+            i += 25;
+        }
+        hWindow = GetWindow(hWindow, GW_HWNDNEXT);
+    }
+    emit info("OK");
 #endif
 
-#if 0
-    QFuture <void> local_thread;
-    local_thread = QtConcurrent::run(this, &MainBox::heavy_function);
+#if 1
+    MyDebug::set_v(5);
+    emit info(QString("%1").arg(MyDebug::get_v()));
 #endif
 
 #if 0
@@ -452,72 +481,10 @@ bool MainBox::test(void)
 #endif
 
 #if 0
-    bar = new MyToolBar();
-    bar->show();
-
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->addToolBar(Qt::TopToolBarArea, bar);
-    }
-#endif
-
-#if 0
-    uint16_t a = 0x0106;
-    uint16_t b = a >> 8;
-    uint16_t c = a & 0xFF;
-    emit info(QString("%1 %2")
-              .arg(b, 2, 10, QChar('0'))
-              .arg(c, 2, 10, QChar('0')));
-#endif
-
-#if 0
-    typedef struct XXX
-    {
-        int id;
-        QString text;
-        QString param;
-    } XXX_t;
-    QList<XXX> xxx;
-
-    xxx.append({ 1, "test1", "01020304" });
-    xxx.append({ 1, "test2", "" });
-    xxx.append({ 1, "test3", "01020304" });
-
-    foreach(XXX val,xxx )
-    {
-        bool ok;
-        int value = val.param.toInt(&ok, 16);
-        if(ok)
-        {
-            emit info(QString("%1 %2")
-                      .arg(val.text)
-                      .arg(value));
-        }
-        else
-        {
-            emit info(QString("%1 (bad)%2")
-                      .arg(val.text)
-                      .arg(0));
-        }
-    }
-
-    emit info("OK");
-#endif
-
-#if 0
     emit info(QString("ulong %1").arg(sizeof(ulong)));
     emit info(QString("qlonglong %1").arg(sizeof(qlonglong)));
     emit info(QString("uint32_t %1").arg(sizeof(uint32_t)));
     emit info(QString("uint64_t %1").arg(sizeof(uint64_t)));
-#endif
-
-#if 0
-    ui->hex_widget->setValue(0xFEFEFEFE);
-#endif
-
-#if 0
-    emit s_syslog(0, LOG_ERR, "test");
 #endif
 
 #if 0

@@ -48,7 +48,7 @@ class Log_options : public QDialog
     Q_PROPERTY(QString file_AutoSave        READ get_file_AutoSave          WRITE set_file_AutoSave)
 
 public:
-    Log_options(QWidget *parent = nullptr);
+    explicit Log_options(QWidget *parent = nullptr);
     ~Log_options();
 
     QTextCodec *get_text_codec(void);

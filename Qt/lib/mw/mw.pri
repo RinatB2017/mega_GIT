@@ -2,7 +2,7 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-include (LoggingCategories/LoggingCategories.pri)
+#include (LoggingCategories/LoggingCategories.pri)
 include (dock_position/dock_position.pri)
 include (helpbrowser/helpbrowser.pri)
 include (log_options/log_options.pri)

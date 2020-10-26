@@ -101,9 +101,6 @@ private:
     //---
 
     //MyToolBar *bar = nullptr;
-#ifdef Q_OS_WIN
-    QString getWindowTitle(HWND hWindow);
-#endif
 
     QPointer<QFileSystemModel> file_model;
 

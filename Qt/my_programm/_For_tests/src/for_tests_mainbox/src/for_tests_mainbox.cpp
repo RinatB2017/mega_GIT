@@ -417,45 +417,31 @@ void MainBox::heavy_function(void)
 //--------------------------------------------------------------------------------
 int MyDebug::s_value = 0;
 
-#ifdef Q_OS_WIN
-#include <windows.h>
-QString MainBox::getWindowTitle(HWND hWindow)
-{
-    wchar_t wtitle[1024];
-    int len = GetWindowText(hWindow, LPWSTR(wtitle), sizeof (wtitle) - sizeof (wchar_t));
-
-    if (len <= 0)
-        return QString();
-    else
-        return QString::fromWCharArray(wtitle);
-}
-#endif
-
+#include <QSvgWidget>
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#ifdef Q_OS_WIN
-    HWND hRoot = GetDesktopWindow();
-    HWND hWindow = GetWindow(hRoot, GW_CHILD);
+#if 1
+    QSvgWidget *w = new QSvgWidget();
+    QString filename = "ramka.svg";
+    w->load(filename);
+    w->adjustSize();
+    w->setFixedSize(w->sizeHint().width() / 2, w->sizeHint().height() / 2);
 
-    int i = 25;
-    while (hWindow != nullptr)
-    {
-        QString win_title = getWindowTitle(hWindow);
-        //if (win_title.contains("Блокнот"))
-        if (win_title.contains("Calcolatrice"))
-        {
-            emit info("Found");
-            MoveWindow(hWindow, i, i, 500, 400, true);
-            i += 25;
-        }
-        hWindow = GetWindow(hWindow, GW_HWNDNEXT);
-    }
-    emit info("OK");
+    emit info(QString("%1 %2")
+              .arg(w->sizeHint().width())
+              .arg(w->sizeHint().height()));
+
+    QPushButton *btn = new QPushButton(w);
+    btn->setText("TEST");
+    btn->setFixedSize(100, 100);
+    btn->move(w->sizeHint().width() / 4 - 50, w->sizeHint().height() / 4 - 50);
+
+    w->show();
 #endif
 
-#if 1
+#if 0
     MyDebug::set_v(5);
     emit info(QString("%1").arg(MyDebug::get_v()));
 #endif

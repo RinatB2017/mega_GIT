@@ -423,6 +423,11 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QString temp = "QWidget { background: darkgray }";
+    qApp->setStyleSheet(temp);
+#endif
+
+#if 0
     QSvgWidget *w = new QSvgWidget();
     QString filename = "ramka.svg";
     w->load(filename);

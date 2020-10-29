@@ -418,11 +418,17 @@ void MainBox::heavy_function(void)
 int MyDebug::s_value = 0;
 
 #include <QSvgWidget>
+#include "passwordbox.hpp"
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    PasswordBox *pb = new PasswordBox();
+    pb->show();
+#endif
+
+#if 0
     QString temp = "QWidget { background: darkgray }";
     qApp->setStyleSheet(temp);
 #endif

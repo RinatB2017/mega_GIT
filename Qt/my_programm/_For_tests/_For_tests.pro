@@ -80,7 +80,6 @@ CONFIG(debug, debug|release) {
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 include ($$LIB_PATH2/icons/arrows.pri)
-include ($$LIB_PATH2/widgets/passwordbox/passwordbox.pri)
 
 include ($$LIB_PATH/mywidgets/mylistwidget.pri)
 
@@ -91,8 +90,6 @@ include (src/mymainwindow/mymainwindow.pri)
 
 include (src/collapsiblewidget/collapsiblewidget.pri)
 include (src/controlexitwidget/controlexitwidget.pri)
-#include (src/spoiler/spoiler.pri)
-#include (src/mytoolbar/mytoolbar.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

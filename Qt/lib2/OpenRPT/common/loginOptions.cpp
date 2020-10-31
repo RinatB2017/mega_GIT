@@ -64,8 +64,8 @@ const DriverInfo _driverInfoList[] = {
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-loginOptions::loginOptions(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+loginOptions::loginOptions(QWidget* parent, const char* name, bool modal)
+    : QDialog(parent)
 {
     setModal(modal);
     setObjectName(name);

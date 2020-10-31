@@ -30,7 +30,7 @@ class ParameterProperties : public QDialog, public Ui::ParameterProperties
     Q_OBJECT
 
 public:
-    ParameterProperties(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    ParameterProperties(QWidget* parent = 0);
     ~ParameterProperties();
 
     Q_INVOKABLE virtual bool            active();

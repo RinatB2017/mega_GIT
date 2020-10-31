@@ -134,6 +134,9 @@ private:
     void find_programm(void);
     void find_to_battle(void);
 
+    void check_pict(const QString &orig_file,
+                    const QString &copy_file);
+
     bool find_programm_with_title(const QString &title);
     bool find_window(const QString &programm_title,
                      int *x,

@@ -20,8 +20,8 @@
 
 #include "logoutput.h"
 
-LogOutput::LogOutput(QWidget* parent, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+LogOutput::LogOutput(QWidget* parent)
+    : QDialog(parent)
 {
     setupUi(this);
 }

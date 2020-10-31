@@ -51,6 +51,8 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 class SimpleWidget;
+
+class QPdfWidget;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -98,6 +100,8 @@ private:
     //---
     QDockWidget *main_dock;
     QList<QDockWidget *> l_docks;
+
+    QPdfWidget *w_pdf = nullptr;
     //---
 
     //MyToolBar *bar = nullptr;

@@ -38,7 +38,7 @@ MetaSQLSaveParameters::MetaSQLSaveParameters(QWidget *parent,
     _schema->addItem("");
     _schema->addItem("public");
     XSqlQuery schemaq("SELECT pkghead_name"
-                      "  FROM pkghead"
+                      " FROM pkghead"
                       " ORDER BY pkghead_name;");
     schemaq.exec();
     while (schemaq.next())
@@ -94,7 +94,7 @@ void MetaSQLSaveParameters::setGrade(int p)
         _grade->setValue(p);
 }
 
-void MetaSQLSaveParameters::setGroup(const QString p)
+void MetaSQLSaveParameters::setGroup(const QString &p)
 {
     int idx = _group->findText(p, Qt::MatchFixedString); // case-insensitive
     if (idx < 0)
@@ -106,17 +106,17 @@ void MetaSQLSaveParameters::setGroup(const QString p)
     _group->setCurrentIndex(idx);
 }
 
-void MetaSQLSaveParameters::setName(const QString p)
+void MetaSQLSaveParameters::setName(const QString &p)
 {
     _name->setText(p);
 }
 
-void MetaSQLSaveParameters::setNotes(const QString p)
+void MetaSQLSaveParameters::setNotes(const QString &p)
 {
     _notes->setPlainText(p);
 }
 
-void MetaSQLSaveParameters::setSchema(const QString p)
+void MetaSQLSaveParameters::setSchema(const QString &p)
 {
     if (DEBUG)
         qDebug("MetaSQLSaveParameters::setSchema(%s) entered", qPrintable(p));

@@ -30,8 +30,8 @@
 
 #include <querysource.h>
 
-SectionEditor::SectionEditor(QWidget* parent, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+SectionEditor::SectionEditor(QWidget* parent)
+    : QDialog(parent)
 {
     scene = 0;
     setupUi(this);
@@ -103,7 +103,7 @@ void SectionEditor::btnEdit_clicked()
   if(idx < 0)
     return;
 
-  DetailSectionDialog * dsd = new DetailSectionDialog(this);
+  DetailSectionDialog *dsd = new DetailSectionDialog(this);
   if(scene)
   {
     // get which ever item is currently selected and edit it
@@ -308,23 +308,23 @@ void SectionEditor::cbFootOdd_toggled( bool yes )
 
 void SectionEditor::init( DocumentScene * scene )
 {
-    this->scene = NULL;
+    this->scene = nullptr;
     // set all the properties
 
-    cbReportHeader->setChecked(scene->getReportHead()!=NULL);
-    cbReportFooter->setChecked(scene->getReportFoot()!=NULL);
+    cbReportHeader->setChecked(scene->getReportHead()!=nullptr);
+    cbReportFooter->setChecked(scene->getReportFoot()!=nullptr);
 
-    cbHeadFirst->setChecked(scene->getPageHeadFirst()!=NULL);
-    cbHeadOdd->setChecked(scene->getPageHeadOdd()!=NULL);
-    cbHeadEven->setChecked(scene->getPageHeadEven()!=NULL);
-    cbHeadLast->setChecked(scene->getPageHeadLast()!=NULL);
-    cbHeadAny->setChecked(scene->getPageHeadAny()!=NULL);
+    cbHeadFirst->setChecked(scene->getPageHeadFirst()!=nullptr);
+    cbHeadOdd->setChecked(scene->getPageHeadOdd()!=nullptr);
+    cbHeadEven->setChecked(scene->getPageHeadEven()!=nullptr);
+    cbHeadLast->setChecked(scene->getPageHeadLast()!=nullptr);
+    cbHeadAny->setChecked(scene->getPageHeadAny()!=nullptr);
 
-    cbFootFirst->setChecked(scene->getPageFootFirst()!=NULL);
-    cbFootOdd->setChecked(scene->getPageFootOdd()!=NULL);
-    cbFootEven->setChecked(scene->getPageFootEven()!=NULL);
-    cbFootLast->setChecked(scene->getPageFootLast()!=NULL);
-    cbFootAny->setChecked(scene->getPageFootAny()!=NULL);
+    cbFootFirst->setChecked(scene->getPageFootFirst()!=nullptr);
+    cbFootOdd->setChecked(scene->getPageFootOdd()!=nullptr);
+    cbFootEven->setChecked(scene->getPageFootEven()!=nullptr);
+    cbFootLast->setChecked(scene->getPageFootLast()!=nullptr);
+    cbFootAny->setChecked(scene->getPageFootAny()!=nullptr);
 
     lbSections->clear();
     for(int i = 0; i < scene->detailSectionCount(); i++) {

@@ -47,8 +47,8 @@
 
 #define DEBUG false
 
-MQLEdit::MQLEdit(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
+MQLEdit::MQLEdit(QWidget* parent)
+    : QWidget(parent)
 {
     setupUi(this);
 

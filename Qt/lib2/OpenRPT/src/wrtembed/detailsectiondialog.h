@@ -32,7 +32,7 @@ class DetailSectionDialog : public QDialog, public Ui::DetailSectionDialog
     Q_OBJECT
 
 public:
-    DetailSectionDialog(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    DetailSectionDialog(QWidget *parent = nullptr);
     ~DetailSectionDialog();
 
     void setReportSectionDetail( ORGraphicsSectionDetail * gsd );

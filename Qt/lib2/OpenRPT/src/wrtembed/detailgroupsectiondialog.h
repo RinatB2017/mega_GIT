@@ -30,7 +30,7 @@ class DetailGroupSectionDialog : public QDialog, public Ui::DetailGroupSectionDi
     Q_OBJECT
 
 public:
-    DetailGroupSectionDialog(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    DetailGroupSectionDialog(QWidget* parent = nullptr);
     ~DetailGroupSectionDialog();
 
 protected slots:

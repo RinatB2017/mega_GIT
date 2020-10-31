@@ -32,7 +32,7 @@ class ResultsOutput : public QDialog, public Ui::ResultsOutput
     Q_OBJECT
 
   public:
-    ResultsOutput(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    ResultsOutput(QWidget* parent = nullptr);
     ~ResultsOutput();
 
   public slots:

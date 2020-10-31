@@ -35,8 +35,8 @@ static QString formatVariant(const QVariant & var)
     return value;
 }
 
-ParameterProperties::ParameterProperties(QWidget* parent, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+ParameterProperties::ParameterProperties(QWidget* parent)
+    : QDialog(parent)
 {
     setupUi(this);
 
@@ -62,7 +62,7 @@ void ParameterProperties::languageChange()
 
 void ParameterProperties::newItem()
 {
-    QListWidgetItem *lwi = 0;
+    QListWidgetItem *lwi = nullptr;
     QVariant var;
     ParameterProperties pedit(this);
     pedit._nameLit->hide();
@@ -79,14 +79,14 @@ void ParameterProperties::newItem()
 void ParameterProperties::editItem()
 {
     QVariant var;
-    QListWidgetItem * item = _list->currentItem();
+    QListWidgetItem *item = _list->currentItem();
     if (item)
     {
         ParameterProperties pedit(this);
         pedit._nameLit->hide();
         pedit._name->hide();
 
-        QVariant var = item->data(Qt::UserRole);
+        var = item->data(Qt::UserRole);
         QString typeName;
 
         switch(var.type())
@@ -252,7 +252,7 @@ bool ParameterProperties::active()
 QList<QVariant> ParameterProperties::list()
 {
     QList<QVariant> varlist;
-    QListWidgetItem * item = 0;
+    QListWidgetItem *item = nullptr;
     for(int row = 0; row < _list->count(); row++)
     {
         item = _list->item(row);

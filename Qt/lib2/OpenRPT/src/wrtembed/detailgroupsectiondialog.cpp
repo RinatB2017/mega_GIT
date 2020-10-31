@@ -20,8 +20,8 @@
 
 #include "detailgroupsectiondialog.h"
 
-DetailGroupSectionDialog::DetailGroupSectionDialog(QWidget* parent, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+DetailGroupSectionDialog::DetailGroupSectionDialog(QWidget* parent)
+    : QDialog(parent)
 {
     setupUi(this);
 

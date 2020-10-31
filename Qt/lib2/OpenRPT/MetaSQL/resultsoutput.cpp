@@ -26,8 +26,8 @@
 
 #define DEBUG false
 
-ResultsOutput::ResultsOutput(QWidget* parent, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+ResultsOutput::ResultsOutput(QWidget* parent)
+    : QDialog(parent)
 {
     setupUi(this);
 
@@ -62,7 +62,7 @@ void ResultsOutput::copy()
             if (j)
                 bytes += ",";
             bytes += "\"" +
-                    model->data(model->index(i, j)).toString().replace("\"", "\"\"") +
+                    model->data(model->index(i, j)).toString().replace("\"", "\"\"").toLatin1() +
                     "\"";
         }
         bytes += "\n";

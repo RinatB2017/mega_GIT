@@ -42,10 +42,10 @@ class MetaSQLSaveParameters : public QDialog, public Ui::MetaSQLSaveParameters
 
   public slots:
     void    setGrade(const  int     p);
-    void    setGroup(const  QString p);
-    void    setName(const   QString p);
-    void    setNotes(const  QString p);
-    void    setSchema(const QString p);
+    void    setGroup(const  QString &p);
+    void    setName(const   QString &p);
+    void    setNotes(const  QString &p);
+    void    setSchema(const QString &p);
 
   protected slots:
     virtual void languageChange();

@@ -33,7 +33,7 @@ class QueryList : public QDialog, public Ui::QueryList
     Q_OBJECT
 
 public:
-    QueryList(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QueryList(QWidget* parent = nullptr);
     ~QueryList();
 
 public slots:

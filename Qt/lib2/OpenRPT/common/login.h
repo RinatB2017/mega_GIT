@@ -34,7 +34,7 @@ class login : public QDialog, public Ui::login
     Q_OBJECT
 
   public:
-    login(QWidget* parent = 0, const char* name = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    login(QWidget* parent = nullptr, const char* name = 0, bool modal = false);
     ~login();
 
     QString _databaseURL;

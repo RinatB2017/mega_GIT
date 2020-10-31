@@ -26,6 +26,8 @@
 #include "mysplashscreen.hpp"
 #include "mymainwindow.hpp"
 #include "for_tests_mainbox.hpp"
+#include "qpdfwidget.h"
+#include "myfiledialog.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
@@ -53,6 +55,11 @@ MainBox::~MainBox()
     //    bar->disconnect();
     //    bar->deleteLater();
     //}
+
+    if(w_pdf)
+    {
+        w_pdf->deleteLater();
+    }
 
     delete ui;
 }
@@ -416,11 +423,36 @@ void MainBox::heavy_function(void)
 }
 //--------------------------------------------------------------------------------
 #include <QSvgWidget>
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#ifdef Q_OS_LINUX
 #if 1
+    w_pdf = new QPdfWidget();
+
+    MyFileDialog *dlg;
+
+    dlg = new MyFileDialog("pdf", "pdf");
+    dlg->setNameFilter("pdf files (*.pdf)");
+    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(".");
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+        bool ok = w_pdf->loadFile(filename);
+        if(ok)
+            w_pdf->show();
+        else
+            emit error(QString("cannot open %1").arg(filename));
+    }
+    dlg->deleteLater();
+#endif
+#endif
+
+#if 0
     QString temp = "QWidget { background: magenta }";
     qApp->setStyleSheet(temp);
 #endif

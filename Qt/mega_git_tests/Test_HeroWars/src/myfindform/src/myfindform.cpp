@@ -62,6 +62,8 @@ void MyFindForm::init(void)
     ui->sb_pos_x->setRange(0,   0xFFFF);
     ui->sb_pos_y->setRange(0,   0xFFFF);
 
+    ui->btn_click->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+
     connect(ui->btn_click,          &QToolButton::clicked,      this,   &MyFindForm::click);
     connect(ui->sb_pos_x,           &QSpinBox::editingFinished, this,   &MyFindForm::click);
     connect(ui->sb_pos_y,           &QSpinBox::editingFinished, this,   &MyFindForm::click);
@@ -733,6 +735,13 @@ void MyFindForm::add_buttons(void)
     buttons.append( { "Auto(active)",   file_auto_active,   &MyFindForm::find_auto_active} );
     buttons.append( { "Battle",         file_in_battle,     &MyFindForm::find_to_battle} );
 
+#if 1
+    check_pict(":/targets/ok.png", file_ok);
+    check_pict(":/targets/auto.png", file_auto);
+    check_pict(":/targets/auto_active.png", file_auto_active);
+    check_pict(":/targets/в бой.png", file_in_battle);
+#endif
+
     int row = 0;
     foreach (BTN btn, buttons)
     {
@@ -752,6 +761,31 @@ void MyFindForm::add_buttons(void)
     prepare_l(file_auto,        &l_file_auto,           &rect_file_auto);
     prepare_l(file_auto_active, &l_file_auto_active,    &rect_file_auto_active);
     prepare_l(file_in_battle,   &l_file_in_battle,      &rect_file_in_battle);
+}
+//--------------------------------------------------------------------------------
+void MyFindForm::check_pict(const QString &orig_file, const QString &copy_file)
+{
+    if(QFile::exists(copy_file) == false)
+    {
+        QFileInfo fi(copy_file);
+        emit debug(fi.absolutePath());
+        QDir dir;
+        if(dir.exists(fi.absolutePath()) ==  false)
+        {
+            dir.mkdir(fi.absolutePath());
+        }
+
+        //emit error(QString("%1 не найден").arg(copy_file));
+        bool ok = QFile::copy(orig_file, copy_file);
+        if(ok)
+        {
+            emit info(QString("%1 создан").arg(copy_file));
+        }
+        else
+        {
+            emit error(QString("%1 НЕ создан").arg(copy_file));
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 void MyFindForm::updateText(void)

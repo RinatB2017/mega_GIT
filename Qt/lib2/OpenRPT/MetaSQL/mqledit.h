@@ -39,7 +39,7 @@ class MQLEdit : public QWidget, public Ui::MQLEdit
     Q_OBJECT
 
   public:
-    MQLEdit(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    MQLEdit(QWidget* parent = nullptr);
     ~MQLEdit();
 
                 static QString       name();

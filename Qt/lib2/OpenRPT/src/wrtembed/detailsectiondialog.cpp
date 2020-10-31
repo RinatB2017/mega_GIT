@@ -26,8 +26,8 @@
 #include <QMessageBox>
 #include <QCheckBox>
 
-DetailSectionDialog::DetailSectionDialog(QWidget* parent, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+DetailSectionDialog::DetailSectionDialog(QWidget* parent)
+    : QDialog(parent)
 {
   setupUi(this);
 

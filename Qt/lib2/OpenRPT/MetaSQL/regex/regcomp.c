@@ -286,12 +286,12 @@ int cflags;
 	/* do the mallocs early so failure handling is easy */
 	g = (struct re_guts *)malloc(sizeof(struct re_guts) +
 							(NC-1)*sizeof(cat_t));
-	if (g == NULL)
+    if (g == NULL)
 		return(REG_ESPACE);
 	p->ssize = len/(size_t)2*(size_t)3 + (size_t)1;	/* ugh */
 	p->strip = (sop *)malloc(p->ssize * sizeof(sop));
 	p->slen = 0;
-	if (p->strip == NULL) {
+    if (p->strip == NULL) {
 		free((char *)g);
 		return(REG_ESPACE);
 	}
@@ -307,14 +307,14 @@ int cflags;
 		p->pend[i] = 0;
 	}
 	g->csetsize = NC;
-	g->sets = NULL;
-	g->setbits = NULL;
+    g->sets = NULL;
+    g->setbits = NULL;
 	g->ncsets = 0;
 	g->cflags = cflags;
 	g->iflags = 0;
 	g->nbol = 0;
 	g->neol = 0;
-	g->must = NULL;
+    g->must = NULL;
 	g->mlen = 0;
 	g->nsub = 0;
 	g->ncategories = 1;	/* category 0 is "everything else" */
@@ -793,7 +793,7 @@ register struct parse *p;
 				if (ci != i)
 					CHadd(cs, ci);
 			}
-		if (cs->multis != NULL)
+        if (cs->multis != NULL)
 			mccase(p, cs);
 	}
 	if (invert) {
@@ -806,11 +806,11 @@ register struct parse *p;
 				CHadd(cs, i);
 		if (p->g->cflags&REG_NEWLINE)
 			CHsub(cs, '\n');
-		if (cs->multis != NULL)
+        if (cs->multis != NULL)
 			mcinvert(p, cs);
 	}
 
-	assert(cs->multis == NULL);		/* xxx */
+    assert(cs->multis == NULL);		/* xxx */
 
 	if (nch(p, cs) == 1) {		/* optimize singleton sets */
 		ordinary(p, firstch(p, cs));
@@ -903,10 +903,10 @@ register cset *cs;
 	while (MORE() && isalpha(PEEK()))
 		NEXT();
 	len = p->next - sp;
-	for (cp = cclasses; cp->name != NULL; cp++)
+    for (cp = cclasses; cp->name != NULL; cp++)
 		if (strncmp(cp->name, sp, len) == 0 && cp->name[len] == '\0')
 			break;
-	if (cp->name == NULL) {
+    if (cp->name == NULL) {
 		/* oops, didn't find it */
 		SETERROR(REG_ECTYPE);
 		return;
@@ -976,7 +976,7 @@ int endc;			/* name ended by endc,']' */
 		return(0);
 	}
 	len = p->next - sp;
-	for (cp = cnames; cp->name != NULL; cp++)
+    for (cp = cnames; cp->name != NULL; cp++)
 		if (strncmp(cp->name, sp, len) == 0 && cp->name[len] == '\0')
 			return(cp->code);	/* known name */
 	if (len == 1)
@@ -1183,21 +1183,21 @@ register struct parse *p;
 		nc = p->ncsalloc;
 		assert(nc % CHAR_BIT == 0);
 		nbytes = nc / CHAR_BIT * css;
-		if (p->g->sets == NULL)
+        if (p->g->sets == NULL)
 			p->g->sets = (cset *)malloc(nc * sizeof(cset));
 		else
 			p->g->sets = (cset *)realloc((char *)p->g->sets,
 							nc * sizeof(cset));
-		if (p->g->setbits == NULL)
+        if (p->g->setbits == NULL)
 			p->g->setbits = (uch *)malloc(nbytes);
 		else {
 			p->g->setbits = (uch *)realloc((char *)p->g->setbits,
 								nbytes);
-			/* xxx this isn't right if setbits is now NULL */
+            /* xxx this isn't right if setbits is now NULL */
 			for (i = 0; i < no; i++)
 				p->g->sets[i].ptr = p->g->setbits + css*(i/CHAR_BIT);
 		}
-		if (p->g->sets != NULL && p->g->setbits != NULL)
+        if (p->g->sets != NULL && p->g->setbits != NULL)
 			(void) memset((char *)p->g->setbits + (nbytes - css),
 								0, css);
 		else {
@@ -1207,13 +1207,13 @@ register struct parse *p;
 		}
 	}
 
-	assert(p->g->sets != NULL);	/* xxx */
+    assert(p->g->sets != NULL);	/* xxx */
 	cs = &p->g->sets[no];
 	cs->ptr = p->g->setbits + css*((no)/CHAR_BIT);
 	cs->mask = 1 << ((no) % CHAR_BIT);
 	cs->hash = 0;
 	cs->smultis = 0;
-	cs->multis = NULL;
+    cs->multis = NULL;
 
 	return(cs);
 }
@@ -1329,11 +1329,11 @@ register char *cp;
 	register size_t oldend = cs->smultis;
 
 	cs->smultis += strlen(cp) + 1;
-	if (cs->multis == NULL)
+    if (cs->multis == NULL)
 		cs->multis = malloc(cs->smultis);
 	else
 		cs->multis = realloc(cs->multis, cs->smultis);
-	if (cs->multis == NULL) {
+    if (cs->multis == NULL) {
 		SETERROR(REG_ESPACE);
 		return;
 	}
@@ -1354,19 +1354,19 @@ register char *cp;
 	register char *fp = mcfind(cs, cp);
 	register size_t len = strlen(fp);
 
-	assert(fp != NULL);
+    assert(fp != NULL);
 	(void) memmove(fp, fp + len + 1,
 				cs->smultis - (fp + len + 1 - cs->multis));
 	cs->smultis -= len;
 
 	if (cs->smultis == 0) {
 		free(cs->multis);
-		cs->multis = NULL;
+        cs->multis = NULL;
 		return;
 	}
 
 	cs->multis = realloc(cs->multis, cs->smultis);
-	assert(cs->multis != NULL);
+    assert(cs->multis != NULL);
 }
 
 /*
@@ -1378,7 +1378,7 @@ mcin(cs, cp)
 register cset *cs;
 register char *cp;
 {
-	return(mcfind(cs, cp) != NULL);
+    return(mcfind(cs, cp) != NULL);
 }
 
 /*
@@ -1392,12 +1392,12 @@ register char *cp;
 {
 	register char *p;
 
-	if (cs->multis == NULL)
-		return(NULL);
+    if (cs->multis == NULL)
+        return(NULL);
 	for (p = cs->multis; *p != '\0'; p += strlen(p) + 1)
 		if (strcmp(cp, p) == 0)
 			return(p);
-	return(NULL);
+    return(NULL);
 }
 
 /*
@@ -1412,7 +1412,7 @@ mcinvert(p, cs)
 register struct parse *p;
 register cset *cs;
 {
-	assert(cs->multis == NULL);	/* xxx */
+    assert(cs->multis == NULL);	/* xxx */
 }
 
 /*
@@ -1427,7 +1427,7 @@ mccase(p, cs)
 register struct parse *p;
 register cset *cs;
 {
-	assert(cs->multis == NULL);	/* xxx */
+    assert(cs->multis == NULL);	/* xxx */
 }
 
 /*
@@ -1627,7 +1627,7 @@ register sopno size;
 		return;
 
 	sp = (sop *)realloc(p->strip, size*sizeof(sop));
-	if (sp == NULL) {
+    if (sp == NULL) {
 		SETERROR(REG_ESPACE);
 		return;
 	}
@@ -1646,7 +1646,7 @@ register struct re_guts *g;
 {
 	g->nstates = p->slen;
 	g->strip = (sop *)realloc((char *)p->strip, p->slen * sizeof(sop));
-	if (g->strip == NULL) {
+    if (g->strip == NULL) {
 		SETERROR(REG_ESPACE);
 		g->strip = p->strip;
 	}
@@ -1723,7 +1723,7 @@ register struct re_guts *g;
 
 	/* turn it into a character string */
 	g->must = malloc((size_t)g->mlen + 1);
-	if (g->must == NULL) {		/* argh; just forget it */
+    if (g->must == NULL) {		/* argh; just forget it */
 		g->mlen = 0;
 		return;
 	}

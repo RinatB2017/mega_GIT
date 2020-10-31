@@ -30,7 +30,7 @@ class LogOutput : public QDialog, public Ui::LogOutput
     Q_OBJECT
 
   public:
-    LogOutput(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    LogOutput(QWidget* parent = nullptr);
     ~LogOutput();
 
   protected slots:

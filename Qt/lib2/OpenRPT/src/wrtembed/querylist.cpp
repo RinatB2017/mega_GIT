@@ -28,8 +28,8 @@
 #include <querysource.h>
 #include "queryeditor.h"
 
-QueryList::QueryList(QWidget* parent, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+QueryList::QueryList(QWidget* parent)
+    : QDialog(parent)
 {
   setupUi(this);
 
@@ -120,7 +120,7 @@ void QueryList::btnDelete_clicked()
   {
     QListWidgetItem * item = lbQuerys->item(idx);
     QuerySource * qs = qsList->remove(item->text());
-    if(qs != NULL)
+    if(qs != nullptr)
       delete qs;
     lbQuerys->takeItem(idx);
   }

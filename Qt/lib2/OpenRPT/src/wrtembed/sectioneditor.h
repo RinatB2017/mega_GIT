@@ -32,7 +32,7 @@ class SectionEditor : public QDialog, public Ui::SectionEditor
     Q_OBJECT
 
 public:
-    SectionEditor(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    explicit SectionEditor(QWidget* parent = 0);
     ~SectionEditor();
 
     void init( DocumentScene * scene );
@@ -57,7 +57,7 @@ public slots:
     virtual void cbFootAny_toggled( bool yes );
 
 protected:
-    DocumentScene * scene;
+    DocumentScene *scene;
 
 protected slots:
     virtual void languageChange();

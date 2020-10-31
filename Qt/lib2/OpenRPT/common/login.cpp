@@ -40,8 +40,8 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-login::login(QWidget* parent, const char* name, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+login::login(QWidget* parent, const char* name, bool modal)
+    : QDialog(parent)
 {
   setModal(modal);
   setObjectName(name);

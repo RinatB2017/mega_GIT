@@ -71,6 +71,8 @@ public:
     void delete_objects(void);
     void test(void);
 
+//    QSize sizeHint() const;
+
 signals:
     void cnt_objects(int);
 

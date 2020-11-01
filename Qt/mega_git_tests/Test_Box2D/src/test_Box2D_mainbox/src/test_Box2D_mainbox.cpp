@@ -41,10 +41,6 @@ MainBox::MainBox(QWidget *parent) :
 MainBox::~MainBox()
 {
     qDebug() << "~MainBox()";
-    if(world)
-    {
-        world->deleteLater();
-    }
     delete ui;
 
     qApp->quit();
@@ -54,29 +50,39 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-    world = new World();
-    connect_log_signals(world, this);
-
+#ifdef QT_DEBUG
     createTestBar();
-    connect(world,  &World::cnt_objects,
-            lcd,    static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
-//    connect(cb_block_insert_object, SIGNAL(clicked(bool)), world, SLOT(block_insert_objects(bool)));
+#endif
 
-    world->setFixedSize(WIDTH, HEIGHT);
-    world->show();
+    ui->lcd->setSegmentStyle(QLCDNumber::Flat);
+    ui->lcd->setDigitCount(10);
+    ui->lcd->setStyleSheet("background-color:black; color:green;");
+    ui->lcd->setMinimumSize(16*10, 32);
 
-    //world->create_scene_0();
-    //world->create_scene_1();
-    //world->create_scene_2();
-    //world->create_scene_3();
+    commands.clear();
+    int id = 0;
+    commands.append({ id++, "create_scene_0", &World::create_scene_0 });
+    commands.append({ id++, "create_scene_1", &World::create_scene_1 });
+    commands.append({ id++, "create_scene_2", &World::create_scene_2 });
+    commands.append({ id++, "create_scene_3", &World::create_scene_3 });
 
-    QVBoxLayout *vbox = new QVBoxLayout();
-    vbox->setMargin(0);
-    vbox->setSpacing(0);
-    vbox->addWidget(world);
-    setLayout(vbox);
+    foreach (CMD command, commands)
+    {
+        ui->cb_block_insert_object->addItem(command.cmd_text, QVariant(Qt::UserRole + command.cmd));
+    }
 
-    world->start();
+    ui->btn_choice_test->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->btn_clear->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
+
+    connect(ui->world_widget,   &World::cnt_objects,
+            ui->lcd,            static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
+
+    ui->world_widget->setFixedSize(WIDTH, HEIGHT);
+
+    connect(ui->btn_choice_test,    &QToolButton::clicked,  this,               &MainBox::choice_test);
+    connect(ui->btn_clear,          &QToolButton::clicked,  ui->world_widget,   &World::w_clear); //FIXME непонятно, почему крашится. Надо разобраться
+
+    ui->world_widget->start();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -89,36 +95,6 @@ void MainBox::createTestBar(void)
 
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    commands.clear();
-    commands.append({ 0x10, "create_scene_0", &World::create_scene_0 });
-    commands.append({ 0x20, "create_scene_1", &World::create_scene_1 });
-    commands.append({ 0x39, "create_scene_2", &World::create_scene_2 });
-    commands.append({ 0x40, "create_scene_3", &World::create_scene_3 });
-
-#if 1
-    lcd = new QLCDNumber(this);
-    lcd->setSegmentStyle(QLCDNumber::Flat);
-    lcd->setDigitCount(10);
-    lcd->setStyleSheet("background-color:black; color:green;");
-    lcd->setMinimumSize(16*10, 32);
-    testbar->addWidget(lcd);
-#endif
-
-#if 0
-    cb_block_insert_object = new QCheckBox("block insert objects");
-    cb_block_insert_object->setObjectName("cb_block_insert_object");
-    testbar->addWidget(cb_block_insert_object);
-#endif
-
-    cb_test = new QComboBox(this);
-    cb_test->setObjectName("cb_test");
-    foreach (CMD command, commands)
-    {
-        cb_test->addItem(command.cmd_text, QVariant(Qt::UserRole + command.cmd));
-    }
-
-    testbar->addWidget(cb_test);
-
     QToolButton *btn_choice_test = add_button(testbar,
                                               new QToolButton(this),
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
@@ -126,21 +102,13 @@ void MainBox::createTestBar(void)
                                               "choice_test");
     btn_choice_test->setObjectName("btn_choice_test");
 
-    QToolButton *btn_clear = add_button(testbar,
-                                        new QToolButton(this),
-                                        qApp->style()->standardIcon(QStyle::SP_TrashIcon),
-                                        "clear",
-                                        "clear");
-    btn_clear->setObjectName("btn_clear");
-
-    connect(btn_choice_test,    &QToolButton::clicked,  this,   &MainBox::choice_test);
-    connect(btn_clear,          &QToolButton::clicked,  world,  &World::w_clear); //FIXME непонятно, почему крашится. Надо разобраться
+    connect(btn_choice_test,    &QToolButton::clicked,  this,   &MainBox::test);
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
 {
     bool ok = false;
-    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
+    int cmd = ui->cb_block_insert_object->itemData(ui->cb_block_insert_object->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
     if(!ok) return;
     auto cmd_it = std::find_if(
                 commands.begin(),
@@ -154,7 +122,7 @@ void MainBox::choice_test(void)
         x = cmd_it->func;
         if(x)
         {
-            (world->*x)();
+            (ui->world_widget->*x)();
         }
         else
         {
@@ -165,15 +133,13 @@ void MainBox::choice_test(void)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
-    //world->test();
-
-    //world->stop();
-    //world->delete_objects();
-    //world->create_scene_3();
-    //world->start();
-
-    world->deleteLater();
-    qApp->quit();
+    emit info("Test");
+#if 1
+    ui->world_widget->create_scene_0();
+    ui->world_widget->create_scene_1();
+    ui->world_widget->create_scene_2();
+    ui->world_widget->create_scene_3();
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

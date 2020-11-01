@@ -466,6 +466,11 @@ void World::timerEvent(QTimerEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
+//QSize World::sizeHint() const
+//{
+//    return QSize(WIDTH, HEIGHT);
+//}
+//--------------------------------------------------------------------------------
 void World::updateText(void)
 {
 

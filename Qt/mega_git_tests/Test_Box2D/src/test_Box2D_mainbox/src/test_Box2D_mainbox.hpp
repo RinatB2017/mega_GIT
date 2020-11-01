@@ -34,7 +34,7 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = nullptr);
+    explicit MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
 private slots:
@@ -50,11 +50,6 @@ private:
     };
 
     Ui::MainBox *ui;
-    World *world = nullptr;
-    QLCDNumber *lcd;
-    QCheckBox *cb_block_insert_object;
-
-    QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
     void init(void);

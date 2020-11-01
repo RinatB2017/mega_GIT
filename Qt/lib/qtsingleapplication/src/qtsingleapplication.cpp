@@ -41,8 +41,8 @@
 #include <QApplication>
 #include <QWidget>
 
-#include "qtsingleapplication.h"
-#include "qtlocalpeer.h"
+#include <qtsingleapplication.h>
+#include <qtlocalpeer.h>
 
 /*!
     \class QtSingleApplication qtsingleapplication.h

@@ -24,6 +24,10 @@
 #include "ui_for_tests_mainbox.h"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
+#ifdef Q_OS_LINUX
+#   include "qpdfwidget.h"
+#endif
+//--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
@@ -51,8 +55,6 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 class SimpleWidget;
-
-class QPdfWidget;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -101,7 +103,9 @@ private:
     QDockWidget *main_dock;
     QList<QDockWidget *> l_docks;
 
+#ifdef Q_OS_LINUX
     QPdfWidget *w_pdf = nullptr;
+#endif
     //---
 
     //MyToolBar *bar = nullptr;

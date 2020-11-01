@@ -8,10 +8,7 @@ TARGET   = Test_Box2D
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_Box2D_mainbox \
-    $$PWD/src/test_Box2D_mainbox/ui \
-    $$PWD/src/world
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += opengl
@@ -26,24 +23,19 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    test_Box2D_mainbox.hpp \
     defines.hpp \
-    version.hpp \
-    listener.hpp \
-    world.hpp
+    version.hpp
 
 SOURCES += \
-    test_Box2D_mainbox.cpp \
-    listener.cpp \
-    world.cpp \
     main.cpp
-
-FORMS   += test_Box2D_mainbox.ui
-
-#RESOURCES += icons/temp.qrc
 
 win32 {
     RC_ICONS = ico/computer.ico
+}
+
+win32 {
+#    CONFIG  += use_BOX2D_221
+    CONFIG  += use_BOX2D_231
 }
 
 LIB_PATH  = "$$PWD/../../../Qt/lib"
@@ -51,12 +43,9 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 
-win32 {
-    #include ($$LIB_PATH2/Box2D/Box2D.pri)
-}
-unix {
-    LIBS    += -lBox2D
-}
+include (src/test_Box2D_mainbox/test_Box2D_mainbox.pri)
+include (src/world/world.pri)
+include ($$LIB_PATH2/Box2D/Box2D.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

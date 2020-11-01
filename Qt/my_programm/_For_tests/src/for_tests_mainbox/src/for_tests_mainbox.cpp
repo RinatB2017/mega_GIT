@@ -26,7 +26,6 @@
 #include "mysplashscreen.hpp"
 #include "mymainwindow.hpp"
 #include "for_tests_mainbox.hpp"
-#include "qpdfwidget.h"
 #include "myfiledialog.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
@@ -56,10 +55,12 @@ MainBox::~MainBox()
     //    bar->deleteLater();
     //}
 
+#ifdef Q_OS_LINUX
     if(w_pdf)
     {
         w_pdf->deleteLater();
     }
+#endif
 
     delete ui;
 }

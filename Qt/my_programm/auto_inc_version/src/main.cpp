@@ -76,6 +76,8 @@ int writeFile(const QString &filename)
     QTemporaryFile tempFile;
     if (tempFile.open())
     {
+        QString eol = "\n";
+
         QTextStream out(&tempFile);
         out << "#ifndef VERSION_HPP\n";
         out << "#define VERSION_HPP\n";

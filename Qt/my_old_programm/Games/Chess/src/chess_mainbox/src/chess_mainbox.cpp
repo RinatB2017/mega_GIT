@@ -43,12 +43,11 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    m_engine->kill();
-    m_engine->waitForFinished();
-
-#ifndef NO_CHESSBOARD
-    board->deleteLater();
-#endif
+    if(m_engine)
+    {
+        m_engine->kill();
+        m_engine->waitForFinished();
+    }
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -59,26 +58,39 @@ void MainBox::init(void)
 #ifdef QT_DEBUG
     createTestBar();
 #endif
+    createChessBar();
     create_chessboard();
     create_engine();
     new_game();
 
-#ifndef NO_CHESSBOARD
-#if 0
-    QVBoxLayout *vbox = new QVBoxLayout();
-    vbox->addWidget(board);
-    vbox->addLayout(grid);
-    //vbox->addStretch(1);
-    setLayout(vbox);
-#else
-    QHBoxLayout *hbox = new QHBoxLayout();
-    hbox->addWidget(board);
-    //hbox->addStretch(1);
-    setLayout(hbox);
-#endif
-#endif
+    connect(this,   &MainBox::invalide_move,    this,   &MainBox::restore_move);
 
-    connect(this,   SIGNAL(invalide_move()),    this,   SLOT(restore_move()));
+    adjustSize();
+    setFixedSize(sizeHint());
+}
+//--------------------------------------------------------------------------------
+void MainBox::createChessBar(void)
+{
+    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_CHECK_PTR(mw);
+
+    QToolBar *chessbar = new QToolBar("chessbar");
+    chessbar->setObjectName("chessbar");
+    mw->addToolBar(Qt::TopToolBarArea, chessbar);
+
+    le_test = new QLineEdit(this);
+    le_test->setFixedWidth(100);
+    le_test->setText("e2e4");
+    chessbar->addWidget(le_test);
+
+    btn_run = add_button(chessbar,
+                         new QToolButton(this),
+                         qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                         "run",
+                         "run");
+
+    connect(btn_run,    &QToolButton::clicked,      this,   &MainBox::run);
+    connect(le_test,    &QLineEdit::returnPressed,  this,   &MainBox::run);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -96,27 +108,12 @@ void MainBox::createTestBar(void)
                           "test",
                           "test");
 
-    le_test = new QLineEdit(this);
-    le_test->setFixedWidth(100);
-    le_test->setText("e2e4");
-    testbar->addWidget(le_test);
-
-    btn_run = add_button(testbar,
-                         new QToolButton(this),
-                         qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                         "run",
-                         "run");
-
-    connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
-    connect(btn_run,  SIGNAL(clicked()), this, SLOT(run()));
+    connect(btn_test,   &QToolButton::clicked,  this,   &MainBox::test);
 }
 //--------------------------------------------------------------------------------
 void MainBox::create_chessboard(void)
 {
-#ifndef NO_CHESSBOARD
-    board = new ChessBoard(this);
-    connect(board,  SIGNAL(s_move(QString)),    this,   SLOT(move(QString)));
-#endif
+    connect(ui->chessboard_widget,  &ChessBoard::s_move,    this,   &MainBox::move);
 }
 //--------------------------------------------------------------------------------
 void MainBox::move(QString text)
@@ -133,17 +130,18 @@ void MainBox::create_engine(void)
     //m_engine->setOpenMode(QProcess::ReadWrite);
     //m_engine->setReadChannel(QProcess::StandardOutput);
 
-    connect(m_engine, SIGNAL(readyReadStandardOutput()), this, SLOT(readData()));
-    connect(m_engine, SIGNAL(readyReadStandardError()),  this, SLOT(readData()));
-
-    connect(le_test, SIGNAL(returnPressed()), this, SLOT(run()));
+    connect(m_engine,   &QProcess::readyReadStandardOutput, this,   &MainBox::readData);
+    connect(m_engine,   &QProcess::readyReadStandardError,  this,   &MainBox::readError);
 
     m_engine->setProgram("gnuchess");
     m_engine->start();
     m_pid = m_engine->pid();
+
+#if 1
     //TODO
     m_engine->write("xboard\n");
-    m_engine->write("protover 2\n");
+    m_engine->write("protover 2\n");    //новая версия протокола
+#endif
 
     whiteMoveRegEx    = QRegExp("\\. \\b([a-h][1-8][a-h][1-8])(q|r|b|n|)\\b");
     blackMoveRegEx    = QRegExp("\\. \\.\\.\\. \\b([a-h][1-8][a-h][1-8])(q|r|b|n|)\\b");
@@ -153,34 +151,32 @@ void MainBox::create_engine(void)
     coordenateRegEx   = QRegExp("\\b([a-h][1-8][a-h][1-8])(q|r|b|n|)\\b");
 }
 //--------------------------------------------------------------------------------
-void MainBox::x1(void)
-{
-    emit info(m_engine->readAll());
-}
+//void MainBox::x1(void)
+//{
+//    emit info(m_engine->readAll());
+//}
 //--------------------------------------------------------------------------------
-void MainBox::x2(void)
-{
-    emit info(m_engine->readAll());
-}
+//void MainBox::x2(void)
+//{
+//    emit info(m_engine->readAll());
+//}
 //--------------------------------------------------------------------------------
 void MainBox::new_game(void)
 {
-#ifndef NO_CHESSBOARD
-    board->new_game();
-#endif
+    ui->chessboard_widget->new_game();
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
-#ifndef NO_CHESSBOARD
-    board->move(le_test->text());
-#endif
-    //board->move("a1a8");
-
-    //board->move("f2f3");
-    //board->move("e7e6");
-    //board->move("g2g4");
-    //board->move("d8h4");
+    ui->chessboard_widget->clear_figures();
+    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "A1");
+    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "B2");
+    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "C3");
+    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "D4");
+    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "E5");
+    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "F6");
+    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "G7");
+    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "H8");
 }
 //--------------------------------------------------------------------------------
 void MainBox::run(void)
@@ -190,13 +186,14 @@ void MainBox::run(void)
 
     if(text.isEmpty())
     {
+        emit error("text empty");
         return;
     }
 
     text.append("\n");
     if(m_engine)
     {
-        m_engine->write(text.toLocal8Bit());
+        m_engine->write(text.toLatin1());
     }
 }
 //--------------------------------------------------------------------------------
@@ -217,7 +214,7 @@ bool MainBox::analize(const QString &line)
         emit debug(QString("invalidMoveRegEx: %1").arg(invalidMoveRegEx.cap(0)));
         if(coordenateRegEx.indexIn(line) >= 0)
         {
-            emit error(QString("coordenateRegEx: %1").arg(coordenateRegEx.cap(1)));
+            emit error(QString("Неверный ход: %1").arg(coordenateRegEx.cap(1)));
             return false;
         }
     }
@@ -232,19 +229,17 @@ bool MainBox::analize(const QString &line)
 
     if(blackMoveRegEx.indexIn(line) >= 0)
     {
+        emit info("Ваш ход");
         emit debug(QString("blackMoveRegEx: %1").arg(blackMoveRegEx.cap(1)));
-#ifndef NO_CHESSBOARD
-        board->move(blackMoveRegEx.cap(1));
-#endif
+        ui->chessboard_widget->move(blackMoveRegEx.cap(1));
         return true;
     }
 
     if(whiteMoveRegEx.indexIn(line) >= 0)
     {
+        emit info("Ход противника");
         emit debug(QString("whiteMoveRegEx: %1").arg(whiteMoveRegEx.cap(1)));
-#ifndef NO_CHESSBOARD
-        board->move(whiteMoveRegEx.cap(1));
-#endif
+        ui->chessboard_widget->move(whiteMoveRegEx.cap(1));
         return true;
     }
     return false;
@@ -253,6 +248,10 @@ bool MainBox::analize(const QString &line)
 void MainBox::readData(void)
 {
     QString output = m_engine->readAllStandardOutput();
+    if(output.isEmpty())
+    {
+        return;
+    }
     QStringList lines = output.split("\n");
     emit debug(QString("received %1 bytes").arg(output.size()));
     emit debug(QString("lines.size() %1").arg(lines.size()));
@@ -262,6 +261,16 @@ void MainBox::readData(void)
         emit trace(QString("%1").arg(line));
         analize(line);
     }
+}
+//--------------------------------------------------------------------------------
+void MainBox::readError(void)
+{
+    QString output = m_engine->readAllStandardError();
+    if(output.isEmpty())
+    {
+        return;
+    }
+    emit error(output);
 }
 //--------------------------------------------------------------------------------
 void MainBox::restore_move(void)

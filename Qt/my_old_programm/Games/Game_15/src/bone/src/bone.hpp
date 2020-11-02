@@ -21,13 +21,8 @@
 #ifndef BONE_HPP
 #define BONE_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-class QLabel;
+#include <QFrame>
+#include <QLabel>
 //--------------------------------------------------------------------------------
 class Bone : public QFrame
 {

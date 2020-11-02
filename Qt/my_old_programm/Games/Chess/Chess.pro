@@ -8,24 +8,19 @@ TARGET   = Chess
 FOLDER  = old_programm
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/new_chessboard
-#    $$PWD/src/chessboard
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 #DEFINES += SHOW_SIZE
-#DEFINES += NO_CHESSBOARD
 
 HEADERS += \
-    chessboard.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    chessboard.cpp \
     main.cpp
 
 RESOURCES   += images/chess.qrc
@@ -41,6 +36,8 @@ LIB_PATH = "$$PWD/../../../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/chess_mainbox/chess_mainbox.pri)
+include (src/new_chessboard/new_chessboard.pri)
+#include (src/chessboard/chessboard.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

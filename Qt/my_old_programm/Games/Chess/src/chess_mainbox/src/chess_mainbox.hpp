@@ -35,8 +35,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox();
 
 signals:
@@ -45,9 +45,10 @@ signals:
 private slots:
     void test(void);
     void run(void);
-    void x1(void);
-    void x2(void);
+//    void x1(void);
+//    void x2(void);
     void readData(void);
+    void readError(void);
     void new_game(void);
 
     void restore_move(void);
@@ -57,18 +58,15 @@ private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-#ifndef NO_CHESSBOARD
-    ChessBoard *board;
-#endif
-    QProcess   *m_engine;
+    QProcess *m_engine = nullptr;
     Q_PID m_pid;
 
     void init(void);
 
-    QLineEdit   *le_test;
+    QPointer<QLineEdit>     le_test;
 
-    QToolButton *btn_test;
-    QToolButton *btn_run;
+    QPointer<QToolButton>   btn_test;
+    QPointer<QToolButton>   btn_run;
 
     QRegExp whiteMoveRegEx;
     QRegExp blackMoveRegEx;
@@ -79,6 +77,7 @@ private:
 
     bool analize(const QString &line);
 
+    void createChessBar(void);
     void createTestBar(void);
     void create_chessboard(void);
     void create_engine(void);

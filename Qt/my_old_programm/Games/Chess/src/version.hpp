@@ -2,9 +2,9 @@
 #define VERSION_HPP
 //-----
 #define VER_MAJOR 0
-#define VER_MINOR 2
+#define VER_MINOR 99
 #define VER_PATCH 0
-#define VER_BUILD 644
-#define VER_STR "0.2.0.644"
+#define VER_BUILD 11
+#define VER_STR "0.99.0.11"
 //-----
 #endif // VERSION_HPP

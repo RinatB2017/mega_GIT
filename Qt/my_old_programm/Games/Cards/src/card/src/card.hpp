@@ -21,40 +21,35 @@
 #ifndef CARD_HPP
 #define CARD_HPP
 //--------------------------------------------------------------------------------
-#include <QMouseEvent>
-#include <QWidget>
-#include <QPixmap>
-#include <QPoint>
+#include <QSvgRenderer>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-class QSvgRenderer;
-class QLabel;
 //--------------------------------------------------------------------------------
 class Card : public MyWidget
 {
     Q_OBJECT
 public:
-    Card(QString name,
-         int pos_x,
-         int pos_y,
-         int card_width,
-         int card_height,
-         QSvgRenderer *renderer,
-         QWidget *parent);
+    Card(QWidget *parent);
+
+    void create_card(QString name,
+                     int pos_x,
+                     int pos_y,
+                     int card_width,
+                     int card_height,
+                     QSvgRenderer *renderer);
 
 private:
     void init(void);
 
-    QLabel *label;
+    QPointer<QLabel> label;
     QPoint lastPoint;
-    bool b_move;
+    bool b_move = 0;
 
-    int pos_x;
-    int pos_y;
-    int card_width;
-    int card_height;
-    QSvgRenderer *re;
+    int pos_x = 0;
+    int pos_y = 0;
+    int card_width = 0;
+    int card_height = 0;
+    QSvgRenderer *re = nullptr;
 
     QString card_name;
 

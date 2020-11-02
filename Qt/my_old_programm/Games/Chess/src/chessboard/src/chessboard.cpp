@@ -347,7 +347,7 @@ bool ChessBoard::get_figure(Figures *figure, int x, int y)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool ChessBoard::move(const QString text)
+bool ChessBoard::move(const QString &text)
 {
     if(text.length() != 4)
     {
@@ -413,6 +413,17 @@ void ChessBoard::clear(void)
 void ChessBoard::new_game(void)
 {
 
+}
+//--------------------------------------------------------------------------------
+void ChessBoard::clear_figures(void)
+{
+    for(int y=0; y<MAX_Y; y++)
+    {
+        for(int x=0; x<MAX_X; x++)
+        {
+            set_figure(Figures::NO_FIGURE, x, y);
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 void ChessBoard::test(void)

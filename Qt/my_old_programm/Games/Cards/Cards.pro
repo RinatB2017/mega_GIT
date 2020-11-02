@@ -49,4 +49,5 @@ include (src/cards_mainbox/cards_mainbox.pri)
 VPATH = $$INCLUDEPATH
 
 RESOURCES += \
+    cards/cards.qrc \
     pictures/pictures.qrc

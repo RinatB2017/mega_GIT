@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QSvgRenderer>
-#include <QVBoxLayout>
-#include <QPainter>
-#include <QBitmap>
-#include <QLabel>
-//--------------------------------------------------------------------------------
 #include "defines.hpp"
 #include "card.hpp"
 //--------------------------------------------------------------------------------
@@ -31,14 +25,23 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-Card::Card(QString name,
-           int pos_x,
-           int pos_y,
-           int card_width,
-           int card_height,
-           QSvgRenderer *renderer,
-           QWidget *parent) :
+Card::Card(QWidget *parent) :
     MyWidget(parent)
+{
+    init();
+}
+//--------------------------------------------------------------------------------
+void Card::init(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void Card::create_card(QString name,
+                       int pos_x,
+                       int pos_y,
+                       int card_width,
+                       int card_height,
+                       QSvgRenderer *renderer)
 {
     card_name = name;
 
@@ -48,12 +51,7 @@ Card::Card(QString name,
     this->card_height = card_height;
     this->re = renderer;
 
-    init();
-}
-//--------------------------------------------------------------------------------
-void Card::init(void)
-{
-    bool ok = false;
+    bool ok;
     label = new QLabel();
 
     QPixmap *card_0 = new QPixmap(re->defaultSize().width(),
@@ -104,6 +102,12 @@ void Card::init(void)
                                card_height - corr_y1 - corr_y2);
 
 #ifdef SAVE_CARD
+    QDir dir;
+    if(dir.exists("cards") == false)
+    {
+        dir.mkdir("cards");
+    }
+
     ok = result.save(QString("cards/%1.png").arg(card_name));
     if(ok == false)
     {

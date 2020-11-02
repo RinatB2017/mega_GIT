@@ -69,14 +69,14 @@ void ChessBoard::create_chessboard(void)
             btn_chessboard[x][y]->setProperty("pos_x", x);
             btn_chessboard[x][y]->setProperty("pos_y", abs(y-7));
 
-            connect(btn_chessboard[x][y],   SIGNAL(clicked(bool)),  this,   SLOT(click()));
+            connect(btn_chessboard[x][y],   &QToolButton::clicked,  this,   &ChessBoard::click);
 
             if(b)
                 btn_chessboard[x][y]->setStyleSheet("background:gray;");
             else
                 btn_chessboard[x][y]->setStyleSheet("background:white;");
 
-            connect(btn_chessboard[x][y], SIGNAL(clicked(bool)), this, SLOT(set_cursor()));
+            connect(btn_chessboard[x][y],   &QToolButton::clicked,  this,   &ChessBoard::set_cursor);
 
             chessboard_grid->addWidget(btn_chessboard[x][y], y, x);
             b=!b;
@@ -363,7 +363,7 @@ bool ChessBoard::get_figure(Figures *figure, int x, int y)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool ChessBoard::move(const QString text)
+bool ChessBoard::move(const QString &text)
 {
     if(text.length() != 4)
     {
@@ -415,6 +415,17 @@ bool ChessBoard::move(const QString text)
 #endif
 
     return true;
+}
+//--------------------------------------------------------------------------------
+void ChessBoard::clear_figures(void)
+{
+    for(int y=0; y<MAX_Y; y++)
+    {
+        for(int x=0; x<MAX_X; x++)
+        {
+            set_figure(Figures::NO_FIGURE, x, y);
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 void ChessBoard::set_cursor(void)

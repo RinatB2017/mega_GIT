@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2014                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -21,18 +21,22 @@
 #ifndef CHESSBOARD_HPP
 #define CHESSBOARD_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
-#include <QFrame>
-//--------------------------------------------------------------------------------
 #include "defines.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class ChessBoard : public QFrame
+class ChessBoard : public MyWidget
 {
     Q_OBJECT
 
 public:
+    enum states {
+        STATE_IDLE = 0,
+        STATE_1,
+        STATE_2
+    };
     enum Figures {
-        BISHOP_BLACK = 0x1000,
+        NO_FIGURE = 0,
+        BISHOP_BLACK,
         KING_BLACK,
         KNIGHT_BLACK,
         PAWN_BLACK,
@@ -45,56 +49,64 @@ public:
         QUEEN_WHITE,
         ROOK_WHITE
     };
-    explicit ChessBoard(QWidget *parent = nullptr);
+    ChessBoard(QWidget *parent = nullptr);
     bool set_figure(Figures figure, const QString &coord);
+    bool set_figure(Figures figure, int x, int y);
+
     bool get_figure(Figures *figure, const QString &coord);
     bool get_figure(Figures *figure, int x, int y);
-    bool move(const QString text);
-    void clear(void);
 
-    void new_game(void);
-
-    void test(void);
+    bool move(const QString &text);
+    void clear_figures(void);
 
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void message(const QString &);
+    void s_move(const QString &data);
+
+public slots:
+    void new_game(void);
+
+private slots:
+    void set_cursor(void);
+    void click(void);
 
 private:
-    QPixmap bishop_white;
-    QPixmap king_white;
-    QPixmap knight_white;
-    QPixmap pawn_white;
-    QPixmap queen_white;
-    QPixmap rook_white;
+    QPixmap w_bishop;
+    QPixmap w_king;
+    QPixmap w_knight;
+    QPixmap w_pawn;
+    QPixmap w_queen;
+    QPixmap w_rook;
 
-    QPixmap bishop_black;
-    QPixmap king_black;
-    QPixmap knight_black;
-    QPixmap pawn_black;
-    QPixmap queen_black;
-    QPixmap rook_black;
+    QPixmap b_bishop;
+    QPixmap b_king;
+    QPixmap b_knight;
+    QPixmap b_pawn;
+    QPixmap b_queen;
+    QPixmap b_rook;
 
-    int chessboard_map[MAX_X][MAX_Y];
+    QGridLayout *chessboard_grid;
+    QToolButton *btn_chessboard[8][8];
 
-    void connect_log(void);
+    QString first_str;
+    QString second_str;
+
+    int state = STATE_1;
+
     void init(void);
 
-    void draw_text(QPainter *painter, const QString &text, int x, int y);
-    void draw_figure(QPainter *painter, QPixmap figure, int x, int y);
-    void draw_field(QPainter *painter, int x, int y, bool is_black);
-    void draw_chessboard(QPainter *painter);
+    void create_chessboard(void);
+    void create_figures(void);
 
     QString return_figure_name(int figure);
     QString return_figure_position(int x, int y);
+
     bool convert_simvol_to_int(int s, int *i_s);
     bool check_coordinate(const QString &coord, int *x, int *y);
 
-protected:
-    void mousePressEvent(QMouseEvent *event);
-    void paintEvent(QPaintEvent *);
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // CHESSBOARD_HPP

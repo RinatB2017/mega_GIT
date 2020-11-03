@@ -34,6 +34,7 @@ public:
         STATE_1,
         STATE_2
     };
+    //King(король), Queen(феерзь), Rook(ладья), Knight(конь), Bishop(слон), Pawn(пешка)
     enum Figures {
         NO_FIGURE = 0,
         BISHOP_BLACK,

@@ -19,16 +19,16 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include "ui_for_tests_mainbox.h"
-//--------------------------------------------------------------------------------
+
 #include <algorithm>    // std::find_if
 #include <vector>       // std::vector
-//--------------------------------------------------------------------------------
+
 #include "mysplashscreen.hpp"
 #include "mymainwindow.hpp"
 #include "for_tests_mainbox.hpp"
 #include "myfiledialog.hpp"
 #include "defines.hpp"
-//--------------------------------------------------------------------------------
+
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MyWidget(parent),
@@ -37,7 +37,7 @@ MainBox::MainBox(QWidget *parent,
 {
     init();
 }
-//--------------------------------------------------------------------------------
+
 MainBox::~MainBox()
 {
     save_widgets();
@@ -64,7 +64,7 @@ MainBox::~MainBox()
 
     delete ui;
 }
-//--------------------------------------------------------------------------------
+
 void MainBox::init(void)
 {
     ui->setupUi(this);
@@ -158,7 +158,7 @@ void MainBox::init(void)
 
     load_widgets();
 }
-//--------------------------------------------------------------------------------
+
 bool MainBox::set_theme_windows(void)
 {
     QFile file(":/themes_css/Theme (Windows).css");
@@ -174,7 +174,7 @@ bool MainBox::set_theme_windows(void)
     }
     return true;
 }
-//--------------------------------------------------------------------------------
+
 bool MainBox::set_norton_commander(void)
 {
     QFile file(":/themes_qss/Norton Commander.qss");
@@ -190,7 +190,7 @@ bool MainBox::set_norton_commander(void)
     }
     return true;
 }
-//--------------------------------------------------------------------------------
+
 bool MainBox::set_styles(void)
 {
     QFile file(":/themes_qss/styles.qss");
@@ -206,12 +206,12 @@ bool MainBox::set_styles(void)
     }
     return true;
 }
-//--------------------------------------------------------------------------------
+
 void MainBox::delete_string(void)
 {
     ui->comboBox->removeItem(ui->comboBox->currentIndex());
 }
-//--------------------------------------------------------------------------------
+
 void MainBox::check_in(void)
 {
     int a = ui->sb_1->value();
@@ -221,12 +221,12 @@ void MainBox::check_in(void)
     bool res = ((a + b) == c);
     ui->btn_ok->setEnabled(res);
 }
-//--------------------------------------------------------------------------------
+
 void MainBox::victory(void)
 {
     messagebox_info("Info", "Victory!");
 }
-//--------------------------------------------------------------------------------
+
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
@@ -280,7 +280,7 @@ void MainBox::createTestBar(void)
 
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
-//--------------------------------------------------------------------------------
+
 void MainBox::choice_test(void)
 {
     bool ok = false;
@@ -308,24 +308,24 @@ void MainBox::choice_test(void)
         }
     }
 }
-//--------------------------------------------------------------------------------
+
 void MainBox::inFunc(QPushButton *btn, saveSlot slot)
 {
     connect(btn,    &QPushButton::clicked,  this,   slot);
 }
-//--------------------------------------------------------------------------------
+
 void MainBox::s_inFunc(void)
 {
     emit trace(Q_FUNC_INFO);
     QMessageBox::information(nullptr, "", "info");
 }
-//--------------------------------------------------------------------------------
+
 int MainBox::get_cnt(void)
 {
     emit trace(Q_FUNC_INFO);
     return QRandomGenerator::global()->generate() % 10;
 }
-//--------------------------------------------------------------------------------
+
 void MainBox::test_validator(void)
 {
     /* Create a string for a regular expression */
@@ -349,7 +349,7 @@ void MainBox::test_validator(void)
     lineEdit->setValidator(ipValidator);
     lineEdit->show();
 }
-//--------------------------------------------------------------------------------
+
 void MainBox::print_mp(QWidget *widget)
 {
     emit error(QString("objectName %1").arg(widget->objectName()));
@@ -372,40 +372,40 @@ void MainBox::print_mp(QWidget *widget)
     }
     emit error("---");
 }
-//--------------------------------------------------------------------------------
+
 bool MainBox::timer_start(void)
 {
     Q_CHECK_PTR(timer);
     timer->start(500);
     return true;
 }
-//--------------------------------------------------------------------------------
+
 bool MainBox::timer_stop(void)
 {
     Q_CHECK_PTR(timer);
     timer->stop();
     return true;
 }
-//--------------------------------------------------------------------------------
+
 void MainBox::show_timer_count(void)
 {
     emit info(QString("cnt %1").arg(cnt++));
 }
-//--------------------------------------------------------------------------------
+
 bool MainBox::inc_push_button(void)
 {
     ui->push_widget->setFixedSize(ui->push_widget->width(),
                                   ui->push_widget->height()+10);
     return true;
 }
-//--------------------------------------------------------------------------------
+
 bool MainBox::dec_push_button(void)
 {
     ui->push_widget->setFixedSize(ui->push_widget->width(),
                                   ui->push_widget->height()-10);
     return true;
 }
-//--------------------------------------------------------------------------------
+
 void MainBox::heavy_function(void)
 {
     QElapsedTimer timer;
@@ -422,15 +422,19 @@ void MainBox::heavy_function(void)
     }
     emit info("OK");
 }
-//--------------------------------------------------------------------------------
+
+#include <iostream>
 #include <QSvgWidget>
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#ifdef Q_OS_LINUX
 #if 1
+    std::cout << "test cout" << std::endl;
+#endif
+
+#ifdef Q_OS_LINUX2
     w_pdf = new QPdfWidget();
 
     MyFileDialog *dlg;
@@ -450,7 +454,6 @@ bool MainBox::test(void)
             emit error(QString("cannot open %1").arg(filename));
     }
     dlg->deleteLater();
-#endif
 #endif
 
 #if 0
@@ -519,12 +522,12 @@ bool MainBox::test(void)
 
     return true;
 }
-//--------------------------------------------------------------------------------
+
 void MainBox::updateText(void)
 {
     ui->retranslateUi(this);
 }
-//--------------------------------------------------------------------------------
+
 bool MainBox::programm_is_exit(void)
 {
     bool is_exit = ui->cb_fag_exit->isChecked();
@@ -534,7 +537,7 @@ bool MainBox::programm_is_exit(void)
     }
     return is_exit;
 }
-//--------------------------------------------------------------------------------
+
 void MainBox::load_setting(void)
 {
 #ifdef QT_DEBUG
@@ -556,7 +559,7 @@ void MainBox::load_setting(void)
         cb_block->setChecked(block_is_checked);
     }
 }
-//--------------------------------------------------------------------------------
+
 void MainBox::save_setting(void)
 {
 #ifdef QT_DEBUG
@@ -572,4 +575,4 @@ void MainBox::save_setting(void)
         save_int("cb_block", cb_block->isChecked());
     }
 }
-//--------------------------------------------------------------------------------
+

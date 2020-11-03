@@ -298,9 +298,10 @@ void World::insert_objects(void)
     ball.body->SetLinearVelocity(b2Vec2(25.0f, 0.0f));
 #ifdef BOX2D_221
     ball.body->ApplyLinearImpulse(b2Vec2(1.0f, 1.0f), b2Vec2(1.0f, 1.0f));          //TODO 2.2.1
-#endif
-#ifdef BOX2D_231
+#elif BOX2D_231
     ball.body->ApplyLinearImpulse(b2Vec2(1.0f, 1.0f), b2Vec2(1.0f, 1.0f), true);    //TODO 2.3.1
+#else
+#   error "Need verion box2d"
 #endif
 
     _objects.append(ball);
@@ -385,9 +386,10 @@ void World::create_scene_1(void)
         ball.body->SetLinearVelocity(b2Vec2(25.0f, 0.0f));
 #ifdef BOX2D_221
         ball.body->ApplyLinearImpulse(b2Vec2(0.0f, 50.0f), b2Vec2(1.0f, 1.0f));   //TODO 2.2.1
-#endif
-#ifdef BOX2D_231
+#elif BOX2D_231
         ball.body->ApplyLinearImpulse(b2Vec2(0.0f, 50.0f), b2Vec2(1.0f, 1.0f), true);   //TODO 2.3.1
+#else
+#   error "Need verion box2d"
 #endif
 
         _objects.append(createWall(50, 20, 1.0, 12.0, 90.0*M_PI/180.0, b2_dynamicBody));

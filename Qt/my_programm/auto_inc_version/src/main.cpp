@@ -79,16 +79,16 @@ int writeFile(const QString &filename)
         QString eol = "\n";
 
         QTextStream out(&tempFile);
-        out << "#ifndef VERSION_HPP\n";
-        out << "#define VERSION_HPP\n";
-        out << "//-----\n";
-        out << "#define VER_MAJOR " << major << "\n";
-        out << "#define VER_MINOR " << minor << "\n";
-        out << "#define VER_PATCH " << patch << "\n";
-        out << "#define VER_BUILD " << build << "\n";
-        out << "#define VER_STR \"" << major << "." << minor << "." << patch << "." << build << "\"\n";
-        out << "//-----\n";
-        out << "#endif // VERSION_HPP\n";
+        out << "#ifndef VERSION_HPP" << eol;
+        out << "#define VERSION_HPP" << eol;
+        out << "//-----" << eol;
+        out << "#define VER_MAJOR " << major << eol;
+        out << "#define VER_MINOR " << minor << eol;
+        out << "#define VER_PATCH " << patch << eol;
+        out << "#define VER_BUILD " << build << eol;
+        out << "#define VER_STR \"" << major << "." << minor << "." << patch << "." << build << "\"" << eol;
+        out << "//-----" << eol;
+        out << "#endif // VERSION_HPP" << eol;
 
         const QString tempFileName = tempFile.fileName();
         tempFile.close();

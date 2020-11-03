@@ -40,7 +40,9 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+#ifdef QT_DEBUG
     qDebug() << "~MainBox()";
+#endif
     delete ui;
 
     qApp->quit();

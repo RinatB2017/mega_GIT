@@ -48,6 +48,11 @@ MainBox::~MainBox()
         m_engine->kill();
         m_engine->waitForFinished();
     }
+    if(le_chess)    le_chess->deleteLater();
+    if(cb_test)     cb_test->deleteLater();
+    if(btn_clear)   btn_clear->deleteLater();
+    if(btn_test)    btn_test->deleteLater();
+    if(btn_run)     btn_run->deleteLater();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -78,10 +83,10 @@ void MainBox::createChessBar(void)
     chessbar->setObjectName("chessbar");
     mw->addToolBar(Qt::TopToolBarArea, chessbar);
 
-    le_test = new QLineEdit(this);
-    le_test->setFixedWidth(100);
-    le_test->setText("e2e4");
-    chessbar->addWidget(le_test);
+    le_chess = new QLineEdit(this);
+    le_chess->setFixedWidth(100);
+    le_chess->setText("e2e4");
+    chessbar->addWidget(le_chess);
 
     btn_run = add_button(chessbar,
                          new QToolButton(this),
@@ -90,7 +95,7 @@ void MainBox::createChessBar(void)
                          "run");
 
     connect(btn_run,    &QToolButton::clicked,      this,   &MainBox::run);
-    connect(le_test,    &QLineEdit::returnPressed,  this,   &MainBox::run);
+    connect(le_chess,   &QLineEdit::returnPressed,  this,   &MainBox::run);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -102,13 +107,29 @@ void MainBox::createTestBar(void)
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
+    btn_clear = new QToolButton(this);
+    btn_clear->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
+    testbar->addWidget(btn_clear);
+
+    cb_test = new QComboBox(this);
+    cb_test->setEditable(true);
+    cb_test->setObjectName("cb_test");
+    cb_test->setFixedWidth(100);
+    //cb_test->setCurrentText("show board");
+    testbar->addWidget(cb_test);
+
     btn_test = add_button(testbar,
                           new QToolButton(this),
                           qApp->style()->standardIcon(QStyle::SP_CommandLink),
                           "test",
                           "test");
 
-    connect(btn_test,   &QToolButton::clicked,  this,   &MainBox::test);
+    connect(btn_clear, &QToolButton::clicked, [this]() {
+        cb_test->removeItem(cb_test->currentIndex());
+    });
+
+    connect(btn_test,   &QToolButton::clicked,          this,   &MainBox::test);
+    //connect(le_test,    &QComboBox::editTextChanged,    this,   &MainBox::test);
 }
 //--------------------------------------------------------------------------------
 void MainBox::create_chessboard(void)
@@ -168,21 +189,54 @@ void MainBox::new_game(void)
 //--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
+    QString temp = cb_test->currentText().append("\n");
+    m_engine->write(temp.toLatin1());
+}
+//--------------------------------------------------------------------------------
+void MainBox::reverse_chessboard(void)
+{
     ui->chessboard_widget->clear_figures();
-    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "A1");
-    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "B2");
-    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "C3");
-    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "D4");
-    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "E5");
-    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "F6");
-    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "G7");
-    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK, "H8");
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_BLACK, "A2");
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_BLACK, "B2");
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_BLACK, "C2");
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_BLACK, "D2");
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_BLACK, "E2");
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_BLACK, "F2");
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_BLACK, "G2");
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_BLACK, "H2");
+
+    ui->chessboard_widget->set_figure(ChessBoard::ROOK_BLACK,   "A1");
+    ui->chessboard_widget->set_figure(ChessBoard::KNIGHT_BLACK, "B1");
+    ui->chessboard_widget->set_figure(ChessBoard::BISHOP_BLACK, "C1");
+    ui->chessboard_widget->set_figure(ChessBoard::KING_BLACK,   "D1");
+    ui->chessboard_widget->set_figure(ChessBoard::QUEEN_BLACK,  "E1");
+    ui->chessboard_widget->set_figure(ChessBoard::BISHOP_BLACK, "F1");
+    ui->chessboard_widget->set_figure(ChessBoard::KNIGHT_BLACK, "G1");
+    ui->chessboard_widget->set_figure(ChessBoard::ROOK_BLACK,   "H1");
+
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_WHITE, "A7");
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_WHITE, "B7");
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_WHITE, "C7");
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_WHITE, "D7");
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_WHITE, "E7");
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_WHITE, "F7");
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_WHITE, "G7");
+    ui->chessboard_widget->set_figure(ChessBoard::PAWN_WHITE, "H7");
+
+    ui->chessboard_widget->set_figure(ChessBoard::ROOK_WHITE,   "A8");
+    ui->chessboard_widget->set_figure(ChessBoard::KNIGHT_WHITE, "B8");
+    ui->chessboard_widget->set_figure(ChessBoard::BISHOP_WHITE, "C8");
+    ui->chessboard_widget->set_figure(ChessBoard::KING_WHITE,   "D8");
+    ui->chessboard_widget->set_figure(ChessBoard::QUEEN_WHITE,  "E8");
+    ui->chessboard_widget->set_figure(ChessBoard::BISHOP_WHITE, "F8");
+    ui->chessboard_widget->set_figure(ChessBoard::KNIGHT_WHITE, "G8");
+    ui->chessboard_widget->set_figure(ChessBoard::ROOK_WHITE,   "H8");
 }
 //--------------------------------------------------------------------------------
 void MainBox::run(void)
 {
-    QString text = le_test->text().trimmed();
-    le_test->clear();
+    QString text = le_chess->text().trimmed();
+    //le_test->clear();
 
     if(text.isEmpty())
     {
@@ -290,11 +344,15 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-
+#ifdef QT_DEBUG
+    load_combobox_property(cb_test);
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-
+#ifdef QT_DEBUG
+    save_combobox_property(cb_test);
+#endif
 }
 //--------------------------------------------------------------------------------

@@ -47,6 +47,7 @@ private slots:
     void run(void);
 //    void x1(void);
 //    void x2(void);
+    void reverse_chessboard(void);
     void readData(void);
     void readError(void);
     void new_game(void);
@@ -63,8 +64,10 @@ private:
 
     void init(void);
 
-    QPointer<QLineEdit>     le_test;
+    QPointer<QLineEdit>     le_chess;
+    QPointer<QComboBox>     cb_test;
 
+    QPointer<QToolButton>   btn_clear;
     QPointer<QToolButton>   btn_test;
     QPointer<QToolButton>   btn_run;
 

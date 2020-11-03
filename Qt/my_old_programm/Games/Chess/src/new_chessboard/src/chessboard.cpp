@@ -279,8 +279,6 @@ bool ChessBoard::check_coordinate(const QString &coord, int *x, int *y)
 //--------------------------------------------------------------------------------
 bool ChessBoard::set_figure(Figures figure, const QString &coord)
 {
-    //King(король), Queen(феерзь), Rook(ладья), Knight(конь), Bishop(слон), Pawn(пешка)
-
     int x = 0;
     int y = 0;
     bool ok = check_coordinate(coord, &x, &y);

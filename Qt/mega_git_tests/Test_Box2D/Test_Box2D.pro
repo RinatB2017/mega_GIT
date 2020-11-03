@@ -33,6 +33,10 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
+linux {
+#    DEFINES += BOX2D_231
+}
+
 win32 {
 #    CONFIG  += use_BOX2D_221
     CONFIG  += use_BOX2D_231

@@ -434,7 +434,7 @@ bool MainBox::test(void)
     std::cout << "test cout" << std::endl;
 #endif
 
-#ifdef Q_OS_LINUX2
+#ifdef Q_OS_LINUX
     w_pdf = new QPdfWidget();
 
     MyFileDialog *dlg;

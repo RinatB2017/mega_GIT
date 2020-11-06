@@ -62,7 +62,7 @@ void MimeMultiPart::prepare() {
     for (it = parts.begin(); it != parts.end(); it++) {
         content += "--" + cBoundary + "\r\n";
         (*it)->prepare();
-        content += (*it)->toString();
+        content += (*it)->toString().toLatin1();
     };
 
     content += "--" + cBoundary + "--\r\n";

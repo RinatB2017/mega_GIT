@@ -27,10 +27,41 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="SerialBox5_fix_baudrate" name="serial_widget" native="true"/>
+      <widget class="SerialBox5_fix_baudrate" name="serial_widget" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>10</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="le_send"/>
+      <widget class="QToolButton" name="btn_clear">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="cb_send">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btn_send">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -50,6 +81,11 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>btn_clear</tabstop>
+  <tabstop>cb_send</tabstop>
+  <tabstop>btn_send</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

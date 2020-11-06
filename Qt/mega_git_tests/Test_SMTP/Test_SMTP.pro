@@ -8,10 +8,7 @@ TARGET      = Test_SMTP
 FOLDER  = tests
 
 PROGRAMM_PATH  += \
-    $$PWD/src \
-    $$PWD/src/smtp \
-    $$PWD/src/sendemail \
-    $$PWD/src/sendemail/ui
+    $$PWD/src
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
@@ -19,51 +16,21 @@ QT  += network
 
 #DEFINES += NO_STYLETOOLBAR
 DEFINES += PROGRAMM_IN_UTF8
-
 DEFINES += NO_TRAYICON
 #DEFINES += NO_LOG
 
-HEADERS += \
-    emailaddress.h \
-    mimeattachment.h \
-    mimecontentformatter.h \
-    mimefile.h \
-    mimehtml.h \
-    mimeinlinefile.h \
-    mimemessage.h \
-    mimemultipart.h \
-    mimepart.h \
-    mimetext.h \
-    quotedprintable.h \
-    smtpclient.h \
-    smtpexports.h
-
 SOURCES += \
-    main.cpp \
-    emailaddress.cpp \
-    mimeattachment.cpp \
-    mimecontentformatter.cpp \
-    mimefile.cpp \
-    mimehtml.cpp \
-    mimeinlinefile.cpp \
-    mimemessage.cpp \
-    mimemultipart.cpp \
-    mimepart.cpp \
-    mimetext.cpp \
-    quotedprintable.cpp \
-    smtpclient.cpp
+    main.cpp
 
 win32 {
     RC_ICONS = ico/computer.ico
 }
 
-HEADERS += sendemail.hpp
-SOURCES += sendemail.cpp
-FORMS   += sendemail.ui
-
 LIB_PATH = "$$PWD/../../../Qt/lib"
 
 include ($$LIB_PATH/turbo.pri)
+include (src/sendemail/sendemail.pri)
+include (src/smtp/smtp.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = src/version.hpp

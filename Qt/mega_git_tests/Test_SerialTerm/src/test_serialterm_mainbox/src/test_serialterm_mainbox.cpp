@@ -54,7 +54,7 @@ void MainBox::init(void)
 #endif
 
     connect(ui->serial_widget,  &SerialBox5_fix_baudrate::output,   this,   &MainBox::serial_data);
-    connect(ui->le_send,        &QLineEdit::returnPressed,          this,   &MainBox::send_data);
+    connect(ui->btn_send,       &QToolButton::clicked,              this,   &MainBox::send_data);
 
     QFont font = QApplication::font();
 #ifdef Q_OS_MACOS
@@ -67,11 +67,18 @@ void MainBox::init(void)
     font.setPointSize(12);
 
     ui->serial_widget->set_fix_baudrate(115200);
+    ui->btn_clear->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
+    ui->btn_send->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+
+    connect(ui->btn_clear,  &QPushButton::clicked, [this]() {
+        ui->cb_send->removeItem(ui->cb_send->currentIndex());
+    });
+
 
     ui->QTermWidget_widget->setTerminalFont(font);
-//    ui->QTermWidget_widget->sendText("export TERM=xterm-256color\n");
-//    ui->console_widget->setScrollBarPosition(QTermWidget::ScrollBarRight);
-//    ui->console_widget->setColorScheme("GreenOnBlack");
+    //    ui->QTermWidget_widget->sendText("export TERM=xterm-256color\n");
+    //    ui->console_widget->setScrollBarPosition(QTermWidget::ScrollBarRight);
+    //    ui->console_widget->setColorScheme("GreenOnBlack");
 
     // real startup
     connect(ui->QTermWidget_widget, &QTermWidget::finished, qApp, &QApplication::quit);
@@ -120,10 +127,10 @@ void MainBox::choice_test(void)
     if(!ok) return;
 
     auto cmd_it = std::find_if(
-        commands.begin(),
-        commands.end(),
-        [cmd](CMD command){ return command.cmd == cmd; }
-    );
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
     if (cmd_it != commands.end())
     {
         typedef bool (MainBox::*function)(void);
@@ -148,7 +155,7 @@ bool MainBox::test(void)
 //--------------------------------------------------------------------------------
 void MainBox::send_data(void)
 {
-    QString text = ui->le_send->text();
+    QString text = ui->cb_send->currentText();
     text.append("\n");
     ui->serial_widget->input(text);
 }

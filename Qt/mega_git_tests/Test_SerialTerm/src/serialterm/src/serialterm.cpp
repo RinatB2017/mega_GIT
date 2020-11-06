@@ -43,7 +43,13 @@ void SerialTerm::show_data(QByteArray data)
 {
     QByteArray ndata;
     ndata = data;
-    write(this->getPtySlaveFd(), ndata.data(), ndata.size());
+    ssize_t res = write(this->getPtySlaveFd(), ndata.data(), ndata.size());
+    if(res != ndata.size())
+    {
+        qDebug() <<QString("bad data size: %1 != %2")
+                   .arg(res)
+                   .arg(ndata.size());
+    }
 }
 //--------------------------------------------------------------------------------
 void SerialTerm::slot_handleError(QSerialPort::SerialPortError error)

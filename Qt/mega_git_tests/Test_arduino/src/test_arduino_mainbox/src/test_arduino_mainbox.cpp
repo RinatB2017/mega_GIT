@@ -59,6 +59,29 @@ void MainBox::init(void)
     connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btnRunMotors,   &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_motor_1,    &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_motor_2,    &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btnChoice,      &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_R,          &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_G,          &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_B,          &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_W,          &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btnSetColor,    &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->Slider_R,       &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->Slider_G,       &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->Slider_B,       &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->Slider_W,       &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->Slider_motor_1, &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->Slider_motor_2, &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->sb_Motor_1,     &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->sb_Motor_2,     &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->sb_R,           &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->sb_G,           &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->sb_B,           &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->sb_W,           &QToolButton::setEnabled);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->cb_Tie,         &QToolButton::setEnabled);
+
     ui->Slider_R->setMaximum(LED_MAX_VALUE);
     ui->Slider_G->setMaximum(LED_MAX_VALUE);
     ui->Slider_B->setMaximum(LED_MAX_VALUE);
@@ -275,7 +298,7 @@ void MainBox::set_color(void)
     int button = dlg->exec();
     if(button == QColorDialog::Accepted)
     {
-        QColor color = dlg->selectedColor();
+        color = dlg->selectedColor();
         int color_R = color.red();
         int color_G = color.green();
         int color_B = color.blue();

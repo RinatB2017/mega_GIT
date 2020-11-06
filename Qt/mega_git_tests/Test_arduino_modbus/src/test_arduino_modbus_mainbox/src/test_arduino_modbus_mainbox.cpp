@@ -75,6 +75,7 @@ void MainBox::createTestBar(void)
                                        "test");
     
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,    btn_test,   &QToolButton::setEnabled);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)

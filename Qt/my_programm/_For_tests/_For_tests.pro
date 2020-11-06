@@ -59,6 +59,7 @@ win32 {
 RESOURCES += \
     images/puzzle/puzzle.qrc \
     images/images.qrc \
+    images/bullets/bullets.qrc \
     ico/icons.qrc \
     themes/themes_css/themes_css.qrc \
     themes/themes_qss/themes_qss.qrc 

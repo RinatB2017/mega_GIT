@@ -444,13 +444,12 @@ bool MainBox::test(void)
     }
 //    image.save("/dev/shm/temp.png");
 
-    QPixmap pixmap = QPixmap::fromImage(image);
+    QToolButton *btn = new QToolButton();
+    //btn->setIcon(QIcon(QPixmap::fromImage(image)));
+    btn->setIcon(QIcon(":/bullets/bullet_left.png"));
+    btn->setFixedSize(8, 600);
 
-    QLabel *lbl = new QLabel();
-    lbl->setPixmap(pixmap);
-    lbl->resize(5, 600);
-
-    lbl->show();
+    btn->show();
 #endif
 
 #if 0

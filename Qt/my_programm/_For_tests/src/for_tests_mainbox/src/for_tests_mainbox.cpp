@@ -431,10 +431,33 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    int max_x = 3;
+    int max_y = 5;
+    QImage image(QSize(max_x, max_y), QImage::Format_ARGB32);
+
+    for(int y=0; y<max_y; y++)
+    {
+        for(int x=0; x<max_x; x++)
+        {
+            image.setPixel(x, y, qRgb(255, 0, 0));
+        }
+    }
+//    image.save("/dev/shm/temp.png");
+
+    QPixmap pixmap = QPixmap::fromImage(image);
+
+    QLabel *lbl = new QLabel();
+    lbl->setPixmap(pixmap);
+    lbl->resize(5, 600);
+
+    lbl->show();
+#endif
+
+#if 0
     std::cout << "test cout" << std::endl;
 #endif
 
-#ifdef Q_OS_LINUX
+#ifdef Q_OS_LINUX2
     w_pdf = new QPdfWidget();
 
     MyFileDialog *dlg;

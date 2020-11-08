@@ -85,7 +85,6 @@ void MainWindow::port_close(void)
 
 void MainWindow::port_send(void)
 {
-    //ui->te_log->append("send data");
     ui->te_log->append(QString("send %1 bytes").arg(serial->write("test")));
 }
 

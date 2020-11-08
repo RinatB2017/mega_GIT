@@ -61,31 +61,26 @@ void MainBox::init_serial_widgets(void)
     ui->serial_widget->set_caption("RS-232");
 
     ui->serial_widget_fix_baudrate->set_fix_baudrate(BAUDRATE);
-//    ui->serial_widget_fix_baudrate_win7->set_fix_baudrate(BAUDRATE);
 
     connect(ui->serial_widget,                      &SerialBox5::output,                    this,   &MainBox::serial_data);
     connect(ui->serial_widget_lite,                 &SerialBox5_lite::output,               this,   &MainBox::serial_data);
     connect(ui->serial_widget_fix_baudrate,         &SerialBox5_fix_baudrate::output,       this,   &MainBox::serial_data);
-//    connect(ui->serial_widget_fix_baudrate_win7,    &SerialBox5_fix_baudrate_win7::output,  this,   &MainBox::serial_data);
     connect(ui->serial_widget_wo_form,              &SerialBox5_wo_form::output,            this,   &MainBox::serial_data);
 
     ui->btn_serial_widget->setDisabled(true);
     ui->btn_serial_widget_lite->setDisabled(true);
     ui->btn_serial_widget_fix_baudrate->setDisabled(true);
-//    ui->btn_serial_widget_fix_baudrate_win7->setDisabled(true);
     ui->btn_serial_widget_wo_form->setDisabled(true);
 
     connect(ui->btn_serial_widget,                      &QToolButton::clicked,  this,   &MainBox::test_only);
     connect(ui->btn_serial_widget_lite,                 &QToolButton::clicked,  this,   &MainBox::test_only);
     connect(ui->btn_serial_widget_fix_baudrate,         &QToolButton::clicked,  this,   &MainBox::test_only);
-//    connect(ui->btn_serial_widget_fix_baudrate_win7,    &QToolButton::clicked,  this,   &MainBox::test_only);
 
     connect(ui->btn_serial_widget_wo_form,              &QToolButton::clicked,  this,   &MainBox::test_send);
 
     connect(ui->serial_widget,                      &SerialBox5::port_is_active,                    ui->btn_serial_widget,                      &QToolButton::setEnabled);
     connect(ui->serial_widget_lite,                 &SerialBox5_lite::port_is_active,               ui->btn_serial_widget_lite,                 &QToolButton::setEnabled);
     connect(ui->serial_widget_fix_baudrate,         &SerialBox5_fix_baudrate::port_is_active,       ui->btn_serial_widget_fix_baudrate,         &QToolButton::setEnabled);
-//    connect(ui->serial_widget_fix_baudrate_win7,    &SerialBox5_fix_baudrate_win7::port_is_active,  ui->btn_serial_widget_fix_baudrate_win7,    &QToolButton::setEnabled);
     connect(ui->serial_widget_wo_form,              &SerialBox5_wo_form::port_is_active,            ui->btn_serial_widget_wo_form,              &QToolButton::setEnabled);
 
     ui->btn_sb_wo_form->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));

@@ -32,9 +32,6 @@ HEADERS += \
 SOURCES += \
     main.cpp
 
-RESOURCES += \
-    locale/lang.qrc
-
 OTHER_FILES += doc/notebook.txt
 
 CONFIG(debug, debug|release) {

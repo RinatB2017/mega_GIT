@@ -34,7 +34,7 @@ win32 {
 }
 
 linux {
-#    DEFINES += BOX2D_231
+    DEFINES += BOX2D_231
 }
 
 win32 {

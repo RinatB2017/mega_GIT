@@ -36,7 +36,6 @@
 #include "serialbox5.hpp"
 #include "serialbox5_lite.hpp"
 #include "serialbox5_fix_baudrate.hpp"
-#include "serialbox5_fix_baudrate_win7.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()
 {
@@ -49,12 +48,10 @@ void Test::test_signals(void)
     SerialBox5 *sb                              = mw->findChild<SerialBox5 *>("serial_widget");
     SerialBox5_lite *sb_lite                    = mw->findChild<SerialBox5_lite *>("serial_widget_lite");
     SerialBox5_fix_baudrate *sb_fix_br          = mw->findChild<SerialBox5_fix_baudrate *>("serial_widget_fix_baudrate");
-    SerialBox5_fix_baudrate_win7 *sb_fix_br_w7  = mw->findChild<SerialBox5_fix_baudrate_win7 *>("serial_widget_fix_baudrate_win7");
 
     QVERIFY(sb);
     QVERIFY(sb_lite);
     QVERIFY(sb_fix_br);
-    QVERIFY(sb_fix_br_w7);
 
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);

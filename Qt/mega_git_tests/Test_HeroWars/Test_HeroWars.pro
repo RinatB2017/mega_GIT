@@ -48,16 +48,19 @@ win32 {
     DEPENDPATH  += C:/opencv/build/include/
 
     OPENCV_VER = 430
-    LIBS    += -LC:\\OpenCV\\x86\\mingw\\bin
+#    LIBS    += -LC:\\OpenCV\\x86\\mingw\\bin
+    LIBS    += -L$$PWD/lib
     LIBS    += -lopencv_core$${OPENCV_VER}
     LIBS    += -lopencv_highgui$${OPENCV_VER}
-    #LIBS    += -lopencv_imgcodecs$${OPENCV_VER}
+    LIBS    += -lopencv_imgcodecs$${OPENCV_VER}
     LIBS    += -lopencv_imgproc$${OPENCV_VER}
     LIBS    += -lopencv_features2d$${OPENCV_VER}
     LIBS    += -lopencv_calib3d$${OPENCV_VER}
     LIBS    += -lopencv_video$${OPENCV_VER}
     LIBS    += -lopencv_videoio$${OPENCV_VER}
     LIBS    += -lopencv_objdetect$${OPENCV_VER}
+
+    message($$LIBS)
 }
 
 CONFIG(debug, debug|release) {

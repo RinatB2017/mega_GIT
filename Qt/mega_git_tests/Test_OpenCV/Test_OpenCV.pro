@@ -58,15 +58,18 @@ unix {
 }
 
 win32 {
-    INCLUDEPATH += C:\\Users\\User\\OpenCV\\opencv\\build\\include
+    INCLUDEPATH += C:/opencv/build/include/
+    DEPENDPATH  += C:/opencv/build/include/
 
-    LIBS    += -Lc:\\Users\\User\\OpenCV\\opencv\\build\\lib\\Release
-    LIBS    += -lopencv_core341
-    LIBS    += -lopencv_highgui341
-    LIBS    += -lopencv_imgcodecs341
-    LIBS    += -lopencv_imgproc341
-    LIBS    += -lopencv_features2d341
-    LIBS    += -lopencv_calib3d341
+    OPENCV_VER = 430
+    LIBS    += -L$$PWD/lib
+    LIBS    += -lopencv_core$${OPENCV_VER}
+    LIBS    += -lopencv_highgui$${OPENCV_VER}
+    LIBS    += -lopencv_imgcodecs$${OPENCV_VER}
+    LIBS    += -lopencv_imgproc$${OPENCV_VER}
+    LIBS    += -lopencv_features2d$${OPENCV_VER}
+    LIBS    += -lopencv_calib3d$${OPENCV_VER}
+    LIBS    += -lopencv_objdetect$${OPENCV_VER}
 }
 
 LIB_PATH  = "$$PWD/../../lib"
@@ -75,7 +78,7 @@ LIB_PATH2 = "$$PWD/../../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

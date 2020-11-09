@@ -708,9 +708,9 @@ void MyFindForm::mouse_click(unsigned int button, QPoint pos)
     //int MOUSEEVENTF_LEFTDOWN  = 0x02;
     //int MOUSEEVENTF_LEFTUP    = 0x04;
 
-    SetCursorPos(pos.x(), pos.y());
-    mouse_event(MOUSEEVENTF_LEFTDOWN,   pos.x(),    pos.y(),    0,  0);
-    mouse_event(MOUSEEVENTF_LEFTUP,     pos.x(),    pos.y(),    0,  0);
+    //SetCursorPos(pos.x(), pos.y());
+    //mouse_event(MOUSEEVENTF_LEFTDOWN,   pos.x(),    pos.y(),    0,  0);
+    //mouse_event(MOUSEEVENTF_LEFTUP,     pos.x(),    pos.y(),    0,  0);
 #endif
 }
 //--------------------------------------------------------------------------------

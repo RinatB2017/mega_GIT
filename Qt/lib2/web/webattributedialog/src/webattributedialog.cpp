@@ -37,37 +37,37 @@ void WebAttributeDialog::init(void)
 {
     ui->setupUi(this);
 
-    sl_attr.append({ "AutoLoadImages",                  QWebEngineSettings::AutoLoadImages });
-    sl_attr.append({ "JavascriptEnabled",               QWebEngineSettings::JavascriptEnabled });
-    sl_attr.append({ "JavascriptCanOpenWindows",        QWebEngineSettings::JavascriptCanOpenWindows });
-    sl_attr.append({ "JavascriptCanAccessClipboard",    QWebEngineSettings::JavascriptCanAccessClipboard });
-    sl_attr.append({ "LinksIncludedInFocusChain",       QWebEngineSettings::LinksIncludedInFocusChain });
-    sl_attr.append({ "LocalStorageEnabled",             QWebEngineSettings::LocalStorageEnabled });
-    sl_attr.append({ "LocalContentCanAccessRemoteUrls", QWebEngineSettings::LocalContentCanAccessRemoteUrls });
-    sl_attr.append({ "XSSAuditingEnabled",              QWebEngineSettings::XSSAuditingEnabled });
-    sl_attr.append({ "SpatialNavigationEnabled",        QWebEngineSettings::SpatialNavigationEnabled });
-    sl_attr.append({ "LocalContentCanAccessFileUrls",   QWebEngineSettings::LocalContentCanAccessFileUrls });
-    sl_attr.append({ "HyperlinkAuditingEnabled",        QWebEngineSettings::HyperlinkAuditingEnabled });
-    sl_attr.append({ "ScrollAnimatorEnabled",           QWebEngineSettings::ScrollAnimatorEnabled });
-    sl_attr.append({ "ErrorPageEnabled",                QWebEngineSettings::ErrorPageEnabled });
-    sl_attr.append({ "PluginsEnabled",                  QWebEngineSettings::PluginsEnabled });
-    sl_attr.append({ "FullScreenSupportEnabled",        QWebEngineSettings::FullScreenSupportEnabled });
-    sl_attr.append({ "ScreenCaptureEnabled",            QWebEngineSettings::ScreenCaptureEnabled });
-    sl_attr.append({ "WebGLEnabled",                    QWebEngineSettings::WebGLEnabled });
-    sl_attr.append({ "Accelerated2dCanvasEnabled",      QWebEngineSettings::Accelerated2dCanvasEnabled });
-    sl_attr.append({ "AutoLoadIconsForPage",            QWebEngineSettings::AutoLoadIconsForPage });
-    sl_attr.append({ "TouchIconsEnabled",               QWebEngineSettings::TouchIconsEnabled });
-    sl_attr.append({ "FocusOnNavigationEnabled",        QWebEngineSettings::FocusOnNavigationEnabled });
-    sl_attr.append({ "PrintElementBackgrounds",         QWebEngineSettings::PrintElementBackgrounds });
-    sl_attr.append({ "AllowRunningInsecureContent",     QWebEngineSettings::AllowRunningInsecureContent });
+    sl_attr.append({ "AutoLoadImages",                      QWebEngineSettings::AutoLoadImages });
+    sl_attr.append({ "JavascriptEnabled",                   QWebEngineSettings::JavascriptEnabled });
+    sl_attr.append({ "JavascriptCanOpenWindows",            QWebEngineSettings::JavascriptCanOpenWindows });
+    sl_attr.append({ "JavascriptCanAccessClipboard",        QWebEngineSettings::JavascriptCanAccessClipboard });
+    sl_attr.append({ "LinksIncludedInFocusChain",           QWebEngineSettings::LinksIncludedInFocusChain });
+    sl_attr.append({ "LocalStorageEnabled",                 QWebEngineSettings::LocalStorageEnabled });
+    sl_attr.append({ "LocalContentCanAccessRemoteUrls",     QWebEngineSettings::LocalContentCanAccessRemoteUrls });
+    sl_attr.append({ "XSSAuditingEnabled",                  QWebEngineSettings::XSSAuditingEnabled });
+    sl_attr.append({ "SpatialNavigationEnabled",            QWebEngineSettings::SpatialNavigationEnabled });
+    sl_attr.append({ "LocalContentCanAccessFileUrls",       QWebEngineSettings::LocalContentCanAccessFileUrls });
+    sl_attr.append({ "HyperlinkAuditingEnabled",            QWebEngineSettings::HyperlinkAuditingEnabled });
+    sl_attr.append({ "ScrollAnimatorEnabled",               QWebEngineSettings::ScrollAnimatorEnabled });
+    sl_attr.append({ "ErrorPageEnabled",                    QWebEngineSettings::ErrorPageEnabled });
+    sl_attr.append({ "PluginsEnabled",                      QWebEngineSettings::PluginsEnabled });
+    sl_attr.append({ "FullScreenSupportEnabled",            QWebEngineSettings::FullScreenSupportEnabled });
+    sl_attr.append({ "ScreenCaptureEnabled",                QWebEngineSettings::ScreenCaptureEnabled });
+    sl_attr.append({ "WebGLEnabled",                        QWebEngineSettings::WebGLEnabled });
+    sl_attr.append({ "Accelerated2dCanvasEnabled",          QWebEngineSettings::Accelerated2dCanvasEnabled });
+    sl_attr.append({ "AutoLoadIconsForPage",                QWebEngineSettings::AutoLoadIconsForPage });
+    sl_attr.append({ "TouchIconsEnabled",                   QWebEngineSettings::TouchIconsEnabled });
+    sl_attr.append({ "FocusOnNavigationEnabled",            QWebEngineSettings::FocusOnNavigationEnabled });
+    sl_attr.append({ "PrintElementBackgrounds",             QWebEngineSettings::PrintElementBackgrounds });
+    sl_attr.append({ "AllowRunningInsecureContent",         QWebEngineSettings::AllowRunningInsecureContent });
     sl_attr.append({ "AllowGeolocationOnInsecureOrigins",   QWebEngineSettings::AllowGeolocationOnInsecureOrigins });
     sl_attr.append({ "AllowWindowActivationFromJavaScript", QWebEngineSettings::AllowWindowActivationFromJavaScript });
-    sl_attr.append({ "ShowScrollBars",                  QWebEngineSettings::ShowScrollBars });
-    sl_attr.append({ "PlaybackRequiresUserGesture",     QWebEngineSettings::PlaybackRequiresUserGesture });
-    sl_attr.append({ "WebRTCPublicInterfacesOnly",      QWebEngineSettings::WebRTCPublicInterfacesOnly });
-    sl_attr.append({ "JavascriptCanPaste",              QWebEngineSettings::WebRTCPublicInterfacesOnly });
-    sl_attr.append({ "DnsPrefetchEnabled",              QWebEngineSettings::DnsPrefetchEnabled });
-    sl_attr.append({ "PdfViewerEnabled",                QWebEngineSettings::PdfViewerEnabled });
+    sl_attr.append({ "ShowScrollBars",                      QWebEngineSettings::ShowScrollBars });
+    sl_attr.append({ "PlaybackRequiresUserGesture",         QWebEngineSettings::PlaybackRequiresUserGesture });
+    sl_attr.append({ "WebRTCPublicInterfacesOnly",          QWebEngineSettings::WebRTCPublicInterfacesOnly });
+    sl_attr.append({ "JavascriptCanPaste",                  QWebEngineSettings::WebRTCPublicInterfacesOnly });
+    sl_attr.append({ "DnsPrefetchEnabled",                  QWebEngineSettings::DnsPrefetchEnabled });
+    sl_attr.append({ "PdfViewerEnabled",                    QWebEngineSettings::PdfViewerEnabled });
 
     int pos_y = 0;
     foreach(ATTR attr, sl_attr)
@@ -128,7 +128,7 @@ bool WebAttributeDialog::get(const QString &attribute_name)
 //--------------------------------------------------------------------------------
 QWebEngineSettings::WebAttribute WebAttributeDialog::get_attr(const QString &attribute_name)
 {
-    QWebEngineSettings::WebAttribute res;
+    QWebEngineSettings::WebAttribute res = QWebEngineSettings::AutoLoadImages;
     foreach(ATTR attr, sl_attr)
     {
         if(attr.attr_name == attribute_name)

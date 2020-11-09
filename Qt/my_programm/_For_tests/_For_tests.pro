@@ -82,10 +82,6 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 include ($$LIB_PATH2/icons/arrows.pri)
 
-linux {
-    include ($$LIB_PATH2/pdfviewer/pdfviewer.pri)
-}
-
 include ($$LIB_PATH/mywidgets/mylistwidget.pri)
 
 include ($$LIB_PATH2/widgets/QLongLongSpinBox/QLongLongSpinBox.pri)

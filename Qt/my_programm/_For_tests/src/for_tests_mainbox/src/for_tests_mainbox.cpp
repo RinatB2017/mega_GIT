@@ -49,18 +49,11 @@ MainBox::~MainBox()
         timer->deleteLater();
     }
 
-    //if(bar)
-    //{
-    //    bar->disconnect();
-    //    bar->deleteLater();
-    //}
-
-#ifdef Q_OS_LINUX
-    if(w_pdf)
-    {
-        w_pdf->deleteLater();
-    }
-#endif
+//    if(bar)
+//    {
+//        bar->disconnect();
+//        bar->deleteLater();
+//    }
 
     delete ui;
 }
@@ -454,28 +447,6 @@ bool MainBox::test(void)
 
 #if 0
     std::cout << "test cout" << std::endl;
-#endif
-
-#ifdef Q_OS_LINUX2
-    w_pdf = new QPdfWidget();
-
-    MyFileDialog *dlg;
-
-    dlg = new MyFileDialog("pdf", "pdf");
-    dlg->setNameFilter("pdf files (*.pdf)");
-    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
-    dlg->setDirectory(".");
-    if(dlg->exec())
-    {
-        QStringList files = dlg->selectedFiles();
-        QString filename = files.at(0);
-        bool ok = w_pdf->loadFile(filename);
-        if(ok)
-            w_pdf->show();
-        else
-            emit error(QString("cannot open %1").arg(filename));
-    }
-    dlg->deleteLater();
 #endif
 
 #if 0

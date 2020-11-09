@@ -7,11 +7,16 @@
 #include <opencv2/objdetect.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc.hpp>
+#include <opencv2/objdetect.hpp>
 
 #include <opencv2/opencv.hpp>
 
 using namespace std;
 using namespace cv;
+//--------------------------------------------------------------------------------
+#ifdef Q_OS_WIN
+#   include <windows.h>
+#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------

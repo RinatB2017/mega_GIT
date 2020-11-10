@@ -7,7 +7,7 @@ linux {
     versiontarget.commands = ~/bin/auto_inc_version $$VERSION_HEADER
 }
 win32 {
-    versiontarget.commands = C:\\bin\\auto_inc_version $$VERSION_HEADER
+    versiontarget.commands = C:/bin/auto_inc_version $$VERSION_HEADER
 }
 versiontarget.depends = Makefile
 

@@ -41,7 +41,7 @@ include (src/youtube_walker/youtube_walker.pri)
 include (src/google_walker/google_walker.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

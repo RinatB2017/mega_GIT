@@ -53,7 +53,7 @@ win32 {
 }
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

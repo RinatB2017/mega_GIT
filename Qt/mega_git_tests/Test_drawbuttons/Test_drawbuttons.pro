@@ -53,7 +53,7 @@ include ($$LIB_PATH2/csvreader/csvreader.pri)
 include ($$LIB_PATH2/CarefulMessageBox/CarefulMessageBox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

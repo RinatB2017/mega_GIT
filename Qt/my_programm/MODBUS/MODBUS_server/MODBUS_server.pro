@@ -60,7 +60,7 @@ include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 include (../lib/MODBUS_server/MODBUS_server.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

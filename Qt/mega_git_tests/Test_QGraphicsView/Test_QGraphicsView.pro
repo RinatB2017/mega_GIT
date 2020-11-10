@@ -59,7 +59,7 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include (src/test_QGraphicsView_mainbox/test_QGraphicsView_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

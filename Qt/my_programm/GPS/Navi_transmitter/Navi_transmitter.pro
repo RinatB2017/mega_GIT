@@ -43,7 +43,7 @@ include ($$LIB_PATH2/serial5/serial5.pri)
 include (src/navi_transmitter_mainbox/navi_transmitter_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

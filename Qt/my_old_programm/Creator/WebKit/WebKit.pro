@@ -61,7 +61,7 @@ include ($$LIB_PATH2/web/webview/webview.pri)
 include (src/webkit_mainbox/webkit_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

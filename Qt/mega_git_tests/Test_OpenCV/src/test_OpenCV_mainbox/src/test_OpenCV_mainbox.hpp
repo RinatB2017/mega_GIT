@@ -1,21 +1,15 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <opencv2/objdetect.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc.hpp>
-#include <opencv2/objdetect.hpp>
-
+#include <QtGlobal>
+//--------------------------------------------------------------------------------
 #include <opencv2/opencv.hpp>
-
-using namespace std;
-using namespace cv;
+//--------------------------------------------------------------------------------
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_WIN
 #   include <windows.h>
 #endif
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -43,17 +37,17 @@ private slots:
 
 private:
     Ui::MainBox *ui;
-    Mat mOrigImage;
-    Mat mElabImage;
+    cv::Mat mOrigImage;
+    cv::Mat mElabImage;
 
     QString m_lastLoadPath;
 
     // ---> Face detectors
     bool create_detectors(void);
 
-    Mat grayFrames;
-    CascadeClassifier faceCade;
-    vector<Rect> faces;
+    cv::Mat grayFrames;
+    cv::CascadeClassifier faceCade;
+    std::vector<cv::Rect> faces;
 
     qreal scaleFactor = 1.0;
     int minNeighbors = 0;

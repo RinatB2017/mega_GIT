@@ -55,7 +55,7 @@ include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 include (src/aggregator_mainbox/aggregator_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

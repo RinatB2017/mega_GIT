@@ -1,17 +1,16 @@
 //--------------------------------------------------------------------------------
 //
 //--------------------------------------------------------------------------------
-#include <QFileDialog>
-#include <QPixmap>
-#include <QPainter>
-//--------------------------------------------------------------------------------
-#include <opencv2/core.hpp>
-#include <opencv2/highgui.hpp>
-//--------------------------------------------------------------------------------
 #define FEAT_FACE_FILE  "xml/haarcascade_frontalface_default.xml"
 #define FEAT_EYE_FILE   "xml/haarcascade_mcs_eyepair_big.xml"
 #define FEAT_NOSE_FILE  "xml/haarcascade_mcs_nose.xml"
 #define FEAT_MOUTH_FILE "xml/haarcascade_mcs_mouth.xml"
+//--------------------------------------------------------------------------------
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/objdetect.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/core.hpp>
 //--------------------------------------------------------------------------------
 #include "test_OpenCV_mainbox.hpp"
 #include "ui_test_OpenCV_mainbox.h"
@@ -48,11 +47,8 @@ MainBox::MainBox(QWidget* parent) :
 
     connect(ui->sl_scale_factor,    SIGNAL(sliderMoved(int)),       SLOT(set_scaleFactor(int)));
     connect(ui->dsb_scalefactor,    SIGNAL(valueChanged(double)),   SLOT(set_scaleFactor(double)));
-
     connect(ui->sl_minNeighbors,    SIGNAL(sliderMoved(int)),       SLOT(set_minNeighbors(int)));
-
     connect(ui->bnLoad, SIGNAL(clicked(bool)), SLOT(onLoad()));
-
     connect(ui->btn_test,   SIGNAL(clicked(bool)),  SLOT(s_test()));
 
     load_widgets();
@@ -61,7 +57,6 @@ MainBox::MainBox(QWidget* parent) :
 MainBox::~MainBox()
 {
     save_widgets();
-
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -156,8 +151,8 @@ void MainBox::refreshHSV(void)
             cv::findContours(thresholdedMat,
                              countours,
                              hierarchy,
-                             RETR_TREE,
-                             CHAIN_APPROX_SIMPLE,
+                             cv::RETR_TREE,
+                             cv::CHAIN_APPROX_SIMPLE,
                              cv::Point( 0, 0 )
                              );
 
@@ -270,7 +265,7 @@ void MainBox::find_faces(void)
 
     mOrigImage.copyTo(mElabImage);
 
-    cvtColor(mOrigImage, grayFrames, COLOR_BGR2GRAY);
+    cv::cvtColor(mOrigImage, grayFrames, cv::COLOR_BGR2GRAY);
     equalizeHist(grayFrames, grayFrames);
 
     bool ok = faceCade.load(FEAT_FACE_FILE);

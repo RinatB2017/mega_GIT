@@ -442,6 +442,18 @@ bool MainBox::test(void)
     btn->setIcon(QIcon(":/bullets/bullet_left.png"));
     btn->setFixedSize(8, 600);
 
+    connect(btn, &QToolButton::clicked, [btn, this]() {
+            direction = !direction;
+            if(direction)
+            {
+                btn->setIcon(QIcon(":/bullets/bullet_right.png"));
+            }
+            else
+            {
+                btn->setIcon(QIcon(":/bullets/bullet_left.png"));
+            }
+        });
+
     btn->show();
 #endif
 

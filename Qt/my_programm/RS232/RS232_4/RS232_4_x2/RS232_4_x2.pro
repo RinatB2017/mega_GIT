@@ -36,7 +36,7 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/serial4/serial4.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

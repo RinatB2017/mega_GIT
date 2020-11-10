@@ -38,7 +38,7 @@ include ($$LIB_PATH2/widgets/qhexedit2/qhexedit2.pri)
 include (src/test_QHexEdit2_mainbox/test_QHexEdit2_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

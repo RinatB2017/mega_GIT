@@ -46,7 +46,7 @@ include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
 include (src/simple_http_reader_mainbox/simple_http_reader_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 #----------------------------------------------

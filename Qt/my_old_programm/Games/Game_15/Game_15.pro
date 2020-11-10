@@ -39,7 +39,7 @@ include (src/game_15_mainbox/game_15_mainbox.pri)
 include (src/bone/bone.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

@@ -101,6 +101,7 @@ private:
     //---
 
     //MyToolBar *bar = nullptr;
+    bool direction = false;
 
     QPointer<QFileSystemModel> file_model;
 

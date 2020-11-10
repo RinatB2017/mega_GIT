@@ -60,7 +60,7 @@ include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include (src/test_ADXL345_mainbox/test_ADXL345_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 #----------------------------------------------

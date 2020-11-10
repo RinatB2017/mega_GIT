@@ -52,7 +52,7 @@ include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 include ($$LIB_PATH2/wifi_frame/wifi_frame.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

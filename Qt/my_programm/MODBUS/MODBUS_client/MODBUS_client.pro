@@ -62,7 +62,7 @@ QT  += serialbus
 include (../lib/MODBUS_client/MODBUS_client.pri)
 
 !exists(/OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

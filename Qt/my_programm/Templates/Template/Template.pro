@@ -77,7 +77,7 @@ include (src/mymainwindow/mymainwindow.pri)
 include (src/mainwidget/mainwidget.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 #----------------------------------------------

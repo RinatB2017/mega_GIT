@@ -49,7 +49,7 @@ include (src/emulator_modbus_mainbox/emulator_modbus_mainbox.pri)
 include (src/settingsdialog/settingsdialog.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

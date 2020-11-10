@@ -36,7 +36,7 @@ include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
 include ($$LIB_PATH2/widgets/rtsp_widget/rtsp_widget.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

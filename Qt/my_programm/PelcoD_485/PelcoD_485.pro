@@ -60,7 +60,7 @@ include ($$LIB_PATH2/icons/arrows.pri)
 include (src/pelco_d_485_mainbox/pelco_d_485_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

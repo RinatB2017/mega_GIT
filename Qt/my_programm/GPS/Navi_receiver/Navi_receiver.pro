@@ -49,7 +49,7 @@ include ($$LIB_PATH2/proto_NMEA_0183/proto_NMEA_0183.pri)
 include (src/navi_receiver_mainbox/navi_receiver_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

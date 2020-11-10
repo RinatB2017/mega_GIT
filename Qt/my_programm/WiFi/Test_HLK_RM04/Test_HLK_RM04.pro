@@ -62,7 +62,7 @@ include ($$LIB_PATH2/ethernet/tcp_server.pri)
 include (src/hlk_rm04_widget/hlk_rm04_widget.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

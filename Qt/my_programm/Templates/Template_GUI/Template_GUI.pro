@@ -71,7 +71,7 @@ include (src/template_mainbox/template_mainbox.pri)
 include (src/template_mainbox_GUI/template_mainbox_GUI.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

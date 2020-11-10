@@ -56,7 +56,7 @@ include (src/mymainwindow/mymainwindow.pri)
 include (src/proxy_walker_m_mainbox/proxy_walker_m_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

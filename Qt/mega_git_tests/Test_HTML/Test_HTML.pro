@@ -51,7 +51,7 @@ include ($$LIB_PATH2/codeeditor/codeeditor.pri)
 include (src/test_html_mainbox/test_html_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

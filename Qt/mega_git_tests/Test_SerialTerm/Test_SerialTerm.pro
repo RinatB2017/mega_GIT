@@ -52,7 +52,7 @@ include (src/test_serialterm_mainbox/test_serialterm_mainbox.pri)
 include (src/serialterm/serialterm.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

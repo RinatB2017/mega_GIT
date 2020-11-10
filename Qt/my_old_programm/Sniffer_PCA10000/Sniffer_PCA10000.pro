@@ -41,7 +41,7 @@ include ($$LIB_PATH/time/time.pri)
 include (src/sniffer_pca10000_mainbox/sniffer_pca10000_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

@@ -76,7 +76,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 }
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 #----------------------------------------------

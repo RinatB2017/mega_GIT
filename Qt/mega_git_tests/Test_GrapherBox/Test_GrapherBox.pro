@@ -55,7 +55,7 @@ include (src/test_GrapherBox_mainbox/test_GrapherBox_mainbox.pri)
 include (src/testdialog/testdialog.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 #----------------------------------------------

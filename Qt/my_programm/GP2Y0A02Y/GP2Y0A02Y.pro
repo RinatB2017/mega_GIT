@@ -57,7 +57,7 @@ include (src/grapher/grapher.pri)
 include (src/gp2y0a02y_mainbox/gp2y0a02y_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 #----------------------------------------------

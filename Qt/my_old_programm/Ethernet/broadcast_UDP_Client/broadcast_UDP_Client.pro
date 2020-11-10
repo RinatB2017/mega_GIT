@@ -27,7 +27,7 @@ win32 {
 LIB_PATH  = "$$PWD/../../../lib"
 LIB_PATH2 = "$$PWD/../../../lib2"
 
-VERSION_HEADER = src/version.hpp
+VERSION_HEADER = $$PWD/src/version.hpp
 include ($$LIB_PATH/auto_inc_version.pri)
 
 include ($$LIB_PATH/meta/mainwindow.pri)

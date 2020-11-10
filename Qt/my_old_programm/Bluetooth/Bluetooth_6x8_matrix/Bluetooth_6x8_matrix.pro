@@ -44,7 +44,7 @@ include (src/bluetooth_6x8_matrix_mainbox/bluetooth_6x8_matrix_mainbox.pri)
 include (src/led/led.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

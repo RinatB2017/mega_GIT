@@ -37,7 +37,7 @@ include ($$LIB_PATH2/qwt/qwt.pri)
 include (src/file_to_rs232_mainbox/file_to_rs232_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

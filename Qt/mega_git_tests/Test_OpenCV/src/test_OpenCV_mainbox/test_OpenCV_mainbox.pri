@@ -4,19 +4,9 @@
 
 DEPENDPATH  += \
     $$PWD/src \
-    $$PWD/src/ui \
-    $$PWD/xml
+    $$PWD/src/ui
 INCLUDEPATH = $$DEPENDPATH
 
-QT  += opengl
-
-#DEFINES += CV_NO_BACKWARD_COMPATIBILITY
-
-HEADERS += webcamera.hpp
-SOURCES += webcamera.cpp
-FORMS   += webcamera.ui
-
-HEADERS += cqtopencvviewergl.h
-SOURCES += cqtopencvviewergl.cpp
-
-include ($$LIB_PATH2/opencv/opencv.pri)
+HEADERS += test_OpenCV_mainbox.hpp
+SOURCES += test_OpenCV_mainbox.cpp
+FORMS   += test_OpenCV_mainbox.ui

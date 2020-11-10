@@ -40,9 +40,9 @@ int readFile(const QString &filename)
     if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        cout << "file " << filename.data()->toAscii() << " not open" << std::endl;
+        cerr << "file " << filename.data()->toAscii() << " not open" << std::endl;
 #else
-        cout << "file " << filename.data()->toLatin1() << " not open" << std::endl;
+        cerr << "file " << filename.data()->toLatin1() << " not open" << std::endl;
 #endif
         return -1;
     }
@@ -98,7 +98,7 @@ int writeFile(const QString &filename)
     }
     else
     {
-        cout << "Error creating temporary file!" << std::endl;
+        cerr << "Error creating temporary file!" << std::endl;
         return -1;
     }
     return 0;
@@ -110,7 +110,7 @@ int main(int argc, char *argv[])
 
     if (argc != 2)
     {
-        cout << "Usage: auto_inc_version filename" << std::endl;
+        cerr << "Usage: auto_inc_version filename" << std::endl;
         return -1;
     }
 

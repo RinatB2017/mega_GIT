@@ -471,6 +471,11 @@ bool MyFindForm::find_window(const QString &programm_title,
 
     return is_found;
 #else
+    Q_UNUSED(programm_title);
+    Q_UNUSED(x);
+    Q_UNUSED(y);
+    Q_UNUSED(width);
+    Q_UNUSED(heigth);
     return false;
 #endif
 
@@ -684,6 +689,11 @@ bool MyFindForm::searchObjectByTemplate(const char *imgName,
     return false;
 }
 //--------------------------------------------------------------------------------
+#ifdef Q_OS_WIN
+#   include <Windows.h>
+#   include <WinUser.h>
+#endif
+
 void MyFindForm::mouse_click(unsigned int button, QPoint pos)
 {
 #ifdef Q_OS_LINUX
@@ -705,12 +715,10 @@ void MyFindForm::mouse_click(unsigned int button, QPoint pos)
 
 #ifdef Q_OS_WIN
     // https://stackoverflow.com/questions/8272681/how-can-i-simulate-a-mouse-click-at-a-certain-position-on-the-screen
-    //int MOUSEEVENTF_LEFTDOWN  = 0x02;
-    //int MOUSEEVENTF_LEFTUP    = 0x04;
 
-    //SetCursorPos(pos.x(), pos.y());
-    //mouse_event(MOUSEEVENTF_LEFTDOWN,   pos.x(),    pos.y(),    0,  0);
-    //mouse_event(MOUSEEVENTF_LEFTUP,     pos.x(),    pos.y(),    0,  0);
+//    SetCursorPos(pos.x(), pos.y());
+//    mouse_event(MOUSEEVENTF_LEFTDOWN,   pos.x(),    pos.y(),    0,  0);
+//    mouse_event(MOUSEEVENTF_LEFTUP,     pos.x(),    pos.y(),    0,  0);
 #endif
 }
 //--------------------------------------------------------------------------------

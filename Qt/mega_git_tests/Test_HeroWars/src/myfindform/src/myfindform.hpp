@@ -21,42 +21,11 @@
 #ifndef MYFINDFORM_HPP
 #define MYFINDFORM_HPP
 //--------------------------------------------------------------------------------
-//#ifdef Q_OS_LINUX
-//#   include <opencv2/core/core.hpp>
-//#   include <opencv2/core/types_c.h>
-//#   include <opencv2/objdetect/objdetect.hpp>
-//#   include <opencv2/imgproc/imgproc.hpp>
-////#   include <opencv2/imgcodecs/imgcodecs_c.h>
-//#   include <opencv2/highgui.hpp> // highgui/highgui.hpp>
-//#   include <opencv2/opencv.hpp>
-
-//#   include <opencv2/core/core_c.h>
-//#   include <opencv2/imgcodecs/legacy/constants_c.h>
-//#   include <opencv2/imgproc/imgproc.hpp>
-//#else
-//#   include <opencv2/core/core.hpp>
-//#   include <opencv2/objdetect/objdetect.hpp>
-//#   include <opencv2/imgproc/imgproc.hpp>
-//#   include <opencv2/highgui/highgui.hpp>
-//#   include <opencv2/highgui/highgui_c.h>
-//#   include <opencv2/opencv.hpp>
-//#   include <opencv2/highgui.hpp>
-//#   include <opencv2/imgcodecs/legacy/constants_c.h>
-//#   include <opencv2/videoio/videoio_c.h>
-//#endif
-
-#ifdef Q_OS_LINUX2
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
+#ifdef Q_OS_LINUX
 #   include <opencv2/core/core.hpp>
-#   include <opencv2/objdetect/objdetect.hpp>
-#   include <opencv2/imgproc/imgproc.hpp>
-#   include <opencv2/highgui/highgui.hpp>
-#   include <opencv2/opencv.hpp>
-#else
-#   include <opencv2/core/core.hpp>
-
 #   include <opencv2/core/core_c.h>
-//#   include <opencv2/imgcodecs/imgcodecs_c.h>
-
 #   include <opencv2/objdetect/objdetect.hpp>
 #   include <opencv2/imgproc/imgproc.hpp>
 #   include <opencv2/opencv.hpp>
@@ -66,8 +35,6 @@
 #   include <opencv2/imgcodecs/legacy/constants_c.h>
 #   include <opencv2/videoio/videoio_c.h>
 #endif
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 using namespace cv;
 //--------------------------------------------------------------------------------
@@ -87,17 +54,19 @@ private:
     Ui::MyFindForm *ui;
 
     QString src_file        = "/dev/shm/0/Screenshot.png";
-    //QString src_file        = "";
-#if 1
-    QString file_ok         = "/dev/shm/0/ok.png";
-    QString file_auto       = "/dev/shm/0/auto.png";
+
+#ifdef Q_OS_LINUX
+    QString file_ok          = "/dev/shm/0/ok.png";
+    QString file_auto        = "/dev/shm/0/auto.png";
     QString file_auto_active = "/dev/shm/0/auto_active.png";
-    QString file_in_battle  = "/dev/shm/0/в бой.png";
-#else
-    QString file_ok          = ":/targets/ok.png";
-    QString file_auto        = ":/targets/auto.png";
-    QString file_auto_active = ":/targets/auto_active.png";
-    QString file_in_battle   = ":/targets/в бой.png";
+    QString file_in_battle   = "/dev/shm/0/в бой.png";
+#endif
+
+#ifdef Q_OS_WIN
+    QString file_ok          = "C:/0/ok.png";
+    QString file_auto        = "C:/0/auto.png";
+    QString file_auto_active = "C:/0/auto_active.png";
+    QString file_in_battle   = "C:/0/в бой.png";
 #endif
 
     QList<QRgb> l_src_file;

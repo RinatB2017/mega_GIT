@@ -3,8 +3,8 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
-#    /usr/lib/OpenCL/vendors/mesa/include \
-#    /usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include/g++-v7 \
+#/usr/lib/OpenCL/vendors/mesa/include \
+#/usr/lib/gcc/x86_64-pc-linux-gnu/7.3.0/include/g++-v7 \
 #CONFIG      += link_pkgconfig
 #INCLUDEPATH += /usr/include/
 

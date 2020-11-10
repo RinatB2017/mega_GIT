@@ -1,9 +1,6 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
-#include <QSettings>
-//--------------------------------------------------------------------------------
 #include <opencv2/objdetect.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc.hpp>

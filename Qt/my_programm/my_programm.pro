@@ -33,7 +33,7 @@ SUBDIRS += \
 
 unix {
 SUBDIRS += \
-    $$PWD/MyBot \    #надо нормально собрать в новой версии opencv
+    $$PWD/MyBot \
     $$PWD/QRCodeGenerator \
     $$PWD/Teacher \
     $$PWD/Teacher_light \

@@ -36,33 +36,9 @@ OTHER_FILES += doc/notebook.txt
 unix {
     CONFIG  += c++11
 
-    PKGCONFIG   += opencv4
-    CONFIG      += link_pkgconfig
-
     LIBS    += -lX11 -lXtst
     LIBS    += -lOpenCL
-    #LIBS    += -lopencv_core
 }
-win32 {
-    INCLUDEPATH += C:/opencv/build/include/
-    DEPENDPATH  += C:/opencv/build/include/
-
-    OPENCV_VER = 430
-#    LIBS    += -LC:\\OpenCV\\x86\\mingw\\bin
-    LIBS    += -L$$PWD/lib
-    LIBS    += -lopencv_core$${OPENCV_VER}
-    LIBS    += -lopencv_highgui$${OPENCV_VER}
-    LIBS    += -lopencv_imgcodecs$${OPENCV_VER}
-    LIBS    += -lopencv_imgproc$${OPENCV_VER}
-    LIBS    += -lopencv_features2d$${OPENCV_VER}
-    LIBS    += -lopencv_calib3d$${OPENCV_VER}
-    LIBS    += -lopencv_video$${OPENCV_VER}
-    LIBS    += -lopencv_videoio$${OPENCV_VER}
-    LIBS    += -lopencv_objdetect$${OPENCV_VER}
-
-    message($$LIBS)
-}
-
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
@@ -72,11 +48,12 @@ LIB_PATH2 = "$$PWD/../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/widgets/showpicture/showpicture.pri)
+include ($$LIB_PATH2/opencv/opencv.pri)
 
 include (src/myfindform/myfindform.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

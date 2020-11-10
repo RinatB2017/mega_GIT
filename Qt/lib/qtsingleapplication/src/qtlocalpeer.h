@@ -45,6 +45,12 @@
 #include <QLocalSocket>
 #include <QDir>
 
+#ifdef Q_OS_WIN
+#include <qt_windows.h>
+#include <minwindef.h>
+#include <windows.h>
+#endif
+
 #include "qtlockedfile.h"
 
 class QtLocalPeer : public QObject

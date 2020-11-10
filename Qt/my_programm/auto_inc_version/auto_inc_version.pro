@@ -8,6 +8,10 @@ TARGET   = auto_inc_version
 DEPENDPATH  += $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
+CONFIG += c++11 console
+CONFIG -= app_bundle
+QT -= gui
+
 SOURCES += main.cpp
 
 LIB_PATH = "$$PWD/../../lib"

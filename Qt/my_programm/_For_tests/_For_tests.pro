@@ -93,7 +93,7 @@ include (src/collapsiblewidget/collapsiblewidget.pri)
 include (src/controlexitwidget/controlexitwidget.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
+    VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

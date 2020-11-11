@@ -1,6 +1,6 @@
 #include <windows.h>
 
-IDI_ICON1	ICON	DISCARDABLE	"C:\\Users\\Master\\Programming\\mega_GIT\\Qt\\tests\\Test_PTZ_widget\\ico\\computer.ico"
+IDI_ICON1	ICON	DISCARDABLE	"F:\\mega_GIT\\Qt\\mega_git_tests\\camera\\Test_Simple_PTZ_widget\\ico\\computer.ico"
 
 VS_VERSION_INFO VERSIONINFO
 	FILEVERSION 0,0,0,0
@@ -23,8 +23,8 @@ VS_VERSION_INFO VERSIONINFO
 				VALUE "FileDescription", "\0"
 				VALUE "FileVersion", "0.0.0.0\0"
 				VALUE "LegalCopyright", "\0"
-				VALUE "OriginalFilename", "Test_PTZ_widget.exe\0"
-				VALUE "ProductName", "Test_PTZ_widget\0"
+				VALUE "OriginalFilename", "Test_Simple_PTZ_widget.exe\0"
+				VALUE "ProductName", "Test_Simple_PTZ_widget\0"
 				VALUE "ProductVersion", "0.0.0.0\0"
 			END
 		END

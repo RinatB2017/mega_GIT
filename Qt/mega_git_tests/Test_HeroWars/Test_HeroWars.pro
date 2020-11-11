@@ -39,6 +39,10 @@ unix {
     LIBS    += -lX11 -lXtst
     LIBS    += -lOpenCL
 }
+win32 {
+    LIBS += -luser32
+}
+
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }

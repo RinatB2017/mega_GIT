@@ -684,7 +684,10 @@ bool MyFindForm::searchObjectByTemplate(const char *imgName,
     //cvReleaseImage(&src);
     //cvReleaseImage(&templ);
     cvReleaseImage(&result);
-
+#else
+    Q_UNUSED(imgName);
+    Q_UNUSED(templName);
+    Q_UNUSED(rect);
 #endif
     return false;
 }
@@ -715,10 +718,13 @@ void MyFindForm::mouse_click(unsigned int button, QPoint pos)
 
 #ifdef Q_OS_WIN
     // https://stackoverflow.com/questions/8272681/how-can-i-simulate-a-mouse-click-at-a-certain-position-on-the-screen
+    // не забудь добавить в .pro LIBS += -luser32
 
-//    SetCursorPos(pos.x(), pos.y());
-//    mouse_event(MOUSEEVENTF_LEFTDOWN,   pos.x(),    pos.y(),    0,  0);
-//    mouse_event(MOUSEEVENTF_LEFTUP,     pos.x(),    pos.y(),    0,  0);
+    SetCursorPos(pos.x(), pos.y());
+    mouse_event(MOUSEEVENTF_LEFTDOWN,   pos.x(),    pos.y(),    0,  0);
+    mouse_event(MOUSEEVENTF_LEFTUP,     pos.x(),    pos.y(),    0,  0);
+
+    Q_UNUSED(button);
 #endif
 }
 //--------------------------------------------------------------------------------

@@ -34,9 +34,9 @@
 #   include <opencv2/highgui/highgui_c.h>
 #   include <opencv2/imgcodecs/legacy/constants_c.h>
 #   include <opencv2/videoio/videoio_c.h>
+
+    using namespace cv;
 #endif
-//--------------------------------------------------------------------------------
-using namespace cv;
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MyFindForm;

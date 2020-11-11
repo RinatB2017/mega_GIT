@@ -6,6 +6,7 @@ TEMPLATE  = subdirs
 CONFIG   *= ordered
 
 SUBDIRS += \
+    $$PWD/camera \
     $$PWD/Test_ADC \
     $$PWD/Test_AT \
     $$PWD/Test_arduino \
@@ -44,10 +45,8 @@ SUBDIRS += \
     $$PWD/Test_RadioGarden \
     $$PWD/Test_RGB_display \
     $$PWD/Test_RGB_Matrix \
-    $$PWD/Test_RTSP_widget \
     $$PWD/Test_SerialBox5 \
     $$PWD/Test_SerialTerm \
-    $$PWD/Test_Simple_PTZ_widget \
     $$PWD/Test_libUSB \
     $$PWD/Test_model \
     $$PWD/Test_pixmap \
@@ -56,7 +55,6 @@ SUBDIRS += \
     $$PWD/Test_SMTP \
     $$PWD/Test_thread \
     $$PWD/Test_triangle \
-    $$PWD/Test_PTZ_widget \
     $$PWD/Test_Widgets \
     $$PWD/Test_QtCharts \
     $$PWD/Test_OpenCL \

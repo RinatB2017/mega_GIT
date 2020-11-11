@@ -8,9 +8,7 @@ TARGET   = Test_mesh
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/mesh_mainbox \
-    $$PWD/src/mesh_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -23,15 +21,11 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    mesh_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    mesh_mainbox.cpp \
     main.cpp
-
-FORMS   += mesh_mainbox.ui
 
 OTHER_FILES += arduino/Mesh_unit/Mesh_unit.ino
 OTHER_FILES += arduino/basic/basic.ino
@@ -58,6 +52,7 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
 
+include (src/mesh_mainbox/mesh_mainbox.pri)
 include (src/mesh_control/mesh_control.pri)
 include (src/mesh_led/mesh_led.pri)
 

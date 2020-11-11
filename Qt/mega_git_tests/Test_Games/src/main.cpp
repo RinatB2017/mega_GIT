@@ -31,7 +31,7 @@
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "test_games.hpp"
+#include "test_games_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
@@ -41,6 +41,8 @@
 #   include "test.hpp"
 #   include <QDebug>
 #endif
+//--------------------------------------------------------------------------------
+#define SINGLE_APP
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -70,14 +72,6 @@ int main(int argc, char *argv[])
 
     MainWindow *main_window = new MainWindow();
     //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
-
-    //---
-    // Workaround: Removing the /usr/lib/libGL.so.1 file fixes the problem.
-    // qDebug() << "OpenGL Versions Supported: " << QGLFormat::openGLVersionFlags();
-    // QGLFormat format;
-    // format.setVersion(4, 3);
-    // QGLFormat::setDefaultFormat(format);
-    //---
 
     //MainBox *mainBox = new MainBox(0, splash);
     MainBox *mainBox = new MainBox(main_window, splash);

@@ -8,9 +8,7 @@ TARGET   = Test_Game
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_Game_mainbox \
-    $$PWD/src/test_Game_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 #QT  += serialbus
@@ -33,16 +31,11 @@ DEFINES += SHOW_SIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    test_Game_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_Game_mainbox.cpp \
     main.cpp
-
-FORMS   += test_Game_mainbox.ui
-#FORMS   += test_Game_mainbox_test.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -67,6 +60,7 @@ LIB_PATH = "$$PWD/../../../Qt/lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 
+include (src/test_Game_mainbox/test_Game_mainbox.pri)
 include (src/scenes/scenes.pri)
 
 !exists(OBJECTS_DIR) {

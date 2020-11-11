@@ -8,26 +8,19 @@ TARGET   = Test_FastTrading
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/template_fast_trading \
-    $$PWD/src/template_fast_trading/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
-
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    template_fast_trading.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    template_fast_trading.cpp \
     main.cpp
-
-FORMS   += template_fast_trading.ui
 
 win32 {
     RC_ICONS += ico/computer.ico
@@ -48,6 +41,7 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
+include (src/fast_trading_mainbox/fast_trading_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = $$PWD/src/version.hpp

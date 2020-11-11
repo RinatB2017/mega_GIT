@@ -27,7 +27,7 @@
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "test_mouse.hpp"
+#include "test_mouse_mainbox.hpp"
 #include "defines.hpp"
 #include "version.hpp"
 //--------------------------------------------------------------------------------
@@ -37,6 +37,8 @@
 #   include "test.hpp"
 #   include <QDebug>
 #endif
+//--------------------------------------------------------------------------------
+#define SINGLE_APP
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {

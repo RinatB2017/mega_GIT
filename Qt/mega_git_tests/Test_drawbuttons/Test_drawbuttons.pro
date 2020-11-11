@@ -8,14 +8,12 @@ TARGET   = Test_drawbuttons
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_drawbuttons_mainbox \
-    $$PWD/src/test_drawbuttons_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 #DEFINES += FIXED_SIZE
 
-#DEFINES += NO_STYLETOOLBAR
+DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 #DEFINES += NO_TOOLBAR
 #DEFINES += NO_LOG
@@ -26,14 +24,10 @@ DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     defines.hpp \
-    version.hpp \
-    test_drawbuttons_mainbox.hpp
+    version.hpp
 
 SOURCES += \
-    test_drawbuttons_mainbox.cpp \
     main.cpp
-
-FORMS   += test_drawbuttons_mainbox.ui
 
 RESOURCES += icons/temp.qrc
 
@@ -47,10 +41,10 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/mywidgets/mydisplay.pri)
 include ($$LIB_PATH/mywidgets/mybutton.pri)
-
 include ($$LIB_PATH2/csvreader/csvreader.pri)
-
 include ($$LIB_PATH2/CarefulMessageBox/CarefulMessageBox.pri)
+
+include (src/test_drawbuttons_mainbox/test_drawbuttons_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = $$PWD/src/version.hpp

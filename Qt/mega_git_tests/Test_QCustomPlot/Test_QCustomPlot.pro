@@ -8,24 +8,22 @@ TARGET   = Test_QCustomPlot
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_QCustomPlot_mainbox \
-    $$PWD/src/test_QCustomPlot_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += PROGRAMM_IN_UTF8
+DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 HEADERS += \
-    test_QCustomPlot_mainbox.hpp \
     defines.hpp \
     version.hpp \
 
 SOURCES += \
-    test_QCustomPlot_mainbox.cpp \
     main.cpp
 
-FORMS   += test_QCustomPlot_mainbox.ui
+RESOURCES += \
+    data/data.qrc
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -35,8 +33,9 @@ LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-
 include ($$LIB_PATH2/QCustomPlot/qcustomplot.pri)
+
+include (src/test_QCustomPlot_mainbox/test_QCustomPlot_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = $$PWD/src/version.hpp

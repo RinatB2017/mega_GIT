@@ -27,7 +27,7 @@
 #define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "template_fast_trading.hpp"
+#include "fast_trading_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()

@@ -55,8 +55,9 @@ private:
     Ui::RTSP_widget *ui;
     QMediaPlayer *player = nullptr;
 
-    QString login = "admin";
-    QString password = "admin";
+    QString login;
+    QString password;
+    QString param;
     QUrl url;
 
     void init(void);

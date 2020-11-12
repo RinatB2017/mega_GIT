@@ -15,6 +15,8 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
+#DEFINES += SAVE_INI
+
 HEADERS += \
     defines.hpp \
     version.hpp

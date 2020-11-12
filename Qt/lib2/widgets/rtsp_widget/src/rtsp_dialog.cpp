@@ -36,9 +36,6 @@ RTSP_dialog::~RTSP_dialog()
 void RTSP_dialog::init(void)
 {
     ui->setupUi(this);
-
-    ui->sb_port->setRange(0, 0xFFFF);
-    ui->le_add->setText("av0_0");
 }
 //--------------------------------------------------------------------------------
 void RTSP_dialog::set_login(const QString &login)
@@ -51,10 +48,34 @@ void RTSP_dialog::set_password(const QString &password)
     ui->le_password->setText(password);
 }
 //--------------------------------------------------------------------------------
+void RTSP_dialog::set_param(const QString &text)
+{
+    ui->le_param->setText(text);
+}
+//--------------------------------------------------------------------------------
 void RTSP_dialog::set_url(QUrl url)
 {
     ui->ip4_widget->set_url(url);
-    ui->sb_port->setValue(url.port());
+}
+//--------------------------------------------------------------------------------
+QString RTSP_dialog::get_login(void)
+{
+    return ui->le_login->text();
+}
+//--------------------------------------------------------------------------------
+QString RTSP_dialog::get_password(void)
+{
+    return ui->le_password->text();
+}
+//--------------------------------------------------------------------------------
+QString RTSP_dialog::get_param(void)
+{
+    return ui->le_param->text();
+}
+//--------------------------------------------------------------------------------
+QUrl RTSP_dialog::get_url(void)
+{
+    return ui->ip4_widget->get_url();
 }
 //--------------------------------------------------------------------------------
 QString RTSP_dialog::get_address(void)
@@ -71,10 +92,10 @@ QString RTSP_dialog::get_address(void)
     address.append(QString("%1:%2")
                    .arg(ui->ip4_widget->get_url().host())
                    .arg(ui->ip4_widget->get_url().port()));
-    if(ui->le_add->text().isEmpty() == false)
+    if(ui->le_param->text().isEmpty() == false)
     {
         address.append("/");
-        address.append(ui->le_add->text());
+        address.append(ui->le_param->text());
     }
 
     return address;

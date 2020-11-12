@@ -15,7 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="command_frame">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -31,45 +31,35 @@
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>IP</string>
-          </property>
-         </widget>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="le_login"/>
+        </item>
+        <item row="0" column="1">
+         <widget class="IPV4" name="ipv4_widget" native="true"/>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Port</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Pass</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
          <widget class="QLabel" name="label_3">
           <property name="text">
            <string>Login</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QSpinBox" name="sb_port"/>
-        </item>
         <item row="2" column="1">
-         <widget class="QLineEdit" name="le_login"/>
-        </item>
-        <item row="3" column="1">
          <widget class="QLineEdit" name="le_password"/>
         </item>
-        <item row="0" column="1">
-         <widget class="IPV4_wo_port" name="ipv4_widget" native="true"/>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>Pass</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>IP</string>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
@@ -118,7 +108,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QFrame" name="frame_2">
+    <widget class="QFrame" name="ptz_frame">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -292,20 +282,19 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>IPV4_wo_port</class>
-   <extends>QWidget</extends>
-   <header>ipv4_wo_port.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>QVideoWidget</class>
    <extends>QWidget</extends>
    <header>qvideowidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>IPV4</class>
+   <extends>QWidget</extends>
+   <header>ipv4.hpp</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>sb_port</tabstop>
   <tabstop>le_login</tabstop>
   <tabstop>le_password</tabstop>
   <tabstop>btn_connect</tabstop>

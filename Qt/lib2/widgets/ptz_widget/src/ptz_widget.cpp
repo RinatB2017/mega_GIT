@@ -24,6 +24,7 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
+#include "mainwindow.hpp"
 #include "ptz_widget.hpp"
 #include "ptz_dialog.hpp"
 //--------------------------------------------------------------------------------
@@ -265,6 +266,14 @@ void PTZ_widget::init(void)
     lock_widgets();
 
     load_widgets();
+
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->add_dock_widget("options",  "options",  Qt::LeftDockWidgetArea, ui->options_frame);
+        mw->add_dock_widget("rtsp",     "rtsp",     Qt::RightDockWidgetArea, ui->ptz_frame);
+        setVisible(false);
+    }
 
     //play();
 }

@@ -21,6 +21,7 @@
 #include "simple_ptz_widget.hpp"
 //--------------------------------------------------------------------------------
 #include "ui_simple_ptz_widget.h"
+#include "mainwindow.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 Simple_PTZ_widget::Simple_PTZ_widget(QWidget *parent) :
@@ -32,8 +33,8 @@ Simple_PTZ_widget::Simple_PTZ_widget(QWidget *parent) :
 //--------------------------------------------------------------------------------
 Simple_PTZ_widget::~Simple_PTZ_widget()
 {
-    save_string("IP", ui->ipv4_widget->get_url().host());
     save_widgets();
+    save_setting();
     if(player)
     {
         delete player;
@@ -56,27 +57,15 @@ void Simple_PTZ_widget::init(void)
     ui->setupUi(this);
 
     ui->video_widget->setMinimumSize(640, 480);
-    ui->sb_port->setRange(0, 0xFFFF);
-
-//    QString ip_string = load_string("IP");
-//    if(ip_string.isEmpty()) ip_string = "ip://127.0.0.1";
-//    ui->ipv4_widget->set_url(QUrl(ip_string));
 
     connect(ui->btn_connect,    &QPushButton::clicked,  this,   &Simple_PTZ_widget::play);
     connect(ui->btn_disconnect, &QPushButton::clicked,  this,   &Simple_PTZ_widget::stop);
 
     connect(&networkManager,    SIGNAL(finished( QNetworkReply*)),  this,   SLOT(onFinished(QNetworkReply*)));
 
-    connect(ui->ipv4_widget,    &IPV4_wo_port::editingFinished, this,   &Simple_PTZ_widget::play);
+    connect(ui->ipv4_widget,    &IPV4::editingFinished,         this,   &Simple_PTZ_widget::play);
     connect(ui->le_login,       &QLineEdit::editingFinished,    this,   &Simple_PTZ_widget::play);
     connect(ui->le_password,    &QLineEdit::editingFinished,    this,   &Simple_PTZ_widget::play);
-    connect(ui->sb_port,        &QSpinBox::editingFinished,     this,   &Simple_PTZ_widget::play);
-
-    url = ui->ipv4_widget->get_url();
-    url.setPort(ui->sb_port->value());
-    emit debug(QString("IP %1").arg(url.toString()));
-
-    load_widgets();
 
     create_player();
     connect_position_widgets();
@@ -87,6 +76,17 @@ void Simple_PTZ_widget::init(void)
     ui->btn_u->setDisabled(true);
     ui->btn_up_down->setDisabled(true);
     ui->btn_left_right->setDisabled(true);
+
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->add_dock_widget("commands", "commands", Qt::LeftDockWidgetArea,     ui->command_frame);
+        mw->add_dock_widget("rtsp",     "rtsp",     Qt::RightDockWidgetArea,    ui->ptz_frame);
+        setVisible(false);
+    }
+
+    load_widgets();
+    load_setting();
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::connect_position_widgets(void)
@@ -151,15 +151,11 @@ void Simple_PTZ_widget::play(void)
         url_str.append("@");
         url_str.append(ui->ipv4_widget->get_url().host());
         url_str.append(":");
-        url_str.append(QString("%1").arg(ui->sb_port->value()));
+        url_str.append(QString("%1").arg(ui->ipv4_widget->get_url().port()));
 
         emit debug(url_str);
 
-        //const QUrl url = QUrl("rtsp://admin:admin@192.168.1.14:81");
-        url = QUrl(url_str);
-        url.setPort(ui->sb_port->value());
-
-        const QNetworkRequest requestRtsp(url);
+        const QNetworkRequest requestRtsp(url_str);
         player->setMedia(requestRtsp);
         player->setVolume(0);   //TODO установить громкость
         player->play();
@@ -263,22 +259,14 @@ void Simple_PTZ_widget::f_up_down(void)
     send_cmd("updown");
 }
 //--------------------------------------------------------------------------------
-//http://192.168.1.14:81/moveptz.xml?dir=left
-//http://192.168.1.14:81/moveptz.xml?dir=right
-//http://192.168.1.14:81/moveptz.xml?dir=leftright
-//http://192.168.1.14:81/moveptz.xml?dir=updown
-
-//http://192.168.1.14:81/moveptz.xml?dir=down
-//http://192.168.1.14:81/videostream.cgi?stream=1
-
 void Simple_PTZ_widget::send_cmd(QString  cmd)
 {
     emit trace(Q_FUNC_INFO);
 
     QString param;
     param.append(QString("http://%1:%2/moveptz.xml?dir=%3")
-                 .arg(url.host())
-                 .arg(url.port())
+                 .arg(ui->ipv4_widget->get_url().host())
+                 .arg(ui->ipv4_widget->get_url().port())
                  .arg(cmd));
 
     QString concatenated = ui->le_login->text() + ":" + ui->le_password->text(); //username:password
@@ -307,11 +295,25 @@ bool Simple_PTZ_widget::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::load_setting(void)
 {
+    ui->le_login->setText(load_string(P_LOGIN));
+    ui->le_password->setText(load_string(P_PASSWORD));
 
+    QUrl url;
+    url.setHost(load_string(P_HOST));
+
+    int t_port = 0;
+    if(load_int(P_PORT, &t_port))
+    {
+        url.setPort(t_port);
+    }
+    ui->ipv4_widget->set_url(url);
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::save_setting(void)
 {
-
+    save_string(P_LOGIN,    ui->le_login->text());
+    save_string(P_PASSWORD, ui->le_password->text());
+    save_string(P_HOST,     ui->ipv4_widget->get_url().host());
+    save_int(P_PORT,        ui->ipv4_widget->get_url().port());
 }
 //--------------------------------------------------------------------------------

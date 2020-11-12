@@ -36,6 +36,8 @@ RTSP_widget::RTSP_widget(QWidget *parent) :
 //--------------------------------------------------------------------------------
 RTSP_widget::~RTSP_widget()
 {
+    save_widgets();
+    save_setting();
     if(player)
     {
         delete player;
@@ -54,18 +56,14 @@ void RTSP_widget::init(void)
     
     ui->video_widget->setMinimumSize(320, 200);
 
-#ifdef Q_OS_LINUX
-    //ui->le_address->setText("rtsp://185.10.80.33:8082/");
-    //ui->le_address->setText("rtsp://192.168.1.66/av0_0");
-    //ui->le_address->setText("rtsp://admin:admin@192.168.1.11:8001/0/video0");
-    //ui->le_address->setText("rtsp://admin:admin@192.168.1.11/0/video0");
-    ui->le_address->setText("rtsp://admin:admin@192.168.1.14:81");
-#else
-    //ui->le_address->setText("rtsp://192.168.1.88/HD");
-    //ui->le_address->setText("rtsp://192.168.10.101:8001/0/video0");
-    ui->le_address->setText("rtsp://192.168.10.159");
-#endif
+    login = "admin";
+    password = "admin";
+    param = "";
+    url.setHost("192.168.1.12");
+    url.setPort(80);
+
     ui->le_address->setEnabled(false);
+    ui->le_address->setProperty(NO_SAVE, true);
 
     ui->btn_play->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
     ui->btn_pause->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPause));
@@ -76,6 +74,9 @@ void RTSP_widget::init(void)
     connect(ui->btn_stop,   SIGNAL(clicked(bool)),  this,   SLOT(stop()));
 
     connect(ui->btn_choice, SIGNAL(clicked(bool)),  this,   SLOT(choice()));
+
+    load_widgets();
+    load_setting();
 }
 //--------------------------------------------------------------------------------
 void RTSP_widget::set_address(const QString &login,
@@ -175,10 +176,16 @@ void RTSP_widget::choice(void)
     dlg->set_login(login);
     dlg->set_password(password);
     dlg->set_url(url);
+    dlg->set_param(param);
     int btn = dlg->exec();
     if(btn == RTSP_dialog::Accepted)
     {
         emit debug(QString("[%1]").arg(dlg->get_address()));
+        login = dlg->get_login();
+        password = dlg->get_password();
+        param = dlg->get_param();
+        url = dlg->get_url();
+
         ui->le_address->setText(dlg->get_address());
     }
     dlg->deleteLater();
@@ -196,11 +203,40 @@ bool RTSP_widget::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void RTSP_widget::load_setting(void)
 {
+    login = load_string(P_LOGIN);
+    password = load_string(P_PASSWORD);
+    url.setHost(load_string(P_HOST));
 
+    int t_port = 0;
+    if(load_int(P_PORT, &t_port))
+    {
+        url.setPort(t_port);
+    }
+
+    //---
+    QString address;
+    address.append("rtsp://");
+    address.append(login);
+    address.append(":");
+    address.append(password);
+    address.append("@");
+    address.append(QString("%1:%2")
+                   .arg(url.host())
+                   .arg(url.port()));
+    if(param.isEmpty() == false)
+    {
+        address.append("/");
+        address.append(param);
+    }
+    ui->le_address->setText(address);
+    //---
 }
 //--------------------------------------------------------------------------------
 void RTSP_widget::save_setting(void)
 {
-
+    save_string(P_LOGIN,    login);
+    save_string(P_PASSWORD, password);
+    save_string(P_HOST,     url.host());
+    save_int(P_PORT,        url.port());
 }
 //--------------------------------------------------------------------------------

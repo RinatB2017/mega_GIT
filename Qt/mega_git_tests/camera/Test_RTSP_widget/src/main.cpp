@@ -60,8 +60,11 @@ int main(int argc, char *argv[])
     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow();
+    Q_ASSERT(main_window != nullptr);
 
     RTSP_widget *mainBox = new RTSP_widget(main_window);
+    Q_ASSERT(mainBox != nullptr);
+
     QObject::connect(mainBox,    SIGNAL(info(QString)),     main_window, SIGNAL(info(QString)));
     QObject::connect(mainBox,    SIGNAL(debug(QString)),    main_window, SIGNAL(debug(QString)));
     QObject::connect(mainBox,    SIGNAL(error(QString)),    main_window, SIGNAL(error(QString)));

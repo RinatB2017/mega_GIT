@@ -41,6 +41,12 @@ public:
 
     void set_login(const QString &login);
     void set_password(const QString &password);
+    void set_param(const QString &text);
+
+    QString get_login(void);
+    QString get_password(void);
+    QString get_param(void);
+    QUrl    get_url(void);
 
     void set_url(QUrl url);
     QString get_address(void);

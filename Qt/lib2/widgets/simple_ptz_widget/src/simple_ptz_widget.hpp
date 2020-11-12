@@ -75,8 +75,6 @@ private:
     QNetworkRequest request;
     QNetworkAccessManager networkManager;
 
-    QUrl url;
-
     void send_cmd(QString cmd);
     void create_player(void);
     void connect_position_widgets(void);

@@ -57,12 +57,11 @@ int main(int argc, char *argv[])
     app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-    qApp->processEvents();
-
     MainWindow *main_window = new MainWindow();
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    Q_ASSERT(main_window != nullptr);
 
     MainBox *mainBox = new MainBox(main_window);
+    Q_ASSERT(mainBox != nullptr);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

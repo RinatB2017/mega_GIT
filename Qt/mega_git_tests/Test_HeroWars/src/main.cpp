@@ -64,11 +64,13 @@ int main(int argc, char *argv[])
     Q_CHECK_PTR(splash);
     splash->show();
 
-    qApp->processEvents();
+//     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow();
+    Q_ASSERT(main_window != nullptr);
 
     MyFindForm *mainBox = new MyFindForm(main_window);
+    Q_ASSERT(mainBox != nullptr);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

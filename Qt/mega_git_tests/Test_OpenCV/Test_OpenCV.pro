@@ -13,15 +13,6 @@ INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
-#DEFINES += SHOW_SIZE
-
-#DEFINES += NO_TOOLBAR_BUTTON_EXIT
-#DEFINES += NO_TOOLBAR_BUTTON_FONT
-#DEFINES += NO_TOOLBAR_BUTTON_LANG
-#DEFINES += NO_TOOLBAR_BUTTON_STYLE
-#DEFINES += NO_TOOLBAR_BUTTON_ABOUT
-#DEFINES += NO_TOOLBAR_BUTTON_HELP
-#DEFINES += NO_TOOLBAR_SEPARATORS
 
 DEFINES += PROGRAMM_IN_UTF8
 
@@ -34,6 +25,11 @@ SOURCES += \
 
 win32 {
     RC_ICONS = ico/computer.ico
+}
+
+win32 {
+    LIBS += -luser32
+    LIBS += -lgdi32
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win
@@ -58,5 +54,7 @@ include (src/test_OpenCV_mainbox/test_OpenCV_mainbox.pri)
     VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
+
+#message($$LIBS)
 
 VPATH = $$INCLUDEPATH

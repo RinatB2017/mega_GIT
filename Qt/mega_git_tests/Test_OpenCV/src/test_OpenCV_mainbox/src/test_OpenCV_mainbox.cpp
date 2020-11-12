@@ -1,25 +1,47 @@
-//--------------------------------------------------------------------------------
-//
-//--------------------------------------------------------------------------------
+/*********************************************************************************
+**                                                                              **
+**     Copyright (C) 2020                                                       **
+**                                                                              **
+**     This program is free software: you can redistribute it and/or modify     **
+**     it under the terms of the GNU General Public License as published by     **
+**     the Free Software Foundation, either version 3 of the License, or        **
+**     (at your option) any later version.                                      **
+**                                                                              **
+**     This program is distributed in the hope that it will be useful,          **
+**     but WITHOUT ANY WARRANTY; without even the implied warranty of           **
+**     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            **
+**     GNU General Public License for more details.                             **
+**                                                                              **
+**     You should have received a copy of the GNU General Public License        **
+**     along with this program.  If not, see http://www.gnu.org/licenses/.      **
+**                                                                              **
+**********************************************************************************
+**                   Author: Bikbao Rinat Zinorovich                            **
+**********************************************************************************/
 #define FEAT_FACE_FILE  "xml/haarcascade_frontalface_default.xml"
 #define FEAT_EYE_FILE   "xml/haarcascade_mcs_eyepair_big.xml"
 #define FEAT_NOSE_FILE  "xml/haarcascade_mcs_nose.xml"
 #define FEAT_MOUTH_FILE "xml/haarcascade_mcs_mouth.xml"
 //--------------------------------------------------------------------------------
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/objdetect.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/imgproc.hpp>
-#include <opencv2/core.hpp>
-//--------------------------------------------------------------------------------
 #include "test_OpenCV_mainbox.hpp"
 #include "ui_test_OpenCV_mainbox.h"
+#include "myfiledialog.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget* parent) :
     MyWidget(parent),
-    ui(new Ui::MainBox),
-    m_lastLoadPath(".")
+    ui(new Ui::MainBox)
+{
+    init();
+}
+//--------------------------------------------------------------------------------
+MainBox::~MainBox()
+{
+    save_widgets();
+    delete ui;
+}
+//--------------------------------------------------------------------------------
+void MainBox::init(void)
 {
     ui->setupUi(this);
 
@@ -38,47 +60,46 @@ MainBox::MainBox(QWidget* parent) :
 
     foreach(const QRadioButton* rb, findChildren< QRadioButton* >())
     {
-        connect(rb, SIGNAL(clicked(bool)), SLOT(refreshHSV()));
+        connect(rb, &QRadioButton::clicked, this,   &MainBox::refreshHSV);
     }
 
     ui->sl_scale_factor->setRange(10, 50);
     ui->dsb_scalefactor->setSingleStep(0.01);
     ui->sl_minNeighbors->setRange(1, 10);
 
-    connect(ui->sl_scale_factor,    SIGNAL(sliderMoved(int)),       SLOT(set_scaleFactor(int)));
-    connect(ui->dsb_scalefactor,    SIGNAL(valueChanged(double)),   SLOT(set_scaleFactor(double)));
-    connect(ui->sl_minNeighbors,    SIGNAL(sliderMoved(int)),       SLOT(set_minNeighbors(int)));
-    connect(ui->bnLoad, SIGNAL(clicked(bool)), SLOT(onLoad()));
-    connect(ui->btn_test,   SIGNAL(clicked(bool)),  SLOT(s_test()));
+    connect(ui->sl_scale_factor,    &QSlider::sliderMoved,
+            this,                   static_cast<void (MainBox::*)(double)>(&MainBox::set_scaleFactor));
+    connect(ui->dsb_scalefactor,    static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+            this,                   static_cast<void (MainBox::*)(double)>(&MainBox::set_scaleFactor));
+    connect(ui->sl_minNeighbors,    &QSlider::sliderMoved,          this,   &MainBox::set_minNeighbors);
+    connect(ui->bnLoad,             &QPushButton::clicked,          this,   &MainBox::onLoad);
+    connect(ui->btn_test,           &QPushButton::clicked,          this,   &MainBox::s_test);
 
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-MainBox::~MainBox()
-{
-    save_widgets();
-    delete ui;
-}
-//--------------------------------------------------------------------------------
 void MainBox::onLoad(void)
 {
-    QString imgName = QFileDialog::getOpenFileName(this,
-                                                   "Load image",
-                                                   m_lastLoadPath,
-                                                   "Images (*.jpg *.jpeg *.png *.bmp)");
-    if(imgName.isEmpty())
-    {
-        return;
-    }
+    MyFileDialog *dlg;
 
-    m_lastLoadPath = QFileInfo(imgName).absolutePath();
-    mOrigImage = cv::imread(imgName.toStdString());
-    if(!mOrigImage.empty())
+    dlg = new MyFileDialog("load_image", "load_image");
+    dlg->setNameFilter("Images (*.jpg *.jpeg *.png *.bmp)");
+    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
+//    dlg->setDirectory(m_lastLoadPath);
+    if(dlg->exec())
     {
-        cv::cvtColor(mOrigImage, mOrigImage, cv::COLOR_BGR2RGB);
-    }
+        QStringList files = dlg->selectedFiles();
+        QString imgName = files.at(0);
+        m_lastLoadPath = QFileInfo(imgName).absolutePath();
+        mOrigImage = cv::imread(imgName.toStdString());
+        if(!mOrigImage.empty())
+        {
+            cv::cvtColor(mOrigImage, mOrigImage, cv::COLOR_BGR2RGB);
+        }
 
-    refreshHSV();
+        refreshHSV();
+    }
+    dlg->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void MainBox::refreshHSV(void)
@@ -253,7 +274,7 @@ void MainBox::find_faces(void)
 {
     if(mOrigImage.data == nullptr)
     {
-        emit error("no data");
+        emit error("find_faces: no data");
         return;
     }
 

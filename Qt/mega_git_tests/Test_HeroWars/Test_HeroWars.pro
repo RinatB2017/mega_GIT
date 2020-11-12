@@ -41,6 +41,7 @@ unix {
 }
 win32 {
     LIBS += -luser32
+    LIBS += -lgdi32
 }
 
 CONFIG(debug, debug|release) {
@@ -60,5 +61,7 @@ include (src/myfindform/myfindform.pri)
     VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
+
+#message($$LIBS)
 
 VPATH = $$INCLUDEPATH

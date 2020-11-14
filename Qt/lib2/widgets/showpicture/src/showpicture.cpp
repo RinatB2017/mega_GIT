@@ -26,10 +26,12 @@ ShowPicture::ShowPicture(QWidget *parent) :
     ui(new Ui::ShowPicture)
 {
     ui->setupUi(this);
+    rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
 }
 //--------------------------------------------------------------------------------
 ShowPicture::~ShowPicture()
 {
+    delete rubberBand;
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -47,6 +49,36 @@ bool ShowPicture::show_picture(const QString &filename)
 void ShowPicture::updateText(void)
 {
     ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+void ShowPicture::mousePressEvent(QMouseEvent *event)
+{
+    origin = event->pos();
+    rubberBand->setGeometry(QRect(origin, QSize()));
+    rubberBand->show();
+}
+//--------------------------------------------------------------------------------
+void ShowPicture::mouseReleaseEvent(QMouseEvent *event)
+{
+    emit info(QString("%1 %2 %3 %4")
+              .arg(origin.x())
+              .arg(origin.y())
+              .arg(event->pos().x())
+              .arg(event->pos().y()));
+
+    QPixmap pixmap = grab(QRect(origin.x(),
+                                origin.y(),
+                                event->pos().x(),
+                                event->pos().y()));
+    QLabel *label = new QLabel();
+    label->setPixmap(pixmap);
+//    label->setFixedSize(pixmap.width(), pixmap.height());
+    label->show();
+}
+//--------------------------------------------------------------------------------
+void ShowPicture::mouseMoveEvent(QMouseEvent *event)
+{
+    rubberBand->setGeometry(QRect(origin, event->pos()).normalized());
 }
 //--------------------------------------------------------------------------------
 bool ShowPicture::programm_is_exit(void)

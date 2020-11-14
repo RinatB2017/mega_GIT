@@ -45,11 +45,18 @@ public:
 
 private:
     Ui::ShowPicture *ui;
+    QRubberBand *rubberBand = nullptr;
+    QPoint origin;
 
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
+
+protected:
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
 };
 //--------------------------------------------------------------------------------
 #endif // SHOWPICTURE_HPP

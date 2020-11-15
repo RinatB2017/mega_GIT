@@ -113,7 +113,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     commands.clear(); int id = 0;
     CMD command;

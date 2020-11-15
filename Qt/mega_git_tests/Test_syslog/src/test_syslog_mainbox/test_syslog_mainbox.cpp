@@ -59,7 +59,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test 0", &MainBox::test_0 });
@@ -96,7 +96,7 @@ void MainBox::createTestBar(void)
 void MainBox::createSenderBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     Sender_syslog *syslogBar_0 = new Sender_syslog("syslogBar_0", 0, LOG_EMERG);
     Sender_syslog *syslogBar_1 = new Sender_syslog("syslogBar_1", 1, LOG_ALERT);

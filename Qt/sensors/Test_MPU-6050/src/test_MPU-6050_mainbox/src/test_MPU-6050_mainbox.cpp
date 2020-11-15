@@ -62,7 +62,7 @@ void MainBox::init(void)
 
 #if 1
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     mw->add_dock_widget("GL widget",
                         "gl_widget",
@@ -143,7 +143,7 @@ void MainBox::init_grapher_widget(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     QToolBar *testbar = new QToolBar(tr("testbar"));
     testbar->setObjectName("testbar");

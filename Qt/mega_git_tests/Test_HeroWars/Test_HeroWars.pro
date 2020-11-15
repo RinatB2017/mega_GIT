@@ -56,6 +56,8 @@ include ($$LIB_PATH2/widgets/showpicture/showpicture.pri)
 include ($$LIB_PATH2/opencv/opencv.pri)
 
 include (src/myfindform/myfindform.pri)
+include (src/worker/worker.pri)
+include (src/item/item.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = $$PWD/src/version.hpp

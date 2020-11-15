@@ -68,12 +68,24 @@ void ShowPicture::mouseReleaseEvent(QMouseEvent *event)
 
     QPixmap pixmap = grab(QRect(origin.x(),
                                 origin.y(),
-                                event->pos().x(),
-                                event->pos().y()));
+                                event->pos().x() - origin.x(),
+                                event->pos().y() - origin.y()));
+#if 0
+    QString filename = "/dev/shm/temp.png";
+    if(pixmap.save(filename) == false)
+    {
+        emit error(QString("%1 not created").arg(filename));
+    }
+#endif
+#if 0
     QLabel *label = new QLabel();
     label->setPixmap(pixmap);
-//    label->setFixedSize(pixmap.width(), pixmap.height());
+    label->setFixedSize(pixmap.width(), pixmap.height());
     label->show();
+#endif
+#if 1
+    emit add_pixmap(pixmap);
+#endif
 }
 //--------------------------------------------------------------------------------
 void ShowPicture::mouseMoveEvent(QMouseEvent *event)

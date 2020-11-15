@@ -65,7 +65,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test", &MainBox::test });
@@ -147,7 +147,7 @@ void MainBox::init_grapher_data(void)
     curve_data = grapher_data->add_curve("data");
 
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     mw->add_dock_widget("Grapher data", "grapher_data", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(grapher_data));
 }
@@ -176,7 +176,7 @@ void MainBox::init_grapher_profit(void)
     curve_profit = grapher_profit->add_curve("profit");
 
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     mw->add_dock_widget("Grapher profit", "grapher_profit", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(grapher_profit));
 }

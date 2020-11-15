@@ -87,7 +87,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     QToolBar *testbar = new QToolBar(tr("testbar"));
     testbar->setObjectName("testbar");
@@ -199,7 +199,7 @@ void MainBox::createDockWidgets(void)
     w2->setLayout(vbox2);
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
     mw->add_dock_widget("Main",     "main_control",     Qt::LeftDockWidgetArea,  reinterpret_cast<QWidget *>(w1));
     mw->add_dock_widget("Control",  "control_control",  Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(w2));
 }

@@ -99,7 +99,7 @@ void MainBox::click(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test 0", &MainBox::test_0 });
@@ -272,7 +272,7 @@ bool MainBox::test_0(void)
 
 #if 1
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     int mb_x = mw->centralWidget()->x();
     int mb_y = mw->centralWidget()->y();

@@ -40,8 +40,6 @@ MyFindForm::MyFindForm(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MyFindForm)
 {
-    ui->setupUi(this);
-
     init();
 }
 //--------------------------------------------------------------------------------
@@ -53,11 +51,11 @@ MyFindForm::~MyFindForm()
 //--------------------------------------------------------------------------------
 void MyFindForm::init(void)
 {
-//    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-//    if(mw)
-//    {
-//        mw->add_dock_widget("Show picture", "show_picture", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(ui->showpicture_widget));
-//    }
+    ui->setupUi(this);
+
+#ifdef QT_DEBUG
+    createTestBar();
+#endif
 
     ui->sb_pos_x->setRange(0,   0xFFFF);
     ui->sb_pos_y->setRange(0,   0xFFFF);
@@ -75,10 +73,78 @@ void MyFindForm::init(void)
     });
 
     add_buttons();
-    connect(ui->btn_test,           &QPushButton::clicked,      this,   &MyFindForm::test);
-    connect(ui->btn_find_programm,  &QPushButton::clicked,      this,   &MyFindForm::find_programm);
-
+    connect(ui->btn_find_programm,  &QPushButton::clicked,      this,               &MyFindForm::find_programm);
+    connect(ui->showpicture_widget, &ShowPicture::add_pixmap,   ui->worker_widget,  &Worker::add_widget);
     load_widgets();
+
+#if 1
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->add_dock_widget("Main", "main_frame", Qt::LeftDockWidgetArea, reinterpret_cast<QWidget *>(ui->main_frame));
+        setVisible(false);
+    }
+#endif
+}
+//--------------------------------------------------------------------------------
+void MyFindForm::createTestBar(void)
+{
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_ASSERT(mw != nullptr);
+
+    commands.clear(); int id = 0;
+    commands.append({ id++, "test",             &MyFindForm::test });
+
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
+
+    cb_test = new QComboBox(this);
+    cb_test->setObjectName("cb_test");
+    foreach (CMD command, commands)
+    {
+        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+    }
+
+    testbar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(testbar,
+                                              new QToolButton(this),
+                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                              "choice_test",
+                                              "choice_test");
+    btn_choice_test->setObjectName("btn_choice_test");
+
+    connect(btn_choice_test,    &QToolButton::clicked,  this,   &MyFindForm::choice_test);
+
+    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+}
+//--------------------------------------------------------------------------------
+void MyFindForm::choice_test(void)
+{
+    bool ok = false;
+    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok) return;
+
+    // QList<MainBox::CMD>::iterator cmd_it = std::find_if(
+    auto cmd_it = std::find_if(
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
+    if (cmd_it != commands.end())
+    {
+        typedef void (MyFindForm::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
+        {
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 void MyFindForm::click(void)

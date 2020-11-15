@@ -86,7 +86,7 @@ void MainWidget_GUI::init(void)
 void MainWidget_GUI::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test", &MainWidget::test });

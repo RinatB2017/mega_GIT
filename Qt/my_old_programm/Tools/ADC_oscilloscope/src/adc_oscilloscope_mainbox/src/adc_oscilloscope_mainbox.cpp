@@ -140,7 +140,7 @@ void MainBox::add_data_float(unsigned int index_curve, float data)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -159,7 +159,7 @@ void MainBox::createTestBar(void)
 void MainBox::createSerialBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     widget = new ModbusAsciiWidget(this);
 

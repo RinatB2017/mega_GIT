@@ -126,7 +126,7 @@ void MainBox::init(void)
 
     //---
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
     mw->add_dock_widget("AutoClicker", "autoclicker_widget", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(ui->autoclicker_widget));
     //---
 
@@ -213,7 +213,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test", &MainBox::test });

@@ -263,7 +263,7 @@ void MainBox::save(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");

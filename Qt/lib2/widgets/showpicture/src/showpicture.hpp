@@ -37,6 +37,9 @@ class ShowPicture : public MyWidget
 {
     Q_OBJECT
 
+signals:
+    void add_pixmap(const QPixmap &);
+
 public:
     explicit ShowPicture(QWidget *parent = nullptr);
     ~ShowPicture();

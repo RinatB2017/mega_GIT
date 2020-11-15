@@ -634,7 +634,7 @@ void MyWidget::check_tooltips(void)
 {
 #if 0
     MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     QList<QAbstractButton *> l_obj = mw->findChildren<QAbstractButton *>();
 #else

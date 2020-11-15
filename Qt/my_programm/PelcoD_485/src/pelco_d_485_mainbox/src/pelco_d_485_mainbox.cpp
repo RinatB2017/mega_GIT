@@ -156,7 +156,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = reinterpret_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     QToolBar *testbar = new QToolBar("testbar");
     Q_CHECK_PTR(testbar);

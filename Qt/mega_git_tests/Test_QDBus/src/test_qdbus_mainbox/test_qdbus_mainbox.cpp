@@ -207,7 +207,7 @@ void MainBox::DBus_deviceRemoved(QDBusObjectPath dev)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test 0", &MainBox::test_0 });

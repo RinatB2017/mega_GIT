@@ -213,7 +213,7 @@ void SerialBox5_wo_form::save_setting(void)
 bool SerialBox5_wo_form::add_menu(int index)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     QMenu *menu = new QMenu(caption);
     Q_CHECK_PTR(menu);
@@ -234,7 +234,7 @@ bool SerialBox5_wo_form::add_menu(int index)
 bool SerialBox5_wo_form::add_menu(int index, const QString &title)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     QMenu *menu = new QMenu(title);
 

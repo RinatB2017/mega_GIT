@@ -223,7 +223,7 @@ void MainBox::victory(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test",             &MainBox::test });
@@ -424,17 +424,17 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
-    int max_x = 3;
-    int max_y = 5;
-    QImage image(QSize(max_x, max_y), QImage::Format_ARGB32);
+//    int max_x = 3;
+//    int max_y = 5;
+//    QImage image(QSize(max_x, max_y), QImage::Format_ARGB32);
 
-    for(int y=0; y<max_y; y++)
-    {
-        for(int x=0; x<max_x; x++)
-        {
-            image.setPixel(x, y, qRgb(255, 0, 0));
-        }
-    }
+//    for(int y=0; y<max_y; y++)
+//    {
+//        for(int x=0; x<max_x; x++)
+//        {
+//            image.setPixel(x, y, qRgb(255, 0, 0));
+//        }
+//    }
 //    image.save("/dev/shm/temp.png");
 
     QToolButton *btn = new QToolButton();

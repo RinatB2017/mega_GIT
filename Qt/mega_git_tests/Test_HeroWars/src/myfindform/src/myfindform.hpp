@@ -53,6 +53,15 @@ public:
 private:
     Ui::MyFindForm *ui;
 
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        void (MyFindForm::*func)(void);
+    } *cmd_t;
+    QList<CMD> commands;
+    QPointer<QComboBox> cb_test;
+
     QString src_file        = "/dev/shm/0/Screenshot.png";
 
 #ifdef Q_OS_LINUX
@@ -90,6 +99,8 @@ private:
     void show_rect_picture(QString caption, QList<QRgb> array, QRect rect);
 
     void init(void);
+    void createTestBar(void);
+    void choice_test(void);
     bool searchObjectByTemplate(const char *imgName,
                                 const char *templName,
                                 QRect *rect);

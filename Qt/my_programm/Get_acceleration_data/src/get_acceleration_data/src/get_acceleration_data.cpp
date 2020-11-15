@@ -62,7 +62,7 @@ void MainBox::init(void)
     init_gl_widget();
 
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
     if(mw)
     {
         mw->add_dock_widget("main", "main", Qt::LeftDockWidgetArea, reinterpret_cast<QWidget *>(ui->main_frame));
@@ -137,7 +137,7 @@ void MainBox::init_gl_widget(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test", &MainBox::test });

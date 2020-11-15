@@ -206,7 +206,7 @@ void MainBox::create_widgets(void)
     //---
 #ifdef USE_DOCKS
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_CHECK_PTR(mw);
+    Q_ASSERT(mw != nullptr);
 
     QDockWidget *dock_note = new QDockWidget(tr("notebook"), this);
     Q_CHECK_PTR(dock_note);

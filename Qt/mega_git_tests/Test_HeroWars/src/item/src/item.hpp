@@ -45,6 +45,9 @@ private:
 
     void init(void);
     void item_close(void);
+    void item_click(void);
+    void item_load(void);
+    void item_save(void);
 
     void updateText(void);
     bool programm_is_exit(void);

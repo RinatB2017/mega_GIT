@@ -63,8 +63,8 @@ void MyFindForm::init(void)
     ui->btn_click->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
 
     connect(ui->btn_click,          &QToolButton::clicked,      this,   &MyFindForm::click);
-    connect(ui->sb_pos_x,           &QSpinBox::editingFinished, this,   &MyFindForm::click);
-    connect(ui->sb_pos_y,           &QSpinBox::editingFinished, this,   &MyFindForm::click);
+//    connect(ui->sb_pos_x,           &QSpinBox::editingFinished, this,   &MyFindForm::click);
+//    connect(ui->sb_pos_y,           &QSpinBox::editingFinished, this,   &MyFindForm::click);
 
     connect(ui->btn_set,            &QToolButton::clicked,      this,   &MyFindForm::set_src_file);
     connect(ui->btn_show,           &QToolButton::clicked, [this]() {
@@ -73,9 +73,9 @@ void MyFindForm::init(void)
     });
 
     add_buttons();
+    connect(ui->le_title,           &QLineEdit::returnPressed,  this,               &MyFindForm::find_programm);
     connect(ui->btn_find_programm,  &QPushButton::clicked,      this,               &MyFindForm::find_programm);
     connect(ui->showpicture_widget, &ShowPicture::add_pixmap,   ui->worker_widget,  &Worker::add_widget);
-    load_widgets();
 
 #if 1
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
@@ -85,6 +85,8 @@ void MyFindForm::init(void)
         setVisible(false);
     }
 #endif
+
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MyFindForm::createTestBar(void)
@@ -880,11 +882,25 @@ bool MyFindForm::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MyFindForm::load_setting(void)
 {
-
+    ui->le_title->setText(load_string(P_TITLE));
+    ui->le_screenshot->setText(load_string(P_SCREENSHOT));
+    int x = 0;
+    int y = 0;
+    if(load_int(P_POS_X, &x))
+    {
+        ui->sb_pos_x->setValue(x);
+    }
+    if(load_int(P_POS_Y, &y))
+    {
+        ui->sb_pos_y->setValue(y);
+    }
 }
 //--------------------------------------------------------------------------------
 void MyFindForm::save_setting(void)
 {
-
+    save_string(P_TITLE, ui->le_title->text());
+    save_string(P_SCREENSHOT, ui->le_screenshot->text());
+    save_int(P_POS_X, ui->sb_pos_x->value());
+    save_int(P_POS_Y, ui->sb_pos_y->value());
 }
 //--------------------------------------------------------------------------------

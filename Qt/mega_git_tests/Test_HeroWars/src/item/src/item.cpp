@@ -18,6 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include "item_options.hpp"
 #include "item.hpp"
 #include "ui_item.h"
 //--------------------------------------------------------------------------------
@@ -39,14 +40,35 @@ void Item::init(void)
     ui->setupUi(this);
 
     ui->btn_clear->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
+    ui->btn_click->setIcon(qApp->style()->standardIcon(QStyle::SP_CommandLink));
+    ui->btn_load->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogOpenButton));
+    ui->btn_save->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
 
     connect(ui->btn_clear,  &QToolButton::clicked,  this,   &Item::item_close);
+    connect(ui->btn_click,  &QToolButton::clicked,  this,   &Item::item_click);
+    connect(ui->btn_load,   &QToolButton::clicked,  this,   &Item::item_load);
+    connect(ui->btn_save,   &QToolButton::clicked,  this,   &Item::item_save);
 }
 //--------------------------------------------------------------------------------
 void Item::item_close(void)
 {
     fail();
 //    parent_lw->removeItemWidget(parent_lw->itemWidget(static_cast<QListWidgetItem *>(property("index").toModelIndex())));
+}
+//--------------------------------------------------------------------------------
+void Item::item_click(void)
+{
+    fail();
+}
+//--------------------------------------------------------------------------------
+void Item::item_load(void)
+{
+    fail();
+}
+//--------------------------------------------------------------------------------
+void Item::item_save(void)
+{
+    fail();
 }
 //--------------------------------------------------------------------------------
 void Item::set_pixmap(const QPixmap &pixmap)
@@ -66,11 +88,11 @@ bool Item::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void Item::load_setting(void)
 {
-    emit info(Q_FUNC_INFO);
+//    emit info(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void Item::save_setting(void)
 {
-    emit info(Q_FUNC_INFO);
+//    emit info(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------

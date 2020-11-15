@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>435</width>
+    <width>256</width>
     <height>47</height>
    </rect>
   </property>
@@ -56,7 +56,28 @@
        </widget>
       </item>
       <item>
+       <widget class="QToolButton" name="btn_load">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="btn_save">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QToolButton" name="btn_clear">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="btn_click">
         <property name="text">
          <string>...</string>
         </property>
@@ -67,6 +88,13 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>cb_active</tabstop>
+  <tabstop>btn_load</tabstop>
+  <tabstop>btn_save</tabstop>
+  <tabstop>btn_clear</tabstop>
+  <tabstop>btn_click</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

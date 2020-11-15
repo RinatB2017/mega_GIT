@@ -57,6 +57,7 @@ include ($$LIB_PATH2/opencv/opencv.pri)
 
 include (src/myfindform/myfindform.pri)
 include (src/worker/worker.pri)
+include (src/item_options/item_options.pri)
 include (src/item/item.pri)
 
 !exists(OBJECTS_DIR) {

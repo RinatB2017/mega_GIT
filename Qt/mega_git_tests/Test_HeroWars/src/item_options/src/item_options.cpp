@@ -18,35 +18,18 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef DEFINES_HPP
-#define DEFINES_HPP
+#include "item_options.hpp"
+#include "ui_item_options.h"
 //--------------------------------------------------------------------------------
-#include "version.hpp"
+Item_options::Item_options(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::Item_options)
+{
+    ui->setupUi(this);
+}
 //--------------------------------------------------------------------------------
-#define ORGNAME "Home"
-#define APPNAME "Test_HeroWars"
+Item_options::~Item_options()
+{
+    delete ui;
+}
 //--------------------------------------------------------------------------------
-#define P_TITLE "title"
-#define P_SCREENSHOT "screenshot"
-#define P_POS_X "pos_x"
-#define P_POS_Y "pos_y"
-//--------------------------------------------------------------------------------
-#define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
-#define QMAKE_TARGET_COMPANY    ORGNAME
-#define QMAKE_TARGET_PRODUCT    APPNAME
-#define QMAKE_TARGET_COPYRIGHT  "Copyright 2015-2020"
-#define RC_ICONS                ":/images/computer.ico"
-//--------------------------------------------------------------------------------
-#define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
-#define VER_FILEVERSION_STR         VER_STR
-#define VER_PRODUCTVERSION          VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
-#define VER_PRODUCTVERSION_STR      VER_STR
-#define VER_FILEDESCRIPTION_STR     APPNAME
-#define VER_INTERNALNAME_STR        APPNAME
-#define VER_LEGALCOPYRIGHT_STR      QMAKE_TARGET_COPYRIGHT
-#define VER_ORIGINALFILENAME_STR    APPNAME
-#define VER_PRODUCTNAME_STR         APPNAME
-//--------------------------------------------------------------------------------
-#define ICON_PROGRAMM   ":/mainwindow/computer.png"
-//--------------------------------------------------------------------------------
-#endif

@@ -18,35 +18,25 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef DEFINES_HPP
-#define DEFINES_HPP
+#ifndef ITEM_OPTIONS_HPP
+#define ITEM_OPTIONS_HPP
 //--------------------------------------------------------------------------------
-#include "version.hpp"
+#include <QDialog>
 //--------------------------------------------------------------------------------
-#define ORGNAME "Home"
-#define APPNAME "Test_HeroWars"
+namespace Ui {
+    class Item_options;
+}
 //--------------------------------------------------------------------------------
-#define P_TITLE "title"
-#define P_SCREENSHOT "screenshot"
-#define P_POS_X "pos_x"
-#define P_POS_Y "pos_y"
+class Item_options : public QDialog
+{
+    Q_OBJECT
+
+public:
+    explicit Item_options(QWidget *parent = nullptr);
+    ~Item_options();
+
+private:
+    Ui::Item_options *ui;
+};
 //--------------------------------------------------------------------------------
-#define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
-#define QMAKE_TARGET_COMPANY    ORGNAME
-#define QMAKE_TARGET_PRODUCT    APPNAME
-#define QMAKE_TARGET_COPYRIGHT  "Copyright 2015-2020"
-#define RC_ICONS                ":/images/computer.ico"
-//--------------------------------------------------------------------------------
-#define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
-#define VER_FILEVERSION_STR         VER_STR
-#define VER_PRODUCTVERSION          VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
-#define VER_PRODUCTVERSION_STR      VER_STR
-#define VER_FILEDESCRIPTION_STR     APPNAME
-#define VER_INTERNALNAME_STR        APPNAME
-#define VER_LEGALCOPYRIGHT_STR      QMAKE_TARGET_COPYRIGHT
-#define VER_ORIGINALFILENAME_STR    APPNAME
-#define VER_PRODUCTNAME_STR         APPNAME
-//--------------------------------------------------------------------------------
-#define ICON_PROGRAMM   ":/mainwindow/computer.png"
-//--------------------------------------------------------------------------------
-#endif
+#endif // ITEM_OPTIONS_HPP

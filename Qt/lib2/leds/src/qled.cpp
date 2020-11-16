@@ -2,25 +2,10 @@
 #include <QPainter>
 #include "qled.hpp"
 //--------------------------------------------------------------------------------
-QLed::QLed(unsigned int width,
-           unsigned int height,
-           const QString &tooltip,
-           const QColor &color_off,
-           const QColor &color_on,
-           QWidget *parent) :
+QLed::QLed(QWidget *parent) :
     QWidget(parent)
 {
-    this->color_off = color_off;
-    this->color_on = color_on;
 
-    if(width < 16) width = 16;
-    if(height < 16) height = 16;
-    setFixedSize(static_cast<int>(width),
-                 static_cast<int>(height));
-    setToolTip(tooltip);
-
-    current_color = color_off;
-    update();
 }
 //--------------------------------------------------------------------------------
 void QLed::setState(bool state)
@@ -34,6 +19,16 @@ void QLed::setState(bool state)
         current_color = color_off;
     }
     update();
+}
+//--------------------------------------------------------------------------------
+void QLed::set_size(int w, int h)
+{
+    setFixedSize(w, h);
+}
+//--------------------------------------------------------------------------------
+void QLed::set_tooltip(const QString &text)
+{
+    tooltip = text;
 }
 //--------------------------------------------------------------------------------
 void QLed::set_color(QColor color)

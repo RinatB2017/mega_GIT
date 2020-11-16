@@ -39,6 +39,8 @@ public:
     ~Item();
 
     void set_pixmap(const QPixmap &pixmap);
+    void led_on(void);
+    void led_off(void);
 
 private:
     Ui::Item *ui;

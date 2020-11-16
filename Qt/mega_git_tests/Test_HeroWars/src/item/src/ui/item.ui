@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>297</width>
+    <width>313</width>
     <height>47</height>
    </rect>
   </property>
@@ -41,6 +41,9 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLed" name="led_widget" native="true"/>
+      </item>
       <item>
        <widget class="QCheckBox" name="cb_active">
         <property name="text">
@@ -95,6 +98,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QLed</class>
+   <extends>QWidget</extends>
+   <header>qled.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>cb_active</tabstop>
   <tabstop>btn_load</tabstop>

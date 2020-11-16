@@ -23,7 +23,10 @@ LedPanel::LedPanel(unsigned int max_leds,
     hbox = new QHBoxLayout;
     for(n=0; n<count; n++)
     {
-        led[n] = new QLed(width_leds, height_leds, QString::number(n), Qt::green);
+        led[n] = new QLed();
+        led[n]->set_size(width_leds, height_leds);
+        led[n]->set_tooltip(QString::number(n));
+        led[n]->set_color_on(Qt::green);
     }
     for(n=count; n>0; n--)
     {

@@ -61,6 +61,7 @@ include ($$LIB_PATH2/icons/digits.pri)
 include ($$LIB_PATH2/icons/arrows.pri)
 #include ($$LIB_PATH2/widgets/showpicture/showpicture.pri)
 include ($$LIB_PATH2/opencv/opencv.pri)
+include ($$LIB_PATH2/leds/leds.pri)
 
 include (src/myfindform/myfindform.pri)
 include (src/worker/worker.pri)

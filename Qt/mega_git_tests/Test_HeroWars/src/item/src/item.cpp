@@ -46,6 +46,8 @@ void Item::init(void)
     ui->btn_save->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
     ui->btn_info->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogHelpButton));
 
+    ui->led_widget->set_size(32, 32);
+
     connect(ui->btn_close,  &QToolButton::clicked,  this,   &Item::item_close);
     connect(ui->btn_click,  &QToolButton::clicked,  this,   &Item::item_click);
     connect(ui->btn_load,   &QToolButton::clicked,  this,   &Item::item_load);
@@ -121,6 +123,16 @@ void Item::set_pixmap(const QPixmap &pixmap)
 {
     this->pixmap = pixmap;
     ui->lbl_picture->setPixmap(pixmap);
+}
+//--------------------------------------------------------------------------------
+void Item::led_on(void)
+{
+    ui->led_widget->setState(true);
+}
+//--------------------------------------------------------------------------------
+void Item::led_off(void)
+{
+    ui->led_widget->setState(false);
 }
 //--------------------------------------------------------------------------------
 void Item::updateText(void)

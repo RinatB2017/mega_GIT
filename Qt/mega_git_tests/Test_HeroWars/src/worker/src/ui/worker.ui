@@ -26,7 +26,20 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="QSpinBox" name="spinBox"/>
+         <widget class="QLabel" name="label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Interval, msec</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="sb_interval"/>
         </item>
         <item>
          <widget class="QToolButton" name="btn_add">
@@ -55,11 +68,22 @@
        <widget class="QListWidget" name="listWidget"/>
       </item>
       <item>
-       <widget class="QPushButton" name="btn_test">
-        <property name="text">
-         <string>test</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QToolButton" name="btn_test_append">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_test">
+          <property name="text">
+           <string>test</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
@@ -67,12 +91,11 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>spinBox</tabstop>
+  <tabstop>sb_interval</tabstop>
   <tabstop>btn_add</tabstop>
   <tabstop>btn_start</tabstop>
   <tabstop>btn_stop</tabstop>
   <tabstop>listWidget</tabstop>
-  <tabstop>btn_test</tabstop>
  </tabstops>
  <resources/>
  <connections/>

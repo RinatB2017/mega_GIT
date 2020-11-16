@@ -8,22 +8,19 @@ class QLed : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QLed(unsigned int width,
-                  unsigned int height,
-                  const QString &tooltip,
-                  const QColor &color_off = Qt::gray,
-                  const QColor &color_on = Qt::red,
-                  QWidget *parent = nullptr);
+    explicit QLed(QWidget *parent = nullptr);
     void setState(bool state);
+    void set_size(int w, int h);
+    void set_tooltip(const QString &text);
     void set_color(QColor color);
     void set_color_on(QColor color);
     void set_color_off(QColor color);
 
 private:
-    QColor color_off;
-    QColor color_on;
-
-    QColor current_color = color_off;
+    QString tooltip = "led";
+    QColor color_off = Qt::gray;
+    QColor color_on = Qt::red;
+    QColor current_color = Qt::gray;
 
 protected:
     void paintEvent(QPaintEvent *);

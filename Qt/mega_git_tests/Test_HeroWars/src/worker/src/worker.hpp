@@ -41,13 +41,23 @@ private:
     Ui::Worker *ui;
     QPixmap pixmap;
 
+    QPointer<QTimer> timer;
+    unsigned int interval = 0;
+    int index = 0;
+    void update(void);
+
+    int get_interval(void);
+    void set_interval(int value);
+
     void init(void);
     void remove_item(int index);
 
-    void f_test(void);
     void f_start(void);
     void f_stop(void);
     void f_add(void);
+
+    void f_test(void);
+    void f_test_append(void);
 
     void updateText(void);
     bool programm_is_exit(void);

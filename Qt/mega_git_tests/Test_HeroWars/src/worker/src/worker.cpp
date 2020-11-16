@@ -32,6 +32,12 @@ Worker::Worker(QWidget *parent) :
 //--------------------------------------------------------------------------------
 Worker::~Worker()
 {
+    save_widgets();
+    if(timer)
+    {
+        timer->disconnect();
+        timer->deleteLater();
+    }
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -43,12 +49,38 @@ void Worker::init(void)
     ui->btn_stop->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaStop));
     ui->btn_add->setIcon(QIcon(":/plus_minus/plus.png"));
 
-    connect(ui->btn_test,           &QPushButton::clicked,      this,   &Worker::f_test);
+    ui->sb_interval->setRange(0, 0xFFFF);
+
     connect(ui->btn_start,          &QPushButton::clicked,      this,   &Worker::f_start);
     connect(ui->btn_stop,           &QPushButton::clicked,      this,   &Worker::f_stop);
     connect(ui->btn_add,            &QPushButton::clicked,      this,   &Worker::f_add);
 
+    connect(ui->btn_test,           &QPushButton::clicked,      this,   &Worker::f_test);
+    connect(ui->btn_test_append,    &QPushButton::clicked,      this,   &Worker::f_test_append);
+    connect(ui->sb_interval,        static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+            this,                   &Worker::set_interval);
+
     ui->listWidget->setProperty(NO_SAVE, true);
+
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout,    this,   &Worker::update);
+
+    load_widgets();
+}
+//--------------------------------------------------------------------------------
+int Worker::get_interval(void)
+{
+    return interval;
+}
+//--------------------------------------------------------------------------------
+void Worker::set_interval(int value)
+{
+    interval = value;
+}
+//--------------------------------------------------------------------------------
+void Worker::update(void)
+{
+    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void Worker::add_widget(const QPixmap &pixmap)
@@ -60,18 +92,38 @@ void Worker::f_test(void)
 {
     emit info(QString("cnt %1").arg(ui->listWidget->count()));
 
-    //ui->listWidget->removeItemWidget(ui->listWidget->currentItem());
-    ui->listWidget->takeItem(1);
+//    ui->listWidget->removeItemWidget(ui->listWidget->currentItem());
+//    ui->listWidget->takeItem(1);
+}
+//--------------------------------------------------------------------------------
+void Worker::f_test_append(void)
+{
+    QPixmap pixmap; //TODO он должен быть пустым для теста
+    QListWidgetItem *lw = new QListWidgetItem(ui->listWidget);
+    Item *item = new Item(ui->listWidget);
+    item->set_pixmap(pixmap);
+    lw->setSizeHint(item->sizeHint());
+    ui->listWidget->setItemWidget(lw, item);
+
+    item->setProperty(P_INDEX, ui->listWidget->currentIndex());
+
+    connect(item,   &Item::remove_item, this,   &Worker::remove_item);
 }
 //--------------------------------------------------------------------------------
 void Worker::f_start(void)
 {
-    fail();
+    if(timer)
+    {
+        timer->start(interval);
+    }
 }
 //--------------------------------------------------------------------------------
 void Worker::f_stop(void)
 {
-    fail();
+    if(timer)
+    {
+        timer->stop();
+    }
 }
 //--------------------------------------------------------------------------------
 void Worker::f_add(void)

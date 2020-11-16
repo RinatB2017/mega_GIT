@@ -44,6 +44,51 @@ public:
 private:
     static int s_value;
 };
+
+#include <QWebEngineView>
+// https://forum.qt.io/topic/54233/how-to-capture-mouse-events-in-webengineview
+class TestBrowser : public QWebEngineView
+{
+    Q_OBJECT
+
+public:
+    TestBrowser()
+    {
+        rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
+//        installEventFilter(this);
+        QApplication::instance()->installEventFilter(this);
+        setMouseTracking(true);
+    }
+
+private:
+    QPoint origin;
+    QRubberBand *rubberBand = nullptr;
+
+protected:
+    bool eventFilter(QObject *object, QEvent *event)
+    {
+        if (object->parent() == this && event->type() == QEvent::MouseButtonPress)
+        {
+            origin = static_cast<QMouseEvent *>(event)->pos();
+            rubberBand->setGeometry(QRect(origin, QSize()));
+            rubberBand->show();
+
+            mousePressEvent(static_cast<QMouseEvent *>(event));
+        }
+        if (object->parent() == this && event->type() == QEvent::MouseButtonRelease)
+        {
+            rubberBand->hide();
+            mouseReleaseEvent(static_cast<QMouseEvent *>(event));
+        }
+        if (object->parent() == this && event->type() == QEvent::MouseMove)
+        {
+            rubberBand->setGeometry(QRect(origin, static_cast<QMouseEvent *>(event)->pos()).normalized());
+            mouseMoveEvent(static_cast<QMouseEvent *>(event));
+        }
+
+        return false;
+    }
+};
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;

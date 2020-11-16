@@ -27,9 +27,8 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
-# не забыть при смене Qt изменить файлы в каталоге win
-RESOURCES += \
-    targets/targets.qrc
+RESOURCES   += \
+    html/html.qrc
 
 OTHER_FILES += doc/notebook.txt
 
@@ -44,6 +43,12 @@ win32 {
     LIBS += -lgdi32
 }
 
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT *= webenginewidgets
+} else {
+    QT *= webkit
+}
+
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
@@ -52,13 +57,17 @@ LIB_PATH  = "$$PWD/../../lib"
 LIB_PATH2 = "$$PWD/../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/widgets/showpicture/showpicture.pri)
+include ($$LIB_PATH2/icons/digits.pri)
+include ($$LIB_PATH2/icons/arrows.pri)
+#include ($$LIB_PATH2/widgets/showpicture/showpicture.pri)
 include ($$LIB_PATH2/opencv/opencv.pri)
 
 include (src/myfindform/myfindform.pri)
 include (src/worker/worker.pri)
 include (src/item_options/item_options.pri)
 include (src/item/item.pri)
+
+include (src/testbrowser/testbrowser.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = $$PWD/src/version.hpp

@@ -45,6 +45,13 @@ DEFINES += SAVE_INI
 
 #DEFINES += USE_CUSTOM_STYLE
 
+CONFIG(debug, debug|release) {
+    # профилирование
+#    QMAKE_CXXFLAGS_DEBUG += -pg
+#    QMAKE_LFLAGS_DEBUG += -pg
+    #---
+}
+
 HEADERS += \
     defines.hpp \
     version.hpp
@@ -85,6 +92,8 @@ include ($$LIB_PATH2/icons/arrows.pri)
 include ($$LIB_PATH/mywidgets/mylistwidget.pri)
 
 include ($$LIB_PATH2/widgets/QLongLongSpinBox/QLongLongSpinBox.pri)
+
+include ($$LIB_PATH2/web/mybrowser/mybrowser.pri)
 
 include (src/for_tests_mainbox/for_tests_mainbox.pri)
 include (src/mymainwindow/mymainwindow.pri)

@@ -32,6 +32,7 @@ class Item : public MyWidget
     Q_OBJECT
 
 signals:
+    void remove_item(int);
 
 public:
     explicit Item(QListWidget *lw, QWidget *parent = nullptr);
@@ -43,11 +44,14 @@ private:
     Ui::Item *ui;
     QListWidget *parent_lw = nullptr;
 
+    QPixmap pixmap;
+
     void init(void);
     void item_close(void);
     void item_click(void);
     void item_load(void);
     void item_save(void);
+    void item_info(void);
 
     void updateText(void);
     bool programm_is_exit(void);

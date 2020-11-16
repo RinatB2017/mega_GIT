@@ -26,10 +26,7 @@
 #define ORGNAME "Home"
 #define APPNAME "Test_HeroWars"
 //--------------------------------------------------------------------------------
-#define P_TITLE "title"
-#define P_SCREENSHOT "screenshot"
-#define P_POS_X "pos_x"
-#define P_POS_Y "pos_y"
+#define P_INDEX "index"
 //--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME

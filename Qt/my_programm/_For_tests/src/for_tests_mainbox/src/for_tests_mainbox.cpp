@@ -424,6 +424,13 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    TestBrowser *browser = new TestBrowser();
+    browser->setUrl(QUrl("https://hero-wars.com"));
+    browser->setMinimumSize(800, 600);
+    browser->show();
+#endif
+
+#if 0
 //    int max_x = 3;
 //    int max_y = 5;
 //    QImage image(QSize(max_x, max_y), QImage::Format_ARGB32);

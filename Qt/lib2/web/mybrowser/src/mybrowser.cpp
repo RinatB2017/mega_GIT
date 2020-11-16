@@ -20,6 +20,7 @@
 **********************************************************************************/
 #include "webattributedialog.hpp"
 #include "mybrowser.hpp"
+#include "defines.hpp"
 #include "ui_mybrowser.h"
 //--------------------------------------------------------------------------------
 // Поисковые роботы https://support.google.com/webmasters/answer/1061943?hl=ru

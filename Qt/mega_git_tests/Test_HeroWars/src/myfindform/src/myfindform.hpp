@@ -78,26 +78,6 @@ private:
     QString file_in_battle   = "C:/0/в бой.png";
 #endif
 
-    QList<QRgb> l_src_file;
-    QRect rect_src_file;
-
-    QList<QRgb> l_file_ok;
-    QRect rect_file_ok;
-
-    QList<QRgb> l_file_auto;
-    QRect rect_file_auto;
-
-    QList<QRgb> l_file_auto_active;
-    QRect rect_file_auto_active;
-
-    QList<QRgb> l_file_in_battle;
-    QRect rect_file_in_battle;
-
-    QList<QRgb> l_temp;
-    QRect rect_temp;
-
-    void show_rect_picture(QString caption, QList<QRgb> array, QRect rect);
-
     void init(void);
     void createTestBar(void);
     void choice_test(void);
@@ -105,39 +85,15 @@ private:
                                 const char *templName,
                                 QRect *rect);
 
-    void click(void);
     void fail(void);
-
-    void find_ok(void);
-    void find_auto(void);
-    void find_auto_active(void);
-    void find_programm(void);
-    void find_to_battle(void);
 
     void check_pict(const QString &orig_file,
                     const QString &copy_file);
 
-    bool find_programm_with_title(const QString &title);
-    bool find_window(const QString &programm_title,
-                     int *x,
-                     int *y,
-                     int *width,
-                     int *heigth);
-
     void show_res(QString filename, QRect rect);
-
-    void set_src_file(void);
-
-    bool prepare_l(QString filename, QList<QRgb> *list, QRect *rect);
-    bool prepare_temp(QString filename,
-                      QRect rect,
-                      QList<QRgb> *list,
-                      QRect *out_rect);
-
     void mouse_click(unsigned int button, QPoint pos);
 
     void test(void);
-    void add_buttons(void);
 
     void updateText(void);
     bool programm_is_exit(void);

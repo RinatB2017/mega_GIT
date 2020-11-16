@@ -18,6 +18,8 @@
 #define TEST_JSON_W "test_json_w"
 #define TEST_JSON_H "test_json_h"
 #define TEST_JSON_SPLITTER "test_json_splitter"
+
+#define PROXIES_XML "proxies.xml"
 //--------------------------------------------------------------------------------
 #define ORGNAME "Home"
 #define APPNAME "_For_tests"

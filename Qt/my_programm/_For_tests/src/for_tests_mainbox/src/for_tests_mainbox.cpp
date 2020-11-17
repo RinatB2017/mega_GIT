@@ -68,9 +68,8 @@ void MainBox::init(void)
     // create shortcut
     QShortcut *shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q), this);
 
-    // connect its 'activated' signal to your function
-    QObject::connect(shortcut,    &QShortcut::activated,
-                     qApp,        &QApplication::quit);
+    // connect its 'activated' signal to close application
+    QObject::connect(shortcut,    &QShortcut::activated,    qApp,   &QApplication::quit);
     //---
 #endif
 

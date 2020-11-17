@@ -130,7 +130,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test 0", &MainBox::test_0 });
@@ -195,7 +195,7 @@ void MainBox::choice_test(void)
 //--------------------------------------------------------------------------------
 bool MainBox::prepare_data(QByteArray input, QByteArray *output)
 {
-    Q_CHECK_PTR(output);
+    Q_ASSERT(output);
 
     if(input.isEmpty())
     {

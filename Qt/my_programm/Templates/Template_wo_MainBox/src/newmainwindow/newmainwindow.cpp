@@ -58,8 +58,8 @@ QToolButton *NewMainWindow::add_button(QToolBar *tool_bar,
                                        const QString &text,
                                        const QString &tool_tip)
 {
-    Q_CHECK_PTR(tool_bar);
-    Q_CHECK_PTR(tool_button);
+    Q_ASSERT(tool_bar);
+    Q_ASSERT(tool_button);
 
     tool_button->setIcon(icon);
     tool_button->setText(text);

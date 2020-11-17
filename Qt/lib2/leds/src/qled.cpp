@@ -5,10 +5,10 @@
 QLed::QLed(QWidget *parent) :
     QWidget(parent)
 {
-
+    setFixedSize(32, 32);
 }
 //--------------------------------------------------------------------------------
-void QLed::setState(bool state)
+void QLed::set_state(bool state)
 {
     if(state)
     {
@@ -51,6 +51,9 @@ void QLed::set_color_off(QColor color)
 //--------------------------------------------------------------------------------
 void QLed::paintEvent(QPaintEvent *)
 {
+    Q_ASSERT(width() != 0);
+    Q_ASSERT(height() != 0);
+
     QPainter painter(this);
     painter.fillRect(0, 0, width(), height(), Qt::transparent);
     painter.setPen(QPen(Qt::black));

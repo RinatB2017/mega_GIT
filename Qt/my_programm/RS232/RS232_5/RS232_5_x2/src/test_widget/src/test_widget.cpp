@@ -63,7 +63,7 @@ void TestWidget::init(void)
 void TestWidget::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test", &TestWidget::test });
@@ -98,8 +98,8 @@ QToolButton *TestWidget::add_button(QToolBar *tool_bar,
                                     const QString &text,
                                     const QString &tool_tip)
 {
-    Q_CHECK_PTR(tool_bar);
-    Q_CHECK_PTR(tool_button);
+    Q_ASSERT(tool_bar);
+    Q_ASSERT(tool_button);
 
     tool_button->setIcon(icon);
     tool_button->setText(QObject::tr(text.toLocal8Bit()));

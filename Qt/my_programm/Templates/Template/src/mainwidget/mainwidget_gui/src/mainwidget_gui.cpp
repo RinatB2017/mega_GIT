@@ -61,7 +61,7 @@ void MainWidget_GUI::init(void)
 
     //---
     w = new MainWidget(this);
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
 
     connect(w,          SIGNAL(info(QString)),  this,       SIGNAL(info(QString)));
     connect(w,          SIGNAL(debug(QString)), this,       SIGNAL(debug(QString)));
@@ -86,7 +86,7 @@ void MainWidget_GUI::init(void)
 void MainWidget_GUI::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test", &MainWidget::test });
@@ -112,7 +112,7 @@ void MainWidget_GUI::createTestBar(void)
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "choice_test",
                                               "choice_test");
-    Q_CHECK_PTR(btn_choice_test);
+    Q_ASSERT(btn_choice_test);
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));

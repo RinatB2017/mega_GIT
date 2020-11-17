@@ -557,7 +557,7 @@ bool SerialBox4::isOpen(void)
 bool SerialBox4::add_menu(int index)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QMenu *menu = new QMenu(tr("Настройка RS-232"));
 
@@ -584,7 +584,7 @@ bool SerialBox4::add_menu(int index)
 bool SerialBox4::add_menu(int index, const QString &title)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QMenu *menu = new QMenu(title);
 

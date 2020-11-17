@@ -206,13 +206,13 @@ void MainBox::create_widgets(void)
     //---
 #ifdef USE_DOCKS
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QDockWidget *dock_note = new QDockWidget(tr("notebook"), this);
-    Q_CHECK_PTR(dock_note);
+    Q_ASSERT(dock_note);
 
     QDockWidget *dock_tab = new QDockWidget(tr("tab"), this);
-    Q_CHECK_PTR(dock_tab);
+    Q_ASSERT(dock_tab);
 
     dock_note->setObjectName("dock_note");
     dock_tab->setObjectName("dock_tab");

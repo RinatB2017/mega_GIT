@@ -251,10 +251,10 @@ bool Map::put_picture(int id, int x, int y)
                .arg(y));
 
     QLayoutItem *item = grid_map->itemAtPosition(y, x);
-    Q_CHECK_PTR(item);
+    Q_ASSERT(item);
 
     QLabel *label = dynamic_cast<QLabel*>(item->widget());
-    Q_CHECK_PTR(label);
+    Q_ASSERT(label);
 
     emit debug(QString("put_picture: PROPERTY_X %1 PROPERTY_Y %2 PROPERTY_ID %3")
                .arg(label->property(PROPERTY_X).toInt())
@@ -284,7 +284,7 @@ bool Map::save_map(const QString &filename)
     }
 
     QXmlPut *xmlPut = new QXmlPut("Map");
-    Q_CHECK_PTR(xmlPut);
+    Q_ASSERT(xmlPut);
 
     int w = columnCount();
     int h = rowCount();

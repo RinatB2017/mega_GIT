@@ -62,8 +62,8 @@ void BaseItem::calc_line(qreal center_x,
                          qreal *end_x,
                          qreal *end_y)
 {
-    Q_CHECK_PTR(end_x);
-    Q_CHECK_PTR(end_y);
+    Q_ASSERT(end_x);
+    Q_ASSERT(end_y);
 
     qreal A = radius;
     qreal B = qCos(qDegreesToRadians(angle)) * A;

@@ -99,7 +99,7 @@ void MainBox::click(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test 0", &MainBox::test_0 });
@@ -214,7 +214,7 @@ void MainBox::mouse_move_to(QPoint pos)
 bool MainBox::find_window(const QString &programm_title, int *x, int *y, int *width, int *heigth)
 {
     Display* display = XOpenDisplay( nullptr );
-    Q_CHECK_PTR(display);
+    Q_ASSERT(display);
 
     bool is_found = false;
     ulong count = 0;
@@ -272,7 +272,7 @@ bool MainBox::test_0(void)
 
 #if 1
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     int mb_x = mw->centralWidget()->x();
     int mb_y = mw->centralWidget()->y();

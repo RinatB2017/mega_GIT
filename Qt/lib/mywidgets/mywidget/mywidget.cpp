@@ -154,8 +154,8 @@ void MyWidget::connect_log(QWidget *parent)
 //--------------------------------------------------------------------------------
 bool MyWidget::connect_log_signals(QWidget *src, QWidget *dest)
 {
-    Q_CHECK_PTR(src);
-    Q_CHECK_PTR(dest);
+    Q_ASSERT(src);
+    Q_ASSERT(dest);
 
     if(src == nullptr)  return false;
     if(dest == nullptr)  return false;
@@ -234,7 +234,7 @@ void MyWidget::init_w_lists(void)
 //--------------------------------------------------------------------------------
 void MyWidget::add_widget_to_w_lists(QWidget *widget)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
     w_lists.append(widget);
 }
 //--------------------------------------------------------------------------------
@@ -338,8 +338,8 @@ void MyWidget::block_widget(const QString &name, bool state)
 //--------------------------------------------------------------------------------
 bool MyWidget::is_slot_exists(QWidget *obj, const char *slot_sign)
 {
-    Q_CHECK_PTR(obj);
-    Q_CHECK_PTR(slot_sign);
+    Q_ASSERT(obj);
+    Q_ASSERT(slot_sign);
 
     if(obj->metaObject()->indexOfSlot(QMetaObject::normalizedSignature(qPrintable(slot_sign))) == -1) return false;
     return true;
@@ -360,7 +360,7 @@ bool MyWidget::set_param(QString group_name, QString name, QVariant value)
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
 #endif
-    Q_CHECK_PTR(settings);
+    Q_ASSERT(settings);
 
     settings->beginGroup(group_name);
     settings->setValue(name, value);
@@ -391,7 +391,7 @@ bool MyWidget::get_param(QString group_name,
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
 #endif
-    Q_CHECK_PTR(settings);
+    Q_ASSERT(settings);
 
     settings->beginGroup(group_name);
     QVariant temp = settings->value(name, default_value);
@@ -415,7 +415,7 @@ QStringList MyWidget::get_all_param_name(void)
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
 #endif
-    Q_CHECK_PTR(settings);
+    Q_ASSERT(settings);
 
     settings->beginGroup(PARAMS_GROUP_NAME);
     QStringList temp = settings->allKeys();
@@ -427,7 +427,7 @@ QStringList MyWidget::get_all_param_name(void)
 //--------------------------------------------------------------------------------
 QString MyWidget::get_full_objectName(QWidget *widget)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
 
     QStringList sl;
     QWidget *temp = static_cast<QWidget *>(widget);
@@ -566,8 +566,8 @@ void MyWidget::load_d_spinBox(QList<d_spin_box> data)
 //--------------------------------------------------------------------------------
 bool MyWidget::create_pixmap(QWidget *w_left, QWidget *w_central)
 {
-    Q_CHECK_PTR(w_left);
-    Q_CHECK_PTR(w_central);
+    Q_ASSERT(w_left);
+    Q_ASSERT(w_central);
 
     QStringList *sl = reinterpret_cast<QStringList *>(w_left);
     if(sl)
@@ -619,8 +619,8 @@ QToolButton *MyWidget::add_button(QToolBar *tool_bar,
                                   const QString &text,
                                   const QString &tool_tip)
 {
-    Q_CHECK_PTR(tool_bar);
-    Q_CHECK_PTR(tool_button);
+    Q_ASSERT(tool_bar);
+    Q_ASSERT(tool_button);
 
     tool_button->setIcon(icon);
     tool_button->setText(QObject::tr(text.toLocal8Bit()));
@@ -634,7 +634,7 @@ void MyWidget::check_tooltips(void)
 {
 #if 0
     MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QList<QAbstractButton *> l_obj = mw->findChildren<QAbstractButton *>();
 #else
@@ -746,7 +746,7 @@ void MyWidget::save_widgets(void)
 
     foreach(QWidget *widget, widgets)
     {
-        Q_CHECK_PTR(widget);
+        Q_ASSERT(widget);
         if(is_my_widget(widget->objectName()))
         {
             if(widget->property(NO_SAVE).toBool() == true)

@@ -132,7 +132,7 @@ void CandleStick_Box_adv::init_axis(void)
     axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
     axisX->setCategories(categories);
     QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
-    Q_CHECK_PTR(axisY);
+    Q_ASSERT(axisY);
     axisY->setMin(axisY->min() * 0.99);
     axisY->setMax(axisY->max() * 1.01);
 }
@@ -260,7 +260,7 @@ int CandleStick_Box_adv::get_max_index(void)
 //--------------------------------------------------------------------------------
 void CandleStick_Box_adv::clear_data(void)
 {
-    Q_CHECK_PTR(candleSeries);
+    Q_ASSERT(candleSeries);
     while(candleSeries->count() > 0)
     {
         candleSeries->remove(candleSeries->sets().at(0));
@@ -304,7 +304,7 @@ void CandleStick_Box_adv::update_data(void)
     qDebug() << v_min << v_max;
 
     QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
-    Q_CHECK_PTR(axisY);
+    Q_ASSERT(axisY);
     axisY->setMin(v_min);
     axisY->setMax(v_max);
 #endif

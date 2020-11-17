@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/targets">
-        <file>в бой.png</file>
-        <file>auto.png</file>
-        <file>ok.png</file>
-        <file>auto_active.png</file>
-    </qresource>
-</RCC>

@@ -64,7 +64,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QToolBar *toolBar = new QToolBar(tr("testbar"));
     toolBar->setObjectName("testbar");

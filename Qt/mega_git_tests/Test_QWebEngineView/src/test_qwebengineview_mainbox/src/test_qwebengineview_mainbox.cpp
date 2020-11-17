@@ -319,7 +319,7 @@ void MainBox::analize(const QString &data)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test", &MainBox::test });

@@ -70,123 +70,123 @@ void SerialWidget::init(void)
 //--------------------------------------------------------------------------------
 bool SerialWidget::isOpen(void)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->isOpen();
 }
 //--------------------------------------------------------------------------------
 bool SerialWidget::serial_open(void)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->open(QIODevice::ReadWrite);
 }
 //--------------------------------------------------------------------------------
 bool SerialWidget::serial_close(void)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     serial5->close();
     return true;
 }
 //--------------------------------------------------------------------------------
 QByteArray SerialWidget::readAll(void)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->readAll();
 }
 //--------------------------------------------------------------------------------
 qint64 SerialWidget::bytesAvailable(void)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->bytesAvailable();
 }
 //--------------------------------------------------------------------------------
 void SerialWidget::setPortName(QString name)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     if(name.isEmpty())  return;
     serial5->setPortName(name);
 }
 //--------------------------------------------------------------------------------
 bool SerialWidget::setBaudRate(qint32 value)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->setBaudRate(value);
 }
 //--------------------------------------------------------------------------------
 bool SerialWidget::setDataBits(QSerialPort::DataBits value)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->setDataBits(value);
 }
 //--------------------------------------------------------------------------------
 bool SerialWidget::setParity(QSerialPort::Parity value)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->setParity(value);
 }
 //--------------------------------------------------------------------------------
 bool SerialWidget::setStopBits(QSerialPort::StopBits value)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->setStopBits(value);
 }
 //--------------------------------------------------------------------------------
 bool SerialWidget::setFlowControl(QSerialPort::FlowControl value)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->setFlowControl(value);
 }
 //--------------------------------------------------------------------------------
 QString SerialWidget::portName(void)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->portName();
 }
 //--------------------------------------------------------------------------------
 int SerialWidget::baudRate(void)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->baudRate();
 }
 //--------------------------------------------------------------------------------
 QSerialPort::DataBits SerialWidget::dataBits(void)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->dataBits();
 }
 //--------------------------------------------------------------------------------
 QSerialPort::Parity SerialWidget::parity(void)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->parity();
 }
 //--------------------------------------------------------------------------------
 QSerialPort::StopBits SerialWidget::stopBits(void)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->stopBits();
 }
 //--------------------------------------------------------------------------------
 QSerialPort::FlowControl SerialWidget::flowControl(void)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->flowControl();
 }
 //--------------------------------------------------------------------------------
 qint64 SerialWidget::write(const char *data, qint64 len)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->write(data, len);
 }
 //--------------------------------------------------------------------------------
 qint64 SerialWidget::write(const char *data)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->write(data);
 }
 //--------------------------------------------------------------------------------
 qint64 SerialWidget::write(const QByteArray &data)
 {
-    Q_CHECK_PTR(serial5);
+    Q_ASSERT(serial5);
     return serial5->write(data);
 }
 //--------------------------------------------------------------------------------

@@ -63,7 +63,7 @@ void MainBox::init(void)
     create_menu();
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QTabWidget *tw = new QTabWidget(this);
     for(int n=0; n<MAX_TAB; n++)
@@ -122,7 +122,7 @@ void MainBox::create_menu(void)
     connect(save_action, SIGNAL(triggered()), this, SLOT(save_setting()));
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     mw->add_filemenu_action(0, save_action);
     mw->add_filemenu_separator(1);
@@ -132,7 +132,7 @@ void MainBox::create_menu(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");

@@ -292,7 +292,7 @@ void AD9106_Box::init_sl_registers(void)
 void AD9106_Box::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test 0", &AD9106_Box::test_0 });

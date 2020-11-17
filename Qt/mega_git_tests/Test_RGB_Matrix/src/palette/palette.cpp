@@ -136,7 +136,7 @@ void MyPalette::load_setting(void)
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif
-    Q_CHECK_PTR(settings);
+    Q_ASSERT(settings);
 
     settings->beginGroup(objectName());
     set_data(settings->value("value").toByteArray());
@@ -152,7 +152,7 @@ void MyPalette::save_setting(void)
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif
-    Q_CHECK_PTR(settings);
+    Q_ASSERT(settings);
 
     settings->beginGroup(objectName());
     settings->setValue("value", get_data());

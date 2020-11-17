@@ -60,9 +60,9 @@ LogBox::LogBox(const QString &o_name,
 //--------------------------------------------------------------------------------
 LogBox::~LogBox()
 {
-    Q_CHECK_PTR(logBox);
-    Q_CHECK_PTR(progressBar);
-    Q_CHECK_PTR(fb);
+    Q_ASSERT(logBox);
+    Q_ASSERT(progressBar);
+    Q_ASSERT(fb);
 
     MyWidget::set_param(P_LOG, FLAG_SHOW_INFO,   flag_is_shows_info);
     MyWidget::set_param(P_LOG, FLAG_SHOW_ERROR,  flag_is_shows_error);
@@ -734,7 +734,7 @@ void LogBox::save_full_log(const QString &filename)
 void LogBox::changeOptions(void)
 {
     Log_options *optionsBox = new Log_options();
-    Q_CHECK_PTR(optionsBox);
+    Q_ASSERT(optionsBox);
 
     optionsBox->setObjectName("optionsBox");
 

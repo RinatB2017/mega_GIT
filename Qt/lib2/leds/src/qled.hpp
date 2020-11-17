@@ -9,7 +9,7 @@ class QLed : public QWidget
     Q_OBJECT
 public:
     explicit QLed(QWidget *parent = nullptr);
-    void setState(bool state);
+    void set_state(bool state);
     void set_size(int w, int h);
     void set_tooltip(const QString &text);
     void set_color(QColor color);

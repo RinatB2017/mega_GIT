@@ -136,10 +136,10 @@ bool MiniMap::set(int x, int y, int id)
     if(y > max_y)   return false;
 
     QLayoutItem *item = grid_map->itemAtPosition(y, x);
-    Q_CHECK_PTR(item);
+    Q_ASSERT(item);
 
     QLabel *label = dynamic_cast<QLabel*>(item->widget());
-    Q_CHECK_PTR(label);
+    Q_ASSERT(label);
 
     QPixmap pixmap;
     pixmap.load(QString(":/images/%1.png").arg(id));

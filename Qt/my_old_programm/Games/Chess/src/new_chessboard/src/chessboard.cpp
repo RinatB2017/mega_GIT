@@ -429,7 +429,7 @@ void ChessBoard::clear_figures(void)
 void ChessBoard::set_cursor(void)
 {
     QToolButton *btn = (QToolButton *)sender();
-    Q_CHECK_PTR(btn);
+    Q_ASSERT(btn);
     if(!btn)
     {
         emit error("set_cursor");

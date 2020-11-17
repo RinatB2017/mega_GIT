@@ -248,7 +248,7 @@ void WebView::init(void)
     cookies->load();
 
     QBotNetworkAccessManager *m_NetManage = new QBotNetworkAccessManager;
-    Q_CHECK_PTR(m_NetManage);
+    Q_ASSERT(m_NetManage);
 
     page()->setNetworkAccessManager(m_NetManage);
     page()->networkAccessManager()->setCookieJar(cookies);
@@ -259,7 +259,7 @@ void WebView::init(void)
 void WebView::contextMenuEvent(QContextMenuEvent *event)
 {
     QMenu *menu = this->page()->createStandardContextMenu();
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
     if(!menu)
     {
         emit info("menu not created!");
@@ -268,7 +268,7 @@ void WebView::contextMenuEvent(QContextMenuEvent *event)
     menu->addSeparator();
 
     QAction *settings = new QAction(QObject::tr("Settings"), this);
-    Q_CHECK_PTR(settings);
+    Q_ASSERT(settings);
 
     settings->setIcon(QIcon::fromTheme("applications-system"));
 
@@ -322,7 +322,7 @@ void WebView::wheelEvent(QWheelEvent *event)
 void WebView::run_websettingbox(void)
 {
     WebSettingBox *vBox = new WebSettingBox(attributes, this);
-    Q_CHECK_PTR(vBox);
+    Q_ASSERT(vBox);
 
     int res = vBox->exec();
     if(res != QDialog::Accepted)
@@ -396,7 +396,7 @@ void WebView::load_setting(void)
 void WebView::save_setting(void)
 {
     QXmlPut *xmlPut = new QXmlPut("WebSettings");
-    Q_CHECK_PTR(xmlPut);
+    Q_ASSERT(xmlPut);
 
     for(int n=0; n<attributes.count(); n++)
     {
@@ -428,7 +428,7 @@ void WebView::load(const QUrl &url)
 QWebView* WebView::createWindow(QWebPage::WebWindowType type)
 {
     WebView* page = new WebView;
-    Q_CHECK_PTR(page);
+    Q_ASSERT(page);
 
     switch(type)
     {
@@ -463,7 +463,7 @@ PersistentCookieJar *WebView::get_cookies(void)
 //--------------------------------------------------------------------------------
 QWebFrame *WebView::get_mainframe(void)
 {
-    Q_CHECK_PTR(page());
+    Q_ASSERT(page());
     if(page() == nullptr)
     {
         return 0;

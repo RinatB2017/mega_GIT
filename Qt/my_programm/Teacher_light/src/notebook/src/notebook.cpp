@@ -164,7 +164,7 @@ void Notebook::check_modified(void)
 void Notebook::btn_click(void)
 {
     QToolButton *btn = dynamic_cast<QToolButton *>(sender());
-    Q_CHECK_PTR(btn);
+    Q_ASSERT(btn);
 
     QString name = btn->property("ID").toString();
     if(name.isEmpty()) return;

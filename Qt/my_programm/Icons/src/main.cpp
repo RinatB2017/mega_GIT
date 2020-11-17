@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
     QPixmap pixmap(":/logo/logo.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 6);
-    Q_CHECK_PTR(splash);
+    Q_ASSERT(splash);
 
     splash->show();
 

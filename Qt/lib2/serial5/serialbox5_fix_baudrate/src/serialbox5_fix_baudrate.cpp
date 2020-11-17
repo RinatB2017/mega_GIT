@@ -410,10 +410,10 @@ void SerialBox5_fix_baudrate::drawData(const QByteArray &data)
 bool SerialBox5_fix_baudrate::add_menu(int index)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QMenu *menu = new QMenu(caption);
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QAction *action_flag_in_hex = new QAction(menu);
     QAction *action_flag_byte_by_byte = new QAction(menu);
@@ -440,10 +440,10 @@ bool SerialBox5_fix_baudrate::add_menu(int index)
 bool SerialBox5_fix_baudrate::add_menu(int index, const QString &title)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QMenu *menu = new QMenu(title);
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QAction *action_flag_in_hex = new QAction(menu);
     QAction *action_flag_byte_by_byte = new QAction(menu);

@@ -59,7 +59,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QToolBar *testbar = new QToolBar(tr("testbar"));
     testbar->setObjectName("testbar");
@@ -126,7 +126,7 @@ void MainBox::test_rtsp(void)
     inst = libvlc_new (0, nullptr);
     mp = libvlc_media_player_new(inst);
     m = libvlc_media_new_location(inst, "rtsp://192.168.0.66:554/av0_0");
-    Q_CHECK_PTR(m);
+    Q_ASSERT(m);
 
     libvlc_media_player_set_media (mp, m);
 

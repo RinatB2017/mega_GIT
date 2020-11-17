@@ -87,7 +87,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QToolBar *testbar = new QToolBar(tr("testbar"));
     testbar->setObjectName("testbar");
@@ -115,8 +115,8 @@ void MainBox::createTestBar(void)
                                        QIcon(),
                                        "test",
                                        "test");
-    Q_CHECK_PTR(btn_run);
-    Q_CHECK_PTR(btn_update);
+    Q_ASSERT(btn_run);
+    Q_ASSERT(btn_update);
     
 
     btn_run->setCheckable(true);
@@ -199,7 +199,7 @@ void MainBox::createDockWidgets(void)
     w2->setLayout(vbox2);
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
     mw->add_dock_widget("Main",     "main_control",     Qt::LeftDockWidgetArea,  reinterpret_cast<QWidget *>(w1));
     mw->add_dock_widget("Control",  "control_control",  Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(w2));
 }
@@ -341,7 +341,7 @@ void MainBox::test(void)
 {
     QFont *font = new QFont("Terminal", 5);
     //QFont *font = new QFont("Monospace", 5);
-    Q_CHECK_PTR(font);
+    Q_ASSERT(font);
 
     QString text = "Hello, world! ПРИВЕТ, МИР!";
     QFontMetrics fm(*font);

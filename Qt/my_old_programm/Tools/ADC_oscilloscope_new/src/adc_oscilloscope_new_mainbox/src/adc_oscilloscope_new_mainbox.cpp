@@ -48,11 +48,11 @@ void MainBox::init()
     ui->setupUi(this);
 
     serial = new SerialBox5(this, tr("RS-232"));
-    Q_CHECK_PTR(serial);
+    Q_ASSERT(serial);
     connect(serial, SIGNAL(output(QByteArray)), this, SLOT(raw_data(QByteArray)));
 
     grapher = new GrapherBox(this);
-    Q_CHECK_PTR(grapher);
+    Q_ASSERT(grapher);
     grapher->set_title("ADC");
     grapher->set_axis_scale_x(0, SIZE);
     grapher->set_axis_scale_y(0, 1024);

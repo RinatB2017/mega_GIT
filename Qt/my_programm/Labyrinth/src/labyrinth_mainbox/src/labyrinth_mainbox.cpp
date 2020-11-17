@@ -153,7 +153,7 @@ QToolButton * MainBox::create_button(const QString &name,
 void MainBox::createImagesDock(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow*>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QToolBar *image_bar = new QToolBar("image_bar");
     image_bar->setObjectName("image_bar");

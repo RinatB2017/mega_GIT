@@ -547,7 +547,7 @@ void LogBox::load_settings(void)
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif
-    Q_CHECK_PTR(settings);
+    Q_ASSERT(settings);
 
     settings->beginGroup("LogEdit");
     logBox->setReadOnly(settings->value("readOnly", true).toBool());
@@ -593,7 +593,7 @@ void LogBox::save_settings(void)
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif
-    Q_CHECK_PTR(settings);
+    Q_ASSERT(settings);
 
     settings->beginGroup("LogEdit");
     settings->setValue("readOnly",      (bool)logBox->isReadOnly());

@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     splash->show();
 
     MyMainWindow *main_window = new MyMainWindow();
-    Q_CHECK_PTR(main_window);
+    Q_ASSERT(main_window);
     main_window->setAttribute(Qt::WA_DeleteOnClose);
 
     MainWidget_GUI *mainBox = new MainWidget_GUI(main_window, splash);

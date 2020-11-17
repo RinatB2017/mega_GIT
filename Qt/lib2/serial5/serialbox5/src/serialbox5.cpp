@@ -215,22 +215,22 @@ void SerialBox5::initSerial(void)
 
 #ifdef RS232_SEND
     sendBox5 = new SendBox5(this);
-    Q_CHECK_PTR(sendBox5);
+    Q_ASSERT(sendBox5);
     connect(sendBox5,   &SendBox5::sendData, this, &SerialBox5::sendData);
     ui->layout_other->addWidget(sendBox5);
 #endif
 
 #ifndef RS232_NO_FRAME
     frame_ring = new QFrame(this);
-    Q_CHECK_PTR(frame_ring);
+    Q_ASSERT(frame_ring);
     add_frame_text(frame_ring, tr("ring"));
 
     frame_dsr = new QFrame(this);
-    Q_CHECK_PTR(frame_dsr);
+    Q_ASSERT(frame_dsr);
     add_frame_text(frame_dsr, tr("dsr"));
 
     frame_cts = new QFrame(this);
-    Q_CHECK_PTR(frame_cts);
+    Q_ASSERT(frame_cts);
     add_frame_text(frame_cts, tr("cts"));
 
     QHBoxLayout *hbox = new QHBoxLayout();
@@ -550,10 +550,10 @@ void SerialBox5::save_setting(void)
 bool SerialBox5::add_menu(int index)
 {
     MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QMenu *menu = new QMenu(caption);
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QAction *action_flag_byte_by_byte = new QAction(menu);
 
@@ -571,7 +571,7 @@ bool SerialBox5::add_menu(int index)
 bool SerialBox5::add_menu(int index, const QString &title)
 {
     MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QMenu *menu = new QMenu(title);
 
@@ -646,7 +646,7 @@ void SerialBox5::get_parameter(void)
 QPushButton *SerialBox5::add_QPushButton(const QString &title)
 {
     QPushButton *btn = new QPushButton(title);
-    Q_CHECK_PTR(btn);
+    Q_ASSERT(btn);
     ui->layout_other->addWidget(btn);
     return btn;
 }

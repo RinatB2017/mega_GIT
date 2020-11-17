@@ -64,7 +64,7 @@ void MainBox::init_protocol(void)
 {
     emit info("init protocol NMEA-0183");
     proto = new Proto_NMEA_0183();
-    Q_CHECK_PTR(proto);
+    Q_ASSERT(proto);
 
     connect(proto, SIGNAL(info(QString)),   this,   SIGNAL(info(QString)));
     connect(proto, SIGNAL(debug(QString)),  this,   SIGNAL(debug(QString)));
@@ -79,7 +79,7 @@ void MainBox::init_protocol(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");

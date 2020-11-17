@@ -62,16 +62,16 @@ int main(int argc, char *argv[])
     QPixmap pixmap(":/logo/logo.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
-    Q_CHECK_PTR(splash);
+    Q_ASSERT(splash);
     splash->show();
 
     qApp->processEvents();
 
     MainWindow *main_window = new MainWindow();
-    Q_CHECK_PTR(main_window);
+    Q_ASSERT(main_window);
 
     MainBox *mainBox = new MainBox(main_window, splash);
-    Q_CHECK_PTR(mainBox);
+    Q_ASSERT(mainBox);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

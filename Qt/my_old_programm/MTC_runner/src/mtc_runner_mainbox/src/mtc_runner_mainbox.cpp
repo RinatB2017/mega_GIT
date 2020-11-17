@@ -59,7 +59,7 @@ void MainBox::init(void)
 void MainBox::createRunBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -84,7 +84,7 @@ void MainBox::createRunBar(void)
 void MainBox::createScriptBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     btn_script = new QToolButton();
     btn_script->setText("...");

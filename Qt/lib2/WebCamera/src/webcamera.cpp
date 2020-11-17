@@ -931,7 +931,7 @@ bool WebCamera::searchObjectByTemplate(const char *imgName, const char *templNam
     Q_ASSERT(templ.height != 0);
 
     result = cvCreateImage(cvSize(src.width - templ.width + 1, src.height - templ.height + 1), 32, 1);
-    Q_CHECK_PTR(result);
+    Q_ASSERT(result);
 
     //    matchTemplate(src, templ, result, CV_TM_CCORR_NORMED);
     cvMatchTemplate(&src, &templ, result, CV_TM_CCORR_NORMED);

@@ -213,7 +213,7 @@ void SysLog::click(void)
     emit trace(Q_FUNC_INFO);
 
     QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
-    Q_CHECK_PTR(btn);
+    Q_ASSERT(btn);
 
     emit info(QString("%1").arg(btn->property("value").toInt()));
 }

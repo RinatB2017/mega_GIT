@@ -66,7 +66,7 @@ void CandleStick_Box::init(void)
     axisX->setCategories(categories);
 
     QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
-    Q_CHECK_PTR(axisY);
+    Q_ASSERT(axisY);
     axisY->setMin(axisY->min() * 0.99);
     axisY->setMax(axisY->max() * 1.01);
 
@@ -199,7 +199,7 @@ int CandleStick_Box::get_max_index(void)
 //--------------------------------------------------------------------------------
 void CandleStick_Box::clear_data(void)
 {
-    Q_CHECK_PTR(candleSeries);
+    Q_ASSERT(candleSeries);
     while(candleSeries->count() > 0)
     {
         candleSeries->remove(candleSeries->sets().at(0));
@@ -239,7 +239,7 @@ void CandleStick_Box::update_data(void)
                .arg(v_max));
 
     QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
-    Q_CHECK_PTR(axisY);
+    Q_ASSERT(axisY);
     axisY->setMin(v_min);
     axisY->setMax(v_max);
 #endif
@@ -315,7 +315,7 @@ void CandleStick_Box::move_up(void)
     emit trace(Q_FUNC_INFO);
 
     QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
-    Q_CHECK_PTR(axisY);
+    Q_ASSERT(axisY);
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::move_down(void)
@@ -323,7 +323,7 @@ void CandleStick_Box::move_down(void)
     emit trace(Q_FUNC_INFO);
 
     QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
-    Q_CHECK_PTR(axisY);
+    Q_ASSERT(axisY);
 }
 //--------------------------------------------------------------------------------
 void CandleStick_Box::zoom(qreal factor)
@@ -398,7 +398,7 @@ void CandleStick_Box::test(void)
 
 #if 0
     QBarCategoryAxis *axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
-    Q_CHECK_PTR(axisX);
+    Q_ASSERT(axisX);
     foreach(QString cat, axisX->categories())
     {
         emit info(cat);

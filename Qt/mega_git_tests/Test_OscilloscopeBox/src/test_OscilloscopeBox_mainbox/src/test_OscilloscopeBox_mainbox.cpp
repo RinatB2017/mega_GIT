@@ -81,7 +81,7 @@ void MainBox::update(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QToolBar *testbar = new QToolBar(tr("testbar"));
     testbar->setObjectName("toolBar");
@@ -100,13 +100,13 @@ void MainBox::createTestBar(void)
 void MainBox::load(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 }
 //--------------------------------------------------------------------------------
 void MainBox::save(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)

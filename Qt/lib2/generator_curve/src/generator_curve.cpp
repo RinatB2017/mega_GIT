@@ -66,7 +66,7 @@ QWidget *Generator_Curve::add_frame(void)
     frame->setLayout(vbox);
 
     frame->setFrameStyle(QFrame::Box | QFrame::Raised);
-    Q_CHECK_PTR(frame);
+    Q_ASSERT(frame);
 
     return frame;
 }
@@ -92,7 +92,7 @@ QWidget *Generator_Curve::add_grapher(void)
     area->setWidgetResizable(true);
     area->setWidget(w);
 
-    Q_CHECK_PTR(area);
+    Q_ASSERT(area);
 
     return area;
 }

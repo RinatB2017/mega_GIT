@@ -51,17 +51,17 @@ void Test_function::lineedit_set(QWidget *widget, const QString &name, const QSt
 QString Test_function::lineedit_get(const QString &name)
 {
     QLineEdit *le = mw->findChild<QLineEdit *>(name);
-    Q_CHECK_PTR(le);
+    Q_ASSERT(le);
 
     return le->text();
 }
 //--------------------------------------------------------------------------------
 QString Test_function::lineedit_get(QWidget *widget, const QString &name)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
 
     QLineEdit *le = widget->findChild<QLineEdit *>(name);
-    Q_CHECK_PTR(le);
+    Q_ASSERT(le);
 
     return le->text();
 }

@@ -58,7 +58,7 @@ void MySettings::init(void)
 //--------------------------------------------------------------------------------
 bool MySettings::load_combobox_property(QWidget *widget)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
     if(compare_name(widget->metaObject()->className(), "QComboBox"))
     {
         int size = settings->beginReadArray(dynamic_cast<QComboBox *>(widget)->objectName());
@@ -75,7 +75,7 @@ bool MySettings::load_combobox_property(QWidget *widget)
 //--------------------------------------------------------------------------------
 bool MySettings::save_combobox_property(QWidget *widget)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
     if(compare_name(widget->metaObject()->className(), "QComboBox"))
     {
         settings->beginWriteArray(dynamic_cast<QComboBox *>(widget)->objectName(), dynamic_cast<QComboBox *>(widget)->count());
@@ -95,7 +95,7 @@ bool MySettings::save_combobox_property(QWidget *widget)
 //--------------------------------------------------------------------------------
 bool MySettings::load_listwidget_property(QWidget *widget)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
 
     QListWidget *lw = dynamic_cast<QListWidget *>(widget);
     if(lw)
@@ -116,7 +116,7 @@ bool MySettings::load_listwidget_property(QWidget *widget)
 //--------------------------------------------------------------------------------
 bool MySettings::save_listwidget_property(QWidget *widget)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
     QListWidget *lw = dynamic_cast<QListWidget *>(widget);
     if(lw)
     {
@@ -138,7 +138,7 @@ bool MySettings::save_listwidget_property(QWidget *widget)
 //--------------------------------------------------------------------------------
 bool MySettings::load_splitter_property(QWidget *widget)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
     if(compare_name(widget->metaObject()->className(), "QSplitter"))
     {
         QString o_name = widget->objectName();
@@ -157,7 +157,7 @@ bool MySettings::load_splitter_property(QWidget *widget)
 //--------------------------------------------------------------------------------
 bool MySettings::save_splitter_property(QWidget *widget)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
     if(compare_name(widget->metaObject()->className(), "QSplitter"))
     {
         QString o_name = widget->objectName();
@@ -176,7 +176,7 @@ bool MySettings::save_splitter_property(QWidget *widget)
 //--------------------------------------------------------------------------------
 bool MySettings::load_property(QWidget *widget, const QString &property_name)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
     QVariant property = settings->value(property_name);
     if(property.isValid() == false)
     {
@@ -192,7 +192,7 @@ bool MySettings::load_property(QWidget *widget, const QString &property_name)
 //--------------------------------------------------------------------------------
 bool MySettings::save_property(QWidget *widget, const QString &property_name)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
     QVariant property = widget->property(property_name.toLocal8Bit());
     if(property.isValid() == false)
     {
@@ -356,7 +356,7 @@ void MySettings::beginWriteArray(const QString &prefix, int size)
 //--------------------------------------------------------------------------------
 int MySettings::beginReadArray(const QString &prefix)
 {
-    Q_CHECK_PTR(settings);
+    Q_ASSERT(settings);
     return settings->beginReadArray(prefix);
 }
 //--------------------------------------------------------------------------------
@@ -372,7 +372,7 @@ void MySettings::setArrayIndex(int i)
 //--------------------------------------------------------------------------------
 QString MySettings::get_full_objectName(QWidget *widget)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
 
     QStringList sl;
     QWidget *temp = static_cast<QWidget *>(widget);
@@ -408,7 +408,7 @@ bool MySettings::is_my_widget(QString o_name)
 //--------------------------------------------------------------------------------
 bool MySettings::compare_name(const char *widget_name, QString class_name)
 {
-    Q_CHECK_PTR(widget_name);
+    Q_ASSERT(widget_name);
     int res = strncmp(widget_name,
                       class_name.toLocal8Bit(),
                       static_cast<size_t>(class_name.count()));

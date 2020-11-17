@@ -77,7 +77,6 @@ SUBDIRS += \
     
 SUBDIRS += \
     $$PWD/Test_ADB \
-    $$PWD/Test_HeroWars \
     $$PWD/Test_OpenCV
     
 unix {

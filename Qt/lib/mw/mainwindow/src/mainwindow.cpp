@@ -57,7 +57,7 @@ MainWindow::~MainWindow()
 //--------------------------------------------------------------------------------
 void MainWindow::setCentralWidget(MyWidget *widget)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
     c_widget = widget;
 
     QMainWindow::setCentralWidget(c_widget);
@@ -77,7 +77,7 @@ void MainWindow::setCentralWidget(MyWidget *widget)
 //--------------------------------------------------------------------------------
 void MainWindow::setCentralWidget(QWidget *widget)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
 
     QMainWindow::setCentralWidget(widget);
 
@@ -88,7 +88,7 @@ void MainWindow::setCentralWidget(QWidget *widget)
 //--------------------------------------------------------------------------------
 void MainWindow::set_c_widget(MyWidget *widget)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
     c_widget = widget;
 }
 //--------------------------------------------------------------------------------
@@ -167,7 +167,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 #else
     if(c_widget)
     {
-        Q_CHECK_PTR(c_widget);
+        Q_ASSERT(c_widget);
         if(!c_widget->programm_is_exit())
         {
             event->ignore();
@@ -205,7 +205,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 #ifdef SHOW_SIZE
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
-    Q_CHECK_PTR(event);
+    Q_ASSERT(event);
 #ifndef NO_STATUSBAR
     statusLabel1->setText(QString(QLatin1String("%1 %2"))
                           .arg(event->size().width())
@@ -452,7 +452,7 @@ void MainWindow::setMenuLanguage(void)
     emit updateLanguage();
 #else
     QAction* menu = static_cast<QAction *>(sender());
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QString p_lang = menu->property(P_LANG).toString();
     if(p_lang == P_US)
@@ -494,7 +494,7 @@ void MainWindow::setToolBarLanguage(void)
     emit updateLanguage();
 #else
     QAction* menu = reinterpret_cast<QAction*>(sender());
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QString p_lang = menu->property(P_LANG).toString();
     if(p_lang == P_US)
@@ -578,7 +578,7 @@ void MainWindow::createStatusBar(void)
 void MainWindow::setStyles(void)
 {
     QAction* menu = static_cast<QAction *>(sender());
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     style_name = menu->text().remove("&");
 
@@ -600,7 +600,7 @@ void MainWindow::setStyles(void)
 void MainWindow::setToolBarStyles(void)
 {
     QPushButton *button = reinterpret_cast<QPushButton*>(sender());
-    Q_CHECK_PTR(button);
+    Q_ASSERT(button);
 
     if(!button)
     {
@@ -627,7 +627,7 @@ void MainWindow::setToolBarStyles(void)
 void MainWindow::about(void)
 {
     AboutBox *about = new AboutBox();
-    Q_CHECK_PTR(about);
+    Q_ASSERT(about);
 
     about->setProperty(P_AVATAR,        ":/logo/avatar.png");
     about->setProperty(P_ORGNAME,       orgName);
@@ -745,7 +745,7 @@ void MainWindow::save_setting(void)
 void MainWindow::createLog(void)
 {
     lb = new LogBox(this);
-    Q_CHECK_PTR(lb);
+    Q_ASSERT(lb);
 
     lb->setObjectName("log_widget");
 
@@ -765,7 +765,7 @@ void MainWindow::createLog(void)
 void MainWindow::createSysLog_dock(void)
 {
     w_syslog = new SysLog("syslog", this);
-    Q_CHECK_PTR(w_syslog);
+    Q_ASSERT(w_syslog);
 
     connect(w_syslog,   &SysLog::info,  this,   &MainWindow::info);
     connect(w_syslog,   &SysLog::debug, this,   &MainWindow::debug);
@@ -784,7 +784,7 @@ void MainWindow::createSysLog_dock(void)
 void MainWindow::createToolBar(void)
 {
     toolbar = new QToolBar("toolbar", this);
-    Q_CHECK_PTR(toolbar);
+    Q_ASSERT(toolbar);
 
     toolbar->setObjectName("toolbar");
     toolbar->setMovable(true);
@@ -861,7 +861,7 @@ void MainWindow::createToolBar(void)
 void MainWindow::createStyleToolBar(void)
 {
     styletoolbar = new QToolBar(tr("styletoolbar"), this);
-    Q_CHECK_PTR(styletoolbar);
+    Q_ASSERT(styletoolbar);
 
     styletoolbar->setObjectName("styletoolbar");
 
@@ -924,7 +924,7 @@ void MainWindow::createCustomStyleToolBar(void)
 {
     //TODO пробую самописные стили
     QToolBar *customStyletoolbar = new QToolBar(tr("customstyletoolbar"), this);
-    Q_CHECK_PTR(customStyletoolbar);
+    Q_ASSERT(customStyletoolbar |= nullptr);
 
     QPushButton *btnTemp = new QPushButton(this);
     btnTemp->setToolTip("Norton");
@@ -1002,7 +1002,7 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 bool MainWindow::add_menu(int pos_x,
                           QMenu *menu)
 {
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QList<QAction *> menus = app_mainBar->actions();
     if(menus.count() == 0)
@@ -1035,8 +1035,8 @@ bool MainWindow::add_action(QMenu *menu,
                             int pos_y,
                             QAction *action)
 {
-    Q_CHECK_PTR(menu);
-    Q_CHECK_PTR(action);
+    Q_ASSERT(menu);
+    Q_ASSERT(action);
 
     QList<QAction *> actions = menu->actions();
     if(actions.count() == 0)
@@ -1062,8 +1062,8 @@ bool MainWindow::add_action(QMenu *menu,
 bool MainWindow::add_filemenu_action(int pos_y,
                                      QAction *action)
 {
-    Q_CHECK_PTR(m_app_filemenu);
-    Q_CHECK_PTR(action);
+    Q_ASSERT(m_app_filemenu);
+    Q_ASSERT(action);
 
     QList<QAction *> actions = m_app_filemenu->actions();
     if(actions.count() == 0)
@@ -1089,8 +1089,8 @@ bool MainWindow::add_filemenu_action(int pos_y,
 bool MainWindow::add_optionsmenu_action(int pos_y,
                                         QAction *action)
 {
-    Q_CHECK_PTR(m_app_optionsmenu);
-    Q_CHECK_PTR(action);
+    Q_ASSERT(m_app_optionsmenu);
+    Q_ASSERT(action);
 
     QList<QAction *> actions = m_app_optionsmenu->actions();
     if(actions.count() == 0)
@@ -1120,9 +1120,9 @@ void MainWindow::change_value(void)
 //--------------------------------------------------------------------------------
 bool MainWindow::add_windowsmenu_action(QWidget *widget, QAction *action)
 {
-    Q_CHECK_PTR(widget);
-    Q_CHECK_PTR(action);
-    Q_CHECK_PTR(m_app_windowsmenu);
+    Q_ASSERT(widget);
+    Q_ASSERT(action);
+    Q_ASSERT(m_app_windowsmenu);
 
 //    l_docs.append(widget);
 
@@ -1141,8 +1141,8 @@ bool MainWindow::add_windowsmenu_action(QWidget *widget, QAction *action)
 bool MainWindow::add_helpmenu_action(int pos_y,
                                      QAction *action)
 {
-    Q_CHECK_PTR(m_app_helpmenu);
-    Q_CHECK_PTR(action);
+    Q_ASSERT(m_app_helpmenu);
+    Q_ASSERT(action);
 
     QList<QAction *> actions = m_app_helpmenu->actions();
     if(actions.count() == 0)
@@ -1168,7 +1168,7 @@ bool MainWindow::add_helpmenu_action(int pos_y,
 bool MainWindow::add_separator(QMenu *menu,
                                int pos_y)
 {
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QList<QAction *> actions = menu->actions();
     if(actions.count() == 0)
@@ -1266,7 +1266,7 @@ bool MainWindow::add_dock_widget(QString title,
                                  QWidget *widget,
                                  bool no_dock_position)
 {
-    Q_CHECK_PTR(widget);
+    Q_ASSERT(widget);
 
     if(title.isEmpty())
     {
@@ -1330,8 +1330,8 @@ void MainWindow::dockLocationChanged(Qt::DockWidgetArea area)
 bool MainWindow::add_filemenu_menu(int pos_y,
                                    QMenu *menu)
 {
-    Q_CHECK_PTR(m_app_filemenu);
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(m_app_filemenu);
+    Q_ASSERT(menu);
 
     QList<QAction *> actions = m_app_filemenu->actions();
     if(actions.count() == 0)
@@ -1358,8 +1358,8 @@ bool MainWindow::add_filemenu_menu(int pos_y,
 bool MainWindow::add_optionsmenu_menu(int pos_y,
                                       QMenu *menu)
 {
-    Q_CHECK_PTR(m_app_filemenu);
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(m_app_filemenu);
+    Q_ASSERT(menu);
 
     QList<QAction *> actions = m_app_optionsmenu->actions();
     if(actions.count() == 0)
@@ -1386,8 +1386,8 @@ bool MainWindow::add_optionsmenu_menu(int pos_y,
 bool MainWindow::add_helpmenu_menu(int pos_y,
                                    QMenu *menu)
 {
-    Q_CHECK_PTR(m_app_filemenu);
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(m_app_filemenu);
+    Q_ASSERT(menu);
 
     QList<QAction *> actions = m_app_helpmenu->actions();
     if(actions.count() == 0)
@@ -1562,7 +1562,7 @@ QMenu *MainWindow::add_new_menu(QMenu     *parent,
                                 QString   text,
                                 QIcon     *icon)
 {
-    Q_CHECK_PTR(parent);
+    Q_ASSERT(parent);
 
     QMenu *menu = new QMenu(parent);
     menu->setTitle(text);
@@ -1577,7 +1577,7 @@ QMenu *MainWindow::add_new_menu(QMenu     *parent,
         parent->addMenu(menu);
     }
 
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     return menu;
 }
@@ -1587,7 +1587,7 @@ bool MainWindow::add_new_action(QMenu   *parent,
                                 QIcon   *icon,
                                 v_saveSlot slot)
 {
-    Q_CHECK_PTR(parent);
+    Q_ASSERT(parent);
 
     QAction *action = new QAction(parent);
     action->setText(text);
@@ -1604,7 +1604,7 @@ bool MainWindow::add_new_action(QMenu   *parent,
         parent->addAction(action);
     }
 
-    Q_CHECK_PTR(action);
+    Q_ASSERT(action);
 
 #if QT_VERSION >= 0x050000
     connect(action, &QAction::triggered,  this,   slot);
@@ -1622,7 +1622,7 @@ bool MainWindow::add_new_action(QMenu   *parent,
                                 QIcon   *icon,
                                 b_saveSlot slot)
 {
-    Q_CHECK_PTR(parent);
+    Q_ASSERT(parent);
 
     QAction *action = new QAction(parent);
     action->setText(text);
@@ -1639,7 +1639,7 @@ bool MainWindow::add_new_action(QMenu   *parent,
         parent->addAction(action);
     }
 
-    Q_CHECK_PTR(action);
+    Q_ASSERT(action);
 
 #if QT_VERSION >= 0x050000
     connect(action, &QAction::triggered,  this,   slot);
@@ -1674,13 +1674,13 @@ void MainWindow::quit(void)
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_separator(QMenu *menu)
 {
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
     menu->addSeparator();
 }
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_exit(QMenu *menu)
 {
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QAction *exit = new QAction(menu);
     exit->setProperty(P_APP_ENG_TEXT, "Exit");
@@ -1697,7 +1697,7 @@ void MainWindow::app_menu_add_exit(QMenu *menu)
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_fonts(QMenu *menu)
 {
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     //---
     QMenu *m_fonts = new QMenu(menu);
@@ -1732,7 +1732,7 @@ void MainWindow::app_menu_add_fonts(QMenu *menu)
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_theme(QMenu *menu)
 {
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QMenu *menu_theme = new QMenu(menu);
     menu_theme->setProperty(P_APP_ENG_TEXT, "Themes");
@@ -1781,7 +1781,7 @@ void MainWindow::app_menu_add_theme(QMenu *menu)
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_lang(QMenu *menu)
 {
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QMenu *menu_language = new QMenu(menu);
     menu_language->setProperty(P_APP_ENG_TEXT, "Language");
@@ -1828,7 +1828,7 @@ void MainWindow::app_menu_add_lang(QMenu *menu)
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_style(QMenu *menu)
 {
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QMenu *menu_style = new QMenu(menu);
     menu_style->setProperty(P_APP_ENG_TEXT, "Style");
@@ -1856,7 +1856,7 @@ void MainWindow::app_menu_add_custom_style(QMenu *menu)
 {
     //TODO пробую самописные стили
 
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QMenu *menu_style = new QMenu(menu);
     menu_style->setProperty(P_APP_ENG_TEXT, "Custom style");
@@ -1877,7 +1877,7 @@ void MainWindow::app_menu_add_custom_style(QMenu *menu)
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_confirm_exit(QMenu *menu)
 {
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QAction *exit = new QAction(menu);
     exit->setProperty(P_APP_ENG_TEXT, "Do not ask when you exit");
@@ -1895,7 +1895,7 @@ void MainWindow::app_menu_add_confirm_exit(QMenu *menu)
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_show_on_top(QMenu *menu)
 {
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QAction *on_top = new QAction(menu);
     on_top->setProperty(P_APP_ENG_TEXT, "Always on top");
@@ -1913,7 +1913,7 @@ void MainWindow::app_menu_add_show_on_top(QMenu *menu)
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_about(QMenu *menu)
 {
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QAction *about = new QAction(menu);
     about->setProperty(P_APP_ENG_TEXT, "About");
@@ -1930,7 +1930,7 @@ void MainWindow::app_menu_add_about(QMenu *menu)
 //--------------------------------------------------------------------------------
 void MainWindow::app_menu_add_help(QMenu *menu)
 {
-    Q_CHECK_PTR(menu);
+    Q_ASSERT(menu);
 
     QAction *help = new QAction(menu);
     help->setProperty(P_APP_ENG_TEXT, "Help");
@@ -1948,7 +1948,7 @@ void MainWindow::app_menu_add_help(QMenu *menu)
 void MainWindow::app_toolbar_add_separator(void)
 {
 #ifndef NO_TOOLBAR
-    Q_CHECK_PTR(toolbar);
+    Q_ASSERT(toolbar);
     toolbar->addSeparator();
 #endif
 }

@@ -68,7 +68,7 @@ void MainWindow::create_menu(void)
 void MainWindow::create_toolbars(void)
 {
     QToolBar *toolbar = new QToolBar("toolbar", this);
-    Q_CHECK_PTR(toolbar);
+    Q_ASSERT(toolbar);
     if(toolbar == nullptr)
     {
         return;

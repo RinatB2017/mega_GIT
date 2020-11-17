@@ -130,7 +130,7 @@ void MainBox::itemChanged(QListWidgetItem *item)
 void MainBox::createUrlBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QToolBar *urlbar = new QToolBar(tr("urlbar"));
     urlbar->setObjectName("urlbar");

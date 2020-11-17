@@ -156,10 +156,10 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = reinterpret_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QToolBar *testbar = new QToolBar("testbar");
-    Q_CHECK_PTR(testbar);
+    Q_ASSERT(testbar);
     testbar->setObjectName("testbar");
 
     mw->addToolBar(Qt::TopToolBarArea, testbar);

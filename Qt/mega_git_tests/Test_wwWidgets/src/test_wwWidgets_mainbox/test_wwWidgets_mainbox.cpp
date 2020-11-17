@@ -110,7 +110,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test 0", &MainBox::test_0 });
@@ -248,7 +248,7 @@ void MainBox::f_qwwcolorbutton(int col, int row)
 
     //---
     QwwColorButton *w = new QwwColorButton;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     w->setShowName(false);
     //w->setText("test");
     //---
@@ -280,7 +280,7 @@ void MainBox::f_qwwhuesatradialpicker(int col, int row)
 
     //---
     QwwHueSatRadialPicker *w = new QwwHueSatRadialPicker;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     w->setValue(5);
     w->setColor(Qt::blue);
     //---
@@ -312,7 +312,7 @@ void MainBox::f_qwwlongspinbox(int col, int row)
 
     //---
     QwwLongSpinBox *w = new QwwLongSpinBox;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwlongspinbox");
@@ -342,7 +342,7 @@ void MainBox::f_qwwrichtextedit(int col, int row)
 
     //---
     QwwRichTextEdit *w = new QwwRichTextEdit;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     w->setText("<B>Hello</B> <font color='red'>world</font>");
     //---
 
@@ -373,7 +373,7 @@ void MainBox::f_qwwcolorcombobox(int col, int row)
 
     //---
     QwwColorComboBox *w = new QwwColorComboBox;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     w->addColor(Qt::red, "red");
     //---
 
@@ -404,7 +404,7 @@ void MainBox::f_qwwled(int col, int row)
 
     //---
     QwwLed *w = new QwwLed(this);
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     w->setAnimated(true);
     w->setColor(Qt::red);
     w->setPeriod(100);
@@ -438,7 +438,7 @@ void MainBox::f_qwwnavigationbar(int col, int row)
 
     //---
     QwwNavigationBar *w = new QwwNavigationBar;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwnavigationbar");
@@ -477,7 +477,7 @@ void MainBox::f_qwwtaskpanel(int col, int row)
     w1->setLayout(vbox1);
 
     QwwTaskPanel *w = new QwwTaskPanel;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     w->addTask(w1, "test");
     w->setMaximumHeight(200);
     //---
@@ -509,7 +509,7 @@ void MainBox::f_qwwbreadcrumb(int col, int row)
 
     //---
     QwwBreadCrumb *w = new QwwBreadCrumb;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwbreadcrumb");
@@ -555,7 +555,7 @@ void MainBox::f_qwwconfigwidget(int col, int row)
     w2->setLayout(vbox2);
 
     QwwConfigWidget *w = new QwwConfigWidget;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     w->addGroup(w1, qApp->style()->standardIcon(QStyle::SP_MediaPlay), "test1");
     w->addGroup(w2, qApp->style()->standardIcon(QStyle::SP_MediaStop), "test2");
     //---
@@ -587,7 +587,7 @@ void MainBox::f_qwwlistnavigator(int col, int row)
 
     //---
     QwwListNavigator *w = new QwwListNavigator;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwlistnavigator");
@@ -617,7 +617,7 @@ void MainBox::f_qwwnumpad(int col, int row)
 
     //---
     QwwNumPad *w = new QwwNumPad;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwnumpad");
@@ -647,7 +647,7 @@ void MainBox::f_qwwtextspinbox(int col, int row)
 
     //---
     QwwTextSpinBox *w = new QwwTextSpinBox;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwtextspinbox");
@@ -677,7 +677,7 @@ void MainBox::f_qwwbuttonlineedit(int col, int row)
 
     //---
     QwwButtonLineEdit *w = new QwwButtonLineEdit;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwbuttonlineedit");
@@ -707,7 +707,7 @@ void MainBox::f_qwwfilechooser(int col, int row)
 
     //---
     QwwFileChooser *w = new QwwFileChooser;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwfilechooser");
@@ -737,7 +737,7 @@ void MainBox::f_qwwlistwidget(int col, int row)
 
     //---
     QwwListWidget *w  =  new QwwListWidget;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwlistwidget");
@@ -767,7 +767,7 @@ void MainBox::f_qwwresetlineedit(int col, int row)
 
     //---
     QwwResetLineEdit *w = new QwwResetLineEdit;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwresetlineedit");
@@ -800,7 +800,7 @@ void MainBox::f_qwwtipwidget(int col, int row)
     sl << "one" << "two" << "three";
     
     QwwTipWidget *w = new QwwTipWidget(sl,this);
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwtipwidget");
@@ -830,7 +830,7 @@ void MainBox::f_qwwclearlineedit(int col, int row)
 
     //---
     QwwClearLineEdit *w  =  new QwwClearLineEdit;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwclearlineedit");
@@ -860,7 +860,7 @@ void MainBox::f_qwwhuesatpicker(int col, int row)
 
     //---
     QwwHueSatPicker *w = new QwwHueSatPicker;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwhuesatpicker");
@@ -890,7 +890,7 @@ void MainBox::f_qwwloginbox(int col, int row)
 
     //---
     QwwLoginBox *w = new QwwLoginBox;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwloginbox");
@@ -920,7 +920,7 @@ void MainBox::f_qwwrichtextbutton(int col, int row)
 
     //---
     QwwRichTextButton *w = new QwwRichTextButton;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwrichtextbutton");
@@ -950,7 +950,7 @@ void MainBox::f_qwwtwocolorindicator(int col, int row)
 
     //---
     QwwTwoColorIndicator *w  = new QwwTwoColorIndicator;
-    Q_CHECK_PTR(w);
+    Q_ASSERT(w);
     //---
 
     QLabel *lbl = new QLabel("qwwtwocolorindicator");

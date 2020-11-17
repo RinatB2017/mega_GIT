@@ -51,7 +51,7 @@ void MainBox::init(void)
 #endif
 
     tab = new QTabWidget(this);
-    Q_CHECK_PTR(tab);
+    Q_ASSERT(tab);
 
     QTabWidget *crystal_clear   = new QTabWidget(this);
     QTabWidget *oxygen          = new QTabWidget(this);
@@ -263,7 +263,7 @@ void MainBox::save(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -283,7 +283,7 @@ void MainBox::add_icons(QTabWidget *page,
                         const QString &catalog_name,
                         int max_x)
 {
-    Q_CHECK_PTR(page);
+    Q_ASSERT(page);
 
     QWidget *view = new QWidget;
     QGridLayout *gbox = new QGridLayout;

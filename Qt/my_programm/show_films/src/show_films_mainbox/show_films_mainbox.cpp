@@ -226,7 +226,7 @@ void MainBox::create_menu(void)
     connect(last_film, SIGNAL(triggered()), this, SLOT(select_last_film()));
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     mw->add_filemenu_action(0, change_player_action);
     mw->add_filemenu_separator(1);

@@ -111,7 +111,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test",             &MainBox::f_test });
@@ -173,7 +173,7 @@ void MainBox::scan(void)
     //554
 
     emit trace(Q_FUNC_INFO);
-    Q_CHECK_PTR(m_pTcpSocket);
+    Q_ASSERT(m_pTcpSocket);
 
     block_this_button(true);
 
@@ -250,7 +250,7 @@ void MainBox::scan(void)
 void MainBox::f_connect(void)
 {
     emit trace(Q_FUNC_INFO);
-    Q_CHECK_PTR(m_pTcpSocket);
+    Q_ASSERT(m_pTcpSocket);
 
     auto index = ui->tv_scan->currentIndex();
     if(index.row() == -1)
@@ -287,7 +287,7 @@ void MainBox::f_connect(void)
 void MainBox::f_disconnect(void)
 {
     emit trace(Q_FUNC_INFO);
-    Q_CHECK_PTR(m_pTcpSocket);
+    Q_ASSERT(m_pTcpSocket);
 
     auto index = ui->tv_scan->currentIndex();
     if(index.row() == -1)

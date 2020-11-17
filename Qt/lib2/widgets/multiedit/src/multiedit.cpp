@@ -68,14 +68,14 @@ void MultiEdit::rem_page(void)
 void MultiEdit::setPlainText(const QString &text)
 {
     QTextEdit *edit = reinterpret_cast<QTextEdit *>(ui->tabWidget->currentWidget());
-    Q_CHECK_PTR(edit);
+    Q_ASSERT(edit);
     edit->setPlainText(text);
 }
 //--------------------------------------------------------------------------------
 QString MultiEdit::toPlainText(void) const
 {
     QTextEdit *edit = reinterpret_cast<QTextEdit *>(ui->tabWidget->currentWidget());
-    Q_CHECK_PTR(edit);
+    Q_ASSERT(edit);
     return edit->toPlainText();
 }
 //--------------------------------------------------------------------------------

@@ -166,7 +166,7 @@ bool GrapherBox::set_curve_color(int channel, QColor color)
 void GrapherBox::set_curve_symbol(int channel,
                                   QwtSymbol *symbol)
 {
-    Q_CHECK_PTR(symbol);
+    Q_ASSERT(symbol);
 
     if(channel < 0)
     {
@@ -222,7 +222,7 @@ void GrapherBox::set_curve_attribute(int channel,
 void GrapherBox::set_curve_fitter(int channel,
                                   QwtSplineCurveFitter *fitter)
 {
-    Q_CHECK_PTR(fitter);
+    Q_ASSERT(fitter);
 
     if(channel < 0)
     {
@@ -371,7 +371,7 @@ int GrapherBox::get_curves_count(void)
 //--------------------------------------------------------------------------------
 QVariant GrapherBox::itemToInfo(QwtPlotItem *plotItem) const
 {
-    Q_CHECK_PTR(plotItem);
+    Q_ASSERT(plotItem);
 
     QVariant itemInfo;
     //qVariantSetValue(itemInfo, plotItem); //TODO deprecated
@@ -382,7 +382,7 @@ QVariant GrapherBox::itemToInfo(QwtPlotItem *plotItem) const
 //--------------------------------------------------------------------------------
 void GrapherBox::showCurve(QwtPlotItem *item, bool on)
 {
-    Q_CHECK_PTR(item);
+    Q_ASSERT(item);
 
     item->setVisible(on);
 
@@ -705,7 +705,7 @@ void GrapherBox::click_legend(void)
 //--------------------------------------------------------------------------------
 void GrapherBox::setAxisScaleDraw( int axisId, QwtScaleDraw *scaleDraw )
 {
-    Q_CHECK_PTR(scaleDraw);
+    Q_ASSERT(scaleDraw);
     ui->qwtPlot->setAxisScaleDraw(axisId, scaleDraw);
 }
 //--------------------------------------------------------------------------------
@@ -719,7 +719,7 @@ void GrapherBox::clear_d_picker(void)
 //--------------------------------------------------------------------------------
 void GrapherBox::set_d_picker(QwtPlotPicker *picker)
 {
-    Q_CHECK_PTR(picker);
+    Q_ASSERT(picker);
     d_picker = picker;
 }
 //--------------------------------------------------------------------------------
@@ -787,7 +787,7 @@ void GrapherBox::init()
 //--------------------------------------------------------------------------------
 void GrapherBox::add_curve_data_points(int channel, QVector<QPointF> *points)
 {
-    Q_CHECK_PTR(points);
+    Q_ASSERT(points);
 
     curves[channel].real_data = *points;
     curves.at(channel).view_curve->setSamples(*points);

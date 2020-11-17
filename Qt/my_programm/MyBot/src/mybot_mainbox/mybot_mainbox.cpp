@@ -76,7 +76,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test 0", &MainBox::test_0 });
@@ -244,7 +244,7 @@ bool MainBox::find_window(const QString &programm_title,
 {
 #ifdef Q_OS_LINUX
     Display* display = XOpenDisplay( nullptr );
-    Q_CHECK_PTR(display);
+    Q_ASSERT(display);
 
     bool is_found = false;
     ulong count = 0;
@@ -309,7 +309,7 @@ void MainBox::find_programm(void)
 
     QString title = ui->le_programm->text();
     QScreen *screen = QGuiApplication::primaryScreen();
-    Q_CHECK_PTR(screen);
+    Q_ASSERT(screen);
 
     int x = 0;
     int y = 0;

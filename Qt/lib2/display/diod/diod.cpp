@@ -88,7 +88,7 @@ void Diod::set_cursor(void)
 {
     QPixmap *pixmap = new QPixmap(MAX_LED_SIZE_W,
                                   MAX_LED_SIZE_H);
-    Q_CHECK_PTR(pixmap);
+    Q_ASSERT(pixmap);
 
     pixmap->fill(QColor(0, 0, 0, 0));
 

@@ -53,7 +53,7 @@ void LedPanel::drawValue(unsigned long data)
     for(n=0; n<count; n++)
     {
         mask = 1 << n;
-        led[n]->setState(data & mask);
+        led[n]->set_state(data & mask);
     }
 }
 //--------------------------------------------------------------------------------

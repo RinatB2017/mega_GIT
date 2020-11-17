@@ -53,7 +53,7 @@ void MainBox::init(void)
 #endif
 
     serialBox = new SerialBox5(this, "RS232", "RS232");
-    Q_CHECK_PTR(serialBox);
+    Q_ASSERT(serialBox);
     serialBox->add_menu(2);
 
     QFrame *frame = new QFrame(this);
@@ -90,7 +90,7 @@ void MainBox::init(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");

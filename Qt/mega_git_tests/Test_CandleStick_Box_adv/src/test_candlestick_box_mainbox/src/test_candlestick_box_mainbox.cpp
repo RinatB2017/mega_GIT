@@ -102,7 +102,7 @@ void MainBox::init_process(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     QToolBar *testbar = new QToolBar(tr("testbar"));
     testbar->setObjectName("testbar");
@@ -455,7 +455,7 @@ void MainBox::started(void)
 //--------------------------------------------------------------------------------
 void MainBox::read_data(void)
 {
-    Q_CHECK_PTR(process);
+    Q_ASSERT(process);
     QByteArray data = process->readAllStandardOutput();
     emit trace(Q_FUNC_INFO);
 }

@@ -49,11 +49,11 @@ MainBox::~MainBox()
         timer->deleteLater();
     }
 
-//    if(bar)
-//    {
-//        bar->disconnect();
-//        bar->deleteLater();
-//    }
+    //    if(bar)
+    //    {
+    //        bar->disconnect();
+    //        bar->deleteLater();
+    //    }
 
     delete ui;
 }
@@ -63,6 +63,16 @@ void MainBox::init(void)
     ui->setupUi(this);
 
     createTestBar();
+
+#if 0
+    // create shortcut
+    QShortcut *shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q), this);
+
+    // connect its 'activated' signal to your function
+    QObject::connect(shortcut,    &QShortcut::activated,
+                     qApp,        &QApplication::quit);
+    //---
+#endif
 
     ui->horizontalSlider->setRange(0, 1000);
 
@@ -223,7 +233,7 @@ void MainBox::victory(void)
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw != nullptr);
+    Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test",             &MainBox::test });
@@ -368,14 +378,14 @@ void MainBox::print_mp(QWidget *widget)
 //--------------------------------------------------------------------------------
 bool MainBox::timer_start(void)
 {
-    Q_CHECK_PTR(timer);
+    Q_ASSERT(timer);
     timer->start(500);
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::timer_stop(void)
 {
-    Q_CHECK_PTR(timer);
+    Q_ASSERT(timer);
     timer->stop();
     return true;
 }
@@ -431,18 +441,18 @@ bool MainBox::test(void)
 #endif
 
 #if 0
-//    int max_x = 3;
-//    int max_y = 5;
-//    QImage image(QSize(max_x, max_y), QImage::Format_ARGB32);
+    //    int max_x = 3;
+    //    int max_y = 5;
+    //    QImage image(QSize(max_x, max_y), QImage::Format_ARGB32);
 
-//    for(int y=0; y<max_y; y++)
-//    {
-//        for(int x=0; x<max_x; x++)
-//        {
-//            image.setPixel(x, y, qRgb(255, 0, 0));
-//        }
-//    }
-//    image.save("/dev/shm/temp.png");
+    //    for(int y=0; y<max_y; y++)
+    //    {
+    //        for(int x=0; x<max_x; x++)
+    //        {
+    //            image.setPixel(x, y, qRgb(255, 0, 0));
+    //        }
+    //    }
+    //    image.save("/dev/shm/temp.png");
 
     QToolButton *btn = new QToolButton();
     //btn->setIcon(QIcon(QPixmap::fromImage(image)));
@@ -450,16 +460,16 @@ bool MainBox::test(void)
     btn->setFixedSize(8, 600);
 
     connect(btn, &QToolButton::clicked, [btn, this]() {
-            direction = !direction;
-            if(direction)
-            {
-                btn->setIcon(QIcon(":/bullets/bullet_right.png"));
-            }
-            else
-            {
-                btn->setIcon(QIcon(":/bullets/bullet_left.png"));
-            }
-        });
+        direction = !direction;
+        if(direction)
+        {
+            btn->setIcon(QIcon(":/bullets/bullet_right.png"));
+        }
+        else
+        {
+            btn->setIcon(QIcon(":/bullets/bullet_left.png"));
+        }
+    });
 
     btn->show();
 #endif

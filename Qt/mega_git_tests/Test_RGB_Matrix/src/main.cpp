@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 
     QPixmap pixmap(":/logo/logo.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);
-    Q_CHECK_PTR(splash);
+    Q_ASSERT(splash);
     splash->show();
     splash->showMessage(QObject::tr("Подождите ..."));
     qApp->processEvents();

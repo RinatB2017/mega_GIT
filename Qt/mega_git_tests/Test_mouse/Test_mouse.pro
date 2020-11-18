@@ -23,8 +23,10 @@ HEADERS += \
 SOURCES += \
     main.cpp
 
-CONFIG  += c++11
-LIBS    += -lX11 -lXtst
+linux {
+    CONFIG  += c++11
+    LIBS    += -lX11 -lXtst
+}
 
 win32 {
     RC_ICONS = ico/computer.ico

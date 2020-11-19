@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     Q_ASSERT(splash);
     splash->show();
 
-    qApp->processEvents();
+    
 
     MainWindow *main_window = new MainWindow();
     //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);

@@ -137,6 +137,14 @@ void MainBox::init(void)
     }
 #endif
 
+#if 1
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->add_dock_widget("TestFrame", "test_frame", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(ui->test_widget));
+    }
+#endif
+
     //---
     file_model = new QFileSystemModel(this);
     file_model->setNameFilters(QStringList() << "*");
@@ -433,6 +441,15 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QList<QWidget *> widgets = ui->test_widget->findChildren<QWidget *>();
+    emit info(QString("widgets: %1").arg(widgets.count()));
+    foreach (QWidget *widget, widgets)
+    {
+        emit info(widget->objectName());
+    }
+#endif
+
+#if 0
     TestBrowser *browser = new TestBrowser();
     browser->setUrl(QUrl("https://hero-wars.com"));
     browser->setMinimumSize(800, 600);

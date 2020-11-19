@@ -584,7 +584,7 @@ void LogBox::syslogLog(QDateTime dt,
 
     logBox->moveCursor(QTextCursor::End);
     //---
-    qApp->processEvents();
+    
 }
 //--------------------------------------------------------------------------------
 void LogBox::syslogLog(int level,
@@ -606,7 +606,7 @@ void LogBox::syslogLog(int level,
 
     logBox->moveCursor(QTextCursor::End);
     //---
-    qApp->processEvents();
+    
 }
 //--------------------------------------------------------------------------------
 void LogBox::save_to(void)

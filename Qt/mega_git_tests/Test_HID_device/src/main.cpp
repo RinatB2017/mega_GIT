@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-    qApp->processEvents();
+    
 
     MainWindow *main_window = new MainWindow();
 

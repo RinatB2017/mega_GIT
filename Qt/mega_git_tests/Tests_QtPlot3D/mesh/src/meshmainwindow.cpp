@@ -218,7 +218,7 @@ void MeshMainWindow::open()
     filenameWidget->setToolTip(s);
     QString ext = fi.suffix();
     filenameWidget->setText(fi.fileName());
-    qApp->processEvents(); // enforces repaint;
+     // enforces repaint;
 
     if (IO::load(dataWidget, s, ext))
     {

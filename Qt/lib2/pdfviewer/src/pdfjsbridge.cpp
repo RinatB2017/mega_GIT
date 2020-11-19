@@ -55,7 +55,7 @@ QVariant PdfJsBridge::invokeJavaScriptAndWaitForResult(const QString &script)
         });
 
         while (!waitSemaphore.tryAcquire()) {
-            qApp->processEvents();
+            
         }
     }
 
@@ -69,7 +69,7 @@ QStringList PdfJsBridge::fetchPdfDocumentDestinations()
     invokeJavaScript("qpdf_FetchDestinations();");
 
     while (!m_pdfDestinationsSema.tryAcquire()) {
-        qApp->processEvents();
+        
     }
 
     return m_pdfDocumentDestinations;
@@ -85,7 +85,7 @@ void PdfJsBridge::close()
 {
     invokeJavaScript("qpdf_Close();");
     while (!m_pdfCloseSema.tryAcquire()) {
-        qApp->processEvents();
+        
     }
 }
 

@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     MySplashScreen splash(pixmap, 3);
     splash.show();
     splash.showMessage(QObject::tr("Подождите ..."));
-    qApp->processEvents();
+    
 
     MainWindow *main_window = new MainWindow;
     //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);

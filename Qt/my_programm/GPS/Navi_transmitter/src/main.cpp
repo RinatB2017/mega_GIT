@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     MySplashScreen *splash = new MySplashScreen(pixmap);
     splash->show();
     splash->showMessage(QObject::tr("Подождите ..."));
-    qApp->processEvents();
+    
 
     MainWindow *main_window = new MainWindow();
     MainBox *mainBox = new MainBox(main_window, splash);

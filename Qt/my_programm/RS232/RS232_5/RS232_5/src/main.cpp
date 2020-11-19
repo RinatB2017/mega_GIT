@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     splash->show();
     splash->showMessage(QObject::tr("Подождите ..."));
 
-    qApp->processEvents();
+    
 
     MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);

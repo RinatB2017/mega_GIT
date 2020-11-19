@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 
     splash->show();
     splash->showMessage(QObject::tr("Подождите ..."));
-    qApp->processEvents();
+    
 
     TestWidget *cw = new TestWidget(main_window);
 //    QObject::connect(cw, &TestWidget::info,  main_window, &MainWindow::info);

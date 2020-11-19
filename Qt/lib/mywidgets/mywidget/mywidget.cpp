@@ -738,9 +738,11 @@ void MyWidget::load_widgets(void)
 //--------------------------------------------------------------------------------
 void MyWidget::save_widgets(void)
 {
+//    QList<QWidget *> widgets = topLevelWidget()->findChildren<QWidget *>();
     QList<QWidget *> widgets = findChildren<QWidget *>();
     if(widgets.count() <= 0)
     {
+        qDebug() << "### [" << objectName() << "] widgets.count() <= 0 [" << widgets.count() + "]";
         return;
     }
 

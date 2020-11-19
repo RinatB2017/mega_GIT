@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     splash->show();
 
-    qApp->processEvents();
+    
 
     MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window != nullptr);

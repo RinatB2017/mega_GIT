@@ -144,7 +144,7 @@ void login::sLogin()
   {
     _splash->show();
     _splash->showMessage(tr("Initializing the Database Connector"));
-    qApp->processEvents();
+    
   }
 
   QString databaseURL;
@@ -178,7 +178,7 @@ void login::sLogin()
   if (_splash)
   {
     _splash->showMessage(tr("Connecting to the Database"));
-    qApp->processEvents();
+    
   }
   
   bool result = db.open();
@@ -212,7 +212,7 @@ void login::sLogin()
   if (_splash)
   {
     _splash->showMessage(tr("Logging into the Database"));
-    qApp->processEvents();
+    
   }
   
   setCursor(QCursor(Qt::ArrowCursor));

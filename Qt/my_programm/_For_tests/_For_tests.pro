@@ -101,6 +101,8 @@ include (src/mymainwindow/mymainwindow.pri)
 include (src/collapsiblewidget/collapsiblewidget.pri)
 include (src/controlexitwidget/controlexitwidget.pri)
 
+include (src/testwidget/testwidget.pri)
+
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)

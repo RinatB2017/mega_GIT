@@ -68,6 +68,6 @@ void MyWaitSplashScreen::showMessage(const QString &message,
         current_progress=0;
     }
     repaint();
-    qApp->processEvents();
+    
 }
 //--------------------------------------------------------------------------------

@@ -633,7 +633,7 @@ foreach (QString lvl, sl)
 
     for(int n=0; n<1000; n++)
     {
-        qApp->processEvents();
+        
         Sleeper::msleep(10);
     }
 

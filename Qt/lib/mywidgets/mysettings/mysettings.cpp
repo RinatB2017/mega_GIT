@@ -161,6 +161,10 @@ bool MySettings::save_splitter_property(QWidget *widget)
     if(compare_name(widget->metaObject()->className(), "QSplitter"))
     {
         QString o_name = widget->objectName();
+        if(o_name == "main_splitter")
+        {
+            qDebug() << "found splitter!";
+        }
         if(o_name.isEmpty() == false)
         {
             QByteArray ba = static_cast<QSplitter *>(widget)->saveState();

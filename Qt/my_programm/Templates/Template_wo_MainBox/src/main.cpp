@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     Q_ASSERT(splash);
     splash->show();
 
-    qApp->processEvents();
+    
 
     NewMainWindow *main_window = new NewMainWindow();
     main_window->show();

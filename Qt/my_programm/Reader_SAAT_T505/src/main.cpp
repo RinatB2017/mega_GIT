@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 
     splash->show();
 
-    qApp->processEvents();
+    
 
     MainWindow *main_window = new MainWindow();
 

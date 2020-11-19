@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>686</width>
+    <width>726</width>
     <height>469</height>
    </rect>
   </property>
@@ -52,7 +52,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>7</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="icon">
@@ -345,8 +345,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>96</width>
-               <height>26</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -362,8 +362,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>96</width>
-               <height>26</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -379,8 +379,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>96</width>
-               <height>26</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -396,7 +396,7 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>638</width>
+               <width>656</width>
                <height>244</height>
               </rect>
              </property>
@@ -473,6 +473,25 @@ p, li { white-space: pre-wrap; }
      </layout>
     </widget>
    </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_11">
+     <property name="leftMargin">
+      <number>8</number>
+     </property>
+     <property name="topMargin">
+      <number>8</number>
+     </property>
+     <property name="rightMargin">
+      <number>8</number>
+     </property>
+     <property name="bottomMargin">
+      <number>8</number>
+     </property>
+     <item>
+      <widget class="TestWidget" name="test_widget" native="true"/>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -496,6 +515,12 @@ p, li { white-space: pre-wrap; }
    <class>ControlExitWidget</class>
    <extends>QWidget</extends>
    <header>controlexitwidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TestWidget</class>
+   <extends>QWidget</extends>
+   <header>testwidget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

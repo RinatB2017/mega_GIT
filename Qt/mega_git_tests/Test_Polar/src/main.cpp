@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     Q_ASSERT(splash);
     splash->show();
 
-    qApp->processEvents();
+    
 
     MainWindow *main_window = new MainWindow();
 

@@ -1266,6 +1266,7 @@ bool MainWindow::add_dock_widget(QString title,
                                  QWidget *widget,
                                  bool no_dock_position)
 {
+    //FIXME надо сделать так, чтобы можно было перенести this
     Q_ASSERT(widget);
 
     if(title.isEmpty())

@@ -52,6 +52,7 @@ CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
 
+include (src/config.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 include ($$LIB_PATH2/icons/arrows.pri)
@@ -69,8 +70,6 @@ include (src/collapsiblewidget/collapsiblewidget.pri)
 include (src/controlexitwidget/controlexitwidget.pri)
 
 include (src/testwidget/testwidget.pri)
-
-include (src/config.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = $$PWD/src/version.hpp

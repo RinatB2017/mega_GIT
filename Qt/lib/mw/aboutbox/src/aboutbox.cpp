@@ -55,10 +55,10 @@ void AboutBox::init(void)
     QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(glWidget);
 
-    ui->labelLogo->setFixedSize(312, 312);
+    ui->lbl_avatar->setFixedSize(312, 312);
 
-    ui->labelLogo->clear();
-    ui->labelLogo->setLayout(vbox);
+    ui->lbl_avatar->clear();
+    ui->lbl_avatar->setLayout(vbox);
 #else
     QTimer::singleShot(0, [this]{
         setFixedSize(sizeHint());

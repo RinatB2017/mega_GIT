@@ -11,36 +11,6 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-#DEFINES += LOGO_GL
-#DEFINES += FIXED_SIZE
-#
-#DEFINES += NO_STYLETOOLBAR
-#DEFINES += NO_STATUSBAR
-DEFINES += NO_TRAYICON
-#DEFINES += NO_TOOLBAR
-#DEFINES += SHOW_SIZE
-#DEFINES += NO_MENU
-#DEFINES += NO_LOG
-
-#DEFINES += SAVE_INI
-
-#DEFINES += ONLY_ENGLISH
-
-#DEFINES += LOG_READ_ONLY
-
-#DEFINES += NO_TOOLBAR_BUTTON_EXIT
-#DEFINES += NO_TOOLBAR_BUTTON_FONT
-#DEFINES += NO_TOOLBAR_BUTTON_LANG
-#DEFINES += NO_TOOLBAR_BUTTON_STYLE
-#DEFINES += NO_TOOLBAR_BUTTON_ABOUT
-#DEFINES += NO_TOOLBAR_BUTTON_HELP
-#DEFINES += NO_TOOLBAR_SEPARATORS
-
-#DEFINES += DEMO
-#DEFINES += "DEMO_YEAR=2017"
-#DEFINES += "DEMO_MONTH=9"
-#DEFINES += "DEMO_DAY=9"
-
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
@@ -65,6 +35,7 @@ CONFIG(debug, debug|release) {
 }
 
 LIB_PATH = "$$PWD/../../../lib"
+include (src/config.pri)    #строка должна быть перед mainwindow
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/template_old_mainbox/template_old_mainbox.pri)
@@ -73,5 +44,7 @@ include (src/template_old_mainbox/template_old_mainbox.pri)
     VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
+
+message ($$DEFINES)
 
 VPATH = $$INCLUDEPATH

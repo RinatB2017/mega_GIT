@@ -12,39 +12,6 @@ DEPENDPATH  += $$PROGRAMM_PATH
 
 QT  += svg
 
-#DEFINES += LOGO_GL
-#DEFINES += FIXED_SIZE
-
-#DEFINES += NO_STYLETOOLBAR
-#DEFINES += NO_STATUSBAR
-#DEFINES += NO_TRAYICON
-#DEFINES += NO_TOOLBAR
-#DEFINES += NO_MENU
-
-#DEFINES += ONLY_ENGLISH
-
-#DEFINES += NO_TOOLBAR_BUTTON_EXIT
-#DEFINES += NO_TOOLBAR_BUTTON_FONT
-#DEFINES += NO_TOOLBAR_BUTTON_LANG
-#DEFINES += NO_TOOLBAR_BUTTON_STYLE
-#DEFINES += NO_TOOLBAR_BUTTON_ABOUT
-#DEFINES += NO_TOOLBAR_BUTTON_HELP
-#DEFINES += NO_TOOLBAR_SEPARATORS
-
-#DEFINES += DEMO
-#DEFINES += "DEMO_YEAR=2018"
-#DEFINES += "DEMO_MONTH=6"
-#DEFINES += "DEMO_DAY=1"
-
-#DEFINES += NO_LOG
-#DEFINES += SYSLOG_LOG
-
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NEED_CODEC
-DEFINES += SAVE_INI
-
-#DEFINES += USE_CUSTOM_STYLE
-
 CONFIG(debug, debug|release) {
     # профилирование
 #    QMAKE_CXXFLAGS_DEBUG += -pg
@@ -102,6 +69,8 @@ include (src/collapsiblewidget/collapsiblewidget.pri)
 include (src/controlexitwidget/controlexitwidget.pri)
 
 include (src/testwidget/testwidget.pri)
+
+include (src/config.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = $$PWD/src/version.hpp

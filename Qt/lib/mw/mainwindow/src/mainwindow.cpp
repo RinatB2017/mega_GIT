@@ -1282,7 +1282,7 @@ bool MainWindow::add_dock_widget(QString title,
     QDockWidget *dw = new QDockWidget(this);
 
     dw->setObjectName(objectname);
-    //    dw->setWindowTitle(title);
+    //dw->setWindowTitle(title);
     dw->setWindowTitle(tr(title.toLatin1()));
     dw->setProperty(P_DOCKWIDGET_ENG_TEXT, title);
 
@@ -1295,6 +1295,9 @@ bool MainWindow::add_dock_widget(QString title,
         QHBoxLayout *hbox = new QHBoxLayout();
         hbox->setMargin(0);
         hbox->setSpacing(0);
+
+//        widget->setParent(dw);
+
         hbox->addWidget(widget);
         hbox->addWidget(dp);
         nw->setLayout(hbox);
@@ -1307,10 +1310,6 @@ bool MainWindow::add_dock_widget(QString title,
     }
 
     dw->setAllowedAreas(Qt::AllDockWidgetAreas);
-    //    dw->setAllowedAreas(Qt::LeftDockWidgetArea |
-    //                        Qt::RightDockWidgetArea |
-    //                        Qt::TopDockWidgetArea |
-    //                        Qt::BottomDockWidgetArea);
 
     connect(dw, &QDockWidget::dockLocationChanged, this, &MainWindow::dockLocationChanged);
 

@@ -38,6 +38,8 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+#define SINGLE_APP
+//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
     set_codecs();
@@ -62,13 +64,12 @@ int main(int argc, char *argv[])
     Q_ASSERT(splash);
     splash->show();
 
-    
-
     MainWindow *main_window = new MainWindow();
+    Q_ASSERT(main_window);
     //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-    //MainBox *mainBox = new MainBox(0, splash);
     MainBox *mainBox = new MainBox(main_window, splash);
+    Q_ASSERT(mainBox);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

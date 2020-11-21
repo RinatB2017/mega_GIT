@@ -28,6 +28,7 @@ LIBS    += -lqtermwidget5
 
 win32 {
     RC_ICONS = ico/computer.ico
+    error (Only linux)
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win

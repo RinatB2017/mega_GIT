@@ -2,7 +2,7 @@
 DEPENDPATH  += $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-QT *= network
+QT += network
 
 SOURCES += \
     qtsingleapplication.cpp \

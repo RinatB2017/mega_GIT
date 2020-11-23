@@ -13,8 +13,10 @@ win32 {
 
 CONFIG(debug, debug|release) {
     OPENCV_VER = 430d
+    message (debug)
 } else {
     OPENCV_VER = 430
+    message (release)
 }
 #    LIBS    += -lgdi32
 
@@ -37,6 +39,4 @@ CONFIG(debug, debug|release) {
     LIBS    += -lopencv_video$${OPENCV_VER}
     LIBS    += -lopencv_photo$${OPENCV_VER}
     LIBS    += -lopencv_videoio$${OPENCV_VER}
-
-    message ($$OPENCV_VER)
 }

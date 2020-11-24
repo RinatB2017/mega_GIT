@@ -36,12 +36,23 @@ MyFileDialog::MyFileDialog(const QString &gName,
 
     beginGroup(gName);
     dir = load_value(oName, QDir::homePath()).toString();
+    bool ok;
+    int w = load_value("width").toInt(&ok);
+    if(ok)
+    {
+        int h = load_value("height").toInt(&ok);
+        if(ok)
+        {
+            resize(w, h);
+        }
+    }
     endGroup();
 }
 //--------------------------------------------------------------------------------
 MyFileDialog::~MyFileDialog()
 {
-
+    save_value("width", width());
+    save_value("height", height());
 }
 //--------------------------------------------------------------------------------
 int MyFileDialog::exec(void)

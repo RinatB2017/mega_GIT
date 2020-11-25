@@ -67,7 +67,7 @@ private:
     Ui::MainBox *ui;
 
     QPointer<QComboBox> cb_test;
-    Database *db;
+    QPointer<Database>  db;
 
     void init(void);
 

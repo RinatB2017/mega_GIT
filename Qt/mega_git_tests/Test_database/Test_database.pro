@@ -11,11 +11,6 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-
-DEFINES += PROGRAMM_IN_UTF8
-
 HEADERS += \
     defines.hpp \
     version.hpp \
@@ -32,6 +27,7 @@ win32 {
 LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
+include (src/config.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/database/database.pri)
 

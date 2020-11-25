@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>726</width>
+    <width>788</width>
     <height>469</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="main_frame">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -396,7 +396,7 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>656</width>
+               <width>724</width>
                <height>244</height>
               </rect>
              </property>
@@ -474,23 +474,14 @@ p, li { white-space: pre-wrap; }
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_11">
-     <property name="leftMargin">
-      <number>8</number>
+    <widget class="TestWidget" name="test_widget" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>10</width>
+       <height>0</height>
+      </size>
      </property>
-     <property name="topMargin">
-      <number>8</number>
-     </property>
-     <property name="rightMargin">
-      <number>8</number>
-     </property>
-     <property name="bottomMargin">
-      <number>8</number>
-     </property>
-     <item>
-      <widget class="TestWidget" name="test_widget" native="true"/>
-     </item>
-    </layout>
+    </widget>
    </item>
   </layout>
  </widget>

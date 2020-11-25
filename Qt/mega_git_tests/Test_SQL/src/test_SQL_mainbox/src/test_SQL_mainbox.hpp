@@ -21,7 +21,12 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
 #include <QtSql>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -29,10 +34,6 @@
 namespace Ui {
     class MainBox;
 }
-//--------------------------------------------------------------------------------
-class QToolButton;
-class QToolBar;
-class QString;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {

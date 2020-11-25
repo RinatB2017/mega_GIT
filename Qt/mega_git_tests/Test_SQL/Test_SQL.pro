@@ -8,28 +8,17 @@ TARGET   = Test_SQL
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_SQL_mainbox \
-    $$PWD/src/test_SQL_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += sql
 
-DEFINES += FIXED_SIZE
-
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_TRAYICON
-
 HEADERS += \
-    test_SQL_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_SQL_mainbox.cpp \
     main.cpp
-
-FORMS   += test_SQL_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -38,9 +27,11 @@ win32 {
 LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
+include (src/config.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include ($$LIB_PATH2/OpenRPT/OpenRPT.pri)
+include (src/test_SQL_mainbox/test_SQL_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = $$PWD/src/version.hpp

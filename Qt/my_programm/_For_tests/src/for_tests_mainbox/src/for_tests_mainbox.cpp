@@ -441,8 +441,11 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
-    test_var(1.0f / 3.0f);
-    test_var(1.0 / 3.0);
+    qDebug() << "pointer_ptr" << pointer_ptr;
+    qDebug() << "shared_data_ptr" << shared_data_ptr;
+    qDebug() << "scoped_ptr" << scoped_ptr;
+    qDebug() << "weak_ptr" << weak_ptr;
+    qDebug() << "atomic_ptr" << atomic_ptr;
 #endif
 
 #if 0

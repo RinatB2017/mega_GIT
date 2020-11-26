@@ -89,6 +89,13 @@ protected:
         return false;
     }
 };
+
+class EmployeeData : public QSharedData
+{
+public:
+    int id;
+    QString name;
+};
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -141,11 +148,17 @@ private:
     int cnt = 0;
 
     //---
+    QPointer<QWidget> pointer_ptr;
+    QSharedDataPointer<EmployeeData> shared_data_ptr;
+    QScopedPointer<QWidget> scoped_ptr;
+    QWeakPointer<QWidget> weak_ptr;
+    QAtomicPointer<QWidget> atomic_ptr;
+    //---
+
+    //---
     QDockWidget *main_dock;
     QList<QDockWidget *> l_docks;
     //---
-
-    void test_var(auto x) { qDebug() << x; }
 
     //MyToolBar *bar = nullptr;
     bool direction = false;

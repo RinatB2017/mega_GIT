@@ -441,6 +441,11 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    test_var(1.0f / 3.0f);
+    test_var(1.0 / 3.0);
+#endif
+
+#if 0
     QList<QWidget *> widgets = ui->test_widget->findChildren<QWidget *>();
     emit info(QString("widgets: %1").arg(widgets.count()));
     foreach (QWidget *widget, widgets)

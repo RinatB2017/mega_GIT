@@ -145,6 +145,8 @@ private:
     QList<QDockWidget *> l_docks;
     //---
 
+    void test_var(auto x) { qDebug() << x; }
+
     //MyToolBar *bar = nullptr;
     bool direction = false;
 

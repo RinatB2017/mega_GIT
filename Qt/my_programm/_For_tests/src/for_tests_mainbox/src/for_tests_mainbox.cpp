@@ -244,6 +244,7 @@ void MainBox::createTestBar(void)
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test",             &MainBox::test });
+    commands.append({ id++, "test2",            &MainBox::test2 });
     commands.append({ id++, "inc push button",  &MainBox::inc_push_button });
     commands.append({ id++, "dec push button",  &MainBox::dec_push_button });
     commands.append({ id++, "timer start",      &MainBox::timer_start });
@@ -446,6 +447,17 @@ bool MainBox::test(void)
     qDebug() << "scoped_ptr" << scoped_ptr;
     qDebug() << "weak_ptr" << weak_ptr;
     qDebug() << "atomic_ptr" << atomic_ptr;
+
+    qDebug() << "-----";
+
+    QScopedPointer<QWidget> scoped_ptr(new QWidget());
+    qDebug() << "scoped_ptr" << scoped_ptr;
+
+#endif
+
+#if 0
+    tw = new TestWidget();
+    tw->show();
 #endif
 
 #if 0
@@ -566,6 +578,15 @@ bool MainBox::test(void)
     //emit colorLog("yellow on blue", Qt::yellow, Qt::blue);
 #endif
 
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test2(void)
+{
+    QPixmap pixmap = tw->grab();
+    QLabel *label = new QLabel();
+    label->setPixmap(pixmap);
+    label->show();
     return true;
 }
 //--------------------------------------------------------------------------------

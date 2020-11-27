@@ -122,6 +122,7 @@ public slots:
     void show_timer_count(void);
 
     bool test(void);
+    bool test2(void);
 
     void print_mp(QWidget *widget);
     void delete_string(void);
@@ -160,6 +161,7 @@ private:
     QList<QDockWidget *> l_docks;
     //---
 
+    TestWidget *tw = nullptr;
     //MyToolBar *bar = nullptr;
     bool direction = false;
 

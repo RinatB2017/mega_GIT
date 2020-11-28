@@ -70,6 +70,8 @@ MyWidget::~MyWidget()
 //--------------------------------------------------------------------------------
 bool MyWidget::check_exists_signals(QWidget *parent)
 {
+    emit trace(Q_FUNC_INFO);
+
     if(parent == nullptr)
     {
         return false;
@@ -194,6 +196,8 @@ void MyWidget::log(const QString &data)
 //--------------------------------------------------------------------------------
 void MyWidget::init_w_lists(void)
 {
+    emit trace(Q_FUNC_INFO);
+
     QList<QLineEdit *> allle = findChildren<QLineEdit *>();
     foreach (QLineEdit *obj, allle)
     {
@@ -240,6 +244,8 @@ void MyWidget::add_widget_to_w_lists(QWidget *widget)
 //--------------------------------------------------------------------------------
 void MyWidget::lock_interface(void)
 {
+    emit trace(Q_FUNC_INFO);
+
     foreach (QWidget *btn, w_lists)
     {
         btn->setDisabled(true);
@@ -248,6 +254,8 @@ void MyWidget::lock_interface(void)
 //--------------------------------------------------------------------------------
 void MyWidget::unlock_interface(void)
 {
+    emit trace(Q_FUNC_INFO);
+
     foreach (QWidget *btn, w_lists)
     {
         btn->setEnabled(true);
@@ -256,6 +264,8 @@ void MyWidget::unlock_interface(void)
 //--------------------------------------------------------------------------------
 void MyWidget::lock_this_button(void)
 {
+    emit trace(Q_FUNC_INFO);
+
     if (QAbstractButton *pb=qobject_cast<QAbstractButton *>(sender()))
     {
         pb->setDisabled(true);
@@ -264,6 +274,8 @@ void MyWidget::lock_this_button(void)
 //--------------------------------------------------------------------------------
 void MyWidget::unlock_this_button(void)
 {
+    emit trace(Q_FUNC_INFO);
+
     if (QAbstractButton *pb=qobject_cast<QAbstractButton *>(sender()))
     {
         pb->setEnabled(true);
@@ -272,6 +284,8 @@ void MyWidget::unlock_this_button(void)
 //--------------------------------------------------------------------------------
 void MyWidget::block_this_button(bool state)
 {
+    emit trace(Q_FUNC_INFO);
+
     if (QAbstractButton *pb=qobject_cast<QAbstractButton *>(sender()))
     {
         pb->setDisabled(state);
@@ -280,6 +294,8 @@ void MyWidget::block_this_button(bool state)
 //--------------------------------------------------------------------------------
 void MyWidget::block_interface(bool state)
 {
+    emit trace(Q_FUNC_INFO);
+
     QList<QAbstractButton *> all_obj = findChildren<QAbstractButton *>();
     foreach(QAbstractButton *obj, all_obj)
     {
@@ -319,6 +335,8 @@ void MyWidget::block_interface(bool state)
 //--------------------------------------------------------------------------------
 void MyWidget::block_widget(const QString &name, bool state)
 {
+    emit trace(Q_FUNC_INFO);
+
     if(name.isEmpty())
     {
         return;
@@ -338,6 +356,8 @@ void MyWidget::block_widget(const QString &name, bool state)
 //--------------------------------------------------------------------------------
 bool MyWidget::is_slot_exists(QWidget *obj, const char *slot_sign)
 {
+    emit trace(Q_FUNC_INFO);
+
     Q_ASSERT(obj);
     Q_ASSERT(slot_sign);
 
@@ -427,6 +447,8 @@ QStringList MyWidget::get_all_param_name(void)
 //--------------------------------------------------------------------------------
 QString MyWidget::get_full_objectName(QWidget *widget)
 {
+    emit trace(Q_FUNC_INFO);
+
     Q_ASSERT(widget);
 
     QStringList sl;
@@ -455,11 +477,15 @@ QString MyWidget::get_full_objectName(QWidget *widget)
 //--------------------------------------------------------------------------------
 void MyWidget::block_close(bool state)
 {
+    emit trace(Q_FUNC_INFO);
+
     setProperty(FLAG_NO_CLOSE, state);
 }
 //--------------------------------------------------------------------------------
 void MyWidget::closeEvent(QCloseEvent *)
 {
+    emit trace(Q_FUNC_INFO);
+
 #ifdef QT_DEBUG
     qDebug() << "closeEvent";
 #endif
@@ -467,6 +493,8 @@ void MyWidget::closeEvent(QCloseEvent *)
 //--------------------------------------------------------------------------------
 void MyWidget::s_test(void)
 {
+    emit trace(Q_FUNC_INFO);
+
     show_objectname();
     // block_wheel();
 }
@@ -474,6 +502,8 @@ void MyWidget::s_test(void)
 #ifndef BLOCK_WHEEL
 void MyWidget::block_wheel(void)
 {
+    emit trace(Q_FUNC_INFO);
+
     QList<QWidget *> all_obj = findChildren<QWidget *>();
     foreach(QWidget *obj, all_obj)
     {
@@ -487,6 +517,8 @@ void MyWidget::block_wheel(void)
 //--------------------------------------------------------------------------------
 void MyWidget::show_objectname(void)
 {
+    emit trace(Q_FUNC_INFO);
+
     QList<QWidget *> all_obj = findChildren<QWidget *>();
     foreach(QWidget *obj, all_obj)
     {
@@ -502,6 +534,8 @@ void MyWidget::show_objectname(void)
 //--------------------------------------------------------------------------------
 void MyWidget::load_checkBox(QList<check_box> data)
 {
+    emit trace(Q_FUNC_INFO);
+
     QList<QCheckBox *> all_chb = findChildren<QCheckBox *>();
 
     foreach (check_box cb_obj, data)
@@ -518,6 +552,8 @@ void MyWidget::load_checkBox(QList<check_box> data)
 //--------------------------------------------------------------------------------
 void MyWidget::load_comboBox(QList<combo_box> data)
 {
+    emit trace(Q_FUNC_INFO);
+
     QList<QComboBox *> all_chb = findChildren<QComboBox *>();
 
     foreach (combo_box cb_obj, data)
@@ -534,6 +570,8 @@ void MyWidget::load_comboBox(QList<combo_box> data)
 //--------------------------------------------------------------------------------
 void MyWidget::load_spinBox(QList<spin_box> data)
 {
+    emit trace(Q_FUNC_INFO);
+
     QList<QSpinBox *> all_chb = findChildren<QSpinBox *>();
 
     foreach (spin_box cb_obj, data)
@@ -550,6 +588,8 @@ void MyWidget::load_spinBox(QList<spin_box> data)
 //--------------------------------------------------------------------------------
 void MyWidget::load_d_spinBox(QList<d_spin_box> data)
 {
+    emit trace(Q_FUNC_INFO);
+
     QList<QDoubleSpinBox *> all_chb = findChildren<QDoubleSpinBox *>();
 
     foreach (d_spin_box cb_obj, data)
@@ -566,6 +606,8 @@ void MyWidget::load_d_spinBox(QList<d_spin_box> data)
 //--------------------------------------------------------------------------------
 bool MyWidget::create_pixmap(QWidget *w_left, QWidget *w_central)
 {
+    emit trace(Q_FUNC_INFO);
+
     Q_ASSERT(w_left);
     Q_ASSERT(w_central);
 
@@ -619,6 +661,8 @@ QToolButton *MyWidget::add_button(QToolBar *tool_bar,
                                   const QString &text,
                                   const QString &tool_tip)
 {
+    emit trace(Q_FUNC_INFO);
+
     Q_ASSERT(tool_bar);
     Q_ASSERT(tool_button);
 
@@ -632,6 +676,8 @@ QToolButton *MyWidget::add_button(QToolBar *tool_bar,
 //--------------------------------------------------------------------------------
 void MyWidget::check_tooltips(void)
 {
+    emit trace(Q_FUNC_INFO);
+
 #if 0
     MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -661,6 +707,8 @@ void MyWidget::check_tooltips(void)
 //--------------------------------------------------------------------------------
 void MyWidget::fail(void)
 {
+    emit trace(Q_FUNC_INFO);
+
     emit error("Пока не сделано");
 }
 //--------------------------------------------------------------------------------
@@ -703,6 +751,8 @@ bool MyWidget::eventFilter(QObject*, QEvent* event)
 void MyWidget::load_widgets(void)
 {
     QTimer::singleShot(0, [this]{
+        emit trace(Q_FUNC_INFO);
+
         QList<QWidget *> widgets = findChildren<QWidget *>();
         if(widgets.count() <= 0)
         {
@@ -738,7 +788,9 @@ void MyWidget::load_widgets(void)
 //--------------------------------------------------------------------------------
 void MyWidget::save_widgets(void)
 {
-//    QList<QWidget *> widgets = topLevelWidget()->findChildren<QWidget *>();
+    emit trace(Q_FUNC_INFO);
+
+    //TODO не надо тут использовать topLevelWidget - ведь сохраняем только текущий виджет
     QList<QWidget *> widgets = findChildren<QWidget *>();
     if(widgets.count() <= 0)
     {

@@ -43,6 +43,8 @@ private slots:
     bool test(void);
 
     void run_crc(void);
+    void load_file(void);
+    void show_crc(QByteArray ba);
 
 private:
     typedef struct CMD

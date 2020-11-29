@@ -11,20 +11,6 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-#DEFINES += SHOW_SIZE
-
-#DEFINES += NO_TOOLBAR_BUTTON_EXIT
-#DEFINES += NO_TOOLBAR_BUTTON_FONT
-#DEFINES += NO_TOOLBAR_BUTTON_LANG
-#DEFINES += NO_TOOLBAR_BUTTON_STYLE
-#DEFINES += NO_TOOLBAR_BUTTON_ABOUT
-#DEFINES += NO_TOOLBAR_BUTTON_HELP
-#DEFINES += NO_TOOLBAR_SEPARATORS
-
-DEFINES += PROGRAMM_IN_UTF8
-
 HEADERS += \
     defines.hpp \
     version.hpp
@@ -49,6 +35,7 @@ CONFIG(debug, debug|release) {
 LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
+include (src/config.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/crc/crc.pri)
 

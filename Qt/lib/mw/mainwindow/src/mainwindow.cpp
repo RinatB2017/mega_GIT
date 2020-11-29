@@ -260,7 +260,7 @@ void MainWindow::init(void)
     createTrayIcon();
 #endif
 
-#ifdef  DEMO
+#if (defined DEMO) and (defined DEMO_YEAR) and (defined DEMO_MONTH) and (defined DEMO_DAY)
     check_date();
 #endif
 
@@ -282,7 +282,7 @@ void MainWindow::init(void)
 //    if(now.date().year()        >= DEMO_YEAR &&
 //            now.date().month()  >= DEMO_MONTH &&
 //            now.date().day()    >  DEMO_DAY)
-#ifdef DEMO
+#if (defined DEMO) and (defined DEMO_YEAR) and (defined DEMO_MONTH) and (defined DEMO_DAY)
 void MainWindow::check_date(void)
 {
     QDateTime now = QDateTime::currentDateTime();
@@ -303,7 +303,7 @@ void MainWindow::check_date(void)
 }
 #endif
 //--------------------------------------------------------------------------------
-#ifdef DEMO
+#if (defined DEMO) and (defined DEMO_YEAR) and (defined DEMO_MONTH) and (defined DEMO_DAY)
 void MainWindow::kill(void)
 {
     int a = 5;
@@ -314,7 +314,7 @@ void MainWindow::kill(void)
 }
 #endif
 //--------------------------------------------------------------------------------
-#ifdef DEMO
+#if (defined DEMO) and (defined DEMO_YEAR) and (defined DEMO_MONTH) and (defined DEMO_DAY)
 void MainWindow::kill2(void)
 {
     QLabel *label = 0;

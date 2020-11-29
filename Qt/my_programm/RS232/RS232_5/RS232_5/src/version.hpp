@@ -4,7 +4,7 @@
 #define VER_MAJOR 0
 #define VER_MINOR 99
 #define VER_PATCH 0
-#define VER_BUILD 674
-#define VER_STR "0.99.0.674"
+#define VER_BUILD 675
+#define VER_STR "0.99.0.675"
 //-----
 #endif // VERSION_HPP

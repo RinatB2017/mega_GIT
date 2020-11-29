@@ -10,8 +10,6 @@ PROGRAMM_PATH  += \
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
-QT  += svg
-
 CONFIG(debug, debug|release) {
     # профилирование
 #    QMAKE_CXXFLAGS_DEBUG += -pg
@@ -66,10 +64,10 @@ include ($$LIB_PATH2/web/mybrowser/mybrowser.pri)
 include (src/for_tests_mainbox/for_tests_mainbox.pri)
 include (src/mymainwindow/mymainwindow.pri)
 
-include (src/collapsiblewidget/collapsiblewidget.pri)
-include (src/controlexitwidget/controlexitwidget.pri)
+#include (src/collapsiblewidget/collapsiblewidget.pri)
+#include (src/controlexitwidget/controlexitwidget.pri)
 
-include (src/testwidget/testwidget.pri)
+#include (src/testwidget/testwidget.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = $$PWD/src/version.hpp

@@ -20,6 +20,7 @@
 **********************************************************************************/
 #include "ui_test_CRC_mainbox.h"
 //--------------------------------------------------------------------------------
+#include "myfiledialog.hpp"
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
@@ -54,7 +55,10 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
-    connect(ui->btn_calc,   SIGNAL(clicked(bool)),  this,   SLOT(run_crc()));
+    ui->le_hex_string->setProperty(NO_SAVE, true);
+
+    connect(ui->btn_calc,       &QPushButton::clicked,  this,   &MainBox::run_crc);
+    connect(ui->btn_load_file,  &QPushButton::clicked,  this,   &MainBox::load_file);
     load_widgets();
 }
 //--------------------------------------------------------------------------------
@@ -141,6 +145,32 @@ void MainBox::run_crc(void)
         return;
     }
 
+    show_crc(ba);
+}
+//--------------------------------------------------------------------------------
+void MainBox::load_file(void)
+{
+    MyFileDialog *dlg = new MyFileDialog("test_crc32", "test_crc32", this);
+    int btn = dlg->exec();
+    if(btn == MyFileDialog::Accepted)
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        QByteArray ba;
+        QFile file(filename);
+        if(file.open(QIODevice::ReadOnly))
+        {
+            ba = file.readAll();
+            show_crc(ba);
+            file.close();
+        }
+    }
+    dlg->deleteLater();
+}
+//--------------------------------------------------------------------------------
+void MainBox::show_crc(QByteArray ba)
+{
     static uint8_t  pelco_crc8 = CRC::pelco_crc8(reinterpret_cast<uint8_t *>(ba.data()), static_cast<uint8_t>(ba.length()));
     static uint8_t  crc8 = CRC::crc8(reinterpret_cast<uint8_t *>(ba.data()), static_cast<uint8_t>(ba.length()));
     static uint16_t crc16 = CRC::crc16(reinterpret_cast<uint8_t *>(ba.data()), static_cast<uint8_t>(ba.length()));

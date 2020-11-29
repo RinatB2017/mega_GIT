@@ -49,12 +49,6 @@ MainBox::~MainBox()
         timer->deleteLater();
     }
 
-    //    if(bar)
-    //    {
-    //        bar->disconnect();
-    //        bar->deleteLater();
-    //    }
-
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -134,14 +128,6 @@ void MainBox::init(void)
     if(sizeHint().height() > 0)
     {
         setMinimumHeight(sizeHint().height());
-    }
-#endif
-
-#if 1
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->add_dock_widget("TestFrame", "test_frame", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(ui->test_widget));
     }
 #endif
 
@@ -245,8 +231,6 @@ void MainBox::createTestBar(void)
     commands.clear(); int id = 0;
     commands.append({ id++, "test",             &MainBox::test });
     commands.append({ id++, "test2",            &MainBox::test2 });
-    commands.append({ id++, "inc push button",  &MainBox::inc_push_button });
-    commands.append({ id++, "dec push button",  &MainBox::dec_push_button });
     commands.append({ id++, "timer start",      &MainBox::timer_start });
     commands.append({ id++, "timer stop",       &MainBox::timer_stop });
 
@@ -403,20 +387,6 @@ void MainBox::show_timer_count(void)
     emit info(QString("cnt %1").arg(cnt++));
 }
 //--------------------------------------------------------------------------------
-bool MainBox::inc_push_button(void)
-{
-    ui->push_widget->setFixedSize(ui->push_widget->width(),
-                                  ui->push_widget->height()+10);
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::dec_push_button(void)
-{
-    ui->push_widget->setFixedSize(ui->push_widget->width(),
-                                  ui->push_widget->height()-10);
-    return true;
-}
-//--------------------------------------------------------------------------------
 void MainBox::heavy_function(void)
 {
     QElapsedTimer timer;
@@ -434,14 +404,42 @@ void MainBox::heavy_function(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-#include <iostream>
-#include <QSvgWidget>
-
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 0
+    QString frame_name = "test_frame";
+    QDockWidget *dw = topLevelWidget()->findChild<QDockWidget *>(frame_name);
+    if(dw)
+    {
+        if(dw->x() > 0)
+        {
+            messagebox_info("INFO", "FOUND");
+        }
+        else
+        {
+            messagebox_critical("ERROR", "FAIL");
+        }
+    }
+    else
+    {
+        emit error(QString("%1 not found")
+                   .arg(frame_name));
+    }
+#endif
+
 #if 1
+    TestStack ts;
+    ts.set("test");
+    l_class.push(ts);
+
+    TestStack ts2;
+    ts2.set("test2");
+    l_class.push(ts2);
+#endif
+
+#if 0
     qDebug() << "pointer_ptr" << pointer_ptr;
     qDebug() << "shared_data_ptr" << shared_data_ptr;
     qDebug() << "scoped_ptr" << scoped_ptr;
@@ -453,121 +451,6 @@ bool MainBox::test(void)
     QScopedPointer<QWidget> scoped_ptr(new QWidget());
     qDebug() << "scoped_ptr" << scoped_ptr;
 
-#endif
-
-#if 0
-    tw = new TestWidget();
-    tw->show();
-#endif
-
-#if 0
-    QList<QWidget *> widgets = ui->test_widget->findChildren<QWidget *>();
-    emit info(QString("widgets: %1").arg(widgets.count()));
-    foreach (QWidget *widget, widgets)
-    {
-        emit info(widget->objectName());
-    }
-#endif
-
-#if 0
-    TestBrowser *browser = new TestBrowser();
-    browser->setUrl(QUrl("https://hero-wars.com"));
-    browser->setMinimumSize(800, 600);
-    browser->show();
-#endif
-
-#if 0
-    //    int max_x = 3;
-    //    int max_y = 5;
-    //    QImage image(QSize(max_x, max_y), QImage::Format_ARGB32);
-
-    //    for(int y=0; y<max_y; y++)
-    //    {
-    //        for(int x=0; x<max_x; x++)
-    //        {
-    //            image.setPixel(x, y, qRgb(255, 0, 0));
-    //        }
-    //    }
-    //    image.save("/dev/shm/temp.png");
-
-    QToolButton *btn = new QToolButton();
-    //btn->setIcon(QIcon(QPixmap::fromImage(image)));
-    btn->setIcon(QIcon(":/bullets/bullet_left.png"));
-    btn->setFixedSize(8, 600);
-
-    connect(btn, &QToolButton::clicked, [btn, this]() {
-        direction = !direction;
-        if(direction)
-        {
-            btn->setIcon(QIcon(":/bullets/bullet_right.png"));
-        }
-        else
-        {
-            btn->setIcon(QIcon(":/bullets/bullet_left.png"));
-        }
-    });
-
-    btn->show();
-#endif
-
-#if 0
-    std::cout << "test cout" << std::endl;
-#endif
-
-#if 0
-    QString temp = "QWidget { background: magenta }";
-    qApp->setStyleSheet(temp);
-#endif
-
-#if 0
-    QSvgWidget *w = new QSvgWidget();
-    QString filename = "ramka.svg";
-    w->load(filename);
-    w->adjustSize();
-    w->setFixedSize(w->sizeHint().width() / 2, w->sizeHint().height() / 2);
-
-    emit info(QString("%1 %2")
-              .arg(w->sizeHint().width())
-              .arg(w->sizeHint().height()));
-
-    QPushButton *btn = new QPushButton(w);
-    btn->setText("TEST");
-    btn->setFixedSize(100, 100);
-    btn->move(w->sizeHint().width() / 4 - 50, w->sizeHint().height() / 4 - 50);
-
-    w->show();
-#endif
-
-#if 0
-    MyDebug::set_v(5);
-    emit info(QString("%1").arg(MyDebug::get_v()));
-#endif
-
-#if 0
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        QList<LogBox *> lb = mw->findChildren<LogBox *>();
-        foreach(LogBox *logbox, lb)
-        {
-            logbox->set_flagNoCRLF(true);
-        }
-    }
-
-    emit info("Test: ");
-    for(int n=9; n>=0; n--)
-    {
-        emit info(QString("%1 ").arg(n));
-    }
-    emit info("OK\n");
-    emit info("The end!");
-#endif
-
-#if 0
-    emit info(QString("ulong %1").arg(sizeof(ulong)));
-    emit info(QString("qlonglong %1").arg(sizeof(qlonglong)));
-    emit info(QString("uint32_t %1").arg(sizeof(uint32_t)));
-    emit info(QString("uint64_t %1").arg(sizeof(uint64_t)));
 #endif
 
 #if 0
@@ -583,10 +466,9 @@ bool MainBox::test(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test2(void)
 {
-    QPixmap pixmap = tw->grab();
-    QLabel *label = new QLabel();
-    label->setPixmap(pixmap);
-    label->show();
+    TestStack test = l_class.pop();
+    emit info(test.get());
+
     return true;
 }
 //--------------------------------------------------------------------------------

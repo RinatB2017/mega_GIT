@@ -96,6 +96,17 @@ public:
     int id;
     QString name;
 };
+
+class TestStack
+{
+public:
+    void set(const QString &text) { memory = text; }
+    QString get(void) { return memory; }
+
+private:
+    QString memory;
+};
+
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -159,10 +170,10 @@ private:
     //---
     QDockWidget *main_dock;
     QList<QDockWidget *> l_docks;
+
+    QStack<TestStack> l_class;
     //---
 
-    TestWidget *tw = nullptr;
-    //MyToolBar *bar = nullptr;
     bool direction = false;
 
     QPointer<QFileSystemModel> file_model;
@@ -173,9 +184,6 @@ private:
     bool set_theme_windows(void);
     bool set_norton_commander(void);
     bool set_styles(void);
-
-    bool inc_push_button(void);
-    bool dec_push_button(void);
 
     void init(void);
     void createTestBar(void);

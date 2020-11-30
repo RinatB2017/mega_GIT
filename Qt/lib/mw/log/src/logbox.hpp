@@ -67,9 +67,7 @@ class LogBox : public QFrame, MySettings
 public:
     explicit LogBox(QWidget *parent);
     explicit LogBox(const QString &o_name,
-                    QWidget *parent,
-                    int min_width  = 1,
-                    int min_height = 1);
+                    QWidget *parent);
     ~LogBox();
 
     void load_settings(void);

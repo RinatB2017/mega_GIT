@@ -405,7 +405,9 @@ QString MySettings::get_full_objectName(QWidget *widget)
 bool MySettings::is_my_widget(QString o_name)
 {
     if(o_name.isEmpty())
+    {
         return false;
+    }
 
     return (o_name.left(3) != "qt_");
 }

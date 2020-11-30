@@ -79,7 +79,7 @@ QStringList SpellChecker::suggest(const QString &word)
     char **suggestWordList;
     
     // Encode from Unicode to the encoding used by current dictionary
-    const char *wordChar = _codec->fromUnicode(word).constData();
+//    const char *wordChar = _codec->fromUnicode(word).constData();
     int numSuggestions = _hunspell->suggest(&suggestWordList, _codec->fromUnicode(word).constData());
     QStringList suggestions;
     for(int i=0; i < numSuggestions; ++i)

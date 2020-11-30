@@ -1512,6 +1512,7 @@ void GrapherBox::check_visible_buttons(void)
     bool buttons_visible = false;
     foreach(QToolButton *btn, buttons)
     {
+        qDebug() << btn->objectName() << btn->isVisible();
         if(btn->isVisible())
         {
             buttons_visible = true;

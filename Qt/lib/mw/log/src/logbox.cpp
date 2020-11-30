@@ -37,25 +37,12 @@ LogBox::LogBox(QWidget *parent) :
 }
 //--------------------------------------------------------------------------------
 LogBox::LogBox(const QString &o_name,
-               QWidget *parent,
-               int min_width,
-               int min_height) :
+               QWidget *parent) :
     QFrame(parent),
     MySettings(),
-    o_name(o_name),
-    flagNoCRLF(false),
-    flagAddDateTime(false),
-    flagColor(true),
-    flagErrorAsMessage(false),
-    flagTextIsWindows(false),
-    flagAutoSave(false)
+    o_name(o_name)
 {
     init();
-
-    if(min_width > 0)
-        setMinimumWidth(min_width);
-    if(min_height > 0)
-        setMinimumHeight(min_height);
 }
 //--------------------------------------------------------------------------------
 LogBox::~LogBox()

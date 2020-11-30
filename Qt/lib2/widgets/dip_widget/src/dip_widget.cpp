@@ -83,9 +83,9 @@ void DIP_widget::set_value(int value)
     buttons[2].state = b.bites.bit_2;
     buttons[3].state = b.bites.bit_3;
     buttons[4].state = b.bites.bit_4;
-    //buttons[5].state = b.bites.bit_5;
-    //buttons[6].state = b.bites.bit_6;
-    //buttons[7].state = b.bites.bit_7;
+    buttons[5].state = b.bites.bit_5;
+    buttons[6].state = b.bites.bit_6;
+    buttons[7].state = b.bites.bit_7;
 
     repaint();
     setToolTip(QString("Адрес = %1").arg(dip_value));

@@ -466,8 +466,11 @@ bool MainBox::test(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test2(void)
 {
-    TestStack test = l_class.pop();
-    emit info(test.get());
+    if(l_class.count() > 0)
+    {
+        TestStack test = l_class.pop();
+        emit info(test.get());
+    }
 
     return true;
 }

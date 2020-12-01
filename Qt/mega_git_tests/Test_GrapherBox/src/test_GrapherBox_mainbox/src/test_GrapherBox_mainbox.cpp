@@ -46,8 +46,6 @@ MainBox::MainBox(QWidget *parent,
     splash(splash),
     ui(new Ui::MainBox)
 {
-    ui->setupUi(this);
-
     init();
 }
 //--------------------------------------------------------------------------------
@@ -59,54 +57,59 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
+    ui->setupUi(this);
     all_break = false;
 
     createTestBar();
 
-    grapher_widget = new GrapherBox(this);
-    grapher_widget->setObjectName("GrapherBox");
-
 #ifdef USE_SCALE_POINT_DATETIME
-    uint x = QDateTime::currentDateTime().toTime_t();
-    grapher_widget->set_title("тест");
-    grapher_widget->set_title_axis_X("X");
-    grapher_widget->set_title_axis_Y("Y");
-    grapher_widget->set_axis_scale_x(x, x+100);
-    grapher_widget->set_axis_scale_y(-100, 100);
-#elif defined(USE_SCALE_POINT_TIME)
-    uint x = (QTime::currentTime().hour() * 3600) + (QTime::currentTime().minute() * 60) + QTime::currentTime().second();
-    grapher_widget->set_title("тест");
-    grapher_widget->set_title_axis_X("X");
-    grapher_widget->set_title_axis_Y("Y");
-    grapher_widget->set_axis_scale_x(x, x+100);
-    grapher_widget->set_axis_scale_y(-100, 100);
+//    uint x = QDateTime::currentDateTime().toTime_t();
+    ui->grapher_widget->set_title("тест");
+    ui->grapher_widget->set_title_axis_X("X");
+    ui->grapher_widget->set_title_axis_Y("Y");
+//    ui->grapher_widget->set_axis_label_rotation(45);
+
+#if 1
+    QDateTime dt = QDateTime(QDateTime(QDate(2000, 1, 1), QTime(0, 0, 0)));
+    ui->grapher_widget->set_axis_scale_x(dt.toSecsSinceEpoch(),
+                                         dt.addDays(10).toSecsSinceEpoch());
 #else
-    grapher_widget->set_title("тест");
-    grapher_widget->set_title_axis_X("X");
-    grapher_widget->set_title_axis_Y("Y");
-    grapher_widget->set_axis_scale_x(0, 100);
-    grapher_widget->set_axis_scale_y(0, 100);
+    ui->grapher_widget->set_axis_scale_x(0, 3600);
 #endif
 
-    //grapher_widget->set_legend_is_visible(true);
+    ui->grapher_widget->set_axis_scale_y(-100, 100);
+#elif defined(USE_SCALE_POINT_TIME)
+    uint x = (QTime::currentTime().hour() * 3600) + (QTime::currentTime().minute() * 60) + QTime::currentTime().second();
+    ui->grapher_widget->set_title("тест");
+    ui->grapher_widget->set_title_axis_X("X");
+    ui->grapher_widget->set_title_axis_Y("Y");
+    ui->grapher_widget->set_axis_scale_x(x, x+100);
+    ui->grapher_widget->set_axis_scale_y(-100, 100);
+#else
+    ui->grapher_widget->set_title("тест");
+    ui->grapher_widget->set_title_axis_X("X");
+    ui->grapher_widget->set_title_axis_Y("Y");
+    ui->grapher_widget->set_axis_scale_x(0, 100);
+    ui->grapher_widget->set_axis_scale_y(0, 100);
+#endif
+
+    //ui->grapher_widget->set_legend_is_visible(true);
 #ifdef ONE_CURVE
-    curve_0 = grapher_widget->add_curve("test");
+    curve_0 = ui->grapher_widget->add_curve("test");
 #else
     //for(int n=0; n<MAX_CHANNELS; n++)
     for(int n=0; n<8; n++)
     {
-        curves[n] = grapher_widget->add_curve(QString(tr("curve %1")).arg(n));
+        curves[n] = ui->grapher_widget->add_curve(QString(tr("curve %1")).arg(n));
     }
 #endif
-    grapher_widget->legends_all_on();
+    ui->grapher_widget->legends_all_on();
     //---
     //test_data();
     //test_data2();
 
-    grapher_widget->push_btn_Horizontal(true);
-    grapher_widget->push_btn_Vertical(true);
-
-    setVisible(false);
+    ui->grapher_widget->push_btn_Horizontal(true);
+    ui->grapher_widget->push_btn_Vertical(true);
     //---
 
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
@@ -115,7 +118,8 @@ void MainBox::init(void)
     mw->add_dock_widget("Graphic",
                         "graphic",
                         Qt::LeftDockWidgetArea,
-                        reinterpret_cast<QWidget *>(grapher_widget));
+                        reinterpret_cast<QWidget *>(ui->grapher_widget));
+    setVisible(false);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_data(void)
@@ -160,9 +164,9 @@ void MainBox::test_data(void)
     foreach(temp_f temp, l_temp)
     {
 #ifdef ONE_CURVE
-        grapher_widget->add_curve_data(curve_0, temp.x, temp.y);
+        ui->grapher_widget->add_curve_data(curve_0, temp.x, temp.y);
 #else
-        grapher_widget->add_curve_data(curves[0], temp.x, temp.y);
+        ui->grapher_widget->add_curve_data(curves[0], temp.x, temp.y);
 #endif
     }
 }
@@ -183,10 +187,10 @@ void MainBox::test_data2(void)
         else {
             begin_y-=delta;
         }
-        grapher_widget->add_curve_data(curve_0, n, begin_y);
+        ui->grapher_widget->add_curve_data(curve_0, n, begin_y);
 #else
         int r = 20;
-        for(int c_index=0; c_index<grapher_widget->get_curves_count(); c_index++)
+        for(int c_index=0; c_index<ui->grapher_widget->get_curves_count(); c_index++)
         {
             int temp = rand() % r;
             if(temp >= r / 2)
@@ -196,7 +200,7 @@ void MainBox::test_data2(void)
             else {
                 begin_y-=delta;
             }
-            grapher_widget->add_curve_data(curves[c_index], n, begin_y);
+            ui->grapher_widget->add_curve_data(curves[c_index], n, begin_y);
         }
 #endif
     }
@@ -270,37 +274,54 @@ void MainBox::choice_test(void)
 void MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
-
     emit info("Test");
 
-#if 0
-    QByteArray ba;
-    QDataStream out(&ba, QIODevice::WriteOnly);
+#ifdef USE_SCALE_POINT_TIME
+    //TODO тест QTime
+    QTime t1 = QTime(0, 0, 0);
+    QTime t2 = t1.addSecs(60);
+    QTime t3 = t2.addSecs(60);
+    QTime t4 = t3.addSecs(60);
+    QTime t5 = t4.addSecs(60);
 
-    out << static_cast<float>(1.234);
-    out << static_cast<qreal>(1.234);
-    emit info(QString("F %1").arg(sizeof(float)));
-    emit info(QString("D %1").arg(sizeof(double)));
-    emit info(QString("size %1").arg(ba.size()));
+    qDebug() << t1.toString();
+    qDebug() << t2.toString();
+    qDebug() << t3.toString();
+    qDebug() << t4.toString();
+    qDebug() << t5.toString();
+
+    ui->grapher_widget->add_curve_data(curve_0, t1, 0);
+    ui->grapher_widget->add_curve_data(curve_0, t2, 10);
+    ui->grapher_widget->add_curve_data(curve_0, t3, 0);
+    ui->grapher_widget->add_curve_data(curve_0, t4, 10);
+    ui->grapher_widget->add_curve_data(curve_0, t5, 0);
 #endif
 
-#if 0
-    emit info(QString("cnt curves %1").arg(grapher_widget->get_curves_count()));
+#ifdef USE_SCALE_POINT_DATETIME
+    //TODO тест QDateTime
+    QDateTime dt1 = QDateTime(QDate(2020, 12, 1), QTime(0, 0, 0));
+     //QDateTime(QDate(2020, 12, 3), QTime(0, 0, 0));
+    QDateTime dt2 = dt1.addDays(1);
+    QDateTime dt3 = dt2.addDays(1);
+    QDateTime dt4 = dt3.addDays(1);
+    QDateTime dt5 = dt4.addDays(1);
 
-    int cnt = 0;
-    bool ok = grapher_widget->get_curve_data_count(0, &cnt);
-    if(ok)
-        emit info(QString("real_data cnt: %1").arg(cnt));
+    qDebug() << dt1.toString();
+    qDebug() << dt1.toSecsSinceEpoch();
+    qDebug() << dt2.toString();
+    qDebug() << dt2.toSecsSinceEpoch();
+    qDebug() << dt3.toString();
+    qDebug() << dt3.toSecsSinceEpoch();
+    qDebug() << dt4.toString();
+    qDebug() << dt4.toSecsSinceEpoch();
+    qDebug() << dt5.toString();
+    qDebug() << dt5.toSecsSinceEpoch();
 
-    qreal data;
-    for(int n=0; n<10; n++)
-    {
-        ok = grapher_widget->get_curve_data(curves[0], n, &data);
-        if(ok)
-            emit info(QString("data %1").arg(data));
-        else
-            return;
-    }
+    ui->grapher_widget->add_curve_data(curve_0, dt1, 0);
+    ui->grapher_widget->add_curve_data(curve_0, dt2, 10);
+    ui->grapher_widget->add_curve_data(curve_0, dt3, 0);
+    ui->grapher_widget->add_curve_data(curve_0, dt4, 10);
+    ui->grapher_widget->add_curve_data(curve_0, dt5, 0);
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -320,19 +341,19 @@ void MainBox::test_load(void)
     qreal data;
     int size = static_cast<int>(ba.size()) / static_cast<int>(sizeof(qreal));
 //    int offset = 0;
-//    grapher_widget->get_curve_data_count(0, &offset);
+//    ui->grapher_widget->get_curve_data_count(0, &offset);
     for(int n=0; n<size; n++)
     {
         in >> data;
-        grapher_widget->add_curve_data(0, data);
-//        grapher_widget->add_curve_data(0, offset + n, data);
+        ui->grapher_widget->add_curve_data(0, data);
+//        ui->grapher_widget->add_curve_data(0, offset + n, data);
     }
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_save(void)
 {
     int cnt = 0;
-    bool ok = grapher_widget->get_curve_data_count(0, &cnt);
+    bool ok = ui->grapher_widget->get_curve_data_count(0, &cnt);
     if(ok)
     {
         emit info(QString("cnt %1").arg(cnt));
@@ -347,7 +368,7 @@ void MainBox::test_save(void)
         QDataStream out(&ba, QIODevice::WriteOnly);
         for(int n=0; n<cnt; n++)
         {
-            ok = grapher_widget->get_curve_data(0, n, &temp);
+            ok = ui->grapher_widget->get_curve_data(0, n, &temp);
             if(ok == false)
             {
                 emit error("get_curve_data return false");
@@ -368,13 +389,13 @@ void MainBox::test0(void)
 {
     emit trace(Q_FUNC_INFO);
     block_interface(true);
-    grapher_widget->test_sinus();
+    ui->grapher_widget->test_sinus();
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test1(void)
 {
-    TestDialog *dlg = new TestDialog(grapher_widget->get_curves_count()-1,
+    TestDialog *dlg = new TestDialog(ui->grapher_widget->get_curves_count()-1,
                                      1000);
     int res = dlg->exec();
     if(res != QDialog::Accepted)
@@ -383,14 +404,14 @@ void MainBox::test1(void)
     }
 
     block_interface(true);
-    grapher_widget->test_single_sinus(dlg->get_index(),
+    ui->grapher_widget->test_single_sinus(dlg->get_index(),
                                       dlg->get_offset());
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test2(void)
 {
-    TestDialog *dlg = new TestDialog(grapher_widget->get_curves_count()-1,
+    TestDialog *dlg = new TestDialog(ui->grapher_widget->get_curves_count()-1,
                                      1000);
     int res = dlg->exec();
     if(res != QDialog::Accepted)
@@ -399,7 +420,7 @@ void MainBox::test2(void)
     }
 
     block_interface(true);
-    grapher_widget->test_random_data(dlg->get_index(),
+    ui->grapher_widget->test_random_data(dlg->get_index(),
                                       dlg->get_offset());
     block_interface(false);
 }
@@ -407,7 +428,7 @@ void MainBox::test2(void)
 void MainBox::test3(void)
 {
     block_interface(true);
-    grapher_widget->test_draw_circle();
+    ui->grapher_widget->test_draw_circle();
     block_interface(false);
 }
 //--------------------------------------------------------------------------------

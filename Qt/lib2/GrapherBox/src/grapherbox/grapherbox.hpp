@@ -23,6 +23,10 @@
 //--------------------------------------------------------------------------------
 //#include "qwt_spline_curve_fitter.h"
 
+#include "qwt_date_scale_engine.h"
+#include "qwt_date_scale_draw.h"
+#include "qwt_date.h"
+
 #include "qwt_plot_renderer.h"
 #include "qwt_plot_magnifier.h"
 #include "qwt_picker_machine.h"
@@ -164,11 +168,18 @@ public slots:
 
     void add_curve_data_points(int channel,
                                QVector<QPointF> *points);
-    void add_curve_data(int channel,
+    bool add_curve_data(int channel,
                         int x,
                         qreal data);
     bool add_curve_data(int channel,
                         qreal data);
+    bool add_curve_data(int channel,
+                        QDateTime v_dt,
+                        qreal value);
+    bool add_curve_data(int channel,
+                        QTime v_t,
+                        qreal value);
+
     bool add_curve_array(int channel,
                          QList<QPointF> a_points);
     bool set_curve_data(int channel,

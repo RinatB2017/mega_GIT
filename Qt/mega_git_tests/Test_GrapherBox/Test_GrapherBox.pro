@@ -11,20 +11,6 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-
-#DEFINES += CONTEXT_MENU
-
-#DEFINES += USE_SCALE_POINT_DATETIME
-#DEFINES += USE_SCALE_POINT_TIME
-
-DEFINES += PROGRAMM_IN_UTF8
-
-#DEFINES += ONE_CURVE
-
-DEFINES += SAVE_INI
-
 HEADERS += \
     defines.hpp \
     version.hpp
@@ -46,6 +32,7 @@ win32 {
 LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
+include (src/config.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH2/icons/digits.pri)

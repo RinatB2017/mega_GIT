@@ -30,22 +30,28 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef USE_SCALE_POINT_DATETIME
-class TimeScaleDraw: public QwtScaleDraw
+class TimeScaleDraw: public QwtDateScaleDraw
 {
 public:
-    TimeScaleDraw(const QTime &base):
+    TimeScaleDraw(const QDateTime &base):
         baseTime(base)
     {
+        // длина меток в пикселях
+        //setTickLength(QwtScaleDiv::MajorTick, 7);
+        //setTickLength(QwtScaleDiv::MinorTick, 24);
+        //setTickLength(QwtScaleDiv::MediumTick, 0);
+
+        setDateFormat(QwtDate::Day, QString("dd.MM.yyyy hh:mm:ss"));
     }
     virtual QwtText label(qreal v) const
     {
         QDateTime upDateTime;
         upDateTime.setTime_t(v);
-        //return upDateTime.toString("dd.MM.yyyy hh:mm:ss");
-        return upDateTime.toString("hh:mm:ss");
+        return upDateTime.toString("dd.MM.yyyy hh:mm:ss");
     }
+
 private:
-    QTime baseTime;
+    QDateTime baseTime;
 };
 
 class PlotPicker: public QwtPlotPicker
@@ -61,9 +67,8 @@ public:
         QwtText text;
         QDateTime dt;
         dt.setTime_t(invTransform(point).x());
-        text.setText(QString("%1 %2")
-                     //.arg(dt.toString("dd.MM.yyyy hh:mm:ss"))
-                     .arg(dt.toString("hh:mm:ss"))
+        text.setText(QString("%1 | %2")
+                     .arg(dt.toString("dd.MM.yyyy hh:mm:ss"))
                      .arg(invTransform(point).y()));
         return text;
     }
@@ -488,7 +493,7 @@ void GrapherBox::create_widgets(void)
     ui->qwtPlot->setCanvasBackground( Qt::white );
 
 #ifdef USE_SCALE_POINT_DATETIME
-    ui->qwtPlot->setAxisScaleDraw(QwtPlot::xBottom, new TimeScaleDraw(QTime::currentTime()));
+    ui->qwtPlot->setAxisScaleDraw(QwtPlot::xBottom, new TimeScaleDraw(QDateTime::currentDateTime()));
 #elif defined(USE_SCALE_POINT_TIME)
     ui->qwtPlot->setAxisScaleDraw(QwtPlot::xBottom, new TimeScaleDraw(QTime::currentTime()));
 #else
@@ -794,20 +799,20 @@ void GrapherBox::add_curve_data_points(int channel, QVector<QPointF> *points)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::add_curve_data(int channel,
+bool GrapherBox::add_curve_data(int channel,
                                 int x,
                                 qreal data)
 {
     if(curves.count() <= 0)
     {
         emit error(tr("curves.count() <= 0"));
-        return;
+        return false;
     }
     if(channel >= curves.count())
     {
         emit error(QString(tr("channel > %1"))
                    .arg(curves.count()));
-        return;
+        return false;
     }
     data_channels[channel].append(QPointF(x, data));    //TODO добавление данных
 
@@ -817,6 +822,8 @@ void GrapherBox::add_curve_data(int channel,
     set_horizontal_alignment(ui->btn_Horizontal->isChecked());
     set_vertical_alignment(ui->btn_Vertical->isChecked());
     updateGraphics();
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 bool GrapherBox::set_curve_data(int channel,
@@ -842,7 +849,7 @@ bool GrapherBox::set_curve_data(int channel,
 
     QPoint point(index, data);
     curves[channel].real_data[index]  = point;
-//    curves[channel].view_curve[index].append(point);
+    //    curves[channel].view_curve[index].append(point);
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -980,6 +987,24 @@ bool GrapherBox::add_curve_data(int channel,
     updateGraphics();
 
     return true;
+}
+//--------------------------------------------------------------------------------
+bool GrapherBox::add_curve_data(int channel,
+                                QDateTime v_dt,
+                                qreal value)
+{
+    return add_curve_data(channel,
+                          v_dt.toSecsSinceEpoch(),
+                          value);
+}
+//--------------------------------------------------------------------------------
+bool GrapherBox::add_curve_data(int channel,
+                                QTime v_t,
+                                qreal value)
+{
+    return add_curve_data(channel,
+                          v_t.hour() * 60 * 60 + v_t.minute() * 60 +v_t.second(),
+                          value);
 }
 //--------------------------------------------------------------------------------
 bool GrapherBox::add_curve_array(int channel,
@@ -1305,7 +1330,7 @@ void GrapherBox::f_load_curves(QString filename)
     }
     QFile file(filename);
     CsvReader *csv = new CsvReader(nullptr ,filename);
-    csv->set_new_separator(';');
+    csv->set_new_separator('|');
     if(csv->Open())
     {
         for(int n=0; n<curves.count(); n++)
@@ -1317,32 +1342,69 @@ void GrapherBox::f_load_curves(QString filename)
         QList<QStringList> str = csv->CSVRead();
         foreach (QStringList sl, str)
         {
+#ifdef USE_SCALE_POINT_DATETIME
+            if(sl.count() == 8)
+            {
+                bool ok = false;
+                int channel = sl.at(0).toInt(&ok);
+
+                int year    = sl.at(1).toInt(&ok);
+                int month   = sl.at(2).toInt(&ok);
+                int day     = sl.at(3).toInt(&ok);
+
+                int hour    = sl.at(4).toInt(&ok);
+                int minute  = sl.at(5).toInt(&ok);
+                int second  = sl.at(6).toInt(&ok);
+
+                qreal value = sl.at(7).toDouble(&ok);
+
+                QDate date;
+                date.setDate(year, month, day);
+
+                QTime time;
+                time.setHMS(hour, minute, second);
+
+                QDateTime dt;
+                dt.setDate(date);
+                dt.setTime(time);
+
+                curves[channel].real_data.append(QPointF(dt.toSecsSinceEpoch(), value));
+                curves[channel].view_curve->append(QPointF(dt.toSecsSinceEpoch(), value));
+                curves[channel].pos_x++;
+#elif defined(USE_SCALE_POINT_TIME)
+            if(sl.count() == 5)
+            {
+                bool ok = false;
+                int channel = sl.at(0).toInt(&ok);
+
+                int hour    = sl.at(1).toInt(&ok);
+                int minute  = sl.at(2).toInt(&ok);
+                int second  = sl.at(3).toInt(&ok);
+
+                qreal value = sl.at(4).toDouble(&ok);
+
+                QTime time;
+                time.setHMS(hour, minute, second);
+
+                curves[channel].real_data.append(QPointF(hour * 60 * 60 + minute * 60 + second, value));
+                curves[channel].view_curve->append(QPointF(hour * 60 * 60 + minute * 60 + second, value));
+                curves[channel].pos_x++;
+#else
             if(sl.count() == 3)
             {
-#ifdef USE_SCALE_POINT_DATETIME
-                //FIXME надо добавить обработчик
-#elif defined(USE_SCALE_POINT_TIME)
-                //FIXME надо добавить обработчик
-#else
                 bool ok = false;
-                int i = sl.at(0).toInt(&ok);
-                if(!ok) i=0;
-                qreal x = sl.at(1).toDouble(&ok);
-                if(!ok) x=curves.at(i).pos_x;
-                qreal y = sl.at(2).toDouble(&ok);
-                if(!ok) y=0;
-                //qDebug() << QString("%1 %2 %3").arg(i).arg(x).arg(y);
-                if((i>=0) && (i<curves.count()))
-                {
-                    curves[i].real_data.append(QPointF(x, y));
-                    curves[i].view_curve->append(QPointF(x, y));
-                    curves[i].pos_x++;
-                }
+                int channel = sl.at(0).toInt(&ok);
+                int pos = sl.at(1).toInt(&ok);
+                qreal value = sl.at(2).toDouble(&ok);
+
+                curves[channel].real_data.append(QPointF(pos, value));
+                curves[channel].view_curve->append(QPointF(pos, value));
+                curves[channel].pos_x++;
 #endif
             }
             else
             {
-                emit error("error data");
+                emit error(QString("error data: cnt %1").arg(sl.count()));
                 break;
             }
 
@@ -1366,15 +1428,63 @@ void GrapherBox::f_save_curves(QString filename)
         return;
     }
 
-    for(int n=0; n<curves.count(); n++)
+    for(int channel=0; channel<curves.count(); channel++)
     {
-        for(int x=0; x<curves.at(n).view_curve->samples().size(); x++)
+        for(int x=0; x<curves.at(channel).view_curve->samples().size(); x++)
         {
-            QString temp = QString("%1;%2;%3\n")
-                    .arg(n)
-                    .arg(curves.at(n).view_curve->sample(static_cast<size_t>(x)).x())
-                    .arg(curves.at(n).view_curve->sample(static_cast<size_t>(x)).y());
+#ifdef USE_SCALE_POINT_DATETIME
+            quint32 pos_date = curves.at(channel).view_curve->sample(static_cast<size_t>(x)).x();
+            qreal   value = curves.at(channel).view_curve->sample(static_cast<size_t>(x)).y();
+
+            QDateTime dt;
+            dt.setTime_t(pos_date);
+
+            int year    = dt.date().year();
+            int month   = dt.date().month();
+            int day     = dt.date().day();
+
+            int hour    = dt.time().hour();
+            int minute  = dt.time().minute();
+            int second  = dt.time().second();
+
+            //TODO формат channel|year|month|day|hour|minute|second|value
+            QString temp = QString("%1|%2|%3|%4|%5|%6|%7|%8\n")
+                    .arg(channel)
+                    .arg(year)
+                    .arg(month)
+                    .arg(day)
+                    .arg(hour)
+                    .arg(minute)
+                    .arg(second)
+                    .arg(value);
             file.write(temp.toLocal8Bit());
+#elif defined(USE_SCALE_POINT_TIME)
+            quint32 pos_time = curves.at(channel).view_curve->sample(static_cast<size_t>(x)).x();
+            qreal   value = curves.at(channel).view_curve->sample(static_cast<size_t>(x)).y();
+
+            QTime temp_t;
+            temp_t.setHMS(0, 0, 0, 0);
+            QTime t = temp_t.addSecs(pos_time);
+
+            int hour    = t.hour();
+            int minute  = t.minute();
+            int second  = t.second();
+
+            //TODO формат channel|minute|second|value
+            QString temp = QString("%1|%2|%3|%4|%5\n")
+                    .arg(channel)
+                    .arg(hour)
+                    .arg(minute)
+                    .arg(second)
+                    .arg(value);
+            file.write(temp.toLocal8Bit());
+#else
+            QString temp = QString("%1|%2|%3\n")
+                    .arg(channel)
+                    .arg(curves.at(channel).view_curve->sample(static_cast<size_t>(x)).x())
+                    .arg(curves.at(channel).view_curve->sample(static_cast<size_t>(x)).y());
+            file.write(temp.toLocal8Bit());
+#endif
         }
     }
     file.close();

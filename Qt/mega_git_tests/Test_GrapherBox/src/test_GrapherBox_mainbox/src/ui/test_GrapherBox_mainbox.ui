@@ -6,11 +6,24 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>130</width>
-    <height>112</height>
+    <width>307</width>
+    <height>208</height>
    </rect>
   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="GrapherBox" name="grapher_widget" native="true"/>
+   </item>
+  </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GrapherBox</class>
+   <extends>QWidget</extends>
+   <header>grapherbox.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

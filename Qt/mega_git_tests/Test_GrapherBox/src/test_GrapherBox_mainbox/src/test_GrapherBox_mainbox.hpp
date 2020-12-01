@@ -71,9 +71,6 @@ private:
     Ui::MainBox *ui;
     bool all_break = false;
 
-//    QPointer<GrapherBox> grapher_widget;
-    GrapherBox *grapher_widget = nullptr;
-
 #ifdef ONE_CURVE
     int curve_0 = 0;
 #else

@@ -104,6 +104,24 @@ void MainBox::init(void)
     ui->hex_widget->setMinimum(std::numeric_limits<qlonglong>::min());
     //---
 
+    //---
+    mdi_widget_0 = new QLineEdit(this);
+    mdi_widget_0->setObjectName("widget_0");
+    mdi_widget_0->setAttribute(Qt::WA_DeleteOnClose);
+
+    mdi_widget_1 = new QLineEdit(this);
+    mdi_widget_1->setObjectName("widget_1");
+    mdi_widget_1->setAttribute(Qt::WA_DeleteOnClose);
+
+    mdi_widget_2 = new QLineEdit(this);
+    mdi_widget_2->setObjectName("widget_2");
+    mdi_widget_2->setAttribute(Qt::WA_DeleteOnClose);
+
+    w0 = ui->mdiArea->addSubWindow(mdi_widget_0);
+    w1 = ui->mdiArea->addSubWindow(mdi_widget_1);
+    w2 = ui->mdiArea->addSubWindow(mdi_widget_2);
+    //---
+
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
 
@@ -408,6 +426,18 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    QList<QMdiSubWindow *> l_sw = ui->mdiArea->subWindowList();
+    emit info(QString("cnt %1").arg(l_sw.count()));
+#endif
+
+#if 0
+    QDateTime dt(QDate(2000, 1, 1), QTime(0, 0, 0));
+    QString time = QString("%1").arg(dt.toTime_t(), 0, 16);
+    QByteArray ba = QByteArray::fromHex(time.toLatin1());
+    emit info(QString("dt [%1]").arg(ba.toHex().data()));
+#endif
+
 #if 0
     QString frame_name = "test_frame";
     QDockWidget *dw = topLevelWidget()->findChild<QDockWidget *>(frame_name);
@@ -429,7 +459,7 @@ bool MainBox::test(void)
     }
 #endif
 
-#if 1
+#if 0
     TestStack ts;
     ts.set("test");
     l_class.push(ts);
@@ -496,6 +526,13 @@ void MainBox::load_setting(void)
     qDebug() << "MainBox::load_setting";
 #endif
 
+    w0->move(load_value("pos_0_x").toInt(),
+             load_value("pos_0_y").toInt());
+    w1->move(load_value("pos_1_x").toInt(),
+             load_value("pos_1_y").toInt());
+    w2->move(load_value("pos_2_x").toInt(),
+             load_value("pos_2_y").toInt());
+
     if(sb_test)
     {
         int value = 0;
@@ -517,6 +554,13 @@ void MainBox::save_setting(void)
 #ifdef QT_DEBUG
     qDebug() << "MainBox::save_setting";
 #endif
+
+    save_value("pos_0_x", w0->x());
+    save_value("pos_0_y", w0->y());
+    save_value("pos_1_x", w1->x());
+    save_value("pos_1_y", w1->y());
+    save_value("pos_2_x", w2->x());
+    save_value("pos_2_y", w2->y());
 
     if(sb_test)
     {

@@ -171,6 +171,14 @@ private:
     QList<QDockWidget *> l_docks;
 
     QStack<TestStack> l_class;
+
+    QLineEdit *mdi_widget_0 = nullptr;
+    QLineEdit *mdi_widget_1 = nullptr;
+    QLineEdit *mdi_widget_2 = nullptr;
+
+    QMdiSubWindow *w0 = nullptr;
+    QMdiSubWindow *w1 = nullptr;
+    QMdiSubWindow *w2 = nullptr;
     //---
 
     bool direction = false;

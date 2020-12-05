@@ -100,6 +100,29 @@ void MainBox::init(void)
     });
 
     //---
+    connect(ui->de_begin,   &QDateEdit::editingFinished,  [this]() {
+        emit info("correct min");
+        ui->de_test->setMinimumDate(ui->de_begin->date());
+    });
+    connect(ui->de_end,   &QDateEdit::editingFinished,  [this]() {
+        emit info("correct max");
+        ui->de_test->setMaximumDate(ui->de_end->date());
+    });
+
+    QTimer::singleShot(1, [this]{
+        if(ui->de_test->minimumDate() != ui->de_begin->date())
+        {
+            ui->de_test->setMinimumDate(ui->de_begin->date());
+        }
+        if(ui->de_test->maximumDate() != ui->de_end->date())
+        {
+            ui->de_test->setMaximumDate(ui->de_end->date());
+        }
+        emit info("CORRECT");
+    });
+    //---
+
+    //---
     ui->hex_widget->setMaximum(std::numeric_limits<qlonglong>::max());
     ui->hex_widget->setMinimum(std::numeric_limits<qlonglong>::min());
     //---
@@ -431,10 +454,16 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QDateTime dt1(QDate(2020, 1,  1), QTime(0, 0, 0), QTimeZone(Qt::LocalTime));
+    QDateTime dt2(QDate(2020, 12, 31), QTime(0, 0, 0), QTimeZone(Qt::LocalTime));
+    emit info(QString("diff %1").arg(dt1.daysTo(dt2)));
+#endif
+
+#if 0
     QDateTime dt(QDate(1970, 1, 1), QTime(0, 0, 0), QTimeZone(Qt::LocalTime));
-//    dt.setDate(QDate(1970, 1, 1));
-//    dt.setTime(QTime(0, 0, 0));
-//    dt.setTimeZone(QTimeZone(Qt::LocalTime));
+    //    dt.setDate(QDate(1970, 1, 1));
+    //    dt.setTime(QTime(0, 0, 0));
+    //    dt.setTimeZone(QTimeZone(Qt::LocalTime));
     emit info(QString("sec %1").arg(dt.toSecsSinceEpoch()));
     qDebug() << dt;
 

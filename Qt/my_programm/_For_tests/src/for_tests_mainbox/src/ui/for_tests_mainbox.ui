@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>559</width>
-    <height>420</height>
+    <height>457</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
@@ -23,7 +23,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>6</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="icon">
@@ -144,6 +144,19 @@
                   <string>CheckBox</string>
                  </property>
                 </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_4">
+               <item>
+                <widget class="QDateEdit" name="de_begin"/>
+               </item>
+               <item>
+                <widget class="QDateEdit" name="de_test"/>
+               </item>
+               <item>
+                <widget class="QDateEdit" name="de_end"/>
                </item>
               </layout>
              </item>
@@ -290,7 +303,7 @@ p, li { white-space: pre-wrap; }
                <x>0</x>
                <y>0</y>
                <width>511</width>
-               <height>223</height>
+               <height>260</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -432,11 +445,20 @@ p, li { white-space: pre-wrap; }
   <tabstop>comboBox_2</tabstop>
   <tabstop>btn_clear_strings</tabstop>
   <tabstop>btn_add_strings</tabstop>
-  <tabstop>lineEdit</tabstop>
+  <tabstop>hex_widget</tabstop>
+  <tabstop>de_begin</tabstop>
+  <tabstop>de_test</tabstop>
+  <tabstop>de_end</tabstop>
+  <tabstop>listWidget</tabstop>
+  <tabstop>horizontalSlider</tabstop>
   <tabstop>sb_1</tabstop>
   <tabstop>sb_2</tabstop>
   <tabstop>sb_res</tabstop>
   <tabstop>btn_ok</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>te_test</tabstop>
+  <tabstop>tree</tabstop>
+  <tabstop>tableView</tabstop>
  </tabstops>
  <resources>
   <include location="../../../../../../lib2/icons/digits/digits.qrc"/>

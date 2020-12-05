@@ -179,6 +179,8 @@ private:
     QMdiSubWindow *w0 = nullptr;
     QMdiSubWindow *w1 = nullptr;
     QMdiSubWindow *w2 = nullptr;
+
+//    QList<QMdiSubWindow *> l_mdi_subwindow;
     //---
 
     bool direction = false;

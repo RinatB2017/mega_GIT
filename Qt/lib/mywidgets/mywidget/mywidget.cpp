@@ -774,6 +774,7 @@ void MyWidget::load_widgets(void)
                 load_listwidget_property(widget);
                 load_combobox_property(widget);
                 load_splitter_property(widget);
+                load_mdi_subwindows(widget);
 
                 foreach(QString property, sl_properties_of_widgets)
                 {
@@ -814,6 +815,7 @@ void MyWidget::save_widgets(void)
             save_listwidget_property(widget);
             save_combobox_property(widget);
             save_splitter_property(widget);
+            save_mdi_subwindows(widget);
 
             foreach(QString property, sl_properties_of_widgets)
             {

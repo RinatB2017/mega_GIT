@@ -120,6 +120,10 @@ void MainBox::init(void)
     w0 = ui->mdiArea->addSubWindow(mdi_widget_0);
     w1 = ui->mdiArea->addSubWindow(mdi_widget_1);
     w2 = ui->mdiArea->addSubWindow(mdi_widget_2);
+
+    w0->setObjectName("mdi_widget0");
+    w1->setObjectName("mdi_widget1");
+    w2->setObjectName("mdi_widget2");
     //---
 
     timer = new QTimer(this);
@@ -427,6 +431,20 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QDateTime dt(QDate(1970, 1, 1), QTime(0, 0, 0), QTimeZone(Qt::LocalTime));
+//    dt.setDate(QDate(1970, 1, 1));
+//    dt.setTime(QTime(0, 0, 0));
+//    dt.setTimeZone(QTimeZone(Qt::LocalTime));
+    emit info(QString("sec %1").arg(dt.toSecsSinceEpoch()));
+    qDebug() << dt;
+
+    qint64 sec_in_day = 24 * 60 * 60;
+    dt = dt.addSecs(sec_in_day);
+    emit info(QString("sec %1").arg(dt.toSecsSinceEpoch()));
+    qDebug() << dt;
+#endif
+
+#if 0
     QList<QMdiSubWindow *> l_sw = ui->mdiArea->subWindowList();
     emit info(QString("cnt %1").arg(l_sw.count()));
 #endif
@@ -526,13 +544,6 @@ void MainBox::load_setting(void)
     qDebug() << "MainBox::load_setting";
 #endif
 
-    w0->move(load_value("pos_0_x").toInt(),
-             load_value("pos_0_y").toInt());
-    w1->move(load_value("pos_1_x").toInt(),
-             load_value("pos_1_y").toInt());
-    w2->move(load_value("pos_2_x").toInt(),
-             load_value("pos_2_y").toInt());
-
     if(sb_test)
     {
         int value = 0;
@@ -554,13 +565,6 @@ void MainBox::save_setting(void)
 #ifdef QT_DEBUG
     qDebug() << "MainBox::save_setting";
 #endif
-
-    save_value("pos_0_x", w0->x());
-    save_value("pos_0_y", w0->y());
-    save_value("pos_1_x", w1->x());
-    save_value("pos_1_y", w1->y());
-    save_value("pos_2_x", w2->x());
-    save_value("pos_2_y", w2->y());
 
     if(sb_test)
     {

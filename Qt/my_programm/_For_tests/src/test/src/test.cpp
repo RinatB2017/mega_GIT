@@ -42,6 +42,8 @@ void Test::test_GUI(void)
         QVERIFY(cb);
         QTest::keyClick(cb, Qt::Key_Down);
         QTest::keyClick(cb, Qt::Key_Down);
+        QTest::keyClick(cb, Qt::Key_Up);
+        QTest::keyClick(cb, Qt::Key_Up);
 
         QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
         QVERIFY(tb);

@@ -47,6 +47,9 @@ public:
     bool load_splitter_property(QWidget *widget);
     bool save_splitter_property(QWidget *widget);
 
+    bool load_mdi_subwindows(QWidget *widget);
+    bool save_mdi_subwindows(QWidget *widget);
+
     bool load_property(QWidget *widget, const QString &property_name);
     bool save_property(QWidget *widget, const QString &property_name);
 

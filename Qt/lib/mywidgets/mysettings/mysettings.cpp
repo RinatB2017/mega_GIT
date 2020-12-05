@@ -178,6 +178,54 @@ bool MySettings::save_splitter_property(QWidget *widget)
     return false;
 }
 //--------------------------------------------------------------------------------
+bool MySettings::load_mdi_subwindows(QWidget *widget)
+{
+    Q_ASSERT(widget);
+    if(compare_name(widget->metaObject()->className(), "QMdiSubWindow"))
+    {
+        if(widget->objectName().isEmpty() == false)
+        {
+            qDebug() << "### found" << widget->objectName();
+            int x = 0;
+            int y = 0;
+            int w = 0;
+            int h = 0;
+            bool ok;
+            ok = load_int("pos_x", &x);
+            if(!ok) return false;
+            ok = load_int("pos_y", &y);
+            if(!ok) return false;
+            ok = load_int("widget_w", &w);
+            if(!ok) return false;
+            ok = load_int("widget_h", &h);
+            if(!ok) return false;
+
+            widget->resize(w, h);
+            widget->move(x, y);
+            return true;
+        }
+    }
+    return false;
+}
+//--------------------------------------------------------------------------------
+bool MySettings::save_mdi_subwindows(QWidget *widget)
+{
+    Q_ASSERT(widget);
+    if(compare_name(widget->metaObject()->className(), "QMdiSubWindow"))
+    {
+        if(widget->objectName().isEmpty() == false)
+        {
+            qDebug() << "### found" << widget->objectName();
+            save_int("pos_x", widget->x());
+            save_int("pos_y", widget->y());
+            save_int("widget_w", widget->width());
+            save_int("widget_h", widget->height());
+            return true;
+        }
+    }
+    return false;
+}
+//--------------------------------------------------------------------------------
 bool MySettings::load_property(QWidget *widget, const QString &property_name)
 {
     Q_ASSERT(widget);

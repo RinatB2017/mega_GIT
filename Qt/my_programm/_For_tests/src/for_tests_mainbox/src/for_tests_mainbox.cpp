@@ -109,7 +109,7 @@ void MainBox::init(void)
         ui->de_test->setMaximumDate(ui->de_end->date());
     });
 
-    QTimer::singleShot(1, [this]{
+    QTimer::singleShot(100, [this]{
         if(ui->de_test->minimumDate() != ui->de_begin->date())
         {
             ui->de_test->setMinimumDate(ui->de_begin->date());

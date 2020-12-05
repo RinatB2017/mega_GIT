@@ -185,7 +185,7 @@ bool MySettings::load_mdi_subwindows(QWidget *widget)
     {
         if(widget->objectName().isEmpty() == false)
         {
-            qDebug() << "### found" << widget->objectName();
+            //qDebug() << "### found" << widget->objectName();
             int x = 0;
             int y = 0;
             int w = 0;

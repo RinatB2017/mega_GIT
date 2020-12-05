@@ -57,8 +57,6 @@ int main(int argc, char *argv[])
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     splash->show();
 
-    
-
     MainWindow *main_window = new MainWindow;
 
     MainBox *mainBox = new MainBox(main_window, splash);

@@ -382,7 +382,7 @@ void QHexEditPrivate::scroll(QWheelEvent *event)
     this->wheelEvent(event);
 }
 
-qint64 QHexEditPrivate::indexOf(QByteArray &ba, qint64 start)
+qint64 QHexEditPrivate::indexOf(const QByteArray &ba, qint64 start)
 {
     if(this->_hexeditdata)
         return this->_reader->indexOf(ba, start);

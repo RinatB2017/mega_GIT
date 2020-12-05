@@ -213,7 +213,7 @@ private slots:
 
     void change_value(void);
 
-#if (defined DEMO) and (defined DEMO_YEAR) and (defined DEMO_MONTH) and (defined DEMO_DAY)
+#if defined (DEMO) && defined (DEMO_YEAR) && defined (DEMO_MONTH) && defined (DEMO_DAY)
     void kill(void);
     void kill2(void);
 #endif
@@ -301,7 +301,7 @@ private:
 
     int state_theme = DARK_THEME;
 
-#if (defined DEMO) and (defined DEMO_YEAR) and (defined DEMO_MONTH) and (defined DEMO_DAY)
+#if defined (DEMO) && defined (DEMO_YEAR) && defined (DEMO_MONTH) && defined (DEMO_DAY)
     void check_date(void);
 #endif
 

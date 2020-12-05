@@ -130,7 +130,7 @@ void MainBox::test_rtsp(void)
 
     libvlc_media_player_set_media (mp, m);
 
-    libvlc_media_player_set_xwindow (mp, static_cast<uint32_t>(ui->widget->winId()));
+    libvlc_media_player_set_xwindow (mp, static_cast<uint32_t>(ui->vlc_widget->winId()));
     libvlc_media_player_play (mp);
 }
 //--------------------------------------------------------------------------------

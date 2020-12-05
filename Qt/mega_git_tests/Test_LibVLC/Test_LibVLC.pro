@@ -11,10 +11,6 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += PROGRAMM_IN_UTF8
-
 HEADERS += \
     defines.hpp \
     version.hpp \
@@ -32,6 +28,7 @@ win32 {
 
 LIB_PATH = "$$PWD/../../../Qt/lib"
 
+include (src/config.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_LibVLC_mainbox/test_LibVLC_mainbox.pri)

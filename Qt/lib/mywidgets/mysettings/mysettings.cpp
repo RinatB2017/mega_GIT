@@ -215,7 +215,7 @@ bool MySettings::save_mdi_subwindows(QWidget *widget)
     {
         if(widget->objectName().isEmpty() == false)
         {
-            qDebug() << "### found" << widget->objectName();
+            //qDebug() << "### found" << widget->objectName();
             save_int("pos_x", widget->x());
             save_int("pos_y", widget->y());
             save_int("widget_w", widget->width());

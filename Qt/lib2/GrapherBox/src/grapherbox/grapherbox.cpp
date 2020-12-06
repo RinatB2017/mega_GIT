@@ -47,7 +47,11 @@ public:
     {
         QDateTime upDateTime;
         upDateTime.setTime_t(v);
+#ifdef USE_SCALE_POINT_DATETIME_FULL
         return upDateTime.toString("dd.MM.yyyy hh:mm:ss");
+#else
+        return upDateTime.toString("dd.MM.yyyy");
+#endif
     }
 
 private:

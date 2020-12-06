@@ -453,6 +453,10 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 0
+    ui->te_test->setHtml("<a href='http://www.w3schools.com/'>Link!</a>aah");
+#endif
+
 #if 1
     QDateTime dt1(QDate(2020, 1,  1), QTime(0, 0, 0), QTimeZone(Qt::LocalTime));
     QDateTime dt2(QDate(2020, 12, 31), QTime(0, 0, 0), QTimeZone(Qt::LocalTime));

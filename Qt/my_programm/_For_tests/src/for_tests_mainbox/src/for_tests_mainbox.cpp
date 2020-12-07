@@ -453,10 +453,25 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 0
+    int cnt = ui->te_test->document()->lineCount();
+    emit info(QString("Lines %1").arg(cnt));
+
+    QString data = ui->te_test->toPlainText();
+    QStringList strList = data.split(QRegExp("[\n]"), Qt::SkipEmptyParts);
+    emit info(QString("Lines %1").arg(strList.count()));
+    for(int n=0; n<strList.count(); n++)
+    {
+        emit info(QString("line %1 [%2]")
+                  .arg(n)
+                  .arg(strList.at(n)));
+    }
+#endif
+
 #if 1
-    QString temp_str = "0 1  2   3    4     5";
+    QString temp_str = "\t0 1  2   3    4     5";
     emit info(temp_str);
-    temp_str = temp_str.replace(QRegExp("\\s{2,}"), " ");  //замена нескольких пробелов на один
+    temp_str = temp_str.replace(QRegExp("\\s{2,}"), " ").remove("\t");  //замена нескольких пробелов на один
     emit info(temp_str);
 #endif
 

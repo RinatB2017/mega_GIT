@@ -453,11 +453,18 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    QString temp_str = "0 1  2   3    4     5";
+    emit info(temp_str);
+    temp_str = temp_str.replace(QRegExp("\\s{2,}"), " ");  //замена нескольких пробелов на один
+    emit info(temp_str);
+#endif
+
 #if 0
     ui->te_test->setHtml("<a href='http://www.w3schools.com/'>Link!</a>aah");
 #endif
 
-#if 1
+#if 0
     QDateTime dt1(QDate(2020, 1,  1), QTime(0, 0, 0), QTimeZone(Qt::LocalTime));
     QDateTime dt2(QDate(2020, 12, 31), QTime(0, 0, 0), QTimeZone(Qt::LocalTime));
     emit info(QString("diff %1").arg(dt1.daysTo(dt2)));

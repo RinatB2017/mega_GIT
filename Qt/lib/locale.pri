@@ -6,14 +6,14 @@ DEPENDPATH  += $$PWD
 INCLUDEPATH = $$DEPENDPATH
 
 # почему то винде не работает *.
-linux {
-    TRANSLATIONS    += locale/*.ts
-}
+#linux {
+#    TRANSLATIONS    += locale/*.ts
+#}
 
-win32 {
+#win32 {
     TRANSLATIONS    += locale/lang_ru.ts
     TRANSLATIONS    += locale/lang_it.ts
-}
+#}
 
 isEmpty(QMAKE_LRELEASE) {
     win32|os2:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\\lrelease.exe

@@ -11,18 +11,6 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-
-#DEFINES += DEMO
-#DEFINES += "DEMO_YEAR=2017"
-#DEFINES += "DEMO_MONTH=9"
-#DEFINES += "DEMO_DAY=9"
-
-DEFINES += PROGRAMM_IN_UTF8
-
-DEFINES += HEX16
-
 HEADERS += \
     defines.hpp \
     version.hpp
@@ -48,6 +36,7 @@ CONFIG(debug, debug|release) {
 LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
+include (src/config.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/widgets/hexspinbox/hexspinbox.pri)
 include ($$LIB_PATH2/usb/usb.pri)

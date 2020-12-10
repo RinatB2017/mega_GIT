@@ -276,6 +276,7 @@ void MainBox::createTestBar(void)
     commands.clear(); int id = 0;
     commands.append({ id++, "test",             &MainBox::test });
     commands.append({ id++, "test2",            &MainBox::test2 });
+    commands.append({ id++, "load QSS",         &MainBox::load_qss });
     commands.append({ id++, "timer start",      &MainBox::timer_start });
     commands.append({ id++, "timer stop",       &MainBox::timer_stop });
 
@@ -447,6 +448,29 @@ void MainBox::heavy_function(void)
         cnt--;
     }
     emit info("OK");
+}
+//--------------------------------------------------------------------------------
+bool MainBox::load_qss(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    MyFileDialog *dlg = new MyFileDialog("qss_file", "qss_file");
+    dlg->setNameFilter("QSS files (*.qss)");
+    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(".");
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+
+        QFile file(files.at(0));
+        file.open(QFile::ReadOnly);
+        QString styleSheet = QLatin1String(file.readAll());
+        file.close();
+        qApp->setStyleSheet(styleSheet);
+    }
+    dlg->deleteLater();
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)

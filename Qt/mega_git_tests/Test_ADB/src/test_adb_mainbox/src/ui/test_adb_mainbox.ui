@@ -111,7 +111,7 @@
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset resource="../../../../../lib/pictures/arrow.qrc">
+          <iconset resource="../../../../../../lib/pictures/arrow.qrc">
            <normaloff>:/arrow/arrow-left.png</normaloff>:/arrow/arrow-left.png</iconset>
          </property>
         </widget>
@@ -122,7 +122,7 @@
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset resource="../../../../../lib/pictures/arrow.qrc">
+          <iconset resource="../../../../../../lib/pictures/arrow.qrc">
            <normaloff>:/arrow/arrow-down.png</normaloff>:/arrow/arrow-down.png</iconset>
          </property>
         </widget>
@@ -133,7 +133,7 @@
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset resource="../../../../../lib/pictures/arrow.qrc">
+          <iconset resource="../../../../../../lib/pictures/arrow.qrc">
            <normaloff>:/arrow/arrow-up.png</normaloff>:/arrow/arrow-up.png</iconset>
          </property>
         </widget>
@@ -144,7 +144,7 @@
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset resource="../../../../../lib/pictures/arrow.qrc">
+          <iconset resource="../../../../../../lib/pictures/arrow.qrc">
            <normaloff>:/arrow/arrow-right.png</normaloff>:/arrow/arrow-right.png</iconset>
          </property>
         </widget>
@@ -273,7 +273,7 @@
            <x>0</x>
            <y>0</y>
            <width>417</width>
-           <height>491</height>
+           <height>510</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -557,7 +557,7 @@
   <tabstop>btn_swipe_UD</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../../../lib/pictures/arrow.qrc"/>
+  <include location="../../../../../../lib/pictures/arrow.qrc"/>
  </resources>
  <connections/>
 </ui>

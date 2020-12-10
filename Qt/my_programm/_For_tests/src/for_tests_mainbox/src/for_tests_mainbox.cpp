@@ -477,6 +477,19 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    QDateTime birth(QDate(1969, 11, 28), QTime(0, 0, 0), QTimeZone(Qt::UTC));
+    QString birth_str = birth.toString("ddMMyyyy");
+    emit info(QString("birth [%1]").arg(birth_str));
+    int sum = 0;
+    for(int i=0; i<birth_str.length(); i++)
+    {
+        sum += birth_str.mid(i, 1).toInt();
+    }
+    emit info(QString("sum %1").arg(sum));
+#endif
+
+
 #if 0
     int cnt = ui->te_test->document()->lineCount();
     emit info(QString("Lines %1").arg(cnt));
@@ -492,7 +505,7 @@ bool MainBox::test(void)
     }
 #endif
 
-#if 1
+#if 0
     QString temp_str = "\t0 1  2   3    4     5";
     emit info(temp_str);
     temp_str = temp_str.replace(QRegExp("\\s{2,}"), " ").remove("\t");  //замена нескольких пробелов на один

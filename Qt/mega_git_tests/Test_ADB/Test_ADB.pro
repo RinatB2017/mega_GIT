@@ -45,7 +45,6 @@ include ($$LIB_PATH2/opencv/opencv.pri)
 include ($$LIB_PATH2/icons/arrows.pri)
 
 include (src/test_adb_mainbox/test_adb_mainbox.pri)
-
 include (src/autoclicker/autoclicker.pri)
 
 !exists(OBJECTS_DIR) {

@@ -50,10 +50,7 @@ void Test::test_grapher(void)
 #endif
 
 #if 1
-//    MainBox *mb = mw->findChild<MainBox *>("MainBox");
-//    QVERIFY(mb);
-
-    DataGrapherBox *gb = mw->findChild<DataGrapherBox *>("DataGrapherBox");
+    DataGrapherBox *gb = mw->findChild<DataGrapherBox *>();
     QVERIFY(gb);
 
     gb->clr_curves();
@@ -63,8 +60,9 @@ void Test::test_grapher(void)
     QCOMPARE(gb->add_curve("curve2"),   2);
     QCOMPARE(gb->add_curve("curve3"),   3);
     QCOMPARE(gb->add_curve("curve4"),   4);
+    QCOMPARE(gb->add_curve("curve5"),   5);
 
-    QCOMPARE(gb->get_max_index(),    5);
+    QCOMPARE(gb->get_max_index(),    6);
 
     for(int n=0; n<1000; n++)
     {

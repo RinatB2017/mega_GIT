@@ -21,22 +21,17 @@
 #ifndef WORKER_FAKE_HPP
 #define WORKER_FAKE_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class Worker_fake;
 }
 //--------------------------------------------------------------------------------
-class Worker_fake : public QWidget
+class Worker_fake : public MyWidget
 {
     Q_OBJECT
 
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
     void output(QByteArray text);
 
 public:
@@ -47,14 +42,26 @@ public:
     void port_open(void);
     void port_close(void);
 
+    void readyRead(void);
+
 private slots:
     void update(void);
+
+    void start(void);
+    void stop(void);
+
+    void test(void);
 
 private:
     Ui::Worker_fake *ui;
     QTimer *timer = nullptr;
 
     void init(void);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // Worker_fake_HPP

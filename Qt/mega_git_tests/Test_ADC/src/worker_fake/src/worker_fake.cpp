@@ -23,7 +23,7 @@
 #include "ui_worker_fake.h"
 //--------------------------------------------------------------------------------
 Worker_fake::Worker_fake(QWidget *parent) :
-    QWidget(parent),
+    MyWidget(parent),
     ui(new Ui::Worker_fake)
 {
     init();
@@ -38,8 +38,16 @@ void Worker_fake::init(void)
 {
     ui->setupUi(this);
 
+    ui->btn_start->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->btn_stop->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaStop));
+    ui->btn_test->setIcon(qApp->style()->standardIcon(QStyle::SP_CommandLink));
+
     timer = new QTimer(this);
     connect(timer,  &QTimer::timeout,   this,   &Worker_fake::update);
+
+    connect(ui->btn_start,  &QToolButton::clicked,  this,   &Worker_fake::start);
+    connect(ui->btn_stop,   &QToolButton::clicked,  this,   &Worker_fake::stop);
+    connect(ui->btn_test,   &QToolButton::clicked,  this,   &Worker_fake::test);
 
     ui->sb_interval->setRange(100, 10000);
 
@@ -68,7 +76,7 @@ void Worker_fake::update(void)
             .arg(static_cast<qreal>(rand() % a - b));
 
     QByteArray data;
-    data.append(temp);
+    data.append(temp.toLatin1());
     data.append(static_cast<char>(0x0A));
 
     emit output(data);
@@ -91,5 +99,58 @@ void Worker_fake::port_close(void)
     {
         timer->stop();
     }
+}
+//--------------------------------------------------------------------------------
+void Worker_fake::readyRead(void)
+{
+    emit trace(Q_FUNC_INFO);
+}
+//--------------------------------------------------------------------------------
+void Worker_fake::start(void)
+{
+    emit trace(Q_FUNC_INFO);
+    if(timer)
+    {
+        timer->start(ui->sb_interval->value());
+    }
+}
+//--------------------------------------------------------------------------------
+void Worker_fake::stop(void)
+{
+    emit trace(Q_FUNC_INFO);
+    if(timer)
+    {
+        timer->stop();
+    }
+}
+//--------------------------------------------------------------------------------
+void Worker_fake::test(void)
+{
+    emit trace(Q_FUNC_INFO);
+}
+//--------------------------------------------------------------------------------
+void Worker_fake::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool Worker_fake::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void Worker_fake::load_setting(void)
+{
+    int value = 0;
+    bool ok = load_int("fake_intervel", &value);
+    if(ok)
+    {
+        ui->sb_interval->setValue(value);
+    }
+}
+//--------------------------------------------------------------------------------
+void Worker_fake::save_setting(void)
+{
+    save_int("fake_intervel", ui->sb_interval->value());
 }
 //--------------------------------------------------------------------------------

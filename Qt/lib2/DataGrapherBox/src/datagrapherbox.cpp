@@ -114,10 +114,15 @@ void DataGrapherBox::init(void)
 
     connect(ui->grapher_widget, &GrapherBox::change_text,   this,   &DataGrapherBox::change_text);
 
-    //ui->grapher_widget->set_visible_btn_Options(false);
-    //ui->grapher_widget->set_visible_btn_Load(false);
-    //ui->grapher_widget->set_visible_btn_Save(false);
-    ui->grapher_widget->set_visible_btn_Statistic(false);
+    QTimer::singleShot(0, [this]{
+        ui->grapher_widget->set_visible_btn_Options(false);
+        ui->grapher_widget->set_visible_btn_all_ON(false);
+        ui->grapher_widget->set_visible_btn_all_OFF(false);
+        ui->grapher_widget->set_visible_btn_Statistic(false);
+        ui->grapher_widget->set_visible_btn_Autoscroll(false);
+        ui->grapher_widget->set_visible_btn_Load(false);
+        ui->grapher_widget->set_visible_btn_Save(false);
+    });
 
     ui->grapher_widget->push_btn_Horizontal(true);
     ui->grapher_widget->push_btn_Vertical(true);

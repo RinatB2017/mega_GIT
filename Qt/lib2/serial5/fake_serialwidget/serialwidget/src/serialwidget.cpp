@@ -30,11 +30,7 @@ SerialWidget::SerialWidget(QWidget *parent) :
 //--------------------------------------------------------------------------------
 SerialWidget::~SerialWidget()
 {
-    if(worker_fake)
-    {
-        worker_fake->disconnect();
-        worker_fake->deleteLater();
-    }
+
 }
 //--------------------------------------------------------------------------------
 void SerialWidget::init(void)

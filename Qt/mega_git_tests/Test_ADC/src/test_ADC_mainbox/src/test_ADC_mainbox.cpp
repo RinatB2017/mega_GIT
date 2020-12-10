@@ -42,6 +42,7 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -53,33 +54,32 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
-    data_widget = new DataGrapherBox(this);
-    data_widget->setObjectName("DataGrapherBox");
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->add_dock_widget("ADC", "data_widget", Qt::LeftDockWidgetArea, reinterpret_cast<QWidget *>(data_widget));
-    }
-
     clr_curves();
     for(int n=0; n<6; n++)
     {
         QString curve_name = QString("A%1").arg(n);
-        data_widget->add_curve(curve_name);
+        ui->data_widget->add_curve(curve_name);
     }
 
     ui->serial_widget->set_fix_baudrate(57600);
-
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_ADC(QByteArray)));
-    //---
-    layout()->setMargin(0);
+
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->add_dock_widget("ADC",
+                            "data_widget",
+                            Qt::LeftDockWidgetArea,
+                            reinterpret_cast<QWidget *>(ui->main_frame));
+        setVisible(false);
+    }
 
     load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::clr_curves(void)
 {
-    data_widget->clr_curves();
+    ui->data_widget->clr_curves();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -182,7 +182,7 @@ void MainBox::analize_packet(QStringList sl)
 void MainBox::add_curves(QStringList sl)
 {
     // emit trace(Q_FUNC_INFO);
-    data_widget->add_curves(sl);
+    ui->data_widget->add_curves(sl);
 }
 //--------------------------------------------------------------------------------
 QVariant MainBox::convert_string(QString str_value)
@@ -215,7 +215,7 @@ QVariant MainBox::convert_string(QString str_value)
 void MainBox::show_data_ADC(QStringList sl)
 {
     int max_index = sl.count();
-    if(data_widget->get_max_index() != max_index)
+    if(ui->data_widget->get_max_index() != max_index)
     {
         emit error("curves.length() != max_index");
         return;
@@ -223,7 +223,7 @@ void MainBox::show_data_ADC(QStringList sl)
     for(int index=0; index<max_index; index++)
     {
         QVariant value = convert_string(sl.at(index));
-        data_widget->add_data(index, value.toDouble());
+        ui->data_widget->add_data(index, value.toDouble());
     }
 }
 //--------------------------------------------------------------------------------

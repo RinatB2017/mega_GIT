@@ -62,8 +62,6 @@ private:
     QString data_str;
     bool flag_good_data = false;
 
-    DataGrapherBox *data_widget = nullptr;
-
     QVariant convert_string(QString str_value);
 
     void analize_packet(QStringList sl);

@@ -11,15 +11,12 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
+DEFINES += PROGRAMM_IN_UTF8
 DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
-
-#DEFINES += USE_SCALE_POINT_TIME
+DEFINES += USE_SCALE_POINT_TIME
 #DEFINES += NO_GRAPHER
-
 DEFINES += NEED_CODEC
-
-DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     defines.hpp \
@@ -49,7 +46,7 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
-
+include ($$LIB_PATH2/DataGrapherBox/DataGrapherBox.pri)
 
 #----------------------------------------------
 #CONFIG  += use_worker
@@ -59,8 +56,6 @@ include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
 #----------------------------------------------
-
-include ($$LIB_PATH2/DataGrapherBox/DataGrapherBox.pri)
 
 include (src/test_ADC_mainbox/test_ADC_mainbox.pri)
 

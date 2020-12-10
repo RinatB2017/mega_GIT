@@ -88,7 +88,7 @@ Network::Network(QList<int> neuronsInLayers,
         {
             for (int k = 0; k < m_layers[i]->neuron(j)->m_inputs.size(); k++)
             {
-                m_layers[i]->neuron(j)->m_inputs[k]->setWeight((float)rand() / RAND_MAX);
+                m_layers[i]->neuron(j)->m_inputs[k]->setWeight((float)rand() / (float)RAND_MAX);
             }
         }
     }

@@ -27,33 +27,39 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-class ShowPicture : public QLabel
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
+namespace Ui {
+    class ShowPicture;
+}
+//--------------------------------------------------------------------------------
+class ShowPicture : public MyWidget
 {
     Q_OBJECT
+
+signals:
+    void add_pixmap(const QPixmap &);
 
 public:
     explicit ShowPicture(QWidget *parent = nullptr);
     ~ShowPicture();
 
-    QList<QRubberBand *> get_rects(void);
-    bool get_pixmap(uint x, uint y, uint w, uint h, QPixmap *pixmap);
-
-    void test(void);
-    bool correct(int x, int y, QRect rect);
-    bool correct(int id, QRect rect);
+    bool show_picture(const QString &filename);
 
 private:
-    QPoint origin;
+    Ui::ShowPicture *ui;
     QRubberBand *rubberBand = nullptr;
-    QList<QRubberBand *> l_bands;
-    bool flag_clicked = false;
+    QPoint origin;
 
-    void init(void);
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
 protected:
-    virtual void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    virtual void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    virtual void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // SHOWPICTURE_HPP

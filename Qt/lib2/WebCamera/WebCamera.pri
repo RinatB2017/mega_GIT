@@ -10,8 +10,6 @@ INCLUDEPATH = $$DEPENDPATH
 
 QT  += opengl
 
-#DEFINES += CV_NO_BACKWARD_COMPATIBILITY
-
 HEADERS += webcamera.hpp
 SOURCES += webcamera.cpp
 FORMS   += webcamera.ui

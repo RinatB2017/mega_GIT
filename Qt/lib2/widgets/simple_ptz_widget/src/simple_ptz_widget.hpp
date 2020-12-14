@@ -21,16 +21,11 @@
 #ifndef SIMPLE_PTZ_WIDGET_HPP
 #define SIMPLE_PTZ_WIDGET_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QMediaPlayer>
+#include <QVideoProbe>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -43,11 +38,12 @@ namespace Ui {
     class Simple_PTZ_widget;
 }
 //--------------------------------------------------------------------------------
-class MainBox;
-//--------------------------------------------------------------------------------
 class Simple_PTZ_widget : public MyWidget
 {
     Q_OBJECT
+
+signals:
+    void get_frame(QVideoFrame);
 
 public:
     explicit Simple_PTZ_widget(QWidget *parent = nullptr);
@@ -74,11 +70,14 @@ private slots:
     void f_up_down(void);
 
 private:
-    Ui::Simple_PTZ_widget *ui;
-    QPointer<QMediaPlayer> player;
+    Ui::Simple_PTZ_widget   *ui;
+    QPointer<QMediaPlayer>  player;
+    QPointer<QVideoProbe>   probe;
 
     QNetworkRequest request;
     QNetworkAccessManager networkManager;
+
+    void processFrame(QVideoFrame const &frame);
 
     void send_cmd(QString cmd);
     void create_player(void);

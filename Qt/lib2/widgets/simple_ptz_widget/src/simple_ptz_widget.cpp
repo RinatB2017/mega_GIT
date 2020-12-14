@@ -49,7 +49,18 @@ void Simple_PTZ_widget::create_player(void)
     player->setVolume(0);   //TODO выключить звук
     player->setVideoOutput(ui->video_widget);
 
-    connect(player, SIGNAL(error(QMediaPlayer::Error)), this,   SLOT(f_error(QMediaPlayer::Error)));
+    connect(player, static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error),
+            this,   &Simple_PTZ_widget::f_error);
+
+    probe = new QVideoProbe;
+    connect(probe,  &QVideoProbe::videoFrameProbed,
+            this,   &Simple_PTZ_widget::processFrame);
+    probe->setSource(player); // Returns true, hopefully.
+}
+//--------------------------------------------------------------------------------
+void Simple_PTZ_widget::processFrame(const QVideoFrame &frame)
+{
+    emit get_frame(frame);
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::init(void)
@@ -58,14 +69,20 @@ void Simple_PTZ_widget::init(void)
 
     ui->video_widget->setMinimumSize(640, 480);
 
-    connect(ui->btn_connect,    &QPushButton::clicked,  this,   &Simple_PTZ_widget::play);
-    connect(ui->btn_disconnect, &QPushButton::clicked,  this,   &Simple_PTZ_widget::stop);
+    connect(ui->btn_connect,    &QPushButton::clicked,
+            this,               &Simple_PTZ_widget::play);
+    connect(ui->btn_disconnect, &QPushButton::clicked,
+            this,               &Simple_PTZ_widget::stop);
 
-    connect(&networkManager,    SIGNAL(finished( QNetworkReply*)),  this,   SLOT(onFinished(QNetworkReply*)));
+    connect(&networkManager,    &QNetworkAccessManager::finished,
+            this,               &Simple_PTZ_widget::onFinished);
 
-    connect(ui->ipv4_widget,    &IPV4::editingFinished,         this,   &Simple_PTZ_widget::play);
-    connect(ui->le_login,       &QLineEdit::editingFinished,    this,   &Simple_PTZ_widget::play);
-    connect(ui->le_password,    &QLineEdit::editingFinished,    this,   &Simple_PTZ_widget::play);
+    connect(ui->ipv4_widget,    &IPV4::editingFinished,
+            this,               &Simple_PTZ_widget::play);
+    connect(ui->le_login,       &QLineEdit::editingFinished,
+            this,               &Simple_PTZ_widget::play);
+    connect(ui->le_password,    &QLineEdit::editingFinished,
+            this,               &Simple_PTZ_widget::play);
 
     create_player();
     connect_position_widgets();
@@ -91,18 +108,18 @@ void Simple_PTZ_widget::init(void)
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::connect_position_widgets(void)
 {
-    connect(ui->btn_l,  SIGNAL(pressed()),  this,   SLOT(f_left()));
-    connect(ui->btn_r,  SIGNAL(pressed()),  this,   SLOT(f_right()));
-    connect(ui->btn_u,  SIGNAL(pressed()),  this,   SLOT(f_up()));
-    connect(ui->btn_d,  SIGNAL(pressed()),  this,   SLOT(f_down()));
+    connect(ui->btn_l,  &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_left);
+    connect(ui->btn_r,  &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_right);
+    connect(ui->btn_u,  &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_up);
+    connect(ui->btn_d,  &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_down);
 
-    connect(ui->btn_l,  SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(ui->btn_r,  SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(ui->btn_u,  SIGNAL(released()), this,   SLOT(f_stop()));
-    connect(ui->btn_d,  SIGNAL(released()), this,   SLOT(f_stop()));
+    connect(ui->btn_l,  &QToolButton::released, this,   &Simple_PTZ_widget::f_stop);
+    connect(ui->btn_r,  &QToolButton::released, this,   &Simple_PTZ_widget::f_stop);
+    connect(ui->btn_u,  &QToolButton::released, this,   &Simple_PTZ_widget::f_stop);
+    connect(ui->btn_d,  &QToolButton::released, this,   &Simple_PTZ_widget::f_stop);
 
-    connect(ui->btn_left_right, SIGNAL(clicked()),  this,   SLOT(f_left_right()));
-    connect(ui->btn_up_down,    SIGNAL(clicked()),  this,   SLOT(f_up_down()));
+    connect(ui->btn_left_right, &QPushButton::clicked,  this,   &Simple_PTZ_widget::f_left_right);
+    connect(ui->btn_up_down,    &QPushButton::clicked,  this,   &Simple_PTZ_widget::f_up_down);
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::f_error(QMediaPlayer::Error err)
@@ -270,7 +287,7 @@ void Simple_PTZ_widget::send_cmd(QString  cmd)
                  .arg(cmd));
 
     QString concatenated = ui->le_login->text() + ":" + ui->le_password->text(); //username:password
-    emit info(QString("%1").arg(concatenated));
+//    emit info(QString("%1").arg(concatenated));
 
     QByteArray data = concatenated.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;
@@ -279,8 +296,8 @@ void Simple_PTZ_widget::send_cmd(QString  cmd)
     request.setRawHeader("Connection:", "keep-alive");
     networkManager.get(request);
 
-    emit info(param);
-    emit info("OK");
+//    emit info(param);
+//    emit info("OK");
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::updateText(void)

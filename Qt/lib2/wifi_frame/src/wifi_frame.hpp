@@ -69,7 +69,7 @@ private:
     QString caption;
     bool is_server = false;
     bool server_is_created = false;
-    QByteArray  serial_data;
+    QByteArray serial_data;
     bool is_ready = false;
 
     void init(void);

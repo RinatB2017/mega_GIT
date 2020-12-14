@@ -55,11 +55,11 @@ int main(int argc, char *argv[])
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     splash->show();
 
-    
-
     MainWindow *main_window = new MainWindow;
+    Q_ASSERT(main_window);
 
     Simple_PTZ_widget *mainBox = new Simple_PTZ_widget(main_window);
+    Q_ASSERT(mainBox);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

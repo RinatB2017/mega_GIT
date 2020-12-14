@@ -64,9 +64,9 @@ void MainWindow::setCentralWidget(MyWidget *widget)
 
 #if 1
     QList<MyWidget *> l_widgets = findChildren<MyWidget *>();
-    foreach(MyWidget *widget, l_widgets)
+    foreach(MyWidget *w, l_widgets)
     {
-        widget->load_setting();
+        w->load_setting();
     }
 #endif
 
@@ -275,8 +275,9 @@ void MainWindow::init(void)
     }
     //---
 
-    setAttribute(Qt::WA_DeleteOnClose);
-    //setAttribute(Qt::WA_QuitOnClose);
+    //TODO не стоит именно здесь взводить эти аттрибуты, лучше в mywidget
+//    setAttribute(Qt::WA_DeleteOnClose);
+//    setAttribute(Qt::WA_QuitOnClose);
 }
 //--------------------------------------------------------------------------------
 //    if(now.date().year()        >= DEMO_YEAR &&

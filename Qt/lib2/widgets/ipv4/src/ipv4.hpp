@@ -55,7 +55,7 @@ private:
     QPointer<QSpinBox> c;
     QPointer<QSpinBox> d;
 
-    QSpinBox *port;
+    QPointer<QSpinBox> port;
 
     void init(void);
 

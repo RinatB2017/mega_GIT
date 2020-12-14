@@ -276,7 +276,7 @@ void MainWindow::init(void)
     //---
 
     //TODO не стоит именно здесь взводить эти аттрибуты, лучше в mywidget
-//    setAttribute(Qt::WA_DeleteOnClose);
+    setAttribute(Qt::WA_DeleteOnClose);
 //    setAttribute(Qt::WA_QuitOnClose);
 }
 //--------------------------------------------------------------------------------

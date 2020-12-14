@@ -20,6 +20,7 @@
 **********************************************************************************/
 #include "simple_ptz_widget.hpp"
 //--------------------------------------------------------------------------------
+#include "VideoFrameGrabber.h"
 #include "ui_simple_ptz_widget.h"
 #include "mainwindow.hpp"
 #include "defines.hpp"
@@ -35,16 +36,27 @@ Simple_PTZ_widget::~Simple_PTZ_widget()
 {
     save_widgets();
     save_setting();
+
+    if(probe)
+    {
+        disconnect(probe,  &QVideoProbe::videoFrameProbed,
+                   this,   &Simple_PTZ_widget::processFrame);
+        probe->deleteLater();
+    }
     if(player)
     {
-        delete player;
+        player->stop();
+        disconnect(player, static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error),
+                   this,   &Simple_PTZ_widget::f_error);
+        player->deleteLater();
     }
+
     delete ui;
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::create_player(void)
 {
-    //player = new QMediaPlayer(this, QMediaPlayer::StreamPlayback);
+    //    player = new QMediaPlayer(this, QMediaPlayer::StreamPlayback);
     player = new QMediaPlayer(this);
     player->setVolume(0);   //TODO выключить звук
     player->setVideoOutput(ui->video_widget);
@@ -52,15 +64,34 @@ void Simple_PTZ_widget::create_player(void)
     connect(player, static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error),
             this,   &Simple_PTZ_widget::f_error);
 
-    probe = new QVideoProbe;
+    probe = new QVideoProbe(this);
     connect(probe,  &QVideoProbe::videoFrameProbed,
             this,   &Simple_PTZ_widget::processFrame);
     probe->setSource(player); // Returns true, hopefully.
 }
+
+//void Simple_PTZ_widget::create_player(void)
+//{
+//    player = new QMediaPlayer(this);
+//    player->setVolume(0);   //TODO выключить звук
+//    player->setVideoOutput(ui->video_widget);
+
+//    connect(player, static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error),
+//            this,   &Simple_PTZ_widget::f_error);
+
+//    VideoFrameGrabber* grabber = new VideoFrameGrabber(this);
+//    player->setVideoOutput(grabber);
+
+//    connect(grabber,    &VideoFrameGrabber::frameAvailable,
+//            this,       &Simple_PTZ_widget::processFrame);
+//}
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::processFrame(const QVideoFrame &frame)
 {
-    emit get_frame(frame);
+    if(player->state() == QMediaPlayer::PlayingState)
+    {
+        emit get_frame(frame);
+    }
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::init(void)
@@ -156,10 +187,11 @@ void Simple_PTZ_widget::onFinished( QNetworkReply* reply )
 void Simple_PTZ_widget::play(void)
 {
     emit trace(Q_FUNC_INFO);
+
     if(player->isAvailable())
     {
         player->stop();
-#if 1
+
         QString url_str;
         url_str.append("rtsp://");
         url_str.append(ui->le_login->text());
@@ -176,27 +208,7 @@ void Simple_PTZ_widget::play(void)
         player->setMedia(requestRtsp);
         player->setVolume(0);   //TODO установить громкость
         player->play();
-#else
-        url.setScheme("rtsp");
 
-        emit debug(url.toString());
-
-        QString concatenated = ui->le_login->text() + ":" + ui->le_password->text(); //username:password
-        emit debug(QString("concatenated = [%1]").arg(concatenated));
-
-        QByteArray data = concatenated.toLocal8Bit().toBase64();
-        QString headerData = "Basic " + data;
-        QNetworkRequest request(url);
-        //QNetworkRequest request(QUrl("http://192.168.1.14:81/videostream.cgi?stream=1"));
-        request.setRawHeader("Authorization", headerData.toLocal8Bit());
-        request.setRawHeader("Connection:", "keep-alive");
-
-        //qDebug() << request;
-
-        player->setMedia(QMediaContent(request));
-        //player->setMedia(request);
-        player->play();
-#endif
         ui->btn_d->setEnabled(true);
         ui->btn_l->setEnabled(true);
         ui->btn_r->setEnabled(true);
@@ -212,6 +224,8 @@ void Simple_PTZ_widget::play(void)
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::pause(void)
 {
+    emit trace(Q_FUNC_INFO);
+
     if(player->isAvailable())
     {
         player->pause();
@@ -224,6 +238,8 @@ void Simple_PTZ_widget::pause(void)
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::stop(void)
 {
+    emit trace(Q_FUNC_INFO);
+
     if(player->isAvailable())
     {
         player->stop();
@@ -287,7 +303,7 @@ void Simple_PTZ_widget::send_cmd(QString  cmd)
                  .arg(cmd));
 
     QString concatenated = ui->le_login->text() + ":" + ui->le_password->text(); //username:password
-//    emit info(QString("%1").arg(concatenated));
+    //    emit info(QString("%1").arg(concatenated));
 
     QByteArray data = concatenated.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;
@@ -296,8 +312,8 @@ void Simple_PTZ_widget::send_cmd(QString  cmd)
     request.setRawHeader("Connection:", "keep-alive");
     networkManager.get(request);
 
-//    emit info(param);
-//    emit info("OK");
+    //    emit info(param);
+    //    emit info("OK");
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::updateText(void)

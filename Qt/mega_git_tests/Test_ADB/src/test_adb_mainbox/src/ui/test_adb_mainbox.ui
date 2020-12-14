@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>MainBox</class>
  <widget class="QWidget" name="MainBox">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>673</width>
-    <height>714</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
@@ -272,8 +264,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>417</width>
-           <height>510</height>
+           <width>416</width>
+           <height>463</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -395,9 +387,6 @@
           <property name="maximum">
            <number>255</number>
           </property>
-          <property name="value">
-           <number>255</number>
-          </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -414,7 +403,11 @@
          </widget>
         </item>
         <item row="1" column="2">
-         <widget class="QSpinBox" name="spSaturationFrom"/>
+         <widget class="QSpinBox" name="spSaturationFrom">
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
         </item>
         <item row="1" column="3">
          <widget class="QLabel" name="label_7">
@@ -424,14 +417,15 @@
          </widget>
         </item>
         <item row="2" column="5">
-         <widget class="QSpinBox" name="spValueTo"/>
+         <widget class="QSpinBox" name="spValueTo">
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
         </item>
         <item row="2" column="4">
          <widget class="QSlider" name="slValueTo">
           <property name="maximum">
-           <number>255</number>
-          </property>
-          <property name="value">
            <number>255</number>
           </property>
           <property name="orientation">
@@ -443,10 +437,18 @@
          </widget>
         </item>
         <item row="0" column="2">
-         <widget class="QSpinBox" name="spHueFrom"/>
+         <widget class="QSpinBox" name="spHueFrom">
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
         </item>
         <item row="2" column="2">
-         <widget class="QSpinBox" name="spValueFrom"/>
+         <widget class="QSpinBox" name="spValueFrom">
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
         </item>
         <item row="1" column="1">
          <widget class="QSlider" name="slSaturationFrom">
@@ -462,7 +464,11 @@
          </widget>
         </item>
         <item row="1" column="5">
-         <widget class="QSpinBox" name="spSaturationTo"/>
+         <widget class="QSpinBox" name="spSaturationTo">
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_4">
@@ -497,7 +503,11 @@
          </widget>
         </item>
         <item row="0" column="5">
-         <widget class="QSpinBox" name="spHueTo"/>
+         <widget class="QSpinBox" name="spHueTo">
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
         </item>
         <item row="2" column="3">
          <widget class="QLabel" name="label_9">
@@ -509,7 +519,7 @@
         <item row="0" column="1">
          <widget class="QSlider" name="slHueFrom">
           <property name="maximum">
-           <number>179</number>
+           <number>255</number>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -522,10 +532,7 @@
         <item row="0" column="4">
          <widget class="QSlider" name="slHueTo">
           <property name="maximum">
-           <number>179</number>
-          </property>
-          <property name="value">
-           <number>179</number>
+           <number>255</number>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>

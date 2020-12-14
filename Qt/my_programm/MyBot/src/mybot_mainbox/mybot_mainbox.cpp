@@ -361,11 +361,25 @@ bool MainBox::test_0(void)
     emit info("Test_0()");
 
 #if 1
+    QString filename1 = "/dev/shm/0/Screenshot.png";
+    QString filename2 = "/dev/shm/0/auto.png";
+
+    if(QFile::exists(filename1) == false)
+    {
+        emit error(QString("File %1 not found").arg(filename1));
+        return false;
+    }
+    if(QFile::exists(filename2) == false)
+    {
+        emit error(QString("File %2 not found").arg(filename2));
+        return false;
+    }
+
     QRect rect;
     QElapsedTimer timer;
     timer.start();
-    bool ok = ui->camera_widget->searchObjectByTemplate("/dev/shm/0/Screenshot.png",
-                                                        "/dev/shm/0/auto.png",
+    bool ok = ui->camera_widget->searchObjectByTemplate(filename1.toLatin1(),
+                                                        filename2.toLatin1(),
                                                         &rect);
     if(ok)
     {

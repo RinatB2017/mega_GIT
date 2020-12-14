@@ -54,17 +54,17 @@ public slots:
     void pause(void);
     void stop(void);
 
-private slots:
-    void onFinished( QNetworkReply* reply );
-
-    void f_error(QMediaPlayer::Error err);
-
-    void f_stop(void);
-
     void f_left(void);
     void f_right(void);
     void f_up(void);
     void f_down(void);
+
+    void f_stop(void);
+
+private slots:
+    void onFinished( QNetworkReply* reply );
+
+    void f_error(QMediaPlayer::Error err);
 
     void f_left_right(void);
     void f_up_down(void);

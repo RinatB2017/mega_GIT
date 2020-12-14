@@ -20,7 +20,6 @@
 **********************************************************************************/
 #include "simple_ptz_widget.hpp"
 //--------------------------------------------------------------------------------
-#include "VideoFrameGrabber.h"
 #include "ui_simple_ptz_widget.h"
 #include "mainwindow.hpp"
 #include "defines.hpp"
@@ -69,22 +68,6 @@ void Simple_PTZ_widget::create_player(void)
             this,   &Simple_PTZ_widget::processFrame);
     probe->setSource(player); // Returns true, hopefully.
 }
-
-//void Simple_PTZ_widget::create_player(void)
-//{
-//    player = new QMediaPlayer(this);
-//    player->setVolume(0);   //TODO выключить звук
-//    player->setVideoOutput(ui->video_widget);
-
-//    connect(player, static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error),
-//            this,   &Simple_PTZ_widget::f_error);
-
-//    VideoFrameGrabber* grabber = new VideoFrameGrabber(this);
-//    player->setVideoOutput(grabber);
-
-//    connect(grabber,    &VideoFrameGrabber::frameAvailable,
-//            this,       &Simple_PTZ_widget::processFrame);
-//}
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::processFrame(const QVideoFrame &frame)
 {

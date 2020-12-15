@@ -155,6 +155,7 @@ void World::paintEvent(QPaintEvent *)
     painter.setTransform(_transform);
 
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+#   error (Need Qt5)
 #else
     QPen pen;
     pen.setWidthF(0.07);

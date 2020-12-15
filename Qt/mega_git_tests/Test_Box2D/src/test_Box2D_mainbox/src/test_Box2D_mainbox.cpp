@@ -136,7 +136,8 @@ void MainBox::choice_test(void)
 void MainBox::test(void)
 {
     emit info("Test");
-#if 1
+
+#if 0
     ui->world_widget->create_scene_0();
     ui->world_widget->create_scene_1();
     ui->world_widget->create_scene_2();

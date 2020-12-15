@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>WebCamera</class>
  <widget class="QWidget" name="WebCamera">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>315</width>
-    <height>569</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>Camera</string>
   </property>

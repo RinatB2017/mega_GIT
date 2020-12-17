@@ -473,11 +473,31 @@ bool MainBox::load_qss(void)
     return true;
 }
 //--------------------------------------------------------------------------------
+#include <QMediaPlayer>
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QMediaPlayer *player = new QMediaPlayer;
+    connect(player, &QMediaPlayer::durationChanged, this, [&](qint64 duration) {
+        int seconds = (duration/1000) % 60;
+        int minutes = (duration/60000) % 60;
+        int hours = (duration/3600000) % 24;
+
+        QTime time(hours, minutes,seconds);
+        emit info(time.toString("hh:mm:ss"));
+
+        emit info(QDateTime::fromSecsSinceEpoch(duration / 1000.0, Qt::UTC).toString("hh:mm:ss"));
+    });
+
+    player->setMedia(QUrl::fromLocalFile(QDir::toNativeSeparators("/dev/shm/Seal-Crazy lyrics-c45a8Htv3c0.webm.mp3")));
+    player->setVolume(50);
+    player->play();
+#endif
+
+#if 0
     QDateTime birth(QDate(1969, 11, 28), QTime(0, 0, 0), QTimeZone(Qt::UTC));
     QString birth_str = birth.toString("ddMMyyyy");
     emit info(QString("birth [%1]").arg(birth_str));

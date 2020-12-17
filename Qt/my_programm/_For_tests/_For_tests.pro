@@ -17,6 +17,8 @@ CONFIG(debug, debug|release) {
     #---
 }
 
+QT  += multimedia
+
 HEADERS += \
     defines.hpp \
     version.hpp

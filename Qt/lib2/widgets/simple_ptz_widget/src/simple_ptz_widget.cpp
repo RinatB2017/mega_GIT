@@ -55,7 +55,7 @@ Simple_PTZ_widget::~Simple_PTZ_widget()
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::create_player(void)
 {
-    //    player = new QMediaPlayer(this, QMediaPlayer::StreamPlayback);
+    // player = new QMediaPlayer(this, QMediaPlayer::StreamPlayback);
     player = new QMediaPlayer(this);
     player->setVolume(0);   //TODO выключить звук
     player->setVideoOutput(ui->video_widget);

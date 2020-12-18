@@ -66,17 +66,19 @@ LogBox::~LogBox()
 
     if(logBox)
     {
-        logBox->disconnect();
+        disconnect(logBox, &LogBox::customContextMenuRequested,    this,   &LogBox::popup);
+
         logBox->deleteLater();
     }
     if(progressBar)
     {
-        progressBar->disconnect();
         progressBar->deleteLater();
     }
     if(fb)
     {
-        fb->disconnect();
+        disconnect(fb, &FindBox::find_prev,    this,   &LogBox::find_prev);
+        disconnect(fb, &FindBox::find_next,    this,   &LogBox::find_next);
+
         fb->deleteLater();
     }
 }

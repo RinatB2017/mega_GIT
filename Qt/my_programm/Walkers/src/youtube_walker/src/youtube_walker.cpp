@@ -30,7 +30,7 @@ Youtube_walker::~Youtube_walker()
 {
     if(viewer)
     {
-        viewer->disconnect();
+        disconnect(viewer->page(), SIGNAL(loadFinished(bool)), this,   SLOT(test_JS(bool)));
         viewer->deleteLater();
     }
 }

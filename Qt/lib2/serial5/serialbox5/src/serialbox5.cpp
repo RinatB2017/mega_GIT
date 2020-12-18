@@ -58,7 +58,11 @@ SerialBox5::~SerialBox5()
 #ifdef RS232_LOG
     if(logBox)
     {
-        logBox->disconnect();
+        disconnect(this,   &SerialBox5::info,  logBox, &LogBox::infoLog);
+        disconnect(this,   &SerialBox5::debug, logBox, &LogBox::debugLog);
+        disconnect(this,   &SerialBox5::error, logBox, &LogBox::errorLog);
+        disconnect(this,   &SerialBox5::trace, logBox, &LogBox::traceLog);
+
         logBox->close();
         logBox->deleteLater();
     }
@@ -67,7 +71,8 @@ SerialBox5::~SerialBox5()
 #ifdef RS232_SEND
     if(sendBox5)
     {
-        sendBox5->disconnect();
+        disconnect(sendBox5,   &SendBox5::sendData, this, &SerialBox5::sendData);
+
         sendBox5->close();
         sendBox5->deleteLater();
     }
@@ -99,18 +104,6 @@ void SerialBox5::init(void)
 #endif
 
     connect(ui->btn_default, &QPushButton::clicked, this, &SerialBox5::set_default);
-
-//FIXME надо разобраться
-//#ifdef RS232_LOG
-//    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-//    if(mw)
-//    {
-//        connect(mw, &MainWindow::signal_is_shows_info,   logBox,   &LogBox::set_flag_is_shows_info);
-//        connect(mw, &MainWindow::signal_is_shows_debug,  logBox,   &LogBox::set_flag_is_shows_debug);
-//        connect(mw, &MainWindow::signal_is_shows_error,  logBox,   &LogBox::set_flag_is_shows_error);
-//        connect(mw, &MainWindow::signal_is_shows_trace,  logBox,   &LogBox::set_flag_is_shows_trace);
-//    }
-//#endif
 
     setCloseState();
     updateText();

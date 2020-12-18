@@ -31,12 +31,14 @@ SerialWidget::~SerialWidget()
     if(timer)
     {
         timer->stop();
-        timer->disconnect();
+        disconnect(timer,  &QTimer::timeout,  this,   &SerialWidget::timer_stop);
+
         timer->deleteLater();
     }
     if(serial5)
     {
-        serial5->disconnect();
+        disconnect(serial5, &QSerialPort::errorOccurred,               this,   &SerialWidget::serial5_error);
+
         serial5->close();
         serial5->deleteLater();
     }
@@ -51,7 +53,6 @@ void SerialWidget::init(void)
     connect(timer,  &QTimer::timeout,  this,   &SerialWidget::timer_stop);
 
     connect(serial5, &QSerialPort::readyRead,                   this,   &SerialWidget::procSerialDataReceive);
-    //connect(serial5, &QSerialPort::error,                       this,   &SerialWidget::serial5_error);
     connect(serial5, &QSerialPort::errorOccurred,               this,   &SerialWidget::serial5_error);
 
     connect(serial5, &QSerialPort::baudRateChanged,             this,   &SerialWidget::baudRateChanged);

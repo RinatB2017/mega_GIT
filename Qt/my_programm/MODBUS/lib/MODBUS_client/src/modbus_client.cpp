@@ -305,7 +305,8 @@ void MODBUS_client::disconnect_device(void)
 {
     if (modbusDevice->connectDevice())
     {
-        modbusDevice->disconnect();
+        disconnect(modbusDevice,   SIGNAL(errorOccurred(QModbusDevice::Error)),    this,   SLOT(errorOccurred(QModbusDevice::Error)));
+        disconnect(modbusDevice,   SIGNAL(stateChanged(QModbusDevice::State)),     this,   SLOT(stateChanged(QModbusDevice::State)));
     }
 }
 //--------------------------------------------------------------------------------
@@ -346,7 +347,8 @@ void MODBUS_client::disconnect_tcp_device(void)
 {
     if (modbusDevice->connectDevice())
     {
-        modbusDevice->disconnect();
+        disconnect(modbusDevice,   SIGNAL(errorOccurred(QModbusDevice::Error)),    this,   SLOT(errorOccurred(QModbusDevice::Error)));
+        disconnect(modbusDevice,   SIGNAL(stateChanged(QModbusDevice::State)),     this,   SLOT(stateChanged(QModbusDevice::State)));
     }
 }
 //--------------------------------------------------------------------------------

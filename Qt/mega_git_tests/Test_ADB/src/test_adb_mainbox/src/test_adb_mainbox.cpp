@@ -47,13 +47,19 @@ MainBox::~MainBox()
     if(timer_autoshot)
     {
         timer_autoshot->stop();
-        timer_autoshot->disconnect();
+        disconnect(timer_autoshot, &QTimer::timeout,       this,   &MainBox::f_create_screenshot);
+
         timer_autoshot->deleteLater();
     }
 
     if(myProcess)
     {
-        myProcess->disconnect();
+        disconnect(myProcess,  SIGNAL(started()),                      this,   SLOT(started()));
+        disconnect(myProcess,  SIGNAL(finished(int)),                  this,   SLOT(finished(int)));
+        disconnect(myProcess,  SIGNAL(error(QProcess::ProcessError)),  this,   SLOT(process_error(QProcess::ProcessError)));
+        disconnect(myProcess,  SIGNAL(readyReadStandardOutput()),      this,   SLOT(readData()));
+        disconnect(myProcess,  SIGNAL(readyReadStandardError()),       this,   SLOT(readData()));
+
         myProcess->deleteLater();
     }
 

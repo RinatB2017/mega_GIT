@@ -71,7 +71,8 @@ SerialBox5_fix_baudrate::~SerialBox5_fix_baudrate()
 #ifdef RS232_SEND
     if(sendBox5)
     {
-        sendBox5->disconnect();
+        disconnect(sendBox5, &SendBox5::sendData, this, &SerialBox5_fix_baudrate::sendData);
+
         sendBox5->close();
         sendBox5->deleteLater();
     }

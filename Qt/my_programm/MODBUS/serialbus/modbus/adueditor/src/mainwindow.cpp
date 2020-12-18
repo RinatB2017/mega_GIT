@@ -237,7 +237,6 @@ void MainWindow::disconnectAndDelete()
     if (!m_device)
         return;
     m_device->disconnectDevice();
-    m_device->disconnect();
     delete m_device;
     m_device = nullptr;
 }

@@ -45,7 +45,8 @@ MainBox::~MainBox()
     if(timer)
     {
         timer->stop();
-        timer->disconnect();
+        disconnect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
+
         timer->deleteLater();
     }
 

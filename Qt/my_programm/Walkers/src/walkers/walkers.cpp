@@ -46,13 +46,11 @@ MainBox::~MainBox()
 
     if(youtube_walker)
     {
-        youtube_walker->disconnect();
         youtube_walker->close();
         youtube_walker->deleteLater();
     }
     if(google_walker)
     {
-        google_walker->disconnect();
         google_walker->close();
         google_walker->deleteLater();
     }

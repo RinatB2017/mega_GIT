@@ -45,7 +45,8 @@ HelpBrowser::~HelpBrowser()
 {
     if(textBrowser)
     {
-        textBrowser->disconnect();
+        disconnect(textBrowser,    &QTextBrowser::sourceChanged,   this,           &HelpBrowser::updateCaption);
+
         textBrowser->deleteLater();
     }
 }

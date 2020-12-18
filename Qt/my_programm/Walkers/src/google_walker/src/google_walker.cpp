@@ -32,7 +32,6 @@ Google_walker::~Google_walker()
 {
     if(viewer)
     {
-        viewer->disconnect();
         viewer->deleteLater();
     }
 }

@@ -51,6 +51,12 @@ MainBox::~MainBox()
     if (modbusDevice)
     {
         modbusDevice->disconnectDevice();
+        disconnect(modbusDevice, &QModbusServer::dataWritten,
+                   this, &MainBox::updateWidgets);
+        disconnect(modbusDevice, &QModbusServer::stateChanged,
+                   this, &MainBox::onStateChanged);
+        disconnect(modbusDevice, &QModbusServer::errorOccurred,
+                   this, &MainBox::handleDeviceError);
         delete modbusDevice;
     }
     delete ui;
@@ -93,7 +99,12 @@ void MainBox::on_connectType_currentIndexChanged(int index)
 {
     if (modbusDevice)
     {
-        modbusDevice->disconnect();
+        disconnect(modbusDevice, &QModbusServer::dataWritten,
+                   this, &MainBox::updateWidgets);
+        disconnect(modbusDevice, &QModbusServer::stateChanged,
+                   this, &MainBox::onStateChanged);
+        disconnect(modbusDevice, &QModbusServer::errorOccurred,
+                   this, &MainBox::handleDeviceError);
         delete modbusDevice;
         modbusDevice = nullptr;
     }

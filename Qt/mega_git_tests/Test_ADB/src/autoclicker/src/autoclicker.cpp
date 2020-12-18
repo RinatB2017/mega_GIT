@@ -36,7 +36,8 @@ AutoClicker::~AutoClicker()
     if(timer_autoclick)
     {
         timer_autoclick->stop();
-        timer_autoclick->disconnect();
+        disconnect(timer_autoclick,    &QTimer::timeout,   this,   &AutoClicker::update);
+
         timer_autoclick->deleteLater();
     }
 

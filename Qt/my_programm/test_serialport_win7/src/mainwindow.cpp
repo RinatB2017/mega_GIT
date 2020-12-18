@@ -98,7 +98,9 @@ MainWindow::~MainWindow()
 {
     if(serial)
     {
-        serial->disconnect();
+        disconnect(serial, &QSerialPort::readyRead,        this,   &MainWindow::read_data);
+        disconnect(serial, &QSerialPort::errorOccurred,    this,   &MainWindow::serial5_error);
+
         serial->deleteLater();
     }
 

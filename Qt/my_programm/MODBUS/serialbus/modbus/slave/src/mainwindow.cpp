@@ -81,8 +81,15 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     if (modbusDevice)
-        modbusDevice->disconnectDevice();
-    delete modbusDevice;
+    {
+        disconnect(modbusDevice,    &QModbusServer::dataWritten,
+                   this,            &MainWindow::updateWidgets);
+        disconnect(modbusDevice,    &QModbusServer::stateChanged,
+                   this,            &MainWindow::onStateChanged);
+        disconnect(modbusDevice,    &QModbusServer::errorOccurred,
+                   this,            &MainWindow::handleDeviceError);
+        delete modbusDevice;
+    }
 
     delete ui;
 }
@@ -107,7 +114,12 @@ void MainWindow::on_connectType_currentIndexChanged(int index)
 {
     if (modbusDevice)
     {
-        modbusDevice->disconnect();
+        disconnect(modbusDevice,    &QModbusServer::dataWritten,
+                   this,            &MainWindow::updateWidgets);
+        disconnect(modbusDevice,    &QModbusServer::stateChanged,
+                   this,            &MainWindow::onStateChanged);
+        disconnect(modbusDevice,    &QModbusServer::errorOccurred,
+                   this,            &MainWindow::handleDeviceError);
         delete modbusDevice;
         modbusDevice = nullptr;
     }

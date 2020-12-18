@@ -204,7 +204,9 @@ void MODBUS_server::disconnect_device(void)
 {
     if (modbusDevice->connectDevice())
     {
-        modbusDevice->disconnect();
+        disconnect(modbusDevice,   SIGNAL(dataWritten(QModbusDataUnit::RegisterType,int,int)), this,   SLOT(updateWidgets(QModbusDataUnit::RegisterType,int,int)));
+        disconnect(modbusDevice,   SIGNAL(errorOccurred(QModbusDevice::Error)),                this,   SLOT(errorOccurred(QModbusDevice::Error)));
+        disconnect(modbusDevice,   SIGNAL(stateChanged(QModbusDevice::State)),                 this,   SLOT(stateChanged(QModbusDevice::State)));
     }
 }
 //--------------------------------------------------------------------------------
@@ -252,7 +254,9 @@ void MODBUS_server::disconnect_tcp_device(void)
 {
     if (modbusDevice->connectDevice())
     {
-        modbusDevice->disconnect();
+        disconnect(modbusDevice,   SIGNAL(dataWritten(QModbusDataUnit::RegisterType,int,int)), this,   SLOT(updateWidgets(QModbusDataUnit::RegisterType,int,int)));
+        disconnect(modbusDevice,   SIGNAL(errorOccurred(QModbusDevice::Error)),                this,   SLOT(errorOccurred(QModbusDevice::Error)));
+        disconnect(modbusDevice,   SIGNAL(stateChanged(QModbusDevice::State)),                 this,   SLOT(stateChanged(QModbusDevice::State)));
     }
 }
 //--------------------------------------------------------------------------------

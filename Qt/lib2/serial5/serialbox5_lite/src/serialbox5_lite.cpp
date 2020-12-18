@@ -71,7 +71,8 @@ SerialBox5_lite::~SerialBox5_lite()
 #ifdef RS232_SEND
     if(sendBox5)
     {
-        sendBox5->disconnect();
+        disconnect(sendBox5, &SendBox5::sendData, this, &SerialBox5_lite::sendData);
+
         sendBox5->close();
         sendBox5->deleteLater();
     }

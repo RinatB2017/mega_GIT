@@ -277,6 +277,13 @@
           </item>
          </layout>
         </item>
+        <item row="4" column="5">
+         <widget class="QToolButton" name="btn_screenshot">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>

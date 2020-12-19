@@ -20,6 +20,7 @@
 **********************************************************************************/
 #include "simple_ptz_widget.hpp"
 //--------------------------------------------------------------------------------
+#include "myfiledialog.hpp"
 #include "ui_simple_ptz_widget.h"
 #include "mainwindow.hpp"
 #include "defines.hpp"
@@ -73,6 +74,7 @@ void Simple_PTZ_widget::processFrame(const QVideoFrame &frame)
 {
     if(player->state() == QMediaPlayer::PlayingState)
     {
+        current_frame = frame;
         emit get_frame(frame);
     }
 }
@@ -82,6 +84,8 @@ void Simple_PTZ_widget::init(void)
     ui->setupUi(this);
 
     ui->video_widget->setMinimumSize(640, 480);
+
+    ui->btn_screenshot->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
 
     connect(ui->btn_connect,    &QPushButton::clicked,
             this,               &Simple_PTZ_widget::play);
@@ -97,6 +101,9 @@ void Simple_PTZ_widget::init(void)
             this,               &Simple_PTZ_widget::play);
     connect(ui->le_password,    &QLineEdit::editingFinished,
             this,               &Simple_PTZ_widget::play);
+
+    connect(ui->btn_screenshot, &QPushButton::clicked,
+            this,               &Simple_PTZ_widget::f_screenshot);
 
     create_player();
     connect_position_widgets();
@@ -275,6 +282,35 @@ void Simple_PTZ_widget::f_up_down(void)
     send_cmd("updown");
 }
 //--------------------------------------------------------------------------------
+void Simple_PTZ_widget::f_screenshot(void)
+{
+    QImage img = current_frame.image();
+
+    MyFileDialog *dlg = new MyFileDialog("screenshot", "screenshot");
+    dlg->setAcceptMode(MyFileDialog::AcceptSave);
+    dlg->setNameFilter("PNG files (*.png)");
+    dlg->setDefaultSuffix("png");
+    dlg->setDirectory(".");
+    dlg->selectFile("screenshot");
+    dlg->setOption(MyFileDialog::DontConfirmOverwrite, false);
+    // dlg->setConfirmOverwrite(true);
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+        bool ok = img.save(filename);
+        if(ok)
+        {
+            emit info(QString("File %1 created").arg(filename));
+        }
+        else
+        {
+            emit error(QString("File %1 NOT created").arg(filename));
+        }
+    }
+    dlg->deleteLater();
+}
+//--------------------------------------------------------------------------------
 void Simple_PTZ_widget::send_cmd(QString  cmd)
 {
     emit trace(Q_FUNC_INFO);
@@ -295,8 +331,8 @@ void Simple_PTZ_widget::send_cmd(QString  cmd)
     request.setRawHeader("Connection:", "keep-alive");
     networkManager.get(request);
 
-    //    emit info(param);
-    //    emit info("OK");
+    // emit info(param);
+    // emit info("OK");
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::updateText(void)

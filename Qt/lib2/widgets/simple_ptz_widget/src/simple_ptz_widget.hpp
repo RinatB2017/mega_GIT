@@ -69,6 +69,8 @@ private slots:
     void f_left_right(void);
     void f_up_down(void);
 
+    void f_screenshot(void);
+
 private:
     Ui::Simple_PTZ_widget   *ui;
     QPointer<QMediaPlayer>  player;
@@ -76,6 +78,8 @@ private:
 
     QNetworkRequest request;
     QNetworkAccessManager networkManager;
+
+    QVideoFrame current_frame;
 
     void processFrame(QVideoFrame const &frame);
 

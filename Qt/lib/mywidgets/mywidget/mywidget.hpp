@@ -82,7 +82,7 @@ class MyWidget : public QWidget, public MyMessages, public MySettings
 
 public:
     explicit MyWidget(QWidget *parent = nullptr);
-    ~MyWidget();
+    virtual ~MyWidget();
 
     void init_w_lists(void);
     void add_widget_to_w_lists(QWidget *widget);

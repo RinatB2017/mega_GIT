@@ -198,6 +198,18 @@ void MainBox::init(void)
     ui->tableView->setModel(text_model);
     //---
 
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        for(int n=0; n<5; n++)
+        {
+            QLabel *statusLabel1 = new QLabel();
+            statusLabel1->setText(QString("SL %1").arg(n));
+
+            mw->statusBar()->addWidget(statusLabel1);
+        }
+    }
+
     load_widgets();
 }
 //--------------------------------------------------------------------------------

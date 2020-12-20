@@ -116,12 +116,6 @@ void MainWindow::changeEvent(QEvent *event)
             styletoolbar->setWindowTitle(tr("styletoolbar"));
         }
 #endif
-//#ifndef NO_LOG
-//        if(ld)
-//        {
-//            ld->setWindowTitle(tr("log"));
-//        }
-//#endif
         break;
 
     default:

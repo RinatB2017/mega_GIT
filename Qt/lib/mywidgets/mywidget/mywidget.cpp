@@ -712,6 +712,31 @@ void MyWidget::fail(void)
     emit error("Пока не сделано");
 }
 //--------------------------------------------------------------------------------
+void MyWidget::check_file(const QString &orig_file, const QString &copy_file)
+{
+    if(QFile::exists(copy_file) == false)
+    {
+        QFileInfo fi(copy_file);
+        emit debug(fi.absolutePath());
+        QDir dir;
+        if(dir.exists(fi.absolutePath()) ==  false)
+        {
+            dir.mkdir(fi.absolutePath());
+        }
+
+        //emit error(QString("%1 не найден").arg(copy_file));
+        bool ok = QFile::copy(orig_file, copy_file);
+        if(ok)
+        {
+            emit info(QString("%1 создан").arg(copy_file));
+        }
+        else
+        {
+            emit error(QString("%1 НЕ создан").arg(copy_file));
+        }
+    }
+}
+//--------------------------------------------------------------------------------
 void MyWidget::changeEvent(QEvent *event)
 {
     switch (event->type())

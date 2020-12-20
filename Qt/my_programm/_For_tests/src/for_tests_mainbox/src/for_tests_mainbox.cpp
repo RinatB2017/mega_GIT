@@ -198,17 +198,49 @@ void MainBox::init(void)
     ui->tableView->setModel(text_model);
     //---
 
+    //---
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
-        for(int n=0; n<5; n++)
+        for(int n=0; n<3; n++)
         {
             QLabel *statusLabel1 = new QLabel();
-            statusLabel1->setText(QString("SL %1").arg(n));
+            statusLabel1->setText("00");
+            l_status.append(statusLabel1);
 
             mw->statusBar()->addWidget(statusLabel1);
         }
+        mw->statusBar()->addWidget(new QSpinBox(this));
     }
+    QTimer *timer = new QTimer();
+    QTime time;
+    time = QTime::currentTime();
+    hour = time.hour();
+    min = time.minute();
+    sec = time.second();
+    connect(timer,  &QTimer::timeout,  [this]() {
+        sec++;
+        if(sec > 59)
+        {
+            sec = 0;
+            min++;
+        }
+        if(min > 59)
+        {
+            min = 0;
+            hour++;
+        }
+        if(hour > 23)
+        {
+            hour = 0;
+        }
+        l_status.at(0)->setText(QString("%1").arg(hour, 2, 10, QChar('0')));
+        l_status.at(1)->setText(QString("%1").arg(min, 2, 10, QChar('0')));
+        l_status.at(2)->setText(QString("%1").arg(sec, 2, 10, QChar('0')));
+    });
+    timer->start(1000);
+
+    //---
 
     load_widgets();
 }

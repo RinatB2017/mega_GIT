@@ -182,6 +182,10 @@ private:
     QMdiSubWindow *w2 = nullptr;
 
 //    QList<QMdiSubWindow *> l_mdi_subwindow;
+    QList<QLabel *> l_status;
+    int hour = 0;
+    int min = 0;
+    int sec = 0;
     //---
 
     bool direction = false;

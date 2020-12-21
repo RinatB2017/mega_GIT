@@ -971,7 +971,7 @@ void MainWindow::createTrayIcon(void)
     add_new_action(trayIconMenu,    "Restore",  nullptr,    &MainWindow::showNormal);
 
     trayIconMenu->addSeparator();
-    add_new_action(trayIconMenu,    "Quit",     nullptr,  &MainWindow::quit);
+    add_new_action(trayIconMenu,    "Quit",     nullptr,    &MainWindow::quit);
 
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);

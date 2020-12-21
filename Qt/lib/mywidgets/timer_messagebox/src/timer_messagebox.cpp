@@ -18,56 +18,28 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef DIGITAL_CLOCK_HPP
-#define DIGITAL_CLOCK_HPP
-//--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "timer_messagebox.hpp"
-#include "timer_options.hpp"
-#include "mymessages.hpp"
-#include "defines.hpp"
+#include "ui_timer_messagebox.h"
 //--------------------------------------------------------------------------------
-class Digital_clock : public QLabel
+Timer_messagebox::Timer_messagebox(const QString &message, QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::Timer_messagebox)
 {
-    Q_OBJECT
+    ui->setupUi(this);
 
-signals:
-    void s_show_message(void);
+    QIcon icon = style()->standardIcon(QStyle::SP_MessageBoxWarning);
+    QPixmap pixmap = icon.pixmap(QSize(60, 60));
+    ui->label->setPixmap(pixmap);
 
-public:
-    explicit Digital_clock(QWidget *parent = nullptr);
-    virtual ~Digital_clock();
-
-private:
-    QTimer *timer = nullptr;
-    QTime time;
-
-    int hour = 0;
-    int min  = 0;
-    int sec  = 0;
-
-    bool timer_active = false;
-    QString message;
-    int t_hour = 0;
-    int t_min  = 0;
-    int t_sec  = 0;
-
-    QSettings *settings = nullptr;
-
-    void init(void);
-    void timeout(void);
-    void show_message(void);
-
-    void popup(QPoint);
-    void open_option(void);
-
-    void load_setting(void);
-    void save_setting(void);
-};
+    ui->le_message->setText(message);
+    ui->le_message->setReadOnly(true);
+    setWindowFlags(Qt::WindowStaysOnTopHint);
+    connect(ui->buttonBox,  &QDialogButtonBox::accepted,
+            this,           &Timer_messagebox::close);
+}
 //--------------------------------------------------------------------------------
-#endif // DIGITAL_CLOCK_HPP
+Timer_messagebox::~Timer_messagebox()
+{
+    delete ui;
+}
+//--------------------------------------------------------------------------------

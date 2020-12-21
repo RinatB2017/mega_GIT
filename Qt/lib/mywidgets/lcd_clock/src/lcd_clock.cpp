@@ -20,6 +20,11 @@
 **********************************************************************************/
 #include "lcd_clock.hpp"
 //--------------------------------------------------------------------------------
+#define P_MESSAGE   "message"
+#define P_HOUR      "hour"
+#define P_MIN       "min"
+#define P_SEC       "sec"
+//--------------------------------------------------------------------------------
 LCD_clock::LCD_clock(QWidget *parent) :
     QLCDNumber(parent)
 {
@@ -34,17 +39,29 @@ LCD_clock::~LCD_clock()
         disconnect(timer,  &QTimer::timeout,   this,   &LCD_clock::timeout);
         timer->deleteLater();
     }
+    save_setting();
+    if(settings)
+    {
+        settings->deleteLater();
+    }
 }
 //--------------------------------------------------------------------------------
 void LCD_clock::init(void)
 {
     timer = new QTimer(this);
+    connect(timer,  &QTimer::timeout,
+            this,   &LCD_clock::timeout);
 
     setStyleSheet("background: black; color: yellow;");
     setSegmentStyle(QLCDNumber::Flat);
     setDigitCount(8);
 
-    connect(timer,  &QTimer::timeout,   this,   &LCD_clock::timeout);
+    setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this,   &LCD_clock::customContextMenuRequested,
+            this,   &LCD_clock::popup);
+
+    connect(this,   &LCD_clock::s_show_message,
+            this,   &LCD_clock::show_message);
 
     time = QTime::currentTime();
     hour = time.hour();
@@ -56,6 +73,8 @@ void LCD_clock::init(void)
             .arg(min,  2, 10, QChar('0'))
             .arg(sec,  2, 10, QChar('0'));
     display(clock);
+
+    load_setting();
 
     timer->start(1000);
 }
@@ -83,5 +102,80 @@ void LCD_clock::timeout(void)
             .arg(min, 2, 10, QChar('0'))
             .arg(sec, 2, 10, QChar('0'));
     display(clock);
+
+    if(timer_active == false)   return;
+    if(t_hour != hour)          return;
+    if(t_min  != min)           return;
+    if(t_sec  != sec)           return;
+
+    timer_active = false;
+    emit s_show_message();
+}
+//--------------------------------------------------------------------------------
+void LCD_clock::show_message(void)
+{
+    Timer_messagebox *msgbox = new Timer_messagebox(message);
+    msgbox->setWindowTitle("Warning");
+    msgbox->show();
+}
+//--------------------------------------------------------------------------------
+void LCD_clock::popup(QPoint)
+{
+    QMenu *popup_menu = new QMenu();
+
+    popup_menu->setStyleSheet("background:white;color:black;");
+
+    QAction *clock_action   = new QAction(tr("options"),   this);
+
+    popup_menu->addAction(clock_action);
+
+    connect(clock_action,   &QAction::triggered,    this,   &LCD_clock::open_option);
+
+    popup_menu->exec(QCursor::pos());
+}
+//--------------------------------------------------------------------------------
+void LCD_clock::open_option(void)
+{
+    Timer_options *dlg = new Timer_options(this);
+    dlg->set_message(message);
+
+    int btn = dlg->exec();
+    if(btn == QDialog::Accepted)
+    {
+        QTime t_time = dlg->get_time();
+        t_hour = t_time.hour();
+        t_min  = t_time.minute();
+        t_sec  = t_time.second();
+        message = dlg->get_message();
+        timer_active = true;
+    }
+}
+//--------------------------------------------------------------------------------
+void LCD_clock::load_setting(void)
+{
+#ifdef QT_DEBUG
+    QString app_name = QString("%1(debug)").arg(APPNAME);
+#else
+    QString app_name = APPNAME;
+#endif
+
+#ifndef SAVE_INI
+    settings = new QSettings(ORGNAME, app_name);
+#else
+    settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
+#endif
+
+    message = settings->value(P_MESSAGE).toString();
+    t_hour = settings->value(P_HOUR).toInt();
+    t_min  = settings->value(P_MIN).toInt();
+    t_sec  = settings->value(P_SEC).toInt();
+}
+//--------------------------------------------------------------------------------
+void LCD_clock::save_setting(void)
+{
+    settings->setValue(P_MESSAGE,   QVariant::fromValue(message));
+    settings->setValue(P_HOUR,      QVariant::fromValue(t_hour));
+    settings->setValue(P_MIN,       QVariant::fromValue(t_min));
+    settings->setValue(P_SEC,       QVariant::fromValue(t_sec));
 }
 //--------------------------------------------------------------------------------

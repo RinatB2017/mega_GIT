@@ -21,13 +21,23 @@
 #ifndef LCD_CLOCK_HPP
 #define LCD_CLOCK_HPP
 //--------------------------------------------------------------------------------
-#include <QLCDNumber>
-#include <QTimer>
-#include <QTime>
+#ifdef HAVE_QT5
+#   include<QtWidgets>
+#else
+#   include <QtGui>
+#endif
+//--------------------------------------------------------------------------------
+#include "timer_messagebox.hpp"
+#include "timer_options.hpp"
+#include "mymessages.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 class LCD_clock : public QLCDNumber
 {
     Q_OBJECT
+
+signals:
+    void s_show_message(void);
 
 public:
     explicit LCD_clock(QWidget *parent = nullptr);
@@ -41,8 +51,23 @@ private:
     int min  = 0;
     int sec  = 0;
 
+    bool timer_active = false;
+    QString message;
+    int t_hour = 0;
+    int t_min  = 0;
+    int t_sec  = 0;
+
+    QSettings *settings = nullptr;
+
     void init(void);
     void timeout(void);
+    void show_message(void);
+
+    void popup(QPoint);
+    void open_option(void);
+
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // LCD_CLOCK_HPP

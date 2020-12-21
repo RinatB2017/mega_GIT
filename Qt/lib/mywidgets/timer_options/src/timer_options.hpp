@@ -18,56 +18,32 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef DIGITAL_CLOCK_HPP
-#define DIGITAL_CLOCK_HPP
+#ifndef TIMER_OPTIONS_HPP
+#define TIMER_OPTIONS_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QDialog>
+#include <QTime>
 //--------------------------------------------------------------------------------
-#include "timer_messagebox.hpp"
-#include "timer_options.hpp"
-#include "mymessages.hpp"
-#include "defines.hpp"
+namespace Ui {
+    class Timer_options;
+}
 //--------------------------------------------------------------------------------
-class Digital_clock : public QLabel
+class Timer_options : public QDialog
 {
     Q_OBJECT
 
-signals:
-    void s_show_message(void);
-
 public:
-    explicit Digital_clock(QWidget *parent = nullptr);
-    virtual ~Digital_clock();
+    explicit Timer_options(QWidget *parent = nullptr);
+    ~Timer_options();
+
+    void  set_time(const QTime &time);
+    QTime get_time(void);
+
+    void set_message(const QString &message);
+    QString get_message(void);
 
 private:
-    QTimer *timer = nullptr;
-    QTime time;
-
-    int hour = 0;
-    int min  = 0;
-    int sec  = 0;
-
-    bool timer_active = false;
-    QString message;
-    int t_hour = 0;
-    int t_min  = 0;
-    int t_sec  = 0;
-
-    QSettings *settings = nullptr;
-
-    void init(void);
-    void timeout(void);
-    void show_message(void);
-
-    void popup(QPoint);
-    void open_option(void);
-
-    void load_setting(void);
-    void save_setting(void);
+    Ui::Timer_options *ui;
 };
 //--------------------------------------------------------------------------------
-#endif // DIGITAL_CLOCK_HPP
+#endif // TIMER_OPTIONS_HPP

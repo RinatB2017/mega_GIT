@@ -18,56 +18,38 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef DIGITAL_CLOCK_HPP
-#define DIGITAL_CLOCK_HPP
-//--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-#include "timer_messagebox.hpp"
 #include "timer_options.hpp"
-#include "mymessages.hpp"
-#include "defines.hpp"
+#include "ui_timer_options.h"
 //--------------------------------------------------------------------------------
-class Digital_clock : public QLabel
+Timer_options::Timer_options(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::Timer_options)
 {
-    Q_OBJECT
-
-signals:
-    void s_show_message(void);
-
-public:
-    explicit Digital_clock(QWidget *parent = nullptr);
-    virtual ~Digital_clock();
-
-private:
-    QTimer *timer = nullptr;
-    QTime time;
-
-    int hour = 0;
-    int min  = 0;
-    int sec  = 0;
-
-    bool timer_active = false;
-    QString message;
-    int t_hour = 0;
-    int t_min  = 0;
-    int t_sec  = 0;
-
-    QSettings *settings = nullptr;
-
-    void init(void);
-    void timeout(void);
-    void show_message(void);
-
-    void popup(QPoint);
-    void open_option(void);
-
-    void load_setting(void);
-    void save_setting(void);
-};
+    ui->setupUi(this);
+}
 //--------------------------------------------------------------------------------
-#endif // DIGITAL_CLOCK_HPP
+Timer_options::~Timer_options()
+{
+    delete ui;
+}
+//--------------------------------------------------------------------------------
+void Timer_options::set_time(const QTime &time)
+{
+    ui->timeEdit->setTime(time);
+}
+//--------------------------------------------------------------------------------
+QTime Timer_options::get_time(void)
+{
+    return ui->timeEdit->time();
+}
+//--------------------------------------------------------------------------------
+void Timer_options::set_message(const QString &message)
+{
+    ui->le_message->setText(message);
+}
+//--------------------------------------------------------------------------------
+QString Timer_options::get_message(void)
+{
+    return ui->le_message->text();
+}
+//--------------------------------------------------------------------------------

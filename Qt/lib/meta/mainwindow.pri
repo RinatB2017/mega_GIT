@@ -15,6 +15,8 @@ include ($$PWD/../locale.pri)
 include ($$PWD/../mw/mw.pri)
 include ($$PWD/../turbo.pri)
 
+include ($$LIB_PATH/mywidgets/timer_messagebox/timer_messagebox.pri)
+include ($$LIB_PATH/mywidgets/timer_options/timer_options.pri)
 include ($$LIB_PATH/mywidgets/digital_clock/digital_clock.pri)
 include ($$LIB_PATH/mywidgets/lcd_clock/lcd_clock.pri)
 

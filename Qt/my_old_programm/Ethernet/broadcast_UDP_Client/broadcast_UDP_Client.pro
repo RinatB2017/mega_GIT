@@ -31,7 +31,7 @@ VERSION_HEADER = $$PWD/src/version.hpp
 include ($$LIB_PATH/auto_inc_version.pri)
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/ethernet/udp_client.pri)
+include ($$LIB_PATH2/ethernet/udp_client/udp_client.pri)
 
 include (src/broadcast_udp_client_mainbox/broadcast_udp_client_mainbox.pri)
 

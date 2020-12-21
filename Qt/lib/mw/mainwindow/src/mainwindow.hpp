@@ -113,7 +113,7 @@ class MainWindow : public QMainWindow, public MySettings
 
 public:
     explicit MainWindow(QMainWindow* parent = nullptr);
-    ~MainWindow();
+    virtual ~MainWindow();
 
     void setCentralWidget(MyWidget *widget);
     void setCentralWidget(QWidget *widget);

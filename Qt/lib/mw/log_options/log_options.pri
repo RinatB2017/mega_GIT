@@ -11,4 +11,4 @@ HEADERS += log_options.hpp
 SOURCES += log_options.cpp
 FORMS 	+= log_options.ui
 
-include ($$LIB_PATH/mywidgets/myfiledialog.pri)
+include ($$LIB_PATH/mywidgets/myfiledialog/myfiledialog.pri)

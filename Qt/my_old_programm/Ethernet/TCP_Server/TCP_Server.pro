@@ -38,7 +38,7 @@ LIB_PATH2 = "$$PWD/../../../lib2"
 }
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/ethernet/tcp_server.pri)
+include ($$LIB_PATH2/ethernet/tcp_server/tcp_server.pri)
 
 include (src/tcp_server_mainbox/tcp_server_mainbox.pri)
 

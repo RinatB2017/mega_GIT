@@ -35,7 +35,7 @@ LIB_PATH2 = "$$PWD/../../../lib2"
 }
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/ethernet/udp_client.pri)
+include ($$LIB_PATH2/ethernet/udp_client/udp_client.pri)
 include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
 
 #include ($$LIB_PATH/ethernet/fake/fake.pri)

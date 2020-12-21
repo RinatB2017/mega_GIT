@@ -47,7 +47,7 @@ signals:
 
 public:
     explicit Simple_PTZ_widget(QWidget *parent = nullptr);
-    ~Simple_PTZ_widget();
+    virtual ~Simple_PTZ_widget();
 
 public slots:
     void play(void);

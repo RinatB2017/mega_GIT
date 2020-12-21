@@ -136,8 +136,8 @@ public:
 
     void check_file(const QString &orig_file, const QString &copy_file);
 
-    bool add_digital_clock(void);
-    bool add_lcd_clock(void);
+    bool add_digital_clock(bool add_spacer = true);
+    bool add_lcd_clock(bool add_spacer = true);
 
     virtual void updateText(void) = 0;
     virtual bool programm_is_exit(void) = 0;

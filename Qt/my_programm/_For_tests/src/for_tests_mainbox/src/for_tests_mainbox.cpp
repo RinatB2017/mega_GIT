@@ -199,8 +199,9 @@ void MainBox::init(void)
     //---
 
     //---
-    add_digital_clock();
 //    add_lcd_clock();
+//    add_digital_clock(false);
+    add_digital_clock();
     //---
 
     load_widgets();

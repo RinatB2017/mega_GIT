@@ -713,12 +713,15 @@ void MyWidget::fail(void)
     emit error("Пока не сделано");
 }
 //--------------------------------------------------------------------------------
-bool MyWidget::add_digital_clock(void)
+bool MyWidget::add_digital_clock(bool add_spacer)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
-        mw->statusBar()->addWidget(new QWidget(this), 1);
+        if(add_spacer)
+        {
+            mw->statusBar()->addWidget(new QWidget(this), 1);
+        }
 
         Digital_clock *digital_clock = new Digital_clock(this);
         mw->statusBar()->addWidget(digital_clock);
@@ -728,12 +731,15 @@ bool MyWidget::add_digital_clock(void)
     return false;
 }
 //--------------------------------------------------------------------------------
-bool MyWidget::add_lcd_clock(void)
+bool MyWidget::add_lcd_clock(bool add_spacer)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
-        mw->statusBar()->addWidget(new QWidget(this), 1);
+        if(add_spacer)
+        {
+            mw->statusBar()->addWidget(new QWidget(this), 1);
+        }
 
         LCD_clock *lcd_clock = new LCD_clock(this);
         mw->statusBar()->addWidget(lcd_clock);

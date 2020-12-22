@@ -37,7 +37,7 @@ MySettings::~MySettings()
 {
     if(settings)
     {
-        settings->deleteLater();
+        delete settings;
     }
 }
 //--------------------------------------------------------------------------------

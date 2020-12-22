@@ -53,7 +53,7 @@ void Log_options::choice_file(void)
             autosave_filename = filename;
         }
     }
-    dlg->deleteLater();
+    delete dlg;
 }
 //--------------------------------------------------------------------------------
 Log_options::~Log_options()

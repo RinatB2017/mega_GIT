@@ -29,12 +29,12 @@ IPV4::IPV4(QWidget *parent) :
 //--------------------------------------------------------------------------------
 IPV4::~IPV4()
 {
-    if(a) a->deleteLater();
-    if(b) b->deleteLater();
-    if(c) c->deleteLater();
-    if(d) d->deleteLater();
+    if(a) delete a;
+    if(b) delete b;
+    if(c) delete c;
+    if(d) delete d;
 
-    if(port) port->deleteLater();
+    if(port) delete port;
 }
 //--------------------------------------------------------------------------------
 void IPV4::init(void)

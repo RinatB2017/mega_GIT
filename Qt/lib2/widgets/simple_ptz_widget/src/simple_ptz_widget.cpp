@@ -41,14 +41,14 @@ Simple_PTZ_widget::~Simple_PTZ_widget()
     {
         disconnect(probe,  &QVideoProbe::videoFrameProbed,
                    this,   &Simple_PTZ_widget::processFrame);
-        probe->deleteLater();
+        delete probe;
     }
     if(player)
     {
         player->stop();
         disconnect(player, static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error),
                    this,   &Simple_PTZ_widget::f_error);
-        player->deleteLater();
+        delete player;
     }
 
     delete ui;
@@ -170,8 +170,6 @@ void Simple_PTZ_widget::onFinished( QNetworkReply* reply )
     {
         emit error(reply->errorString());
     }
-
-    reply->deleteLater();
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::play(void)
@@ -308,7 +306,7 @@ void Simple_PTZ_widget::f_screenshot(void)
             emit error(QString("File %1 NOT created").arg(filename));
         }
     }
-    dlg->deleteLater();
+    delete dlg;
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::send_cmd(QString  cmd)

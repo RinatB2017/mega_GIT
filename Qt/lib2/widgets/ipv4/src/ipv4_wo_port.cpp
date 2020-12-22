@@ -76,10 +76,10 @@ IPV4_wo_port::IPV4_wo_port(QWidget *parent) :
 //--------------------------------------------------------------------------------
 IPV4_wo_port::~IPV4_wo_port()
 {
-    if(a) a->deleteLater();
-    if(b) b->deleteLater();
-    if(c) c->deleteLater();
-    if(d) d->deleteLater();
+    if(a) delete a;
+    if(b) delete b;
+    if(c) delete c;
+    if(d) delete d;
 }
 //--------------------------------------------------------------------------------
 void IPV4_wo_port::setObjectName(const QString &name)

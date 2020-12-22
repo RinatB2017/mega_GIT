@@ -48,9 +48,9 @@ MainWindow::~MainWindow()
 #endif
 
 #ifndef NO_LOG
-    if(lb != nullptr)
+    if(lb)
     {
-        lb->deleteLater();
+        delete lb;
     }
 #endif
 }

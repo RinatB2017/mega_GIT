@@ -67,19 +67,17 @@ LogBox::~LogBox()
     if(logBox)
     {
         disconnect(logBox, &LogBox::customContextMenuRequested,    this,   &LogBox::popup);
-
-        logBox->deleteLater();
+        delete logBox;
     }
     if(progressBar)
     {
-        progressBar->deleteLater();
+        delete progressBar;
     }
     if(fb)
     {
         disconnect(fb, &FindBox::find_prev,    this,   &LogBox::find_prev);
         disconnect(fb, &FindBox::find_next,    this,   &LogBox::find_next);
-
-        fb->deleteLater();
+        delete fb;
     }
 }
 //--------------------------------------------------------------------------------
@@ -614,7 +612,7 @@ void LogBox::save_to(void)
         QStringList files = dlg->selectedFiles();
         save_log(files.at(0));
     }
-    dlg->deleteLater();
+    delete dlg;
 }
 //--------------------------------------------------------------------------------
 void LogBox::save_full_log_to(void)
@@ -633,7 +631,7 @@ void LogBox::save_full_log_to(void)
         QStringList files = dlg->selectedFiles();
         save_full_log(files.at(0));
     }
-    dlg->deleteLater();
+    delete dlg;
 }
 //--------------------------------------------------------------------------------
 void LogBox::save_log(const QString &filename)
@@ -761,7 +759,7 @@ void LogBox::changeOptions(void)
 
         save_settings();
     }
-    optionsBox->deleteLater();
+    delete optionsBox;
 }
 //--------------------------------------------------------------------------------
 void LogBox::update_log(void)

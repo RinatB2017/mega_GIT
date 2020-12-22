@@ -37,13 +37,10 @@ Digital_clock::~Digital_clock()
     {
         timer->stop();
         disconnect(timer,  &QTimer::timeout,   this,   &Digital_clock::timeout);
-        timer->deleteLater();
+        delete timer;
     }
     save_setting();
-    if(settings)
-    {
-        settings->deleteLater();
-    }
+    delete settings;
 }
 //--------------------------------------------------------------------------------
 void Digital_clock::init(void)
@@ -59,10 +56,7 @@ void Digital_clock::init(void)
     connect(this,   &Digital_clock::s_show_message,
             this,   &Digital_clock::show_message);
 
-    time = QTime::currentTime();
-    hour = time.hour();
-    min  = time.minute();
-    sec  = time.second();
+    correct_time();
 
     QString clock = QString("%1:%2:%3")
             .arg(hour, 2, 10, QChar('0'))
@@ -73,6 +67,14 @@ void Digital_clock::init(void)
     load_setting();
 
     timer->start(1000);
+}
+//--------------------------------------------------------------------------------
+void Digital_clock::correct_time(void)
+{
+    QTime time = QTime::currentTime();
+    hour = time.hour();
+    min  = time.minute();
+    sec  = time.second();
 }
 //--------------------------------------------------------------------------------
 void Digital_clock::timeout(void)
@@ -87,6 +89,11 @@ void Digital_clock::timeout(void)
     {
         min = 0;
         hour++;
+    }
+    else
+    {
+        //TODO корректировка времени каждый час
+        correct_time();
     }
     if(hour > 23)
     {
@@ -149,6 +156,7 @@ void Digital_clock::open_option(void)
         message = dlg->get_message();
         timer_active = true;
     }
+    delete dlg;
 }
 //--------------------------------------------------------------------------------
 void Digital_clock::load_setting(void)

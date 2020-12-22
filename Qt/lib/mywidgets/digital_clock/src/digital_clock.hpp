@@ -45,7 +45,6 @@ public:
 
 private:
     QTimer *timer = nullptr;
-    QTime time;
 
     int hour = 0;
     int min  = 0;
@@ -60,6 +59,7 @@ private:
     QSettings *settings = nullptr;
 
     void init(void);
+    void correct_time(void);
     void timeout(void);
     void show_message(void);
 

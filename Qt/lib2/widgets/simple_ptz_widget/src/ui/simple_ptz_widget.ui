@@ -96,17 +96,7 @@
        </layout>
       </item>
       <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
+       <widget class="Scan_home_network" name="widget" native="true"/>
       </item>
      </layout>
     </widget>
@@ -302,6 +292,12 @@
    <class>IPV4</class>
    <extends>QWidget</extends>
    <header>ipv4.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Scan_home_network</class>
+   <extends>QWidget</extends>
+   <header>scan_home_network.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

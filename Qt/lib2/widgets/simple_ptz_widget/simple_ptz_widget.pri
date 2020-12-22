@@ -13,3 +13,5 @@ QT  +=  multimediawidgets
 SOURCES	+= simple_ptz_widget.cpp
 HEADERS += simple_ptz_widget.hpp
 FORMS	+= simple_ptz_widget.ui
+
+include ($$LIB_PATH2/widgets/scan_home_network/scan_home_network.pri)

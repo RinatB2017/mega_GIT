@@ -486,7 +486,17 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
+    QByteArray ba;
+    for(int n=192; n<219; n++)
+    {
+        ba.append((uchar)n);
+        //qDebug() << (char)n;
+    }
+    emit info(ba);
+#endif
+
+#if 0
     QMediaPlayer *player = new QMediaPlayer;
     connect(player, &QMediaPlayer::durationChanged, this, [&](qint64 duration) {
         int seconds = (duration/1000) % 60;

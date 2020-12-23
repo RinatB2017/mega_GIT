@@ -8,9 +8,7 @@ TARGET   = Test_NeuronNet
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_NeuronNet_mainbox \
-    $$PWD/src/test_NeuronNet_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -19,15 +17,11 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    test_NeuronNet_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_NeuronNet_mainbox.cpp \
     main.cpp
-
-FORMS   += test_NeuronNet_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -40,7 +34,9 @@ RESOURCES += \
 OTHER_FILES += doc/notebook.txt
 
 LIB_PATH = "$$PWD/../../../Qt/lib"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
+include (src/test_NeuronNet_mainbox/test_NeuronNet_mainbox.pri)
 include (src/neuro/neuro.pri)
 
 !exists(OBJECTS_DIR) {

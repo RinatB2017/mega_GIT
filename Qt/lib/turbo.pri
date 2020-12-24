@@ -64,10 +64,13 @@ win32 {
 
 unix:!macx {
     CONFIG(debug, debug|release) {
-        OPTIMIZE = -pipe -O0
+        OPTIMIZE = -O0
     }
     else {
-        OPTIMIZE = -pipe -O2
+        OPTIMIZE = -O2
+    }
+    linux {
+        OPTIMIZE += -pipe
     }
     #OPTIMIZE    += -Wno-missing-braces -Wno-missing-field-initializers
 

@@ -5,17 +5,17 @@ INCLUDEPATH += $$DEPENDPATH
 
 # Input
 HEADERS += \
-    src/modbus-private.h \
-    src/modbus-rtu-private.h \
-    src/modbus-rtu.h \
-#    src/modbus-tcp-private.h \
-#    src/modbus-tcp.h \
-    src/modbus-version.h \
-    src/modbus.h \
-    src/config.h
+    modbus-private.h \
+    modbus-rtu-private.h \
+    modbus-rtu.h \
+#    modbus-tcp-private.h \
+#    modbus-tcp.h \
+    modbus-version.h \
+    modbus.h \
+    config.h
     
 SOURCES += \
-    src/modbus-data.c \
-    src/modbus-rtu.c \
-#    src/modbus-tcp.c \
-    src/modbus.c
+    modbus-data.c \
+    modbus-rtu.c \
+#    modbus-tcp.c \
+    modbus.c

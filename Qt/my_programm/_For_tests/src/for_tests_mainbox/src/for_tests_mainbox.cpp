@@ -480,11 +480,28 @@ bool MainBox::load_qss(void)
     return true;
 }
 //--------------------------------------------------------------------------------
+void MainBox::show_test_widget(QWidget *widget)
+{
+    Q_ASSERT(widget);
+    (*widget).show();
+}
+//--------------------------------------------------------------------------------
 #include <QMediaPlayer>
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 1
+//    QWidget *widget = new QWidget();
+    QWidget *widget = nullptr;
+    show_test_widget(widget);
+#endif
+
+#if 0
+    Q_ASSERT(test_widget);
+    emit error("test_widget FAIL");
+#endif
 
 #if 0
     QByteArray ba;

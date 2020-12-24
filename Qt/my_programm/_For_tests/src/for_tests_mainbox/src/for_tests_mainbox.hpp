@@ -168,8 +168,13 @@ private:
     //---
 
     //---
-    QDockWidget *main_dock;
+    QDockWidget *main_dock = nullptr;
     QList<QDockWidget *> l_docks;
+
+    //---
+    QWidget *test_widget = nullptr;
+    void show_test_widget(QWidget *widget);
+    //---
 
     QStack<TestStack> l_class;
 

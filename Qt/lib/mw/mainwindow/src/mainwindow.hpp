@@ -126,7 +126,7 @@ public:
     bool add_filemenu_menu(int pos_y,
                            QMenu *menu);
     bool add_optionsmenu_menu(int pos_y,
-                           QMenu *menu);
+                              QMenu *menu);
     bool add_helpmenu_menu(int pos_y,
                            QMenu *menu);
 
@@ -143,6 +143,8 @@ public:
 
     bool add_separator(QMenu *menu,
                        int pos_y);
+
+    bool add_mdi_sorting(void);
 
     bool add_filemenu_separator(int pos_y);
     bool add_optionsmenu_separator(int pos_y);
@@ -270,6 +272,9 @@ private:
     void createStatusBar(void);
     void createTrayIcon(void);
 
+    void set_tileSubWindows(void);
+    void set_cascadeSubWindows(void);
+
 #ifndef NO_TOOLBAR
     QPointer<QToolBar> toolbar;
     void createToolBar(void);
@@ -347,7 +352,7 @@ private:
     void app_updateText(void);
     void dockwidget_updateText(void);
 
-//    void show_docs(void);
+    //    void show_docs(void);
 
     void dockLocationChanged(Qt::DockWidgetArea area);
 

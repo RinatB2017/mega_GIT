@@ -272,7 +272,7 @@ void MainWindow::init(void)
 
     //TODO не стоит именно здесь взводить эти аттрибуты, лучше в mywidget
     setAttribute(Qt::WA_DeleteOnClose);
-//    setAttribute(Qt::WA_QuitOnClose);
+    //    setAttribute(Qt::WA_QuitOnClose);
 }
 //--------------------------------------------------------------------------------
 //    if(now.date().year()        >= DEMO_YEAR &&
@@ -422,7 +422,7 @@ void MainWindow::load_translations()
     //---
     QLocale locale = QLocale();
 #ifdef QT_DEBUG
-        qDebug() << "### locale" << locale.name();
+    qDebug() << "### locale" << locale.name();
 #endif
     if(locale.name() == "ru_RU")
     {
@@ -453,7 +453,7 @@ void MainWindow::setMenuLanguage(void)
     QString p_lang = menu->property(P_LANG).toString();
     if(p_lang == P_US)
     {
-//        if(translator_common)   qApp->removeTranslator(translator_common);
+        //        if(translator_common)   qApp->removeTranslator(translator_common);
         if(translator_system)   qApp->removeTranslator(translator_system);
         if(translator_ru) qApp->removeTranslator(translator_ru);
         if(translator_it) qApp->removeTranslator(translator_it);
@@ -462,7 +462,7 @@ void MainWindow::setMenuLanguage(void)
     }
     if(p_lang == P_RU)
     {
-//        if(translator_common)   qApp->installTranslator(translator_common);
+        //        if(translator_common)   qApp->installTranslator(translator_common);
         if(translator_system)   qApp->installTranslator(translator_system);
         if(translator_ru)       qApp->installTranslator(translator_ru);
         emit updateLanguage();
@@ -470,7 +470,7 @@ void MainWindow::setMenuLanguage(void)
     }
     if(p_lang == P_IT)
     {
-//        if(translator_common)   qApp->installTranslator(translator_common);
+        //        if(translator_common)   qApp->installTranslator(translator_common);
         if(translator_system)   qApp->installTranslator(translator_system);
         if(translator_it)       qApp->installTranslator(translator_it);
         emit updateLanguage();
@@ -495,7 +495,7 @@ void MainWindow::setToolBarLanguage(void)
     QString p_lang = menu->property(P_LANG).toString();
     if(p_lang == P_US)
     {
-//        if(translator_common) qApp->removeTranslator(translator_common);
+        //        if(translator_common) qApp->removeTranslator(translator_common);
         if(translator_system) qApp->removeTranslator(translator_system);
         if(translator_ru) qApp->removeTranslator(translator_ru);
         if(translator_it) qApp->removeTranslator(translator_it);
@@ -504,7 +504,7 @@ void MainWindow::setToolBarLanguage(void)
     }
     if(p_lang == P_RU)
     {
-//        if(translator_common) qApp->installTranslator(translator_common);
+        //        if(translator_common) qApp->installTranslator(translator_common);
         if(translator_system)   qApp->installTranslator(translator_system);
         if(translator_ru)       qApp->installTranslator(translator_ru);
         emit updateLanguage();
@@ -512,7 +512,7 @@ void MainWindow::setToolBarLanguage(void)
     }
     if(p_lang == P_IT)
     {
-//        if(translator_common) qApp->installTranslator(translator_common);
+        //        if(translator_common) qApp->installTranslator(translator_common);
         if(translator_system)   qApp->installTranslator(translator_system);
         if(translator_it)       qApp->installTranslator(translator_it);
         emit updateLanguage();
@@ -1120,7 +1120,7 @@ bool MainWindow::add_windowsmenu_action(QWidget *widget, QAction *action)
     Q_ASSERT(action);
     Q_ASSERT(m_app_windowsmenu);
 
-//    l_docs.append(widget);
+    //    l_docs.append(widget);
 
 #if 0
     ToolButtonAction *tb_action = new ToolButtonAction(action);
@@ -1185,6 +1185,72 @@ bool MainWindow::add_separator(QMenu *menu,
     }
 
     return false;
+}
+//--------------------------------------------------------------------------------
+bool MainWindow::add_mdi_sorting(void)
+{
+    QList<QMdiSubWindow *> l_obj = findChildren<QMdiSubWindow *>();
+    emit debug(QString("find %1 mdi").arg(l_obj.count()));
+    if(l_obj.count() <= 0)
+    {
+        return false;
+    }
+
+    Q_ASSERT(app_mainBar);
+
+    QMenu *menu = new QMenu(app_mainBar);
+    menu->setProperty(P_APP_ENG_TEXT, "MDI");
+    menu->setTitle("MDI");
+    menu->setToolTip("MDI");
+    menu->setStatusTip("MDI");
+
+    QAction *a_tile = new QAction(this);
+    a_tile->setObjectName("a_tile");
+    a_tile->setText("Tile");
+    a_tile->setToolTip("Tile");
+    a_tile->setStatusTip("Tile");
+    a_tile->setProperty(P_APP_ENG_TEXT, "Tile");
+    connect(a_tile, &QAction::triggered,
+            this,   &MainWindow::set_tileSubWindows);
+
+    QAction *a_cascade = new QAction(this);
+    a_cascade->setObjectName("a_cascade");
+    a_cascade->setText("Cascade");
+    a_cascade->setToolTip("Cascade");
+    a_cascade->setStatusTip("Cascade");
+    a_cascade->setProperty(P_APP_ENG_TEXT, "Cascade");
+    connect(a_cascade,  &QAction::triggered,
+            this,       &MainWindow::set_cascadeSubWindows);
+
+    menu->addAction(a_tile);
+    menu->addAction(a_cascade);
+
+    bool ok = add_optionsmenu_menu(9, menu);
+    if(ok)
+    {
+        add_optionsmenu_separator(11);
+    }
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MainWindow::set_tileSubWindows(void)
+{
+    QList<QMdiArea *> l_obj = findChildren<QMdiArea *>();
+    if(l_obj.count() <= 1)
+    {
+        l_obj.at(0)->tileSubWindows();
+        return;
+    }
+}
+//--------------------------------------------------------------------------------
+void MainWindow::set_cascadeSubWindows(void)
+{
+    QList<QMdiArea *> l_obj = findChildren<QMdiArea *>();
+    if(l_obj.count() <= 1)
+    {
+        l_obj.at(0)->cascadeSubWindows();
+        return;
+    }
 }
 //--------------------------------------------------------------------------------
 bool MainWindow::add_filemenu_separator(int pos_y)
@@ -1293,7 +1359,7 @@ bool MainWindow::add_dock_widget(QString title,
         hbox->setMargin(0);
         hbox->setSpacing(0);
 
-//        widget->setParent(dw);
+        //        widget->setParent(dw);
 
         hbox->addWidget(widget);
         hbox->addWidget(dp);

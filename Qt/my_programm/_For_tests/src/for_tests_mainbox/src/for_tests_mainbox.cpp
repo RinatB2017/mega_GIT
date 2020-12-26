@@ -205,6 +205,12 @@ void MainBox::init(void)
     //---
 
     load_widgets();
+
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->add_mdi_sorting();
+    }
 }
 //--------------------------------------------------------------------------------
 bool MainBox::set_theme_windows(void)

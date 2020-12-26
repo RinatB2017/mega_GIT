@@ -35,6 +35,8 @@ public:
     explicit Show_HSV_color(QWidget *parent = nullptr);
     ~Show_HSV_color();
 
+    void set_color(QColor color);
+
 private:
     Ui::Show_HSV_color *ui;
 

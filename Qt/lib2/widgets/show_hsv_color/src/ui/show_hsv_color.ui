@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>Show_HSV_color</class>
  <widget class="QWidget" name="Show_HSV_color">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>266</width>
+    <height>129</height>
+   </rect>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <widget class="QFrame" name="frame">
@@ -37,7 +45,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QSlider" name="slHueFrom">
+         <widget class="QSlider" name="slHue">
           <property name="maximum">
            <number>179</number>
           </property>
@@ -66,7 +74,7 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QSlider" name="slSaturationFrom">
+         <widget class="QSlider" name="slSaturation">
           <property name="maximum">
            <number>255</number>
           </property>
@@ -79,7 +87,7 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QSlider" name="slValueFrom">
+         <widget class="QSlider" name="slValue">
           <property name="maximum">
            <number>255</number>
           </property>
@@ -108,21 +116,21 @@
          </widget>
         </item>
         <item row="0" column="2">
-         <widget class="QSpinBox" name="spHueFrom">
+         <widget class="QSpinBox" name="spHue">
           <property name="maximum">
            <number>179</number>
           </property>
          </widget>
         </item>
         <item row="1" column="2">
-         <widget class="QSpinBox" name="spSaturationFrom">
+         <widget class="QSpinBox" name="spSaturation">
           <property name="maximum">
            <number>255</number>
           </property>
          </widget>
         </item>
         <item row="2" column="2">
-         <widget class="QSpinBox" name="spValueFrom">
+         <widget class="QSpinBox" name="spValue">
           <property name="maximum">
            <number>255</number>
           </property>

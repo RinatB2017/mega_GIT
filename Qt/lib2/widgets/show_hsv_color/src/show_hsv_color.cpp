@@ -38,25 +38,25 @@ void Show_HSV_color::init(void)
 {
     ui->setupUi(this);
 
-    ui->spHueFrom->setRange(0, 0xFF);
-    ui->spSaturationFrom->setRange(0, 0xFF);
-    ui->spValueFrom->setRange(0, 0xFF);
+    ui->spHue->setRange(0, 0xFF);
+    ui->spSaturation->setRange(0, 0xFF);
+    ui->spValue->setRange(0, 0xFF);
 
-    ui->slHueFrom->setRange(0, 0xFF);
-    ui->slSaturationFrom->setRange(0, 0xFF);
-    ui->slValueFrom->setRange(0, 0xFF);
+    ui->slHue->setRange(0, 0xFF);
+    ui->slSaturation->setRange(0, 0xFF);
+    ui->slValue->setRange(0, 0xFF);
 
-    connect(ui->spHueFrom,          static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slHueFrom,          &QSlider::setValue);
-    connect(ui->spSaturationFrom,   static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slSaturationFrom,   &QSlider::setValue);
-    connect(ui->spValueFrom,        static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slValueFrom,        &QSlider::setValue);
+    connect(ui->spHue,          static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slHue,          &QSlider::setValue);
+    connect(ui->spSaturation,   static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slSaturation,   &QSlider::setValue);
+    connect(ui->spValue,        static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slValue,        &QSlider::setValue);
 
-    connect(ui->slHueFrom,          static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spHueFrom,          &QSpinBox::setValue);
-    connect(ui->slSaturationFrom,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spSaturationFrom,   &QSpinBox::setValue);
-    connect(ui->slValueFrom,        static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spValueFrom,        &QSpinBox::setValue);
+    connect(ui->slHue,          static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spHue,          &QSpinBox::setValue);
+    connect(ui->slSaturation,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spSaturation,   &QSpinBox::setValue);
+    connect(ui->slValue,        static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spValue,        &QSpinBox::setValue);
 
-    connect(ui->slHueFrom,          static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    this,                   &Show_HSV_color::update_color);
-    connect(ui->slSaturationFrom,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    this,                   &Show_HSV_color::update_color);
-    connect(ui->slValueFrom,        static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    this,                   &Show_HSV_color::update_color);
+    connect(ui->slHue,          static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    this,                   &Show_HSV_color::update_color);
+    connect(ui->slSaturation,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    this,                   &Show_HSV_color::update_color);
+    connect(ui->slValue,        static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    this,                   &Show_HSV_color::update_color);
 
     load_widgets();
 
@@ -65,12 +65,24 @@ void Show_HSV_color::init(void)
 //--------------------------------------------------------------------------------
 void Show_HSV_color::update_color(int value)
 {
-    QColor color = QColor::fromHsv(ui->slHueFrom->value(),
-                                   ui->slSaturationFrom->value(),
-                                   ui->slValueFrom->value());
+    QColor color = QColor::fromHsv(ui->slHue->value(),
+                                   ui->slSaturation->value(),
+                                   ui->slValue->value());
 
     ui->color_widget->set_color(color);
     Q_UNUSED(value);
+}
+//--------------------------------------------------------------------------------
+void Show_HSV_color::set_color(QColor color)
+{
+    int h = 0;
+    int s = 0;
+    int v = 0;
+    color.getHsv(&h, &s, &v);
+
+    ui->slHue->setValue(h);
+    ui->slSaturation->setValue(s);
+    ui->slValue->setValue(v);
 }
 //--------------------------------------------------------------------------------
 void Show_HSV_color::updateText(void)

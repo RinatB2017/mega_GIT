@@ -23,6 +23,7 @@
 //--------------------------------------------------------------------------------
 #include <QMediaPlayer>
 #include <QVideoProbe>
+#include <QPointer>
 //--------------------------------------------------------------------------------
 #include "myfiledialog.hpp"
 #include "mywidget.hpp"
@@ -45,8 +46,8 @@ public:
 private:
     Ui::MyMediaPlayer *ui;
 
-    QMediaPlayer *player = nullptr;
-    QVideoProbe *probe = nullptr;
+    QPointer<QMediaPlayer> player;
+    QPointer<QVideoProbe>  probe;
     QVideoFrame current_frame;
 
     void init(void);

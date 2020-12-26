@@ -43,6 +43,7 @@ MainWindow::~MainWindow()
     QList<MyWidget *> l_widgets = findChildren<MyWidget *>();
     foreach(MyWidget *widget, l_widgets)
     {
+        Q_ASSERT(widget);
         widget->save_setting();
     }
 #endif
@@ -147,6 +148,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         event->ignore();
         return;
     }
+
 #if 1
     QList<MyWidget *> l_widgets = findChildren<MyWidget *>();
     foreach(MyWidget *widget, l_widgets)
@@ -157,7 +159,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
             return;
         }
     }
-
 #else
     if(c_widget)
     {

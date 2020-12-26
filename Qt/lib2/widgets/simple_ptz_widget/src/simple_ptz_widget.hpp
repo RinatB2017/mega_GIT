@@ -25,6 +25,7 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QMediaPlayer>
+#include <QVideoWidget>
 #include <QVideoProbe>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -75,9 +76,7 @@ private:
     Ui::Simple_PTZ_widget   *ui;
     QPointer<QMediaPlayer>  player;
     QPointer<QVideoProbe>   probe;
-
-    QNetworkRequest request;
-    QNetworkAccessManager networkManager;
+    QPointer<QNetworkAccessManager> networkManager;
 
     QVideoFrame current_frame;
 

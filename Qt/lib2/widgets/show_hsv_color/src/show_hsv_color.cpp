@@ -65,25 +65,11 @@ void Show_HSV_color::init(void)
 //--------------------------------------------------------------------------------
 void Show_HSV_color::update_color(int value)
 {
-    QPainter painter;
-
     QColor color = QColor::fromHsv(ui->slHueFrom->value(),
                                    ui->slSaturationFrom->value(),
                                    ui->slValueFrom->value());
-    qDebug() << color;
 
-    int w = ui->color_label->width() - 10;
-    int h = ui->color_label->height() - 10;
-    QPixmap *pixmap = new QPixmap(w, h);
-
-    painter.begin(pixmap);
-    painter.setPen(color);
-    painter.setBrush(color);
-    painter.fillRect(0, 0, w, h, color);
-    painter.end();
-
-    ui->color_label->setPixmap(*pixmap);
-
+    ui->color_widget->set_color(color);
     Q_UNUSED(value);
 }
 //--------------------------------------------------------------------------------

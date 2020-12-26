@@ -59,6 +59,8 @@ void MySettings::init(void)
 bool MySettings::load_combobox_property(QWidget *widget)
 {
     Q_ASSERT(widget);
+    Q_ASSERT(settings);
+
     if(compare_name(widget->metaObject()->className(), "QComboBox"))
     {
         int size = settings->beginReadArray(dynamic_cast<QComboBox *>(widget)->objectName());
@@ -76,6 +78,8 @@ bool MySettings::load_combobox_property(QWidget *widget)
 bool MySettings::save_combobox_property(QWidget *widget)
 {
     Q_ASSERT(widget);
+    Q_ASSERT(settings);
+
     if(compare_name(widget->metaObject()->className(), "QComboBox"))
     {
         settings->beginWriteArray(dynamic_cast<QComboBox *>(widget)->objectName(), dynamic_cast<QComboBox *>(widget)->count());
@@ -96,6 +100,7 @@ bool MySettings::save_combobox_property(QWidget *widget)
 bool MySettings::load_listwidget_property(QWidget *widget)
 {
     Q_ASSERT(widget);
+    Q_ASSERT(settings);
 
     QListWidget *lw = dynamic_cast<QListWidget *>(widget);
     if(lw)
@@ -117,6 +122,8 @@ bool MySettings::load_listwidget_property(QWidget *widget)
 bool MySettings::save_listwidget_property(QWidget *widget)
 {
     Q_ASSERT(widget);
+    Q_ASSERT(settings);
+
     QListWidget *lw = dynamic_cast<QListWidget *>(widget);
     if(lw)
     {
@@ -139,6 +146,7 @@ bool MySettings::save_listwidget_property(QWidget *widget)
 bool MySettings::load_splitter_property(QWidget *widget)
 {
     Q_ASSERT(widget);
+
     if(compare_name(widget->metaObject()->className(), "QSplitter"))
     {
         QString o_name = widget->objectName();
@@ -158,6 +166,7 @@ bool MySettings::load_splitter_property(QWidget *widget)
 bool MySettings::save_splitter_property(QWidget *widget)
 {
     Q_ASSERT(widget);
+
     if(compare_name(widget->metaObject()->className(), "QSplitter"))
     {
         QString o_name = widget->objectName();
@@ -181,6 +190,7 @@ bool MySettings::save_splitter_property(QWidget *widget)
 bool MySettings::load_mdi_subwindows(QWidget *widget)
 {
     Q_ASSERT(widget);
+
     if(compare_name(widget->metaObject()->className(), "QMdiSubWindow"))
     {
         if(widget->objectName().isEmpty() == false)
@@ -211,6 +221,7 @@ bool MySettings::load_mdi_subwindows(QWidget *widget)
 bool MySettings::save_mdi_subwindows(QWidget *widget)
 {
     Q_ASSERT(widget);
+
     if(compare_name(widget->metaObject()->className(), "QMdiSubWindow"))
     {
         if(widget->objectName().isEmpty() == false)
@@ -229,6 +240,7 @@ bool MySettings::save_mdi_subwindows(QWidget *widget)
 bool MySettings::load_property(QWidget *widget, const QString &property_name)
 {
     Q_ASSERT(widget);
+
     QVariant property = settings->value(property_name);
     if(property.isValid() == false)
     {
@@ -245,6 +257,7 @@ bool MySettings::load_property(QWidget *widget, const QString &property_name)
 bool MySettings::save_property(QWidget *widget, const QString &property_name)
 {
     Q_ASSERT(widget);
+
     QVariant property = widget->property(property_name.toLocal8Bit());
     if(property.isValid() == false)
     {
@@ -260,6 +273,8 @@ bool MySettings::save_property(QWidget *widget, const QString &property_name)
 //--------------------------------------------------------------------------------
 bool MySettings::load_int(QString name, int *value)
 {
+    Q_ASSERT(settings);
+
     bool ok = false;
     int res = settings->value(name).toInt(&ok);
     if(ok == false)
@@ -272,11 +287,14 @@ bool MySettings::load_int(QString name, int *value)
 //--------------------------------------------------------------------------------
 void MySettings::save_int(QString name, int value)
 {
+    Q_ASSERT(settings);
     settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
 bool MySettings::load_ulonglong(QString name, qlonglong *value)
 {
+    Q_ASSERT(settings);
+
     bool ok = false;
     int res = settings->value(name).toULongLong(&ok);
     if(ok == false)
@@ -289,21 +307,26 @@ bool MySettings::load_ulonglong(QString name, qlonglong *value)
 //--------------------------------------------------------------------------------
 void MySettings::save_ulonglong(QString name, qlonglong value)
 {
+    Q_ASSERT(settings);
     settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
 bool MySettings::load_bool(QString name)
 {
+    Q_ASSERT(settings);
     return settings->value(name).toBool();
 }
 //--------------------------------------------------------------------------------
 void MySettings::save_bool(QString name, bool value)
 {
+    Q_ASSERT(settings);
     settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
 bool MySettings::load_uint(QString name, uint *value)
 {
+    Q_ASSERT(settings);
+
     bool ok = false;
     uint res = settings->value(name).toUInt(&ok);
     if(ok == false)
@@ -316,93 +339,77 @@ bool MySettings::load_uint(QString name, uint *value)
 //--------------------------------------------------------------------------------
 void MySettings::save_uint(QString name, uint value)
 {
+    Q_ASSERT(settings);
     settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
 QString MySettings::load_string(QString name)
 {
+    Q_ASSERT(settings);
     return settings->value(name).toString();
 }
 //--------------------------------------------------------------------------------
 void MySettings::save_string(QString name, QString value)
 {
+    Q_ASSERT(settings);
     settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
 QByteArray MySettings::load_bytearray(QString name)
 {
+    Q_ASSERT(settings);
     QByteArray ba;
-    if(settings)
-    {
-        ba = settings->value(name).toByteArray();
-    }
-    else
-    {
-        qDebug() << "### load_bytearray ###";
-    }
+    ba = settings->value(name).toByteArray();
     return ba;
 }
 //--------------------------------------------------------------------------------
 void MySettings::save_bytearray(QString name, QByteArray value)
 {
-    if(settings)
-    {
-        settings->setValue(name, QVariant::fromValue(value));
-    }
-    else
-    {
-        qDebug() << "### save_bytearray ###";
-    }
+    Q_ASSERT(settings);
+    settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
 QStringList MySettings::load_stringlist(QString name)
 {
+    Q_ASSERT(settings);
     QStringList sl;
-    if(settings)
-    {
-        sl = settings->value(name).toStringList();
-    }
-    else
-    {
-        qDebug() << "### load_stringlist ###";
-    }
+    sl = settings->value(name).toStringList();
     return sl;
 }
 //--------------------------------------------------------------------------------
 void MySettings::save_stringlist(QString name, QStringList value)
 {
-    if(settings)
-    {
-        settings->setValue(name, QVariant::fromValue(value));
-    }
-    else
-    {
-        qDebug() << "### save_stringlist ###";
-    }
+    Q_ASSERT(settings);
+    settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
 QVariant MySettings::load_value(QString name, const QVariant &defaultValue)
 {
+    Q_ASSERT(settings);
     return settings->value(name, defaultValue);
 }
 //--------------------------------------------------------------------------------
 void MySettings::save_value(QString name, QVariant value)
 {
+    Q_ASSERT(settings);
     settings->setValue(name, value);
 }
 //--------------------------------------------------------------------------------
 void MySettings::beginGroup(const QString &prefix)
 {
+    Q_ASSERT(settings);
     settings->beginGroup(prefix);
 }
 //--------------------------------------------------------------------------------
 void MySettings::endGroup(void)
 {
+    Q_ASSERT(settings);
     settings->endGroup();
 }
 //--------------------------------------------------------------------------------
 void MySettings::beginWriteArray(const QString &prefix, int size)
 {
+    Q_ASSERT(settings);
     settings->beginWriteArray(prefix, size);
 }
 //--------------------------------------------------------------------------------
@@ -414,11 +421,13 @@ int MySettings::beginReadArray(const QString &prefix)
 //--------------------------------------------------------------------------------
 void MySettings::endArray(void)
 {
+    Q_ASSERT(settings);
     settings->endArray();
 }
 //--------------------------------------------------------------------------------
 void MySettings::setArrayIndex(int i)
 {
+    Q_ASSERT(settings);
     settings->setArrayIndex(i);
 }
 //--------------------------------------------------------------------------------
@@ -471,6 +480,7 @@ bool MySettings::compare_name(const char *widget_name, QString class_name)
 //--------------------------------------------------------------------------------
 void MySettings::clear_all(void)
 {
+    Q_ASSERT(settings);
     settings->clear();
 }
 //--------------------------------------------------------------------------------

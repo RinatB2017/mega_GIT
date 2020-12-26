@@ -34,9 +34,6 @@ Simple_PTZ_widget::Simple_PTZ_widget(QWidget *parent) :
 //--------------------------------------------------------------------------------
 Simple_PTZ_widget::~Simple_PTZ_widget()
 {
-    save_widgets();
-    save_setting();
-
     if(probe)
     {
         disconnect(probe,  &QVideoProbe::videoFrameProbed,
@@ -51,6 +48,7 @@ Simple_PTZ_widget::~Simple_PTZ_widget()
         delete player;
     }
 
+    delete networkManager;
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -84,15 +82,16 @@ void Simple_PTZ_widget::init(void)
     ui->setupUi(this);
 
     ui->video_widget->setMinimumSize(640, 480);
-
     ui->btn_screenshot->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
+
+    networkManager = new QNetworkAccessManager(this);
 
     connect(ui->btn_connect,    &QPushButton::clicked,
             this,               &Simple_PTZ_widget::play);
     connect(ui->btn_disconnect, &QPushButton::clicked,
             this,               &Simple_PTZ_widget::stop);
 
-    connect(&networkManager,    &QNetworkAccessManager::finished,
+    connect(networkManager,    &QNetworkAccessManager::finished,
             this,               &Simple_PTZ_widget::onFinished);
 
     connect(ui->ipv4_widget,    &IPV4::editingFinished,
@@ -115,16 +114,13 @@ void Simple_PTZ_widget::init(void)
     ui->btn_up_down->setDisabled(true);
     ui->btn_left_right->setDisabled(true);
 
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->add_dock_widget("commands", "commands", Qt::LeftDockWidgetArea,     ui->command_frame);
-        mw->add_dock_widget("rtsp",     "rtsp",     Qt::RightDockWidgetArea,    ui->ptz_frame);
-        setVisible(false);
-    }
-
-    load_widgets();
-    load_setting();
+//    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+//    if(mw)
+//    {
+//        mw->add_dock_widget("commands", "commands", Qt::LeftDockWidgetArea,     ui->command_frame);
+//        mw->add_dock_widget("rtsp",     "rtsp",     Qt::RightDockWidgetArea,    ui->ptz_frame);
+//        setVisible(false);
+//    }
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::connect_position_widgets(void)
@@ -327,7 +323,7 @@ void Simple_PTZ_widget::send_cmd(QString  cmd)
     QNetworkRequest request=QNetworkRequest(QUrl( param ));
     request.setRawHeader("Authorization", headerData.toLocal8Bit());
     request.setRawHeader("Connection:", "keep-alive");
-    networkManager.get(request);
+    networkManager->get(request);
 
     // emit info(param);
     // emit info("OK");

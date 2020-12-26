@@ -55,7 +55,7 @@ public:
     TestBrowser()
     {
         rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
-        //        installEventFilter(this);
+        // installEventFilter(this);
         QApplication::instance()->installEventFilter(this);
         setMouseTracking(true);
     }

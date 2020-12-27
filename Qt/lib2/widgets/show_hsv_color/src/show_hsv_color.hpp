@@ -41,7 +41,8 @@ private:
     Ui::Show_HSV_color *ui;
 
     void init(void);
-    void update_color(int value = 0);
+    void update_color_RGB(void);
+    void update_color_HSV(void);
 
     void updateText(void);
     bool programm_is_exit(void);

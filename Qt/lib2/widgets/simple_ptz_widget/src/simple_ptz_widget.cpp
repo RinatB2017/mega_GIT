@@ -82,7 +82,7 @@ void Simple_PTZ_widget::init(void)
 {
     ui->setupUi(this);
 
-    ui->video_widget->setMinimumSize(640, 480);
+    ui->video_widget->setMinimumSize(M_WIDTH, M_HEIGHT);
     ui->btn_screenshot->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
 
     networkManager = new QNetworkAccessManager(this);

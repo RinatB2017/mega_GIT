@@ -38,39 +38,78 @@ void Show_HSV_color::init(void)
 {
     ui->setupUi(this);
 
-    ui->spHue->setRange(0, 0xFF);
-    ui->spSaturation->setRange(0, 0xFF);
-    ui->spValue->setRange(0, 0xFF);
+    ui->sl_H->setRange(0, 255);
+    ui->sl_S->setRange(0, 255);
+    ui->sl_V->setRange(0, 255);
 
-    ui->slHue->setRange(0, 0xFF);
-    ui->slSaturation->setRange(0, 0xFF);
-    ui->slValue->setRange(0, 0xFF);
+    ui->sl_R->setRange(0, 255);
+    ui->sl_G->setRange(0, 255);
+    ui->sl_B->setRange(0, 255);
 
-    connect(ui->spHue,          static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slHue,          &QSlider::setValue);
-    connect(ui->spSaturation,   static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slSaturation,   &QSlider::setValue);
-    connect(ui->spValue,        static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slValue,        &QSlider::setValue);
+    connect(ui->sl_H,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->lcd_H,  static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
+    connect(ui->sl_S,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->lcd_S,  static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
+    connect(ui->sl_V,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->lcd_V,  static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
 
-    connect(ui->slHue,          static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spHue,          &QSpinBox::setValue);
-    connect(ui->slSaturation,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spSaturation,   &QSpinBox::setValue);
-    connect(ui->slValue,        static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spValue,        &QSpinBox::setValue);
+    connect(ui->sl_R,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->lcd_R,  static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
+    connect(ui->sl_G,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->lcd_G,  static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
+    connect(ui->sl_B,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->lcd_B,  static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
 
-    connect(ui->slHue,          static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    this,                   &Show_HSV_color::update_color);
-    connect(ui->slSaturation,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    this,                   &Show_HSV_color::update_color);
-    connect(ui->slValue,        static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    this,                   &Show_HSV_color::update_color);
+    connect(ui->sl_H,   &QSlider::sliderMoved, this,   &Show_HSV_color::update_color_HSV);
+    connect(ui->sl_S,   &QSlider::sliderMoved, this,   &Show_HSV_color::update_color_HSV);
+    connect(ui->sl_V,   &QSlider::sliderMoved, this,   &Show_HSV_color::update_color_HSV);
+
+    connect(ui->sl_R,   &QSlider::sliderMoved, this,   &Show_HSV_color::update_color_RGB);
+    connect(ui->sl_G,   &QSlider::sliderMoved, this,   &Show_HSV_color::update_color_RGB);
+    connect(ui->sl_B,   &QSlider::sliderMoved, this,   &Show_HSV_color::update_color_RGB);
+
+    //---
+#if 1
+    QList<QLCDNumber *> l_lcd = findChildren<QLCDNumber *>();
+    foreach (QLCDNumber *lcd, l_lcd)
+    {
+        lcd->setStyleSheet("background:black; color:lightgreen;");
+    }
+#endif
+    //---
 
     load_widgets();
 
-    update_color();
+    update_color_HSV();
 }
 //--------------------------------------------------------------------------------
-void Show_HSV_color::update_color(int value)
+void Show_HSV_color::update_color_HSV(void)
 {
-    QColor color = QColor::fromHsv(ui->slHue->value(),
-                                   ui->slSaturation->value(),
-                                   ui->slValue->value());
+    int h = ui->sl_H->value();
+    int s = ui->sl_S->value();
+    int v = ui->sl_V->value();
+
+    QColor color = QColor::fromHsv(h,
+                                   s,
+                                   v);
 
     ui->color_widget->set_color(color);
-    Q_UNUSED(value);
+
+    ui->sl_R->setValue(color.red());
+    ui->sl_G->setValue(color.green());
+    ui->sl_B->setValue(color.blue());
+}
+//--------------------------------------------------------------------------------
+void Show_HSV_color::update_color_RGB(void)
+{
+    QColor color = QColor::fromRgb(ui->sl_R->value(),
+                                   ui->sl_G->value(),
+                                   ui->sl_B->value());
+
+    ui->color_widget->set_color(color);
+
+    int h = 0;
+    int s = 0;
+    int v = 0;
+    color.getHsv(&h, &s, &v);
+
+    ui->sl_H->setValue(h);
+    ui->sl_S->setValue(s);
+    ui->sl_V->setValue(v);
 }
 //--------------------------------------------------------------------------------
 void Show_HSV_color::set_color(QColor color)
@@ -80,9 +119,13 @@ void Show_HSV_color::set_color(QColor color)
     int v = 0;
     color.getHsv(&h, &s, &v);
 
-    ui->slHue->setValue(h);
-    ui->slSaturation->setValue(s);
-    ui->slValue->setValue(v);
+    ui->sl_H->setValue(h);
+    ui->sl_S->setValue(s);
+    ui->sl_V->setValue(v);
+
+    ui->sl_R->setValue(color.red());
+    ui->sl_G->setValue(color.green());
+    ui->sl_B->setValue(color.blue());
 }
 //--------------------------------------------------------------------------------
 void Show_HSV_color::updateText(void)

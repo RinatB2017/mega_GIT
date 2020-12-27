@@ -1359,7 +1359,7 @@ bool MainWindow::add_dock_widget(QString title,
         hbox->setMargin(0);
         hbox->setSpacing(0);
 
-        // widget->setParent(dw);
+        widget->setParent(dw);
 
         hbox->addWidget(widget);
         hbox->addWidget(dp);

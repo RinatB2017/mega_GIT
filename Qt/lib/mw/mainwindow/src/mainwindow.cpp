@@ -1373,6 +1373,7 @@ bool MainWindow::add_dock_widget(QString title,
     }
 
     dw->setAllowedAreas(Qt::AllDockWidgetAreas);
+    dw->setAttribute(Qt::WA_DeleteOnClose);
 
     connect(dw, &QDockWidget::dockLocationChanged, this, &MainWindow::dockLocationChanged);
 

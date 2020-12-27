@@ -34,19 +34,20 @@ Simple_PTZ_widget::Simple_PTZ_widget(QWidget *parent) :
 //--------------------------------------------------------------------------------
 Simple_PTZ_widget::~Simple_PTZ_widget()
 {
-    if(probe)
-    {
-        disconnect(probe,  &QVideoProbe::videoFrameProbed,
-                   this,   &Simple_PTZ_widget::processFrame);
-        delete probe;
-    }
-    if(player)
-    {
-        player->stop();
-        disconnect(player, static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error),
-                   this,   &Simple_PTZ_widget::f_error);
-        delete player;
-    }
+    Q_ASSERT(player);
+
+    player->stop();
+    disconnect(player, static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error),
+               this,   &Simple_PTZ_widget::f_error);
+    delete player;
+
+    Q_ASSERT(probe);
+
+    disconnect(probe,  &QVideoProbe::videoFrameProbed,
+               this,   &Simple_PTZ_widget::processFrame);
+    delete probe;
+
+    Q_ASSERT(networkManager);
 
     delete networkManager;
     delete ui;

@@ -1120,7 +1120,7 @@ bool MainWindow::add_windowsmenu_action(QWidget *widget, QAction *action)
     Q_ASSERT(action);
     Q_ASSERT(m_app_windowsmenu);
 
-    //    l_docs.append(widget);
+    // l_docs.append(widget);
 
 #if 0
     ToolButtonAction *tb_action = new ToolButtonAction(action);
@@ -1359,7 +1359,7 @@ bool MainWindow::add_dock_widget(QString title,
         hbox->setMargin(0);
         hbox->setSpacing(0);
 
-        //        widget->setParent(dw);
+        // widget->setParent(dw);
 
         hbox->addWidget(widget);
         hbox->addWidget(dp);

@@ -493,12 +493,18 @@ void MainBox::show_test_widget(QWidget *widget)
 }
 //--------------------------------------------------------------------------------
 #include <QMediaPlayer>
+#include "show_hsv_color.hpp"
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    Show_HSV_color *widget = new Show_HSV_color();
+    widget->show();
+#endif
+
+#if 0
     QWidget *widget = new QWidget();
 //    QWidget *widget = nullptr;
     show_test_widget(widget);

@@ -63,6 +63,9 @@ include ($$LIB_PATH2/widgets/QLongLongSpinBox/QLongLongSpinBox.pri)
 
 include ($$LIB_PATH2/web/mybrowser/mybrowser.pri)
 
+include ($$LIB_PATH2/widgets/show_hsv_color/show_hsv_color.pri)
+include ($$LIB_PATH2/widgets/color_widget/color_widget.pri)
+
 include (src/for_tests_mainbox/for_tests_mainbox.pri)
 include (src/mymainwindow/mymainwindow.pri)
 

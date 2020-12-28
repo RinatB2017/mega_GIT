@@ -17,7 +17,7 @@ CONFIG(debug, debug|release) {
     #---
 }
 
-QT  += multimedia
+#QT  += multimedia
 
 HEADERS += \
     defines.hpp \
@@ -58,21 +58,11 @@ include ($$LIB_PATH2/icons/digits.pri)
 include ($$LIB_PATH2/icons/arrows.pri)
 
 include ($$LIB_PATH/mywidgets/mylistwidget/mylistwidget.pri)
-
 include ($$LIB_PATH2/widgets/QLongLongSpinBox/QLongLongSpinBox.pri)
-
-include ($$LIB_PATH2/web/mybrowser/mybrowser.pri)
-
-include ($$LIB_PATH2/widgets/show_hsv_color/show_hsv_color.pri)
-include ($$LIB_PATH2/widgets/color_widget/color_widget.pri)
+#include ($$LIB_PATH2/web/mybrowser/mybrowser.pri)
 
 include (src/for_tests_mainbox/for_tests_mainbox.pri)
 include (src/mymainwindow/mymainwindow.pri)
-
-#include (src/collapsiblewidget/collapsiblewidget.pri)
-#include (src/controlexitwidget/controlexitwidget.pri)
-
-#include (src/testwidget/testwidget.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = $$PWD/src/version.hpp

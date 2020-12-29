@@ -83,17 +83,36 @@ void HSV_widget::set_saturation(void)
     int height  = image.height();
     int inc_s   = ui->sb_saturation->value();
 
+    QColor color;
+    int h = 0;
+    int s = 0;
+    int v = 0;
+
+    //---
+#if 0
+    QByteArray ba;
+    QBuffer    buffer( &ba );
+    buffer.open( QIODevice::WriteOnly );
+    image.save( &buffer, "BMP" );
+    emit info(QString("Ba len:      %1").arg(ba.length()));
+    emit info(QString("Buffer size: %1").arg(buffer.size()));
+    emit info(QString("width:  %1").arg(width));
+    emit info(QString("height: %1").arg(height));
+    emit info(QString("size 1: %1").arg(width * height));
+    emit info(QString("size 2: %1").arg(width * height * 2));
+    emit info(QString("size 3: %1").arg(width * height * 3));
+    emit info(QString("size 4: %1").arg(width * height * 4));
+#endif
+    //---
+
     QElapsedTimer timer;
     timer.start();
     for(int y=0; y<height; y++)
     {
         for(int x=0; x<width; x++)
         {
-            QColor color = image.pixelColor(x, y);
+            color = image.pixelColor(x, y);
 
-            int h = 0;
-            int s = 0;
-            int v = 0;
             color.getHsv(&h, &s, &v);
 
             s += inc_s;
@@ -122,17 +141,19 @@ void HSV_widget::set_value(void)
     int height = image.height();
     int inc_v = ui->sb_value->value();
 
+    QColor color;
+    int h = 0;
+    int s = 0;
+    int v = 0;
+
     QElapsedTimer timer;
     timer.start();
     for(int y=0; y<height; y++)
     {
         for(int x=0; x<width; x++)
         {
-            QColor color = image.pixelColor(x, y);
+            color = image.pixelColor(x, y);
 
-            int h = 0;
-            int s = 0;
-            int v = 0;
             color.getHsv(&h, &s, &v);
 
             v += inc_v;

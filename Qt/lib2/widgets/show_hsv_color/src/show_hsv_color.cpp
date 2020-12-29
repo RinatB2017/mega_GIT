@@ -74,7 +74,9 @@ void Show_HSV_color::init(void)
 
     load_widgets();
 
-    update_color_HSV();
+    QTimer::singleShot(0, [this]{
+        update_color_HSV();
+    });
 }
 //--------------------------------------------------------------------------------
 void Show_HSV_color::update_color_HSV(void)

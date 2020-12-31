@@ -83,6 +83,8 @@ public:
     void beginWriteArray(const QString &prefix, int size = -1);
     int  beginReadArray(const QString &prefix);
 
+    QString get_full_objectName(QWidget *widget);
+
     void endArray(void);
     void setArrayIndex(int i);
 
@@ -92,7 +94,6 @@ private:
     QPointer<QSettings> settings;
 
     void init(void);
-    QString get_full_objectName(QWidget *widget);
 };
 //--------------------------------------------------------------------------------
 #endif

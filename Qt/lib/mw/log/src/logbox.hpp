@@ -52,15 +52,14 @@ enum LEVELS
     L_TRACE
 };
 
-#define P_LOG     "Log"
-#define FLAG_SHOW_INFO  "flag_show_info"
-#define FLAG_SHOW_ERROR "flag_show_error"
-#define FLAG_SHOW_DEBUG "flag_show_debug"
-#define FLAG_SHOW_TRACE "flag_show_trace"
+#define P_FLAG_SHOW_INFO  "flag_show_info"
+#define P_FLAG_SHOW_ERROR "flag_show_error"
+#define P_FLAG_SHOW_DEBUG "flag_show_debug"
+#define P_FLAG_SHOW_TRACE "flag_show_trace"
 //--------------------------------------------------------------------------------
 class FindBox;
 //--------------------------------------------------------------------------------
-class LogBox : public QFrame, MySettings
+class LogBox : public MyWidget
 {
     Q_OBJECT
 
@@ -70,9 +69,6 @@ public:
                     QWidget *parent);
     ~LogBox();
 
-    void load_settings(void);
-    void save_settings(void);
-
     void set_o_name(const QString &value);
 
     void set_flagNoCRLF(bool state);
@@ -81,8 +77,6 @@ public:
     void set_flagErrorAsMessage(bool state);
     void set_flagTextIsWindows(bool state);
     void set_flagAutoSave(bool state);
-
-    void updateText(void);
 
 public slots:
     void clear(void);
@@ -176,6 +170,11 @@ private:
 
     void append_string(LOG_DATA log_data);
     QString syslog_to_str(int level);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 
 protected:
     void changeEvent(QEvent *event);

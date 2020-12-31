@@ -653,7 +653,7 @@ bool MainBox::test(void)
 
 #endif
 
-#if 0
+#if 1
     emit info("Info");
     emit debug("Debug");
     emit error("Error");

@@ -29,8 +29,7 @@
 //#include "LoggingCategories.hpp"
 //--------------------------------------------------------------------------------
 LogBox::LogBox(QWidget *parent) :
-    QFrame(parent),
-    MySettings(),
+    MyWidget(parent),
     o_name("logbox")
 {
     init();
@@ -38,8 +37,7 @@ LogBox::LogBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 LogBox::LogBox(const QString &o_name,
                QWidget *parent) :
-    QFrame(parent),
-    MySettings(),
+    MyWidget(parent),
     o_name(o_name)
 {
     init();
@@ -50,19 +48,6 @@ LogBox::~LogBox()
     Q_ASSERT(logBox);
     Q_ASSERT(progressBar);
     Q_ASSERT(fb);
-
-    MyWidget::set_param(P_LOG, FLAG_SHOW_INFO,   flag_is_shows_info);
-    MyWidget::set_param(P_LOG, FLAG_SHOW_ERROR,  flag_is_shows_error);
-#ifndef NO_LOG_DEBUG
-    MyWidget::set_param(P_LOG, FLAG_SHOW_DEBUG,  flag_is_shows_debug);
-#endif
-#ifndef NO_LOG_TRACE
-    MyWidget::set_param(P_LOG, FLAG_SHOW_TRACE,  flag_is_shows_trace);
-#endif
-
-    //qDebug() << "logbox is closed!";
-
-    save_settings();
 
     if(logBox)
     {
@@ -90,36 +75,7 @@ void LogBox::init(void)
     current_codec = QTextCodec::codecForLocale();
 #endif
 
-    //FIXME говнокод
-    QVariant v_flag_show_info   = true;
-    QVariant v_flag_show_debug  = true;
-    QVariant v_flag_show_error  = true;
-    QVariant v_flag_show_trace  = true;
-
-    MyWidget::get_param(P_LOG, FLAG_SHOW_INFO,   true,   &v_flag_show_info);
-    MyWidget::get_param(P_LOG, FLAG_SHOW_DEBUG,  true,   &v_flag_show_debug);
-    MyWidget::get_param(P_LOG, FLAG_SHOW_ERROR,  true,   &v_flag_show_error);
-    MyWidget::get_param(P_LOG, FLAG_SHOW_TRACE,  true,   &v_flag_show_trace);
-
-    flag_is_shows_info  = v_flag_show_info.toBool();
-    flag_is_shows_debug = v_flag_show_debug.toBool();
-    flag_is_shows_error = v_flag_show_error.toBool();
-    flag_is_shows_trace = v_flag_show_trace.toBool();
-
-#ifdef NO_LOG_DEBUG
-    flag_is_shows_debug = false;
-#endif
-#ifdef NO_LOG_TRACE
-    flag_is_shows_trace = false;
-#endif
-    //---
-
     create_widgets();
-
-    if(o_name.isEmpty() == false)
-    {
-        load_settings();
-    }
 
     logBox->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(logBox, &LogBox::customContextMenuRequested,    this,   &LogBox::popup);
@@ -250,7 +206,7 @@ void LogBox::create_widgets(void)
     QFont font("Liberation Mono", 10);
     logBox = new QTextEdit(this);
     logBox->setObjectName("te_LogBox");
-    logBox->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+//    logBox->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     logBox->setFont(font);
     logBox->setProperty(NO_SAVE, true);
 #ifdef Q_OS_LINUX
@@ -306,9 +262,6 @@ void LogBox::create_widgets(void)
     mainbox->addLayout(vbox);
 
     setLayout(mainbox);
-    setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
-
-    //adjustSize();
 }
 //--------------------------------------------------------------------------------
 void LogBox::find_prev(const QString &text)
@@ -756,8 +709,6 @@ void LogBox::changeOptions(void)
         qDebug() << autosave_filename;
 
         update_log();
-
-        save_settings();
     }
     delete optionsBox;
 }
@@ -793,16 +744,6 @@ void LogBox::setVisibleProgressBar(bool state)
     progressBar->setVisible(state);
 }
 //--------------------------------------------------------------------------------
-void LogBox::updateText(void)
-{
-    foreach (auto action, app_actions)
-    {
-        action->setText(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
-        action->setToolTip(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
-        action->setStatusTip(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
-    }
-}
-//--------------------------------------------------------------------------------
 void LogBox::changeEvent(QEvent *event)
 {
     switch (event->type())
@@ -827,16 +768,45 @@ void LogBox::keyPressEvent(QKeyEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-void LogBox::load_settings(void)
+void LogBox::updateText(void)
+{
+    foreach (auto action, app_actions)
+    {
+        action->setText(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
+        action->setToolTip(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
+        action->setStatusTip(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
+    }
+}
+//--------------------------------------------------------------------------------
+bool LogBox::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void LogBox::load_setting(void)
 {
 #ifdef QT_DEBUG
-    qDebug() << "LogBox::load_settings(void)";
+    qDebug() << "LogBox::load_setting(void)";
 #endif
 
     QString text = o_name;
-    if(text.isEmpty())  text = "noname";
+    if(text.isEmpty())  text = "LogBox";
 
-    beginGroup(text);
+    beginGroup(get_full_objectName(this));
+
+    flag_is_shows_info  = load_bool(P_FLAG_SHOW_INFO);
+    flag_is_shows_debug = load_bool(P_FLAG_SHOW_DEBUG);
+    flag_is_shows_error = load_bool(P_FLAG_SHOW_ERROR);
+    flag_is_shows_trace = load_bool(P_FLAG_SHOW_TRACE);
+
+#ifdef NO_LOG_DEBUG
+    flag_is_shows_debug = false;
+#endif
+#ifdef NO_LOG_TRACE
+    flag_is_shows_trace = false;
+#endif
+    //---
+
     logBox->setReadOnly(load_value(P_FLAG_READ_ONLY, true).toBool());
     logBox->setAcceptRichText(load_value(P_FLAG_ACCEPT_RICH_TEXT, true).toBool());
     flagNoCRLF          = load_value(P_FLAG_NO_CRLF, false).toBool();
@@ -879,15 +849,15 @@ void LogBox::load_settings(void)
     endGroup();
 }
 //--------------------------------------------------------------------------------
-void LogBox::save_settings(void)
+void LogBox::save_setting(void)
 {
 #ifdef QT_DEBUG
-    qDebug() << "LogBox::save_settings(void)";
+    qDebug() << "LogBox::save_setting(void)";
 #endif
 
     QString text = o_name;
     //if(text.isEmpty())  text = objectName();
-    if(text.isEmpty())  text = "RS-232";
+    if(text.isEmpty())  text = "LogBox";
 
 #ifdef QT_DEBUG
     qDebug() << "logbox: save settings";
@@ -900,7 +870,8 @@ void LogBox::save_settings(void)
     qDebug() << "FileAutoSave" << autosave_filename;
 #endif
 
-    beginGroup(text);
+    beginGroup(get_full_objectName(this));
+
     save_value(P_FLAG_READ_ONLY,          logBox->isReadOnly());
     save_value(P_FLAG_ACCEPT_RICH_TEXT,   logBox->acceptRichText());
     save_value(P_FLAG_NO_CRLF,            flagNoCRLF);
@@ -910,6 +881,15 @@ void LogBox::save_settings(void)
     save_value(P_FLAG_TEXT_IS_WINDOWS,    flagTextIsWindows);
     save_value(P_FLAG_AUTOSIZE,           flagAutoSave);
     save_value(P_FILE_AUTOSIZE,           autosave_filename);
+
+    save_bool(P_FLAG_SHOW_INFO,   flag_is_shows_info);
+    save_bool(P_FLAG_SHOW_ERROR,  flag_is_shows_error);
+#ifndef NO_LOG_DEBUG
+    save_bool(P_FLAG_SHOW_DEBUG,  flag_is_shows_debug);
+#endif
+#ifndef NO_LOG_TRACE
+    save_bool(P_FLAG_SHOW_TRACE,  flag_is_shows_trace);
+#endif
 
 #ifndef NO_LOG
     QFont font = get_font();

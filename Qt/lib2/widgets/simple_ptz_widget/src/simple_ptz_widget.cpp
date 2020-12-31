@@ -317,7 +317,7 @@ void Simple_PTZ_widget::send_cmd(QString  cmd)
                  .arg(cmd));
 
     QString concatenated = ui->le_login->text() + ":" + ui->le_password->text(); //username:password
-    //    emit info(QString("%1").arg(concatenated));
+    // emit info(QString("%1").arg(concatenated));
 
     QByteArray data = concatenated.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;

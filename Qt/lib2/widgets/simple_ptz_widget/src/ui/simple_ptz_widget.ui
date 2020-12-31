@@ -96,7 +96,7 @@
        </layout>
       </item>
       <item>
-       <widget class="Scan_home_network" name="widget" native="true"/>
+       <widget class="Scan_home_network" name="scan_widget" native="true"/>
       </item>
      </layout>
     </widget>

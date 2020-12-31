@@ -516,10 +516,6 @@ void SerialBox5::updateText(void)
 {
     ui->retranslateUi(this);
 
-#ifdef RS232_LOG
-    logBox->updateText();
-#endif
-
 #ifdef RS232_SEND
     sendBox5->updateText();
 #endif

@@ -47,7 +47,6 @@ void Mesh_control::init(void)
 
     ui->widget_serial->set_fix_baudrate(115200);
     ui->widget_log->set_o_name(QString("%1_log").arg(objectName()));
-    ui->widget_log->load_settings();
 
     //qDebug() << "ui->widget_log->objectName()" << ui->widget_log->objectName();
 

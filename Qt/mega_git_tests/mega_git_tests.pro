@@ -31,6 +31,7 @@ SUBDIRS += \
     $$PWD/Test_QHexEdit2 \
     $$PWD/Test_mesh \
     $$PWD/Test_md5 \
+    $$PWD/Test_LogBoxs \
     $$PWD/Test_OpenRPT \
     $$PWD/Test_OscilloscopeBox \
     $$PWD/Test_picture \

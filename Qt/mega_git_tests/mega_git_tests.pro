@@ -21,6 +21,7 @@ SUBDIRS += \
     $$PWD/Test_drawbuttons \
     $$PWD/Test_draw_line \
     $$PWD/Test_event_filter \
+    $$PWD/Test_hsv_color \
     $$PWD/Test_FastTrading \
     $$PWD/Test_GrapherBox \
     $$PWD/Test_HistogramBox \
@@ -31,6 +32,8 @@ SUBDIRS += \
     $$PWD/Test_QHexEdit2 \
     $$PWD/Test_mesh \
     $$PWD/Test_md5 \
+    $$PWD/Test_lcd_knob \
+    $$PWD/Test_ledspanel \
     $$PWD/Test_LogBoxs \
     $$PWD/Test_OpenRPT \
     $$PWD/Test_OscilloscopeBox \

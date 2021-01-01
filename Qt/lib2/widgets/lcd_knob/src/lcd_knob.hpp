@@ -2,6 +2,7 @@
 #ifndef LCD_KNOB_H
 #define LCD_KNOB_H
 //--------------------------------------------------------------------------------
+#include <QPointer>
 #include <QFrame>
 //--------------------------------------------------------------------------------
 class QwtKnob;
@@ -30,10 +31,9 @@ signals:
     void valueChanged(double);
 
 private:
-    QwtKnob *knob;
-    QLCDNumber *lcd;
-    QVBoxLayout *vbox;
-
+    QPointer<QwtKnob>     knob;
+    QPointer<QLCDNumber>  lcd;
+    QPointer<QVBoxLayout> vbox;
 };
 //--------------------------------------------------------------------------------
 #endif // LCD_KNOB_H

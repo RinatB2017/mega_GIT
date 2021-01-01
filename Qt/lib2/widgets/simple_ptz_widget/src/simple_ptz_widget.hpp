@@ -32,6 +32,7 @@
 //--------------------------------------------------------------------------------
 #define P_LOGIN     "login"
 #define P_PASSWORD  "password"
+#define P_OTHER_CMD "other_cmd"
 #define P_HOST      "host"
 #define P_PORT      "port"
 //--------------------------------------------------------------------------------
@@ -75,6 +76,8 @@ private slots:
 
     void f_screenshot(void);
 
+    void f_other_cmd(void);
+
 private:
     Ui::Simple_PTZ_widget   *ui;
     QPointer<QMediaPlayer>  player;
@@ -85,7 +88,9 @@ private:
 
     void processFrame(QVideoFrame const &frame);
 
-    void send_cmd(QString cmd);
+    void send_cmd(const QString &cmd);
+    void send_other_cmd(const QString &cmd);
+
     void create_player(void);
     void connect_position_widgets(void);
 

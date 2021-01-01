@@ -82,8 +82,10 @@ void Simple_PTZ_widget::init(void)
 {
     ui->setupUi(this);
 
-    ui->video_widget->setMinimumSize(M_WIDTH, M_HEIGHT);
+    //ui->video_widget->setMinimumSize(M_WIDTH, M_HEIGHT);
     ui->btn_screenshot->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
+
+    ui->btn_other_cmd->setIcon(qApp->style()->standardIcon(QStyle::SP_CommandLink));
 
     networkManager = new QNetworkAccessManager(this);
 
@@ -92,7 +94,7 @@ void Simple_PTZ_widget::init(void)
     connect(ui->btn_disconnect, &QPushButton::clicked,
             this,               &Simple_PTZ_widget::stop);
 
-    connect(networkManager,    &QNetworkAccessManager::finished,
+    connect(networkManager,     &QNetworkAccessManager::finished,
             this,               &Simple_PTZ_widget::onFinished);
 
     connect(ui->ipv4_widget,    &IPV4::editingFinished,
@@ -105,6 +107,12 @@ void Simple_PTZ_widget::init(void)
     connect(ui->btn_screenshot, &QPushButton::clicked,
             this,               &Simple_PTZ_widget::f_screenshot);
 
+    connect(ui->btn_other_cmd,  &QPushButton::clicked,
+            this,               &Simple_PTZ_widget::f_other_cmd);
+
+    connect(ui->le_other_cmd,   &QLineEdit::returnPressed,
+            this,               &Simple_PTZ_widget::f_other_cmd);
+
     create_player();
     connect_position_widgets();
 
@@ -114,6 +122,11 @@ void Simple_PTZ_widget::init(void)
     ui->btn_u->setDisabled(true);
     ui->btn_up_down->setDisabled(true);
     ui->btn_left_right->setDisabled(true);
+
+#ifndef QT_DEBUG
+    ui->le_other_cmd->setVisible(false);
+    ui->btn_other_cmd->setVisible(false);
+#endif
 
 //    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
 //    if(mw)
@@ -138,6 +151,8 @@ void Simple_PTZ_widget::connect_position_widgets(void)
 
     connect(ui->btn_left_right, &QPushButton::clicked,  this,   &Simple_PTZ_widget::f_left_right);
     connect(ui->btn_up_down,    &QPushButton::clicked,  this,   &Simple_PTZ_widget::f_up_down);
+
+    connect(ui->btn_stop,   &QToolButton::clicked,      this,   &Simple_PTZ_widget::f_stop);
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::f_error(QMediaPlayer::Error err)
@@ -161,7 +176,9 @@ void Simple_PTZ_widget::onFinished( QNetworkReply* reply )
     if(reply->error() == QNetworkReply::NoError)
     {
         QString data = QString::fromUtf8(reply->readAll());
+
         emit debug(data);
+        qDebug() << data;
     }
     else
     {
@@ -277,6 +294,11 @@ void Simple_PTZ_widget::f_up_down(void)
     send_cmd("updown");
 }
 //--------------------------------------------------------------------------------
+void Simple_PTZ_widget::f_other_cmd(void)
+{
+    send_other_cmd(ui->le_other_cmd->text());
+}
+//--------------------------------------------------------------------------------
 void Simple_PTZ_widget::f_screenshot(void)
 {
     QImage img = current_frame.image();
@@ -306,7 +328,7 @@ void Simple_PTZ_widget::f_screenshot(void)
     delete dlg;
 }
 //--------------------------------------------------------------------------------
-void Simple_PTZ_widget::send_cmd(QString  cmd)
+void Simple_PTZ_widget::send_cmd(const QString &cmd)
 {
     emit trace(Q_FUNC_INFO);
 
@@ -317,7 +339,7 @@ void Simple_PTZ_widget::send_cmd(QString  cmd)
                  .arg(cmd));
 
     QString concatenated = ui->le_login->text() + ":" + ui->le_password->text(); //username:password
-    // emit info(QString("%1").arg(concatenated));
+    //emit debug(QString("%1").arg(concatenated));
 
     QByteArray data = concatenated.toLocal8Bit().toBase64();
     QString headerData = "Basic " + data;
@@ -326,10 +348,33 @@ void Simple_PTZ_widget::send_cmd(QString  cmd)
     request.setRawHeader("Connection:", "keep-alive");
     networkManager->get(request);
 
-    // emit info(param);
+    emit debug(param);
     // emit info("OK");
 }
 //--------------------------------------------------------------------------------
+void Simple_PTZ_widget::send_other_cmd(const QString &cmd)
+{
+    emit trace(Q_FUNC_INFO);
+
+    QString param;
+    param.append(QString("http://%1:%2/%3")
+                 .arg(ui->ipv4_widget->get_url().host())
+                 .arg(ui->ipv4_widget->get_url().port())
+                 .arg(cmd));
+
+    QString concatenated = ui->le_login->text() + ":" + ui->le_password->text(); //username:password
+    //emit debug(QString("%1").arg(concatenated));
+
+    QByteArray data = concatenated.toLocal8Bit().toBase64();
+    QString headerData = "Basic " + data;
+    QNetworkRequest request=QNetworkRequest(QUrl( param ));
+    request.setRawHeader("Authorization", headerData.toLocal8Bit());
+    request.setRawHeader("Connection:", "keep-alive");
+    networkManager->get(request);
+
+    emit debug(param);
+    // emit info("OK");
+}//--------------------------------------------------------------------------------
 void Simple_PTZ_widget::updateText(void)
 {
     ui->retranslateUi(this);
@@ -344,6 +389,7 @@ void Simple_PTZ_widget::load_setting(void)
 {
     ui->le_login->setText(load_string(P_LOGIN));
     ui->le_password->setText(load_string(P_PASSWORD));
+    ui->le_other_cmd->setText(load_string(P_OTHER_CMD));
 
     QUrl url;
     url.setHost(load_string(P_HOST));
@@ -358,9 +404,10 @@ void Simple_PTZ_widget::load_setting(void)
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::save_setting(void)
 {
-    save_string(P_LOGIN,    ui->le_login->text());
-    save_string(P_PASSWORD, ui->le_password->text());
-    save_string(P_HOST,     ui->ipv4_widget->get_url().host());
-    save_int(P_PORT,        ui->ipv4_widget->get_url().port());
+    save_string(P_LOGIN,        ui->le_login->text());
+    save_string(P_PASSWORD,     ui->le_password->text());
+    save_string(P_OTHER_CMD,    ui->le_other_cmd->text());
+    save_string(P_HOST,         ui->ipv4_widget->get_url().host());
+    save_int(P_PORT,            ui->ipv4_widget->get_url().port());
 }
 //--------------------------------------------------------------------------------

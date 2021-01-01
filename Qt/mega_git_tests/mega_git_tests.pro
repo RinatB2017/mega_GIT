@@ -17,6 +17,7 @@ SUBDIRS += \
     $$PWD/Test_CandleStick_Box_adv \
     $$PWD/Test_CRC \
     $$PWD/Test_digits \
+    $$PWD/Test_dip_widget \
     $$PWD/Test_database \
     $$PWD/Test_drawbuttons \
     $$PWD/Test_draw_line \

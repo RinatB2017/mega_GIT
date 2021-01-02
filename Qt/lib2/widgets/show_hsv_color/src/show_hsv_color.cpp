@@ -128,6 +128,8 @@ void Show_HSV_color::set_color(QColor color)
     ui->sl_R->setValue(color.red());
     ui->sl_G->setValue(color.green());
     ui->sl_B->setValue(color.blue());
+
+    update_color_RGB();
 }
 //--------------------------------------------------------------------------------
 void Show_HSV_color::updateText(void)

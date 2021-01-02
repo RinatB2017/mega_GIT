@@ -121,6 +121,12 @@ QList<QRubberBand *> ShowPicture::get_rects(void)
     return l_bands;
 }
 //--------------------------------------------------------------------------------
+bool ShowPicture::clr_rects(void)
+{
+    l_bands.clear();
+    return true;
+}
+//--------------------------------------------------------------------------------
 bool ShowPicture::get_pixmap(uint x, uint y, uint w, uint h, QPixmap *pixmap)
 {
     if(w == 0)  return false;

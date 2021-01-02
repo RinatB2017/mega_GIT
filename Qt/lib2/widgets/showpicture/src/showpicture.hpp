@@ -36,6 +36,7 @@ public:
     ~ShowPicture();
 
     QList<QRubberBand *> get_rects(void);
+    bool clr_rects(void);
     bool get_pixmap(uint x, uint y, uint w, uint h, QPixmap *pixmap);
 
     void test(void);

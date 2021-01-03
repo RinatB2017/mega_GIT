@@ -268,6 +268,17 @@ private:
     QString title_axis_X;
     QString title_axis_Y;
 
+    bool flag_visible_btn_all_ON = true;
+    bool flag_visible_btn_all_OFF = true;
+    bool flag_visible_btn_Horizontal = true;
+    bool flag_visible_btn_Vertical = true;
+    bool flag_visible_btn_Options = true;
+    bool flag_visible_btn_Load = true;
+    bool flag_visible_btn_Save = true;
+    bool flag_visible_btn_Statistic = true;
+    bool flag_visible_btn_Clear = true;
+    bool flag_visible_btn_Autoscroll = true;
+
     //---
     typedef QList<QPointF> data_channel;
     data_channel data_channels[MAX_CHANNELS];

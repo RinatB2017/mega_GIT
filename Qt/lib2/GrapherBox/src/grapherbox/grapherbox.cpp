@@ -1622,76 +1622,87 @@ void GrapherBox::set_title_axis_Y(const QString &title)
 //--------------------------------------------------------------------------------
 void GrapherBox::check_visible_buttons(void)
 {
-    QList<QToolButton *> buttons = ui->frame_buttons->findChildren<QToolButton *>();
-    bool buttons_visible = false;
-    foreach(QToolButton *btn, buttons)
-    {
-        qDebug() << btn->objectName() << btn->isVisible();
-        if(btn->isVisible())
-        {
-            buttons_visible = true;
-        }
-    }
-    ui->frame_buttons->setVisible(buttons_visible);
+    ui->btn_all_on->setVisible(flag_visible_btn_all_ON);
+    ui->btn_all_off->setVisible(flag_visible_btn_all_OFF);
+    ui->btn_Horizontal->setVisible(flag_visible_btn_Horizontal);
+    ui->btn_Vertical->setVisible(flag_visible_btn_Vertical);
+    ui->btn_Options->setVisible(flag_visible_btn_Options);
+    ui->btn_Load->setVisible(flag_visible_btn_Load);
+    ui->btn_Save->setVisible(flag_visible_btn_Save);
+    ui->btn_Statistic->setVisible(flag_visible_btn_Statistic);
+    ui->btn_Clear->setVisible(flag_visible_btn_Clear);
+    ui->btn_autoscroll->setVisible(flag_visible_btn_Autoscroll);
+
+    ui->frame_buttons->setVisible(
+                flag_visible_btn_all_ON     ||
+                flag_visible_btn_all_OFF    ||
+                flag_visible_btn_Horizontal ||
+                flag_visible_btn_Vertical   ||
+                flag_visible_btn_Options    ||
+                flag_visible_btn_Load       ||
+                flag_visible_btn_Save       ||
+                flag_visible_btn_Statistic  ||
+                flag_visible_btn_Clear      ||
+                flag_visible_btn_Autoscroll);
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_all_ON(bool state)
 {
-    ui->btn_all_on->setVisible(state);
+    flag_visible_btn_all_ON = state;
     check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_all_OFF(bool state)
 {
-    ui->btn_all_off->setVisible(state);
+    flag_visible_btn_all_OFF = state;
     check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_Horizontal(bool state)
 {
-    ui->btn_Horizontal->setVisible(state);
+    flag_visible_btn_Horizontal = state;
     check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_Vertical(bool state)
 {
-    ui->btn_Vertical->setVisible(state);
+    flag_visible_btn_Vertical = state;
     check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_Options(bool state)
 {
-    ui->btn_Options->setVisible(state);
+    flag_visible_btn_Options = state;
     check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_Load(bool state)
 {
-    ui->btn_Load->setVisible(state);
+    flag_visible_btn_Load = state;
     check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_Save(bool state)
 {
-    ui->btn_Save->setVisible(state);
+    flag_visible_btn_Save = state;
     check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_Statistic(bool state)
 {
-    ui->btn_Statistic->setVisible(state);
+    flag_visible_btn_Statistic = state;
     check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_Clear(bool state)
 {
-    ui->btn_Clear->setVisible(state);
+    flag_visible_btn_Clear = state;
     check_visible_buttons();
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::set_visible_btn_Autoscroll(bool state)
 {
-    ui->btn_autoscroll->setVisible(state);
+    flag_visible_btn_Autoscroll = state;
     check_visible_buttons();
 }
 //--------------------------------------------------------------------------------

@@ -21,6 +21,14 @@
 #include "show_hsv_color.hpp"
 #include "ui_show_hsv_color.h"
 //--------------------------------------------------------------------------------
+#define MIN_H 0
+#define MIN_S 0
+#define MIN_V 0
+
+#define MAX_H 359
+#define MAX_S 255
+#define MAX_V 255
+//--------------------------------------------------------------------------------
 Show_HSV_color::Show_HSV_color(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::Show_HSV_color)
@@ -38,9 +46,9 @@ void Show_HSV_color::init(void)
 {
     ui->setupUi(this);
 
-    ui->sl_H->setRange(0, 255);
-    ui->sl_S->setRange(0, 255);
-    ui->sl_V->setRange(0, 255);
+    ui->sl_H->setRange(MIN_H, MAX_H);
+    ui->sl_S->setRange(MIN_S, MAX_S);
+    ui->sl_V->setRange(MIN_V, MAX_V);
 
     ui->sl_R->setRange(0, 255);
     ui->sl_G->setRange(0, 255);

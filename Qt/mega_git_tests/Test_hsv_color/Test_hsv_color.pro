@@ -47,6 +47,4 @@ include ($$LIB_PATH2/widgets/color_widget/color_widget.pri)
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 
-message ($$DEFINES)
-
 VPATH = $$INCLUDEPATH

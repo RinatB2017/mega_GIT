@@ -48,6 +48,9 @@ private:
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 };
 //--------------------------------------------------------------------------------
 #endif // SHOW_HSV_COLOR_HPP

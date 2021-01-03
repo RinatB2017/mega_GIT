@@ -72,6 +72,22 @@ void Show_HSV_color::init(void)
 
     //---
 #if 1
+    int max_x = 360;
+    int max_y = 20;
+    QImage *image = new QImage(max_x, max_y, QImage::Format_RGB32);
+    for(int y=0; y<max_y; y++)
+    {
+        for(int hue=0; hue<max_x; hue++)
+        {
+            QColor color = QColor::fromHsv(hue, 200, 200);
+            image->setPixelColor(hue, y, color);
+        }
+    }
+    ui->color_label->setPixmap(QPixmap::fromImage(*image));
+    ui->color_label->installEventFilter(this);
+#endif
+
+#if 1
     QList<QLCDNumber *> l_lcd = findChildren<QLCDNumber *>();
     foreach (QLCDNumber *lcd, l_lcd)
     {
@@ -138,6 +154,34 @@ void Show_HSV_color::set_color(QColor color)
     ui->sl_B->setValue(color.blue());
 
     update_color_RGB();
+}
+//--------------------------------------------------------------------------------
+bool Show_HSV_color::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == ui->color_label)
+    {
+        if (event->type() == QEvent::MouseButtonPress)
+        {
+            int x = ((QMouseEvent *)event)->x();
+            int y = ((QMouseEvent *)event)->y();
+            QImage image = ui->color_label->pixmap(Qt::ReturnByValue).toImage();
+            if((x <= image.width() && (y <= image.height())))
+            {
+                QColor color = image.pixelColor(x, y);
+                set_color(color);
+            }
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        // pass the event on to the parent class
+        return eventFilter(obj, event);
+    }
 }
 //--------------------------------------------------------------------------------
 void Show_HSV_color::updateText(void)

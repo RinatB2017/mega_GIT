@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>Show_HSV_color</class>
  <widget class="QWidget" name="Show_HSV_color">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>382</width>
+    <height>252</height>
+   </rect>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -20,6 +28,9 @@
         <enum>QFrame::Raised</enum>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QLabel" name="color_label"/>
+        </item>
         <item>
          <layout class="QGridLayout" name="gridLayout">
           <item row="4" column="1">

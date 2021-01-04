@@ -53,6 +53,7 @@ void DIP_widget::init(void)
 
     setToolTip(QString("Адрес = %1").arg(dip_value));
     setFixedSize(MAX_WIDTH, MAX_HEIGHT);
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 //--------------------------------------------------------------------------------
 void DIP_widget::set_value(int value)

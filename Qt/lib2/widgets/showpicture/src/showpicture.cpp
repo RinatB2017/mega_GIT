@@ -20,6 +20,8 @@
 **********************************************************************************/
 #include "showpicture.hpp"
 //--------------------------------------------------------------------------------
+#define P_ID    "ID"
+//--------------------------------------------------------------------------------
 ShowPicture::ShowPicture(QWidget *parent) :
     QLabel(parent)
 {
@@ -66,6 +68,11 @@ void ShowPicture::mousePressEvent(QMouseEvent *event)
         if(found)
         {
             //qDebug() << "remove" << index;
+            emit delete_rect(l_bands[index]->property(P_ID).toInt(),
+                             l_bands[index]->x(),
+                             l_bands[index]->y(),
+                             l_bands[index]->width(),
+                             l_bands[index]->height());
             l_bands.removeAt(index);
         }
         //qDebug() << "count" << l_bands.count();
@@ -81,11 +88,11 @@ void ShowPicture::mousePressEvent(QMouseEvent *event)
     // в linux проблем нет с любым стилем
     QPalette palette;
 
-//    palette.setBrush(QPalette::WindowText, QBrush(Qt::white));
+    //    palette.setBrush(QPalette::WindowText, QBrush(Qt::white));
 
-//    QColor color(Qt::blue);
-//    color.setAlpha(80);
-//    palette.setBrush(QPalette::Highlight, QBrush(color));
+    //    QColor color(Qt::blue);
+    //    color.setAlpha(80);
+    //    palette.setBrush(QPalette::Highlight, QBrush(color));
 
     rubberBand->setStyleSheet("background:red;");
 
@@ -93,7 +100,6 @@ void ShowPicture::mousePressEvent(QMouseEvent *event)
 
     rubberBand->setPalette(palette);
 #endif
-
 
     origin = static_cast<QMouseEvent *>(event)->pos();
     rubberBand->setGeometry(QRect(origin, QSize()));
@@ -105,7 +111,14 @@ void ShowPicture::mouseReleaseEvent(QMouseEvent *)
     if(flag_clicked)
     {
         flag_clicked = false;
-        rubberBand->setProperty("ID", l_bands.count());
+        rubberBand->setProperty(P_ID, l_bands.count());
+
+        emit append_rect(l_bands.count(),
+                         rubberBand->x(),
+                         rubberBand->y(),
+                         rubberBand->width(),
+                         rubberBand->height());
+
         l_bands.append(rubberBand);
     }
 }
@@ -173,7 +186,7 @@ bool ShowPicture::correct(int id, QRect rect)
 {
     foreach (QRubberBand *band, l_bands)
     {
-        if(band->property("ID").toInt() == id)
+        if(band->property(P_ID).toInt() == id)
         {
             qDebug() << id << "found";
             band->setGeometry(rect.x(),

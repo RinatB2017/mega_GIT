@@ -31,6 +31,10 @@ class ShowPicture : public QLabel
 {
     Q_OBJECT
 
+signals:
+    void append_rect(int id, int x, int y, int w, int h);
+    void delete_rect(int id, int x, int y, int w, int h);
+
 public:
     explicit ShowPicture(QWidget *parent = nullptr);
     ~ShowPicture();

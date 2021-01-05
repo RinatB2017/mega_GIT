@@ -43,15 +43,22 @@ public:
     bool clr_rects(void);
     bool get_pixmap(uint x, uint y, uint w, uint h, QPixmap *pixmap);
 
+    void set_rect_max(uint value);
+
     void test(void);
+
     bool correct(int x, int y, QRect rect);
     bool correct(int id, QRect rect);
+
+    void create_rect(int x, int y, int w, int h);
 
 private:
     QPoint origin;
     QRubberBand *rubberBand = nullptr;
     QList<QRubberBand *> l_bands;
     bool flag_clicked = false;
+
+    int max_rect = 100;
 
     void init(void);
 

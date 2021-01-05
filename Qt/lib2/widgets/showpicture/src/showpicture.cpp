@@ -111,15 +111,22 @@ void ShowPicture::mouseReleaseEvent(QMouseEvent *)
     if(flag_clicked)
     {
         flag_clicked = false;
-        rubberBand->setProperty(P_ID, l_bands.count());
+        if(l_bands.count() < max_rect)
+        {
+            rubberBand->setProperty(P_ID, l_bands.count());
 
-        emit append_rect(l_bands.count(),
-                         rubberBand->x(),
-                         rubberBand->y(),
-                         rubberBand->width(),
-                         rubberBand->height());
+            emit append_rect(l_bands.count(),
+                             rubberBand->x(),
+                             rubberBand->y(),
+                             rubberBand->width(),
+                             rubberBand->height());
 
-        l_bands.append(rubberBand);
+            l_bands.append(rubberBand);
+        }
+        else
+        {
+            rubberBand->hide();
+        }
     }
 }
 //--------------------------------------------------------------------------------
@@ -197,5 +204,23 @@ bool ShowPicture::correct(int id, QRect rect)
         }
     }
     return false;
+}
+//--------------------------------------------------------------------------------
+void ShowPicture::create_rect(int x, int y, int w, int h)
+{
+    if(l_bands.count() < max_rect)
+    {
+        QRubberBand *band = new QRubberBand(QRubberBand::Rectangle, this);
+        band->setGeometry(x, y, w, h);
+        band->setProperty(P_ID, l_bands.count());
+        band->show();
+
+        l_bands.append(band);
+    }
+}
+//--------------------------------------------------------------------------------
+void ShowPicture::set_rect_max(uint value)
+{
+    max_rect = value;
 }
 //--------------------------------------------------------------------------------

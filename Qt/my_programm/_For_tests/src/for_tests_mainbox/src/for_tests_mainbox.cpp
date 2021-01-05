@@ -498,6 +498,12 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    QString FIO = ui->lineEdit->text();
+    QChar fio = FIO[0];
+    qDebug() << fio << fio.unicode();
+#endif
+
 #if 0
     QWidget *widget = new QWidget();
 //    QWidget *widget = nullptr;
@@ -653,7 +659,7 @@ bool MainBox::test(void)
 
 #endif
 
-#if 1
+#if 0
     emit info("Info");
     emit debug("Debug");
     emit error("Error");

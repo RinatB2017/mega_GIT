@@ -88,7 +88,7 @@ public slots:
     void  set_font(QFont font);
     QFont get_font(void);
 
-    void infoLog(const QString &text);
+    void infoLog(const  QString &text);
     void debugLog(const QString &text);
     void errorLog(const QString &text);
     void traceLog(const QString &text);

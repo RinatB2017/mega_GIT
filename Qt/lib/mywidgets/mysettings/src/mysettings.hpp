@@ -35,7 +35,7 @@ public:
     MySettings();
     ~MySettings();
 
-    bool is_my_widget(QString o_name);
+    bool is_my_widget(const QString &o_name);
     bool compare_name(const char *widget_name, QString class_name);
 
     bool load_combobox_property(QWidget *widget);
@@ -53,29 +53,29 @@ public:
     bool load_property(QWidget *widget, const QString &property_name);
     bool save_property(QWidget *widget, const QString &property_name);
 
-    bool load_int(QString name, int *value);
-    void save_int(QString name, int value);
+    bool load_int(const QString &name, int *value);
+    void save_int(const QString &name, int value);
 
-    bool load_ulonglong(QString name, qlonglong *value);
-    void save_ulonglong(QString name, qlonglong value);
+    bool load_ulonglong(const QString &name, qlonglong *value);
+    void save_ulonglong(const QString &name, qlonglong value);
 
-    bool load_bool(QString name);
-    void save_bool(QString name, bool value);
+    bool load_bool(const QString &name, QVariant default_value = false);
+    void save_bool(const QString &name, bool value);
 
-    bool load_uint(QString name, uint *value);
-    void save_uint(QString name, uint value);
+    bool load_uint(const QString &name, uint *value);
+    void save_uint(const QString &name, uint value);
 
-    QString load_string(QString name);
-    void save_string(QString name, QString value);
+    QString load_string(const QString &name);
+    void save_string(const QString &name, QString value);
 
-    QByteArray load_bytearray(QString name);
-    void save_bytearray(QString name, QByteArray value);
+    QByteArray load_bytearray(const QString &name);
+    void save_bytearray(const QString &name, QByteArray value);
 
-    QStringList load_stringlist(QString name);
-    void save_stringlist(QString name, QStringList value);
+    QStringList load_stringlist(const QString &name);
+    void save_stringlist(const QString &name, QStringList value);
 
-    QVariant load_value(QString name, const QVariant &defaultValue = QVariant());
-    void save_value(QString name, QVariant value);
+    QVariant load_value(const QString &name, const QVariant &defaultValue = QVariant());
+    void save_value(const QString &name, QVariant value);
 
     void beginGroup(const QString &prefix);
     void endGroup(void);

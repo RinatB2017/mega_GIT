@@ -789,15 +789,15 @@ void LogBox::load_setting(void)
     qDebug() << "LogBox::load_setting(void)";
 #endif
 
-    QString text = o_name;
-    if(text.isEmpty())  text = "LogBox";
+//    QString text = o_name;
+//    if(text.isEmpty())  text = "LogBox";
 
     beginGroup(get_full_objectName(this));
 
-    flag_is_shows_info  = load_bool(P_FLAG_SHOW_INFO);
-    flag_is_shows_debug = load_bool(P_FLAG_SHOW_DEBUG);
-    flag_is_shows_error = load_bool(P_FLAG_SHOW_ERROR);
-    flag_is_shows_trace = load_bool(P_FLAG_SHOW_TRACE);
+    flag_is_shows_info  = load_bool(P_FLAG_SHOW_INFO,   true);
+    flag_is_shows_debug = load_bool(P_FLAG_SHOW_DEBUG,  true);
+    flag_is_shows_error = load_bool(P_FLAG_SHOW_ERROR,  true);
+    flag_is_shows_trace = load_bool(P_FLAG_SHOW_TRACE,  true);
 
 #ifdef NO_LOG_DEBUG
     flag_is_shows_debug = false;
@@ -855,9 +855,9 @@ void LogBox::save_setting(void)
     qDebug() << "LogBox::save_setting(void)";
 #endif
 
-    QString text = o_name;
-    //if(text.isEmpty())  text = objectName();
-    if(text.isEmpty())  text = "LogBox";
+//    QString text = o_name;
+//    if(text.isEmpty())  text = objectName();
+//    if(text.isEmpty())  text = "LogBox";
 
 #ifdef QT_DEBUG
     qDebug() << "logbox: save settings";

@@ -1117,7 +1117,7 @@ void QHexEditPrivate::wheelEvent(QWheelEvent *event)
         int numDegrees = event->angleDelta().y() / 8;
         int numSteps = numDegrees / 15;
 
-        if(event->orientation() == Qt::Vertical)
+        if(event->angleDelta().y() > 0)
         {
             int pos = this->verticalSliderPosition64() - (numSteps * this->_whellscrolllines);
             int maxlines = this->_hexeditdata->length() / QHexEditPrivate::BYTES_PER_LINE;

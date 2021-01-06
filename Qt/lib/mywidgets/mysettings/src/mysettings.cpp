@@ -271,7 +271,7 @@ bool MySettings::save_property(QWidget *widget, const QString &property_name)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MySettings::load_int(QString name, int *value)
+bool MySettings::load_int(const QString &name, int *value)
 {
     Q_ASSERT(settings);
 
@@ -285,13 +285,13 @@ bool MySettings::load_int(QString name, int *value)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MySettings::save_int(QString name, int value)
+void MySettings::save_int(const QString &name, int value)
 {
     Q_ASSERT(settings);
     settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
-bool MySettings::load_ulonglong(QString name, qlonglong *value)
+bool MySettings::load_ulonglong(const QString &name, qlonglong *value)
 {
     Q_ASSERT(settings);
 
@@ -305,25 +305,25 @@ bool MySettings::load_ulonglong(QString name, qlonglong *value)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MySettings::save_ulonglong(QString name, qlonglong value)
+void MySettings::save_ulonglong(const QString &name, qlonglong value)
 {
     Q_ASSERT(settings);
     settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
-bool MySettings::load_bool(QString name)
+bool MySettings::load_bool(const QString &name, QVariant default_value)
 {
     Q_ASSERT(settings);
-    return settings->value(name).toBool();
+    return settings->value(name, default_value).toBool();
 }
 //--------------------------------------------------------------------------------
-void MySettings::save_bool(QString name, bool value)
+void MySettings::save_bool(const QString &name, bool value)
 {
     Q_ASSERT(settings);
     settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
-bool MySettings::load_uint(QString name, uint *value)
+bool MySettings::load_uint(const QString &name, uint *value)
 {
     Q_ASSERT(settings);
 
@@ -337,25 +337,25 @@ bool MySettings::load_uint(QString name, uint *value)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MySettings::save_uint(QString name, uint value)
+void MySettings::save_uint(const QString &name, uint value)
 {
     Q_ASSERT(settings);
     settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
-QString MySettings::load_string(QString name)
+QString MySettings::load_string(const QString &name)
 {
     Q_ASSERT(settings);
     return settings->value(name).toString();
 }
 //--------------------------------------------------------------------------------
-void MySettings::save_string(QString name, QString value)
+void MySettings::save_string(const QString &name, QString value)
 {
     Q_ASSERT(settings);
     settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
-QByteArray MySettings::load_bytearray(QString name)
+QByteArray MySettings::load_bytearray(const QString &name)
 {
     Q_ASSERT(settings);
     QByteArray ba;
@@ -363,13 +363,13 @@ QByteArray MySettings::load_bytearray(QString name)
     return ba;
 }
 //--------------------------------------------------------------------------------
-void MySettings::save_bytearray(QString name, QByteArray value)
+void MySettings::save_bytearray(const QString &name, QByteArray value)
 {
     Q_ASSERT(settings);
     settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
-QStringList MySettings::load_stringlist(QString name)
+QStringList MySettings::load_stringlist(const QString &name)
 {
     Q_ASSERT(settings);
     QStringList sl;
@@ -377,19 +377,19 @@ QStringList MySettings::load_stringlist(QString name)
     return sl;
 }
 //--------------------------------------------------------------------------------
-void MySettings::save_stringlist(QString name, QStringList value)
+void MySettings::save_stringlist(const QString &name, QStringList value)
 {
     Q_ASSERT(settings);
     settings->setValue(name, QVariant::fromValue(value));
 }
 //--------------------------------------------------------------------------------
-QVariant MySettings::load_value(QString name, const QVariant &defaultValue)
+QVariant MySettings::load_value(const QString &name, const QVariant &defaultValue)
 {
     Q_ASSERT(settings);
     return settings->value(name, defaultValue);
 }
 //--------------------------------------------------------------------------------
-void MySettings::save_value(QString name, QVariant value)
+void MySettings::save_value(const QString &name, QVariant value)
 {
     Q_ASSERT(settings);
     settings->setValue(name, value);
@@ -459,7 +459,7 @@ QString MySettings::get_full_objectName(QWidget *widget)
     return temp_string;
 }
 //--------------------------------------------------------------------------------
-bool MySettings::is_my_widget(QString o_name)
+bool MySettings::is_my_widget(const QString &o_name)
 {
     if(o_name.isEmpty())
     {

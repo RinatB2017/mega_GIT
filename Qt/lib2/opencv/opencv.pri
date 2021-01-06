@@ -41,4 +41,5 @@ CONFIG(debug, debug|release) {
     LIBS    += -lopencv_videoio$${OPENCV_VER}
 
     LIBS    += -lopencv_aruco$${OPENCV_VER}
+    LIBS    += -lopencv_xphoto$${OPENCV_VER}
 }

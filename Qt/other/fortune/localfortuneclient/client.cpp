@@ -77,20 +77,21 @@ Client::Client(QWidget *parent)
     in.setDevice(socket);
     in.setVersion(QDataStream::Qt_5_10);
 
-    connect(hostLineEdit, &QLineEdit::textChanged,
-            this, &Client::enableGetFortuneButton);
-    connect(getFortuneButton, &QPushButton::clicked,
-            this, &Client::requestNewFortune);
+    connect(hostLineEdit,   &QLineEdit::textChanged,
+            this,           &Client::enableGetFortuneButton);
+    connect(getFortuneButton,   &QPushButton::clicked,
+            this,               &Client::requestNewFortune);
     connect(quitButton, &QPushButton::clicked, this, &Client::close);
-    connect(socket, &QLocalSocket::readyRead, this, &Client::readFortune);
-    connect(socket, QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::error),
-            this, &Client::displayError);
+    connect(socket,         &QLocalSocket::readyRead,
+            this,           &Client::readFortune);
+    connect(socket,         QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::errorOccurred),
+            this,           &Client::displayError);
 
     QGridLayout *mainLayout = new QGridLayout(this);
-    mainLayout->addWidget(hostLabel, 0, 0);
+    mainLayout->addWidget(hostLabel,    0, 0);
     mainLayout->addWidget(hostLineEdit, 0, 1);
-    mainLayout->addWidget(statusLabel, 2, 0, 1, 2);
-    mainLayout->addWidget(buttonBox, 3, 0, 1, 2);
+    mainLayout->addWidget(statusLabel,  2, 0, 1, 2);
+    mainLayout->addWidget(buttonBox,    3, 0, 1, 2);
 
     setWindowTitle(QGuiApplication::applicationDisplayName());
     hostLineEdit->setFocus();
@@ -106,7 +107,8 @@ void Client::requestNewFortune()
 
 void Client::readFortune()
 {
-    if (blockSize == 0) {
+    if (blockSize == 0)
+    {
         // Relies on the fact that QDataStream serializes a quint32 into
         // sizeof(quint32) bytes
         if (socket->bytesAvailable() < (int)sizeof(quint32))
@@ -120,7 +122,8 @@ void Client::readFortune()
     QString nextFortune;
     in >> nextFortune;
 
-    if (nextFortune == currentFortune) {
+    if (nextFortune == currentFortune)
+    {
         QTimer::singleShot(0, this, &Client::requestNewFortune);
         return;
     }

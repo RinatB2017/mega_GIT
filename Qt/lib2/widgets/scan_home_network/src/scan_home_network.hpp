@@ -38,7 +38,7 @@ public:
 private:
     Ui::Scan_home_network *ui;
 
-    QProcess *myProcess = nullptr;
+    QPointer<QProcess> myProcess;
 
     void init(void);
     void create_engine(void);

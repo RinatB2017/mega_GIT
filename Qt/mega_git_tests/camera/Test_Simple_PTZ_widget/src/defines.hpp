@@ -4,6 +4,6 @@
 #define ORGNAME "Work"
 #define APPNAME "Test_Simple_PTZ_widget"
 //--------------------------------------------------------------------------------
-#define ICON_PROGRAMM   ":/mainwindow/computer.png"
+#define ICON_PROGRAMM   ":/ico/camera.png"
 //--------------------------------------------------------------------------------
 #endif

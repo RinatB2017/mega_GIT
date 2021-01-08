@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/ico">
         <file>computer.ico</file>
+        <file>camera.ico</file>
+        <file>camera.png</file>
     </qresource>
 </RCC>

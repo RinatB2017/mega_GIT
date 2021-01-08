@@ -11,12 +11,6 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += PROGRAMM_IN_UTF8
-
-#DEFINES += SAVE_INI
-
 HEADERS += \
     defines.hpp \
     version.hpp
@@ -25,13 +19,16 @@ SOURCES += main.cpp
 
 OTHER_FILES += doc/notebook.txt
 
+RESOURCES   += ico/icons.qrc
+
 win32 {
-    RC_ICONS = ico/computer.ico
+    RC_ICONS = ico/camera.ico
 }
 
 LIB_PATH  = "$$PWD/../../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../../Qt/lib2"
 
+include (src/config.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include ($$LIB_PATH2/icons/arrows.pri)

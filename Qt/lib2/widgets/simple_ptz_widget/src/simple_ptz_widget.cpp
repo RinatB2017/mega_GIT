@@ -49,33 +49,11 @@ Simple_PTZ_widget::~Simple_PTZ_widget()
 
     Q_ASSERT(networkManager);
 
+    disconnect(networkManager,     &QNetworkAccessManager::finished,
+               this,               &Simple_PTZ_widget::onFinished);
+
     delete networkManager;
     delete ui;
-}
-//--------------------------------------------------------------------------------
-void Simple_PTZ_widget::create_player(void)
-{
-    // player = new QMediaPlayer(this, QMediaPlayer::StreamPlayback);
-    player = new QMediaPlayer(this);
-    player->setVolume(0);   //TODO выключить звук
-    player->setVideoOutput(ui->video_widget);
-
-    connect(player, static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error),
-            this,   &Simple_PTZ_widget::f_error);
-
-    probe = new QVideoProbe(this);
-    connect(probe,  &QVideoProbe::videoFrameProbed,
-            this,   &Simple_PTZ_widget::processFrame);
-    probe->setSource(player); // Returns true, hopefully.
-}
-//--------------------------------------------------------------------------------
-void Simple_PTZ_widget::processFrame(const QVideoFrame &frame)
-{
-    if(player->state() == QMediaPlayer::PlayingState)
-    {
-        current_frame = frame;
-        emit get_frame(frame);
-    }
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::init(void)
@@ -116,6 +94,8 @@ void Simple_PTZ_widget::init(void)
     create_player();
     connect_position_widgets();
 
+    create_socket();
+
     ui->btn_d->setDisabled(true);
     ui->btn_l->setDisabled(true);
     ui->btn_r->setDisabled(true);
@@ -128,13 +108,67 @@ void Simple_PTZ_widget::init(void)
     ui->btn_other_cmd->setVisible(false);
 #endif
 
-//    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-//    if(mw)
-//    {
-//        mw->add_dock_widget("commands", "commands", Qt::LeftDockWidgetArea,     ui->command_frame);
-//        mw->add_dock_widget("rtsp",     "rtsp",     Qt::RightDockWidgetArea,    ui->ptz_frame);
-//        setVisible(false);
-//    }
+#if 0
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->add_dock_widget("commands", "commands", Qt::LeftDockWidgetArea,     ui->command_frame);
+        mw->add_dock_widget("rtsp",     "rtsp",     Qt::RightDockWidgetArea,    ui->ptz_frame);
+        setVisible(false);
+    }
+#endif
+}
+//--------------------------------------------------------------------------------
+void Simple_PTZ_widget::create_player(void)
+{
+    // player = new QMediaPlayer(this, QMediaPlayer::StreamPlayback);
+    player = new QMediaPlayer(this);
+    player->setVolume(0);   //TODO выключить звук
+    player->setVideoOutput(ui->video_widget);
+
+    connect(player, static_cast<void (QMediaPlayer::*)(QMediaPlayer::Error)>(&QMediaPlayer::error),
+            this,   &Simple_PTZ_widget::f_error);
+
+    probe = new QVideoProbe(this);
+    connect(probe,  &QVideoProbe::videoFrameProbed,
+            this,   &Simple_PTZ_widget::processFrame);
+    probe->setSource(player); // Returns true, hopefully.
+}
+//--------------------------------------------------------------------------------
+void Simple_PTZ_widget::processFrame(const QVideoFrame &frame)
+{
+    if(player->state() == QMediaPlayer::PlayingState)
+    {
+        current_frame = frame;
+        emit get_frame(frame);
+
+        if(socket->isOpen())
+        {
+            if(frame.isValid())
+            {
+                // https://coderoad.ru/37724602/%D0%9A%D0%B0%D0%BA-%D1%81%D0%BE%D1%85%D1%80%D0%B0%D0%BD%D0%B8%D1%82%D1%8C-%D0%BA%D0%B0%D0%B4%D1%80-%D1%81-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E-QMediaPlayer
+                QVideoFrame cloneFrame(frame);
+                bool ok = cloneFrame.map(QAbstractVideoBuffer::ReadOnly);
+                if(!ok)
+                {
+                    emit error("Error create map");
+                    return;
+                }
+
+                QByteArray block;
+                block.append(reinterpret_cast<const char *>(cloneFrame.bits()), cloneFrame.mappedBytes());
+                emit info(QString("send %1 bytes").arg(block.length()));
+                socket->write(block);
+
+                cloneFrame.unmap();
+            }
+            else
+            {
+                emit error("Frame not valid!");
+                return;
+            }
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::connect_position_widgets(void)
@@ -374,7 +408,78 @@ void Simple_PTZ_widget::send_other_cmd(const QString &cmd)
 
     emit debug(param);
     // emit info("OK");
-}//--------------------------------------------------------------------------------
+}
+//--------------------------------------------------------------------------------
+void Simple_PTZ_widget::create_socket(void)
+{
+    socket = new QLocalSocket(this);
+
+    connect(socket,         &QLocalSocket::readyRead,
+            this,           &Simple_PTZ_widget::readFortune);
+    connect(socket,         QOverload<QLocalSocket::LocalSocketError>::of(&QLocalSocket::errorOccurred),
+            this,           &Simple_PTZ_widget::displayError);
+
+    connect(ui->btn_server_connect,     &QPushButton::clicked,
+            this,                       &Simple_PTZ_widget::server_connect);
+    connect(ui->btn_server_disconnect,  &QPushButton::clicked,
+            this,                       &Simple_PTZ_widget::server_disconnect);
+}
+//--------------------------------------------------------------------------------
+void Simple_PTZ_widget::displayError(QLocalSocket::LocalSocketError socketError)
+{
+    switch (socketError) {
+    case QLocalSocket::ServerNotFoundError:
+        emit error("ServerNotFoundError");
+        break;
+
+    case QLocalSocket::ConnectionRefusedError:
+        emit error("ConnectionRefusedError");
+        break;
+
+    case QLocalSocket::PeerClosedError:
+        emit error("PeerClosedError");
+        break;
+
+    default:
+        emit error(QString("Unknown error: %1")
+                   .arg(socket->errorString()));
+    }
+}
+//--------------------------------------------------------------------------------
+void Simple_PTZ_widget::readFortune(void)
+{
+    emit info(QString("Simple_PTZ_widget: read %1 bytes")
+              .arg(socket->bytesAvailable()));
+    emit info(QString("Read data [%1]")
+              .arg(socket->readAll().data()));
+}
+//--------------------------------------------------------------------------------
+void Simple_PTZ_widget::server_connect(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    if(ui->le_server->text().isEmpty())
+    {
+        emit error("Server name is empty!");
+        return;
+    }
+
+    emit info("Connect...");
+
+    socket->abort();
+    socket->connectToServer(ui->le_server->text());
+}
+//--------------------------------------------------------------------------------
+void Simple_PTZ_widget::server_disconnect(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    emit info("Disconnect...");
+
+    socket->abort();
+    socket->close();
+}
+//--------------------------------------------------------------------------------
 void Simple_PTZ_widget::updateText(void)
 {
     ui->retranslateUi(this);
@@ -390,6 +495,7 @@ void Simple_PTZ_widget::load_setting(void)
     ui->le_login->setText(load_string(P_LOGIN));
     ui->le_password->setText(load_string(P_PASSWORD));
     ui->le_other_cmd->setText(load_string(P_OTHER_CMD));
+    ui->le_server->setText(load_string(P_SERVER));
 
     QUrl url;
     url.setHost(load_string(P_HOST));
@@ -407,6 +513,7 @@ void Simple_PTZ_widget::save_setting(void)
     save_string(P_LOGIN,        ui->le_login->text());
     save_string(P_PASSWORD,     ui->le_password->text());
     save_string(P_OTHER_CMD,    ui->le_other_cmd->text());
+    save_string(P_SERVER,       ui->le_server->text());
     save_string(P_HOST,         ui->ipv4_widget->get_url().host());
     save_int(P_PORT,            ui->ipv4_widget->get_url().port());
 }

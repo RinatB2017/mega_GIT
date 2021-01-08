@@ -35,13 +35,6 @@ Scan_home_network::~Scan_home_network()
 {
     if(myProcess)
     {
-        disconnect(myProcess,  &QProcess::started,                 this,   &Scan_home_network::started);
-        disconnect(myProcess,  static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
-                   this,       &Scan_home_network::finished);
-        disconnect(myProcess,  &QProcess::errorOccurred,           this,   &Scan_home_network::process_error);
-        disconnect(myProcess,  &QProcess::readyReadStandardOutput, this,   &Scan_home_network::readData);
-        disconnect(myProcess,  &QProcess::readyReadStandardError,  this,   &Scan_home_network::readData);
-
         delete myProcess;
     }
 

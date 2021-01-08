@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>Simple_PTZ_widget</class>
  <widget class="QWidget" name="Simple_PTZ_widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>633</width>
+    <height>336</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>PTZ</string>
   </property>
@@ -110,6 +118,42 @@
       </item>
       <item>
        <widget class="Scan_home_network" name="scan_widget" native="true"/>
+      </item>
+      <item>
+       <widget class="QFrame" name="client_frame">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>Client:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="le_server"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_server_connect">
+           <property name="text">
+            <string>connect</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_server_disconnect">
+           <property name="text">
+            <string>disconnect</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -295,7 +339,7 @@
              <x>0</x>
              <y>0</y>
              <width>122</width>
-             <height>169</height>
+             <height>222</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">

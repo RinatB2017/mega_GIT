@@ -21,6 +21,8 @@
 #ifndef SIMPLE_PTZ_WIDGET_HPP
 #define SIMPLE_PTZ_WIDGET_HPP
 //--------------------------------------------------------------------------------
+#include <QLocalSocket>
+//--------------------------------------------------------------------------------
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
@@ -35,6 +37,7 @@
 #define P_OTHER_CMD "other_cmd"
 #define P_HOST      "host"
 #define P_PORT      "port"
+#define P_SERVER    "server"
 //--------------------------------------------------------------------------------
 #define M_WIDTH  640
 #define M_HEIGHT 480
@@ -78,6 +81,13 @@ private slots:
 
     void f_other_cmd(void);
 
+    //---
+    void readFortune(void);
+    void displayError(QLocalSocket::LocalSocketError socketError);
+    void server_connect(void);
+    void server_disconnect(void);
+    //---
+
 private:
     Ui::Simple_PTZ_widget   *ui;
     QPointer<QMediaPlayer>  player;
@@ -86,6 +96,8 @@ private:
 
     QVideoFrame current_frame;
 
+    QPointer<QLocalSocket> socket;
+
     void processFrame(QVideoFrame const &frame);
 
     void send_cmd(const QString &cmd);
@@ -93,6 +105,8 @@ private:
 
     void create_player(void);
     void connect_position_widgets(void);
+
+    void create_socket(void);
 
     void init(void);
 

@@ -59,7 +59,8 @@ Server::Server(QWidget *parent)
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     server = new QLocalServer(this);
-    if (!server->listen("fortune")) {
+    if (!server->listen("fortune"))
+    {
         QMessageBox::critical(this, tr("Local Fortune Server"),
                               tr("Unable to start the server: %1.")
                               .arg(server->errorString()));
@@ -82,8 +83,10 @@ Server::Server(QWidget *parent)
 
     QPushButton *quitButton = new QPushButton(tr("Quit"));
     quitButton->setAutoDefault(false);
-    connect(quitButton, &QPushButton::clicked, this, &Server::close);
-    connect(server, &QLocalServer::newConnection, this, &Server::sendFortune);
+    connect(quitButton, &QPushButton::clicked,
+            this,       &Server::close);
+    connect(server,     &QLocalServer::newConnection,
+            this,       &Server::sendFortune);
 
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     buttonLayout->addStretch(1);

@@ -11,8 +11,6 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += PROGRAMM_IN_UTF8
-
 HEADERS += \
     defines.hpp \
     version.hpp

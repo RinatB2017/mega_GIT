@@ -120,7 +120,7 @@
        <widget class="Scan_home_network" name="scan_widget" native="true"/>
       </item>
       <item>
-       <widget class="QFrame" name="client_frame">
+       <widget class="QFrame" name="communications_frame">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>

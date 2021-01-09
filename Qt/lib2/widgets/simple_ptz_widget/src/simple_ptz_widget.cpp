@@ -94,7 +94,9 @@ void Simple_PTZ_widget::init(void)
     create_player();
     connect_position_widgets();
 
+#ifdef USE_COMMUNICATIONS
     create_socket();
+#endif
 
     ui->btn_d->setDisabled(true);
     ui->btn_l->setDisabled(true);
@@ -102,6 +104,10 @@ void Simple_PTZ_widget::init(void)
     ui->btn_u->setDisabled(true);
     ui->btn_up_down->setDisabled(true);
     ui->btn_left_right->setDisabled(true);
+
+#ifndef USE_COMMUNICATIONS
+    ui->communications_frame->setVisible(false);
+#endif
 
 #ifndef QT_DEBUG
     ui->le_other_cmd->setVisible(false);
@@ -142,6 +148,7 @@ void Simple_PTZ_widget::processFrame(const QVideoFrame &frame)
         current_frame = frame;
         emit get_frame(frame);
 
+#ifdef USE_COMMUNICATIONS
         if(socket->isOpen())
         {
             if(frame.isValid())
@@ -168,6 +175,7 @@ void Simple_PTZ_widget::processFrame(const QVideoFrame &frame)
                 return;
             }
         }
+#endif
     }
 }
 //--------------------------------------------------------------------------------
@@ -410,6 +418,7 @@ void Simple_PTZ_widget::send_other_cmd(const QString &cmd)
     // emit info("OK");
 }
 //--------------------------------------------------------------------------------
+#ifdef USE_COMMUNICATIONS
 void Simple_PTZ_widget::create_socket(void)
 {
     socket = new QLocalSocket(this);
@@ -424,7 +433,9 @@ void Simple_PTZ_widget::create_socket(void)
     connect(ui->btn_server_disconnect,  &QPushButton::clicked,
             this,                       &Simple_PTZ_widget::server_disconnect);
 }
+#endif
 //--------------------------------------------------------------------------------
+#ifdef USE_COMMUNICATIONS
 void Simple_PTZ_widget::displayError(QLocalSocket::LocalSocketError socketError)
 {
     switch (socketError) {
@@ -445,7 +456,9 @@ void Simple_PTZ_widget::displayError(QLocalSocket::LocalSocketError socketError)
                    .arg(socket->errorString()));
     }
 }
+#endif
 //--------------------------------------------------------------------------------
+#ifdef USE_COMMUNICATIONS
 void Simple_PTZ_widget::readFortune(void)
 {
     emit info(QString("Simple_PTZ_widget: read %1 bytes")
@@ -453,7 +466,9 @@ void Simple_PTZ_widget::readFortune(void)
     emit info(QString("Read data [%1]")
               .arg(socket->readAll().data()));
 }
+#endif
 //--------------------------------------------------------------------------------
+#ifdef USE_COMMUNICATIONS
 void Simple_PTZ_widget::server_connect(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -469,7 +484,9 @@ void Simple_PTZ_widget::server_connect(void)
     socket->abort();
     socket->connectToServer(ui->le_server->text());
 }
+#endif
 //--------------------------------------------------------------------------------
+#ifdef USE_COMMUNICATIONS
 void Simple_PTZ_widget::server_disconnect(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -479,6 +496,7 @@ void Simple_PTZ_widget::server_disconnect(void)
     socket->abort();
     socket->close();
 }
+#endif
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::updateText(void)
 {

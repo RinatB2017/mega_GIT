@@ -82,10 +82,16 @@ private slots:
     void f_other_cmd(void);
 
     //---
+#ifdef USE_COMMUNICATIONS
+    QPointer<QLocalSocket> socket;
+
+    void create_socket(void);
+
     void readFortune(void);
     void displayError(QLocalSocket::LocalSocketError socketError);
     void server_connect(void);
     void server_disconnect(void);
+#endif
     //---
 
 private:
@@ -96,8 +102,6 @@ private:
 
     QVideoFrame current_frame;
 
-    QPointer<QLocalSocket> socket;
-
     void processFrame(QVideoFrame const &frame);
 
     void send_cmd(const QString &cmd);
@@ -105,8 +109,6 @@ private:
 
     void create_player(void);
     void connect_position_widgets(void);
-
-    void create_socket(void);
 
     void init(void);
 

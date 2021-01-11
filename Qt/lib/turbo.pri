@@ -2,11 +2,28 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-unix:!macx {
-    OBJECTS_DIR = /dev/shm/my_programm/$$FOLDER/$$TARGET/obj
-    MOC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/moc
-    UI_DIR      = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
-    RCC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/rc
+#unix:!macx {
+#    OBJECTS_DIR = /dev/shm/my_programm/$$FOLDER/$$TARGET/obj
+#    MOC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/moc
+#    UI_DIR      = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
+#    RCC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/rc
+#}
+
+# https://stackoverflow.com/questions/36871334/qmake-conditional-for-raspberrypi
+linux {
+    contains(QMAKE_HOST.arch, arm.*):{
+        message(raspberry)
+        OBJECTS_DIR = temp/obj
+        MOC_DIR     = temp/moc
+        UI_DIR      = temp/ui
+        RCC_DIR     = temp/rc
+    }else{
+        message(linux)
+        OBJECTS_DIR = /dev/shm/my_programm/$$FOLDER/$$TARGET/obj
+        MOC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/moc
+        UI_DIR      = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
+        RCC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/rc
+    }
 }
 
 macx {

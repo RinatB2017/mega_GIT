@@ -65,7 +65,6 @@ private:
     void init_serial(void);
 
     QPointer<QComboBox> cb_test;
-    QPointer<QCheckBox> cb_block;
     QList<CMD> commands;
 
     void init(void);

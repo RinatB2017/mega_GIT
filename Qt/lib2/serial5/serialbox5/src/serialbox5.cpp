@@ -621,14 +621,12 @@ void SerialBox5::get_parameter(void)
 
     QString temp;
     temp.clear();
-#if 1
     temp = QString("%1, %2, %3, %4, %5")
             .arg(baudRate())
             .arg(dataBits())
             .arg(parity())
             .arg(stopBits())
             .arg(flowControl());
-#endif
     emit info(temp);
 }
 //--------------------------------------------------------------------------------

@@ -345,46 +345,7 @@ int SerialBox5_fix_baudrate::input(const QString &data)
 //--------------------------------------------------------------------------------
 QString SerialBox5_fix_baudrate::ByteArrayToHex(const QByteArray &data)
 {
-#if 0
-    QByteArray temp_addr;
-    QByteArray temp;
-    QString str;
-    int i,n;
-
-    int addr=0;
-
-    temp_addr.append(((unsigned char*)&addr)[3]);
-    temp_addr.append(((unsigned char*)&addr)[2]);
-    temp_addr.append(((unsigned char*)&addr)[1]);
-    temp_addr.append(((unsigned char*)&addr)[0]);
-    str.append(temp_addr.toHex().toUpper());
-    str.append("  ");
-    temp = data.toHex().toUpper();
-    n=0;
-    for(i=0;i<temp.length();i+=2)
-    {
-        str.append(temp.at(i));
-        str.append(temp.at(i+1));
-        str.append(" ");
-        n++;
-        if(n>15 && i!=(temp.length()-2))
-        {
-            n=0;
-            addr+=16;
-            str.append("\n");
-            temp_addr.clear();
-            temp_addr.append(((unsigned char*)&addr)[3]);
-            temp_addr.append(((unsigned char*)&addr)[2]);
-            temp_addr.append(((unsigned char*)&addr)[1]);
-            temp_addr.append(((unsigned char*)&addr)[0]);
-            str.append(temp_addr.toHex().toUpper());
-            str.append("  ");
-        }
-    }
-    return str;
-#else
     return data.toHex();
-#endif
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::sendData(const QByteArray &sending_data)
@@ -487,20 +448,12 @@ void SerialBox5_fix_baudrate::get_parameter(void)
 
     QString temp;
     temp.clear();
-#if 0
-    emit info(QString("baudRate %1").arg(baudRate()));
-    emit info(QString("dataBits %1").arg(dataBits()));
-    emit info(QString("parity %1").arg(parity()));
-    emit info(QString("stopBits %1").arg(stopBits()));
-    emit info(QString("flowControl %1").arg(flowControl()));
-#else
     temp = QString("%1, %2, %3, %4, %5")
             .arg(baudRate())
             .arg(dataBits())
             .arg(parity())
             .arg(stopBits())
             .arg(flowControl());
-#endif
     emit info(temp);
 }
 //--------------------------------------------------------------------------------

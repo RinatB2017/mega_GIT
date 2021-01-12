@@ -184,14 +184,12 @@ bool MyWidget::connect_log_signals(QWidget *src, QWidget *dest)
 //--------------------------------------------------------------------------------
 void MyWidget::log(const QString &data)
 {
-#if 1
     qDebug() << data;
-#else
+
 #ifdef QT_DEBUG
     qDebug() << data;
 #else
     Q_UNUSED(data)
-#endif
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -679,14 +677,7 @@ void MyWidget::check_tooltips(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 0
-    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw);
-
-    QList<QAbstractButton *> l_obj = mw->findChildren<QAbstractButton *>();
-#else
     QList<QAbstractButton *> l_obj = findChildren<QAbstractButton *>();
-#endif
     foreach (QAbstractButton *obj, l_obj)
     {
         if(obj->objectName().left(3) == "qt_")
@@ -791,22 +782,12 @@ void MyWidget::changeEvent(QEvent *event)
 #ifndef BLOCK_WHEEL
 bool MyWidget::eventFilter(QObject*, QEvent* event)
 {
-#if 0
-    QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
-    //---
-    if(mouseEvent->type() == QMouseEvent::Wheel)
-    {
-        return true;
-    }
-    return false;
-#else
     if(event->type() == QEvent::Wheel)
     {
         qDebug() << "Wheel event blocked";
         return true;
     }
     return false;
-#endif
 }
 #endif
 //--------------------------------------------------------------------------------

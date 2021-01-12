@@ -258,14 +258,12 @@ void MyMainWindow::setCentralWidget(MyWidget *widget)
     grid->addWidget(l_widget, 1, 0);    grid->addWidget(widget, 1, 1);    grid->addWidget(r_widget, 1, 2);
     grid->addWidget(lb_box,   2, 0);    grid->addWidget(b_widget, 2, 1);  grid->addWidget(rb_box,   2, 2);
 
-#if 1
     QToolButton *btn = new QToolButton();
     btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     btn->setCheckable(true);
     connect(btn,    &QToolButton::toggled,  widget, &MyWidget::setHidden);
     btn->setText("#");
     grid->addWidget(btn, 1, 3);
-#endif
 
     w->setLayout(grid);
 

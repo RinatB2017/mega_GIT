@@ -39,14 +39,12 @@ MainWindow::~MainWindow()
     qDebug() << "~MainWindow()";
 #endif
 
-#if 1
     QList<MyWidget *> l_widgets = findChildren<MyWidget *>();
     foreach(MyWidget *widget, l_widgets)
     {
         Q_ASSERT(widget);
         widget->save_setting();
     }
-#endif
 
 #ifndef NO_LOG
     if(lb)
@@ -63,13 +61,11 @@ void MainWindow::setCentralWidget(MyWidget *widget)
 
     QMainWindow::setCentralWidget(c_widget);
 
-#if 1
     QList<MyWidget *> l_widgets = findChildren<MyWidget *>();
     foreach(MyWidget *w, l_widgets)
     {
         w->load_setting();
     }
-#endif
 
 #ifdef FIXED_SIZE
     setFixedSize(sizeHint());
@@ -149,7 +145,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
         return;
     }
 
-#if 1
     QList<MyWidget *> l_widgets = findChildren<MyWidget *>();
     foreach(MyWidget *widget, l_widgets)
     {
@@ -159,17 +154,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
             return;
         }
     }
-#else
-    if(c_widget)
-    {
-        Q_ASSERT(c_widget);
-        if(!c_widget->programm_is_exit())
-        {
-            event->ignore();
-            return;
-        }
-    }
-#endif
 
     if(flag_close)
     {
@@ -367,13 +351,8 @@ void MainWindow::createMenus(void)
     app_menu_add_separator(m_app_optionsmenu);
 #endif
 
-    //FIXME под виндой это нормально не работает, почему то
-#ifndef Q_OS_WIN
     app_menu_add_show_on_top(m_app_optionsmenu);
     app_menu_add_separator(m_app_optionsmenu);
-#else
-    flag_always_on_top = false;
-#endif
 
     app_menu_add_confirm_exit(m_app_optionsmenu);
 
@@ -441,12 +420,6 @@ void MainWindow::load_translations()
 void MainWindow::setMenuLanguage(void)
 {
 #ifndef ONLY_ENGLISH
-#if 0
-    if(translator_common)   qApp->installTranslator(translator_common);
-    if(translator_programm) qApp->installTranslator(translator_programm);
-    if(translator_system)   qApp->installTranslator(translator_system);
-    emit updateLanguage();
-#else
     QAction* menu = static_cast<QAction *>(sender());
     Q_ASSERT(menu);
 
@@ -477,25 +450,18 @@ void MainWindow::setMenuLanguage(void)
         return;
     }
 #endif
-#endif
 }
 //--------------------------------------------------------------------------------
 void MainWindow::setToolBarLanguage(void)
 {
 #ifndef ONLY_ENGLISH
-#if 0
-    if(translator_common)   qApp->installTranslator(translator_common);
-    if(translator_programm) qApp->installTranslator(translator_programm);
-    if(translator_system)   qApp->installTranslator(translator_system);
-    emit updateLanguage();
-#else
     QAction* menu = reinterpret_cast<QAction*>(sender());
     Q_ASSERT(menu);
 
     QString p_lang = menu->property(P_LANG).toString();
     if(p_lang == P_US)
     {
-        //        if(translator_common) qApp->removeTranslator(translator_common);
+        // if(translator_common) qApp->removeTranslator(translator_common);
         if(translator_system) qApp->removeTranslator(translator_system);
         if(translator_ru) qApp->removeTranslator(translator_ru);
         if(translator_it) qApp->removeTranslator(translator_it);
@@ -504,7 +470,7 @@ void MainWindow::setToolBarLanguage(void)
     }
     if(p_lang == P_RU)
     {
-        //        if(translator_common) qApp->installTranslator(translator_common);
+        // if(translator_common) qApp->installTranslator(translator_common);
         if(translator_system)   qApp->installTranslator(translator_system);
         if(translator_ru)       qApp->installTranslator(translator_ru);
         emit updateLanguage();
@@ -512,13 +478,12 @@ void MainWindow::setToolBarLanguage(void)
     }
     if(p_lang == P_IT)
     {
-        //        if(translator_common) qApp->installTranslator(translator_common);
+        // if(translator_common) qApp->installTranslator(translator_common);
         if(translator_system)   qApp->installTranslator(translator_system);
         if(translator_it)       qApp->installTranslator(translator_it);
         emit updateLanguage();
         return;
     }
-#endif
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -1120,17 +1085,7 @@ bool MainWindow::add_windowsmenu_action(QWidget *widget, QAction *action)
     Q_ASSERT(action);
     Q_ASSERT(m_app_windowsmenu);
 
-    // l_docs.append(widget);
-
-#if 0
-    ToolButtonAction *tb_action = new ToolButtonAction(action);
-    connect(tb_action->toolButton(), &QToolButton::clicked, this, &MainWindow::change_value);
-
-    m_app_windowsmenu->addAction(tb_action);
-#else
     m_app_windowsmenu->addAction(action);
-#endif
-
     return true;
 }
 //--------------------------------------------------------------------------------

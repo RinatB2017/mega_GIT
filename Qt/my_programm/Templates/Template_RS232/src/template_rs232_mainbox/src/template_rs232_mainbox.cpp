@@ -54,15 +54,11 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::init_serial(void)
 {
-#if 1
     QTimer::singleShot(100, [this]{
         ui->serial_widget->set_caption("RS232_5");
     });
     connect(this,               static_cast<void (MainBox::*)(const QByteArray&)>(&MainBox::send),
             ui->serial_widget,  static_cast<int (SerialBox5::*)(const QByteArray&)>(&SerialBox5::input));
-#else
-    connect(this,   SIGNAL(send(QByteArray)), ui->serial_widget,  SLOT(input(QByteArray)));
-#endif
     connect(ui->serial_widget,  &SerialBox5::output,    this,               &MainBox::read_data);
 }
 //--------------------------------------------------------------------------------
@@ -83,9 +79,6 @@ void MainBox::createTestBar(void)
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
-    cb_block = new QCheckBox("block", this);
-    testbar->addWidget(cb_block);
-
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
     foreach (CMD command, commands)
@@ -102,11 +95,6 @@ void MainBox::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
-
-    //testbar->setFixedWidth(toolBar->sizeHint().width());
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -139,8 +127,6 @@ void MainBox::choice_test(void)
 bool MainBox::test(void)
 {
     qDebug() << "Test";
-    ui->serial_widget->set_caption("RS232");
-
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -156,19 +142,11 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-    if(cb_block)
-    {
-        bool block_is_checked = load_bool("cb_block");
-        cb_block->clicked(block_is_checked);
-        cb_block->setChecked(block_is_checked);
-    }
+
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-    if(cb_block)
-    {
-        save_int("cb_block", cb_block->isChecked());
-    }
+
 }
 //--------------------------------------------------------------------------------

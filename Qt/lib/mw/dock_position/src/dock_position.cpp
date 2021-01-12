@@ -44,13 +44,11 @@ Dock_position::Dock_position(const QString &doc_name, QWidget *parent) :
 
     ui->btn_show->setToolTip(QObject::tr("Show buttons"));
 
-#if 1
     connect(ui->btn_show,   &QToolButton::toggled,  ui->btn_up,     &QToolButton::setVisible);
     connect(ui->btn_show,   &QToolButton::toggled,  ui->btn_down,   &QToolButton::setVisible);
     connect(ui->btn_show,   &QToolButton::toggled,  ui->btn_left,   &QToolButton::setVisible);
     connect(ui->btn_show,   &QToolButton::toggled,  ui->btn_right,  &QToolButton::setVisible);
     ui->btn_show->toggled(false);
-#endif
 
     connect(ui->btn_up,     &QToolButton::clicked,  this,   &Dock_position::move_up);
     connect(ui->btn_down,   &QToolButton::clicked,  this,   &Dock_position::move_down);

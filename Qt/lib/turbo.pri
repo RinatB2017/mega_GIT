@@ -18,7 +18,7 @@ linux {
         UI_DIR      = temp/ui
         RCC_DIR     = temp/rc
     }else{
-        message(linux)
+        # message(linux)
         OBJECTS_DIR = /dev/shm/my_programm/$$FOLDER/$$TARGET/obj
         MOC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/moc
         UI_DIR      = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui

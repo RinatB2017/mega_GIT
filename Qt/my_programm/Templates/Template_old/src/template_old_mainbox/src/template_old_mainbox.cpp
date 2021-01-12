@@ -72,7 +72,6 @@ void MainBox::createTestBar(void)
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test",     &MainBox::test });
-    commands.append({ id++, "test2",    &MainBox::test2 });
 
     testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -134,12 +133,6 @@ void MainBox::choice_test(void)
 bool MainBox::test(void)
 {
     emit info("Test");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test2(void)
-{
-    emit info("Test2");
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -248,7 +248,6 @@ void LogBox::create_widgets(void)
     vbox->addLayout(hbox);
 #endif
 
-#if 1
     fb = new FindBox(this);
     connect(fb, &FindBox::find_prev,    this,   &LogBox::find_prev);
     connect(fb, &FindBox::find_next,    this,   &LogBox::find_next);
@@ -257,7 +256,6 @@ void LogBox::create_widgets(void)
     vbox->addWidget(fb);
 
     installEventFilter(this);
-#endif
 
     mainbox->addLayout(vbox);
 

@@ -43,6 +43,4 @@ include (src/template_old_mainbox/template_old_mainbox.pri)
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 
-message ($$DEFINES)
-
 VPATH = $$INCLUDEPATH

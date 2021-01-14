@@ -34,6 +34,7 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/arrows.pri)
 include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
 include ($$LIB_PATH2/widgets/simple_ptz_widget/simple_ptz_widget.pri)
+include ($$LIB_PATH2/opencv/opencv.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = $$PWD/src/version.hpp

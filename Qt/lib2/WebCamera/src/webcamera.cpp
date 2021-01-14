@@ -325,8 +325,8 @@ void WebCamera::start(void)
         set_hue(static_cast<int>(mCapture.get(CV_CAP_PROP_HUE)));
 
         //TODO
-        mCapture.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
-        mCapture.set(CV_CAP_PROP_FRAME_HEIGHT, 720);
+        //mCapture.set(CV_CAP_PROP_FRAME_WIDTH, 1280);
+        //mCapture.set(CV_CAP_PROP_FRAME_HEIGHT, 720);
         //set_autofocus(true);
         mCapture.set(CV_CAP_PROP_AUTOFOCUS, 1);
 
@@ -344,7 +344,7 @@ void WebCamera::start(void)
         ui->sl_hue->setDisabled(mCapture.get(CV_CAP_PROP_HUE) == 0.0);
 
         //TODO ui->cameraWidget->setFixedSize(w, h);
-        ui->main_frame->setFixedWidth(ui->cameraWidget->width() + ui->frame->width());
+        //ui->main_frame->setFixedWidth(ui->cameraWidget->width() + ui->frame->width());
 
         mCameraEventId = startTimer(0);
     }

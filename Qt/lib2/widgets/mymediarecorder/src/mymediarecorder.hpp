@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2018                                                       **
+**     Copyright (C) 2020                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,101 +18,49 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef SIMPLE_PTZ_WIDGET_HPP
-#define SIMPLE_PTZ_WIDGET_HPP
+#ifndef MYMEDIARECORDER_HPP
+#define MYMEDIARECORDER_HPP
 //--------------------------------------------------------------------------------
-#include <QLocalSocket>
-//--------------------------------------------------------------------------------
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
 #include <QMediaPlayer>
-#include <QVideoWidget>
 #include <QVideoProbe>
+#include <QPointer>
 //--------------------------------------------------------------------------------
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/videoio.hpp>
+//--------------------------------------------------------------------------------
+#include "myfiledialog.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#define P_LOGIN     "login"
-#define P_PASSWORD  "password"
-#define P_OTHER_CMD "other_cmd"
-#define P_HOST      "host"
-#define P_PORT      "port"
-#define P_SERVER    "server"
-//--------------------------------------------------------------------------------
-#define M_WIDTH  640
-#define M_HEIGHT 480
+using namespace cv;
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class Simple_PTZ_widget;
+    class MyMediaRecorder;
 }
 //--------------------------------------------------------------------------------
-class Simple_PTZ_widget : public MyWidget
+class MyMediaRecorder : public MyWidget
 {
     Q_OBJECT
 
-signals:
-    void get_frame(QVideoFrame);
-
 public:
-    explicit Simple_PTZ_widget(QWidget *parent = nullptr);
-    virtual ~Simple_PTZ_widget();
+    explicit MyMediaRecorder(QWidget *parent = nullptr);
+    ~MyMediaRecorder();
 
 public slots:
-    void play(void);
-    void pause(void);
-    void stop(void);
-
-    void f_left(void);
-    void f_right(void);
-    void f_up(void);
-    void f_down(void);
-
-    void f_stop(void);
-
-    void f_test(void);
-
-private slots:
-    void onFinished( QNetworkReply* reply );
-
-    void f_error(QMediaPlayer::Error err);
-
-    void f_left_right(void);
-    void f_up_down(void);
-
-    void f_screenshot(void);
-
-    void f_other_cmd(void);
-
-    //---
-#ifdef USE_COMMUNICATIONS
-    QPointer<QLocalSocket> socket;
-
-    void create_socket(void);
-
-    void readFortune(void);
-    void displayError(QLocalSocket::LocalSocketError socketError);
-    void server_connect(void);
-    void server_disconnect(void);
-#endif
-    //---
+    void get_frame(QVideoFrame frame);
 
 private:
-    Ui::Simple_PTZ_widget   *ui;
-    QPointer<QMediaPlayer>  player;
-    QPointer<QVideoProbe>   probe;
-    QPointer<QNetworkAccessManager> networkManager;
+    Ui::MyMediaRecorder *ui;
 
-    QVideoFrame current_frame;
-
-    void processFrame(QVideoFrame const &frame);
-
-    void send_cmd(const QString &cmd);
-    void send_other_cmd(const QString &cmd);
-
-    void create_player(void);
-    void connect_position_widgets(void);
+    QString filename = "output.avi";
+    VideoWriter out;
 
     void init(void);
+
+    void set_filename(void);
+    void start(void);
+    void stop(void);
+
+    void processFrame(QVideoFrame const &frame);
 
     void updateText(void);
     bool programm_is_exit(void);
@@ -120,4 +68,4 @@ private:
     void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // PTZ_WIDGET_HPP
+#endif // MYMEDIARECORDER_HPP

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>633</width>
-    <height>336</height>
+    <height>375</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -65,10 +65,10 @@
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout_3">
-        <item row="1" column="0">
-         <widget class="QPushButton" name="btn_left_right">
+        <item row="0" column="1">
+         <widget class="QPushButton" name="btn_disconnect">
           <property name="text">
-           <string>left-right</string>
+           <string>disconnect</string>
           </property>
          </widget>
         </item>
@@ -79,6 +79,13 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="btn_left_right">
+          <property name="text">
+           <string>left-right</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="0">
          <widget class="QPushButton" name="btn_connect">
           <property name="text">
@@ -86,17 +93,37 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="btn_disconnect">
-          <property name="text">
-           <string>disconnect</string>
-          </property>
-         </widget>
-        </item>
         <item row="2" column="0" colspan="2">
          <widget class="QPushButton" name="btn_stop">
           <property name="text">
            <string>stop</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="MyMediaRecorder" name="mediarecorder_widget" native="true"/>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QToolButton" name="btn_screenshot">
+          <property name="text">
+           <string>...</string>
           </property>
          </widget>
         </item>
@@ -321,13 +348,6 @@
           </item>
          </layout>
         </item>
-        <item row="4" column="5">
-         <widget class="QToolButton" name="btn_screenshot">
-          <property name="text">
-           <string>...</string>
-          </property>
-         </widget>
-        </item>
         <item row="2" column="3">
          <widget class="QScrollArea" name="scrollArea">
           <property name="widgetResizable">
@@ -339,7 +359,7 @@
              <x>0</x>
              <y>0</y>
              <width>122</width>
-             <height>222</height>
+             <height>261</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -350,6 +370,13 @@
           </widget>
          </widget>
         </item>
+        <item row="4" column="0">
+         <widget class="QToolButton" name="btn_test">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>
@@ -358,6 +385,12 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>MyMediaRecorder</class>
+   <extends>QWidget</extends>
+   <header>mymediarecorder.hpp</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>QVideoWidget</class>
    <extends>QWidget</extends>
@@ -385,14 +418,18 @@
   <tabstop>btn_left_right</tabstop>
   <tabstop>btn_up_down</tabstop>
   <tabstop>btn_stop</tabstop>
+  <tabstop>btn_screenshot</tabstop>
   <tabstop>le_other_cmd</tabstop>
   <tabstop>btn_other_cmd</tabstop>
+  <tabstop>le_server</tabstop>
+  <tabstop>btn_server_connect</tabstop>
+  <tabstop>btn_server_disconnect</tabstop>
   <tabstop>btn_u</tabstop>
+  <tabstop>scrollArea</tabstop>
   <tabstop>btn_l</tabstop>
   <tabstop>btn_r</tabstop>
   <tabstop>btn_d</tabstop>
-  <tabstop>scrollArea</tabstop>
-  <tabstop>btn_screenshot</tabstop>
+  <tabstop>btn_test</tabstop>
  </tabstops>
  <resources>
   <include location="../../../../icons/arrows/arrows.qrc"/>

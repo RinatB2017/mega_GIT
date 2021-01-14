@@ -91,6 +91,9 @@ void Simple_PTZ_widget::init(void)
     connect(ui->le_other_cmd,   &QLineEdit::returnPressed,
             this,               &Simple_PTZ_widget::f_other_cmd);
 
+    connect(ui->btn_test,       &QPushButton::clicked,
+            this,               &Simple_PTZ_widget::f_test);
+
     create_player();
     connect_position_widgets();
 
@@ -112,6 +115,10 @@ void Simple_PTZ_widget::init(void)
 #ifndef QT_DEBUG
     ui->le_other_cmd->setVisible(false);
     ui->btn_other_cmd->setVisible(false);
+#endif
+
+#ifndef QT_DEBUG
+    ui->btn_test->setVisible(false);
 #endif
 
 #if 0
@@ -147,6 +154,8 @@ void Simple_PTZ_widget::processFrame(const QVideoFrame &frame)
     {
         current_frame = frame;
         emit get_frame(frame);
+
+        ui->mediarecorder_widget->get_frame(frame);
 
 #ifdef USE_COMMUNICATIONS
         if(socket->isOpen())
@@ -264,6 +273,11 @@ void Simple_PTZ_widget::play(void)
     {
         emit error("Player is not available!");
     }
+}
+//--------------------------------------------------------------------------------
+void Simple_PTZ_widget::f_test(void)
+{
+    emit info("Test");
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::pause(void)

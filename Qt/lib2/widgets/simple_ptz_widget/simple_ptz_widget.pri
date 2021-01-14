@@ -14,5 +14,7 @@ SOURCES	+= simple_ptz_widget.cpp
 HEADERS += simple_ptz_widget.hpp
 FORMS	+= simple_ptz_widget.ui
 
+RESOURCES   += $$LIB_PATH2/icons/nuvola/nuvola_actions.qrc
+
 include ($$LIB_PATH2/widgets/scan_home_network/scan_home_network.pri)
 include ($$LIB_PATH2/widgets/mymediarecorder/mymediarecorder.pri)

@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>MyMediaRecorder</class>
  <widget class="QWidget" name="MyMediaRecorder">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>165</width>
+    <height>33</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -20,6 +28,9 @@
    </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="lbl_filename"/>
+     </item>
      <item>
       <widget class="QToolButton" name="btn_filename">
        <property name="text">

@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "ptz_widget.hpp"
 #include "ptz_dialog.hpp"
@@ -110,12 +104,38 @@ void PTZ_widget::init(void)
 
     connect(ui->btn_play,   SIGNAL(clicked(bool)),  this,   SLOT(play()));
     connect(ui->btn_stop,   SIGNAL(clicked(bool)),  this,   SLOT(stop()));
-
     connect(ui->btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(f_test()));
-
     connect(ui->btn_choice, SIGNAL(clicked(bool)),  this,   SLOT(choice()));
 
-    //---
+    init_params();
+
+    url.setHost(ui->ip_widget->get_url().host());
+    url.setPort(ui->sb_port->value());
+
+    url.setHost(load_string(IP_STRING));
+    int value = 0;
+    load_int(PORT_STRING, &value);
+    url.setPort(value);
+
+    ui->ip_widget->set_url(url);
+
+    lock_widgets();
+    load_widgets();
+
+#if 1
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->add_dock_widget("options",  "options_frame",  Qt::LeftDockWidgetArea,   ui->options_frame);
+        mw->add_dock_widget("rtsp",     "rtsp_frame",     Qt::RightDockWidgetArea,  ui->ptz_frame);
+        mw->add_dock_widget("scan",     "scan_frame",     Qt::RightDockWidgetArea,  ui->scan_frame);
+        setVisible(false);
+    }
+#endif
+}
+//--------------------------------------------------------------------------------
+void PTZ_widget::init_params(void)
+{
     int index = 0;
     PTZ_PARAM param;
     PTZ_PARAM param1;
@@ -251,31 +271,6 @@ void PTZ_widget::init(void)
     param1.param2 = 0;
     param2.btn_caption = "OFF";
     add_buttons(index++, "FLIP", param1, param2);
-    //---
-
-    url.setHost(ui->ip_widget->get_url().host());
-    url.setPort(ui->sb_port->value());
-
-    url.setHost(load_string(IP_STRING));
-    int value = 0;
-    load_int(PORT_STRING, &value);
-    url.setPort(value);
-
-    ui->ip_widget->set_url(url);
-
-    lock_widgets();
-
-    load_widgets();
-
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->add_dock_widget("options",  "options",  Qt::LeftDockWidgetArea, ui->options_frame);
-        mw->add_dock_widget("rtsp",     "rtsp",     Qt::RightDockWidgetArea, ui->ptz_frame);
-        setVisible(false);
-    }
-
-    //play();
 }
 //--------------------------------------------------------------------------------
 void PTZ_widget::widgets_set_state(bool state)

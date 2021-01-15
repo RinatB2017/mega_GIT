@@ -22,12 +22,10 @@
 #define PTZ_WIDGET_HPP
 //--------------------------------------------------------------------------------
 #include <QMediaPlayer>
-#include <QToolButton>
-#include <QSettings>
-#include <QWidget>
 //--------------------------------------------------------------------------------
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 struct PTZ_PARAM
@@ -46,8 +44,6 @@ namespace Ui {
     class PTZ_widget;
 }
 //--------------------------------------------------------------------------------
-class MainBox;
-//--------------------------------------------------------------------------------
 class PTZ_widget : public MyWidget
 {
     Q_OBJECT
@@ -55,12 +51,6 @@ class PTZ_widget : public MyWidget
 public:
     explicit PTZ_widget(QWidget *parent = nullptr);
     ~PTZ_widget();
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
 
 public slots:
     void play(void);
@@ -134,6 +124,7 @@ private:
     void connect_position_widgets(void);
 
     void init(void);
+    void init_params(void);
 
     void widgets_set_state(bool state);
     void lock_widgets(void);

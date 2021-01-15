@@ -203,6 +203,7 @@ void MainWindow::init(void)
     setWindowTitle(QString("%1 (ver. %2)")
                    .arg(appName)
                    .arg(appVersion));
+    setObjectName("MainWindow");
 
     load_setting();
 

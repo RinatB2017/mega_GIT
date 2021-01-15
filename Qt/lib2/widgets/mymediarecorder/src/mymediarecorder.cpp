@@ -52,6 +52,8 @@ void MyMediaRecorder::init(void)
     connect(ui->btn_start,      &QToolButton::clicked,  this,   &MyMediaRecorder::start);
     connect(ui->btn_stop,       &QToolButton::clicked,  this,   &MyMediaRecorder::stop);
 
+    ui->lbl_filename->setText(QFileInfo(filename).fileName());
+
     ui->btn_start->setEnabled(true);
     ui->btn_stop->setDisabled(true);
 }
@@ -78,6 +80,7 @@ void MyMediaRecorder::set_filename(void)
     dlg->setAcceptMode(MyFileDialog::AcceptSave);
     dlg->setNameFilter("AVI files (*.avi)");
     dlg->setDefaultSuffix("avi");
+    dlg->selectFile(filename);
     if(dlg->exec())
     {
         QStringList files = dlg->selectedFiles();
@@ -85,6 +88,7 @@ void MyMediaRecorder::set_filename(void)
         if(t_filename.isEmpty() == false)
         {
             filename = QFileInfo(t_filename).absoluteFilePath();
+            ui->lbl_filename->setText(QFileInfo(filename).fileName());
         }
     }
     delete dlg;

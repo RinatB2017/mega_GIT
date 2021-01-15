@@ -799,8 +799,9 @@ void MyWidget::load_widgets(void)
         QList<QWidget *> widgets = findChildren<QWidget *>();
         if(widgets.count() <= 0)
         {
-            return;
+            widgets = topLevelWidget()->findChildren<QWidget *>();
         }
+        Q_ASSERT(widgets.count() > 0);
 
         foreach(QWidget *widget, widgets)
         {
@@ -834,13 +835,12 @@ void MyWidget::save_widgets(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    //TODO не надо тут использовать topLevelWidget - ведь сохраняем только текущий виджет
     QList<QWidget *> widgets = findChildren<QWidget *>();
     if(widgets.count() <= 0)
     {
-        qDebug() << "###" << objectName() << "widgets.count() <= 0 [" << widgets.count() + "]";
-        return;
+        widgets = topLevelWidget()->findChildren<QWidget *>();
     }
+    Q_ASSERT(widgets.count() > 0);
 
     foreach(QWidget *widget, widgets)
     {

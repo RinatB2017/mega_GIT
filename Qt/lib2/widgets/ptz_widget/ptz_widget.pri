@@ -19,3 +19,5 @@ HEADERS += \
 FORMS	+= \
     ptz_widget.ui \
     ptz_dialog.ui
+
+include ($$LIB_PATH2/widgets/scan_home_network/scan_home_network.pri)

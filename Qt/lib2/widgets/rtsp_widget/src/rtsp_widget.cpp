@@ -22,6 +22,7 @@
 //#include <QMultimedia>
 //#include <QtMultimediaWidgets>
 //--------------------------------------------------------------------------------
+#include "mainwindow.hpp"
 #include "rtsp_widget.hpp"
 #include "rtsp_dialog.hpp"
 //--------------------------------------------------------------------------------

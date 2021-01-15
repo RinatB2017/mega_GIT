@@ -56,9 +56,7 @@ int main(int argc, char *argv[])
     QPixmap pixmap(":/logo/logo.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
-    splash->show();
-
-    
+    splash->show();    
 
     MainWindow *main_window = new MainWindow;
     Q_ASSERT(main_window != nullptr);

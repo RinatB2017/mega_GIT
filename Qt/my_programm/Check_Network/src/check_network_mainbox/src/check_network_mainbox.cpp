@@ -51,12 +51,6 @@ MainBox::~MainBox()
     {
         m_pTcpSocket->deleteLater();
     }
-#ifdef USE_RTSP
-    if(rtsp_widget)
-    {
-        rtsp_widget->deleteLater();
-    }
-#endif
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -64,10 +58,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-#ifdef USE_RTSP
-    rtsp_widget = new RTSP_widget(this);
-    ui->layout_rtsp->addWidget(rtsp_widget);
-
+#ifndef USE_RTSP
+    ui->rtsp_frame->setVisible(false);
+#else
     connect(ui->tv_scan,    &QTreeView::doubleClicked,  this,   &MainBox::f_set_url);
 #endif
 
@@ -215,6 +208,18 @@ void MainBox::scan(void)
 
     for(quint32 address = min_address; address<max_address; address++)
     {
+        U_INT32 t_address;
+        t_address.value = address;
+        if((t_address.bytes.a == 0) || (t_address.bytes.a == 255))
+        {
+            emit debug(QString("Bad address: %1.%2.%3.%4")
+                       .arg(t_address.bytes.d)
+                       .arg(t_address.bytes.c)
+                       .arg(t_address.bytes.b)
+                       .arg(t_address.bytes.a));
+            continue;
+        }
+
         dlg->setLabelText(QString("Пожалуйста, ждите! (осталось %1 хостов)").arg(max_address - address));
         dlg->setValue(static_cast<int>(address));
 
@@ -312,22 +317,42 @@ void MainBox::f_set_url(const QModelIndex &index)
                .arg(port));
 
 #ifdef USE_RTSP
-    rtsp_widget->set_address("admin",
-                             "admin",
-                             url,
-                             port);
-    rtsp_widget->play();
+    ui->rtsp_widget->set_address("admin",
+                                 "admin",
+                                 url,
+                                 port);
+    ui->rtsp_widget->play();
 #endif
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_test(void)
 {
+#if 1
+    QHostAddress src = QHostAddress(QString("%1")
+                                    .arg(ui->ip_widget_begin->get_url().host()));
+    QHostAddress dst = QHostAddress(QString("%1")
+                                    .arg(ui->ip_widget_end->get_url().host()));
+
+    quint32 min_address = src.toIPv4Address();
+    quint32 max_address = dst.toIPv4Address();
+
+    if(min_address >= max_address)
+    {
+        emit error("Адреса некорректны");
+        return false;
+    }
+    emit info(QString("Всего %1 адресов")
+              .arg(max_address - min_address));
+#endif
+
+#if 0
     for(int n=1; n<5; n++)
     {
         model->insertRow(0);
         model->setData(model->index(0, 0, QModelIndex()), QString("192.168.1.%1").arg(n));
         model->setData(model->index(0, 1, QModelIndex()), QString("%1").arg(n));
     }
+#endif
 
     return true;
 }

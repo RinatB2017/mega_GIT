@@ -29,6 +29,18 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 #include <QAbstractSocket>
 //--------------------------------------------------------------------------------
+union U_INT32
+{
+    uint32_t value;
+    struct
+    {
+        uint8_t a;
+        uint8_t b;
+        uint8_t c;
+        uint8_t d;
+    } bytes;
+};
+//--------------------------------------------------------------------------------
 class MySplashScreen;
 class QTcpSocket;
 class RTSP_widget;
@@ -76,11 +88,7 @@ private:
     int nPort = 0;
     QPointer<QTcpSocket> m_pTcpSocket;
 
-    QStandardItemModel *model = nullptr;
-
-#ifdef USE_RTSP
-    RTSP_widget *rtsp_widget = nullptr;
-#endif
+    QPointer<QStandardItemModel> model;
 
     void init(void);
     void createTestBar(void);

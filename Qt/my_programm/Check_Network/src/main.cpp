@@ -37,8 +37,6 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-#define SINGLE_APP
-//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
     set_codecs();
@@ -68,6 +66,7 @@ int main(int argc, char *argv[])
 
     MainBox *mainBox = new MainBox(main_window, splash);
     Q_ASSERT(mainBox);
+
     main_window->setCentralWidget(mainBox);
     main_window->show();
 

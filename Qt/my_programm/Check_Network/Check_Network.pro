@@ -12,14 +12,6 @@ INCLUDEPATH = $$DEPENDPATH
 
 QT  += network
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += PROGRAMM_IN_UTF8
-#DEFINES += NO_LOG
-#DEFINES += SHOW_SIZE
-
-DEFINES += USE_RTSP
-
 HEADERS += \
     defines.hpp \
     version.hpp
@@ -40,6 +32,7 @@ OTHER_FILES += doc/notebook.txt
 LIB_PATH  = "$$PWD/../../lib"
 LIB_PATH2 = "$$PWD/../../lib2"
 
+include (src/config.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
 include ($$LIB_PATH2/widgets/rtsp_widget/rtsp_widget.pri)

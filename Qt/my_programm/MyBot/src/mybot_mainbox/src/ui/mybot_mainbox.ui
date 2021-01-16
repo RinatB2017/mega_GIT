@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainBox</class>
+ <widget class="QWidget" name="MainBox">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>567</width>
+    <height>65</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="btn_kpat">
+       <property name="text">
+        <string>KPat</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_kmines">
+       <property name="text">
+        <string>KMines</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_kdiamond">
+       <property name="text">
+        <string>KDiamond</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="le_programm"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_find_programm">
+       <property name="text">
+        <string>Найти</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="WebCamera" name="camera_widget" native="true"/>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>WebCamera</class>
+   <extends>QWidget</extends>
+   <header>webcamera.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>btn_kpat</tabstop>
+  <tabstop>btn_kmines</tabstop>
+  <tabstop>btn_kdiamond</tabstop>
+  <tabstop>le_programm</tabstop>
+  <tabstop>btn_find_programm</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

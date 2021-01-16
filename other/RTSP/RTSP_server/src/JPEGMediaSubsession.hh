@@ -30,8 +30,8 @@ public:
 			    Boolean reuseFirstSource);
 	~JPEGMediaSubsession();
 protected:
-	virtual FramedSource* JPEGMediaSubsession::createNewStreamSource(unsigned clientSessionId, unsigned& estBitrate);
-	virtual RTPSink* JPEGMediaSubsession::createNewRTPSink(Groupsock* rtpGroupsock, unsigned char rtpPayloadTypeIfDynamic, FramedSource* inputSource);
+    virtual FramedSource* createNewStreamSource(unsigned clientSessionId, unsigned& estBitrate);
+    virtual RTPSink* createNewRTPSink(Groupsock* rtpGroupsock, unsigned char rtpPayloadTypeIfDynamic, FramedSource* inputSource);
 private:
   char const* fFileName;
   u_int64_t fFileSize; // if known

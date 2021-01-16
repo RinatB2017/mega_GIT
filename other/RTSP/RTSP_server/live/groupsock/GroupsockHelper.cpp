@@ -20,6 +20,8 @@ along with this library; if not, write to the Free Software Foundation, Inc.,
 
 #include "live/groupsock/include/GroupsockHelper.hh"
 
+#include <sys/socket.h>
+
 #if defined(__WIN32__) || defined(_WIN32)
 #include <time.h>
 extern "C" int initializeWinsockIfNecessary();

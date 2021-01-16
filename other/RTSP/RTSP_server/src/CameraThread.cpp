@@ -23,7 +23,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
-#include "opencv2\opencv.hpp"
+#include </usr/include/opencv4/opencv2/opencv.hpp>
 
 std::mutex lock_jpegbuffer;
 

@@ -390,5 +390,3 @@ void CameraJPEGDeviceSource::setParamsFromHeader() {
 	fLastQFactor = 70;
 	//  fLastQFactor = 50;
 }
-
-

@@ -6,9 +6,7 @@ TEMPLATE = app
 TARGET   = MyBot
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/mybot_mainbox \
-    $$PWD/src/mybot_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -16,7 +14,6 @@ DEFINES += NO_TRAYICON
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    mybot_mainbox.hpp \
     defines.hpp \
     version.hpp
 
@@ -25,10 +22,7 @@ unix {
 }
 
 SOURCES += \
-    mybot_mainbox.cpp \
     main.cpp
-
-FORMS   += mybot_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -53,6 +47,7 @@ LIB_PATH2 = "$$PWD/../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/WebCamera/WebCamera.pri)
+include (src/mybot_mainbox/mybot_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = $$PWD/src/version.hpp

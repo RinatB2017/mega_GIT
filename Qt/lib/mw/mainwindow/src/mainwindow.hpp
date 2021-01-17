@@ -107,6 +107,15 @@
 #define P_IT    "IT"
 #define P_RU    "RU"
 //--------------------------------------------------------------------------------
+typedef struct {
+    QPointer<QTranslator> translator_obj;   // new QTranslator
+    QString translator_file;                // :/lang/lang_ru.qm
+    QString locale_name;                    // ru_RU
+    QString language;                       // Russian
+    QString property;                       // RU
+    QString icon_name;                      // P_ICON_RU
+} TRANSLATOR;
+//--------------------------------------------------------------------------------
 class MainWindow : public QMainWindow, public MySettings
 {
     Q_OBJECT
@@ -204,6 +213,8 @@ private slots:
     void setToolBarLanguage(void);
     void help(void);
 
+    void choice_translator(QAction *menu);
+
     void set_system_palette(void);
     void set_blue_palette(void);
     void set_dark_palette(void);
@@ -243,8 +254,10 @@ private:
                         b_saveSlot slot);
 
     QPointer<QTranslator> translator_system;
-    QPointer<QTranslator> translator_ru;
-    QPointer<QTranslator> translator_it;
+//    QPointer<QTranslator> translator_ru;
+//    QPointer<QTranslator> translator_it;
+
+    QList<TRANSLATOR> l_translators;
 
     QString orgName;
     QString appName;

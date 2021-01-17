@@ -254,9 +254,6 @@ private:
                         b_saveSlot slot);
 
     QPointer<QTranslator> translator_system;
-//    QPointer<QTranslator> translator_ru;
-//    QPointer<QTranslator> translator_it;
-
     QList<TRANSLATOR> l_translators;
 
     QString orgName;

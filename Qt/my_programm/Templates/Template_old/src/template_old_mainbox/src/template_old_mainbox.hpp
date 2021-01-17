@@ -40,6 +40,8 @@ public:
 
 private slots:
     void choice_test(void);
+
+public slots:
     bool test(void);
 
 private:

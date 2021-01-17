@@ -24,10 +24,9 @@ MainWindow::MainWindow(QMainWindow *parent)
     : QMainWindow(parent),
       orgName(ORGNAME),
       appName(APPNAME),
-      appVersion(QString("%1.%2.%3 (%4)")
+      appVersion(QString("%1.%2.%3")
                  .arg(VER_MAJOR)
                  .arg(VER_MINOR)
-                 .arg(VER_PATCH)
                  .arg(VER_BUILD))
 {
     init();
@@ -380,6 +379,7 @@ void MainWindow::load_translations()
         qApp->installTranslator(translator_system);
     }
     //---
+#if 1
     TRANSLATOR translator_ru;
     translator_ru.translator_obj = new QTranslator(this);
     translator_ru.translator_file = ":/lang/lang_ru.qm";
@@ -388,15 +388,18 @@ void MainWindow::load_translations()
     translator_ru.property = P_RU;
     translator_ru.icon_name = P_ICON_RU;
     l_translators.append(translator_ru);
+#endif
 
-//    TRANSLATOR translator_it;
-//    translator_it.translator_obj = new QTranslator(this);
-//    translator_it.translator_file = ":/lang/lang_it.qm";
-//    translator_it.locale_name = "it_IT";
-//    translator_it.language = "Italiano";
-//    translator_it.property = P_IT;
-//    translator_ru.icon_name = P_ICON_IT;
-//    l_translators.append(translator_it);
+#if 1
+    TRANSLATOR translator_it;
+    translator_it.translator_obj = new QTranslator(this);
+    translator_it.translator_file = ":/lang/lang_it.qm";
+    translator_it.locale_name = "it_IT";
+    translator_it.language = "Italiano";
+    translator_it.property = P_IT;
+    translator_ru.icon_name = P_ICON_IT;
+    l_translators.append(translator_it);
+#endif
 
     foreach (TRANSLATOR translator, l_translators)
     {
@@ -1270,6 +1273,7 @@ bool MainWindow::add_dock_widget(QString title,
 {
     Q_ASSERT(widget);
     //FIXME надо сделать так, чтобы можно было перенести this
+    // пока удается, обернув вызов этой функции в singleShot, но есть глюки
 
     if(title.isEmpty())
     {
@@ -1285,7 +1289,6 @@ bool MainWindow::add_dock_widget(QString title,
     QDockWidget *dw = new QDockWidget(this);
 
     dw->setObjectName(objectname);
-    //dw->setWindowTitle(title);
     dw->setWindowTitle(tr(title.toLatin1()));
     dw->setProperty(P_DOCKWIDGET_ENG_TEXT, title);
 
@@ -1300,6 +1303,9 @@ bool MainWindow::add_dock_widget(QString title,
         hbox->setSpacing(0);
 
         widget->setParent(dw);
+
+        //TODO не факт, что это правильно
+        widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
         hbox->addWidget(widget);
         hbox->addWidget(dp);
@@ -1794,8 +1800,6 @@ void MainWindow::app_menu_add_lang(QMenu *menu)
     menu_language->setIcon(QIcon(P_ICON_LANG));
     menu->addMenu(menu_language);
     app_menus.append(menu_language);
-
-    Q_ASSERT(l_translators.count() > 0);
 
     QAction *a_us = new QAction(menu_language);
     QString lang = "English";

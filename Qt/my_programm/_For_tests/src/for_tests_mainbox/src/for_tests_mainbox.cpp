@@ -494,9 +494,19 @@ void MainBox::show_test_widget(QWidget *widget)
 //--------------------------------------------------------------------------------
 //#include <QMediaPlayer>
 
+#define A 1
+#define B 2
+#define C 3
+#define RESULT A "-" B "-" C
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 0
+    QString temp = RESULT;
+    emit info(QString("Ver: [%1]").arg(temp));
+#endif
 
 #if 0
     QWidget *widget = new QWidget();

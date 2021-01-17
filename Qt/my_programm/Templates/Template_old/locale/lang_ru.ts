@@ -187,10 +187,6 @@
         <source>English</source>
         <translation>Английский</translation>
     </message>
-</context>
-
-<context>
-    <name>MainWindow</name>
     <message>
         <source>log</source>
         <translation>Лог</translation>
@@ -215,9 +211,6 @@
         <source>Show buttons</source>
         <translation>Показать кнопки</translation>
     </message>
-</context>
-
-<context>
     <name>QObject</name>
     <message>
         <source>Starting application %1</source>
@@ -253,6 +246,10 @@
     </message>
     <message>
         <source>RadioButton</source>
+        <translation>Надо переименовать</translation>
+    </message>
+    <message>
+        <source>PushButton</source>
         <translation>Надо переименовать</translation>
     </message>
 </context>

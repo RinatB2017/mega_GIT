@@ -8,7 +8,7 @@ TARGET   = auto_inc_version
 DEPENDPATH  += $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-CONFIG += c++11 console
+CONFIG += c++11
 CONFIG -= app_bundle
 QT -= gui
 

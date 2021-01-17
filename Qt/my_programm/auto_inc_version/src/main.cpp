@@ -30,7 +30,6 @@ using namespace std;
 //--------------------------------------------------------------------------------
 int major = 0;
 int minor = 0;
-int patch = 0;
 int build = 0;
 //--------------------------------------------------------------------------------
 int readFile(const QString &filename)
@@ -46,6 +45,7 @@ int readFile(const QString &filename)
 #endif
         return -1;
     }
+    int cnt = 0;
     QTextStream in(&file);
     while(!in.atEnd())
     {
@@ -53,18 +53,22 @@ int readFile(const QString &filename)
         if(str == "VER_MAJOR")
         {
             in >> major;
+            cnt++;
         }
         if(str == "VER_MINOR")
         {
             in >> minor;
-        }
-        if(str == "VER_PATCH")
-        {
-            in >> patch;
+            cnt++;
         }
         if(str == "VER_BUILD")
         {
             in >> build;
+            cnt++;
+        }
+        if(cnt >= 3)
+        {
+            // чтобы не считать данные дважды
+            break;
         }
     }
     build++;
@@ -84,9 +88,7 @@ int writeFile(const QString &filename)
         out << "//-----" << eol;
         out << "#define VER_MAJOR " << major << eol;
         out << "#define VER_MINOR " << minor << eol;
-        out << "#define VER_PATCH " << patch << eol;
         out << "#define VER_BUILD " << build << eol;
-        out << "#define VER_STR \"" << major << "." << minor << "." << patch << "." << build << "\"" << eol;
         out << "//-----" << eol;
         out << "#endif // VERSION_HPP" << eol;
 
@@ -116,6 +118,9 @@ int main(int argc, char *argv[])
 
     res = readFile(argv[1]);
     if(res < 0) return res;
+
+    cout << major << "." << minor << "." << build << ".0" << std::endl;
+
     res = writeFile(argv[1]);
     if(res < 0) return res;
 

@@ -53,6 +53,8 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
+    ui->btn_temp->setProperty(NO_SAVE, true);
+
 #if 1
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else
@@ -63,6 +65,35 @@ void MainBox::init(void)
 #endif
 
     load_widgets();
+
+    qDebug() << this->objectName();
+
+#if 0
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->add_dock_widget("MainBox",
+                            "mainbox",
+                            Qt::TopDockWidgetArea,
+                            ui->main_frame);
+        setVisible(false);
+    }
+#endif
+
+#if 1
+    //TODO если не вызвать singleShot, то будет странно. Надо исправить позже
+    QTimer::singleShot(0, [this]{
+        MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+        if(mw)
+        {
+            mw->add_dock_widget("MainBox",
+                                "mainbox",
+                                Qt::TopDockWidgetArea,
+                                this);
+//            setVisible(false);    //TODO не надо это разкомментировать
+        }
+    });
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -110,10 +141,10 @@ void MainBox::choice_test(void)
     if(!ok) return;
 
     auto cmd_it = std::find_if(
-        commands.begin(),
-        commands.end(),
-        [cmd](CMD command){ return command.cmd == cmd; }
-    );
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
     if (cmd_it != commands.end())
     {
         typedef bool (MainBox::*function)(void);

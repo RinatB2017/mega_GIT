@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2017                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -21,24 +21,22 @@
 #ifndef DEFINES_HPP
 #define DEFINES_HPP
 //--------------------------------------------------------------------------------
-#include "version.hpp"
-//--------------------------------------------------------------------------------
-#define ORGNAME "Work"
-#define APPNAME "Template_old"
-//--------------------------------------------------------------------------------
-#define VERSION                     VER_MAJOR.VER_MINOR.VER_BUILD.0
-#define QMAKE_TARGET_COMPANY        ORGNAME
-#define QMAKE_TARGET_PRODUCT        APPNAME
-#define QMAKE_TARGET_COPYRIGHT      "Copyright 2020-2025"
-#define RC_ICONS                    ":/images/computer.ico"
-//--------------------------------------------------------------------------------
-#define VER_PRODUCTVERSION_STR      VER_STR
-#define VER_FILEDESCRIPTION_STR     APPNAME
-#define VER_INTERNALNAME_STR        APPNAME
-#define VER_LEGALCOPYRIGHT_STR      QMAKE_TARGET_COPYRIGHT
-#define VER_ORIGINALFILENAME_STR    APPNAME
-#define VER_PRODUCTNAME_STR         APPNAME
-//--------------------------------------------------------------------------------
-#define ICON_PROGRAMM   ":/mainwindow/computer.png"
+// === win ===
+#define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_BUILD,0
+#define STR_FILEVERSION             VER_MAJOR ## "." ## VER_MINOR ## "." ## VER_BUILD ## ".0"
+
+#define VER_PRODUCTVERSION          VER_MAJOR,VER_MINOR,VER_BUILD,0
+#define STR_PRODUCTVERSION          VER_MAJOR ## "." ## VER_MINOR ## "." ## VER_BUILD ## ".0"
+//#define STR_PRODUCTVERSION          "2.0.0.0"
+
+#define STR_COMPANYNAME             ORGNAME
+#define STR_FILEDESCRIPTION         APPNAME
+#define STR_INTERNALNAME            APPNAME
+#define STR_LEGALCOPYRIGHT          "Copyright © 2021 " ORGNAME
+#define STR_LEGALTRADEMARKS1        "All Rights Reserved"
+#define STR_LEGALTRADEMARKS2        STR_LEGALTRADEMARKS1
+#define STR_ORIGINALFILENAME        APPNAME
+#define STR_PRODUCTNAME             APPNAME
+#define STR_COMPANYDOMAIN           "mywebsite.com"
 //--------------------------------------------------------------------------------
 #endif

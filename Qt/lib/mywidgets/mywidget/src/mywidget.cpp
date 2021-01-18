@@ -498,7 +498,7 @@ void MyWidget::s_test(void)
     // block_wheel();
 }
 //--------------------------------------------------------------------------------
-#ifndef BLOCK_WHEEL
+#ifdef BLOCK_WHEEL
 void MyWidget::block_wheel(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -779,7 +779,7 @@ void MyWidget::changeEvent(QEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-#ifndef BLOCK_WHEEL
+#ifdef BLOCK_WHEEL
 bool MyWidget::eventFilter(QObject*, QEvent* event)
 {
     if(event->type() == QEvent::Wheel)

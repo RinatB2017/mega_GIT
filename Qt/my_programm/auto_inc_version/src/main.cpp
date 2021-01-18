@@ -31,6 +31,7 @@ using namespace std;
 int major = 0;
 int minor = 0;
 int build = 0;
+int patch = 0;
 //--------------------------------------------------------------------------------
 int readFile(const QString &filename)
 {
@@ -65,7 +66,12 @@ int readFile(const QString &filename)
             in >> build;
             cnt++;
         }
-        if(cnt >= 3)
+        if(str == "VER_PATCH")
+        {
+            in >> patch;
+            cnt++;
+        }
+        if(cnt >= 4)
         {
             // чтобы не считать данные дважды
             break;
@@ -89,6 +95,7 @@ int writeFile(const QString &filename)
         out << "#define VER_MAJOR " << major << eol;
         out << "#define VER_MINOR " << minor << eol;
         out << "#define VER_BUILD " << build << eol;
+        out << "#define VER_PATCH " << patch << eol;
         out << "//-----" << eol;
         out << "#endif // VERSION_HPP" << eol;
 
@@ -119,7 +126,7 @@ int main(int argc, char *argv[])
     res = readFile(argv[1]);
     if(res < 0) return res;
 
-    cout << major << "." << minor << "." << build << ".0" << std::endl;
+    cout << major << "." << minor << "." << build << patch << "." << std::endl;
 
     res = writeFile(argv[1]);
     if(res < 0) return res;

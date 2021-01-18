@@ -24,10 +24,11 @@ MainWindow::MainWindow(QMainWindow *parent)
     : QMainWindow(parent),
       orgName(ORGNAME),
       appName(APPNAME),
-      appVersion(QString("%1.%2.%3")
+      appVersion(QString("%1.%2.%3.%4")
                  .arg(VER_MAJOR)
                  .arg(VER_MINOR)
-                 .arg(VER_BUILD))
+                 .arg(VER_BUILD)
+                 .arg(VER_PATCH))
 {
     init();
 }

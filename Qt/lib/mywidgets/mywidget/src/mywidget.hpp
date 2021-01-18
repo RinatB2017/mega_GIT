@@ -157,7 +157,7 @@ signals:
 public slots:
     void block_interface(bool state);
     void check_tooltips(void);
-#ifndef BLOCK_WHEEL
+#ifdef BLOCK_WHEEL
     void block_wheel(void);
 #endif
 
@@ -177,7 +177,7 @@ private:
 
 protected:
     void changeEvent(QEvent *event);
-#ifndef BLOCK_WHEEL
+#ifdef BLOCK_WHEEL
     bool eventFilter(QObject*, QEvent* event);
 #endif
     void closeEvent(QCloseEvent *);

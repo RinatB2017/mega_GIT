@@ -8,6 +8,7 @@ CONFIG   += ordered
 SUBDIRS += \
     $$PWD/_For_tests \
     $$PWD/auto_inc_version \
+    $$PWD/generate_rc \
     $$PWD/CalcMd5 \
     $$PWD/Check_Network \
     $$PWD/hello_speak \

@@ -21,7 +21,7 @@
 #include <QSignalSpy>
 #include <QTest>
 //--------------------------------------------------------------------------------
-#define private public
+//#define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "for_tests_mainbox.hpp"

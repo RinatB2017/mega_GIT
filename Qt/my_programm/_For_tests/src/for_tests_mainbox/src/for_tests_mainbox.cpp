@@ -494,16 +494,20 @@ void MainBox::show_test_widget(QWidget *widget)
 //--------------------------------------------------------------------------------
 //#include <QMediaPlayer>
 
+#define Q(x) #x
+#define QUOTE(x) Q(x)
+
 #define A 1
 #define B 2
 #define C 3
-#define RESULT A "-" B "-" C
+//#define RESULT(a, b, c) #a "." #b "." #c
+#define RESULT QUOTE(A.B.C)
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 0
+#if 1
     QString temp = RESULT;
     emit info(QString("Ver: [%1]").arg(temp));
 #endif

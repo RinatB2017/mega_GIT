@@ -17,8 +17,6 @@ CONFIG(debug, debug|release) {
     #---
 }
 
-#QT  += multimedia
-
 HEADERS += \
     defines.hpp \
     version.hpp
@@ -27,7 +25,9 @@ SOURCES += \
     main.cpp
 
 win32 {
-    RC_ICONS = ico/computer.ico
+    RC_ICONS = ico/computer.ico # нужно, чтобы создался фал .rc автоматом
+#    FILEVERSION = VER_MAJOR,VER_MINOR,VER_BUILD,0
+#    RC_FILE  = programm.rc
 }
 
 RESOURCES += \
@@ -43,7 +43,6 @@ RESOURCES += \
 
 OTHER_FILES += \
     doc/notebook.txt
-#    meta/*
 
 LIB_PATH  = "$$PWD/../../lib"
 LIB_PATH2 = "$$PWD/../../lib2"

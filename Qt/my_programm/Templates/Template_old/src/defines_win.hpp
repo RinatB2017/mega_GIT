@@ -18,19 +18,22 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef DEFINES_HPP
-#define DEFINES_HPP
+#ifndef DEFINES_WIN_HPP
+#define DEFINES_WIN_HPP
 //--------------------------------------------------------------------------------
-// === win ===
+#include "version.hpp"
+//--------------------------------------------------------------------------------
+#define Q(x) #x
+#define QUOTE(x) Q(x)
+//--------------------------------------------------------------------------------
 #define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_BUILD,0
-#define STR_FILEVERSION             VER_MAJOR ## "." ## VER_MINOR ## "." ## VER_BUILD ## ".0"
+#define STR_FILEVERSION             QUOTE(VER_MAJOR) "." QUOTE(VER_MINOR) "." QUOTE(VER_BUILD) ".0"
 
 #define VER_PRODUCTVERSION          VER_MAJOR,VER_MINOR,VER_BUILD,0
-#define STR_PRODUCTVERSION          VER_MAJOR ## "." ## VER_MINOR ## "." ## VER_BUILD ## ".0"
-//#define STR_PRODUCTVERSION          "2.0.0.0"
+#define STR_PRODUCTVERSION          QUOTE(VER_MAJOR) "." QUOTE(VER_MINOR) "." QUOTE(VER_BUILD) ".0"
 
 #define STR_COMPANYNAME             ORGNAME
-#define STR_FILEDESCRIPTION         APPNAME
+#define STR_FILEDESCRIPTION         "My template for app"
 #define STR_INTERNALNAME            APPNAME
 #define STR_LEGALCOPYRIGHT          "Copyright © 2021 " ORGNAME
 #define STR_LEGALTRADEMARKS1        "All Rights Reserved"

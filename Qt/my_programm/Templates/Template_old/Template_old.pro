@@ -19,7 +19,7 @@ SOURCES += \
     main.cpp
 
 win32 {
-    RC_FILE  = programm.rc
+#    RC_FILE  = programm.rc
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win

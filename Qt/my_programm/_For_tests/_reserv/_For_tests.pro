@@ -5,35 +5,54 @@
 TEMPLATE = app
 TARGET   = _For_tests
 
-#APP_MAJOR = 1
-#APP_MINOR = 0
-#APP_BUILD = 0
-#APP_PATCH = 0
+APP_MAJOR = 5
+APP_MINOR = 6
+APP_BUILD = 7
+APP_PATCH = 8
 
-#DEFINES += APP_MAJOR=$${APP_MAJOR}
-#DEFINES += APP_MINOR=$${APP_MINOR}
-#DEFINES += APP_BUILD=$${APP_BUILD}
-#DEFINES += APP_PATCH=$${APP_PATCH}
+DEFINES += APP_MAJOR=$${APP_MAJOR}
+DEFINES += APP_MINOR=$${APP_MINOR}
+DEFINES += APP_BUILD=$${APP_BUILD}
+DEFINES += APP_PATCH=$${APP_PATCH}
 
 PROGRAMM_PATH  += \
     $$PWD/src
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
+CONFIG(debug, debug|release) {
+    # профилирование
+#    QMAKE_CXXFLAGS_DEBUG += -pg
+#    QMAKE_LFLAGS_DEBUG += -pg
+    #---
+}
+
 HEADERS += \
-    defines.hpp
+    defines.hpp \
     version.hpp
 
 SOURCES += \
     main.cpp
 
+win32 {
+    VERSION = $${APP_MAJOR}"."$${APP_MINOR}"."$${APP_BUILD}"."$${APP_PATCH}
+
+    QMAKE_TARGET_COMPANY = Home
+    QMAKE_TARGET_PRODUCT = $$TARGET
+    QMAKE_TARGET_COPYRIGHT = "Copyright (c) 2020-2025"
+    QMAKE_TARGET_DESCRIPTION = "my description"
+
+    RC_ICONS = ico/computer.ico # нужно, чтобы создался фал .rc автоматом
+#    RC_FILE  = programm.rc
+}
+
 RESOURCES += \
-    $$PWD/images/puzzle/puzzle.qrc \
-    $$PWD/images/images.qrc \
-    $$PWD/images/bullets/bullets.qrc \
-    $$PWD/ico/icons.qrc \
-    $$PWD/themes/themes_css/themes_css.qrc \
-    $$PWD/themes/themes_qss/themes_qss.qrc
+    images/puzzle/puzzle.qrc \
+    images/images.qrc \
+    images/bullets/bullets.qrc \
+    ico/icons.qrc \
+    themes/themes_css/themes_css.qrc \
+    themes/themes_qss/themes_qss.qrc 
 
 #можно поставить новое logo
 #RESOURCES += about/about.qrc
@@ -46,29 +65,9 @@ LIB_PATH2 = "$$PWD/../../lib2"
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)
-
-    # профилирование
-    # QMAKE_CXXFLAGS_DEBUG += -pg
-    # QMAKE_LFLAGS_DEBUG += -pg
-    #---
-}
-
-win32 {
-    #VERSION = $${APP_MAJOR}"."$${APP_MINOR}"."$${APP_BUILD}"."$${APP_PATCH}
-    VERSION = 1.0.5.0
-
-    QMAKE_TARGET_COMPANY = Home
-    QMAKE_TARGET_PRODUCT = $$TARGET
-    QMAKE_TARGET_COPYRIGHT = "Copyright (c) 2020-2025"
-    QMAKE_TARGET_DESCRIPTION = "my description"
-
-    RC_ICONS = ico/computer.ico # нужно, чтобы создался фал .rc автоматом
-    # RC_FILE  = programm.rc
 }
 
 include (src/config.pri)
-#include (src/version.pri)
-#include (src/windows.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 include ($$LIB_PATH2/icons/arrows.pri)
@@ -81,9 +80,7 @@ include (src/for_tests_mainbox/for_tests_mainbox.pri)
 include (src/mymainwindow/mymainwindow.pri)
 
 !exists(OBJECTS_DIR) {
-    # VERSION_HEADER = $$PWD/src/version.pri
     VERSION_HEADER = $$PWD/src/version.hpp
-    # message($$VERSION_HEADER)
     include ($$LIB_PATH/auto_inc_version.pri)
 }
 

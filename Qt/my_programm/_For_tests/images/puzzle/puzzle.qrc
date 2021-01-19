@@ -1,6 +1,5 @@
 <RCC>
-    <qresource prefix="/bones"/>
-    <qresource prefix="/">
+    <qresource prefix="/puzzle">
         <file>s0.png</file>
         <file>s1.png</file>
     </qresource>

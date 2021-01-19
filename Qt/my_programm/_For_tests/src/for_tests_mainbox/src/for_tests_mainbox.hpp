@@ -176,8 +176,6 @@ private:
     void show_test_widget(QWidget *widget);
     //---
 
-    QStack<TestStack> l_class;
-
     QLineEdit *mdi_widget_0 = nullptr;
     QLineEdit *mdi_widget_1 = nullptr;
     QLineEdit *mdi_widget_2 = nullptr;

@@ -494,20 +494,84 @@ void MainBox::show_test_widget(QWidget *widget)
 //--------------------------------------------------------------------------------
 //#include <QMediaPlayer>
 
-#define Q(x) #x
-#define QUOTE(x) Q(x)
-
-#define A 1
-#define B 2
-#define C 3
-//#define RESULT(a, b, c) #a "." #b "." #c
-#define RESULT QUOTE(A.B.C)
-
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
+    MyFileDialog *dlg = new MyFileDialog("main_box", "main_box");
+    dlg->setNameFilter("Any files (*.*)");
+    dlg->setDirectory(".");
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        QString src_filename = files.at(0);
+        QString dst_filename = QString("%1_new").arg(src_filename);
+
+        emit info(QString("src: %1").arg(src_filename));
+        emit info(QString("dst: %1").arg(dst_filename));
+
+        QFile src_file(src_filename);
+        QFile dst_file(dst_filename);
+
+        if (!src_file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            emit info(QString("file %1 not open for read"));
+            return false;
+        }
+        if (!dst_file.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            emit info(QString("file %1 not open for write"));
+            return false;
+        }
+
+        QTextStream in(&src_file);
+        QTextStream out(&dst_file);
+
+        QString eol = "\n";
+        int index = 0;
+        while(!in.atEnd())
+        {
+            QString line = in.readLine();
+            emit info(QString("[%1]").arg(line));
+
+            index = line.indexOf("APP_MAJOR =");
+            if(index >= 0)
+            {
+                emit error(QString("found in [%1]").arg(line));
+            }
+            index = line.indexOf("APP_MINOR =");
+            if(index >= 0)
+            {
+                emit error(QString("found in [%1]").arg(line));
+            }
+            index = line.indexOf("APP_BUILD =");
+            if(index >= 0)
+            {
+                emit error(QString("found in [%1]").arg(line));
+            }
+            index = line.indexOf("APP_PATCH =");
+            if(index >= 0)
+            {
+                emit error(QString("found in [%1]").arg(line));
+            }
+
+            out << line << eol;
+
+//            in >> str;
+//            emit info(QString("[%1]").arg(str));
+//            //APP_MAJOR
+
+//            out << str;
+        }
+        src_file.close();
+        dst_file.close();
+    }
+
+    delete dlg;
+#endif
+
+#if 0
     QString temp = RESULT;
     emit info(QString("Ver: [%1]").arg(temp));
 #endif
@@ -680,12 +744,7 @@ bool MainBox::test(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test2(void)
 {
-    if(l_class.count() > 0)
-    {
-        TestStack test = l_class.pop();
-        emit info(test.get());
-    }
-
+    emit info("Test2");
     return true;
 }
 //--------------------------------------------------------------------------------

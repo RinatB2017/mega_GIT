@@ -19,12 +19,20 @@ SOURCES += \
     main.cpp
 
 win32 {
-#    RC_FILE  = programm.rc
+    VERSION = 0.99.20.1
+
+    QMAKE_TARGET_COMPANY = Home
+    QMAKE_TARGET_PRODUCT = $$TARGET
+    QMAKE_TARGET_COPYRIGHT = "Copyright (c) 2020-2025"
+    QMAKE_TARGET_DESCRIPTION = "my description"
+
+    RC_ICONS = "ico/computer.ico"
+    # RC_FILE  = programm.rc
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win
 RESOURCES += \
-    images/images.qrc
+    ico/icons.qrc
 
 OTHER_FILES += doc/notebook.txt
 
@@ -42,5 +50,7 @@ include (src/template_old_mainbox/template_old_mainbox.pri)
     VERSION_HEADER = $$PWD/src/version.hpp
     include ($$LIB_PATH/auto_inc_version.pri)
 }
+
+message($$DEFINES)
 
 VPATH = $$INCLUDEPATH

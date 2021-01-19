@@ -1,6 +1,5 @@
 <RCC>
-    <qresource prefix="/bones"/>
-    <qresource prefix="/">
+    <qresource prefix="/gems">
         <file>gem_blue.png</file>
         <file>gem_green.png</file>
         <file>gem_purple.png</file>

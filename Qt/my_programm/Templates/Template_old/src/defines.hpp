@@ -23,23 +23,21 @@
 //--------------------------------------------------------------------------------
 #include "version.hpp"
 //--------------------------------------------------------------------------------
-//#include "defines_win.hpp"
-//--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "Template_old"
 //--------------------------------------------------------------------------------
-#define VERSION                     VER_MAJOR.VER_MINOR.VER_BUILD.0
-#define QMAKE_TARGET_COMPANY        ORGNAME
-#define QMAKE_TARGET_PRODUCT        APPNAME
-#define QMAKE_TARGET_COPYRIGHT      "Copyright 2020-2025"
-#define RC_ICONS                    ":/images/computer.ico"
+//#define VERSION                     VER_MAJOR.VER_MINOR.VER_BUILD.0
+//#define QMAKE_TARGET_COMPANY        ORGNAME
+//#define QMAKE_TARGET_PRODUCT        APPNAME
+//#define QMAKE_TARGET_COPYRIGHT      "Copyright 2020-2025"
+//#define RC_ICONS                    ":/images/computer.ico"
 //--------------------------------------------------------------------------------
-#define VER_PRODUCTVERSION_STR      VER_STR
-#define VER_FILEDESCRIPTION_STR     APPNAME
-#define VER_INTERNALNAME_STR        APPNAME
-#define VER_LEGALCOPYRIGHT_STR      QMAKE_TARGET_COPYRIGHT
-#define VER_ORIGINALFILENAME_STR    APPNAME
-#define VER_PRODUCTNAME_STR         APPNAME
+//#define VER_PRODUCTVERSION_STR      VER_STR
+//#define VER_FILEDESCRIPTION_STR     APPNAME
+//#define VER_INTERNALNAME_STR        APPNAME
+//#define VER_LEGALCOPYRIGHT_STR      QMAKE_TARGET_COPYRIGHT
+//#define VER_ORIGINALFILENAME_STR    APPNAME
+//#define VER_PRODUCTNAME_STR         APPNAME
 //--------------------------------------------------------------------------------
 #define ICON_PROGRAMM   ":/mainwindow/computer.png"
 //--------------------------------------------------------------------------------

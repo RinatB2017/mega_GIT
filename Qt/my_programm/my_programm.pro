@@ -7,7 +7,8 @@ CONFIG   += ordered
 
 SUBDIRS += \
     $$PWD/_For_tests \
-    $$PWD/auto_inc_version \
+#     $$PWD/auto_inc_version_pri \
+    $$PWD/auto_inc_version_ini \
     $$PWD/generate_rc \
     $$PWD/CalcMd5 \
     $$PWD/Check_Network \

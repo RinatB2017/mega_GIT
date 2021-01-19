@@ -90,7 +90,7 @@ void MainBox::init(void)
                                 "mainbox",
                                 Qt::TopDockWidgetArea,
                                 this);
-//            setVisible(false);    //TODO не надо это разкомментировать
+            //            setVisible(false);    //TODO не надо это разкомментировать
         }
     });
 #endif

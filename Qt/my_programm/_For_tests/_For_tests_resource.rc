@@ -3,8 +3,8 @@
 IDI_ICON1	ICON	DISCARDABLE	"F:\\mega_GIT\\Qt\\my_programm\\_For_tests\\ico\\computer.ico"
 
 VS_VERSION_INFO VERSIONINFO
-	FILEVERSION 1,0,5,0
-	PRODUCTVERSION 1,0,5,0
+	FILEVERSION 1,0,1,0
+	PRODUCTVERSION 1,0,1,0
 	FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
 	FILEFLAGS VS_FF_DEBUG
@@ -21,11 +21,11 @@ VS_VERSION_INFO VERSIONINFO
 			BEGIN
 				VALUE "CompanyName", "Home\0"
 				VALUE "FileDescription", "my description\0"
-				VALUE "FileVersion", "1.0.5.0\0"
-				VALUE "LegalCopyright", "Copyright (c) 2020-2025\0"
+				VALUE "FileVersion", "1.0.1.0\0"
+				VALUE "LegalCopyright", "Copyright \251 2020-2025\0"
 				VALUE "OriginalFilename", "_For_tests.exe\0"
 				VALUE "ProductName", "_For_tests\0"
-				VALUE "ProductVersion", "1.0.5.0\0"
+				VALUE "ProductVersion", "1.0.1.0\0"
 			END
 		END
 		BLOCK "VarFileInfo"

@@ -492,11 +492,13 @@ void MainBox::show_test_widget(QWidget *widget)
     (*widget).show();
 }
 //--------------------------------------------------------------------------------
-//#include <QMediaPlayer>
-
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 0
+    emit info("Copyright \\251 2020-2025");
+#endif
 
 #if 0
     MyFileDialog *dlg = new MyFileDialog("main_box", "main_box");
@@ -569,166 +571,6 @@ bool MainBox::test(void)
     }
 
     delete dlg;
-#endif
-
-#if 0
-    QString temp = RESULT;
-    emit info(QString("Ver: [%1]").arg(temp));
-#endif
-
-#if 0
-    QWidget *widget = new QWidget();
-//    QWidget *widget = nullptr;
-    show_test_widget(widget);
-#endif
-
-#if 0
-    Q_ASSERT(test_widget);
-    emit error("test_widget FAIL");
-#endif
-
-#if 0
-    QByteArray ba;
-    for(int n=192; n<219; n++)
-    {
-        ba.append((uchar)n);
-        //qDebug() << (char)n;
-    }
-    emit info(ba);
-#endif
-
-#if 0
-    QMediaPlayer *player = new QMediaPlayer;
-    connect(player, &QMediaPlayer::durationChanged, this, [&](qint64 duration) {
-        int seconds = (duration/1000) % 60;
-        int minutes = (duration/60000) % 60;
-        int hours = (duration/3600000) % 24;
-
-        QTime time(hours, minutes,seconds);
-        emit info(time.toString("hh:mm:ss"));
-
-        emit info(QDateTime::fromSecsSinceEpoch(duration / 1000.0, Qt::UTC).toString("hh:mm:ss"));
-    });
-
-    player->setMedia(QUrl::fromLocalFile(QDir::toNativeSeparators("/dev/shm/Seal-Crazy lyrics-c45a8Htv3c0.webm.mp3")));
-    player->setVolume(50);
-    player->play();
-#endif
-
-#if 0
-    QDateTime birth(QDate(1969, 11, 28), QTime(0, 0, 0), QTimeZone(Qt::UTC));
-    QString birth_str = birth.toString("ddMMyyyy");
-    emit info(QString("birth [%1]").arg(birth_str));
-    int sum = 0;
-    for(int i=0; i<birth_str.length(); i++)
-    {
-        sum += birth_str.mid(i, 1).toInt();
-    }
-    emit info(QString("sum %1").arg(sum));
-#endif
-
-
-#if 0
-    int cnt = ui->te_test->document()->lineCount();
-    emit info(QString("Lines %1").arg(cnt));
-
-    QString data = ui->te_test->toPlainText();
-    QStringList strList = data.split(QRegExp("[\n]"), Qt::SkipEmptyParts);
-    emit info(QString("Lines %1").arg(strList.count()));
-    for(int n=0; n<strList.count(); n++)
-    {
-        emit info(QString("line %1 [%2]")
-                  .arg(n)
-                  .arg(strList.at(n)));
-    }
-#endif
-
-#if 0
-    QString temp_str = "\t0 1  2   3    4     5";
-    emit info(temp_str);
-    temp_str = temp_str.replace(QRegExp("\\s{2,}"), " ").remove("\t");  //замена нескольких пробелов на один
-    emit info(temp_str);
-#endif
-
-#if 0
-    ui->te_test->setHtml("<a href='http://www.w3schools.com/'>Link!</a>aah");
-#endif
-
-#if 0
-    QDateTime dt1(QDate(2020, 1,  1), QTime(0, 0, 0), QTimeZone(Qt::LocalTime));
-    QDateTime dt2(QDate(2020, 12, 31), QTime(0, 0, 0), QTimeZone(Qt::LocalTime));
-    emit info(QString("diff %1").arg(dt1.daysTo(dt2)));
-#endif
-
-#if 0
-    QDateTime dt(QDate(1970, 1, 1), QTime(0, 0, 0), QTimeZone(Qt::LocalTime));
-    //    dt.setDate(QDate(1970, 1, 1));
-    //    dt.setTime(QTime(0, 0, 0));
-    //    dt.setTimeZone(QTimeZone(Qt::LocalTime));
-    emit info(QString("sec %1").arg(dt.toSecsSinceEpoch()));
-    qDebug() << dt;
-
-    qint64 sec_in_day = 24 * 60 * 60;
-    dt = dt.addSecs(sec_in_day);
-    emit info(QString("sec %1").arg(dt.toSecsSinceEpoch()));
-    qDebug() << dt;
-#endif
-
-#if 0
-    QList<QMdiSubWindow *> l_sw = ui->mdiArea->subWindowList();
-    emit info(QString("cnt %1").arg(l_sw.count()));
-#endif
-
-#if 0
-    QDateTime dt(QDate(2000, 1, 1), QTime(0, 0, 0));
-    QString time = QString("%1").arg(dt.toTime_t(), 0, 16);
-    QByteArray ba = QByteArray::fromHex(time.toLatin1());
-    emit info(QString("dt [%1]").arg(ba.toHex().data()));
-#endif
-
-#if 0
-    QString frame_name = "test_frame";
-    QDockWidget *dw = topLevelWidget()->findChild<QDockWidget *>(frame_name);
-    if(dw)
-    {
-        if(dw->x() > 0)
-        {
-            messagebox_info("INFO", "FOUND");
-        }
-        else
-        {
-            messagebox_critical("ERROR", "FAIL");
-        }
-    }
-    else
-    {
-        emit error(QString("%1 not found")
-                   .arg(frame_name));
-    }
-#endif
-
-#if 0
-    TestStack ts;
-    ts.set("test");
-    l_class.push(ts);
-
-    TestStack ts2;
-    ts2.set("test2");
-    l_class.push(ts2);
-#endif
-
-#if 0
-    qDebug() << "pointer_ptr" << pointer_ptr;
-    qDebug() << "shared_data_ptr" << shared_data_ptr;
-    qDebug() << "scoped_ptr" << scoped_ptr;
-    qDebug() << "weak_ptr" << weak_ptr;
-    qDebug() << "atomic_ptr" << atomic_ptr;
-
-    qDebug() << "-----";
-
-    QScopedPointer<QWidget> scoped_ptr(new QWidget());
-    qDebug() << "scoped_ptr" << scoped_ptr;
-
 #endif
 
 #if 0

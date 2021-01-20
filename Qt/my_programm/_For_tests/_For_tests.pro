@@ -5,15 +5,15 @@
 TEMPLATE = app
 TARGET   = _For_tests
 
-#APP_MAJOR = 1
-#APP_MINOR = 0
-#APP_BUILD = 0
-#APP_PATCH = 0
+VER_MAJOR = 1
+VER_MINOR = 0
+VER_PATCH = 1
+VER_BUILD = 0
 
-#DEFINES += APP_MAJOR=$${APP_MAJOR}
-#DEFINES += APP_MINOR=$${APP_MINOR}
-#DEFINES += APP_BUILD=$${APP_BUILD}
-#DEFINES += APP_PATCH=$${APP_PATCH}
+DEFINES += VER_MAJOR=$${VER_MAJOR}
+DEFINES += VER_MINOR=$${VER_MINOR}
+DEFINES += VER_BUILD=$${VER_BUILD}
+DEFINES += VER_PATCH=$${VER_PATCH}
 
 PROGRAMM_PATH  += \
     $$PWD/src
@@ -54,12 +54,11 @@ CONFIG(debug, debug|release) {
 }
 
 win32 {
-    #VERSION = $${APP_MAJOR}"."$${APP_MINOR}"."$${APP_BUILD}"."$${APP_PATCH}
-    VERSION = 1.0.5.0
+    VERSION = $${VER_MAJOR}"."$${VER_MINOR}"."$${VER_PATCH}"."$${VER_BUILD}
 
     QMAKE_TARGET_COMPANY = Home
     QMAKE_TARGET_PRODUCT = $$TARGET
-    QMAKE_TARGET_COPYRIGHT = "Copyright (c) 2020-2025"
+    QMAKE_TARGET_COPYRIGHT = "Copyright \\251 2020-2025"
     QMAKE_TARGET_DESCRIPTION = "my description"
 
     RC_ICONS = ico/computer.ico # нужно, чтобы создался фал .rc автоматом
@@ -67,8 +66,6 @@ win32 {
 }
 
 include (src/config.pri)
-#include (src/version.pri)
-#include (src/windows.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 include ($$LIB_PATH2/icons/arrows.pri)
@@ -81,10 +78,10 @@ include (src/for_tests_mainbox/for_tests_mainbox.pri)
 include (src/mymainwindow/mymainwindow.pri)
 
 !exists(OBJECTS_DIR) {
-    # VERSION_HEADER = $$PWD/src/version.pri
-    VERSION_HEADER = $$PWD/src/version.hpp
-    # message($$VERSION_HEADER)
-    include ($$LIB_PATH/auto_inc_version.pri)
+#    VERSION_HEADER = $$PWD/src/version.pri
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    message($$VERSION_HEADER)
+#    include ($$LIB_PATH/auto_inc_version.pri)
 }
 
 VPATH = $$INCLUDEPATH

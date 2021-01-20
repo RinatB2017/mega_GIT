@@ -27,8 +27,8 @@ MainWindow::MainWindow(QMainWindow *parent)
       appVersion(QString("%1.%2.%3.%4")
                  .arg(VER_MAJOR)
                  .arg(VER_MINOR)
-                 .arg(VER_BUILD)
-                 .arg(VER_PATCH))
+                 .arg(VER_PATCH)
+                 .arg(VER_BUILD))
 {
     init();
 }

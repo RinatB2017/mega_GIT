@@ -5,6 +5,16 @@
 TEMPLATE = app
 TARGET   = Template_old
 
+VER_MAJOR = 1
+VER_MINOR = 0
+VER_PATCH = 1
+VER_BUILD = 0
+
+DEFINES += VER_MAJOR=$${VER_MAJOR}
+DEFINES += VER_MINOR=$${VER_MINOR}
+DEFINES += VER_BUILD=$${VER_BUILD}
+DEFINES += VER_PATCH=$${VER_PATCH}
+
 FOLDER  = _Templates
 
 DEPENDPATH  += \
@@ -19,11 +29,11 @@ SOURCES += \
     main.cpp
 
 win32 {
-    VERSION = 0.99.20.1
+    VERSION = $${VER_MAJOR}"."$${VER_MINOR}"."$${VER_PATCH}"."$${VER_BUILD}
 
     QMAKE_TARGET_COMPANY = Home
     QMAKE_TARGET_PRODUCT = $$TARGET
-    QMAKE_TARGET_COPYRIGHT = "Copyright (c) 2020-2025"
+    QMAKE_TARGET_COPYRIGHT = "Copyright \\251 2020-2025"
     QMAKE_TARGET_DESCRIPTION = "my description"
 
     RC_ICONS = "ico/computer.ico"
@@ -47,10 +57,11 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include (src/template_old_mainbox/template_old_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    message($$VERSION_HEADER)
+#    include ($$LIB_PATH/auto_inc_version.pri)
 }
 
-message($$DEFINES)
+#message($$DEFINES)
 
 VPATH = $$INCLUDEPATH

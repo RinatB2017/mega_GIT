@@ -155,17 +155,18 @@ protected:
             QStylePainter painter(this);
             QStyleOptionTab opt;
 
-            for(int i = 0;i < count();i++)
+            for(int i=0; i<count(); i++)
             {
-                QString text = tabText(i);
-                mColor = Qt::red;
-                QString colorName = mColor.name();
+                mColor = Qt::green;
                 initStyleOption(&opt, i);
 
                 if(indexAlert == i)
+                {
                     opt.palette.setColor(QPalette::Button, mColor);
-                painter.drawControl(QStyle::CE_TabBarTabShape, opt);
-                painter.drawControl(QStyle::CE_TabBarTabLabel,opt);
+                    qDebug() << mColor.red() << mColor.green() << mColor.blue();
+                }
+                painter.drawControl(QStyle::CE_TabBarTabShape,  opt);
+                painter.drawControl(QStyle::CE_TabBarTabLabel,  opt);
             }
         }
         else

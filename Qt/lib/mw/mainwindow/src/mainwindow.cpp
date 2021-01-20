@@ -1290,7 +1290,7 @@ bool MainWindow::add_dock_widget(QString title,
     QDockWidget *dw = new QDockWidget(this);
 
     dw->setObjectName(objectname);
-    dw->setWindowTitle(tr(title.toLatin1()));
+    dw->setWindowTitle(tr(title.toLocal8Bit()));
     dw->setProperty(P_DOCKWIDGET_ENG_TEXT, title);
 
     if(no_dock_position == false)
@@ -2150,19 +2150,19 @@ void MainWindow::app_updateText(void)
 {
     foreach (auto menu, app_menus)
     {
-        menu->setTitle(tr(menu->property(P_APP_ENG_TEXT).toString().toLatin1()));
+        menu->setTitle(tr(menu->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
     }
     foreach (auto action, app_actions)
     {
-        action->setText(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
-        action->setToolTip(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
-        action->setStatusTip(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
+        action->setText(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
+        action->setToolTip(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
+        action->setStatusTip(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
     }
     foreach (auto btn, app_buttons)
     {
-        btn->setText(tr(btn->property(P_APP_ENG_TEXT).toString().toLatin1()));
-        btn->setToolTip(tr(btn->property(P_APP_ENG_TEXT).toString().toLatin1()));
-        btn->setStatusTip(tr(btn->property(P_APP_ENG_TEXT).toString().toLatin1()));
+        btn->setText(tr(btn->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
+        btn->setToolTip(tr(btn->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
+        btn->setStatusTip(tr(btn->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
     }
 }
 //--------------------------------------------------------------------------------
@@ -2171,7 +2171,7 @@ void MainWindow::dockwidget_updateText(void)
     QList<QDockWidget *> ldw = findChildren<QDockWidget *>();
     foreach (QDockWidget *dock, ldw)
     {
-        dock->setWindowTitle(tr(dock->property(P_DOCKWIDGET_ENG_TEXT).toString().toLatin1()));
+        dock->setWindowTitle(tr(dock->property(P_DOCKWIDGET_ENG_TEXT).toString().toLocal8Bit()));
     }
 }
 //--------------------------------------------------------------------------------

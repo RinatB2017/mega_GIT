@@ -770,9 +770,9 @@ void LogBox::updateText(void)
 {
     foreach (auto action, app_actions)
     {
-        action->setText(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
-        action->setToolTip(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
-        action->setStatusTip(tr(action->property(P_APP_ENG_TEXT).toString().toLatin1()));
+        action->setText(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
+        action->setToolTip(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
+        action->setStatusTip(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
     }
 }
 //--------------------------------------------------------------------------------

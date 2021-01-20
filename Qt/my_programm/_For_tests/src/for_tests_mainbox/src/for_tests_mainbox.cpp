@@ -506,13 +506,6 @@ bool MainBox::test(void)
     tabs->setAlert(1);
 
     tabs->show();
-
-//    QWidget *w = new QWidget();
-//    w->setMinimumSize(320, 240);
-//    QVBoxLayout *vbox = new QVBoxLayout();
-//    vbox->addWidget(tabs);
-//    w->setLayout(vbox);
-//    w->show();
 #endif
 
 #if 0

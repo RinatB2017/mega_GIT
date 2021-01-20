@@ -200,7 +200,7 @@ void QtLocalPeer::receiveConnection(void)
     } while (remaining && got >= 0 && socket->waitForReadyRead(2000));
     if (got < 0)
     {
-        qWarning("QtLocalPeer: Message reception failed %s", socket->errorString().toLatin1().constData());
+        qWarning("QtLocalPeer: Message reception failed %s", socket->errorString().toLocal8Bit().constData());
         delete socket;
         return;
     }

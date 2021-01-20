@@ -398,7 +398,7 @@ void MainWindow::load_translations()
     translator_it.locale_name = "it_IT";
     translator_it.language = "Italiano";
     translator_it.property = P_IT;
-    translator_ru.icon_name = P_ICON_IT;
+    translator_it.icon_name = P_ICON_IT;
     l_translators.append(translator_it);
 #endif
 

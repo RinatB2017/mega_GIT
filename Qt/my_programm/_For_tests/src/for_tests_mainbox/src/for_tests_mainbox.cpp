@@ -199,8 +199,8 @@ void MainBox::init(void)
     //---
 
     //---
-//    add_lcd_clock();
-//    add_digital_clock(false);
+    //    add_lcd_clock();
+    //    add_digital_clock(false);
     add_digital_clock();
     //---
 
@@ -496,6 +496,25 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    TabWidgetAlert *tabs = new TabWidgetAlert();
+    tabs->setMinimumSize(320, 240);
+    tabs->addTab(new QWidget(),"TAB 1");
+    tabs->addTab(new QWidget(),"TAB 2");
+    tabs->addTab(new QWidget(),"TAB 3");
+
+    tabs->setAlert(1);
+
+    tabs->show();
+
+//    QWidget *w = new QWidget();
+//    w->setMinimumSize(320, 240);
+//    QVBoxLayout *vbox = new QVBoxLayout();
+//    vbox->addWidget(tabs);
+//    w->setLayout(vbox);
+//    w->show();
+#endif
+
 #if 0
     emit info("Copyright \\251 2020-2025");
 #endif
@@ -560,11 +579,11 @@ bool MainBox::test(void)
 
             out << line << eol;
 
-//            in >> str;
-//            emit info(QString("[%1]").arg(str));
-//            //APP_MAJOR
+            //            in >> str;
+            //            emit info(QString("[%1]").arg(str));
+            //            //APP_MAJOR
 
-//            out << str;
+            //            out << str;
         }
         src_file.close();
         dst_file.close();

@@ -23,6 +23,7 @@
 //--------------------------------------------------------------------------------
 #include "ui_for_tests_mainbox.h"
 #include "mywidget.hpp"
+
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -105,6 +106,121 @@ public:
 
 private:
     QString memory;
+};
+
+//---
+// https://gist.github.com/eyllanesc/4a821d2956b5e2ee841f3eb156da078d
+
+class TabBarAlert : public QTabBar
+{
+    int indexAlert = -1;
+    QColor mColor = Qt::red;
+    Q_OBJECT
+
+public:
+    TabBarAlert(QWidget *parent = Q_NULLPTR) : QTabBar(parent)
+    {
+
+    }
+    void setIndexAlert(int index)
+    {
+        if(indexAlert == index)
+            return;
+        indexAlert = index;
+        update();
+    }
+
+    int getIndexAlert() const
+    {
+        return indexAlert;
+    }
+
+    QColor getColor() const
+    {
+        return mColor;
+    }
+    void setColor(const QColor &color)
+    {
+        if(color == mColor)
+            return;
+        mColor = color;
+        update();
+    }
+
+protected:
+    void paintEvent(QPaintEvent *event)
+    {
+        if(indexAlert> -1 && indexAlert < count())
+        {
+            QStylePainter painter(this);
+            QStyleOptionTab opt;
+
+            for(int i = 0;i < count();i++)
+            {
+                QString text = tabText(i);
+                mColor = Qt::red;
+                QString colorName = mColor.name();
+                initStyleOption(&opt, i);
+
+                if(indexAlert == i)
+                    opt.palette.setColor(QPalette::Button, mColor);
+                painter.drawControl(QStyle::CE_TabBarTabShape, opt);
+                painter.drawControl(QStyle::CE_TabBarTabLabel,opt);
+            }
+        }
+        else
+        {
+            QTabBar::paintEvent(event);
+        }
+    }
+
+};
+
+class TabWidgetAlert : public QTabWidget
+{
+    TabBarAlert *tb = nullptr;
+    QTimer *timer = nullptr;
+    bool on = false;
+    int indexAlert = -1;
+
+    Q_OBJECT
+public:
+    TabWidgetAlert(QWidget *parent = Q_NULLPTR) : QTabWidget(parent)
+    {
+        tb = new TabBarAlert(this);
+        setTabBar(tb);
+        tb->setColor(Qt::black);
+
+        /*
+        *Disable the alert if the current tab matches the alert tab.
+        */
+        connect(this, &TabWidgetAlert::currentChanged, [this](int index)
+        {
+            if(index == tb->getIndexAlert())
+            {
+                tb->setIndexAlert(-1);
+                on = false;
+                timer->stop();
+           }
+        });
+
+        timer = new QTimer(this);
+
+        /*
+        *Create the blink
+        */
+        connect(timer, &QTimer::timeout, [this]()
+        {
+            tb->setIndexAlert(on? indexAlert: -1);
+            on = !on;
+        });
+    }
+
+    void setAlert(int index)
+    {
+        indexAlert = index;
+        timer->start(500);
+    }
 };
 //--------------------------------------------------------------------------------
 namespace Ui {

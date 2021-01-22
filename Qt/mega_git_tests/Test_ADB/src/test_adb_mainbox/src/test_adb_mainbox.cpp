@@ -648,6 +648,7 @@ void MainBox::run_cmd(void)
     QString program = PROG_PROCESS;
     QStringList arguments;
 
+    // https://gist.github.com/davidnunez/1404789
     // adb shell 'pm list packages' | sed 's/.*://g'
 
     arguments << "-s" << ui->cb_devices->currentText();

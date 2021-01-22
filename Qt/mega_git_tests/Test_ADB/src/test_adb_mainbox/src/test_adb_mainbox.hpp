@@ -115,6 +115,8 @@ private:
 
     void f_auto_shot(bool state);
 
+    void run_cmd(void);
+
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);

@@ -101,6 +101,9 @@ void MainBox::init(void)
     connect(ui->btn_adb,                &QPushButton::clicked,  this,   &MainBox::f_adb);
     connect(ui->btn_test,               &QPushButton::clicked,  this,   &MainBox::f_test);
 
+    connect(ui->le_cmd,                 &QLineEdit::returnPressed,  this,   &MainBox::run_cmd);
+    connect(ui->btn_cmd,                &QPushButton::clicked,      this,   &MainBox::run_cmd);
+
     ui->lbl_screenshot->installEventFilter(this);
 
     foreach( QSlider* slider, findChildren< QSlider* >() )
@@ -128,12 +131,6 @@ void MainBox::init(void)
     connect(ui->cb_auto,    &QCheckBox::toggled,    this,   &MainBox::f_auto_shot);
 
     ui->cb_auto->setProperty(NO_BLOCK, true);
-    //---
-
-    //---
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw);
-    mw->add_dock_widget("AutoClicker", "autoclicker_widget", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(ui->autoclicker_widget));
     //---
 
     //---
@@ -214,6 +211,22 @@ void MainBox::init(void)
     connect(ui->slValueTo,          static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spValueTo,          &QSpinBox::setValue);
 
     load_widgets();
+
+#if 0
+    //FIXME если что-то остаётся в MainBox, то доки не запоминаются, надо исправить
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        mw->add_dock_widget("autoclicker",
+                            "autoclicker",
+                            Qt::LeftDockWidgetArea,
+                            ui->frame_autoclicker);
+        mw->add_dock_widget("command",
+                            "command",
+                            Qt::LeftDockWidgetArea,
+                            ui->frame_command);
+    }
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -304,9 +317,9 @@ void MainBox::readData(void)
             QString line = lines.at(n);
             if(line.contains("List of devices attached") == false)
             {
-                emit debug(QString("line [%1]").arg(line));
+                // emit debug(QString("line [%1]").arg(line));
                 QString temp = line.remove("\t").remove("device").trimmed();
-                emit debug(QString("temp [%1]").arg(temp));
+                // emit debug(QString("temp [%1]").arg(temp));
                 if(temp.isEmpty() == false)
                 {
                     sl_data.append(temp);
@@ -622,6 +635,33 @@ bool MainBox::f_test(void)
 {
     emit info("Test");
     return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::run_cmd(void)
+{
+    if(ui->cb_devices->currentText().isEmpty())
+    {
+        emit error("device not selected");
+        return;
+    }
+
+    QString program = PROG_PROCESS;
+    QStringList arguments;
+
+    // adb shell 'pm list packages' | sed 's/.*://g'
+
+    arguments << "-s" << ui->cb_devices->currentText();
+    arguments << "shell";
+    arguments << ui->le_cmd->text();
+
+    block_interface(true);
+    run_program(program, arguments);
+    while(f_busy)
+    {
+        QCoreApplication::processEvents();
+    }
+    block_interface(false);
+    return;
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_auto_shot(bool state)

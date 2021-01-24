@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,51 +18,60 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef OCV_WIDGET_HPP
+#define OCV_WIDGET_HPP
 //--------------------------------------------------------------------------------
+#include <opencv2/objdetect.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
+
+#include <opencv2/opencv.hpp>
+
+using namespace std;
+using namespace cv;
+//--------------------------------------------------------------------------------
+#include "myfiledialog.hpp"
 #include "mywidget.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+    class OCV_widget;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class OCV_widget : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    ~MainBox();
+    explicit OCV_widget(QWidget *parent = nullptr);
+    ~OCV_widget();
+
+signals:
+    bool f_tap(int pos_x, int pos_y);
+
+public slots:
+    void get_pixmap(QPixmap pixmap);
 
 private slots:
-    void choice_test(void);
-    bool test(void);
+    void refreshHSV(void);
 
 private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
+    Ui::OCV_widget *ui;
 
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QComboBox> cb_test;
-    QList<CMD> commands;
+    Mat mOrigImage;
+    QImage image;
 
     void init(void);
-    void createTestBar(void);
+
+    void onLoad(void);
 
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // OCV_WIDGET_HPP

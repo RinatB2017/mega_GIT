@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,44 +18,88 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef DEFINES_HPP
-#define DEFINES_HPP
+#ifndef ADB_WIDGET_HPP
+#define ADB_WIDGET_HPP
 //--------------------------------------------------------------------------------
-#include <QtGlobal>
+#include <QProcess>
 //--------------------------------------------------------------------------------
-//#include "version.hpp"
+#include "mywidget.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
-#define ORGNAME     "Work"
-#define APPNAME     "Test_ADB"
+namespace Ui {
+    class ADB_widget;
+}
+//--------------------------------------------------------------------------------
+class ADB_widget : public MyWidget
+{
+    Q_OBJECT
 
-#define PROG_PROCESS    "adb"
+public:
+    explicit ADB_widget(QWidget *parent = nullptr);
+    ~ADB_widget();
 
-#define P_INTERVAL  "interval"
-#define P_POS_X     "pos_x"
-#define P_POS_Y     "pos_y"
+signals:
+    void r_programm(QString program, QStringList arguments);
+    void set_pixmap(QPixmap pixmap);
+
+public slots:
+    bool f_tap(int pos_x, int pos_y);
+
+private slots:
+    void started(void);
+    void finished(int result);
+    void process_error(QProcess::ProcessError p_error);
+
+    void readData(void);
+
+private:
+    Ui::ADB_widget *ui;
+
+    QPointer<QProcess> myProcess;
+
+    int s_width = 0;
+    int s_height = 0;
+
+    bool f_busy = false;
+    bool binary_data = false;
+    int process_result = 0;
+    QStringList sl_data;
+
+    QStringList sl_commands;
+
+    QPointer <QTimer> timer_autoshot;
+
+    void init(void);
+    void create_process(void);
+
+    void run_program(const QString &program,
+                     const QStringList &arguments);
+
+    bool f_devices(void);
+    void f_create_screenshot(void);
+    bool f_get_screeshot(void);
+    bool f_get_file_screeshot(void);
+    void f_screen_tap(void);
+
+    bool f_swipe(int x1, int y1, int x2, int y2, int delay);
+    bool f_test_swipe_LR(void);
+    bool f_test_swipe_RL(void);
+    bool f_test_swipe_UD(void);
+    bool f_test_swipe_DU(void);
+
+    bool f_adb(void);
+    bool f_test(void);
+
+    void run_cmd(void);
+
+    void f_auto_shot(bool state);
+
+    void f_show_screeshot(const QString &filename);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
+};
 //--------------------------------------------------------------------------------
-#ifdef Q_OS_LINUX
-#   define PICTURE_NAME "/dev/shm/screencap.png"
-#else
-#   define PICTURE_NAME "screencap.png"
-#endif
-//--------------------------------------------------------------------------------
-#define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
-#define QMAKE_TARGET_COMPANY    ORGNAME
-#define QMAKE_TARGET_PRODUCT    APPNAME
-#define QMAKE_TARGET_COPYRIGHT  "Copyright 2015-2020"
-#define RC_ICONS                ":/images/computer.ico"
-//--------------------------------------------------------------------------------
-#define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
-#define VER_FILEVERSION_STR         VER_STR
-#define VER_PRODUCTVERSION          VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
-#define VER_PRODUCTVERSION_STR      VER_STR
-#define VER_FILEDESCRIPTION_STR     APPNAME
-#define VER_INTERNALNAME_STR        APPNAME
-#define VER_LEGALCOPYRIGHT_STR      QMAKE_TARGET_COPYRIGHT
-#define VER_ORIGINALFILENAME_STR    APPNAME
-#define VER_PRODUCTNAME_STR         APPNAME
-//--------------------------------------------------------------------------------
-#define ICON_PROGRAMM   ":/mainwindow/computer.png"
-//--------------------------------------------------------------------------------
-#endif
+#endif // ADB_WIDGET_HPP

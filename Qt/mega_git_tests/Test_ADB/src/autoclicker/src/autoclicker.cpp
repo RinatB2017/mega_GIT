@@ -304,7 +304,7 @@ void AutoClicker::run_command(const QString &data)
 //--------------------------------------------------------------------------------
 void AutoClicker::updateText(void)
 {
-
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
 bool AutoClicker::programm_is_exit(void)

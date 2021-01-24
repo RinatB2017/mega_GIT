@@ -58,6 +58,8 @@ include ($$LIB_PATH2/icons/arrows.pri)
 
 include (src/test_adb_mainbox/test_adb_mainbox.pri)
 include (src/autoclicker/autoclicker.pri)
+include (src/adb_widget/adb_widget.pri)
+include (src/ocv_widget/ocv_widget.pri)
 
 !exists(OBJECTS_DIR) {
 #    VERSION_HEADER = $$PWD/src/version.hpp

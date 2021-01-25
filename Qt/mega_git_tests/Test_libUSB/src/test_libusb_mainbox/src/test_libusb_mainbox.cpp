@@ -20,13 +20,15 @@
 **********************************************************************************/
 #include "ui_test_libusb_mainbox.h"
 //--------------------------------------------------------------------------------
-#include <sys/time.h>
-
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "test_libusb_mainbox.hpp"
 #include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef Q_OS_LINUX
+#   include <sys/time.h>
+#endif
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

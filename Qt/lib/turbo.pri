@@ -63,11 +63,11 @@ macx {
 win32 {
     CONFIG(debug, debug|release) {
         #DESTDIR = bin/debug
-        DESTDIR = c:/Programming/my_programm_bin
+        DESTDIR = c:/Programming/my_programm_bin/$$FOLDER/$$TARGET
     }
     else {
         #DESTDIR = bin/release
-        DESTDIR = c:/Programming/my_programm_bin
+        DESTDIR = c:/Programming/my_programm_bin/$$FOLDER/$$TARGET
     }
 }
 ###############################################################################

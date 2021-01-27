@@ -38,7 +38,6 @@ include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH2/icons/digits.pri)
 
 include (src/test_GrapherBox_mainbox/test_GrapherBox_mainbox.pri)
-
 include (src/testdialog/testdialog.pri)
 
 !exists(OBJECTS_DIR) {

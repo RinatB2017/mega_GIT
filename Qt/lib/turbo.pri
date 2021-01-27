@@ -107,6 +107,11 @@ unix:!macx {
 #CONFIG	 += precompile_header
 #PRECOMPILED_HEADER  = stable.h
 ###############################################################################
+greaterThan(QT_MAJOR_VERSION, 5) {
+    QT += core5compat   # Qt 6.0
+    message(Qt6)
+}
+###############################################################################
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
     DEFINES += HAVE_QT5

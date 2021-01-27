@@ -74,7 +74,7 @@ void MainBox::show_my_IP(void)
             if(ba.contains("Ваш IP адрес"))
             {
                 QString begin_str = "<big id=\"d_clip_button\">";
-                int begin = ba.lastIndexOf(begin_str);
+                int begin = ba.lastIndexOf(begin_str.toLocal8Bit());
                 int end = ba.lastIndexOf("</big>");
                 emit debug(QString("begin %1").arg(begin));
                 emit debug(QString("end %1").arg(end));

@@ -26,6 +26,8 @@
 #else
 #   include <QtGui>
 #endif
+
+#include <QTextCodec>   //FIXME 6.0
 //--------------------------------------------------------------------------------
 namespace Ui {
     class Log_options;

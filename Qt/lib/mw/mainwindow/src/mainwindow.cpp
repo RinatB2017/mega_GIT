@@ -597,11 +597,18 @@ void MainWindow::load_main(void)
 
     QFont font = qApp->font();
     QString font_name;
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+    QFont::Weight font_weight;
+#else
     int font_weight;
+#endif
     int font_size;
 
     beginGroup(P_MAIN);
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+#else
     font_weight = load_value(P_FONT_WEIGHT,   QFont::Normal).toInt();
+#endif
     font_size   = load_value(P_FONT_SIZE,     9).toInt();
     font_name   = load_value(P_FONT_NAME,     "Liberation Sans").toString();
 

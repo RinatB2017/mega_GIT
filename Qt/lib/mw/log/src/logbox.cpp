@@ -828,7 +828,11 @@ void LogBox::load_setting(void)
 
     QFont font;
     QString font_name;
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+    QFont::Weight font_weight;
+#else
     int font_weight = 0;
+#endif
     int font_size = 0;
 
     font_weight = load_value(P_FONT_WEIGHT,   QFont::Normal).toInt();
@@ -839,11 +843,7 @@ void LogBox::load_setting(void)
     if(font_size < 6)  font_size = 6;
 
     font.setFamily(font_name);
-#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
     font.setWeight(font_weight);
-#else
-    font.setWeight(font_weight);
-#endif
     font.setPointSize(font_size);
 
     logBox->setFont(font);

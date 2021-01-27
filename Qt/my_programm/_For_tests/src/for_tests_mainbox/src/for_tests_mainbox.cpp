@@ -396,11 +396,17 @@ void MainBox::test_validator(void)
      * Create a validation regular expression
      * using a regular expression
      */
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+#else
     QRegExpValidator *ipValidator = new QRegExpValidator(ipRegex, this);
+#endif
 
     /* Set Validator on QLineEdit */
     QLineEdit *lineEdit = new QLineEdit();
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+#else
     lineEdit->setValidator(ipValidator);
+#endif
     lineEdit->show();
 }
 //--------------------------------------------------------------------------------

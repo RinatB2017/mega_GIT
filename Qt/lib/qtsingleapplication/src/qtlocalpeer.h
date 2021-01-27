@@ -51,6 +51,8 @@
 #include <windows.h>
 #endif
 
+#include <QRegExp>  //FIXME 6.0
+
 #include "qtlockedfile.h"
 
 class QtLocalPeer : public QObject

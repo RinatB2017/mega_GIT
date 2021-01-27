@@ -609,7 +609,11 @@ void MainWindow::load_main(void)
     if(font_size < 6)  font_size = 6;
 
     font.setFamily(font_name);
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
     font.setWeight(font_weight);
+#else
+    font.setWeight(font_weight);
+#endif
     font.setPointSize(font_size);
 
     font.setBold(false);
@@ -1300,7 +1304,7 @@ bool MainWindow::add_dock_widget(QString title,
 
         QWidget *nw = new QWidget(this);
         QHBoxLayout *hbox = new QHBoxLayout();
-        hbox->setMargin(0);
+        hbox->setContentsMargins(0, 0, 0, 0);
         hbox->setSpacing(0);
 
         widget->setParent(dw);

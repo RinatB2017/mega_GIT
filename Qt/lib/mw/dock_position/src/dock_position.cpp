@@ -38,7 +38,7 @@ Dock_position::Dock_position(const QString &doc_name, QWidget *parent) :
     ui->btn_left->setFixedSize(size, size);
     ui->btn_right->setFixedSize(size, size);
 
-    ui->buttons_layout->setMargin(0);
+    ui->buttons_layout->setContentsMargins(0, 0, 0, 0);
     ui->buttons_layout->setSpacing(0);
 #endif
 

@@ -626,7 +626,7 @@ bool MyWidget::create_pixmap(QWidget *w_left, QWidget *w_central)
         te->setReadOnly(true);
         te->setPlainText(text);
         QVBoxLayout *vbox = new QVBoxLayout();
-        vbox->setMargin(0);
+        vbox->setContentsMargins(0, 0, 0, 0);
         vbox->addWidget(te);
         frame->setLayout(vbox);
         frame->setFixedSize(te->width(), w_central->height());

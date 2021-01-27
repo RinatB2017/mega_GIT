@@ -15,8 +15,9 @@ DEFINES += VER_MINOR=$${VER_MINOR}
 DEFINES += VER_BUILD=$${VER_BUILD}
 DEFINES += VER_PATCH=$${VER_PATCH}
 
-greaterThan(QT_MAJOR_VERSION, 6) {
+greaterThan(QT_MAJOR_VERSION, 5) {
     QT += core5compat   # Qt 6.0
+    message(Qt6)
 }
 
 PROGRAMM_PATH  += \

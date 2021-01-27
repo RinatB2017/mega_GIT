@@ -26,8 +26,11 @@
 #else
 #   include <QtGui>
 #endif
-
-#include <QTextCodec>   //FIXME 6.0
+//--------------------------------------------------------------------------------
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
+#   include <QTextCodec>
+#   include <QRegExp>
+#endif
 //--------------------------------------------------------------------------------
 #include "digital_clock.hpp"
 #include "lcd_clock.hpp"

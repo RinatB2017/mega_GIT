@@ -80,7 +80,7 @@ void LogBox::init(void)
     logBox->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(logBox, &LogBox::customContextMenuRequested,    this,   &LogBox::popup);
 
-    logBox->document()->setMaximumBlockCount(1000);
+//    logBox->document()->setMaximumBlockCount(MAX_BLOCK_CNT);
 }
 //--------------------------------------------------------------------------------
 void LogBox::popup(QPoint)

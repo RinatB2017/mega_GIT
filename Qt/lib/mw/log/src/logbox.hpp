@@ -52,6 +52,8 @@ enum LEVELS
     L_TRACE
 };
 
+//#define MAX_BLOCK_CNT 100000
+
 #define P_FLAG_SHOW_INFO  "flag_show_info"
 #define P_FLAG_SHOW_ERROR "flag_show_error"
 #define P_FLAG_SHOW_DEBUG "flag_show_debug"

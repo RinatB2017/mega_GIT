@@ -101,10 +101,15 @@ void Simple_PTZ_widget::init(void)
     create_socket();
 #endif
 
-    ui->btn_d->setDisabled(true);
-    ui->btn_l->setDisabled(true);
-    ui->btn_r->setDisabled(true);
-    ui->btn_u->setDisabled(true);
+    ui->btn_down->setDisabled(true);
+    ui->btn_left->setDisabled(true);
+    ui->btn_right->setDisabled(true);
+    ui->btn_up->setDisabled(true);
+    ui->btn_left_up->setDisabled(true);
+    ui->btn_left_down->setDisabled(true);
+    ui->btn_right_up->setDisabled(true);
+    ui->btn_right_down->setDisabled(true);
+
     ui->btn_up_down->setDisabled(true);
     ui->btn_left_right->setDisabled(true);
 
@@ -190,15 +195,25 @@ void Simple_PTZ_widget::processFrame(const QVideoFrame &frame)
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::connect_position_widgets(void)
 {
-    connect(ui->btn_l,  &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_left);
-    connect(ui->btn_r,  &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_right);
-    connect(ui->btn_u,  &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_up);
-    connect(ui->btn_d,  &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_down);
+    connect(ui->btn_left,   &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_left);
+    connect(ui->btn_right,  &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_right);
+    connect(ui->btn_up,     &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_up);
+    connect(ui->btn_down,   &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_down);
 
-    connect(ui->btn_l,  &QToolButton::released, this,   &Simple_PTZ_widget::f_stop);
-    connect(ui->btn_r,  &QToolButton::released, this,   &Simple_PTZ_widget::f_stop);
-    connect(ui->btn_u,  &QToolButton::released, this,   &Simple_PTZ_widget::f_stop);
-    connect(ui->btn_d,  &QToolButton::released, this,   &Simple_PTZ_widget::f_stop);
+//    connect(ui->btn_left_up,    &QToolButton::pressed,   this,   &Simple_PTZ_widget::f_left_up);
+//    connect(ui->btn_left_down,  &QToolButton::pressed,   this,   &Simple_PTZ_widget::f_left_down);
+//    connect(ui->btn_right_up,   &QToolButton::pressed,   this,   &Simple_PTZ_widget::f_right_up);
+//    connect(ui->btn_right_down, &QToolButton::pressed,   this,   &Simple_PTZ_widget::f_right_down);
+
+    connect(ui->btn_left,   &QToolButton::released, this,   &Simple_PTZ_widget::f_stop);
+    connect(ui->btn_right,  &QToolButton::released, this,   &Simple_PTZ_widget::f_stop);
+    connect(ui->btn_up,     &QToolButton::released, this,   &Simple_PTZ_widget::f_stop);
+    connect(ui->btn_down,   &QToolButton::released, this,   &Simple_PTZ_widget::f_stop);
+
+    connect(ui->btn_left_up,    &QToolButton::released,   this,   &Simple_PTZ_widget::f_stop);
+    connect(ui->btn_left_down,  &QToolButton::released,   this,   &Simple_PTZ_widget::f_stop);
+    connect(ui->btn_right_up,   &QToolButton::released,   this,   &Simple_PTZ_widget::f_stop);
+    connect(ui->btn_right_down, &QToolButton::released,   this,   &Simple_PTZ_widget::f_stop);
 
     connect(ui->btn_left_right, &QPushButton::clicked,  this,   &Simple_PTZ_widget::f_left_right);
     connect(ui->btn_up_down,    &QPushButton::clicked,  this,   &Simple_PTZ_widget::f_up_down);
@@ -262,10 +277,15 @@ void Simple_PTZ_widget::play(void)
         player->setVolume(0);   //TODO установить громкость
         player->play();
 
-        ui->btn_d->setEnabled(true);
-        ui->btn_l->setEnabled(true);
-        ui->btn_r->setEnabled(true);
-        ui->btn_u->setEnabled(true);
+        ui->btn_up->setEnabled(true);
+        ui->btn_down->setEnabled(true);
+        ui->btn_left->setEnabled(true);
+        ui->btn_right->setEnabled(true);
+        ui->btn_left_up->setEnabled(true);
+        ui->btn_left_down->setEnabled(true);
+        ui->btn_right_up->setEnabled(true);
+        ui->btn_right_down->setEnabled(true);
+
         ui->btn_up_down->setEnabled(true);
         ui->btn_left_right->setEnabled(true);
     }
@@ -302,10 +322,15 @@ void Simple_PTZ_widget::stop(void)
     {
         player->stop();
 
-        ui->btn_d->setDisabled(true);
-        ui->btn_l->setDisabled(true);
-        ui->btn_r->setDisabled(true);
-        ui->btn_u->setDisabled(true);
+        ui->btn_up->setDisabled(true);
+        ui->btn_down->setDisabled(true);
+        ui->btn_left->setDisabled(true);
+        ui->btn_right->setDisabled(true);
+        ui->btn_left_up->setDisabled(true);
+        ui->btn_left_down->setDisabled(true);
+        ui->btn_right_up->setDisabled(true);
+        ui->btn_right_down->setDisabled(true);
+
         ui->btn_up_down->setDisabled(true);
         ui->btn_left_right->setDisabled(true);
     }

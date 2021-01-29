@@ -6,7 +6,6 @@ TEMPLATE  = subdirs
 CONFIG   *= ordered
 
 SUBDIRS += \
-    $$PWD/camera \
     $$PWD/sensors \
     $$PWD/Test_ADC \
     $$PWD/Test_AT \

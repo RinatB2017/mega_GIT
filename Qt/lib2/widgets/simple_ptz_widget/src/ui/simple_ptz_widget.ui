@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>Simple_PTZ_widget</class>
  <widget class="QWidget" name="Simple_PTZ_widget">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>633</width>
-    <height>375</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>PTZ</string>
   </property>
@@ -29,6 +21,9 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="Select_camera_widget" name="select_camera_widget" native="true"/>
+      </item>
       <item>
        <layout class="QGridLayout" name="gridLayout">
         <item row="1" column="1">
@@ -141,6 +136,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QToolButton" name="btn_test">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -212,7 +214,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QToolButton" name="btn_u">
+           <widget class="QToolButton" name="btn_up">
             <property name="icon">
              <iconset resource="../../../../icons/arrows/arrows.qrc">
               <normaloff>:/arrows/up.png</normaloff>:/arrows/up.png</iconset>
@@ -250,7 +252,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QToolButton" name="btn_d">
+           <widget class="QToolButton" name="btn_down">
             <property name="icon">
              <iconset resource="../../../../icons/arrows/arrows.qrc">
               <normaloff>:/arrows/down.png</normaloff>:/arrows/down.png</iconset>
@@ -288,7 +290,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QToolButton" name="btn_l">
+           <widget class="QToolButton" name="btn_left">
             <property name="icon">
              <iconset resource="../../../../icons/arrows/arrows.qrc">
               <normaloff>:/arrows/left.png</normaloff>:/arrows/left.png</iconset>
@@ -326,7 +328,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QToolButton" name="btn_r">
+           <widget class="QToolButton" name="btn_right">
             <property name="icon">
              <iconset resource="../../../../icons/arrows/arrows.qrc">
               <normaloff>:/arrows/right.png</normaloff>:/arrows/right.png</iconset>
@@ -359,7 +361,7 @@
              <x>0</x>
              <y>0</y>
              <width>122</width>
-             <height>261</height>
+             <height>277</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -370,10 +372,35 @@
           </widget>
          </widget>
         </item>
+        <item row="0" column="0">
+         <widget class="QToolButton" name="btn_left_up">
+          <property name="icon">
+           <iconset resource="../../../../icons/arrows/arrows.qrc">
+            <normaloff>:/arrows/up_left.png</normaloff>:/arrows/up_left.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="5">
+         <widget class="QToolButton" name="btn_right_up">
+          <property name="icon">
+           <iconset resource="../../../../icons/arrows/arrows.qrc">
+            <normaloff>:/arrows/up_right.png</normaloff>:/arrows/up_right.png</iconset>
+          </property>
+         </widget>
+        </item>
         <item row="4" column="0">
-         <widget class="QToolButton" name="btn_test">
-          <property name="text">
-           <string>...</string>
+         <widget class="QToolButton" name="btn_left_down">
+          <property name="icon">
+           <iconset resource="../../../../icons/arrows/arrows.qrc">
+            <normaloff>:/arrows/down_left.png</normaloff>:/arrows/down_left.png</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="5">
+         <widget class="QToolButton" name="btn_right_down">
+          <property name="icon">
+           <iconset resource="../../../../icons/arrows/arrows.qrc">
+            <normaloff>:/arrows/down_right.png</normaloff>:/arrows/down_right.png</iconset>
           </property>
          </widget>
         </item>
@@ -409,6 +436,12 @@
    <header>scan_home_network.hpp</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>Select_camera_widget</class>
+   <extends>QWidget</extends>
+   <header>select_camera_widget.hpp</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>le_login</tabstop>
@@ -421,15 +454,19 @@
   <tabstop>btn_screenshot</tabstop>
   <tabstop>le_other_cmd</tabstop>
   <tabstop>btn_other_cmd</tabstop>
+  <tabstop>btn_test</tabstop>
   <tabstop>le_server</tabstop>
   <tabstop>btn_server_connect</tabstop>
   <tabstop>btn_server_disconnect</tabstop>
-  <tabstop>btn_u</tabstop>
+  <tabstop>btn_left_up</tabstop>
+  <tabstop>btn_up</tabstop>
+  <tabstop>btn_right_up</tabstop>
+  <tabstop>btn_left</tabstop>
+  <tabstop>btn_right</tabstop>
+  <tabstop>btn_left_down</tabstop>
+  <tabstop>btn_down</tabstop>
+  <tabstop>btn_right_down</tabstop>
   <tabstop>scrollArea</tabstop>
-  <tabstop>btn_l</tabstop>
-  <tabstop>btn_r</tabstop>
-  <tabstop>btn_d</tabstop>
-  <tabstop>btn_test</tabstop>
  </tabstops>
  <resources>
   <include location="../../../../icons/arrows/arrows.qrc"/>

@@ -94,6 +94,14 @@ void Simple_PTZ_widget::init(void)
     connect(ui->btn_test,       &QPushButton::clicked,
             this,               &Simple_PTZ_widget::f_test);
 
+    ui->btn_up->setProperty(P_CMD, "up");
+    ui->btn_down->setProperty(P_CMD, "down");
+    ui->btn_left->setProperty(P_CMD, "left");
+    ui->btn_right->setProperty(P_CMD, "right");
+    ui->btn_left_right->setProperty(P_CMD, "leftright");
+    ui->btn_up_down->setProperty(P_CMD, "updown");
+    ui->btn_stop->setProperty(P_CMD, "stop");
+
     create_player();
     connect_position_widgets();
 
@@ -195,15 +203,15 @@ void Simple_PTZ_widget::processFrame(const QVideoFrame &frame)
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::connect_position_widgets(void)
 {
-    connect(ui->btn_left,   &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_left);
-    connect(ui->btn_right,  &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_right);
-    connect(ui->btn_up,     &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_up);
-    connect(ui->btn_down,   &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_down);
+    connect(ui->btn_left,   &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_click);
+    connect(ui->btn_right,  &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_click);
+    connect(ui->btn_up,     &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_click);
+    connect(ui->btn_down,   &QToolButton::pressed,  this,   &Simple_PTZ_widget::f_click);
 
-//    connect(ui->btn_left_up,    &QToolButton::pressed,   this,   &Simple_PTZ_widget::f_left_up);
-//    connect(ui->btn_left_down,  &QToolButton::pressed,   this,   &Simple_PTZ_widget::f_left_down);
-//    connect(ui->btn_right_up,   &QToolButton::pressed,   this,   &Simple_PTZ_widget::f_right_up);
-//    connect(ui->btn_right_down, &QToolButton::pressed,   this,   &Simple_PTZ_widget::f_right_down);
+    connect(ui->btn_left_up,    &QToolButton::pressed,   this,   &Simple_PTZ_widget::f_click);
+    connect(ui->btn_left_down,  &QToolButton::pressed,   this,   &Simple_PTZ_widget::f_click);
+    connect(ui->btn_right_up,   &QToolButton::pressed,   this,   &Simple_PTZ_widget::f_click);
+    connect(ui->btn_right_down, &QToolButton::pressed,   this,   &Simple_PTZ_widget::f_click);
 
     connect(ui->btn_left,   &QToolButton::released, this,   &Simple_PTZ_widget::f_stop);
     connect(ui->btn_right,  &QToolButton::released, this,   &Simple_PTZ_widget::f_stop);
@@ -215,10 +223,10 @@ void Simple_PTZ_widget::connect_position_widgets(void)
     connect(ui->btn_right_up,   &QToolButton::released,   this,   &Simple_PTZ_widget::f_stop);
     connect(ui->btn_right_down, &QToolButton::released,   this,   &Simple_PTZ_widget::f_stop);
 
-    connect(ui->btn_left_right, &QPushButton::clicked,  this,   &Simple_PTZ_widget::f_left_right);
-    connect(ui->btn_up_down,    &QPushButton::clicked,  this,   &Simple_PTZ_widget::f_up_down);
+    connect(ui->btn_left_right, &QPushButton::clicked,  this,   &Simple_PTZ_widget::f_click);
+    connect(ui->btn_up_down,    &QPushButton::clicked,  this,   &Simple_PTZ_widget::f_click);
 
-    connect(ui->btn_stop,   &QToolButton::clicked,      this,   &Simple_PTZ_widget::f_stop);
+    connect(ui->btn_stop,   &QToolButton::clicked,      this,   &Simple_PTZ_widget::f_click);
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::f_error(QMediaPlayer::Error err)
@@ -298,6 +306,111 @@ void Simple_PTZ_widget::play(void)
 void Simple_PTZ_widget::f_test(void)
 {
     emit info("Test");
+
+    int id = ui->select_camera_widget->get_id();
+    emit debug(QString("ID: %1").arg(id));
+    if(id >= 0)
+    {
+        show_camera_param(id);
+    }
+}
+//--------------------------------------------------------------------------------
+void Simple_PTZ_widget::show_camera_param(int id)
+{
+    QXmlGet xmlGet;
+    QString filename = CAMERAS_XML;
+    if(!QFile(filename).exists())
+    {
+        emit error(QString(tr("file %1 not exists")).arg(filename));
+        return;
+    }
+
+    QString error_message;
+    int error_line;
+    int error_column;
+    bool ok = xmlGet.load(filename, &error_message, &error_line, &error_column);
+    if(ok == false)
+    {
+        emit error(QString(tr("file %1 not load ERROR: %2 line %3 column %4"))
+                   .arg(filename)
+                   .arg(error_message)
+                   .arg(error_line)
+                   .arg(error_column));
+        return;
+    }
+
+    QStringList sl_commands;
+    sl_commands << "Stop";
+    sl_commands << "Center";
+    sl_commands << "Left";
+    sl_commands << "LeftUp";
+    sl_commands << "Right";
+    sl_commands << "RightUp";
+    sl_commands << "Up";
+    sl_commands << "Down";
+    sl_commands << "LeftDown";
+    sl_commands << "RightDown";
+    sl_commands << "ZoomIn";
+    sl_commands << "ZoomOut";
+
+    while(xmlGet.findNext("Camera"))
+    {
+        xmlGet.descend();
+        int id_value = xmlGet.getAttributeInt("id", -1);
+
+        // emit debug(QString("ud_value: %1").arg(id_value));
+        if(id_value == id)
+        {
+            if (xmlGet.find("Makes"))
+            {
+                xmlGet.descend();
+                while (xmlGet.findNext("Make"))
+                {
+                    QString name = xmlGet.getAttributeString("Name",    "");
+                    QString model = xmlGet.getAttributeString("Model",  "");
+
+                    emit info(QString("name %1 model %2")
+                              .arg(name)
+                              .arg(model));
+                }
+                xmlGet.rise();
+            }
+
+            if (xmlGet.find("CommandURL"))
+            {
+                emit info(QString("CommandURL: %1 ").arg(xmlGet.getString()));
+            }
+
+            if (xmlGet.find("Commands"))
+            {
+                emit info("\tCommands found ");
+                xmlGet.descend();
+                foreach (QString cmd, sl_commands)
+                {
+                    if (xmlGet.find(cmd))
+                    {
+                        emit error(QString("%1: %2 ")
+                                   .arg(cmd)
+                                   .arg(xmlGet.getString()));
+                    }
+                }
+                xmlGet.rise();
+            }
+
+            if (xmlGet.find("ExtendedCommands"))
+            {
+                emit info("\tExtendedCommands found ");
+                xmlGet.descend();
+                while(xmlGet.findNext("Command"))
+                {
+                    emit error(QString("Name: [%1]").arg(xmlGet.getAttributeString("Name", "-1")));
+                }
+                xmlGet.rise();
+            }
+        }
+        xmlGet.rise();
+    }
+    emit info("OK");
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::pause(void)
@@ -340,39 +453,19 @@ void Simple_PTZ_widget::stop(void)
     }
 }
 //--------------------------------------------------------------------------------
+void Simple_PTZ_widget::f_click(void)
+{
+    QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
+    if(btn)
+    {
+        QString cmd = btn->property(P_CMD).toString();
+        send_cmd(cmd);
+    }
+}
+//--------------------------------------------------------------------------------
 void Simple_PTZ_widget::f_stop(void)
 {
     send_cmd("stop");
-}
-//--------------------------------------------------------------------------------
-void Simple_PTZ_widget::f_left(void)
-{
-    send_cmd("left");
-}
-//--------------------------------------------------------------------------------
-void Simple_PTZ_widget::f_right(void)
-{
-    send_cmd("right");
-}
-//--------------------------------------------------------------------------------
-void Simple_PTZ_widget::f_up(void)
-{
-    send_cmd("up");
-}
-//--------------------------------------------------------------------------------
-void Simple_PTZ_widget::f_down(void)
-{
-    send_cmd("down");
-}
-//--------------------------------------------------------------------------------
-void Simple_PTZ_widget::f_left_right(void)
-{
-    send_cmd("leftright");
-}
-//--------------------------------------------------------------------------------
-void Simple_PTZ_widget::f_up_down(void)
-{
-    send_cmd("updown");
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::f_other_cmd(void)

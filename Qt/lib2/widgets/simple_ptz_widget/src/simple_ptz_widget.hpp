@@ -62,11 +62,7 @@ public slots:
     void pause(void);
     void stop(void);
 
-    void f_left(void);
-    void f_right(void);
-    void f_up(void);
-    void f_down(void);
-
+    void f_click(void);
     void f_stop(void);
 
     void f_test(void);
@@ -75,9 +71,6 @@ private slots:
     void onFinished( QNetworkReply* reply );
 
     void f_error(QMediaPlayer::Error err);
-
-    void f_left_right(void);
-    void f_up_down(void);
 
     void f_screenshot(void);
 
@@ -111,6 +104,8 @@ private:
 
     void create_player(void);
     void connect_position_widgets(void);
+
+    void show_camera_param(int id);
 
     void init(void);
 

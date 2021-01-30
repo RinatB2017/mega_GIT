@@ -97,6 +97,8 @@ private:
 
     QString command_url;
 
+    QList<QAbstractButton *>sl_buttons;
+
     void processFrame(QVideoFrame const &frame);
 
     void send_cmd(const QString &cmd);

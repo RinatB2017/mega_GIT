@@ -278,6 +278,11 @@ void Simple_PTZ_widget::enable_buttons(bool state)
 
     ui->btn_zoom_in->setEnabled(state);
     ui->btn_zoom_out->setEnabled(state);
+
+    foreach (QAbstractButton *btn, sl_buttons)
+    {
+        btn->setEnabled(state);
+    }
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::play(void)
@@ -316,7 +321,7 @@ void Simple_PTZ_widget::play(void)
 void Simple_PTZ_widget::f_test(void)
 {
     emit info("Test");
-    emit info(QString("cnt: %1").arg(ui->extended_commands_layout->count()));
+    // emit info(QString("cnt: %1").arg(ui->extended_commands_layout->count()));
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::f_apply_id(void)
@@ -432,6 +437,8 @@ void Simple_PTZ_widget::show_camera_param(int id)
             {
                 ui->extended_commands_layout->takeAt(0);
             }
+            sl_buttons.clear();
+
             if (xmlGet.find("ExtendedCommands"))
             {
                 emit info("\tExtendedCommands found ");
@@ -445,6 +452,8 @@ void Simple_PTZ_widget::show_camera_param(int id)
                     btn->setText(name);
                     btn->setToolTip(xml_cmd);
                     btn->setProperty(P_CMD, xml_cmd);
+                    btn->setDisabled(player->isAvailable());
+                    sl_buttons.append(btn);
                     connect(btn,    &QPushButton::clicked,  this,   &Simple_PTZ_widget::f_click);
 
                     ui->extended_commands_layout->addWidget(btn);
@@ -547,11 +556,20 @@ void Simple_PTZ_widget::send_cmd(const QString &cmd)
                  .arg(ui->ipv4_widget->get_url().port())
                  .arg(cmd));
 #else
+    if(command_url.startsWith("/") == false)
+    {
+        command_url = "/"+command_url;
+    }
+    QString t_cmd = cmd;
+    if(t_cmd.startsWith("?") == false)
+    {
+        t_cmd = "?"+cmd;
+    }
     param.append(QString("http://%1:%2%3%4")
                  .arg(ui->ipv4_widget->get_url().host())
                  .arg(ui->ipv4_widget->get_url().port())
                  .arg(command_url)
-                 .arg(cmd));
+                 .arg(t_cmd));
 #endif
 
     QString concatenated = ui->le_login->text() + ":" + ui->le_password->text(); //username:password

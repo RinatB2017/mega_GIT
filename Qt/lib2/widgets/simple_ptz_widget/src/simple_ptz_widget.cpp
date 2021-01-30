@@ -97,13 +97,13 @@ void Simple_PTZ_widget::init(void)
     connect(ui->select_camera_widget,   &Select_camera_widget::apply_id,
             this,                       &Simple_PTZ_widget::f_test);
 
-    ui->btn_up->setProperty(P_CMD, "up");
-    ui->btn_down->setProperty(P_CMD, "down");
-    ui->btn_left->setProperty(P_CMD, "left");
-    ui->btn_right->setProperty(P_CMD, "right");
-    ui->btn_left_right->setProperty(P_CMD, "leftright");
-    ui->btn_up_down->setProperty(P_CMD, "updown");
-    ui->btn_stop->setProperty(P_CMD, "stop");
+    ui->btn_up->setProperty(P_CMD, "/moveptz.xml?dir=up");
+    ui->btn_down->setProperty(P_CMD, "/moveptz.xml?dir=down");
+    ui->btn_left->setProperty(P_CMD, "/moveptz.xml?dir=left");
+    ui->btn_right->setProperty(P_CMD, "/moveptz.xml?dir=right");
+    ui->btn_left_right->setProperty(P_CMD, "/moveptz.xml?dir=leftright");
+    ui->btn_up_down->setProperty(P_CMD, "/moveptz.xml?dir=updown");
+    ui->btn_stop->setProperty(P_CMD, "/moveptz.xml?dir=stop");
 
     create_player();
     connect_position_widgets();
@@ -356,10 +356,10 @@ void Simple_PTZ_widget::show_camera_param(int id)
     sl_commands.append({ "LeftUp",      ui->btn_left_up });
     sl_commands.append({ "Right",       ui->btn_right });
     sl_commands.append({ "RightUp",     ui->btn_right_up });
-    sl_commands.append({ "Up",          ui->btn_stop });
-    sl_commands.append({ "Down",        ui->btn_stop });
-    sl_commands.append({ "LeftDown",    ui->btn_stop });
-    sl_commands.append({ "RightDown",   ui->btn_stop });
+    sl_commands.append({ "Up",          ui->btn_up });
+    sl_commands.append({ "Down",        ui->btn_down });
+    sl_commands.append({ "LeftDown",    ui->btn_left_down });
+    sl_commands.append({ "RightDown",   ui->btn_right_down });
     sl_commands.append({ "ZoomIn",      nullptr });
     sl_commands.append({ "ZoomOut",     nullptr });
 
@@ -509,7 +509,7 @@ void Simple_PTZ_widget::f_click(void)
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::f_stop(void)
 {
-    send_cmd("stop");
+    send_cmd("/moveptz.xml?dir=stop");
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::f_other_cmd(void)
@@ -551,10 +551,17 @@ void Simple_PTZ_widget::send_cmd(const QString &cmd)
     emit trace(Q_FUNC_INFO);
 
     QString param;
+#if 0
     param.append(QString("http://%1:%2/moveptz.xml?dir=%3")
                  .arg(ui->ipv4_widget->get_url().host())
                  .arg(ui->ipv4_widget->get_url().port())
                  .arg(cmd));
+#else
+    param.append(QString("http://%1:%2%3")
+                 .arg(ui->ipv4_widget->get_url().host())
+                 .arg(ui->ipv4_widget->get_url().port())
+                 .arg(cmd));
+#endif
 
     QString concatenated = ui->le_login->text() + ":" + ui->le_password->text(); //username:password
     //emit debug(QString("%1").arg(concatenated));

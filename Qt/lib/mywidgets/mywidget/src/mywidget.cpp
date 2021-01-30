@@ -39,7 +39,7 @@ MyWidget::MyWidget(QWidget *parent) :
 #endif
 #ifdef QT_DEBUG
     qDebug() << "MyWidget()";
-    QTimer::singleShot(0, this, SLOT(s_test()));
+    //QTimer::singleShot(0, this, SLOT(s_test()));
 #endif
 
     sl_properties_of_widgets.append("isEnabled");

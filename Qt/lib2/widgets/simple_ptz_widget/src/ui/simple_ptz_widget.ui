@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>Simple_PTZ_widget</class>
  <widget class="QWidget" name="Simple_PTZ_widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>632</width>
+    <height>610</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>PTZ</string>
   </property>
@@ -59,43 +67,117 @@
        </layout>
       </item>
       <item>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="1" column="0">
-         <widget class="QPushButton" name="btn_left_right">
-          <property name="text">
-           <string>left-right</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0" colspan="2">
-         <widget class="QPushButton" name="btn_stop">
-          <property name="text">
-           <string>stop</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="btn_up_down">
-          <property name="text">
-           <string>up-down</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QPushButton" name="btn_disconnect">
-          <property name="text">
-           <string>disconnect</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
          <widget class="QPushButton" name="btn_connect">
           <property name="text">
            <string>connect</string>
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QPushButton" name="btn_disconnect">
+          <property name="text">
+           <string>disconnect</string>
+          </property>
+         </widget>
+        </item>
        </layout>
+      </item>
+      <item>
+       <widget class="QScrollArea" name="scrollArea_2">
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>370</width>
+           <height>283</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <item>
+           <widget class="QGroupBox" name="groupBox_2">
+            <property name="title">
+             <string>Commands</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QPushButton" name="btn_left_right">
+               <property name="text">
+                <string>left-right</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btn_up_down">
+               <property name="text">
+                <string>up-down</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btn_center">
+               <property name="text">
+                <string>center</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btn_zoom_in">
+               <property name="text">
+                <string>zoom in</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btn_zoom_out">
+               <property name="text">
+                <string>zoom out</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btn_stop">
+               <property name="text">
+                <string>stop</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="groupBox">
+            <property name="title">
+             <string>ExtendedCommands</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_8">
+             <item>
+              <layout class="QVBoxLayout" name="extended_commands_layout"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -361,7 +443,7 @@
              <x>0</x>
              <y>0</y>
              <width>122</width>
-             <height>277</height>
+             <height>496</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -448,9 +530,6 @@
   <tabstop>le_password</tabstop>
   <tabstop>btn_connect</tabstop>
   <tabstop>btn_disconnect</tabstop>
-  <tabstop>btn_left_right</tabstop>
-  <tabstop>btn_up_down</tabstop>
-  <tabstop>btn_stop</tabstop>
   <tabstop>btn_screenshot</tabstop>
   <tabstop>le_other_cmd</tabstop>
   <tabstop>btn_other_cmd</tabstop>

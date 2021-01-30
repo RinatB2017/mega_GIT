@@ -66,6 +66,7 @@ public slots:
     void f_stop(void);
 
     void f_test(void);
+    void f_apply_id(void);
 
 private slots:
     void onFinished( QNetworkReply* reply );
@@ -94,6 +95,8 @@ private:
 
     QVideoFrame current_frame;
 
+    QString command_url;
+
     void processFrame(QVideoFrame const &frame);
 
     void send_cmd(const QString &cmd);
@@ -103,6 +106,8 @@ private:
     void connect_position_widgets(void);
 
     void show_camera_param(int id);
+
+    void enable_buttons(bool state);
 
     void init(void);
 

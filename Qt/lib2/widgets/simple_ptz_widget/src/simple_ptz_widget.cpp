@@ -95,15 +95,15 @@ void Simple_PTZ_widget::init(void)
             this,               &Simple_PTZ_widget::f_test);
 
     connect(ui->select_camera_widget,   &Select_camera_widget::apply_id,
-            this,                       &Simple_PTZ_widget::f_test);
+            this,                       &Simple_PTZ_widget::f_apply_id);
 
-    ui->btn_up->setProperty(P_CMD, "/moveptz.xml?dir=up");
-    ui->btn_down->setProperty(P_CMD, "/moveptz.xml?dir=down");
-    ui->btn_left->setProperty(P_CMD, "/moveptz.xml?dir=left");
-    ui->btn_right->setProperty(P_CMD, "/moveptz.xml?dir=right");
-    ui->btn_left_right->setProperty(P_CMD, "/moveptz.xml?dir=leftright");
-    ui->btn_up_down->setProperty(P_CMD, "/moveptz.xml?dir=updown");
-    ui->btn_stop->setProperty(P_CMD, "/moveptz.xml?dir=stop");
+    ui->btn_up->setProperty(P_CMD,          "/moveptz.xml?dir=up");
+    ui->btn_down->setProperty(P_CMD,        "/moveptz.xml?dir=down");
+    ui->btn_left->setProperty(P_CMD,        "/moveptz.xml?dir=left");
+    ui->btn_right->setProperty(P_CMD,       "/moveptz.xml?dir=right");
+    ui->btn_left_right->setProperty(P_CMD,  "/moveptz.xml?dir=leftright");
+    ui->btn_up_down->setProperty(P_CMD,     "/moveptz.xml?dir=updown");
+    ui->btn_stop->setProperty(P_CMD,        "/moveptz.xml?dir=stop");
 
     create_player();
     connect_position_widgets();
@@ -112,17 +112,7 @@ void Simple_PTZ_widget::init(void)
     create_socket();
 #endif
 
-    ui->btn_down->setDisabled(true);
-    ui->btn_left->setDisabled(true);
-    ui->btn_right->setDisabled(true);
-    ui->btn_up->setDisabled(true);
-    ui->btn_left_up->setDisabled(true);
-    ui->btn_left_down->setDisabled(true);
-    ui->btn_right_up->setDisabled(true);
-    ui->btn_right_down->setDisabled(true);
-
-    ui->btn_up_down->setDisabled(true);
-    ui->btn_left_right->setDisabled(true);
+    enable_buttons(false);
 
 #ifndef USE_COMMUNICATIONS
     ui->communications_frame->setVisible(false);
@@ -230,6 +220,11 @@ void Simple_PTZ_widget::connect_position_widgets(void)
     connect(ui->btn_up_down,    &QPushButton::clicked,  this,   &Simple_PTZ_widget::f_click);
 
     connect(ui->btn_stop,   &QToolButton::clicked,      this,   &Simple_PTZ_widget::f_click);
+
+    connect(ui->btn_center, &QToolButton::clicked,      this,   &Simple_PTZ_widget::f_click);
+
+    connect(ui->btn_zoom_in,    &QToolButton::clicked,      this,   &Simple_PTZ_widget::f_click);
+    connect(ui->btn_zoom_out,   &QToolButton::clicked,      this,   &Simple_PTZ_widget::f_click);
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::f_error(QMediaPlayer::Error err)
@@ -263,6 +258,28 @@ void Simple_PTZ_widget::onFinished( QNetworkReply* reply )
     }
 }
 //--------------------------------------------------------------------------------
+void Simple_PTZ_widget::enable_buttons(bool state)
+{
+    ui->btn_up->setEnabled(state);
+    ui->btn_down->setEnabled(state);
+    ui->btn_left->setEnabled(state);
+    ui->btn_right->setEnabled(state);
+    ui->btn_left_up->setEnabled(state);
+    ui->btn_left_down->setEnabled(state);
+    ui->btn_right_up->setEnabled(state);
+    ui->btn_right_down->setEnabled(state);
+
+    ui->btn_up_down->setEnabled(state);
+    ui->btn_left_right->setEnabled(state);
+
+    ui->btn_stop->setEnabled(state);
+
+    ui->btn_center->setEnabled(state);
+
+    ui->btn_zoom_in->setEnabled(state);
+    ui->btn_zoom_out->setEnabled(state);
+}
+//--------------------------------------------------------------------------------
 void Simple_PTZ_widget::play(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -288,17 +305,7 @@ void Simple_PTZ_widget::play(void)
         player->setVolume(0);   //TODO установить громкость
         player->play();
 
-        ui->btn_up->setEnabled(true);
-        ui->btn_down->setEnabled(true);
-        ui->btn_left->setEnabled(true);
-        ui->btn_right->setEnabled(true);
-        ui->btn_left_up->setEnabled(true);
-        ui->btn_left_down->setEnabled(true);
-        ui->btn_right_up->setEnabled(true);
-        ui->btn_right_down->setEnabled(true);
-
-        ui->btn_up_down->setEnabled(true);
-        ui->btn_left_right->setEnabled(true);
+        enable_buttons(true);
     }
     else
     {
@@ -309,7 +316,11 @@ void Simple_PTZ_widget::play(void)
 void Simple_PTZ_widget::f_test(void)
 {
     emit info("Test");
-
+    emit info(QString("cnt: %1").arg(ui->extended_commands_layout->count()));
+}
+//--------------------------------------------------------------------------------
+void Simple_PTZ_widget::f_apply_id(void)
+{
     int id = ui->select_camera_widget->get_id();
     emit debug(QString("ID: %1").arg(id));
     if(id >= 0)
@@ -348,10 +359,9 @@ void Simple_PTZ_widget::show_camera_param(int id)
         QPointer<QAbstractButton> btn;
     } COMMAND;
 
-#if 1
     QList<COMMAND> sl_commands;
     sl_commands.append({ "Stop",        ui->btn_stop });
-    sl_commands.append({ "Center",      nullptr });
+    sl_commands.append({ "Center",      ui->btn_center });
     sl_commands.append({ "Left",        ui->btn_left });
     sl_commands.append({ "LeftUp",      ui->btn_left_up });
     sl_commands.append({ "Right",       ui->btn_right });
@@ -360,24 +370,8 @@ void Simple_PTZ_widget::show_camera_param(int id)
     sl_commands.append({ "Down",        ui->btn_down });
     sl_commands.append({ "LeftDown",    ui->btn_left_down });
     sl_commands.append({ "RightDown",   ui->btn_right_down });
-    sl_commands.append({ "ZoomIn",      nullptr });
-    sl_commands.append({ "ZoomOut",     nullptr });
-
-#else
-    QStringList sl_commands;
-    sl_commands << "Stop";
-    sl_commands << "Center";
-    sl_commands << "Left";
-    sl_commands << "LeftUp";
-    sl_commands << "Right";
-    sl_commands << "RightUp";
-    sl_commands << "Up";
-    sl_commands << "Down";
-    sl_commands << "LeftDown";
-    sl_commands << "RightDown";
-    sl_commands << "ZoomIn";
-    sl_commands << "ZoomOut";
-#endif
+    sl_commands.append({ "ZoomIn",      ui->btn_zoom_in });
+    sl_commands.append({ "ZoomOut",     ui->btn_zoom_out });
 
     while(xmlGet.findNext("Camera"))
     {
@@ -387,7 +381,7 @@ void Simple_PTZ_widget::show_camera_param(int id)
         // emit debug(QString("ud_value: %1").arg(id_value));
         if(id_value == id)
         {
-            if (xmlGet.find("Makes"))
+            if(xmlGet.find("Makes"))
             {
                 xmlGet.descend();
                 while (xmlGet.findNext("Make"))
@@ -402,6 +396,11 @@ void Simple_PTZ_widget::show_camera_param(int id)
                 xmlGet.rise();
             }
 
+            if(xmlGet.find("CommandURL"))
+            {
+                command_url = xmlGet.getString("");
+            }
+
             if (xmlGet.find("CommandURL"))
             {
                 emit info(QString("CommandURL: %1 ").arg(xmlGet.getString()));
@@ -411,7 +410,6 @@ void Simple_PTZ_widget::show_camera_param(int id)
             {
                 emit info("\tCommands found ");
                 xmlGet.descend();
-#if 1
                 foreach (COMMAND cmd, sl_commands)
                 {
                     if (xmlGet.find(cmd.cmd))
@@ -427,28 +425,31 @@ void Simple_PTZ_widget::show_camera_param(int id)
                                    .arg(xml_cmd));
                     }
                 }
-#else
-                foreach (QString cmd, sl_commands)
-                {
-                    if (xmlGet.find(cmd))
-                    {
-                        emit error(QString("%1: %2 ")
-                                   .arg(cmd)
-                                   .arg(xmlGet.getString()));
-                    }
-                }
-#endif
                 xmlGet.rise();
             }
 
+            while(ui->extended_commands_layout->count())
+            {
+                ui->extended_commands_layout->takeAt(0);
+            }
             if (xmlGet.find("ExtendedCommands"))
             {
                 emit info("\tExtendedCommands found ");
                 xmlGet.descend();
                 while(xmlGet.findNext("Command"))
                 {
-                    emit error(QString("Name: [%1]").arg(xmlGet.getAttributeString("Name", "-1")));
+                    QString name = xmlGet.getAttributeString("Name", "-1");
+                    QString xml_cmd = xmlGet.getString("-1");
+
+                    QPushButton *btn = new QPushButton(this);
+                    btn->setText(name);
+                    btn->setToolTip(xml_cmd);
+                    btn->setProperty(P_CMD, xml_cmd);
+                    connect(btn,    &QPushButton::clicked,  this,   &Simple_PTZ_widget::f_click);
+
+                    ui->extended_commands_layout->addWidget(btn);
                 }
+                ui->extended_commands_layout->addStretch(1);
                 xmlGet.rise();
             }
         }
@@ -478,18 +479,7 @@ void Simple_PTZ_widget::stop(void)
     if(player->isAvailable())
     {
         player->stop();
-
-        ui->btn_up->setDisabled(true);
-        ui->btn_down->setDisabled(true);
-        ui->btn_left->setDisabled(true);
-        ui->btn_right->setDisabled(true);
-        ui->btn_left_up->setDisabled(true);
-        ui->btn_left_down->setDisabled(true);
-        ui->btn_right_up->setDisabled(true);
-        ui->btn_right_down->setDisabled(true);
-
-        ui->btn_up_down->setDisabled(true);
-        ui->btn_left_right->setDisabled(true);
+        enable_buttons(false);
     }
     else
     {
@@ -557,9 +547,10 @@ void Simple_PTZ_widget::send_cmd(const QString &cmd)
                  .arg(ui->ipv4_widget->get_url().port())
                  .arg(cmd));
 #else
-    param.append(QString("http://%1:%2%3")
+    param.append(QString("http://%1:%2%3%4")
                  .arg(ui->ipv4_widget->get_url().host())
                  .arg(ui->ipv4_widget->get_url().port())
+                 .arg(command_url)
                  .arg(cmd));
 #endif
 

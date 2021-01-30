@@ -501,14 +501,15 @@ void Simple_PTZ_widget::f_click(void)
     QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
     if(btn)
     {
-        QString cmd = btn->property(P_CMD).toString();
-        send_cmd(cmd);
+        cmd = btn->property(P_CMD).toString();
+        send_cmd();
     }
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::f_stop(void)
 {
-    send_cmd("/moveptz.xml?dir=stop");
+    cmd = "/moveptz.xml?dir=stop";
+    send_cmd();
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::f_other_cmd(void)
@@ -545,7 +546,7 @@ void Simple_PTZ_widget::f_screenshot(void)
     delete dlg;
 }
 //--------------------------------------------------------------------------------
-void Simple_PTZ_widget::send_cmd(const QString &cmd)
+void Simple_PTZ_widget::send_cmd(void)
 {
     emit trace(Q_FUNC_INFO);
 
@@ -560,16 +561,15 @@ void Simple_PTZ_widget::send_cmd(const QString &cmd)
     {
         command_url = "/"+command_url;
     }
-    QString t_cmd = cmd;
-    if(t_cmd.startsWith("?") == false)
+    if(cmd.startsWith("?") == false)
     {
-        t_cmd = "?"+cmd;
+        cmd = "?"+cmd;
     }
     param.append(QString("http://%1:%2%3%4")
                  .arg(ui->ipv4_widget->get_url().host())
                  .arg(ui->ipv4_widget->get_url().port())
                  .arg(command_url)
-                 .arg(t_cmd));
+                 .arg(cmd));
 #endif
 
     QString concatenated = ui->le_login->text() + ":" + ui->le_password->text(); //username:password

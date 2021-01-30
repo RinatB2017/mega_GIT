@@ -95,13 +95,16 @@ private:
 
     QVideoFrame current_frame;
 
+    //---
     QString command_url;
+    QString cmd;
+    //---
 
     QList<QAbstractButton *>sl_buttons;
 
     void processFrame(QVideoFrame const &frame);
 
-    void send_cmd(const QString &cmd);
+    void send_cmd(void);
     void send_other_cmd(const QString &cmd);
 
     void create_player(void);

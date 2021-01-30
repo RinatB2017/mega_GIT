@@ -94,6 +94,9 @@ void Simple_PTZ_widget::init(void)
     connect(ui->btn_test,       &QPushButton::clicked,
             this,               &Simple_PTZ_widget::f_test);
 
+    connect(ui->select_camera_widget,   &Select_camera_widget::apply_id,
+            this,                       &Simple_PTZ_widget::f_test);
+
     ui->btn_up->setProperty(P_CMD, "up");
     ui->btn_down->setProperty(P_CMD, "down");
     ui->btn_left->setProperty(P_CMD, "left");
@@ -339,6 +342,28 @@ void Simple_PTZ_widget::show_camera_param(int id)
         return;
     }
 
+    typedef struct
+    {
+        QString cmd;
+        QPointer<QAbstractButton> btn;
+    } COMMAND;
+
+#if 1
+    QList<COMMAND> sl_commands;
+    sl_commands.append({ "Stop",        ui->btn_stop });
+    sl_commands.append({ "Center",      nullptr });
+    sl_commands.append({ "Left",        ui->btn_left });
+    sl_commands.append({ "LeftUp",      ui->btn_left_up });
+    sl_commands.append({ "Right",       ui->btn_right });
+    sl_commands.append({ "RightUp",     ui->btn_right_up });
+    sl_commands.append({ "Up",          ui->btn_stop });
+    sl_commands.append({ "Down",        ui->btn_stop });
+    sl_commands.append({ "LeftDown",    ui->btn_stop });
+    sl_commands.append({ "RightDown",   ui->btn_stop });
+    sl_commands.append({ "ZoomIn",      nullptr });
+    sl_commands.append({ "ZoomOut",     nullptr });
+
+#else
     QStringList sl_commands;
     sl_commands << "Stop";
     sl_commands << "Center";
@@ -352,6 +377,7 @@ void Simple_PTZ_widget::show_camera_param(int id)
     sl_commands << "RightDown";
     sl_commands << "ZoomIn";
     sl_commands << "ZoomOut";
+#endif
 
     while(xmlGet.findNext("Camera"))
     {
@@ -385,6 +411,23 @@ void Simple_PTZ_widget::show_camera_param(int id)
             {
                 emit info("\tCommands found ");
                 xmlGet.descend();
+#if 1
+                foreach (COMMAND cmd, sl_commands)
+                {
+                    if (xmlGet.find(cmd.cmd))
+                    {
+                        QString xml_cmd = xmlGet.getString();
+                        if(cmd.btn)
+                        {
+                            cmd.btn->setProperty(P_CMD, xml_cmd);
+                            cmd.btn->setToolTip(xml_cmd);
+                        }
+                        emit error(QString("%1: %2 ")
+                                   .arg(cmd.cmd)
+                                   .arg(xml_cmd));
+                    }
+                }
+#else
                 foreach (QString cmd, sl_commands)
                 {
                     if (xmlGet.find(cmd))
@@ -394,6 +437,7 @@ void Simple_PTZ_widget::show_camera_param(int id)
                                    .arg(xmlGet.getString()));
                     }
                 }
+#endif
                 xmlGet.rise();
             }
 

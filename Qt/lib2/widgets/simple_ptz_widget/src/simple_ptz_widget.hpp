@@ -69,11 +69,8 @@ public slots:
 
 private slots:
     void onFinished( QNetworkReply* reply );
-
     void f_error(QMediaPlayer::Error err);
-
     void f_screenshot(void);
-
     void f_other_cmd(void);
 
     //---

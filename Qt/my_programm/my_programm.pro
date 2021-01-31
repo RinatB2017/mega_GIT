@@ -11,7 +11,6 @@ SUBDIRS += \
     $$PWD/auto_inc_version_hpp \
     $$PWD/generate_rc \
     $$PWD/CalcMd5 \
-    $$PWD/Check_Network \
     $$PWD/hello_speak \
     $$PWD/Get_acceleration_data \
     $$PWD/Get_MyIP \

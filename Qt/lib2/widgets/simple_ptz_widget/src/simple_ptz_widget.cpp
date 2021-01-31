@@ -394,7 +394,7 @@ void Simple_PTZ_widget::show_camera_param(int id)
                     QString name = xmlGet.getAttributeString("Name",    "");
                     QString model = xmlGet.getAttributeString("Model",  "");
 
-                    emit info(QString("name %1 model %2")
+                    emit debug(QString("name %1 model %2")
                               .arg(name)
                               .arg(model));
                 }
@@ -408,12 +408,12 @@ void Simple_PTZ_widget::show_camera_param(int id)
 
             if (xmlGet.find("CommandURL"))
             {
-                emit info(QString("CommandURL: %1 ").arg(xmlGet.getString()));
+                emit debug(QString("CommandURL: %1 ").arg(xmlGet.getString()));
             }
 
             if (xmlGet.find("Commands"))
             {
-                emit info("\tCommands found ");
+                emit debug("\tCommands found ");
                 xmlGet.descend();
                 foreach (COMMAND cmd, sl_commands)
                 {
@@ -425,7 +425,7 @@ void Simple_PTZ_widget::show_camera_param(int id)
                             cmd.btn->setProperty(P_CMD, xml_cmd);
                             cmd.btn->setToolTip(xml_cmd);
                         }
-                        emit error(QString("%1: %2 ")
+                        emit debug(QString("%1: %2 ")
                                    .arg(cmd.cmd)
                                    .arg(xml_cmd));
                     }
@@ -441,12 +441,12 @@ void Simple_PTZ_widget::show_camera_param(int id)
 
             if (xmlGet.find("ExtendedCommands"))
             {
-                emit info("\tExtendedCommands found ");
+                emit debug("\tExtendedCommands found ");
                 xmlGet.descend();
                 while(xmlGet.findNext("Command"))
                 {
-                    QString name = xmlGet.getAttributeString("Name", "-1");
-                    QString xml_cmd = xmlGet.getString("-1");
+                    QString name = xmlGet.getAttributeString("Name", "");
+                    QString xml_cmd = xmlGet.getString("");
 
                     QPushButton *btn = new QPushButton(this);
                     btn->setText(name);
@@ -464,7 +464,7 @@ void Simple_PTZ_widget::show_camera_param(int id)
         }
         xmlGet.rise();
     }
-    emit info("OK");
+    emit debug("OK");
 }
 //--------------------------------------------------------------------------------
 void Simple_PTZ_widget::pause(void)

@@ -66,21 +66,7 @@ void MainBox::init(void)
 
     load_widgets();
 
-    qDebug() << this->objectName();
-
 #if 0
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->add_dock_widget("MainBox",
-                            "mainbox",
-                            Qt::TopDockWidgetArea,
-                            ui->main_frame);
-        setVisible(false);
-    }
-#endif
-
-#if 1
     //TODO если не вызвать singleShot, то будет странно. Надо исправить позже
     QTimer::singleShot(0, [this]{
         MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
@@ -164,6 +150,7 @@ void MainBox::choice_test(void)
 bool MainBox::test(void)
 {
     emit info("Test");
+    emit info(qApp->applicationVersion());
     return true;
 }
 //--------------------------------------------------------------------------------

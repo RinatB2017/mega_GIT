@@ -72,6 +72,13 @@ int main(int argc, char *argv[])
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
+#ifdef Q_OS_LINUX
+    app.setApplicationVersion(QString("%1.%2.%3.%4")
+                              .arg(VER_MAJOR)
+                              .arg(VER_MINOR)
+                              .arg(VER_PATCH)
+                              .arg(VER_BUILD));
+#endif
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/logo.png");
@@ -80,21 +87,9 @@ int main(int argc, char *argv[])
     Q_ASSERT(splash);
     splash->show();
 
-    
-
     MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
-    //---
-    // Workaround: Removing the /usr/lib/libGL.so.1 file fixes the problem.
-    // qDebug() << "OpenGL Versions Supported: " << QGLFormat::openGLVersionFlags();
-    // QGLFormat format;
-    // format.setVersion(4, 3);
-    // QGLFormat::setDefaultFormat(format);
-    //---
-
-    //MainBox *mainBox = new MainBox(0, splash);
     MainBox *mainBox = new MainBox(main_window, splash);
     Q_ASSERT(mainBox);
 

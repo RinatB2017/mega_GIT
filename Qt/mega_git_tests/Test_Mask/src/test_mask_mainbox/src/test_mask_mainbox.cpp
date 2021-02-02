@@ -70,10 +70,10 @@ void MainBox::init(void)
     });
 #endif
 
-    QTimer::singleShot(1000, [this]{
+    QTimer::singleShot(0, [this]{
 #if 1
     QPixmap maskPix( ":/mask.png" );
-    setMask( maskPix.scaled( size() ).mask() );
+    topLevelWidget()->setMask( maskPix.scaled( size() ).mask() );
 #else
         QPixmap *pixmap = new QPixmap(800, 600);
 
@@ -89,7 +89,7 @@ void MainBox::init(void)
                   .arg(size().width())
                   .arg(size().height()));
 
-        setMask( pixmap->scaled( size() ).mask() );
+        topLevelWidget()->setMask( pixmap->scaled( size() ).mask() );
 #endif
     });
 }
@@ -163,7 +163,37 @@ bool MainBox::test(void)
 {
     emit info("Test");
 
+#if 1
     emit info(qApp->applicationVersion());
+#endif
+
+#if 0
+    QPixmap maskPix( ":/mask.png" );
+    topLevelWidget()->setMask( maskPix.scaled( size() ).mask() );
+#else
+    QPixmap *maskPix = new QPixmap(800, 600);
+
+    maskPix->fill(Qt::transparent);
+
+    QPainter painter(this);
+    painter.begin(maskPix);
+//    painter.fillRect(0, 0, 800, 600, Qt::red);
+    painter.fillRect(0, 0, 800, 300, Qt::red);
+    painter.end();
+
+#if 0
+    if(maskPix->save("/dev/shm/mask.png", "PNG"))
+    {
+        emit info("OK");
+    }
+    else
+    {
+        emit error("FAIL");
+    }
+#else
+    topLevelWidget()->setMask( maskPix->scaled( topLevelWidget()->size() ).mask() );
+#endif
+#endif
 
 #if 0
     QPixmap *pixmap = new QPixmap(800, 600);

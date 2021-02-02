@@ -503,6 +503,10 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    emit info(QString("ver. [%1]").arg(qApp->applicationVersion()));
+#endif
+
+#if 0
     TabWidgetAlert *tabs = new TabWidgetAlert();
     tabs->setMinimumSize(320, 240);
     tabs->addTab(new QWidget(),"TAB 1");

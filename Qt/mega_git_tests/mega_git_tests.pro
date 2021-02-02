@@ -72,6 +72,7 @@ SUBDIRS += \
     $$PWD/Test_Game \
     $$PWD/Test_Games \
     $$PWD/Test_OpenGL \
+    $$PWD/Test_Mask \
     $$PWD/Test_mouse \
     $$PWD/Test_RSA \
     $$PWD/Test_SDL \

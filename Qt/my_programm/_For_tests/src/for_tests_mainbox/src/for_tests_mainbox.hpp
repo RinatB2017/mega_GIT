@@ -53,7 +53,6 @@ public slots:
     void show_timer_count(void);
 
     bool test(void);
-    bool test2(void);
     bool load_qss(void);
 
     void print_mp(QWidget *widget);
@@ -83,11 +82,6 @@ private:
     //---
     QDockWidget *main_dock = nullptr;
     QList<QDockWidget *> l_docks;
-
-    //---
-    QWidget *test_widget = nullptr;
-    void show_test_widget(QWidget *widget);
-    //---
 
     QLineEdit *mdi_widget_0 = nullptr;
     QLineEdit *mdi_widget_1 = nullptr;

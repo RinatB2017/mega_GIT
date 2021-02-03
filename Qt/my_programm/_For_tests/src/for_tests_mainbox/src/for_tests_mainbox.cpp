@@ -288,7 +288,6 @@ void MainBox::createTestBar(void)
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test",             &MainBox::test });
-    commands.append({ id++, "test2",            &MainBox::test2 });
     commands.append({ id++, "load QSS",         &MainBox::load_qss });
     commands.append({ id++, "timer start",      &MainBox::timer_start });
     commands.append({ id++, "timer stop",       &MainBox::timer_stop });
@@ -330,7 +329,7 @@ void MainBox::createTestBar(void)
     connect(cb_block,   &QCheckBox::clicked,    btn_choice_test,    &QComboBox::setDisabled);
     connect(cb_block,   &QCheckBox::clicked,    sb_test,            &QComboBox::setDisabled);
 
-    //    testbar->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    // testbar->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
@@ -341,7 +340,6 @@ void MainBox::choice_test(void)
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
     if(!ok) return;
 
-    // QList<MainBox::CMD>::iterator cmd_it = std::find_if(
     auto cmd_it = std::find_if(
                 commands.begin(),
                 commands.end(),
@@ -492,12 +490,6 @@ bool MainBox::load_qss(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::show_test_widget(QWidget *widget)
-{
-    Q_ASSERT(widget);
-    (*widget).show();
-}
-//--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -507,92 +499,7 @@ bool MainBox::test(void)
 #endif
 
 #if 0
-    TabWidgetAlert *tabs = new TabWidgetAlert();
-    tabs->setMinimumSize(320, 240);
-    tabs->addTab(new QWidget(),"TAB 1");
-    tabs->addTab(new QWidget(),"TAB 2");
-    tabs->addTab(new QWidget(),"TAB 3");
-
-    tabs->setAlert(1);
-
-    tabs->show();
-#endif
-
-#if 0
     emit info("Copyright \\251 2020-2025");
-#endif
-
-#if 0
-    MyFileDialog *dlg = new MyFileDialog("main_box", "main_box");
-    dlg->setNameFilter("Any files (*.*)");
-    dlg->setDirectory(".");
-    if(dlg->exec())
-    {
-        QStringList files = dlg->selectedFiles();
-        QString src_filename = files.at(0);
-        QString dst_filename = QString("%1_new").arg(src_filename);
-
-        emit info(QString("src: %1").arg(src_filename));
-        emit info(QString("dst: %1").arg(dst_filename));
-
-        QFile src_file(src_filename);
-        QFile dst_file(dst_filename);
-
-        if (!src_file.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            emit info(QString("file %1 not open for read"));
-            return false;
-        }
-        if (!dst_file.open(QIODevice::WriteOnly | QIODevice::Text))
-        {
-            emit info(QString("file %1 not open for write"));
-            return false;
-        }
-
-        QTextStream in(&src_file);
-        QTextStream out(&dst_file);
-
-        QString eol = "\n";
-        int index = 0;
-        while(!in.atEnd())
-        {
-            QString line = in.readLine();
-            emit info(QString("[%1]").arg(line));
-
-            index = line.indexOf("APP_MAJOR =");
-            if(index >= 0)
-            {
-                emit error(QString("found in [%1]").arg(line));
-            }
-            index = line.indexOf("APP_MINOR =");
-            if(index >= 0)
-            {
-                emit error(QString("found in [%1]").arg(line));
-            }
-            index = line.indexOf("APP_BUILD =");
-            if(index >= 0)
-            {
-                emit error(QString("found in [%1]").arg(line));
-            }
-            index = line.indexOf("APP_PATCH =");
-            if(index >= 0)
-            {
-                emit error(QString("found in [%1]").arg(line));
-            }
-
-            out << line << eol;
-
-            //            in >> str;
-            //            emit info(QString("[%1]").arg(str));
-            //            //APP_MAJOR
-
-            //            out << str;
-        }
-        src_file.close();
-        dst_file.close();
-    }
-
-    delete dlg;
 #endif
 
 #if 0
@@ -603,12 +510,6 @@ bool MainBox::test(void)
     //emit colorLog("yellow on blue", Qt::yellow, Qt::blue);
 #endif
 
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test2(void)
-{
-    emit info("Test2");
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -494,7 +494,17 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
+    QByteArray ba;
+    ba.append("ab,c");
+    ba.append("def");
+    ba.append("xyz");
+
+    QList<QByteArray> temp = ba.split(',');
+    emit info(QString("[%1]").arg(temp[0].data()));
+#endif
+
+#if 0
     emit info(QString("ver. [%1]").arg(qApp->applicationVersion()));
 #endif
 

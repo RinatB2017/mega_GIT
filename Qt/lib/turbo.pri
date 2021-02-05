@@ -107,8 +107,15 @@ unix:!macx {
 #CONFIG	 += precompile_header
 #PRECOMPILED_HEADER  = stable.h
 ###############################################################################
+#
+# не факт, что это правильно будет в будущем
+#
 greaterThan(QT_MAJOR_VERSION, 5) {
-    QT += core5compat   # Qt 6.0
+    QT += core5compat
+
+    CONFIG += c++1z
+    QMAKE_CXXFLAGS += -std=c++1z
+
     message(Qt6)
 }
 ###############################################################################

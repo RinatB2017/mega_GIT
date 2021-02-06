@@ -494,6 +494,20 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    int cnt = 500;
+    QString temp = QString("%1").arg(cnt, 8, 16, QChar('0'));
+    emit info(temp);
+#endif
+
+#if 0
+    int cnt = 500;
+    QByteArray ba;
+    ba.append((char *)&cnt, sizeof(cnt));
+    QString temp = ba.toHex();
+    emit info(temp);
+#endif
+
 #if 0
     QByteArray ba;
     ba.append("ab,c");

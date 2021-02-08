@@ -33,7 +33,6 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class SimpleWidget;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -105,9 +104,7 @@ private:
     void createTestBar(void);
 
     void test_validator(void);
-    int get_cnt(void);
-
-    void heavy_function(void);
+    int  get_cnt(void);
 
     void updateText(void);
     bool programm_is_exit(void);

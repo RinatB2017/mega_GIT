@@ -104,6 +104,7 @@ void MainBox::init(void)
 
     connect(new_page,   SIGNAL(loadFinished(bool)),         this,   SLOT(s_autorun_js()));
 
+#ifdef USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
@@ -112,6 +113,7 @@ void MainBox::init(void)
         mw->add_dock_widget("view", "frame_view",   Qt::LeftDockWidgetArea, reinterpret_cast<QWidget *>(ui->frame_view));
         setVisible(false);
     }
+#endif
 
     load_widgets();
 }

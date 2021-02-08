@@ -112,14 +112,17 @@ void MainBox::init(void)
     ui->grapher_widget->push_btn_Vertical(true);
     //---
 
+#ifdef USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw);
-
-    mw->add_dock_widget("Graphic",
-                        "graphic",
-                        Qt::LeftDockWidgetArea,
-                        reinterpret_cast<QWidget *>(ui->grapher_widget));
-    setVisible(false);
+    if(mw)
+    {
+        mw->add_dock_widget("Graphic",
+                            "graphic",
+                            Qt::LeftDockWidgetArea,
+                            reinterpret_cast<QWidget *>(ui->grapher_widget));
+        setVisible(false);
+    }
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_data(void)

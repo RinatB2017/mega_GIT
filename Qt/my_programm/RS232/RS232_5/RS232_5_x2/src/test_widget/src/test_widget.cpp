@@ -45,6 +45,7 @@ void TestWidget::init(void)
     ui->setupUi(this);
     createTestBar();
 
+#ifdef USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
@@ -56,6 +57,7 @@ void TestWidget::init(void)
 
         setVisible(false);
     }
+#endif
 
     load_widgets();
 }

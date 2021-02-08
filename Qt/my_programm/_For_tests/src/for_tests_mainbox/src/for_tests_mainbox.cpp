@@ -23,9 +23,9 @@
 #include <algorithm>    // std::find_if
 #include <vector>       // std::vector
 
+#include "for_tests_mainbox.hpp"
 #include "mysplashscreen.hpp"
 #include "mymainwindow.hpp"
-#include "for_tests_mainbox.hpp"
 #include "myfiledialog.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
@@ -152,21 +152,6 @@ void MainBox::init(void)
 
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
-
-    //---
-#if 0
-    QElapsedTimer timer;
-    for(int n=0; n<10; n++)
-    {
-        splash->showMessage(QString("test %1").arg(n));
-        timer.start();
-        while(timer.elapsed() < 1000)
-        {
-            QCoreApplication::processEvents();
-        }
-    }
-#endif
-    //---
 
 #if 1
     //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -450,23 +435,6 @@ void MainBox::show_timer_count(void)
     emit info(QString("cnt %1").arg(cnt++));
 }
 //--------------------------------------------------------------------------------
-void MainBox::heavy_function(void)
-{
-    QElapsedTimer timer;
-    int cnt = 9;
-    while(cnt > 0)
-    {
-        timer.start();
-        while(timer.elapsed() < 1000)
-        {
-
-        }
-        emit info(QString("%1").arg(cnt));
-        cnt--;
-    }
-    emit info("OK");
-}
-//--------------------------------------------------------------------------------
 bool MainBox::load_qss(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -495,30 +463,6 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
-    int cnt = 500;
-    QString temp = QString("%1").arg(cnt, 8, 16, QChar('0'));
-    emit info(temp);
-#endif
-
-#if 0
-    int cnt = 500;
-    QByteArray ba;
-    ba.append((char *)&cnt, sizeof(cnt));
-    QString temp = ba.toHex();
-    emit info(temp);
-#endif
-
-#if 0
-    QByteArray ba;
-    ba.append("ab,c");
-    ba.append("def");
-    ba.append("xyz");
-
-    QList<QByteArray> temp = ba.split(',');
-    emit info(QString("[%1]").arg(temp[0].data()));
-#endif
-
-#if 0
     emit info(QString("ver. [%1]").arg(qApp->applicationVersion()));
 #endif
 

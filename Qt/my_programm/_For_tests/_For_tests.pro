@@ -28,7 +28,6 @@ SOURCES += \
     main.cpp
 
 RESOURCES += \
-    $$PWD/images/puzzle/puzzle.qrc \
     $$PWD/images/images.qrc \
     $$PWD/images/bullets/bullets.qrc \
     $$PWD/ico/icons.qrc \

@@ -198,10 +198,14 @@ void MainBox::createDockWidgets(void)
     QWidget *w2 = new QWidget(this);
     w2->setLayout(vbox2);
 
+#ifdef USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw);
-    mw->add_dock_widget("Main",     "main_control",     Qt::LeftDockWidgetArea,  reinterpret_cast<QWidget *>(w1));
-    mw->add_dock_widget("Control",  "control_control",  Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(w2));
+    if(mw)
+    {
+        mw->add_dock_widget("Main",     "main_control",     Qt::LeftDockWidgetArea,  reinterpret_cast<QWidget *>(w1));
+        mw->add_dock_widget("Control",  "control_control",  Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(w2));
+    }
+#endif
 }
 //--------------------------------------------------------------------------------
 #if 0

@@ -61,13 +61,14 @@ void MainBox::init(void)
     init_grapher();
     init_gl_widget();
 
+#ifdef USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw);
     if(mw)
     {
         mw->add_dock_widget("main", "main", Qt::LeftDockWidgetArea, reinterpret_cast<QWidget *>(ui->main_frame));
         setFixedSize(0, 0);
     }
+#endif
 
     load_widgets();
 }

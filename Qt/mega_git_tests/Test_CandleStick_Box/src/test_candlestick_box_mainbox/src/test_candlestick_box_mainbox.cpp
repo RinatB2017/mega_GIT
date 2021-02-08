@@ -78,12 +78,14 @@ void MainBox::init(void)
     init_process();
     load_widgets();
 
+#ifdef USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     if(mw)
     {
         mw->add_dock_widget("CandleStickBox", "candlestickbox", Qt::LeftDockWidgetArea, reinterpret_cast<QWidget *>(ui->CandleStick_widget));
         setVisible(false);
     }
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_process(void)

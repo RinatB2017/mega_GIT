@@ -146,10 +146,13 @@ void MainBox::init_grapher_data(void)
 
     curve_data = grapher_data->add_curve("data");
 
+#ifdef USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw);
-
-    mw->add_dock_widget("Grapher data", "grapher_data", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(grapher_data));
+    if(mw)
+    {
+        mw->add_dock_widget("Grapher data", "grapher_data", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(grapher_data));
+    }
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_grapher_profit(void)
@@ -175,10 +178,13 @@ void MainBox::init_grapher_profit(void)
 
     curve_profit = grapher_profit->add_curve("profit");
 
+#ifdef USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw);
-
-    mw->add_dock_widget("Grapher profit", "grapher_profit", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(grapher_profit));
+    if(mw)
+    {
+        mw->add_dock_widget("Grapher profit", "grapher_profit", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(grapher_profit));
+    }
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_widgets(void)

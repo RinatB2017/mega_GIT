@@ -95,37 +95,41 @@ void MainBox::init(void)
 void MainBox::add_serial0(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw);
-
-    Mesh_control *control0 = new Mesh_control("control0", this);
-    mw->add_dock_widget("Serial0", "serial0", Qt::LeftDockWidgetArea,   reinterpret_cast<QWidget *>(control0));
+    if(mw)
+    {
+        Mesh_control *control0 = new Mesh_control("control0", this);
+        mw->add_dock_widget("Serial0", "serial0", Qt::LeftDockWidgetArea,   reinterpret_cast<QWidget *>(control0));
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::add_serial1(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw);
-
-    Mesh_control *control1 = new Mesh_control("control1", this);
-    mw->add_dock_widget("Serial1", "serial1", Qt::RightDockWidgetArea,   reinterpret_cast<QWidget *>(control1));
+    if(mw)
+    {
+        Mesh_control *control1 = new Mesh_control("control1", this);
+        mw->add_dock_widget("Serial1", "serial1", Qt::RightDockWidgetArea,   reinterpret_cast<QWidget *>(control1));
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::add_serial2(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw);
-
-    Mesh_control *control2 = new Mesh_control("control2", this);
-    mw->add_dock_widget("Serial2", "serial2", Qt::LeftDockWidgetArea,   reinterpret_cast<QWidget *>(control2));
+    if(mw)
+    {
+        Mesh_control *control2 = new Mesh_control("control2", this);
+        mw->add_dock_widget("Serial2", "serial2", Qt::LeftDockWidgetArea,   reinterpret_cast<QWidget *>(control2));
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::add_serial3(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw);
-
-    Mesh_control *control3 = new Mesh_control("control3", this);
-    mw->add_dock_widget("Serial3", "serial3", Qt::RightDockWidgetArea,   reinterpret_cast<QWidget *>(control3));
+    if(mw)
+    {
+        Mesh_control *control3 = new Mesh_control("control3", this);
+        mw->add_dock_widget("Serial3", "serial3", Qt::RightDockWidgetArea,   reinterpret_cast<QWidget *>(control3));
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

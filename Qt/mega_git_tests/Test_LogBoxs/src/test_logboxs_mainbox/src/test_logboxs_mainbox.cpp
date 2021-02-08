@@ -70,7 +70,7 @@ void MainBox::init(void)
 
     load_widgets();
 
-#if 0
+#ifdef USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {

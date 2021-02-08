@@ -60,18 +60,19 @@ void MainBox::init(void)
     init_gl_widget();
     init_serial_widget();
 
-#if 1
+#ifdef USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    Q_ASSERT(mw);
-
-    mw->add_dock_widget("GL widget",
-                        "gl_widget",
-                        Qt::RightDockWidgetArea,
-                        reinterpret_cast<QWidget *>(ui->gl_frame));
-    mw->add_dock_widget("Grapher widget",
-                        "grapher_widget",
-                        Qt::RightDockWidgetArea,
-                        reinterpret_cast<QWidget *>(ui->grapher_widget));
+    if(mw)
+    {
+        mw->add_dock_widget("GL widget",
+                            "gl_widget",
+                            Qt::RightDockWidgetArea,
+                            reinterpret_cast<QWidget *>(ui->gl_frame));
+        mw->add_dock_widget("Grapher widget",
+                            "grapher_widget",
+                            Qt::RightDockWidgetArea,
+                            reinterpret_cast<QWidget *>(ui->grapher_widget));
+    }
 #endif
 
 //#ifdef Q_OS_WIN

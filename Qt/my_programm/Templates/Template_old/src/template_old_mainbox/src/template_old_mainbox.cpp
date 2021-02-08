@@ -69,6 +69,7 @@ void MainBox::init(void)
 #if 0
     //TODO если не вызвать singleShot, то будет странно. Надо исправить позже
     QTimer::singleShot(0, [this]{
+#ifdef USE_DOCK_WIDGETS
         MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
         if(mw)
         {
@@ -78,6 +79,7 @@ void MainBox::init(void)
                                 this);
             //            setVisible(false);    //TODO не надо это разкомментировать
         }
+#endif
     });
 #endif
 }

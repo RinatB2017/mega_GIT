@@ -71,6 +71,7 @@ void MainBox::init(void)
 
     connect(ui->tcp_widget, &TCP_Server::output,    this,   &MainBox::info);
 
+#ifdef USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
@@ -78,6 +79,7 @@ void MainBox::init(void)
         mw->add_dock_widget("wifi",     "wifi",     Qt::LeftDockWidgetArea, reinterpret_cast<QWidget *>(ui->wifi_framewidget));
         mw->add_dock_widget("HLK-RM04", "HLK-RM04", Qt::LeftDockWidgetArea, reinterpret_cast<QWidget *>(ui->hlk_rm04_widget));
     }
+#endif
 
     //setLayout(main_layout);
 

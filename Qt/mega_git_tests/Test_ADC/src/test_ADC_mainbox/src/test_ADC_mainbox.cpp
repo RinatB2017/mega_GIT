@@ -64,6 +64,7 @@ void MainBox::init(void)
     ui->serial_widget->set_fix_baudrate(57600);
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_ADC(QByteArray)));
 
+#ifdef USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
@@ -73,6 +74,7 @@ void MainBox::init(void)
                             reinterpret_cast<QWidget *>(ui->main_frame));
         setVisible(false);
     }
+#endif
 
     load_widgets();
 }

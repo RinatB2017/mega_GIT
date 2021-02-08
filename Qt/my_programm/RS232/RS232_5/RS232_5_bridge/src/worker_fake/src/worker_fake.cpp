@@ -48,11 +48,13 @@ void Worker_fake::init(void)
     QRegExpValidator *validator = new QRegExpValidator(regex, this);
     ui->le_hex->setValidator(validator);
 
+#ifdef USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
         mw->add_dock_widget("FAKE log", "fake_log_dock",  Qt::BottomDockWidgetArea, this);
     }
+#endif
 }
 //--------------------------------------------------------------------------------
 void Worker_fake::input(QByteArray data)

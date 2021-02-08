@@ -60,7 +60,7 @@ void MainBox::init(void)
 
     load_widgets();
 
-#if 1
+#ifdef USE_DOCK_WIDGETS
     //FIXME если что-то остаётся в MainBox, то доки не запоминаются, надо исправить
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)

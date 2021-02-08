@@ -56,6 +56,7 @@ void MainBox::init(void)
     ui->browser_widget->setUrl(QUrl("http://radio.garden/"));
     ui->browser_widget->run();
 
+#ifdef USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
@@ -65,6 +66,7 @@ void MainBox::init(void)
                             reinterpret_cast<QWidget *>(ui->browser_widget));
         setVisible(false);
     }
+#endif
 
     updateText();
     load_widgets();

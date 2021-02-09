@@ -54,24 +54,54 @@ void Show_HSV_color::init(void)
     ui->sl_G->setRange(0, 255);
     ui->sl_B->setRange(0, 255);
 
-    connect(ui->sl_H,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->lcd_H,  static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
-    connect(ui->sl_S,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->lcd_S,  static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
-    connect(ui->sl_V,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->lcd_V,  static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
+    ui->lcd_H->setProperty(NO_SAVE, true);
+    ui->lcd_H_hex->setProperty(NO_SAVE, true);
+    ui->lcd_S->setProperty(NO_SAVE, true);
+    ui->lcd_S_hex->setProperty(NO_SAVE, true);
+    ui->lcd_V->setProperty(NO_SAVE, true);
+    ui->lcd_V_hex->setProperty(NO_SAVE, true);
+    ui->lcd_R->setProperty(NO_SAVE, true);
+    ui->lcd_R_hex->setProperty(NO_SAVE, true);
+    ui->lcd_G->setProperty(NO_SAVE, true);
+    ui->lcd_G_hex->setProperty(NO_SAVE, true);
+    ui->lcd_B->setProperty(NO_SAVE, true);
+    ui->lcd_B_hex->setProperty(NO_SAVE, true);
 
-    connect(ui->sl_R,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->lcd_R,  static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
-    connect(ui->sl_G,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->lcd_G,  static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
-    connect(ui->sl_B,   static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->lcd_B,  static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
+    connect(ui->sl_H,   &QSlider::valueChanged, this,   &Show_HSV_color::show_H);
+    connect(ui->sl_S,   &QSlider::valueChanged, this,   &Show_HSV_color::show_S);
+    connect(ui->sl_V,   &QSlider::valueChanged, this,   &Show_HSV_color::show_V);
 
-    connect(ui->sl_H,   &QSlider::sliderMoved, this,   &Show_HSV_color::update_color_HSV);
-    connect(ui->sl_S,   &QSlider::sliderMoved, this,   &Show_HSV_color::update_color_HSV);
-    connect(ui->sl_V,   &QSlider::sliderMoved, this,   &Show_HSV_color::update_color_HSV);
+    connect(ui->sl_R,   &QSlider::valueChanged, this,   &Show_HSV_color::show_R);
+    connect(ui->sl_G,   &QSlider::valueChanged, this,   &Show_HSV_color::show_G);
+    connect(ui->sl_B,   &QSlider::valueChanged, this,   &Show_HSV_color::show_B);
 
-    connect(ui->sl_R,   &QSlider::sliderMoved, this,   &Show_HSV_color::update_color_RGB);
-    connect(ui->sl_G,   &QSlider::sliderMoved, this,   &Show_HSV_color::update_color_RGB);
-    connect(ui->sl_B,   &QSlider::sliderMoved, this,   &Show_HSV_color::update_color_RGB);
+    connect(ui->sl_H,   &QSlider::sliderMoved,  this,   &Show_HSV_color::update_color_HSV);
+    connect(ui->sl_S,   &QSlider::sliderMoved,  this,   &Show_HSV_color::update_color_HSV);
+    connect(ui->sl_V,   &QSlider::sliderMoved,  this,   &Show_HSV_color::update_color_HSV);
 
-    //---
-#if 1
+    connect(ui->sl_R,   &QSlider::sliderMoved,  this,   &Show_HSV_color::update_color_RGB);
+    connect(ui->sl_G,   &QSlider::sliderMoved,  this,   &Show_HSV_color::update_color_RGB);
+    connect(ui->sl_B,   &QSlider::sliderMoved,  this,   &Show_HSV_color::update_color_RGB);
+
+    update_image();
+
+    ui->color_label->installEventFilter(this);
+
+    QList<QLCDNumber *> l_lcd = findChildren<QLCDNumber *>();
+    foreach (QLCDNumber *lcd, l_lcd)
+    {
+        lcd->setStyleSheet("background:black; color:lightgreen;");
+    }
+
+    load_widgets();
+
+    QTimer::singleShot(0, [this]{
+        update_color_HSV();
+    });
+}
+//--------------------------------------------------------------------------------
+void Show_HSV_color::update_image(void)
+{
     int max_x = 360;
     int max_y = 20;
     QImage *image = new QImage(max_x, max_y, QImage::Format_RGB32);
@@ -84,23 +114,6 @@ void Show_HSV_color::init(void)
         }
     }
     ui->color_label->setPixmap(QPixmap::fromImage(*image));
-    ui->color_label->installEventFilter(this);
-#endif
-
-#if 1
-    QList<QLCDNumber *> l_lcd = findChildren<QLCDNumber *>();
-    foreach (QLCDNumber *lcd, l_lcd)
-    {
-        lcd->setStyleSheet("background:black; color:lightgreen;");
-    }
-#endif
-    //---
-
-    load_widgets();
-
-    QTimer::singleShot(0, [this]{
-        update_color_HSV();
-    });
 }
 //--------------------------------------------------------------------------------
 void Show_HSV_color::update_color_HSV(void)
@@ -154,6 +167,42 @@ void Show_HSV_color::set_color(QColor color)
     ui->sl_B->setValue(color.blue());
 
     update_color_RGB();
+}
+//--------------------------------------------------------------------------------
+void Show_HSV_color::show_H(int value)
+{
+    ui->lcd_H->display(value);
+    ui->lcd_H_hex->display(QString("%1").arg(value, 2, 16, QChar('0')));
+}
+//--------------------------------------------------------------------------------
+void Show_HSV_color::show_S(int value)
+{
+    ui->lcd_S->display(value);
+    ui->lcd_S_hex->display(QString("%1").arg(value, 2, 16, QChar('0')));
+}
+//--------------------------------------------------------------------------------
+void Show_HSV_color::show_V(int value)
+{
+    ui->lcd_V->display(value);
+    ui->lcd_V_hex->display(QString("%1").arg(value, 2, 16, QChar('0')));
+}
+//--------------------------------------------------------------------------------
+void Show_HSV_color::show_R(int value)
+{
+    ui->lcd_R->display(value);
+    ui->lcd_R_hex->display(QString("%1").arg(value, 2, 16, QChar('0')));
+}
+//--------------------------------------------------------------------------------
+void Show_HSV_color::show_G(int value)
+{
+    ui->lcd_G->display(value);
+    ui->lcd_G_hex->display(QString("%1").arg(value, 2, 16, QChar('0')));
+}
+//--------------------------------------------------------------------------------
+void Show_HSV_color::show_B(int value)
+{
+    ui->lcd_B->display(value);
+    ui->lcd_B_hex->display(QString("%1").arg(value, 2, 16, QChar('0')));
 }
 //--------------------------------------------------------------------------------
 bool Show_HSV_color::eventFilter(QObject *obj, QEvent *event)

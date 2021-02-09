@@ -43,11 +43,20 @@ private:
     void init(void);
     void update_color_RGB(void);
     void update_color_HSV(void);
+    void update_image(void);
 
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
+
+    void show_H(int value);
+    void show_S(int value);
+    void show_V(int value);
+
+    void show_R(int value);
+    void show_G(int value);
+    void show_B(int value);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

@@ -56,7 +56,7 @@ private:
     int t_min  = 0;
     int t_sec  = 0;
 
-    QSettings *settings = nullptr;
+    QPointer<QSettings> settings;
 
     void init(void);
     void correct_time(void);

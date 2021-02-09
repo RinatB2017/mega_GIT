@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = Template_old
 
+FOLDER  = _Templates
+
 VER_MAJOR = 1
 VER_MINOR = 0
 VER_PATCH = 1
@@ -14,8 +16,6 @@ DEFINES += VER_MAJOR=$${VER_MAJOR}
 DEFINES += VER_MINOR=$${VER_MINOR}
 DEFINES += VER_BUILD=$${VER_BUILD}
 DEFINES += VER_PATCH=$${VER_PATCH}
-
-FOLDER  = _Templates
 
 DEPENDPATH  += \
     $$PWD/src

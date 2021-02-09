@@ -42,7 +42,7 @@
 #include <QMatrix4x4>
 #include <QVector3D>
 
-#include <qmath.h>
+#include <qmath.h"
 
 #include "qtlogo.h"
 

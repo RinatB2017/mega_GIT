@@ -49,7 +49,7 @@
 ****************************************************************************/
 
 #include "logo.h"
-#include <qmath.h>
+#include <qmath.h"
 
 Logo::Logo()
     : m_count(0)

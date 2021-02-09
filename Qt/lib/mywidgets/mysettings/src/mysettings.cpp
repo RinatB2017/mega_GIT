@@ -21,7 +21,7 @@
 #include <QtGlobal>
 
 #ifdef Q_OS_LINUX
-#   include </usr/include/linux/stddef.h"
+#   include </usr/include/linux/stddef.h>
 #endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp" //FIXME позже надо убрать отсуда

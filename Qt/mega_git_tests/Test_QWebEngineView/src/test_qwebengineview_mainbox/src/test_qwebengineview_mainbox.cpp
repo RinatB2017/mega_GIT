@@ -100,7 +100,8 @@ void MainBox::init(void)
     {
         mw->add_dock_widget("JS", "js_dock", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(ui->groupBox_js));
     }
-#else
+#endif
+#if 0
     QSplitter *splitter = new QSplitter(Qt::Horizontal);
     splitter->setObjectName("splitter");
     splitter->setChildrenCollapsible(false);

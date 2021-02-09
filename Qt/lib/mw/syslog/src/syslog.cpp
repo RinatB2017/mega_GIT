@@ -19,7 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #ifdef Q_OS_LINUX
-#   include </usr/include/syslog.h"
+#   include </usr/include/syslog.h>
 #endif
 //--------------------------------------------------------------------------------
 #include "ui_syslog.h"

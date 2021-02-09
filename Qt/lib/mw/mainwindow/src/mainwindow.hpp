@@ -44,7 +44,7 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
-#   include <syslog.h"
+#   include <syslog.h>
 #endif
 #if defined Q_OS_WIN || defined Q_OS_MAC
 #   define LOG_EMERG       0       /* system is unusable */

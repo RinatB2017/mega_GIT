@@ -36,7 +36,8 @@
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   define PICTURE_NAME "/dev/shm/screencap.png"
-#else
+#endif
+#ifdef Q_OS_WIN
 #   define PICTURE_NAME "screencap.png"
 #endif
 //--------------------------------------------------------------------------------

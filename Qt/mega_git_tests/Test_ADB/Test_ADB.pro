@@ -35,7 +35,7 @@ win32 {
     QMAKE_TARGET_COPYRIGHT = "Copyright \\251 2020-2025"
     QMAKE_TARGET_DESCRIPTION = "my description"
 
-    RC_ICONS = ico/computer.ico # нужно, чтобы создался фал .rc автоматом
+    RC_ICONS = ico/computer.ico # нужно, чтобы создался файл .rc автоматом
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win
@@ -61,10 +61,10 @@ include (src/autoclicker/autoclicker.pri)
 include (src/adb_widget/adb_widget.pri)
 include (src/ocv_widget/ocv_widget.pri)
 
-!exists(OBJECTS_DIR) {
+#!exists(OBJECTS_DIR) {
 #    VERSION_HEADER = $$PWD/src/version.hpp
 #    message($$VERSION_HEADER)
 #    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#}
 
 VPATH = $$INCLUDEPATH

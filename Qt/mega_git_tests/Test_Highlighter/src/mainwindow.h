@@ -48,82 +48,34 @@
   **
   ****************************************************************************/
 
-#include <QtWidgets>
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
-#include "mainwindow.h"
+#include "highlighter.h"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+#include <QMainWindow>
+
+class QTextEdit;
+
+class MainWindow : public QMainWindow
 {
-    setupFileMenu();
-    setupHelpMenu();
-    setupEditor();
+    Q_OBJECT
 
-    setCentralWidget(editor);
-    setWindowTitle(tr("Syntax Highlighter"));
-}
+public:
+    MainWindow(QWidget *parent = nullptr);
 
-void MainWindow::about()
-{
-    QMessageBox::about(this, tr("About Syntax Highlighter"),
-                       tr("<p>The <b>Syntax Highlighter</b> example shows how " \
-                          "to perform simple syntax highlighting by subclassing " \
-                          "the QSyntaxHighlighter class and describing " \
-                          "highlighting rules using regular expressions.</p>"));
-}
+public slots:
+    void about();
+    void newFile();
+    void openFile(const QString &path = QString());
 
-void MainWindow::newFile()
-{
-    editor->clear();
-}
+private:
+    void setupEditor();
+    void setupFileMenu();
+    void setupHelpMenu();
 
-void MainWindow::openFile(const QString &path)
-{
-    QString fileName = path;
+    QTextEdit *editor;
+    Highlighter *highlighter;
+};
 
-    if (fileName.isNull())
-        fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "", "C++ Files (*.cpp *.h)");
-
-    if (!fileName.isEmpty()) {
-        QFile file(fileName);
-        if (file.open(QFile::ReadOnly | QFile::Text))
-            editor->setPlainText(file.readAll());
-    }
-}
-
-void MainWindow::setupEditor()
-{
-    QFont font;
-    font.setFamily("Courier");
-    font.setFixedPitch(true);
-    font.setPointSize(10);
-
-    editor = new QTextEdit;
-    editor->setFont(font);
-
-    highlighter = new Highlighter(editor->document());
-
-    //QFile file("mainwindow.h");
-    QFile file("noname.js");
-    if (file.open(QFile::ReadOnly | QFile::Text))
-        editor->setPlainText(file.readAll());
-}
-
-void MainWindow::setupFileMenu()
-{
-    QMenu *fileMenu = new QMenu(tr("&File"), this);
-    menuBar()->addMenu(fileMenu);
-
-    fileMenu->addAction(tr("&New"), this, SLOT(newFile()), QKeySequence::New);
-    fileMenu->addAction(tr("&Open..."), this, SLOT(openFile()), QKeySequence::Open);
-    fileMenu->addAction(tr("E&xit"), qApp, SLOT(quit()), QKeySequence::Quit);
-}
-
-void MainWindow::setupHelpMenu()
-{
-    QMenu *helpMenu = new QMenu(tr("&Help"), this);
-    menuBar()->addMenu(helpMenu);
-
-    helpMenu->addAction(tr("&About"), this, SLOT(about()));
-    helpMenu->addAction(tr("About &Qt"), qApp, SLOT(aboutQt()));
-}
+#endif // MAINWINDOW_H

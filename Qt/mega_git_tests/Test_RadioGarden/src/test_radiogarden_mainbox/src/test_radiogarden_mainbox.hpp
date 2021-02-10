@@ -24,7 +24,7 @@
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -41,7 +41,6 @@ public:
 private slots:
     void choice_test(void);
     bool test(void);
-    bool test2(void);
 
 private:
     typedef struct CMD

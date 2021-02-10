@@ -2,13 +2,11 @@
 <ui version="4.0">
  <class>MainBox</class>
  <widget class="QWidget" name="MainBox">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>112</width>
-    <height>228</height>
-   </rect>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>

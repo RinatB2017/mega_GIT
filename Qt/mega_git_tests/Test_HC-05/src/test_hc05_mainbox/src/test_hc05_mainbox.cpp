@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "ui_test_hc05_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -60,20 +54,11 @@ void MainBox::init(void)
 
     init_serial();
 
-    connect(ui->btn_find_hc05,      SIGNAL(clicked(bool)),  this,   SLOT(find_device()));
-    connect(ui->btn_get_version,    SIGNAL(clicked(bool)),  this,   SLOT(get_version()));
-    connect(ui->btn_get_addr,       SIGNAL(clicked(bool)),  this,   SLOT(get_address()));
-    connect(ui->btn_test,           SIGNAL(clicked(bool)),  this,   SLOT(test()));
-    connect(ui->btn_reset,          SIGNAL(clicked(bool)),  this,   SLOT(reset()));
-
-#if 1
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-#else
-    if(sizeHint().height() > 0)
-    {
-        setMinimumHeight(sizeHint().height());
-    }
-#endif
+    connect(ui->btn_find_hc05,      &QPushButton::clicked,  this,   &MainBox::find_device);
+    connect(ui->btn_get_version,    &QPushButton::clicked,  this,   &MainBox::get_version);
+    connect(ui->btn_get_addr,       &QPushButton::clicked,  this,   &MainBox::get_address);
+    connect(ui->btn_test,           &QPushButton::clicked,  this,   &MainBox::test);
+    connect(ui->btn_reset,          &QPushButton::clicked,  this,   &MainBox::reset);
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_serial(void)

@@ -74,18 +74,6 @@ void HID_device::init(void)
 
     connect(ui->btn_test,   &QPushButton::clicked,  this,   &HID_device::test);
 
-#if 0
-    QFont font("Liberation Mono", 16);
-    ui->hexedit_widget->setFont(font);
-
-    QByteArray fram_data;
-    for(int n=0; n<10; n++)
-    {
-        fram_data.append(static_cast<char>(n));
-    }
-    ui->hexedit_widget->setData(QHexEditData::fromMemory(fram_data));
-#endif
-
     //setFixedSize(sizeHint());
     load_widgets();
 

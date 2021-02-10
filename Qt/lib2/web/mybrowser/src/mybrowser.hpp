@@ -21,12 +21,6 @@
 #ifndef MYBROWSER_HPP
 #define MYBROWSER_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <QWebEngineCookieStore>
 #include <QWebEngineSettings>
 #include <QWebEngineProfile>

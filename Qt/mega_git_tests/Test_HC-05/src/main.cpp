@@ -62,12 +62,11 @@ int main(int argc, char *argv[])
     Q_ASSERT(splash);
     splash->show();
 
-    
-
     MainWindow *main_window = new MainWindow();
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    Q_ASSERT(main_window);
 
     MainBox *mainBox = new MainBox(main_window, splash);
+    Q_ASSERT(mainBox);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

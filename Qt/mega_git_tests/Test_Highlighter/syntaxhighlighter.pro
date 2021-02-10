@@ -1,13 +1,17 @@
-  QT += widgets
-  requires(qtConfig(filedialog))
+QT += widgets
+requires(qtConfig(filedialog))
 
-  HEADERS         = highlighter.h \
-                    mainwindow.h
-  SOURCES         = highlighter.cpp \
-                    mainwindow.cpp \
-                    main.cpp
+DEPENDPATH  += \
+    $$PWD/src
+INCLUDEPATH = $$DEPENDPATH
 
-  # install
-  target.path = $$[QT_INSTALL_EXAMPLES]/widgets/richtext/syntaxhighlighter
-  INSTALLS += target
+HEADERS += \
+    highlighter.h \
+    mainwindow.h
+
+SOURCES += \
+    highlighter.cpp \
+    mainwindow.cpp \
+    main.cpp
   
+VPATH = $$INCLUDEPATH

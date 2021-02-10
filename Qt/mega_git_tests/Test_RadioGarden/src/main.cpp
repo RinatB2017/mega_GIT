@@ -59,13 +59,15 @@ int main(int argc, char *argv[])
     app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
+    //FIXME не работает WebGL
+    // QApplication::setAttribute(Qt::AA_UseOpenGLES, true);
+    //---
+
     QPixmap pixmap(":/logo/logo.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     Q_ASSERT(splash);
     splash->show();
-
-    
 
     MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);

@@ -56,6 +56,9 @@ void MainBox::init(void)
     ui->browser_widget->setUrl(QUrl("http://radio.garden/"));
     ui->browser_widget->run();
 
+    updateText();
+    load_widgets();
+
 #ifdef USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
@@ -67,9 +70,6 @@ void MainBox::init(void)
         setVisible(false);
     }
 #endif
-
-    updateText();
-    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -79,7 +79,6 @@ void MainBox::createTestBar(void)
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test",     &MainBox::test });
-    commands.append({ id++, "test2",    &MainBox::test2 });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -135,12 +134,6 @@ void MainBox::choice_test(void)
 bool MainBox::test(void)
 {
     emit info("Test");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test2(void)
-{
-    emit info("Test2");
     return true;
 }
 //--------------------------------------------------------------------------------

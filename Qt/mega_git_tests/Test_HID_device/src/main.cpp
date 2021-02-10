@@ -57,11 +57,11 @@ int main(int argc, char *argv[])
     app.setApplicationName(QObject::tr(APPNAME));
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-    
-
     MainWindow *main_window = new MainWindow();
+    Q_ASSERT(main_window);
 
     HID_device *mainBox = new HID_device(main_window);
+    Q_ASSERT(mainBox);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

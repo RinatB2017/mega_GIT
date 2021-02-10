@@ -20,7 +20,7 @@
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 
-#include "Qsci/qsciscintilla.h"
+#include "qsciscintilla.h"
 
 #include <string.h>
 
@@ -35,11 +35,11 @@
 #include <QMenu>
 #include <QPoint>
 
-#include "Qsci/qsciabstractapis.h"
-#include "Qsci/qscicommandset.h"
-#include "Qsci/qscilexer.h"
-#include "Qsci/qscistyle.h"
-#include "Qsci/qscistyledtext.h"
+#include "qsciabstractapis.h"
+#include "qscicommandset.h"
+#include "qscilexer.h"
+#include "qscistyle.h"
+#include "qscistyledtext.h"
 
 
 // Make sure these match the values in Scintilla.h.  We don't #include that

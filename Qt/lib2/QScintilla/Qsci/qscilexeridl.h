@@ -23,8 +23,8 @@
 
 #include <QObject>
 
-#include <Qsci/qsciglobal.h>
-#include <Qsci/qscilexercpp.h>
+#include <qsciglobal.h>
+#include <qscilexercpp.h>
 
 
 //! \brief The QsciLexerIDL class encapsulates the Scintilla IDL

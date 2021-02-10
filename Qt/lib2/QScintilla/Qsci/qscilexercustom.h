@@ -21,8 +21,8 @@
 #ifndef QSCILEXERCUSTOM_H
 #define QSCILEXERCUSTOM_H
 
-#include <Qsci/qsciglobal.h>
-#include <Qsci/qscilexer.h>
+#include <qsciglobal.h>
+#include <qscilexer.h>
 
 
 class QsciScintilla;

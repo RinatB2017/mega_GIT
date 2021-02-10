@@ -18,8 +18,8 @@
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 
-#include "Qsci/qscidocument.h"
-#include "Qsci/qsciscintillabase.h"
+#include "qscidocument.h"
+#include "qsciscintillabase.h"
 
 
 // This internal class encapsulates the underlying document and is shared by

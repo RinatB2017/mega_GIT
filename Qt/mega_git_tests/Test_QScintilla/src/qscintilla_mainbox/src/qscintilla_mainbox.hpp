@@ -21,37 +21,40 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
+#include <qsciscintilla.h>
+#include <qscilexercpp.h>
+#include <qscilexerjavascript.h>
+#include <qscilexercss.h>
+#include <qscilexercsharp.h>
+#include <qscilexerhtml.h>
+#include <qscilexerjava.h>
+#include <qscilexerpython.h>
+#include <qscilexerpascal.h>
 //--------------------------------------------------------------------------------
+#include "mywaitsplashscreen.hpp"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
 #include "mywidget.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QCheckBox;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox();
 
 private slots:
     void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
+    bool test(void);
 
 private:
     typedef struct CMD
@@ -75,6 +78,8 @@ private:
 
     void init(void);
     void createTestBar(void);
+
+    bool read_file(const QString &filename, QString *data);
 
     void updateText(void);
     bool programm_is_exit(void);

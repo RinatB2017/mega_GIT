@@ -18,11 +18,11 @@
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 
-#include "Qsci/qscimacro.h"
+#include "qscimacro.h"
 
 #include <QStringList>
 
-#include "Qsci/qsciscintilla.h"
+#include "qsciscintilla.h"
 
 
 static int fromHex(unsigned char ch);

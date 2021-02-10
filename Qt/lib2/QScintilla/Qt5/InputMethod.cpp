@@ -19,7 +19,7 @@
 
 #include "SciNamespace.h"
 
-#include "Qsci/qsciscintillabase.h"
+#include "qsciscintillabase.h"
 #include "ScintillaQt.h"
 
 

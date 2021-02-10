@@ -18,29 +18,9 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
-#if defined(Q_OS_WIN)
-#   include "Qsci/qsciscintilla.h"
-#   include "Qsci/qscilexercpp.h"
-#   include "Qsci/qscilexerjavascript.h"
-#else
-#   include <Qsci/qsciscintilla.h>
-#   include <Qsci/qscilexercpp.h>
-#   include <Qsci/qscilexerjavascript.h>
-#endif
-//--------------------------------------------------------------------------------
 #include "ui_qscintilla_mainbox.h"
 //--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
-#include "mysplashscreen.hpp"
-#include "mainwindow.hpp"
 #include "qscintilla_mainbox.hpp"
-#include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -77,65 +57,95 @@ void MainBox::init(void)
     ui->te_JS->setUtf8(true);
     ui->te_JS->setLexer(lexJS);
 
-    //---
-    //! Текущая строка кода и ее подсветка
-    ui->te_CPP->setCaretLineVisible(true);
-    ui->te_CPP->setCaretLineBackgroundColor(QColor("gainsboro"));
+    QsciLexerCSS *lexCSS = new QsciLexerCSS(this);
+    ui->te_CSS->setUtf8(true);
+    ui->te_CSS->setLexer(lexCSS);
 
-    //! Выравнивание
-    ui->te_CPP->setAutoIndent(true);
-    ui->te_CPP->setIndentationGuides(false);
-    ui->te_CPP->setIndentationsUseTabs(true);
-    ui->te_CPP->setIndentationWidth(4);
+    QsciLexerCSharp *lexCSharp = new QsciLexerCSharp(this);
+    ui->te_CSharp->setUtf8(true);
+    ui->te_CSharp->setLexer(lexCSharp);
 
-    //! margin это полоска слева, на которой обычно распологаются breakpoints
-    ui->te_CPP->setMarginsBackgroundColor(QColor("gainsboro"));
-    ui->te_CPP->setMarginLineNumbers(1, true);
-    ui->te_CPP->setMarginWidth(1, 50);
+    QsciLexerHTML *lexHTML = new QsciLexerHTML(this);
+    ui->te_HTML->setUtf8(true);
+    ui->te_HTML->setLexer(lexHTML);
 
-    //! Авто-дополнение кода в зависимости от источника
-    ui->te_CPP->setAutoCompletionSource(QsciScintilla::AcsAll);
-    ui->te_CPP->setAutoCompletionCaseSensitivity(true);
-    ui->te_CPP->setAutoCompletionReplaceWord(true);
-    ui->te_CPP->setAutoCompletionUseSingle(QsciScintilla::AcusAlways);
-    ui->te_CPP->setAutoCompletionThreshold(0);
+    QsciLexerJava *lexJava = new QsciLexerJava(this);
+    ui->te_Java->setUtf8(true);
+    ui->te_Java->setLexer(lexJava);
 
-    //! Подсветка соответствий скобок
-    ui->te_CPP->setBraceMatching(QsciScintilla::SloppyBraceMatch);
-    ui->te_CPP->setMatchedBraceBackgroundColor(Qt::yellow);
-    ui->te_CPP->setUnmatchedBraceForegroundColor(Qt::blue);
-    //---
-    //! margin это полоска слева, на которой обычно распологаются breakpoints
-    ui->te_JS->setMarginsBackgroundColor(QColor("gainsboro"));
-    ui->te_JS->setMarginLineNumbers(1, true);
-    ui->te_JS->setMarginWidth(1, 50);
-    //---
+    QsciLexerPython *lexPython = new QsciLexerPython(this);
+    ui->te_Python->setUtf8(true);
+    ui->te_Python->setLexer(lexPython);
 
-    QString temp_CPP;
-    temp_CPP.append("class MainBox : public QWidget\n");
-    temp_CPP.append("{\n");
-    temp_CPP.append("   Q_OBJECT\n");
-    temp_CPP.append("\n");
-    temp_CPP.append("   public:\n");
-    temp_CPP.append("       explicit MainBox(QWidget *parent);\n");
-    temp_CPP.append("       ~MainBox();\n");
-    temp_CPP.append("\n");
-    temp_CPP.append("   private:\n");
-    temp_CPP.append("       void init(void);\n");
-    temp_CPP.append("       void function(void)\n");
-    temp_CPP.append("       {\n");
-    temp_CPP.append("           int x = 5;\n");
-    temp_CPP.append("       }\n");
-    temp_CPP.append("};\n");
+    QsciLexerPascal *lexPascal = new QsciLexerPascal(this);
+    ui->te_Pascal->setUtf8(true);
+    ui->te_Pascal->setLexer(lexPascal);
 
-    QString temp_JS;
-    temp_JS.append("function()\n");
-    temp_JS.append("{\n");
-    temp_JS.append("   alert(document.title)\n");
-    temp_JS.append("}\n");
+    QList<QsciScintilla *> l_lexer = findChildren<QsciScintilla *>();
+    emit debug(QString("cnt = %1").arg(l_lexer.count()));
+    foreach (QsciScintilla *lexer, l_lexer)
+    {
+        // Текущая строка кода и ее подсветка
+        lexer->setCaretLineVisible(true);
+        lexer->setCaretLineBackgroundColor(QColor("gainsboro"));
 
-    ui->te_CPP->setText(temp_CPP);
-    ui->te_JS->setText(temp_JS);
+        // Выравнивание
+        lexer->setAutoIndent(true);
+        lexer->setIndentationGuides(false);
+        lexer->setIndentationsUseTabs(true);
+        lexer->setIndentationWidth(4);
+
+        // margin это полоска слева, на которой обычно располагаются breakpoints
+        lexer->setMarginsBackgroundColor(QColor("gainsboro"));
+        lexer->setMarginLineNumbers(1, true);
+        lexer->setMarginWidth(1, 50);
+
+        // Авто-дополнение кода в зависимости от источника
+        lexer->setAutoCompletionSource(QsciScintilla::AcsAll);
+        lexer->setAutoCompletionCaseSensitivity(true);
+        lexer->setAutoCompletionReplaceWord(true);
+        lexer->setAutoCompletionUseSingle(QsciScintilla::AcusAlways);
+        lexer->setAutoCompletionThreshold(0);
+
+        // Подсветка соответствий скобок
+        lexer->setBraceMatching(QsciScintilla::SloppyBraceMatch);
+        lexer->setMatchedBraceBackgroundColor(Qt::yellow);
+        lexer->setUnmatchedBraceForegroundColor(Qt::blue);
+    }
+
+    bool ok;
+    QString cpp_data;
+    QString js_data;
+    QString css_data;
+    QString cs_data;
+    QString html_data;
+    QString java_data;
+    QString py_data;
+    QString pas_data;
+
+    ok = read_file(":/data/data.cpp", &cpp_data);
+    if(ok)  ui->te_CPP->setText(cpp_data);
+
+    ok = read_file(":/data/data.js", &js_data);
+    if(ok) ui->te_JS->setText(js_data);
+
+    ok = read_file(":/data/data.css", &css_data);
+    if(ok) ui->te_CSS->setText(css_data);
+
+    ok = read_file(":/data/data.cs", &cs_data);
+    if(ok) ui->te_CSharp->setText(cs_data);
+
+    ok = read_file(":/data/data.html", &html_data);
+    if(ok) ui->te_HTML->setText(html_data);
+
+    ok = read_file(":/data/data.java", &java_data);
+    if(ok) ui->te_Java->setText(java_data);
+
+    ok = read_file(":/data/data.py", &py_data);
+    if(ok) ui->te_Python->setText(py_data);
+
+    ok = read_file(":/data/data.pas", &pas_data);
+    if(ok) ui->te_Pascal->setText(pas_data);
 
 #ifdef Q_OS_LINUX
     //TODO белый цвет, если тема темная
@@ -145,19 +155,36 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
+bool MainBox::read_file(const QString &filename, QString *data)
+{
+    Q_ASSERT(data);
+    if(filename.isEmpty())
+    {
+        emit error("filename is empty!");
+        return false;
+    }
+
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        emit error(QString("File %1 not read").arg(filename));
+        return false;
+    }
+    QByteArray ba = file.readAll();
+    *data = ba.data();
+
+    file.close();
+
+    return true;
+}
+//--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &MainBox::test_0 });
-    commands.append({ id++, "test 1", &MainBox::test_1 });
-    commands.append({ id++, "test 2", &MainBox::test_2 });
-    commands.append({ id++, "test 3", &MainBox::test_3 });
-    commands.append({ id++, "test 4", &MainBox::test_4 });
-    commands.append({ id++, "test 5", &MainBox::test_5 });
-    commands.append({ id++, "test 6", nullptr });
+    commands.append({ id++, "test", &MainBox::test });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -216,39 +243,9 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+bool MainBox::test(void)
 {
-    emit info("Test_0()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
-{
-    emit info("Test_1()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
-{
-    emit info("Test_2()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
-{
-    emit info("Test_3()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
-{
-    emit info("Test_4()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
-{
-    emit info("Test_5()");
+    emit info("Test()");
     return true;
 }
 //--------------------------------------------------------------------------------

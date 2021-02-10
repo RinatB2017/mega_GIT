@@ -30,7 +30,7 @@
 #include <QRect>
 #include <QWidget>
 
-#include "Qsci/qsciscintillabase.h"
+#include "qsciscintillabase.h"
 
 
 // Set if the accessibility support needs initialising.

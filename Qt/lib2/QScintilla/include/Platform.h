@@ -47,7 +47,7 @@
 #undef PLAT_QT
 #define PLAT_QT 1
 
-#include <Qsci/qsciglobal.h>
+#include <qsciglobal.h>
 QT_BEGIN_NAMESPACE
 class QPainter;
 QT_END_NAMESPACE

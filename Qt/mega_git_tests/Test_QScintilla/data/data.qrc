@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/data">
+        <file>data.cpp</file>
+        <file>data.cs</file>
+        <file>data.css</file>
+        <file>data.html</file>
+        <file>data.java</file>
+        <file>data.js</file>
+        <file>data.pas</file>
+        <file>data.py</file>
+    </qresource>
+</RCC>

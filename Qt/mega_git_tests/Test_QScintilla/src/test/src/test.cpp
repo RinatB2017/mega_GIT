@@ -55,11 +55,6 @@ void Test::test_func(void)
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
 
-    QCOMPARE(mb->test_0(), true);
-    QCOMPARE(mb->test_1(), true);
-    QCOMPARE(mb->test_2(), true);
-    QCOMPARE(mb->test_3(), true);
-    QCOMPARE(mb->test_4(), true);
-    QCOMPARE(mb->test_5(), true);
+    QCOMPARE(mb->test(), true);
 }
 //--------------------------------------------------------------------------------

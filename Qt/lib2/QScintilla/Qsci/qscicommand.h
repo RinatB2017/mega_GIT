@@ -23,8 +23,8 @@
 
 #include <qstring.h>
 
-#include <Qsci/qsciglobal.h>
-#include <Qsci/qsciscintillabase.h>
+#include <qsciglobal.h>
+#include <qsciscintillabase.h>
 
 
 class QsciScintilla;

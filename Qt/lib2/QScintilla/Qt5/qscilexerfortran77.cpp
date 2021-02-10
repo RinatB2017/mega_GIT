@@ -18,7 +18,7 @@
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 
-#include "Qsci/qscilexerfortran77.h"
+#include "qscilexerfortran77.h"
 
 #include <qcolor.h>
 #include <qfont.h>

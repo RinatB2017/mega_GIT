@@ -18,14 +18,14 @@
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 
-#include "Qsci/qscilexerhtml.h"
+#include "qscilexerhtml.h"
 
 #include <qcolor.h>
 #include <qfont.h>
 #include <qsettings.h>
 
-#include "Qsci/qscilexerjavascript.h"
-#include "Qsci/qscilexerpython.h"
+#include "qscilexerjavascript.h"
+#include "qscilexerpython.h"
 
 
 // The ctor.

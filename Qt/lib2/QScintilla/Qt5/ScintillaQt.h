@@ -25,7 +25,7 @@
 #include <QClipboard>
 #include <QObject>
 
-#include <Qsci/qsciglobal.h>
+#include <qsciglobal.h>
 
 #include "SciNamespace.h"
 

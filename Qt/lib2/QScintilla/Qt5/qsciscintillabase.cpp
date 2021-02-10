@@ -18,7 +18,7 @@
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 
-#include "Qsci/qsciscintillabase.h"
+#include "qsciscintillabase.h"
 
 #include <QApplication>
 #include <QClipboard>

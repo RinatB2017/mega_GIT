@@ -23,8 +23,8 @@
 
 #include <QObject>
 
-#include <Qsci/qsciglobal.h>
-#include <Qsci/qscilexercpp.h>
+#include <qsciglobal.h>
+#include <qscilexercpp.h>
 
 
 //! \brief The QsciLexerJava class encapsulates the Scintilla Java lexer.

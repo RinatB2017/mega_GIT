@@ -23,8 +23,8 @@
 
 #include <QObject>
 
-#include <Qsci/qsciglobal.h>
-#include <Qsci/qscilexercpp.h>
+#include <qsciglobal.h>
+#include <qscilexercpp.h>
 
 
 //! \brief The QsciLexerCSharp class encapsulates the Scintilla C#

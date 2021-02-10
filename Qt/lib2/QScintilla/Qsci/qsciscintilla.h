@@ -28,10 +28,10 @@
 #include <QPointer>
 #include <QStringList>
 
-#include <Qsci/qsciglobal.h>
-#include <Qsci/qscicommand.h>
-#include <Qsci/qscidocument.h>
-#include <Qsci/qsciscintillabase.h>
+#include <qsciglobal.h>
+#include <qscicommand.h>
+#include <qscidocument.h>
+#include <qsciscintillabase.h>
 
 
 QT_BEGIN_NAMESPACE

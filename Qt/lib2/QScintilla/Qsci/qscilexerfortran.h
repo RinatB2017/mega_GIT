@@ -23,8 +23,8 @@
 
 #include <QObject>
 
-#include <Qsci/qsciglobal.h>
-#include <Qsci/qscilexerfortran77.h>
+#include <qsciglobal.h>
+#include <qscilexerfortran77.h>
 
 
 //! \brief The QsciLexerFortran class encapsulates the Scintilla Fortran lexer.

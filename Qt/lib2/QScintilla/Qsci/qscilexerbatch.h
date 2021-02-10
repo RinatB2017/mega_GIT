@@ -23,8 +23,8 @@
 
 #include <QObject>
 
-#include <Qsci/qsciglobal.h>
-#include <Qsci/qscilexer.h>
+#include <qsciglobal.h>
+#include <qscilexer.h>
 
 
 //! \brief The QsciLexerBatch class encapsulates the Scintilla batch file

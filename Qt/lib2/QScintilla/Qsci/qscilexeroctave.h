@@ -23,8 +23,8 @@
 
 #include <QObject>
 
-#include <Qsci/qsciglobal.h>
-#include <Qsci/qscilexermatlab.h>
+#include <qsciglobal.h>
+#include <qscilexermatlab.h>
 
 
 //! \brief The QsciLexerOctave class encapsulates the Scintilla Octave file

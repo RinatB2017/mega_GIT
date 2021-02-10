@@ -28,7 +28,7 @@
 #include <QPoint>
 #include <QTimer>
 
-#include <Qsci/qsciglobal.h>
+#include <qsciglobal.h>
 
 
 QT_BEGIN_NAMESPACE

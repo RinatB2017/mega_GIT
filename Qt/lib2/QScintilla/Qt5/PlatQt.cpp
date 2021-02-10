@@ -41,7 +41,7 @@
 #include "Platform.h"
 #include "XPM.h"
 
-#include "Qsci/qsciscintillabase.h"
+#include "qsciscintillabase.h"
 #include "SciClasses.h"
 
 #include "FontQuality.h"

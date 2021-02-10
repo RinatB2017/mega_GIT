@@ -20,7 +20,7 @@
 
 #include <stdlib.h>
 
-#include "Qsci/qsciapis.h"
+#include "qsciapis.h"
 
 #include <QApplication>
 #include <QDataStream>
@@ -32,7 +32,7 @@
 #include <QTextStream>
 #include <QThread>
 
-#include "Qsci/qscilexer.h"
+#include "qscilexer.h"
 
 
 

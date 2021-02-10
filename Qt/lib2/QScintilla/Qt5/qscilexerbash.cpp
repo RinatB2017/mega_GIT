@@ -18,7 +18,7 @@
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 
-#include "Qsci/qscilexerbash.h"
+#include "qscilexerbash.h"
 
 #include <qcolor.h>
 #include <qfont.h>

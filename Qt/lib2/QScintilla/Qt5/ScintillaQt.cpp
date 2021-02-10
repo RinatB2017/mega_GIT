@@ -29,7 +29,7 @@
 #include <qscrollbar.h>
 #include <qstring.h>
 
-#include "Qsci/qsciscintillabase.h"
+#include "qsciscintillabase.h"
 #include "ScintillaQt.h"
 #if !defined(QT_NO_ACCESSIBILITY)
 #include "SciAccessibility.h"

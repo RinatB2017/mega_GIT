@@ -23,8 +23,8 @@
 
 #include <QObject>
 
-#include <Qsci/qsciglobal.h>
-#include <Qsci/qscilexer.h>
+#include <qsciglobal.h>
+#include <qscilexer.h>
 
 
 //! \brief The QsciLexerTeX class encapsulates the Scintilla TeX lexer.

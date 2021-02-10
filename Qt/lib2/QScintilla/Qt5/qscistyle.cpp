@@ -18,11 +18,11 @@
 // WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
 
-#include "Qsci/qscistyle.h"
+#include "qscistyle.h"
 
 #include <qapplication.h>
 
-#include "Qsci/qsciscintillabase.h"
+#include "qsciscintillabase.h"
 
 
 // A ctor.

@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <QWebFrame>
 //--------------------------------------------------------------------------------
 #include <QNetworkProxy>
@@ -130,7 +124,8 @@ void MainBox::createUrlBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
 
-    QToolBar *testbar = new QToolBar(tr("urlbar"));
+    QToolBar *testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
 
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 

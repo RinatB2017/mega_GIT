@@ -61,12 +61,12 @@ int main(int argc, char *argv[])
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     splash->show();
 
-    
-
     MainWindow *main_window = new MainWindow();
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    Q_ASSERT(main_window);
 
     QSDLScreenWidget *mainBox = new QSDLScreenWidget(main_window);
+    Q_ASSERT(mainBox);
+
     main_window->setCentralWidget(mainBox);
 
     main_window->show();

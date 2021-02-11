@@ -18,15 +18,13 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_H
-#define MAINBOX_H
+#ifndef MAINBOX_HPP
+#define MAINBOX_HPP
 //--------------------------------------------------------------------------------
 #include <QWebElement>
-#include <QToolButton>
-#include <QToolBar>
-#include <QWidget>
-#include <QtSql>
-#include <QUrl>
+#include <QSqlTableModel>
+#include <QSqlRecord>
+#include <QSqlQuery>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -43,8 +41,6 @@ class MainBox;
 //--------------------------------------------------------------------------------
 class QListWidgetItem;
 class QNetworkReply;
-class QProgressBar;
-class QWebFrame;
 class TableView;
 class WebView;
 //--------------------------------------------------------------------------------
@@ -53,7 +49,7 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = nullptr);
+    explicit MainBox(QWidget *parent = nullptr);
     ~MainBox();
 
 private slots:
@@ -139,4 +135,4 @@ private:
     void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_H
+#endif // MAINBOX_HPP

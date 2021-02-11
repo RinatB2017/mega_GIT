@@ -53,7 +53,8 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
-    ui->browser_widget->setUrl(QUrl("http://radio.garden/"));
+    ui->browser_widget->setUrl(QUrl("http://radio.garden"));
+//    ui->browser_widget->setUrl(QUrl("https://maps.google.com"));
     ui->browser_widget->run();
 
     updateText();

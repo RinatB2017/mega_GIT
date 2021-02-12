@@ -23,7 +23,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="icon">
@@ -319,8 +319,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>96</width>
+               <height>26</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -336,8 +336,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>96</width>
+               <height>26</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -353,8 +353,8 @@ p, li { white-space: pre-wrap; }
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>96</width>
+               <height>26</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -422,6 +422,24 @@ p, li { white-space: pre-wrap; }
          <layout class="QVBoxLayout" name="verticalLayout_10">
           <item>
            <widget class="QTextBrowser" name="textBrowser"/>
+          </item>
+          <item>
+           <widget class="QFrame" name="test_frame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QSpinBox" name="sb_test"/>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="le_test"/>
+             </item>
+            </layout>
+           </widget>
           </item>
          </layout>
         </widget>

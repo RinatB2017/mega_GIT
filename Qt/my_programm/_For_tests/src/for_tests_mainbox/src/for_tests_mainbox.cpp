@@ -41,7 +41,6 @@ MainBox::MainBox(QWidget *parent,
 MainBox::~MainBox()
 {
     save_widgets();
-
     if(timer)
     {
         timer->stop();
@@ -189,13 +188,19 @@ void MainBox::init(void)
     add_digital_clock();
     //---
 
-    load_widgets();
-
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->add_mdi_sorting();
-    }
+    QTimer::singleShot(0, [this]{
+        MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+        if(mw)
+        {
+            mw->add_mdi_sorting();
+            //TODO проверка корректного переноса frame в dockwidget
+            mw->add_dock_widget("test_dock",
+                                "test_dock",
+                                Qt::BottomDockWidgetArea,
+                                ui->test_frame);
+        }
+        load_widgets();
+    });
 }
 //--------------------------------------------------------------------------------
 bool MainBox::set_theme_windows(void)
@@ -463,6 +468,50 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QWidgetList list = qApp->allWidgets();
+    emit info(QString("cnt: %1").arg(list.count()));
+    foreach (QWidget *widget, list)
+    {
+
+    }
+    for(int n=0; n<list.count(); n++)
+    {
+        QWidget *w = list.at(n);
+        if(w->objectName() == "le_test")
+        {
+            emit info("found!!!");
+        }
+        if(w->objectName() == "dateTimeEdit")
+        {
+            emit info("found dateTimeEdit");
+        }
+    }
+#endif
+
+#if 0
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        auto l_docks = mw->findChildren<QDockWidget *>();
+        emit info(QString("cnt: %1").arg(l_docks.count()));
+        foreach (QDockWidget *dw, l_docks)
+        {
+            emit error(dw->objectName());
+
+            auto l_le = dw->findChildren<QLineEdit *>();
+            foreach(QLineEdit *le, l_le)
+            {
+                if(le->objectName() == "le_test")
+                {
+                    le->setText(le->objectName());
+                }
+                emit info(QString("---> [%1]").arg(le->objectName()));
+            }
+        }
+    }
+#endif
+
+#if 0
     emit info(QString("ver. [%1]").arg(qApp->applicationVersion()));
 #endif
 
@@ -492,6 +541,10 @@ bool MainBox::programm_is_exit(void)
     if(is_exit == false)
     {
         messagebox_info("Info", "Низзя");
+    }
+    else
+    {
+//        save_widgets();
     }
     return is_exit;
 }

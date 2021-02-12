@@ -796,11 +796,7 @@ void MyWidget::load_widgets(void)
     QTimer::singleShot(0, [this]{
         emit trace(Q_FUNC_INFO);
 
-        QList<QWidget *> widgets = findChildren<QWidget *>();
-        if(widgets.count() <= 0)
-        {
-            widgets = topLevelWidget()->findChildren<QWidget *>();
-        }
+        QWidgetList widgets = qApp->allWidgets();
         Q_ASSERT(widgets.count() > 0);
 
         foreach(QWidget *widget, widgets)
@@ -835,11 +831,7 @@ void MyWidget::save_widgets(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    QList<QWidget *> widgets = findChildren<QWidget *>();
-    if(widgets.count() <= 0)
-    {
-        widgets = topLevelWidget()->findChildren<QWidget *>();
-    }
+    QWidgetList widgets = qApp->allWidgets();
     Q_ASSERT(widgets.count() > 0);
 
     foreach(QWidget *widget, widgets)

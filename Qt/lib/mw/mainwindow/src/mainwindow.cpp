@@ -810,7 +810,9 @@ void MainWindow::createToolBar(void)
 
 
 #ifndef NO_TOOLBAR
+#ifndef NO_MENU
     add_windowsmenu_action(toolbar, toolbar->toggleViewAction());
+#endif
 #endif
 }
 #endif
@@ -854,7 +856,9 @@ void MainWindow::createStyleToolBar(void)
 #endif
 
     addToolBar(Qt::LeftToolBarArea, styletoolbar);
+#ifndef NO_MENU
     add_windowsmenu_action(styletoolbar, styletoolbar->toggleViewAction());
+#endif
 }
 #endif
 //--------------------------------------------------------------------------------
@@ -892,7 +896,9 @@ void MainWindow::createCustomStyleToolBar(void)
     customStyletoolbar->addWidget(btnTemp);
 
     addToolBar(Qt::LeftToolBarArea, customStyletoolbar);
+#ifndef NO_MENU
     add_windowsmenu_action(customStyletoolbar, customStyletoolbar->toggleViewAction());
+#endif
 }
 #endif
 #endif
@@ -1333,7 +1339,9 @@ bool MainWindow::add_dock_widget(QString title,
     connect(dw, &QDockWidget::dockLocationChanged, this, &MainWindow::dockLocationChanged);
 
     addDockWidget(area, dw);
+#ifndef NO_MENU
     add_windowsmenu_action(dw, dw->toggleViewAction());
+#endif
     load_setting();
 
     return true;

@@ -42,21 +42,13 @@ public:
     explicit MainBox(QWidget *parent, MySplashScreen *splash);
     ~MainBox();
 
-    typedef void (MainBox::*saveSlot)(void);
-    void inFunc(QPushButton *btn, saveSlot slot);
-
 public slots:
     void choice_test(void);
-    bool timer_start(void);
-    bool timer_stop(void);
-    void show_timer_count(void);
 
     bool test(void);
     bool load_qss(void);
 
     void print_mp(QWidget *widget);
-
-    void s_inFunc(void);
 
 private:
     typedef struct CMD
@@ -71,9 +63,6 @@ private:
     Ui::MainBox *ui;
 
     QPointer<QComboBox> cb_test;
-    QPointer<QTimer> timer;
-    int cnt = 0;
-
     QPointer<QSpinBox>  sb_test;
     QPointer<QCheckBox> cb_block;
 
@@ -83,9 +72,6 @@ private:
 
     void init(void);
     void createTestBar(void);
-
-    void test_validator(void);
-    int  get_cnt(void);
 
     void updateText(void);
     bool programm_is_exit(void);

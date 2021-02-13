@@ -28,7 +28,7 @@ SOURCES += \
     main.cpp
 
 RESOURCES += \
-    $$PWD/images/images.qrc \
+    $$PWD/styles/styles.qrc \
     $$PWD/images/bullets/bullets.qrc \
     $$PWD/ico/icons.qrc \
     $$PWD/themes/themes_css/themes_css.qrc \
@@ -67,11 +67,9 @@ win32 {
 include (src/config.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
-include ($$LIB_PATH2/icons/arrows.pri)
 
 include ($$LIB_PATH/mywidgets/mylistwidget/mylistwidget.pri)
 include ($$LIB_PATH2/widgets/QLongLongSpinBox/QLongLongSpinBox.pri)
-#include ($$LIB_PATH2/web/mybrowser/mybrowser.pri)
 
 include (src/for_tests_mainbox/for_tests_mainbox.pri)
 include (src/mymainwindow/mymainwindow.pri)

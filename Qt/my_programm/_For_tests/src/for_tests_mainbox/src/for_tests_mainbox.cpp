@@ -41,14 +41,6 @@ MainBox::MainBox(QWidget *parent,
 MainBox::~MainBox()
 {
     save_widgets();
-    if(timer)
-    {
-        timer->stop();
-        disconnect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
-
-        timer->deleteLater();
-    }
-
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -57,9 +49,6 @@ void MainBox::init(void)
     ui->setupUi(this);
 
     createTestBar();
-
-    timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
 
     connect_log_signals(ui->controls_widget, this);
 
@@ -150,11 +139,8 @@ void MainBox::createTestBar(void)
     Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test",             &MainBox::test });
-    commands.append({ id++, "load QSS",         &MainBox::load_qss });
-    commands.append({ id++, "timer start",      &MainBox::timer_start });
-    commands.append({ id++, "timer stop",       &MainBox::timer_stop });
-
+    commands.append({ id++, "test",                 &MainBox::test });
+    commands.append({ id++, "load QSS",             &MainBox::load_qss });
     commands.append({ id++, "Theme (Windows).css",  &MainBox::set_theme_windows });
     commands.append({ id++, "Norton Commander.qss", &MainBox::set_norton_commander });
     commands.append({ id++, "styles.qss",           &MainBox::set_styles });
@@ -225,53 +211,6 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::inFunc(QPushButton *btn, saveSlot slot)
-{
-    connect(btn,    &QPushButton::clicked,  this,   slot);
-}
-//--------------------------------------------------------------------------------
-void MainBox::s_inFunc(void)
-{
-    emit trace(Q_FUNC_INFO);
-    QMessageBox::information(nullptr, "", "info");
-}
-//--------------------------------------------------------------------------------
-int MainBox::get_cnt(void)
-{
-    emit trace(Q_FUNC_INFO);
-    return QRandomGenerator::global()->generate() % 10;
-}
-//--------------------------------------------------------------------------------
-void MainBox::test_validator(void)
-{
-    /* Create a string for a regular expression */
-    QString ipRange = "(?:[0-1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])";
-    /*
-     * Create a regular expression with a string
-     * as a repeating element
-     */
-    QRegExp ipRegex ("^" + ipRange
-                     + "\\." + ipRange
-                     + "\\." + ipRange
-                     + "\\." + ipRange + "$");
-    /*
-     * Create a validation regular expression
-     * using a regular expression
-     */
-#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
-#else
-    QRegExpValidator *ipValidator = new QRegExpValidator(ipRegex, this);
-#endif
-
-    /* Set Validator on QLineEdit */
-    QLineEdit *lineEdit = new QLineEdit();
-#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
-#else
-    lineEdit->setValidator(ipValidator);
-#endif
-    lineEdit->show();
-}
-//--------------------------------------------------------------------------------
 void MainBox::print_mp(QWidget *widget)
 {
     emit error(QString("objectName %1").arg(widget->objectName()));
@@ -293,25 +232,6 @@ void MainBox::print_mp(QWidget *widget)
         emit error(QString("%1").arg(QString::fromLatin1(metaObject->method(i).methodSignature())));
     }
     emit error("---");
-}
-//--------------------------------------------------------------------------------
-bool MainBox::timer_start(void)
-{
-    Q_ASSERT(timer);
-    timer->start(500);
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::timer_stop(void)
-{
-    Q_ASSERT(timer);
-    timer->stop();
-    return true;
-}
-//--------------------------------------------------------------------------------
-void MainBox::show_timer_count(void)
-{
-    emit info(QString("cnt %1").arg(cnt++));
 }
 //--------------------------------------------------------------------------------
 bool MainBox::load_qss(void)
@@ -341,7 +261,7 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 0
+#if 1
     QWidgetList widgets;
     widgets = qApp->allWidgets();
     emit info(QString("Found %1 widgets").arg(widgets.count()));
@@ -355,7 +275,7 @@ bool MainBox::test(void)
     delete w;
 #endif
 
-#if 1
+#if 0
     emit info(QString("ver. [%1]").arg(qApp->applicationVersion()));
 #endif
 

@@ -362,11 +362,10 @@ private:
     void app_updateText(void);
     void dockwidget_updateText(void);
 
-    //    void show_docs(void);
+    // void show_docs(void);
 
     void dockLocationChanged(Qt::DockWidgetArea area);
 
-    //TODO
     bool check_exit(void);
 
 protected:

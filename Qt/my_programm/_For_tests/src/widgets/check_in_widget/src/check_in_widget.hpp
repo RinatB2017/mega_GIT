@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,79 +18,30 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef CHECK_IN_WIDGET_HPP
+#define CHECK_IN_WIDGET_HPP
 //--------------------------------------------------------------------------------
-#include "ui_for_tests_mainbox.h"
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
+#include "default_widget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+    class Check_in_widget;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class Check_in_widget : public Default_widget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent, MySplashScreen *splash);
-    ~MainBox();
-
-    typedef void (MainBox::*saveSlot)(void);
-    void inFunc(QPushButton *btn, saveSlot slot);
-
-public slots:
-    void choice_test(void);
-    bool timer_start(void);
-    bool timer_stop(void);
-    void show_timer_count(void);
-
-    bool test(void);
-    bool load_qss(void);
-
-    void print_mp(QWidget *widget);
-
-    void s_inFunc(void);
+    explicit Check_in_widget(QWidget *parent = nullptr);
+    ~Check_in_widget();
 
 private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } *cmd_t;
-    QList<CMD> commands;
-
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QComboBox> cb_test;
-    QPointer<QTimer> timer;
-    int cnt = 0;
-
-    QPointer<QSpinBox>  sb_test;
-    QPointer<QCheckBox> cb_block;
-
-    bool set_theme_windows(void);
-    bool set_norton_commander(void);
-    bool set_styles(void);
+    Ui::Check_in_widget *ui;
 
     void init(void);
-    void createTestBar(void);
 
-    void test_validator(void);
-    int  get_cnt(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void check_in(void);
+    void victory(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // CHECK_IN_WIDGET_HPP

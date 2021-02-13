@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,79 +18,36 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#include "table_widget.hpp"
+#include "ui_table_widget.h"
 //--------------------------------------------------------------------------------
-#include "ui_for_tests_mainbox.h"
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+Table_widget::Table_widget(QWidget *parent) :
+    Default_widget(parent),
+    ui(new Ui::Table_widget)
+{
+    init();
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+Table_widget::~Table_widget()
 {
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent, MySplashScreen *splash);
-    ~MainBox();
-
-    typedef void (MainBox::*saveSlot)(void);
-    void inFunc(QPushButton *btn, saveSlot slot);
-
-public slots:
-    void choice_test(void);
-    bool timer_start(void);
-    bool timer_stop(void);
-    void show_timer_count(void);
-
-    bool test(void);
-    bool load_qss(void);
-
-    void print_mp(QWidget *widget);
-
-    void s_inFunc(void);
-
-private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } *cmd_t;
-    QList<CMD> commands;
-
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QComboBox> cb_test;
-    QPointer<QTimer> timer;
-    int cnt = 0;
-
-    QPointer<QSpinBox>  sb_test;
-    QPointer<QCheckBox> cb_block;
-
-    bool set_theme_windows(void);
-    bool set_norton_commander(void);
-    bool set_styles(void);
-
-    void init(void);
-    void createTestBar(void);
-
-    void test_validator(void);
-    int  get_cnt(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
+    delete ui;
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+void Table_widget::init(void)
+{
+    ui->setupUi(this);
+
+    QStandardItemModel *text_model = new QStandardItemModel(0, 2, this);
+    text_model->setHeaderData(0, Qt::Horizontal, "Test");
+    text_model->setHorizontalHeaderLabels(QStringList() << "Text" << "N");
+
+    for(int n=0; n<10; n++)
+    {
+        text_model->insertRow(n);
+        text_model->setData(text_model->index(n, 0, QModelIndex()), "text");
+        text_model->setData(text_model->index(n, 1, QModelIndex()), n);
+    }
+
+    ui->tableView->setModel(text_model);
+}
+//--------------------------------------------------------------------------------

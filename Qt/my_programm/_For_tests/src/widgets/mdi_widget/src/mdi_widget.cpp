@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,79 +18,43 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#include "mdi_widget.hpp"
+#include "ui_mdi_widget.h"
 //--------------------------------------------------------------------------------
-#include "ui_for_tests_mainbox.h"
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+MDI_widget::MDI_widget(QWidget *parent) :
+    Default_widget(parent),
+    ui(new Ui::MDI_widget)
+{
+    init();
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+MDI_widget::~MDI_widget()
 {
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent, MySplashScreen *splash);
-    ~MainBox();
-
-    typedef void (MainBox::*saveSlot)(void);
-    void inFunc(QPushButton *btn, saveSlot slot);
-
-public slots:
-    void choice_test(void);
-    bool timer_start(void);
-    bool timer_stop(void);
-    void show_timer_count(void);
-
-    bool test(void);
-    bool load_qss(void);
-
-    void print_mp(QWidget *widget);
-
-    void s_inFunc(void);
-
-private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } *cmd_t;
-    QList<CMD> commands;
-
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QComboBox> cb_test;
-    QPointer<QTimer> timer;
-    int cnt = 0;
-
-    QPointer<QSpinBox>  sb_test;
-    QPointer<QCheckBox> cb_block;
-
-    bool set_theme_windows(void);
-    bool set_norton_commander(void);
-    bool set_styles(void);
-
-    void init(void);
-    void createTestBar(void);
-
-    void test_validator(void);
-    int  get_cnt(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
+    delete ui;
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+void MDI_widget::init(void)
+{
+    ui->setupUi(this);
+
+    mdi_widget_0 = new QLineEdit(this);
+    mdi_widget_0->setObjectName("widget_0");
+    mdi_widget_0->setAttribute(Qt::WA_DeleteOnClose);
+
+    mdi_widget_1 = new QLineEdit(this);
+    mdi_widget_1->setObjectName("widget_1");
+    mdi_widget_1->setAttribute(Qt::WA_DeleteOnClose);
+
+    mdi_widget_2 = new QLineEdit(this);
+    mdi_widget_2->setObjectName("widget_2");
+    mdi_widget_2->setAttribute(Qt::WA_DeleteOnClose);
+
+    w0 = ui->mdiArea->addSubWindow(mdi_widget_0);
+    w1 = ui->mdiArea->addSubWindow(mdi_widget_1);
+    w2 = ui->mdiArea->addSubWindow(mdi_widget_2);
+
+    w0->setObjectName("mdi_widget0");
+    w1->setObjectName("mdi_widget1");
+    w2->setObjectName("mdi_widget2");
+}
+//--------------------------------------------------------------------------------

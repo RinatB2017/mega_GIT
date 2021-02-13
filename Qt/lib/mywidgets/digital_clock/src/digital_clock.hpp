@@ -44,7 +44,7 @@ public:
     virtual ~Digital_clock();
 
 private:
-    QTimer *timer = nullptr;
+    QPointer<QTimer> timer;
 
     int hour = 0;
     int min  = 0;

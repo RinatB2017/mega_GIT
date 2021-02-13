@@ -69,7 +69,9 @@ void WebAttributeDialog::init(void)
     sl_attr.append({ "DnsPrefetchEnabled",                  QWebEngineSettings::DnsPrefetchEnabled });
     sl_attr.append({ "PdfViewerEnabled",                    QWebEngineSettings::PdfViewerEnabled });
 
+    int pos_x = 0;
     int pos_y = 0;
+    qDebug() << QString("cnt: %1").arg(sl_attr.count());
     foreach(ATTR attr, sl_attr)
     {
         QCheckBox *cb_attr = new QCheckBox(this);
@@ -78,9 +80,14 @@ void WebAttributeDialog::init(void)
 
         QLabel *label = new QLabel(this);
         label->setText(attr.attr_name);
-        ui->grid->addWidget(label,      pos_y, 0);
-        ui->grid->addWidget(cb_attr,    pos_y, 1);
+        ui->grid->addWidget(label,      pos_y, pos_x);
+        ui->grid->addWidget(cb_attr,    pos_y, pos_x + 1);
         pos_y++;
+        if(pos_y >=15)
+        {
+            pos_y = 0;
+            pos_x += 2;
+        }
     }
 
     connect(ui->buttonBox,  &QDialogButtonBox::accepted,    this,   &WebAttributeDialog::accept);

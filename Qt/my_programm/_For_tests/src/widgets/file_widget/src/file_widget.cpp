@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,79 +18,52 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#include "file_widget.hpp"
+#include "ui_file_widget.h"
 //--------------------------------------------------------------------------------
-#include "ui_for_tests_mainbox.h"
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+File_widget::File_widget(QWidget *parent) :
+    Default_widget(parent),
+    ui(new Ui::File_widget)
+{
+    init();
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+File_widget::~File_widget()
 {
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent, MySplashScreen *splash);
-    ~MainBox();
-
-    typedef void (MainBox::*saveSlot)(void);
-    void inFunc(QPushButton *btn, saveSlot slot);
-
-public slots:
-    void choice_test(void);
-    bool timer_start(void);
-    bool timer_stop(void);
-    void show_timer_count(void);
-
-    bool test(void);
-    bool load_qss(void);
-
-    void print_mp(QWidget *widget);
-
-    void s_inFunc(void);
-
-private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } *cmd_t;
-    QList<CMD> commands;
-
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QComboBox> cb_test;
-    QPointer<QTimer> timer;
-    int cnt = 0;
-
-    QPointer<QSpinBox>  sb_test;
-    QPointer<QCheckBox> cb_block;
-
-    bool set_theme_windows(void);
-    bool set_norton_commander(void);
-    bool set_styles(void);
-
-    void init(void);
-    void createTestBar(void);
-
-    void test_validator(void);
-    int  get_cnt(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
+    delete ui;
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+void File_widget::init(void)
+{
+    ui->setupUi(this);
+
+    file_model = new QFileSystemModel(this);
+    file_model->setNameFilters(QStringList() << "*");
+    file_model->setNameFilterDisables(false);
+
+#if 0
+    file_model->setHeaderData(0, Qt::Horizontal, "a0");
+    file_model->setHeaderData(1, Qt::Horizontal, "a1");
+    file_model->setHeaderData(2, Qt::Horizontal, "a2");
+    file_model->setHeaderData(3, Qt::Horizontal, "a3");
+#endif
+
+    ui->tree->setModel(file_model);
+
+#if 1
+//    int w = ui->tree->width();
+//    emit info(QString("w: %1").arg(w));
+    ui->tree->setColumnWidth(0, 300);
+    ui->tree->setColumnWidth(1, 100);
+    ui->tree->setColumnWidth(2, 100);
+    ui->tree->setColumnWidth(3, 100);
+#endif
+
+#if 0
+    ui->tree->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+    ui->tree->header()->setSectionResizeMode(1, QHeaderView::Fixed);
+    ui->tree->header()->setSectionResizeMode(2, QHeaderView::Fixed);
+    ui->tree->header()->setSectionResizeMode(3, QHeaderView::Fixed);
+#endif
+}
+//--------------------------------------------------------------------------------

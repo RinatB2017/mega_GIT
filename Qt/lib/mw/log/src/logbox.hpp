@@ -142,7 +142,7 @@ private:
     bool flag_is_shows_trace = true;
 
 #ifdef NEED_CODEC
-    QTextCodec *current_codec = nullptr; //TODO проверить надо
+    QTextCodec *current_codec = nullptr;
 #endif
 
     QPointer<QProgressBar> progressBar;

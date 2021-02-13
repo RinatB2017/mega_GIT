@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,79 +18,45 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#include "check_in_widget.hpp"
+#include "ui_check_in_widget.h"
 //--------------------------------------------------------------------------------
-#include "ui_for_tests_mainbox.h"
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+Check_in_widget::Check_in_widget(QWidget *parent) :
+    Default_widget(parent),
+    ui(new Ui::Check_in_widget)
+{
+    init();
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+Check_in_widget::~Check_in_widget()
 {
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent, MySplashScreen *splash);
-    ~MainBox();
-
-    typedef void (MainBox::*saveSlot)(void);
-    void inFunc(QPushButton *btn, saveSlot slot);
-
-public slots:
-    void choice_test(void);
-    bool timer_start(void);
-    bool timer_stop(void);
-    void show_timer_count(void);
-
-    bool test(void);
-    bool load_qss(void);
-
-    void print_mp(QWidget *widget);
-
-    void s_inFunc(void);
-
-private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } *cmd_t;
-    QList<CMD> commands;
-
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QComboBox> cb_test;
-    QPointer<QTimer> timer;
-    int cnt = 0;
-
-    QPointer<QSpinBox>  sb_test;
-    QPointer<QCheckBox> cb_block;
-
-    bool set_theme_windows(void);
-    bool set_norton_commander(void);
-    bool set_styles(void);
-
-    void init(void);
-    void createTestBar(void);
-
-    void test_validator(void);
-    int  get_cnt(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
+    delete ui;
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+void Check_in_widget::init(void)
+{
+    ui->setupUi(this);
+
+    connect(ui->sb_1,   static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &Check_in_widget::check_in);
+    connect(ui->sb_2,   static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &Check_in_widget::check_in);
+    connect(ui->sb_res, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &Check_in_widget::check_in);
+    connect(ui->btn_ok, &QPushButton::clicked,  this,   &Check_in_widget::victory);
+
+    check_in();
+}
+//--------------------------------------------------------------------------------
+void Check_in_widget::check_in(void)
+{
+    int a = ui->sb_1->value();
+    int b = ui->sb_2->value();
+    int c = ui->sb_res->value();
+
+    bool res = ((a + b) == c);
+    ui->btn_ok->setEnabled(res);
+}
+//--------------------------------------------------------------------------------
+void Check_in_widget::victory(void)
+{
+    messagebox_info("Info", "Victory!");
+}
+//--------------------------------------------------------------------------------

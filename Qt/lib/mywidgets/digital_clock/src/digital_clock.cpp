@@ -92,7 +92,6 @@ void Digital_clock::timeout(void)
     }
     else
     {
-        //TODO корректировка времени каждый час
         correct_time();
     }
     if(hour > 23)

@@ -101,6 +101,7 @@ void MainBox::createTestBar(void)
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
+    cb_test->setProperty(NO_SAVE, true);
     foreach (CMD command, commands)
     {
         cb_test->addItem(command.cmd_text, QVariant(command.cmd));

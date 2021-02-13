@@ -58,99 +58,14 @@ void MainBox::init(void)
 
     createTestBar();
 
-#if 0
-    // create shortcut
-    QShortcut *shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q), this);
-
-    // connect its 'activated' signal to close application
-    QObject::connect(shortcut,    &QShortcut::activated,    qApp,   &QApplication::quit);
-    //---
-#endif
-
-    ui->horizontalSlider->setRange(0, 1000);
-
-    connect(ui->sb_1,   static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &MainBox::check_in);
-    connect(ui->sb_2,   static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &MainBox::check_in);
-    connect(ui->sb_res, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &MainBox::check_in);
-    connect(ui->btn_ok, &QPushButton::clicked,  this,   &MainBox::victory);
-
-    check_in();
-
-    ui->toolButton->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon)));
-    connect(ui->toolButton, &QToolButton::clicked,  this,   &MainBox::delete_string);
-
-    //---
-    connect(ui->btn_click,  &QPushButton::clicked,  [this]() {
-        emit info("click");
-    });
-    connect(ui->btn_set_dt,  &QPushButton::clicked,  [this]() {
-        ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
-    });
-    connect(ui->btn_clear_strings,  &QPushButton::clicked,  [this]() {
-        ui->comboBox_2->clear();
-    });
-    connect(ui->btn_add_strings,  &QPushButton::clicked,  [this]() {
-        ui->comboBox_2->addItem("a0");
-        ui->comboBox_2->addItem("a1");
-        ui->comboBox_2->addItem("a2");
-
-        ui->listWidget->addItem("b0");
-        ui->listWidget->addItem("b1");
-        ui->listWidget->addItem("b2");
-    });
-
-    //---
-    connect(ui->de_begin,   &QDateEdit::editingFinished,  [this]() {
-        emit info("correct min");
-        ui->de_test->setMinimumDate(ui->de_begin->date());
-    });
-    connect(ui->de_end,   &QDateEdit::editingFinished,  [this]() {
-        emit info("correct max");
-        ui->de_test->setMaximumDate(ui->de_end->date());
-    });
-
-    QTimer::singleShot(100, [this]{
-        if(ui->de_test->minimumDate() != ui->de_begin->date())
-        {
-            ui->de_test->setMinimumDate(ui->de_begin->date());
-        }
-        if(ui->de_test->maximumDate() != ui->de_end->date())
-        {
-            ui->de_test->setMaximumDate(ui->de_end->date());
-        }
-        emit info("CORRECT");
-    });
-    //---
-
-    //---
-    ui->hex_widget->setMaximum(std::numeric_limits<qlonglong>::max());
-    ui->hex_widget->setMinimum(std::numeric_limits<qlonglong>::min());
-    //---
-
-    //---
-    mdi_widget_0 = new QLineEdit(this);
-    mdi_widget_0->setObjectName("widget_0");
-    mdi_widget_0->setAttribute(Qt::WA_DeleteOnClose);
-
-    mdi_widget_1 = new QLineEdit(this);
-    mdi_widget_1->setObjectName("widget_1");
-    mdi_widget_1->setAttribute(Qt::WA_DeleteOnClose);
-
-    mdi_widget_2 = new QLineEdit(this);
-    mdi_widget_2->setObjectName("widget_2");
-    mdi_widget_2->setAttribute(Qt::WA_DeleteOnClose);
-
-    w0 = ui->mdiArea->addSubWindow(mdi_widget_0);
-    w1 = ui->mdiArea->addSubWindow(mdi_widget_1);
-    w2 = ui->mdiArea->addSubWindow(mdi_widget_2);
-
-    w0->setObjectName("mdi_widget0");
-    w1->setObjectName("mdi_widget1");
-    w2->setObjectName("mdi_widget2");
-    //---
-
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainBox::show_timer_count);
+
+    connect_log_signals(ui->controls_widget, this);
+
+    // add_lcd_clock();
+    // add_digital_clock(false);
+    add_digital_clock();
 
 #if 1
     //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -161,33 +76,7 @@ void MainBox::init(void)
     }
 #endif
 
-    //---
-    file_model = new QFileSystemModel(this);
-    file_model->setNameFilters(QStringList() << "*");
-    file_model->setNameFilterDisables(false);
-
-    ui->tree->setModel(file_model);
-    //---
-    QStandardItemModel *text_model = new QStandardItemModel(0, 2, this);
-    text_model->setHeaderData(0, Qt::Horizontal, tr("Test"));
-    text_model->setHorizontalHeaderLabels(QStringList() << "Text" << "N");
-
-    for(int n=0; n<10; n++)
-    {
-        text_model->insertRow(n);
-        text_model->setData(text_model->index(n, 0, QModelIndex()), "text");
-        text_model->setData(text_model->index(n, 1, QModelIndex()), n);
-    }
-
-    ui->tableView->setModel(text_model);
-    //---
-
-    //---
-    //    add_lcd_clock();
-    //    add_digital_clock(false);
-    add_digital_clock();
-    //---
-
+#if 1
     QTimer::singleShot(0, [this]{
         MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
         if(mw)
@@ -201,11 +90,13 @@ void MainBox::init(void)
         }
         load_widgets();
     });
+#endif
 }
 //--------------------------------------------------------------------------------
 bool MainBox::set_theme_windows(void)
 {
-    QFile file(":/themes_css/Theme (Windows).css");
+    QString filename = ":/themes_css/Theme (Windows).css";
+    QFile file(filename);
     if(file.open(QIODevice::ReadOnly))
     {
         QByteArray ba = file.readAll();
@@ -213,7 +104,7 @@ bool MainBox::set_theme_windows(void)
     }
     else
     {
-        emit error("theme file not open");
+        emit error(QString("file [%1] not open").arg(filename));
         return false;
     }
     return true;
@@ -221,7 +112,8 @@ bool MainBox::set_theme_windows(void)
 //--------------------------------------------------------------------------------
 bool MainBox::set_norton_commander(void)
 {
-    QFile file(":/themes_qss/Norton Commander.qss");
+    QString filename = ":/themes_qss/Norton Commander.qss";
+    QFile file(filename);
     if(file.open(QIODevice::ReadOnly))
     {
         QByteArray ba = file.readAll();
@@ -229,7 +121,7 @@ bool MainBox::set_norton_commander(void)
     }
     else
     {
-        emit error("theme file not open");
+        emit error(QString("file [%1] not open").arg(filename));
         return false;
     }
     return true;
@@ -237,7 +129,8 @@ bool MainBox::set_norton_commander(void)
 //--------------------------------------------------------------------------------
 bool MainBox::set_styles(void)
 {
-    QFile file(":/themes_qss/styles.qss");
+    QString filename = ":/themes_qss/styles.qss";
+    QFile file(filename);
     if(file.open(QIODevice::ReadOnly))
     {
         QByteArray ba = file.readAll();
@@ -245,30 +138,10 @@ bool MainBox::set_styles(void)
     }
     else
     {
-        emit error("theme file not open");
+        emit error(QString("file [%1] not open").arg(filename));
         return false;
     }
     return true;
-}
-//--------------------------------------------------------------------------------
-void MainBox::delete_string(void)
-{
-    ui->comboBox->removeItem(ui->comboBox->currentIndex());
-}
-//--------------------------------------------------------------------------------
-void MainBox::check_in(void)
-{
-    int a = ui->sb_1->value();
-    int b = ui->sb_2->value();
-    int c = ui->sb_res->value();
-
-    bool res = ((a + b) == c);
-    ui->btn_ok->setEnabled(res);
-}
-//--------------------------------------------------------------------------------
-void MainBox::victory(void)
-{
-    messagebox_info("Info", "Victory!");
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -300,6 +173,7 @@ void MainBox::createTestBar(void)
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
+    cb_test->setProperty(NO_SAVE, true);
     foreach (CMD command, commands)
     {
         cb_test->addItem(command.cmd_text, QVariant(command.cmd));
@@ -467,51 +341,21 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 0
+    QWidgetList widgets;
+    widgets = qApp->allWidgets();
+    emit info(QString("Found %1 widgets").arg(widgets.count()));
+
+    QPushButton *w = new QPushButton();
+    w->show();
+
+    widgets = qApp->allWidgets();
+    emit info(QString("Found %1 widgets").arg(widgets.count()));
+
+    delete w;
+#endif
+
 #if 1
-    QWidgetList list = qApp->allWidgets();
-    emit info(QString("cnt: %1").arg(list.count()));
-    foreach (QWidget *widget, list)
-    {
-
-    }
-    for(int n=0; n<list.count(); n++)
-    {
-        QWidget *w = list.at(n);
-        if(w->objectName() == "le_test")
-        {
-            emit info("found!!!");
-        }
-        if(w->objectName() == "dateTimeEdit")
-        {
-            emit info("found dateTimeEdit");
-        }
-    }
-#endif
-
-#if 0
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        auto l_docks = mw->findChildren<QDockWidget *>();
-        emit info(QString("cnt: %1").arg(l_docks.count()));
-        foreach (QDockWidget *dw, l_docks)
-        {
-            emit error(dw->objectName());
-
-            auto l_le = dw->findChildren<QLineEdit *>();
-            foreach(QLineEdit *le, l_le)
-            {
-                if(le->objectName() == "le_test")
-                {
-                    le->setText(le->objectName());
-                }
-                emit info(QString("---> [%1]").arg(le->objectName()));
-            }
-        }
-    }
-#endif
-
-#if 0
     emit info(QString("ver. [%1]").arg(qApp->applicationVersion()));
 #endif
 
@@ -537,16 +381,7 @@ void MainBox::updateText(void)
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)
 {
-    bool is_exit = ui->cb_fag_exit->isChecked();
-    if(is_exit == false)
-    {
-        messagebox_info("Info", "Низзя");
-    }
-    else
-    {
-//        save_widgets();
-    }
-    return is_exit;
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)

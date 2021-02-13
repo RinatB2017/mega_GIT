@@ -76,6 +76,8 @@ include ($$LIB_PATH2/widgets/QLongLongSpinBox/QLongLongSpinBox.pri)
 include (src/for_tests_mainbox/for_tests_mainbox.pri)
 include (src/mymainwindow/mymainwindow.pri)
 
+include (src/widgets/widgets.pri)
+
 #!exists(OBJECTS_DIR) {
 #    VERSION_HEADER = $$PWD/src/version.pri
 #    VERSION_HEADER = $$PWD/src/version.hpp

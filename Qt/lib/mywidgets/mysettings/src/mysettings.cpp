@@ -24,9 +24,8 @@
 #   include </usr/include/linux/stddef.h>
 #endif
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp" //FIXME позже надо убрать отсуда
-
 #include "mysettings.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 MySettings::MySettings()
 {
@@ -128,7 +127,6 @@ bool MySettings::save_listwidget_property(QWidget *widget)
     if(lw)
     {
         settings->beginGroup(get_full_objectName(widget));
-        //settings->setValue("currentindex", QVariant(dynamic_cast<QListWidget *>(widget)->currentIndex()));    //TODO проба
         settings->beginWriteArray(dynamic_cast<QListWidget *>(widget)->objectName(), dynamic_cast<QListWidget *>(widget)->count());
         for(int n=0; n<dynamic_cast<QListWidget *>(widget)->count(); n++)
         {

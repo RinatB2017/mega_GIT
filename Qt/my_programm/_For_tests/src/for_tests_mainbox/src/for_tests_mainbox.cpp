@@ -65,7 +65,7 @@ void MainBox::init(void)
     }
 #endif
 
-#if 1
+#ifdef USE_DOCK_WIDGETS
     QTimer::singleShot(0, [this]{
         MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
         if(mw)

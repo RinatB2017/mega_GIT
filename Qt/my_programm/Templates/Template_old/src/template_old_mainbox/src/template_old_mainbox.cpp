@@ -120,7 +120,9 @@ void MainBox::createTestBar(void)
     connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
     connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
 
+#ifndef NO_MENU
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+#endif    
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)

@@ -261,7 +261,29 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
+    auto fptr = &MainBox::test2;
+    void *f = reinterpret_cast<void *&>(fptr);
+    f();
+
+//    typedef void (MainBox::*function)(void);
+//    function x;
+//    x = f;
+//    (this->*x)();
+#endif
+
+#if 0
+    QDesktopWidget w;
+    emit info(QString("%1:%2")
+            .arg(w.width())
+            .arg(w.height()));
+
+    emit info(QString("%1:%2")
+            .arg(qApp->desktop()->width())
+            .arg(qApp->desktop()->height()));
+#endif
+
+#if 0
     QWidgetList widgets;
     widgets = qApp->allWidgets();
     emit info(QString("Found %1 widgets").arg(widgets.count()));
@@ -292,6 +314,12 @@ bool MainBox::test(void)
 #endif
 
     return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::test2(void)
+{
+    emit info("YES");
+    qDebug() << "YES!";
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

@@ -46,6 +46,7 @@ public slots:
     void choice_test(void);
 
     bool test(void);
+    void test2(void);
     bool load_qss(void);
 
     void print_mp(QWidget *widget);

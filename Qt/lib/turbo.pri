@@ -89,13 +89,12 @@ unix:!macx {
     linux {
         OPTIMIZE += -pipe
     }
-    #OPTIMIZE    += -Wno-missing-braces -Wno-missing-field-initializers
-
     QMAKE_CFLAGS   += $${OPTIMIZE}
     QMAKE_CXXFLAGS += $${OPTIMIZE}
     QMAKE_LFLAGS   += $${OPTIMIZE}
     QMAKE_OBJECTIVE_CFLAGS += $${OPTIMIZE}
 
+    #OPTIMIZE    += -Wno-missing-braces -Wno-missing-field-initializers
     QMAKE_CXX   = ccache g++
 
     #CONFIG += warn_off
@@ -104,8 +103,16 @@ unix:!macx {
     #QMAKE_CXXFLAGS_WARN_ON -= -Wno-missing-braces -Wno-missing-field-initializers
 }
 ###############################################################################
-#CONFIG	 += precompile_header
-#PRECOMPILED_HEADER  = stable.h
+# ccache в винде нет, проверю, может это поможет
+win32 {
+    CONFIG	 += precompile_header
+    PRECOMPILED_HEADER  = stable.h
+
+    HEADERS += stable.h
+    precompile_header:!isEmpty(PRECOMPILED_HEADER) {
+        DEFINES += USING_PCH
+    }
+}
 ###############################################################################
 #
 # не факт, что это правильно будет в будущем

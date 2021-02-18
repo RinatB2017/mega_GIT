@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -21,34 +21,10 @@
 #ifndef DEFINES_HPP
 #define DEFINES_HPP
 //--------------------------------------------------------------------------------
-#include <QtGlobal>
+#include "version.hpp"
 //--------------------------------------------------------------------------------
-//#include "version.hpp"
-//--------------------------------------------------------------------------------
-#define ORGNAME     "Work"
-#define APPNAME     "Test_ADB"
-
-#define PROG_PROCESS    "adb"
-
-#define P_INTERVAL  "interval"
-#define P_POS_X     "pos_x"
-#define P_POS_Y     "pos_y"
-//--------------------------------------------------------------------------------
-#define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
-#define QMAKE_TARGET_COMPANY    ORGNAME
-#define QMAKE_TARGET_PRODUCT    APPNAME
-#define QMAKE_TARGET_COPYRIGHT  "Copyright 2020-2025"
-#define RC_ICONS                ":/images/computer.ico"
-//--------------------------------------------------------------------------------
-#define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
-#define VER_FILEVERSION_STR         VER_STR
-#define VER_PRODUCTVERSION          VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
-#define VER_PRODUCTVERSION_STR      VER_STR
-#define VER_FILEDESCRIPTION_STR     APPNAME
-#define VER_INTERNALNAME_STR        APPNAME
-#define VER_LEGALCOPYRIGHT_STR      QMAKE_TARGET_COPYRIGHT
-#define VER_ORIGINALFILENAME_STR    APPNAME
-#define VER_PRODUCTNAME_STR         APPNAME
+#define ORGNAME "Work"
+#define APPNAME "TCP_local_socket"
 //--------------------------------------------------------------------------------
 #define ICON_PROGRAMM   ":/mainwindow/computer.png"
 //--------------------------------------------------------------------------------

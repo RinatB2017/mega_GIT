@@ -71,7 +71,6 @@ void MainBox::init(void)
         if(mw)
         {
             mw->add_mdi_sorting();
-            //TODO проверка корректного переноса frame в dockwidget
             mw->add_dock_widget("test_dock",
                                 "test_dock",
                                 Qt::BottomDockWidgetArea,
@@ -257,9 +256,33 @@ bool MainBox::load_qss(void)
     return true;
 }
 //--------------------------------------------------------------------------------
+#include "qyuvopenglwidget.h"
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 0
+    AVFrame *frame = new AVFrame();
+
+    QYUVOpenGLWidget *w = new QYUVOpenGLWidget();
+    w->updateTextures(frame->data[0], frame->data[1], frame->data[2], frame->linesize[0], frame->linesize[1], frame->linesize[2]);
+    w->show();
+#endif
+
+#if 0
+    QImage image(200, 200, QImage::Format_RGB32);
+    QPainter painter(&image);
+    painter.fillRect(0, 0, image.width(), image.height(), Qt::red);
+
+//    QLabel *label = new QLabel();
+//    label->setPixmap(QPixmap::fromImage(image));
+//    label->show();
+
+    MyGLWidget *w = new MyGLWidget();
+    w->loadImage(image);
+    w->show();
+#endif
 
 #if 0
     auto fptr = &MainBox::test2;

@@ -2,15 +2,10 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-TEMPLATE  = subdirs
-CONFIG   *= ordered
+DEPENDPATH  += $$PWD/src
+INCLUDEPATH = $$DEPENDPATH
 
-SUBDIRS += \
-    broadcastreceiver \
-    broadcastsender \
-    broadcast_UDP_Client \
-    TCP_local_socket \
-    TCP_Server \
-    TCP_Client \
-    UDP_Server \
-    UDP_Client
+QT      += testlib
+
+HEADERS += test.hpp
+SOURCES += test.cpp

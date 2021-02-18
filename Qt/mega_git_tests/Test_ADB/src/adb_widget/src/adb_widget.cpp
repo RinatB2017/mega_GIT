@@ -61,6 +61,8 @@ void ADB_widget::init(void)
     ui->sb_pos_x->setRange(0, s_width);
     ui->sb_pos_y->setRange(0, s_height);
 
+    copy_file(":/scrcpy-server", "scrcpy-server");
+
     create_process();
 
     //---
@@ -143,6 +145,11 @@ void ADB_widget::init(void)
 
     connect(ui->cb_auto,    &QCheckBox::toggled,    this,   &ADB_widget::f_auto_shot);
 
+    connect(ui->btn_1,  &QToolButton::clicked,  this,   &ADB_widget::f_1);
+    connect(ui->btn_2,  &QToolButton::clicked,  this,   &ADB_widget::f_2);
+    connect(ui->btn_3,  &QToolButton::clicked,  this,   &ADB_widget::f_3);
+    connect(ui->btn_4,  &QToolButton::clicked,  this,   &ADB_widget::f_4);
+
     ui->cb_commands->addItems(sl_commands);
     ui->btn_adb->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
 
@@ -174,6 +181,7 @@ void ADB_widget::run_program(const QString &program,
 //--------------------------------------------------------------------------------
 void ADB_widget::readData(void)
 {
+    emit info(QString("==> bytesAvailable: %1").arg(myProcess->bytesAvailable()));
     if(binary_data == false)
     {
         QString output = myProcess->readAllStandardOutput();
@@ -284,25 +292,18 @@ void ADB_widget::f_create_screenshot(void)
     }
 
     binary_data = true;
-    QString filename = PICTURE_NAME;
 
     QElapsedTimer timer;
     timer.start();
     f_get_screeshot();
 
     QByteArray ba = myProcess->readAllStandardOutput();
-    QFile file(filename);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        emit error(QString("File %1 not created").arg(filename));
-        binary_data = false;
-        return;
-    }
-    file.write(ba);
-    file.close();
+
+    QPixmap pixmap;
+    pixmap.loadFromData(ba, "PNG");
 
     emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
-    f_show_screeshot(filename);
+    f_show_screeshot(pixmap);
 
     emit info("OK");
     binary_data = false;
@@ -417,7 +418,144 @@ bool ADB_widget::f_adb(void)
 //--------------------------------------------------------------------------------
 bool ADB_widget::f_test(void)
 {
-    emit info("Test");
+    QStringList arguments;
+    QString device = ui->cb_devices->currentText();
+
+#if 0
+    arguments.clear();
+    arguments << "-s" << device;
+    arguments << "push";
+    arguments << "/dev/shm/scrcpy-server";
+    arguments << "/data/local/tmp/scrcpy-server.jar";
+
+    test_run(arguments);
+#endif
+
+#if 1
+    arguments.clear();
+    arguments << "-s" << device;
+    arguments << "reverse";
+    arguments << "localabstract:scrcpy";
+    arguments << "tcp:27183";
+
+    test_run(arguments);
+#endif
+
+#if 1
+    arguments.clear();
+    arguments << "-s" << device;
+    arguments << "shell";
+    arguments << "CLASSPATH=/data/local/tmp/scrcpy-server.jar";
+    arguments << "app_process";
+    arguments << "/";
+    arguments << "com.genymobile.scrcpy.Server";
+    arguments << "1.14";
+    arguments << "info";
+    arguments << "1080";
+    arguments << "8000000";
+    arguments << "60";
+    arguments << "-1";
+    arguments << "false";
+    arguments << "-";
+
+    test_run(arguments);
+#endif
+
+#if 1
+    arguments.clear();
+    arguments << "-s" << device;
+    arguments << "reverse";
+    arguments << "--remove";
+    arguments << "localabstract:scrcpy";
+
+    test_run(arguments);
+#endif
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+void ADB_widget::f_1(void)
+{
+    QStringList arguments;
+
+    arguments.clear();
+    arguments << "-s" << ui->cb_devices->currentText();
+    arguments << "push";
+    arguments << "scrcpy-server";
+    arguments << "/data/local/tmp/scrcpy-server.jar";
+
+    test_run(arguments);
+}
+//--------------------------------------------------------------------------------
+void ADB_widget::f_2(void)
+{
+    QStringList arguments;
+
+    arguments.clear();
+    arguments << "-s" << ui->cb_devices->currentText();
+    arguments << "reverse";
+    arguments << "localabstract:scrcpy";
+    arguments << "tcp:27183";
+
+    test_run(arguments);
+}
+//--------------------------------------------------------------------------------
+void ADB_widget::f_3(void)
+{
+    QStringList arguments;
+
+    arguments.clear();
+    arguments << "-s" << ui->cb_devices->currentText();
+    arguments << "shell";
+    arguments << "CLASSPATH=/data/local/tmp/scrcpy-server.jar";
+    arguments << "app_process";
+    arguments << "/";
+    arguments << "com.genymobile.scrcpy.Server";
+    arguments << "1.14";
+    arguments << "info";
+    arguments << "1080";
+    arguments << "8000000";
+    arguments << "60";
+    arguments << "-1";
+    arguments << "false";
+    arguments << "-";
+
+    test_run(arguments);
+}
+//--------------------------------------------------------------------------------
+void ADB_widget::f_4(void)
+{
+    QStringList arguments;
+
+    arguments.clear();
+    arguments << "-s" << ui->cb_devices->currentText();
+    arguments << "reverse";
+    arguments << "--remove";
+    arguments << "localabstract:scrcpy";
+
+    test_run(arguments);
+}
+//--------------------------------------------------------------------------------
+bool ADB_widget::test_run(const QStringList &arguments)
+{
+    if(ui->cb_devices->currentText().isEmpty())
+    {
+        emit error("device not selected");
+        return false;
+    }
+
+    QString program = PROG_PROCESS;
+
+    QElapsedTimer timer;
+    timer.start();
+
+    run_program(program, arguments);
+    while(f_busy)
+    {
+        QCoreApplication::processEvents();
+    }
+
+    emit info(QString("process_result: %1").arg(process_result));
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -530,18 +668,16 @@ void ADB_widget::f_auto_shot(bool state)
     }
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::f_show_screeshot(const QString &filename)
+void ADB_widget::f_show_screeshot(QPixmap pixmap)
 {
-    QPixmap pix = QPixmap(filename);
-
-    s_width = pix.width();
-    s_height = pix.height();
+    s_width = pixmap.width();
+    s_height = pixmap.height();
 
     ui->sb_pos_x->setRange(0, s_width);
     ui->sb_pos_y->setRange(0, s_height);
 
     emit info(QString("size %1 %2").arg(s_width).arg(s_height));
-    emit set_pixmap(pix);
+    emit set_pixmap(pixmap);
 }
 //--------------------------------------------------------------------------------
 bool ADB_widget::f_get_screeshot(void)
@@ -558,7 +694,13 @@ bool ADB_widget::f_get_screeshot(void)
 
     arguments << "-s" << ui->cb_devices->currentText();
     arguments << "exec-out";
+#if 1
     arguments << "screencap";
+#else
+    arguments << "screenrecord";
+    arguments << "–bit-rate";
+    arguments << "12000000";
+#endif
     arguments << "-p";
 
     run_program(program, arguments);
@@ -567,6 +709,30 @@ bool ADB_widget::f_get_screeshot(void)
         QCoreApplication::processEvents();
     }
     return (process_result == 0);
+}
+//--------------------------------------------------------------------------------
+bool ADB_widget::copy_file(const QString &src_filename,
+                        const QString &dst_filename)
+{
+    QFile src_file(src_filename);
+    QFile dst_file(dst_filename);
+
+    if(dst_file.exists())
+    {
+        return true;
+    }
+
+    if(!src_file.open(QIODevice::ReadOnly))
+    {
+        emit error(QString("file %1 not open").arg(src_filename));
+        return false;
+    }
+    if(!src_file.copy(dst_filename))
+    {
+        emit error(QString("file %1 not created").arg(dst_filename));
+        return false;
+    }
+    return true;
 }
 //--------------------------------------------------------------------------------
 void ADB_widget::updateText(void)

@@ -3,13 +3,11 @@
 #**********************************************************************************
 
 TEMPLATE = app
-TARGET   = Test_ADB
+TARGET   = TCP_local_socket
 
-FOLDER  = tests
-
-VER_MAJOR = 0
-VER_MINOR = 99
-VER_PATCH = 1
+VER_MAJOR = 1
+VER_MINOR = 0
+VER_PATCH = 0
 VER_BUILD = 0
 
 DEFINES += VER_MAJOR=$${VER_MAJOR}
@@ -17,12 +15,15 @@ DEFINES += VER_MINOR=$${VER_MINOR}
 DEFINES += VER_BUILD=$${VER_BUILD}
 DEFINES += VER_PATCH=$${VER_PATCH}
 
+QT += network
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
-    defines.hpp
+    defines.hpp \
+    version.hpp
 
 SOURCES += \
     main.cpp
@@ -35,13 +36,13 @@ win32 {
     QMAKE_TARGET_COPYRIGHT = "Copyright \\251 2020-2025"
     QMAKE_TARGET_DESCRIPTION = "my description"
 
-    RC_ICONS = ico/computer.ico # нужно, чтобы создался файл .rc автоматом
+    RC_ICONS = "ico/computer.ico"
+    # RC_FILE  = programm.rc
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win
 RESOURCES += \
-    images/images.qrc \
-    scrcpy-server/scrcpy-server.qrc
+    ico/icons.qrc
 
 OTHER_FILES += doc/notebook.txt
 
@@ -49,23 +50,20 @@ CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
 
-LIB_PATH  = "$$PWD/../../../Qt/lib"
-LIB_PATH2 = "$$PWD/../../../Qt/lib2"
+LIB_PATH  = "$$PWD/../../../lib"
+LIB_PATH2 = "$$PWD/../../../lib2"
 
-include (src/config.pri)
+include (src/config.pri)    #строка должна быть перед mainwindow
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/opencv/opencv.pri)
-include ($$LIB_PATH2/icons/arrows.pri)
 
-include (src/test_adb_mainbox/test_adb_mainbox.pri)
-include (src/autoclicker/autoclicker.pri)
-include (src/adb_widget/adb_widget.pri)
-include (src/ocv_widget/ocv_widget.pri)
+include (src/tcp_local_socket_mainbox/tcp_local_socket_mainbox.pri)
 
 #!exists(OBJECTS_DIR) {
 #    VERSION_HEADER = $$PWD/src/version.hpp
 #    message($$VERSION_HEADER)
 #    include ($$LIB_PATH/auto_inc_version.pri)
 #}
+
+#message($$DEFINES)
 
 VPATH = $$INCLUDEPATH

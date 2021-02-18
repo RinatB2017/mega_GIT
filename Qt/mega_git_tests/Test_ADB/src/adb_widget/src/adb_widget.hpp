@@ -74,6 +74,7 @@ private:
 
     void run_program(const QString &program,
                      const QStringList &arguments);
+    bool test_run(const QStringList &arguments);
 
     bool f_devices(void);
     void f_create_screenshot(void);
@@ -90,11 +91,19 @@ private:
     bool f_adb(void);
     bool f_test(void);
 
+    void f_1(void);
+    void f_2(void);
+    void f_3(void);
+    void f_4(void);
+
     void run_cmd(void);
 
     void f_auto_shot(bool state);
 
-    void f_show_screeshot(const QString &filename);
+    void f_show_screeshot(QPixmap pixmap);
+
+    bool copy_file(const QString &src_filename,
+                   const QString &dst_filename);
 
     void updateText(void);
     bool programm_is_exit(void);

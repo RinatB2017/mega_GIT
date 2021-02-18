@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>scrcpy-server</file>
+    </qresource>
+</RCC>

@@ -2,15 +2,11 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-TEMPLATE  = subdirs
-CONFIG   *= ordered
+DEPENDPATH  += \
+    $$PWD/src \
+    $$PWD/src/ui
+INCLUDEPATH = $$DEPENDPATH
 
-SUBDIRS += \
-    broadcastreceiver \
-    broadcastsender \
-    broadcast_UDP_Client \
-    TCP_local_socket \
-    TCP_Server \
-    TCP_Client \
-    UDP_Server \
-    UDP_Client
+HEADERS += tcp_local_socket_mainbox.hpp
+SOURCES += tcp_local_socket_mainbox.cpp
+FORMS   += tcp_local_socket_mainbox.ui

@@ -105,10 +105,10 @@ bool MyWidget::check_exists_signals(QWidget *parent)
 void MyWidget::connect_log(QWidget *parent)
 {
 #ifdef NO_LOG
-    //    connect(this, SIGNAL(info(QString)),    this, SLOT(log(QString)));
-    //    connect(this, SIGNAL(debug(QString)),   this, SLOT(log(QString)));
-    //    connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
-    //    connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
+    // connect(this, SIGNAL(info(QString)),    this, SLOT(log(QString)));
+    // connect(this, SIGNAL(debug(QString)),   this, SLOT(log(QString)));
+    // connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
+    // connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
 
     if(parent == nullptr)
     {
@@ -193,46 +193,27 @@ void MyWidget::log(const QString &data)
 #endif
 }
 //--------------------------------------------------------------------------------
+template<typename T>
+void MyWidget::set_property_widget(void)
+{
+    QList<T *> allle = findChildren<T *>();
+    foreach (T *obj, allle)
+    {
+        obj->setProperty(STATE_PROPERTY, true);
+        w_lists.append(obj);
+    }
+}
+//--------------------------------------------------------------------------------
 void MyWidget::init_w_lists(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    QList<QLineEdit *> allle = findChildren<QLineEdit *>();
-    foreach (QLineEdit *obj, allle)
-    {
-        obj->setProperty(STATE_PROPERTY, true);
-        w_lists.append(obj);
-    }
-    QList<QAbstractSlider *> allsl = findChildren<QAbstractSlider *>();
-    foreach (QAbstractSlider *obj, allsl)
-    {
-        obj->setProperty(STATE_PROPERTY, true);
-        w_lists.append(obj);
-    }
-    QList<QAbstractScrollArea *> allsa = findChildren<QAbstractScrollArea *>();
-    foreach (QAbstractScrollArea *obj, allsa)
-    {
-        obj->setProperty(STATE_PROPERTY, true);
-        w_lists.append(obj);
-    }
-    QList<QAbstractSpinBox *> allsb = findChildren<QAbstractSpinBox *>();
-    foreach (QAbstractSpinBox *obj, allsb)
-    {
-        obj->setProperty(STATE_PROPERTY, true);
-        w_lists.append(obj);
-    }
-    QList<QComboBox *> allcb = findChildren<QComboBox *>();
-    foreach (QComboBox *obj, allcb)
-    {
-        obj->setProperty(STATE_PROPERTY, true);
-        w_lists.append(obj);
-    }
-    QList<QAbstractButton *> allbtn = findChildren<QAbstractButton *>();
-    foreach (QAbstractButton *obj, allbtn)
-    {
-        obj->setProperty(STATE_PROPERTY, true);
-        w_lists.append(obj);
-    }
+    set_property_widget<QLineEdit>();
+    set_property_widget<QAbstractSlider>();
+    set_property_widget<QAbstractScrollArea>();
+    set_property_widget<QAbstractSpinBox>();
+    set_property_widget<QComboBox>();
+    set_property_widget<QAbstractButton>();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::add_widget_to_w_lists(QWidget *widget)
@@ -291,45 +272,29 @@ void MyWidget::block_this_button(bool state)
     }
 }
 //--------------------------------------------------------------------------------
+template<typename T>
+void MyWidget::lock_widget(bool state)
+{
+    QList<T *> all_obj = findChildren<T *>();
+    foreach(T *obj, all_obj)
+    {
+        if(obj->property(NO_BLOCK).toBool() == false)
+        {
+            obj->setDisabled(state);
+        }
+    }
+}
+//--------------------------------------------------------------------------------
 void MyWidget::block_interface(bool state)
 {
     emit trace(Q_FUNC_INFO);
 
-    QList<QAbstractButton *> all_obj = findChildren<QAbstractButton *>();
-    foreach(QAbstractButton *obj, all_obj)
-    {
-        if(obj->property(NO_BLOCK).toBool() == false)
-        {
-            obj->setDisabled(state);
-        }
-    }
-    //---
-    QList<QComboBox *> all_cb = findChildren<QComboBox *>();
-    foreach(QComboBox *obj, all_cb)
-    {
-        if(obj->property(NO_BLOCK).toBool() == false)
-        {
-            obj->setDisabled(state);
-        }
-    }
-    //---
-    QList<QDoubleSpinBox *> all_dsb = findChildren<QDoubleSpinBox *>();
-    foreach(QDoubleSpinBox *obj, all_dsb)
-    {
-        if(obj->property(NO_BLOCK).toBool() == false)
-        {
-            obj->setDisabled(state);
-        }
-    }
-    //---
-    QList<QSpinBox *> all_sb = findChildren<QSpinBox *>();
-    foreach(QSpinBox *obj, all_sb)
-    {
-        if(obj->property(NO_BLOCK).toBool() == false)
-        {
-            obj->setDisabled(state);
-        }
-    }
+    lock_widget<QAbstractButton>(state);
+    lock_widget<QComboBox>(state);
+    lock_widget<QCheckBox>(state);
+    lock_widget<QLineEdit>(state);
+    lock_widget<QDoubleSpinBox>(state);
+    lock_widget<QSpinBox>(state);
 }
 //--------------------------------------------------------------------------------
 void MyWidget::block_widget(const QString &name, bool state)

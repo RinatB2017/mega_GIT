@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>ADB_widget</class>
  <widget class="QWidget" name="ADB_widget">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>270</width>
-    <height>756</height>
-   </rect>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
     <number>0</number>
@@ -49,16 +41,16 @@
         <property name="title">
          <string>Devices</string>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QComboBox" name="cb_devices"/>
+         </item>
          <item>
           <widget class="QPushButton" name="btn_devices">
            <property name="text">
             <string>get</string>
            </property>
           </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="cb_devices"/>
          </item>
         </layout>
        </widget>
@@ -81,10 +73,6 @@
            <item>
             <widget class="QSpinBox" name="sb_interval"/>
            </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_5">
            <item>
             <widget class="QCheckBox" name="cb_auto">
              <property name="sizePolicy">
@@ -111,53 +99,83 @@
        </widget>
       </item>
       <item>
-       <layout class="QGridLayout" name="gridLayout">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <item row="1" column="0">
-         <widget class="QToolButton" name="btn_swipe_RL">
-          <property name="text">
-           <string>...</string>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
-          <property name="icon">
-           <iconset resource="../../../../../../lib/pictures/arrow.qrc">
-            <normaloff>:/arrow/arrow-left.png</normaloff>:/arrow/arrow-left.png</iconset>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
           </property>
-         </widget>
+         </spacer>
         </item>
-        <item row="2" column="1">
-         <widget class="QToolButton" name="btn_swipe_UD">
-          <property name="text">
-           <string>...</string>
+        <item>
+         <layout class="QGridLayout" name="gridLayout">
+          <property name="spacing">
+           <number>0</number>
           </property>
-          <property name="icon">
-           <iconset resource="../../../../../../lib/pictures/arrow.qrc">
-            <normaloff>:/arrow/arrow-down.png</normaloff>:/arrow/arrow-down.png</iconset>
-          </property>
-         </widget>
+          <item row="1" column="0">
+           <widget class="QToolButton" name="btn_swipe_RL">
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../../../lib/pictures/arrow.qrc">
+              <normaloff>:/arrow/arrow-left.png</normaloff>:/arrow/arrow-left.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QToolButton" name="btn_swipe_UD">
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../../../lib/pictures/arrow.qrc">
+              <normaloff>:/arrow/arrow-down.png</normaloff>:/arrow/arrow-down.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QToolButton" name="btn_swipe_DU">
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../../../lib/pictures/arrow.qrc">
+              <normaloff>:/arrow/arrow-up.png</normaloff>:/arrow/arrow-up.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QToolButton" name="btn_swipe_LR">
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../../../../lib/pictures/arrow.qrc">
+              <normaloff>:/arrow/arrow-right.png</normaloff>:/arrow/arrow-right.png</iconset>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
-        <item row="0" column="1">
-         <widget class="QToolButton" name="btn_swipe_DU">
-          <property name="text">
-           <string>...</string>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
           </property>
-          <property name="icon">
-           <iconset resource="../../../../../../lib/pictures/arrow.qrc">
-            <normaloff>:/arrow/arrow-up.png</normaloff>:/arrow/arrow-up.png</iconset>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
           </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QToolButton" name="btn_swipe_LR">
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../../../../../../lib/pictures/arrow.qrc">
-            <normaloff>:/arrow/arrow-right.png</normaloff>:/arrow/arrow-right.png</iconset>
-          </property>
-         </widget>
+         </spacer>
         </item>
        </layout>
       </item>
@@ -169,19 +187,6 @@
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
           <layout class="QGridLayout" name="gridLayout_2">
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_2">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Y:</string>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="0">
             <widget class="QLabel" name="label">
              <property name="sizePolicy">
@@ -195,20 +200,33 @@
              </property>
             </widget>
            </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Y:</string>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="1">
             <widget class="QSpinBox" name="sb_pos_x"/>
            </item>
            <item row="1" column="1">
             <widget class="QSpinBox" name="sb_pos_y"/>
            </item>
+           <item row="0" column="2" rowspan="2">
+            <widget class="QPushButton" name="btn_tap">
+             <property name="text">
+              <string>Tap</string>
+             </property>
+            </widget>
+           </item>
           </layout>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btn_tap">
-           <property name="text">
-            <string>Tap</string>
-           </property>
-          </widget>
          </item>
          <item>
           <widget class="QGroupBox" name="groupBox_4">
@@ -282,12 +300,20 @@
              <property name="text">
               <string>1</string>
              </property>
+             <property name="icon">
+              <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+               <normaloff>:/red/1.png</normaloff>:/red/1.png</iconset>
+             </property>
             </widget>
            </item>
            <item>
             <widget class="QToolButton" name="btn_2">
              <property name="text">
               <string>2</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+               <normaloff>:/red/2.png</normaloff>:/red/2.png</iconset>
              </property>
             </widget>
            </item>
@@ -296,6 +322,10 @@
              <property name="text">
               <string>3</string>
              </property>
+             <property name="icon">
+              <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+               <normaloff>:/red/3.png</normaloff>:/red/3.png</iconset>
+             </property>
             </widget>
            </item>
            <item>
@@ -303,39 +333,26 @@
              <property name="text">
               <string>4</string>
              </property>
+             <property name="icon">
+              <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+               <normaloff>:/red/4.png</normaloff>:/red/4.png</iconset>
+             </property>
             </widget>
            </item>
-           <item>
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
             <widget class="QSpinBox" name="sb_port"/>
            </item>
            <item>
-            <widget class="QPushButton" name="btn_start">
+            <widget class="QToolButton" name="btn_start">
              <property name="text">
-              <string>start</string>
+              <string>...</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="btn_stop">
+            <widget class="QToolButton" name="btn_stop">
              <property name="text">
-              <string>stop</string>
+              <string>...</string>
              </property>
             </widget>
            </item>
@@ -351,6 +368,7 @@
  </widget>
  <resources>
   <include location="../../../../../../lib/pictures/arrow.qrc"/>
+  <include location="../../../../../../lib2/icons/digits/digits.qrc"/>
  </resources>
  <connections/>
 </ui>

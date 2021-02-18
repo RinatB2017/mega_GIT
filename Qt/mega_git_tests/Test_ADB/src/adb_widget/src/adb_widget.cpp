@@ -164,7 +164,7 @@ void ADB_widget::init(void)
     ui->cb_commands->addItems(sl_commands);
     ui->btn_adb->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
 
-    ui->cb_auto->setProperty(NO_BLOCK, true);
+    //ui->cb_auto->setProperty(NO_BLOCK, true);
 }
 //--------------------------------------------------------------------------------
 void ADB_widget::f_get_data(const QByteArray &data)

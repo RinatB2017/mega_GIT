@@ -3,7 +3,7 @@
 //-----
 #define VER_MAJOR 0
 #define VER_MINOR 0
-#define VER_BUILD 277
+#define VER_BUILD 278
 #define VER_PATCH 0
 //-----
 #endif // VERSION_HPP

@@ -61,10 +61,10 @@ IPV4_wo_port::IPV4_wo_port(QWidget *parent) :
     hbox->addWidget(d);
     setLayout(hbox);
 
-    connect(a,  SIGNAL(valueChanged(int)),  this,   SLOT(work()));
-    connect(b,  SIGNAL(valueChanged(int)),  this,   SLOT(work()));
-    connect(c,  SIGNAL(valueChanged(int)),  this,   SLOT(work()));
-    connect(d,  SIGNAL(valueChanged(int)),  this,   SLOT(work()));
+    connect(a,  static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &IPV4_wo_port::work);
+    connect(b,  static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &IPV4_wo_port::work);
+    connect(c,  static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &IPV4_wo_port::work);
+    connect(d,  static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &IPV4_wo_port::work);
 
     connect(a, &QSpinBox::editingFinished,  this,   &IPV4_wo_port::editingFinished);
     connect(b, &QSpinBox::editingFinished,  this,   &IPV4_wo_port::editingFinished);

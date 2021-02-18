@@ -57,6 +57,8 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/opencv/opencv.pri)
 include ($$LIB_PATH2/icons/arrows.pri)
 
+include ($$LIB_PATH2/ethernet/tcp_local_server/tcp_local_server.pri)
+
 include (src/test_adb_mainbox/test_adb_mainbox.pri)
 include (src/autoclicker/autoclicker.pri)
 include (src/adb_widget/adb_widget.pri)

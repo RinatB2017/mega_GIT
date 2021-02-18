@@ -50,7 +50,7 @@ void MainBox::init(void)
         return;
     }
 
-    connect(udpSocket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
+    connect(udpSocket, &QUdpSocket::readyRead,  this,   &MainBox::processPendingDatagrams);
     emit info(QString("UDP server started on port %1").arg(PORT));
 }
 //--------------------------------------------------------------------------------

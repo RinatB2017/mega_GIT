@@ -63,6 +63,7 @@ void TCP_Server::closeServer(void)
 {
     if(tcpServer)
     {
+        emit info("Сервер закрыт");
         tcpServer->close();
     }
     if(clientConnection)

@@ -262,11 +262,11 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 0
-    AVFrame *frame = new AVFrame();
+#if 1
+    // AVFrame *frame = new AVFrame();
 
     QYUVOpenGLWidget *w = new QYUVOpenGLWidget();
-    w->updateTextures(frame->data[0], frame->data[1], frame->data[2], frame->linesize[0], frame->linesize[1], frame->linesize[2]);
+    // w->updateTextures(frame->data[0], frame->data[1], frame->data[2], frame->linesize[0], frame->linesize[1], frame->linesize[2]);
     w->show();
 #endif
 

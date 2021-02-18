@@ -29,8 +29,8 @@ TCP_Server::TCP_Server(QWidget *parent) :
     MyWidget(parent)
 {
 //    processor = new Processor;
-//    connect(this, SIGNAL(output(QByteArray)), processor, SLOT(input(QByteArray)));
-//    connect(processor, SIGNAL(output(QByteArray)), this, SLOT(input(QByteArray)));
+//    connect(this,         &TCP_Server::output,    processor,  &Processor::input);
+//    connect(processor,    &Processor::output,     this,       &TCP_Server::input);
 
     setVisible(false);
 }
@@ -60,7 +60,7 @@ bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
     emit info(QString("IP: %1").arg(tcpServer->serverAddress().toString()));
     emit info(QString("Port: %1").arg(tcpServer->serverPort()));
 
-    connect(tcpServer, SIGNAL(newConnection()), this, SLOT(newConnect()));
+    connect(tcpServer,  &QTcpServer::newConnection, this,   &TCP_Server::newConnect);
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -83,8 +83,8 @@ void TCP_Server::newConnect(void)
     emit info(QString("Клиент подключился: %1:%2")
               .arg(clientConnection->peerAddress().toString())
               .arg(clientConnection->peerPort()));
-    connect(clientConnection,   SIGNAL(disconnected()), this,   SLOT(clientDisconnected()));
-    connect(clientConnection,   SIGNAL(readyRead()),    this,   SLOT(clientReadyRead()));
+    connect(clientConnection,   &QTcpSocket::disconnected,  this,   &TCP_Server::clientDisconnected);
+    connect(clientConnection,   &QTcpSocket::readyRead,     this,   &TCP_Server::clientReadyRead);
 }
 //--------------------------------------------------------------------------------
 void TCP_Server::clientReadyRead(void)

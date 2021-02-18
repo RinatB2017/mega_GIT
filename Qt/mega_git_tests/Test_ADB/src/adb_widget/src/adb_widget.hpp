@@ -23,12 +23,16 @@
 //--------------------------------------------------------------------------------
 #include <QProcess>
 //--------------------------------------------------------------------------------
+#include "tcp_local_server.hpp"
+
 #include "mywidget.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class ADB_widget;
 }
+//--------------------------------------------------------------------------------
+#include <QTcpServer>
 //--------------------------------------------------------------------------------
 class ADB_widget : public MyWidget
 {
@@ -69,6 +73,8 @@ private:
 
     QPointer <QTimer> timer_autoshot;
 
+    QPointer<TCP_Server> server;
+
     void init(void);
     void create_process(void);
 
@@ -91,10 +97,15 @@ private:
     bool f_adb(void);
     bool f_test(void);
 
+    void f_start(void);
+    void f_stop(void);
+
     void f_1(void);
     void f_2(void);
     void f_3(void);
     void f_4(void);
+
+    void f_get_data(const QByteArray &data);
 
     void run_cmd(void);
 

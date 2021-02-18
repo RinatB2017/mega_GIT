@@ -86,11 +86,11 @@ void IPV4::init(void)
     hbox->addWidget(port);
     setLayout(hbox);
 
-    connect(a,  SIGNAL(valueChanged(int)),  this,   SLOT(work()));
-    connect(b,  SIGNAL(valueChanged(int)),  this,   SLOT(work()));
-    connect(c,  SIGNAL(valueChanged(int)),  this,   SLOT(work()));
-    connect(d,  SIGNAL(valueChanged(int)),  this,   SLOT(work()));
-    connect(port,   SIGNAL(valueChanged(int)),  this,   SLOT(work()));
+    connect(a,      static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &IPV4::work);
+    connect(b,      static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &IPV4::work);
+    connect(c,      static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &IPV4::work);
+    connect(d,      static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &IPV4::work);
+    connect(port,   static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  this,   &IPV4::work);
 
     connect(a, &QSpinBox::editingFinished,  this,   &IPV4::editingFinished);
     connect(b, &QSpinBox::editingFinished,  this,   &IPV4::editingFinished);

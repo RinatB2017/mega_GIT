@@ -69,7 +69,7 @@ void MainBox::init_client(void)
     client->setAddress(QHostAddress(ui->ipv4_widget->get_url().host()));
     client->setPort(static_cast<quint16>(ui->ipv4_widget->get_url().port()));
 
-    connect(ui->btn_Send, SIGNAL(clicked()), this, SLOT(send()));
+    connect(ui->btn_Send, &QPushButton::clicked,    this,   &MainBox::send);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

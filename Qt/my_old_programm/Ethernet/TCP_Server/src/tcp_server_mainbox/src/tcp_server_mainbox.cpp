@@ -53,8 +53,8 @@ void MainBox::init(void)
 
     server = new TCP_Server(this);
 
-    connect(server,             SIGNAL(output(QByteArray)), this,   SLOT(f_get_data(QByteArray)));
-    connect(ui->btn_create,     SIGNAL(clicked(bool)),      this,   SLOT(f_connect()));
+    connect(server,             &TCP_Server::output,    this,   &MainBox::f_get_data);
+    connect(ui->btn_create,     &QPushButton::clicked,  this,   &MainBox::f_connect);
 
     load_widgets();
 }

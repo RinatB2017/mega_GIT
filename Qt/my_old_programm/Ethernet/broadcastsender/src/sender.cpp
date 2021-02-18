@@ -64,9 +64,9 @@ Sender::Sender(QWidget *parent)
     udpSocket = new QUdpSocket(this);
     messageNo = 1;
 
-    connect(startButton, SIGNAL(clicked()), this, SLOT(startBroadcasting()));
-    connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
-    connect(timer, SIGNAL(timeout()), this, SLOT(broadcastDatagram()));
+    connect(startButton,    &QPushButton::clicked,  this,   &Sender::startBroadcasting);
+    connect(quitButton,     &QPushButton::clicked,  this,   &Sender::close);
+    connect(timer,          &QTimer::timeout,       this,   &Sender::broadcastDatagram);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(statusLabel);

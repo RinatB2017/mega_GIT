@@ -52,7 +52,7 @@ void UDP_Client::init()
     res = udpSocket->bind(QHostAddress(address), port);
     emit info(res ? "bind is true" : "bind is false");
 
-    connect(udpSocket, SIGNAL(readyRead()), this, SLOT(readPendingDatagrams()));
+    connect(udpSocket,  &QUdpSocket::readyRead, this,   &UDP_Client::readPendingDatagrams);
 }
 //--------------------------------------------------------------------------------
 void UDP_Client::readPendingDatagrams(void)

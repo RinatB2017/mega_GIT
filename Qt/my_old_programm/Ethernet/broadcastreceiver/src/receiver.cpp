@@ -56,8 +56,8 @@ Receiver::Receiver(QWidget *parent)
     udpSocket = new QUdpSocket(this);
     udpSocket->bind(45454, QUdpSocket::ShareAddress);
 
-    connect(udpSocket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
-    connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
+    connect(udpSocket,  &QUdpSocket::readyRead, this,   &Receiver::processPendingDatagrams);
+    connect(quitButton, &QPushButton::clicked,  this,   &Receiver::close);
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
     buttonLayout->addStretch(1);

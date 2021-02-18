@@ -45,7 +45,7 @@ void MainBox::init(void)
 
     client = new UDP_Client(this);
 
-    connect(ui->btn_Send, SIGNAL(clicked()), this, SLOT(send()));
+    connect(ui->btn_Send,   &QPushButton::clicked,  this,   &MainBox::send);
 
     setMinimumWidth(800);
 }

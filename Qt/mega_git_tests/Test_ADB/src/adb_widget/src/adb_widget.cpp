@@ -39,11 +39,12 @@ ADB_widget::~ADB_widget()
     }
     if(myProcess)
     {
-        disconnect(myProcess,  SIGNAL(started()),                      this,   SLOT(started()));
-        disconnect(myProcess,  SIGNAL(finished(int)),                  this,   SLOT(finished(int)));
-        disconnect(myProcess,  SIGNAL(error(QProcess::ProcessError)),  this,   SLOT(process_error(QProcess::ProcessError)));
-        disconnect(myProcess,  SIGNAL(readyReadStandardOutput()),      this,   SLOT(readData()));
-        disconnect(myProcess,  SIGNAL(readyReadStandardError()),       this,   SLOT(readData()));
+        disconnect(myProcess,   &QProcess::started,                  this,   &ADB_widget::started);
+        disconnect(myProcess,   static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+                   this,        &ADB_widget::finished);
+        disconnect(myProcess,   &QProcess::errorOccurred,            this,   &ADB_widget::process_error);
+        disconnect(myProcess,   &QProcess::readyReadStandardOutput,  this,   &ADB_widget::readData);
+        disconnect(myProcess,   &QProcess::readyReadStandardError,   this,   &ADB_widget::readData);
 
         myProcess->deleteLater();
     }
@@ -64,6 +65,16 @@ void ADB_widget::init(void)
     copy_file(":/scrcpy-server", "scrcpy-server");
 
     create_process();
+
+    //---
+    ui->sb_port->setRange(0, 0xFFFF);
+
+    server = new TCP_Server(this);
+    connect(server, &TCP_Server::output,
+            this,   &ADB_widget::f_get_data);
+    connect(ui->btn_start,  &QPushButton::clicked,  this,   &ADB_widget::f_start);
+    connect(ui->btn_stop,   &QPushButton::clicked,  this,   &ADB_widget::f_stop);
+    //---
 
     //---
     sl_commands << "KEYCODE_SETTINGS"
@@ -154,6 +165,12 @@ void ADB_widget::init(void)
     ui->btn_adb->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
 
     ui->cb_auto->setProperty(NO_BLOCK, true);
+}
+//--------------------------------------------------------------------------------
+void ADB_widget::f_get_data(const QByteArray &data)
+{
+    emit trace("get_data");
+    emit trace(data.data());
 }
 //--------------------------------------------------------------------------------
 void ADB_widget::create_process(void)
@@ -472,6 +489,16 @@ bool ADB_widget::f_test(void)
 #endif
 
     return true;
+}
+//--------------------------------------------------------------------------------
+void ADB_widget::f_start(void)
+{
+    server->createServerOnPort(QHostAddress::LocalHost, static_cast<quint16>(ui->sb_port->value()));
+}
+//--------------------------------------------------------------------------------
+void ADB_widget::f_stop(void)
+{
+    server->closeServer();
 }
 //--------------------------------------------------------------------------------
 void ADB_widget::f_1(void)

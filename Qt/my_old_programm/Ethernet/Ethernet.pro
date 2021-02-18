@@ -9,7 +9,6 @@ SUBDIRS += \
     broadcastreceiver \
     broadcastsender \
     broadcast_UDP_Client \
-    TCP_local_socket \
     TCP_Server \
     TCP_Client \
     UDP_Server \

@@ -18,6 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include <QNetworkInterface>
 #include <QTcpServer>
 //--------------------------------------------------------------------------------
 #include "ui_tcp_server_mainbox.h"
@@ -62,7 +63,22 @@ void MainBox::f_connect(void)
 {
     if(server)
     {
-        server->createServerOnPort(QHostAddress::AnyIPv4, static_cast<quint16>(ui->sb_port->value()));
+        QString ipAddress;
+        QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
+        for (int i = 0; i < ipAddressesList.size(); ++i)
+        {
+            if (ipAddressesList.at(i) != QHostAddress::LocalHost && ipAddressesList.at(i).toIPv4Address())
+            {
+                ipAddress = ipAddressesList.at(i).toString();
+                break;
+            }
+        }
+        if (ipAddress.isEmpty())
+        {
+            ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
+        }
+
+        server->createServerOnPort(QHostAddress(ipAddress), static_cast<quint16>(ui->sb_port->value()));
     }
 }
 //--------------------------------------------------------------------------------

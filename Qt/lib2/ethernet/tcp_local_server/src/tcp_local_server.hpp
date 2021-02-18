@@ -18,81 +18,47 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#ifndef TCP_SERVER_HPP
+#define TCP_SERVER_HPP
 //--------------------------------------------------------------------------------
-#include "tcp_local_socket_mainbox.hpp"
-#include "qtsingleapplication.h"
-#include "mysplashscreen.hpp"
-#include "mainwindow.hpp"
-#include "defines.hpp"
-#include "version.hpp"
+#include <QHostAddress>
 //--------------------------------------------------------------------------------
-#include "codecs.h"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include "test.hpp"
-#   include <QDebug>
-#endif
+class Processor;
+class QTcpServer;
+class QTcpSocket;
 //--------------------------------------------------------------------------------
-int main(int argc, char *argv[])
+class TCP_Server : public MyWidget
 {
-    set_codecs();
-#ifdef SINGLE_APP
-    QtSingleApplication app(argc, argv);
-    if(app.isRunning())
-    {
-        //QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
-        if(app.sendMessage("Wake up!")) return 0;
-    }
-#else
-    QApplication app(argc, argv);
-#endif
+    Q_OBJECT
 
-    app.setOrganizationName(QObject::tr(ORGNAME));
-    app.setApplicationName(QObject::tr(APPNAME));
-#ifdef Q_OS_LINUX
-    app.setApplicationVersion(QString("%1.%2.%3.%4")
-                              .arg(VER_MAJOR)
-                              .arg(VER_MINOR)
-                              .arg(VER_PATCH)
-                              .arg(VER_BUILD));
-#endif
-    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+public:
+    explicit TCP_Server(QWidget *parent = nullptr);
+    ~TCP_Server();
 
-    QPixmap pixmap(":/logo/logo.png");
+signals:
+    void output(const QByteArray &);
 
-    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
-    Q_ASSERT(splash);
-    splash->show();
+public slots:    
+    bool createServerOnPort(const QHostAddress address, quint16 port);
+    void closeServer(void);
+    void input(const QByteArray &data);
 
-    MainWindow *main_window = new MainWindow();
-    Q_ASSERT(main_window);
+private slots:
+    void newConnect(void);
+    void clientReadyRead(void);
+    void clientDisconnected(void);
 
-    MainBox *mainBox = new MainBox(main_window, splash);
-    Q_ASSERT(mainBox);
+private:
+    //Processor *processor = nullptr;
+    QTcpServer *tcpServer = nullptr;
+    QTcpSocket *clientConnection = nullptr;
 
-    main_window->setCentralWidget(mainBox);
-    main_window->show();
-
-    splash->finish(main_window);
-
-#ifdef SINGLE_APP
-    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
-#endif
-    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
-
-#ifdef QT_DEBUG
-    int test_result = QTest::qExec(new Test(), argc, argv);
-    if (test_result != EXIT_SUCCESS)
-    {
-        return test_result;
-    }
-#endif
-
-    return app.exec();
-}
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
+};
 //--------------------------------------------------------------------------------
+#endif

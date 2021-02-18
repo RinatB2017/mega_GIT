@@ -22,16 +22,11 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 //--------------------------------------------------------------------------------
-//#include "processor.hpp"
-#include "tcp_server.hpp"
+#include "tcp_local_server.hpp"
 //--------------------------------------------------------------------------------
 TCP_Server::TCP_Server(QWidget *parent) :
     MyWidget(parent)
 {
-//    processor = new Processor;
-//    connect(this, SIGNAL(output(QByteArray)), processor, SLOT(input(QByteArray)));
-//    connect(processor, SIGNAL(output(QByteArray)), this, SLOT(input(QByteArray)));
-
     setVisible(false);
 }
 //--------------------------------------------------------------------------------

@@ -3,10 +3,10 @@
 #**********************************************************************************
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-HEADERS += tcp_local_socket_mainbox.hpp
-SOURCES += tcp_local_socket_mainbox.cpp
-FORMS   += tcp_local_socket_mainbox.ui
+QT      += network
+
+HEADERS += tcp_local_server.hpp
+SOURCES += tcp_local_server.cpp

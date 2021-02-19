@@ -177,11 +177,13 @@ private:
 
     bool check_exists_signals(QWidget *parent);
 
+    // templates
     template<typename T>
     void lock_widget(bool state);
 
     template<typename T>
     void set_property_widget(void);
+    //---
 
     QList<QWidget *> w_lists;
     QStringList sl_properties_of_widgets;

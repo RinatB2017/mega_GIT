@@ -133,6 +133,9 @@ private:
     void init(void);
     void createTestBar(void);
 
+    template<typename T1, typename T2>
+    void test_template(void);
+
     void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);

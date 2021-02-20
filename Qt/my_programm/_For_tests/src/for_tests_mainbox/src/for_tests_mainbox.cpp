@@ -256,6 +256,21 @@ bool MainBox::load_qss(void)
     return true;
 }
 //--------------------------------------------------------------------------------
+template<typename T1, typename T2>
+void MainBox::test_template(void)
+{
+    QList<T1 *> allle = findChildren<T1 *>();
+    foreach (T1 *obj, allle)
+    {
+        obj->setDisabled(true);
+    }
+    QList<T2 *> allle2 = findChildren<T2 *>();
+    foreach (T2 *obj, allle2)
+    {
+        obj->setDisabled(true);
+    }
+}
+//--------------------------------------------------------------------------------
 #include "qyuvopenglwidget.h"
 
 bool MainBox::test(void)
@@ -263,6 +278,10 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    test_template<QToolButton, QDoubleSpinBox>();
+#endif
+
+#if 0
     // AVFrame *frame = new AVFrame();
 
     QYUVOpenGLWidget *w = new QYUVOpenGLWidget();

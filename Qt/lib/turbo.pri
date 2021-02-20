@@ -123,6 +123,12 @@ greaterThan(QT_MAJOR_VERSION, 5) {
     message(Qt6)
 }
 ###############################################################################
+CONFIG(debug, debug|release) {
+    CONFIG += console
+    CONFIG -= app_bundle
+    message (console ON)
+}
+###############################################################################
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets
     DEFINES += HAVE_QT5

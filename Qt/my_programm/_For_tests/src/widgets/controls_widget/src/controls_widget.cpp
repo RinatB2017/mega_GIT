@@ -62,6 +62,15 @@ void Controls_widget::init(void)
         ui->listWidget->addItem("b2");
     });
 
+    connect(ui->btn_set_current_time,  &QPushButton::clicked,  [this]() {
+        ui->te_current_time->setTime(QTime::currentTime());
+    });
+    connect(ui->btn_add_time,  &QPushButton::clicked,  [this]() {
+        QTime time = ui->te_current_time->time();
+        ui->te_current_time->setTime(time.addSecs(60));
+    });
+
+
     //---
     connect(ui->de_begin,   &QDateEdit::editingFinished,  [this]() {
         emit info("correct min");

@@ -163,6 +163,44 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QTimeEdit" name="te_current_time">
+       <property name="displayFormat">
+        <string>HH:mm:ss</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btn_set_current_time">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btn_add_time">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -177,6 +215,31 @@ p, li { white-space: pre-wrap; }
    <header>QLongLongSpinBox.hpp</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>rb_test</tabstop>
+  <tabstop>cb_checkbox_test</tabstop>
+  <tabstop>doubleSpinBox</tabstop>
+  <tabstop>timeEdit</tabstop>
+  <tabstop>toolButton</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>btn_set_dt</tabstop>
+  <tabstop>dateTimeEdit</tabstop>
+  <tabstop>cb_fag_exit</tabstop>
+  <tabstop>btn_click</tabstop>
+  <tabstop>comboBox_2</tabstop>
+  <tabstop>btn_clear_strings</tabstop>
+  <tabstop>btn_add_strings</tabstop>
+  <tabstop>hex_widget</tabstop>
+  <tabstop>de_begin</tabstop>
+  <tabstop>de_test</tabstop>
+  <tabstop>de_end</tabstop>
+  <tabstop>listWidget</tabstop>
+  <tabstop>te_test</tabstop>
+  <tabstop>horizontalSlider</tabstop>
+  <tabstop>te_current_time</tabstop>
+  <tabstop>btn_set_current_time</tabstop>
+  <tabstop>btn_add_time</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

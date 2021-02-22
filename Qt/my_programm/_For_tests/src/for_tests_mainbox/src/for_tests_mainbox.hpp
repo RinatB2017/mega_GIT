@@ -30,63 +30,6 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-class MyGLWidget : public QOpenGLWidget
-{
-public:
-    MyGLWidget(QWidget *parent = nullptr) : QOpenGLWidget(parent) { }
-
-    void loadImage(QImage &img)
-    {
-        this->img = img;
-        width_img=img.width();
-        height_img=img.height();
-
-//        glEnable(GL_TEXTURE_2D); // Enable texturing
-//        glBindTexture(GL_TEXTURE_2D, texture); // Set as the current texture
-//        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img.width(), img.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, img.bits());
-//        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-//        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-//        glDisable(GL_TEXTURE_2D);
-//        update();
-    }
-
-protected:
-    void initializeGL() override
-    {
-        // Set up the rendering context, load shaders and other resources, etc.:
-        QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-        f->glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-        // ...
-    }
-
-    void resizeGL(int w, int h) override
-    {
-        // Update projection matrix and other size related settings:
-        //m_projection.setToIdentity();
-        //m_projection.perspective(45.0f, w / float(h), 0.01f, 100.0f);
-        // ...
-    }
-
-    void paintGL() override
-    {
-        // Draw the scene:
-        QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-        f->glClear(GL_COLOR_BUFFER_BIT);
-        f->glEnable(GL_TEXTURE_2D); // Enable texturing
-//        f->glBindTexture(GL_TEXTURE_2D, texture); // Set as the current texture
-        f->glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img.width(), img.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, img.bits());
-        f->glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-        f->glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-        f->glDisable(GL_TEXTURE_2D);
-        // ...
-    }
-
-private:
-    int width_img = 0;
-    int height_img = 0;
-    QImage img;
-};
-//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }

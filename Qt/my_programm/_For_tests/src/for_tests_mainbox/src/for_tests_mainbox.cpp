@@ -277,66 +277,16 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
     test_template<QToolButton, QDoubleSpinBox>();
 #endif
 
-#if 0
+#if 1
     // AVFrame *frame = new AVFrame();
 
     QYUVOpenGLWidget *w = new QYUVOpenGLWidget();
     // w->updateTextures(frame->data[0], frame->data[1], frame->data[2], frame->linesize[0], frame->linesize[1], frame->linesize[2]);
     w->show();
-#endif
-
-#if 0
-    QImage image(200, 200, QImage::Format_RGB32);
-    QPainter painter(&image);
-    painter.fillRect(0, 0, image.width(), image.height(), Qt::red);
-
-//    QLabel *label = new QLabel();
-//    label->setPixmap(QPixmap::fromImage(image));
-//    label->show();
-
-    MyGLWidget *w = new MyGLWidget();
-    w->loadImage(image);
-    w->show();
-#endif
-
-#if 0
-    auto fptr = &MainBox::test2;
-    void *f = reinterpret_cast<void *&>(fptr);
-    f();
-
-//    typedef void (MainBox::*function)(void);
-//    function x;
-//    x = f;
-//    (this->*x)();
-#endif
-
-#if 0
-    QDesktopWidget w;
-    emit info(QString("%1:%2")
-            .arg(w.width())
-            .arg(w.height()));
-
-    emit info(QString("%1:%2")
-            .arg(qApp->desktop()->width())
-            .arg(qApp->desktop()->height()));
-#endif
-
-#if 0
-    QWidgetList widgets;
-    widgets = qApp->allWidgets();
-    emit info(QString("Found %1 widgets").arg(widgets.count()));
-
-    QPushButton *w = new QPushButton();
-    w->show();
-
-    widgets = qApp->allWidgets();
-    emit info(QString("Found %1 widgets").arg(widgets.count()));
-
-    delete w;
 #endif
 
 #if 0

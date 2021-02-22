@@ -409,36 +409,6 @@ QStringList MyWidget::get_all_param_name(void)
     return temp;
 }
 //--------------------------------------------------------------------------------
-QString MyWidget::get_full_objectName(QWidget *widget)
-{
-    emit trace(Q_FUNC_INFO);
-
-    Q_ASSERT(widget);
-
-    QStringList sl;
-    QWidget *temp = static_cast<QWidget *>(widget);
-    do {
-        if(temp)
-        {
-            sl.append(temp->objectName());
-        }
-        temp = static_cast<QWidget *>(temp->parent());
-    } while(temp);
-
-    QString temp_string;
-    for(int n=sl.count(); n>0; n--)
-    {
-        QString str = sl.at(n-1);
-        if(str.isEmpty() == false)
-        {
-            temp_string.append(QString("%1/").arg(str));
-        }
-    }
-    temp_string = temp_string.remove(temp_string.length()-1, 1);
-    if(temp_string.isEmpty()) temp_string = "xxx";
-    return temp_string;
-}
-//--------------------------------------------------------------------------------
 void MyWidget::block_close(bool state)
 {
     emit trace(Q_FUNC_INFO);

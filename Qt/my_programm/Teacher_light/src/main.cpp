@@ -49,19 +49,28 @@ int main(int argc, char *argv[])
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
+#ifdef Q_OS_LINUX
+    app.setApplicationVersion(QString("%1.%2.%3.%4")
+                              .arg(VER_MAJOR)
+                              .arg(VER_MINOR)
+                              .arg(VER_PATCH)
+                              .arg(VER_BUILD));
+#endif
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/logo.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    Q_ASSERT(splash);
+
     splash->show();
 
-    
-
     MainWindow *main_window = new MainWindow();
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    Q_ASSERT(main_window);
 
     MainBox *mainBox = new MainBox(main_window, splash);
+    Q_ASSERT(mainBox);
+
     main_window->setCentralWidget(mainBox);
     main_window->show();
 

@@ -60,7 +60,7 @@ win32 {
     QMAKE_TARGET_COPYRIGHT = "Copyright \\251 2020-2025"
     QMAKE_TARGET_DESCRIPTION = "my description"
 
-    RC_ICONS = ico/computer.ico # нужно, чтобы создался фал .rc автоматом
+    RC_ICONS = ico/computer.ico # нужно, чтобы создался файл .rc автоматом
     # RC_FILE  = programm.rc
 }
 
@@ -77,7 +77,6 @@ include (src/mymainwindow/mymainwindow.pri)
 include (src/widgets/widgets.pri)
 
 #!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.pri
 #    VERSION_HEADER = $$PWD/src/version.hpp
 #    message($$VERSION_HEADER)
 #    include ($$LIB_PATH/auto_inc_version.pri)

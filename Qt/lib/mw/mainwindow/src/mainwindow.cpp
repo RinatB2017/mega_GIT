@@ -445,10 +445,10 @@ void MainWindow::choice_translator(QAction *menu)
     QString p_lang = menu->property(P_LANG).toString();
 
     auto trans_it = std::find_if(
-        l_translators.begin(),
-        l_translators.end(),
-        [p_lang](TRANSLATOR trans){ return trans.property == p_lang; }
-    );
+                l_translators.begin(),
+                l_translators.end(),
+                [p_lang](TRANSLATOR trans){ return trans.property == p_lang; }
+            );
     if (trans_it != l_translators.end())
     {
         qApp->installTranslator(trans_it->translator_obj);
@@ -949,11 +949,34 @@ void MainWindow::createTrayIcon(void)
     connect(trayIcon,
             &QSystemTrayIcon::activated,
             this,
+            &MainWindow::showHide);
+
+#if 0
+    connect(trayIcon,
+            &QSystemTrayIcon::activated,
+            this,
             &MainWindow::iconActivated);
+#endif
 
     trayIcon->show();
 }
 //--------------------------------------------------------------------------------
+void MainWindow::showHide(QSystemTrayIcon::ActivationReason r)
+{
+    if (r == QSystemTrayIcon::Trigger)
+    {
+        if (!this->isVisible())
+        {
+            this->show();
+        }
+        else
+        {
+            this->hide();
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+#if 0
 void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     if(reason == QSystemTrayIcon::DoubleClick)
@@ -962,6 +985,7 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
         else hide();
     }
 }
+#endif
 //--------------------------------------------------------------------------------
 bool MainWindow::add_menu(int pos_x,
                           QMenu *menu)

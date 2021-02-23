@@ -21,8 +21,6 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
-//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -30,39 +28,31 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class QStackedWidget;
-class QToolButton;
-class QGridLayout;
-class QTabWidget;
-class QLineEdit;
 class Notebook;
-class QToolBar;
-class QWebView;
-class QFrame;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     ~MainBox();
 
 private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-    QGridLayout *grid1;
-    QGridLayout *grid2;
-    QGridLayout *grid3;
-    QGridLayout *grid4;
+    QPointer<QGridLayout> grid1;
+    QPointer<QGridLayout> grid2;
+    QPointer<QGridLayout> grid3;
+    QPointer<QGridLayout> grid4;
 
 #ifndef USE_DOCKS
-    QFrame *notebook_frame;
+    QPointer<QFrame> notebook_frame;
 #endif
-    QTabWidget *tab;
-    Notebook *note;
+    QPointer<QTabWidget> tab;
+    QPointer<Notebook> note;
 
     void init(void);
 

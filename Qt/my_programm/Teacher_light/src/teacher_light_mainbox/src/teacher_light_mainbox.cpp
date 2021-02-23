@@ -18,8 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QLabel>
-//--------------------------------------------------------------------------------
 #include "ui_teacher_light_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -223,8 +221,8 @@ void MainBox::create_widgets(void)
     mw->add_windowsmenu_action(dock_note, dock_note->toggleViewAction());
     mw->add_windowsmenu_action(dock_tab, dock_tab->toggleViewAction());
 
-    mw->addDockWidget(Qt::TopDockWidgetArea,   dock_tab);
-    mw->addDockWidget(Qt::BottomDockWidgetArea,  dock_note);
+    mw->addDockWidget(Qt::TopDockWidgetArea,    dock_tab);
+    mw->addDockWidget(Qt::BottomDockWidgetArea, dock_note);
 
     setHidden(true);    //TODO а так можно, интересно?
     //---

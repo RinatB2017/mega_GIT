@@ -220,7 +220,8 @@ private slots:
     void set_dark_palette(void);
     void set_light_palette(void);
 
-    void iconActivated(QSystemTrayIcon::ActivationReason reason);
+    void showHide(QSystemTrayIcon::ActivationReason r);
+    //void iconActivated(QSystemTrayIcon::ActivationReason reason);
 
     void setToolBarStyles(void);
 

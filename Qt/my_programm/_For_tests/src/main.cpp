@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
     splash->show();
 
     MyMainWindow *main_window = new MyMainWindow();
-    // MainWindow *main_window = new MainWindow();
+    //MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);
 
     // отключает заголовок

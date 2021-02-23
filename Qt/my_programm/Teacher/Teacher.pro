@@ -5,35 +5,33 @@
 TEMPLATE = app
 TARGET   = Teacher
 
+VER_MAJOR = 1
+VER_MINOR = 0
+VER_PATCH = 0
+VER_BUILD = 0
+
+DEFINES += VER_MAJOR=$${VER_MAJOR}
+DEFINES += VER_MINOR=$${VER_MINOR}
+DEFINES += VER_BUILD=$${VER_BUILD}
+DEFINES += VER_PATCH=$${VER_PATCH}
+
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/teacher_mainbox \
-    $$PWD/src/teacher_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT += webenginewidgets
 QT += network
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += NO_LOG
-
-DEFINES += PROGRAMM_IN_UTF8
 
 linux {
     DEFINES += ULTRAWIDE
 }
 
 HEADERS += \
-    teacher_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    teacher_mainbox.cpp \
     main.cpp
-
-FORMS   += teacher_mainbox.ui
 
 OTHER_FILES += doc/notebook.txt
 
@@ -48,13 +46,15 @@ RESOURCES += \
 LIB_PATH  = "$$PWD/../../lib"
 LIB_PATH2 = "$$PWD/../../lib2"
 
+include (src/config.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
-include (src/notebook/notebook.pri)
 include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
+include (src/notebook/notebook.pri)
+include (src/teacher_mainbox/teacher_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

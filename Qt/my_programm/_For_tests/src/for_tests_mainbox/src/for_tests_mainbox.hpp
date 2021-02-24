@@ -30,10 +30,6 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
 class TestClass
 {
 public:
@@ -41,6 +37,12 @@ public:
     void test_function(void)
     {
         T::test2();
+    }
+
+    template<typename T2>
+    void test_function2(void)
+    {
+        T2();
     }
 
     void test2(void)
@@ -51,8 +53,13 @@ public:
     void test(void)
     {
         test_function<TestClass>();
+        //test_function2<decltype(&TestClass::test2)>();
     }
 };
+//--------------------------------------------------------------------------------
+namespace Ui {
+    class MainBox;
+}
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 //--------------------------------------------------------------------------------
@@ -100,12 +107,7 @@ private:
     void test_template(void);
 
     template<class T>
-    void test_function(int delay)
-    {
-        QTimer::singleShot(delay, [this]{
-            T::test2();
-        });
-    }
+    void test_function(int delay);
 
     void updateText(void);
     bool programm_is_exit(void);

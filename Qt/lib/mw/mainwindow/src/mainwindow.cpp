@@ -963,6 +963,7 @@ void MainWindow::createTrayIcon(void)
 //--------------------------------------------------------------------------------
 void MainWindow::showHide(QSystemTrayIcon::ActivationReason r)
 {
+    //qDebug() << "### showHide ###" << r;
     if (r == QSystemTrayIcon::Trigger)
     {
         if (!this->isVisible())

@@ -271,13 +271,13 @@ void MainBox::test_template(void)
     }
 }
 //--------------------------------------------------------------------------------
-//template<class T>
-//void MainBox::test_function(int delay)
-//{
-//    QTimer::singleShot(delay, [this]{
-//        T::test2();
-//    });
-//}
+template<class T>
+void MainBox::test_function(int delay)
+{
+    QTimer::singleShot(delay, [this]{
+        T::test2();
+    });
+}
 //--------------------------------------------------------------------------------
 #include "qyuvopenglwidget.h"
 

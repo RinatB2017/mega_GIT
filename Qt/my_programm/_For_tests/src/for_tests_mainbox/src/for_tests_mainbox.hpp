@@ -34,6 +34,26 @@ namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
+class TestClass
+{
+public:
+    template<class T>
+    void test_function(void)
+    {
+        T::test2();
+    }
+
+    void test2(void)
+    {
+        qDebug() << "### YES ###";
+    }
+
+    void test(void)
+    {
+        test_function<TestClass>();
+    }
+};
+//--------------------------------------------------------------------------------
 class MySplashScreen;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
@@ -78,6 +98,14 @@ private:
 
     template<typename T1, typename T2>
     void test_template(void);
+
+    template<class T>
+    void test_function(int delay)
+    {
+        QTimer::singleShot(delay, [this]{
+            T::test2();
+        });
+    }
 
     void updateText(void);
     bool programm_is_exit(void);

@@ -271,17 +271,34 @@ void MainBox::test_template(void)
     }
 }
 //--------------------------------------------------------------------------------
+//template<class T>
+//void MainBox::test_function(int delay)
+//{
+//    QTimer::singleShot(delay, [this]{
+//        T::test2();
+//    });
+//}
+//--------------------------------------------------------------------------------
 #include "qyuvopenglwidget.h"
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    TestClass tc;
+    tc.test();
+#endif
+
+#if 0
+    test_function<MainBox>(1000);
+#endif
+
 #if 0
     test_template<QToolButton, QDoubleSpinBox>();
 #endif
 
-#if 1
+#if 0
     // AVFrame *frame = new AVFrame();
 
     QYUVOpenGLWidget *w = new QYUVOpenGLWidget();
@@ -311,7 +328,6 @@ bool MainBox::test(void)
 void MainBox::test2(void)
 {
     emit info("YES");
-    qDebug() << "YES!";
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

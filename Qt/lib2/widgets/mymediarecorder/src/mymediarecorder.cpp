@@ -38,15 +38,9 @@ void MyMediaRecorder::init(void)
 {
     ui->setupUi(this);
 
-#if 0
-    ui->btn_filename->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogOpenButton));
-    ui->btn_start->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
-    ui->btn_stop->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaStop));
-#else
     ui->btn_filename->setIcon(QIcon(":/nuvola/actions/actions/document-open.png"));
     ui->btn_start->setIcon(QIcon(":/nuvola/actions/actions/media-record.png"));
     ui->btn_stop->setIcon(QIcon(":/nuvola/actions/actions/media-playback-stop.png"));
-#endif
 
     connect(ui->btn_filename,   &QToolButton::clicked,  this,   &MyMediaRecorder::set_filename);
     connect(ui->btn_start,      &QToolButton::clicked,  this,   &MyMediaRecorder::start);

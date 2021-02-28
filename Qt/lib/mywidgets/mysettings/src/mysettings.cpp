@@ -81,15 +81,15 @@ bool MySettings::save_combobox_property(QWidget *widget)
 
     if(compare_name(widget->metaObject()->className(), "QComboBox"))
     {
-        settings->beginWriteArray(dynamic_cast<QComboBox *>(widget)->objectName(), dynamic_cast<QComboBox *>(widget)->count());
-        int temp_index = dynamic_cast<QComboBox *>(widget)->currentIndex();
+        settings->beginWriteArray(reinterpret_cast<QComboBox *>(widget)->objectName(), reinterpret_cast<QComboBox *>(widget)->count());
+        int temp_index = reinterpret_cast<QComboBox *>(widget)->currentIndex();
         for(int n=0; n<static_cast<QComboBox *>(widget)->count(); n++)
         {
             settings->setArrayIndex(n);
-            dynamic_cast<QComboBox *>(widget)->setCurrentIndex(n);
-            settings->setValue("currentText", QVariant::fromValue(dynamic_cast<QComboBox *>(widget)->currentText()));
+            reinterpret_cast<QComboBox *>(widget)->setCurrentIndex(n);
+            settings->setValue("currentText", QVariant::fromValue(reinterpret_cast<QComboBox *>(widget)->currentText()));
         }
-        dynamic_cast<QComboBox *>(widget)->setCurrentIndex(temp_index);
+        reinterpret_cast<QComboBox *>(widget)->setCurrentIndex(temp_index);
         settings->endArray();
         return true;
     }
@@ -109,7 +109,7 @@ bool MySettings::load_listwidget_property(QWidget *widget)
         for(int n=0; n<size; n++)
         {
             settings->setArrayIndex(n);
-            dynamic_cast<QListWidget *>(widget)->addItem(settings->value("currentText").toString());
+            reinterpret_cast<QListWidget *>(widget)->addItem(settings->value("currentText").toString());
         }
         settings->endArray();
         settings->endGroup();
@@ -127,12 +127,12 @@ bool MySettings::save_listwidget_property(QWidget *widget)
     if(lw)
     {
         settings->beginGroup(get_full_objectName(widget));
-        settings->beginWriteArray(dynamic_cast<QListWidget *>(widget)->objectName(), dynamic_cast<QListWidget *>(widget)->count());
-        for(int n=0; n<dynamic_cast<QListWidget *>(widget)->count(); n++)
+        settings->beginWriteArray(reinterpret_cast<QListWidget *>(widget)->objectName(), reinterpret_cast<QListWidget *>(widget)->count());
+        for(int n=0; n<reinterpret_cast<QListWidget *>(widget)->count(); n++)
         {
             settings->setArrayIndex(n);
-            dynamic_cast<QListWidget *>(widget)->setCurrentRow(n);
-            settings->setValue("currentText", QVariant::fromValue(dynamic_cast<QListWidget *>(widget)->currentItem()->text()));
+            reinterpret_cast<QListWidget *>(widget)->setCurrentRow(n);
+            settings->setValue("currentText", QVariant::fromValue(reinterpret_cast<QListWidget *>(widget)->currentItem()->text()));
         }
         settings->endArray();
         settings->endGroup();
@@ -434,13 +434,13 @@ QString MySettings::get_full_objectName(QWidget *widget)
     Q_ASSERT(widget);
 
     QStringList sl;
-    QWidget *temp = static_cast<QWidget *>(widget);
+    QWidget *temp = reinterpret_cast<QWidget *>(widget);
     do {
         if(temp)
         {
             sl.append(temp->objectName());
         }
-        temp = static_cast<QWidget *>(temp->parent());
+        temp = reinterpret_cast<QWidget *>(temp->parent());
     } while(temp);
 
     QString temp_string;

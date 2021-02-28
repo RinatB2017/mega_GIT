@@ -26,6 +26,8 @@
 #else
 #   include <QtGui>
 #endif
+
+#include <QtGlobal>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

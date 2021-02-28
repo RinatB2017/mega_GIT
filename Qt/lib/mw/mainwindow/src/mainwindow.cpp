@@ -257,7 +257,7 @@ void MainWindow::init(void)
 
     //TODO не стоит именно здесь взводить эти аттрибуты, лучше в mywidget
     setAttribute(Qt::WA_DeleteOnClose);
-    //    setAttribute(Qt::WA_QuitOnClose);
+    //setAttribute(Qt::WA_QuitOnClose);
 }
 //--------------------------------------------------------------------------------
 //    if(now.date().year()        >= DEMO_YEAR &&
@@ -627,7 +627,13 @@ void MainWindow::load_main(void)
     QApplication::setFont(font);
 
     style_name = load_value(P_STYLE_NAME,             "Breeze").toString();
+
+#ifdef ALWAYS_CONFIRM_EXIT
+    flag_close = false;
+#else
     flag_close = load_value(P_NO_ANSWER_FROM_EXIT,    true).toBool();
+#endif
+
     flag_always_on_top = load_value(P_ALWAYS_ON_TOP,  false).toBool();
 
     QApplication::setStyle(QStyleFactory::create(style_name));
@@ -672,7 +678,12 @@ void MainWindow::save_main(void)
     save_value(P_FONT_SIZE,      QApplication::font().pointSize());
     save_value(P_STYLE_NAME,     style_name);
 
+#ifdef ALWAYS_CONFIRM_EXIT
+    save_value(P_NO_ANSWER_FROM_EXIT, false);
+#else
     save_value(P_NO_ANSWER_FROM_EXIT, flag_close);
+#endif
+
     save_value(P_ALWAYS_ON_TOP,   flag_always_on_top);
 
     save_value(P_THEME,         state_theme);

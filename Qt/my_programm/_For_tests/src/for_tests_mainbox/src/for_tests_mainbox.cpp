@@ -285,12 +285,12 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
     TestClass tc;
     tc.test();
 #endif
 
-#if 0
+#if 1
     test_function<MainBox>(1000);
 #endif
 

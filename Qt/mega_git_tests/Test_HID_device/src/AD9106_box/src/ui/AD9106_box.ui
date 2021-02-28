@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>AD9106_Box</class>
  <widget class="QWidget" name="AD9106_Box">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>659</width>
-    <height>457</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>

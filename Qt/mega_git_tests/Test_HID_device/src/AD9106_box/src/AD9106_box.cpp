@@ -295,12 +295,7 @@ void AD9106_Box::createTestBar(void)
     Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &AD9106_Box::test_0 });
-    commands.append({ id++, "test 1", &AD9106_Box::test_1 });
-    commands.append({ id++, "test 2", &AD9106_Box::test_2 });
-    commands.append({ id++, "test 3", &AD9106_Box::test_3 });
-    commands.append({ id++, "test 4", &AD9106_Box::test_4 });
-    commands.append({ id++, "test 5", &AD9106_Box::test_5 });
+    commands.append({ id++, "test", &AD9106_Box::test });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -512,9 +507,9 @@ void AD9106_Box::read_xml(void)
     //---
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::test_0(void)
+void AD9106_Box::test(void)
 {
-    emit info("Test_0()");
+    emit info("Test()");
     bool ok = false;
     float temperature = 0;
     double voltage = 0;
@@ -556,31 +551,6 @@ void AD9106_Box::test_0(void)
     }
 
     emit info("test_0: OK");
-}
-//--------------------------------------------------------------------------------
-void AD9106_Box::test_1(void)
-{
-    emit info("Test_1()");
-}
-//--------------------------------------------------------------------------------
-void AD9106_Box::test_2(void)
-{
-    emit info("Test_2()");
-}
-//--------------------------------------------------------------------------------
-void AD9106_Box::test_3(void)
-{
-    emit info("Test_3()");
-}
-//--------------------------------------------------------------------------------
-void AD9106_Box::test_4(void)
-{
-    emit info("Test_4()");
-}
-//--------------------------------------------------------------------------------
-void AD9106_Box::test_5(void)
-{
-    emit info("Test_5()");
 }
 //--------------------------------------------------------------------------------
 void AD9106_Box::dev_open(void)

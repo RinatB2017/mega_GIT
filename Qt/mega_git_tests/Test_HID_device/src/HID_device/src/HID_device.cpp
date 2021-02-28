@@ -411,7 +411,7 @@ bool HID_device::send_cmd(int cmd, int state)
 //--------------------------------------------------------------------------------
 void HID_device::leds_state(bool state)
 {
-    bool ok = false;
+    bool ok;
     QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
     if(btn == nullptr)
     {
@@ -525,10 +525,7 @@ void HID_device::f_test(void)
 
 #if 1
     AD9106_Box *box = new AD9106_Box();
-    connect(box,    &AD9106_Box::info,  this,   &HID_device::info);
-    connect(box,    &AD9106_Box::debug, this,   &HID_device::debug);
-    connect(box,    &AD9106_Box::error, this,   &HID_device::error);
-    connect(box,    &AD9106_Box::trace, this,   &HID_device::trace);
+    connect_log_signals(box, this);
     box->show();
 #endif
 }

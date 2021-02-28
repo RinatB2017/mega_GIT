@@ -8,9 +8,7 @@ TARGET   = TestPropertyBrowser
 FOLDER  = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_PropertyBrowser_mainbox \
-    $$PWD/src/test_PropertyBrowser_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += PROGRAMM_IN_UTF8
@@ -18,28 +16,25 @@ DEFINES += NO_STYLETOOLBAR
 DEFINES += NO_TRAYICON
 
 HEADERS += \
-    test_PropertyBrowser_mainbox.hpp \
     defines.hpp \
     version.hpp
 
 SOURCES += \
-    test_PropertyBrowser_mainbox.cpp \
     main.cpp
-
-FORMS   += test_PropertyBrowser_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
 }
 
-RESOURCES += demo.qrc
+RESOURCES += \
+    images/images.qrc
 
 LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-
 include ($$LIB_PATH2/QtPropertyBrowser/qtpropertybrowser.pri)
+include (src/test_PropertyBrowser_mainbox/test_PropertyBrowser_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = $$PWD/src/version.hpp

@@ -2,15 +2,13 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-TEMPLATE = app
-TARGET   = Test_syslog
+TEMPLATE    = app
+TARGET      = Test_syslog
 
-FOLDER  = tests
+FOLDER      = tests
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/test_syslog_mainbox \
-    $$PWD/src/test_syslog_mainbox/ui
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 DEFINES += NO_STYLETOOLBAR
@@ -21,15 +19,11 @@ DEFINES += SYSLOG_LOG
 #DEFINES += UNDER_CONSTRUCTION
 
 HEADERS += \
-    test_syslog_mainbox.hpp \
     defines.hpp \
     version.hpp \
 
 SOURCES += \
-    test_syslog_mainbox.cpp \
     main.cpp
-
-FORMS   += test_syslog_mainbox.ui
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -50,6 +44,7 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/sender_syslog/sender_syslog.pri)
+include (src/test_syslog_mainbox/test_syslog_mainbox.pri)
 
 !exists(OBJECTS_DIR) {
     VERSION_HEADER = $$PWD/src/version.hpp

@@ -67,11 +67,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui.engine->setCurrentIndex(0);
     engineSelected(0);
 
-    connect(ui.speakButton, &QPushButton::clicked, this, &MainWindow::speak);
-    connect(ui.pitch, &QSlider::valueChanged, this, &MainWindow::setPitch);
-    connect(ui.rate, &QSlider::valueChanged, this, &MainWindow::setRate);
-    connect(ui.volume, &QSlider::valueChanged, this, &MainWindow::setVolume);
-    connect(ui.engine, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::engineSelected);
+    connect(ui.speakButton, &QPushButton::clicked,  this,   &MainWindow::speak);
+    connect(ui.pitch,       &QSlider::valueChanged, this,   &MainWindow::setPitch);
+    connect(ui.rate,        &QSlider::valueChanged, this,   &MainWindow::setRate);
+    connect(ui.volume,      &QSlider::valueChanged, this,   &MainWindow::setVolume);
+    connect(ui.engine,      static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::engineSelected);
 }
 
 void MainWindow::speak()
@@ -140,9 +140,9 @@ void MainWindow::engineSelected(int index)
     setRate(ui.rate->value());
     setPitch(ui.pitch->value());
     setVolume(ui.volume->value());
-    connect(ui.stopButton, &QPushButton::clicked, m_speech, &QTextToSpeech::stop);
-    connect(ui.pauseButton, &QPushButton::clicked, m_speech, &QTextToSpeech::pause);
-    connect(ui.resumeButton, &QPushButton::clicked, m_speech, &QTextToSpeech::resume);
+    connect(ui.stopButton,      &QPushButton::clicked,  m_speech,   &QTextToSpeech::stop);
+    connect(ui.pauseButton,     &QPushButton::clicked,  m_speech,   &QTextToSpeech::pause);
+    connect(ui.resumeButton,    &QPushButton::clicked,  m_speech,   &QTextToSpeech::resume);
 
     connect(m_speech, &QTextToSpeech::stateChanged, this, &MainWindow::stateChanged);
     connect(m_speech, &QTextToSpeech::localeChanged, this, &MainWindow::localeChanged);

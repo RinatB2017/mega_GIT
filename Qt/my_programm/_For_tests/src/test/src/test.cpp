@@ -31,7 +31,7 @@ Test::Test()
     mw = reinterpret_cast<MainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
 
-    mb = mw->findChild<MainBox *>("MainBox");
+    mb = mw->findChild<MainBox *>();
     QVERIFY(mb);
 }
 //--------------------------------------------------------------------------------

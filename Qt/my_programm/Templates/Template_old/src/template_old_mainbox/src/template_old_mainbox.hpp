@@ -38,11 +38,16 @@ public:
                      MySplashScreen *splash);
     ~MainBox();
 
-private slots:
-    void choice_test(void);
-
 public slots:
     bool test(void);
+
+    //TODO здесь только для теста
+    bool f1(int value);
+    bool f2(int value);
+    bool f3(int value);
+
+private slots:
+    void choice_test(void);
 
 private:
     typedef struct CMD

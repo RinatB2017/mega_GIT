@@ -11,16 +11,13 @@ void set_codecs_old(void)
 #ifdef PROGRAMM_IN_UTF8
     unixcodec = QTextCodec::codecForName("UTF-8");
     wincodec  = QTextCodec::codecForName("UTF-8");
-#endif
-#ifdef PROGRAMM_IN_KOI8R
-    inixcodec = QTextCodec::codecForName("KOI8-R");
+#elif defined PROGRAMM_IN_KOI8R
+    unixcodec = QTextCodec::codecForName("KOI8-R");
     wincodec  = QTextCodec::codecForName("KOI8-R");
-#endif
-#ifdef PROGRAMM_IN_CP1251
+#elif defined PROGRAMM_IN_CP1251
     unixcodec = QTextCodec::codecForName("CP1251");
     wincodec  = QTextCodec::codecForName("CP1251");
-#endif
-#ifdef PROGRAMM_IN_CP866
+#elif defined PROGRAMM_IN_CP866
     unixcodec = QTextCodec::codecForName("CP866");
     wincodec  = QTextCodec::codecForName("CP866");
 #endif
@@ -50,14 +47,11 @@ void set_codecs(void)
     QTextCodec *codec = QTextCodec::codecForName("System");
 #ifdef PROGRAMM_IN_UTF8
     codec = QTextCodec::codecForName("UTF-8");
-#endif
-#ifdef PROGRAMM_IN_KOI8R
+#elif defined PROGRAMM_IN_KOI8R
     codec = QTextCodec::codecForName("KOI8-R");
-#endif
-#ifdef PROGRAMM_IN_CP1251
+#elif defined PROGRAMM_IN_CP1251
     codec = QTextCodec::codecForName("CP1251");
-#endif
-#ifdef PROGRAMM_IN_CP866
+#elif defined PROGRAMM_IN_CP866
     codec = QTextCodec::codecForName("CP866");
 #endif
 

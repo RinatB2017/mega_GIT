@@ -80,6 +80,11 @@ public slots:
 
     void print_mp(QWidget *widget);
 
+    //TODO здесь только для теста
+    bool f1(int value);
+    bool f2(int value);
+    bool f3(int value);
+
 private:
     typedef struct CMD
     {

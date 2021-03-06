@@ -127,7 +127,7 @@ CONFIG(debug, debug|release) {
     CONFIG += c++11
     CONFIG += console
     CONFIG -= app_bundle
-    message (console ON)
+    #message (console ON)
 }
 ###############################################################################
 greaterThan(QT_MAJOR_VERSION, 4) {

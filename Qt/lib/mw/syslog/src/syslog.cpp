@@ -215,7 +215,7 @@ void SysLog::click(void)
     QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
     Q_ASSERT(btn);
 
-    emit info(QString("%1").arg(btn->property("value").toInt()));
+    emit info(QString("%1").arg(btn->property(P_SYSLOG_VALUE).toInt()));
 }
 //--------------------------------------------------------------------------------
 void SysLog::test(void)

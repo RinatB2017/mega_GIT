@@ -83,8 +83,6 @@ void Show_HSV_color::init(void)
     connect(ui->sl_G,   &QSlider::sliderMoved,  this,   &Show_HSV_color::update_color_RGB);
     connect(ui->sl_B,   &QSlider::sliderMoved,  this,   &Show_HSV_color::update_color_RGB);
 
-    update_image();
-
     ui->color_label->installEventFilter(this);
 
     QList<QLCDNumber *> l_lcd = findChildren<QLCDNumber *>();
@@ -96,21 +94,24 @@ void Show_HSV_color::init(void)
     load_widgets();
 
     QTimer::singleShot(0, [this]{
+        update_image();
         update_color_HSV();
     });
 }
 //--------------------------------------------------------------------------------
 void Show_HSV_color::update_image(void)
 {
-    int max_x = 360;
-    int max_y = 20;
+    int max_x = ui->color_label->width();
+    int max_y = ui->color_label->height();
+    double corr = 359.0 / max_x;
     QImage *image = new QImage(max_x, max_y, QImage::Format_RGB32);
     for(int y=0; y<max_y; y++)
     {
-        for(int hue=0; hue<max_x; hue++)
+        for(int x=0; x<max_x; x++)
         {
+            int hue = x * corr; //TODO получаем корректный тон (ширина ведь может быть больше 359)
             QColor color = QColor::fromHsv(hue, 200, 200);
-            image->setPixelColor(hue, y, color);
+            image->setPixelColor(x, y, color);
         }
     }
     ui->color_label->setPixmap(QPixmap::fromImage(*image));
@@ -122,9 +123,7 @@ void Show_HSV_color::update_color_HSV(void)
     int s = ui->sl_S->value();
     int v = ui->sl_V->value();
 
-    QColor color = QColor::fromHsv(h,
-                                   s,
-                                   v);
+    QColor color = QColor::fromHsv(h, s, v);
 
     ui->color_widget->set_color(color);
 

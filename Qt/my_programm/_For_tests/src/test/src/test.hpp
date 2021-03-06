@@ -25,6 +25,7 @@
 #include <QTest>
 //--------------------------------------------------------------------------------
 class MainWindow;
+class MainBox;
 //--------------------------------------------------------------------------------
 class Test : public QObject {
     Q_OBJECT
@@ -33,13 +34,16 @@ public:
     Test();
 
 private slots:
+    void test_GUI(void);
+    void test_signals(void);
+
+    void check_f1(void);
+    void check_f2(void);
+    void check_f3(void);
 
 private:
     MainWindow *mw;
-
-    void test_GUI(void);
-    void test_signals(void);
-    void test_func(void);
+    MainBox    *mb;
 };
 //--------------------------------------------------------------------------------
 #endif

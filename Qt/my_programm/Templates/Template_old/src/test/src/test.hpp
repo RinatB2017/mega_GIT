@@ -21,10 +21,12 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 //--------------------------------------------------------------------------------
-#include <QObject>
+#include <QApplication>
+#include <QSignalSpy>
 #include <QTest>
 //--------------------------------------------------------------------------------
 class MainWindow;
+class MainBox;
 //--------------------------------------------------------------------------------
 class Test : public QObject {
     Q_OBJECT
@@ -34,11 +36,16 @@ public:
 
 private slots:
     void test_GUI(void);
-    void test_func(void);
     void test_signals(void);
-    
+
+    void check_f1(void);
+    void check_f2(void);
+    void check_f3(void);
+
 private:
+    //TODO не надо тут использовать QPointer
     MainWindow *mw;
+    MainBox    *mb;
 };
 //--------------------------------------------------------------------------------
 #endif

@@ -28,8 +28,11 @@
 //--------------------------------------------------------------------------------
 Test::Test()
 {
-    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    mw = reinterpret_cast<MainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
+
+    mb = mw->findChild<MainBox *>("MainBox");
+    QVERIFY(mb);
 }
 //--------------------------------------------------------------------------------
 void Test::test_GUI(void)
@@ -44,34 +47,12 @@ void Test::test_GUI(void)
 
         QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
         QVERIFY(tb);
-        QTest::mouseClick(tb, Qt::LeftButton);
-    });
-}
-//--------------------------------------------------------------------------------
-void Test::test_func(void)
-{
-    QTimer::singleShot(0, [this]{
-        MainBox *mb = mw->findChild<MainBox *>("MainBox");
-        QVERIFY(mb);
-
-        auto *btn = mw->findChild<QAbstractButton *>("btn_click");
-        QVERIFY(btn);
-        btn->click();
-
-        auto *cb = mw->findChild<QAbstractButton *>("cb_checkbox_test");
-        QVERIFY(cb);
-        cb->setChecked(true);
     });
 }
 //--------------------------------------------------------------------------------
 void Test::test_signals(void)
 {
     QTimer::singleShot(0, [this]{
-        MainBox *mb = mw->findChild<MainBox *>("MainBox");
-        QVERIFY(mb);
-
-        mb->show();
-
         QSignalSpy spy_info(mb,  SIGNAL(info(const QString &)));
         QSignalSpy spy_debug(mb, SIGNAL(debug(const QString &)));
         QSignalSpy spy_error(mb, SIGNAL(error(const QString &)));
@@ -107,5 +88,35 @@ void Test::test_signals(void)
 
         mb->clear_log();
     });
+}
+//--------------------------------------------------------------------------------
+void Test::check_f1(void)
+{
+    QVERIFY(mw);
+    QVERIFY(mb);
+
+    QCOMPARE(mb->f1(-1), false);
+    QCOMPARE(mb->f1(0),  false);
+    QCOMPARE(mb->f1(1),  true);
+}
+//--------------------------------------------------------------------------------
+void Test::check_f2(void)
+{
+    QVERIFY(mw);
+    QVERIFY(mb);
+
+    QCOMPARE(mb->f2(-1), false);
+    QCOMPARE(mb->f2(0),  false);
+    QCOMPARE(mb->f2(1),  true);
+}
+//--------------------------------------------------------------------------------
+void Test::check_f3(void)
+{
+    QVERIFY(mw);
+    QVERIFY(mb);
+
+    QCOMPARE(mb->f3(-1), false);
+    QCOMPARE(mb->f3(0),  false);
+    QCOMPARE(mb->f3(1),  true);
 }
 //--------------------------------------------------------------------------------

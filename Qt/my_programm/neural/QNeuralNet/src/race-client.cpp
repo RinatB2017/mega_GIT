@@ -169,7 +169,7 @@ void RaceClient::round()
 
     QList<float> *o = m_network->run(QList<float>() << angle << distance << distance2);
 
-    qDebug() << "Net output for" << angle << distance << distance2 << "is" << *o;
+    qDebug() << "Net output for" << angle << speed << distance << distance2 << "is" << *o;
 
     QString wheelString = QString("wheel:%1\n").arg(o->at(0));
     QString accString = QString("acc:%1\n").arg(o->at(1));

@@ -3,8 +3,8 @@
 #**********************************************************************************
 
 unix {
-    PKGCONFIG   += opencv4
     CONFIG      += link_pkgconfig
+    PKGCONFIG   += opencv4
 }
 
 win32 {

@@ -21,15 +21,11 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <QTest>
 //--------------------------------------------------------------------------------
 class MainWindow;
+class GrapherBox;
+class MainBox;
 //--------------------------------------------------------------------------------
 class Test : public QObject {
     Q_OBJECT
@@ -42,6 +38,8 @@ private slots:
 
 private:
     MainWindow *mw;
+    MainBox    *mb;
+    GrapherBox *gb;
 };
 //--------------------------------------------------------------------------------
 #endif

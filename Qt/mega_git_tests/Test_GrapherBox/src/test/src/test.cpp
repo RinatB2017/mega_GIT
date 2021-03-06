@@ -20,8 +20,6 @@
 **********************************************************************************/
 #include <QTest>
 //--------------------------------------------------------------------------------
-//#define private public
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "grapherbox.hpp"
 #include "test_GrapherBox_mainbox.hpp"
@@ -29,16 +27,19 @@
 //--------------------------------------------------------------------------------
 Test::Test()
 {
-    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    mw = reinterpret_cast<MainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
+
+    mb = mw->findChild<MainBox *>();
+    QVERIFY(mb);
+
+    gb = mb->findChild<GrapherBox *>();
+    QVERIFY(gb);
 }
 //--------------------------------------------------------------------------------
 void Test::test_grapherbox(void)
 {
     QTimer::singleShot(0, [this]{
-        GrapherBox *gb = mw->findChild<GrapherBox *>("GrapherBox");
-        QVERIFY(gb);
-
         const int cnt_buf = 1024;
         qreal test_buf[cnt_buf] = { 0 };
         for(int n=0; n<cnt_buf; n++)

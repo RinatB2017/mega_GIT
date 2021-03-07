@@ -56,11 +56,17 @@ class TestQString: public QObject
 private slots:
     void toUpper();
     void test_add_data();
+    void test_data_add();
 };
 
 void TestQString::test_add_data()
 {
-    // эта функция с таким названием не вызовется
+    // функция с таким названием не вызовется (проблема в "окончании" _data
+}
+
+void TestQString::test_data_add()
+{
+    // функция с таким названием вызовется
 }
 
 void TestQString::toUpper()

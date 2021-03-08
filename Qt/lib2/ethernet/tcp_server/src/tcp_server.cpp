@@ -32,6 +32,9 @@ TCP_Server::TCP_Server(QWidget *parent) :
 //    connect(this,         &TCP_Server::output,    processor,  &Processor::input);
 //    connect(processor,    &Processor::output,     this,       &TCP_Server::input);
 
+    is_open = false;
+    emit server_is_open(is_open);
+
     setVisible(false);
 }
 //--------------------------------------------------------------------------------
@@ -60,6 +63,9 @@ bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
     emit info(QString("IP: %1").arg(tcpServer->serverAddress().toString()));
     emit info(QString("Port: %1").arg(tcpServer->serverPort()));
 
+    is_open = true;
+    emit server_is_open(is_open);
+
     connect(tcpServer,  &QTcpServer::newConnection, this,   &TCP_Server::newConnect);
     return true;
 }
@@ -75,6 +81,9 @@ void TCP_Server::closeServer(void)
         clientConnection->deleteLater();
         clientConnection = nullptr;
     }
+
+    is_open = false;
+    emit server_is_open(is_open);
 }
 //--------------------------------------------------------------------------------
 void TCP_Server::newConnect(void)
@@ -96,7 +105,7 @@ void TCP_Server::clientReadyRead(void)
         emit info("Получены данные");
 
         read_block = clientConnection->readAll();
-        emit trace(read_block);
+        //emit trace(read_block);
         emit debug(read_block.toHex().toUpper());
 
         emit output(read_block);
@@ -112,6 +121,11 @@ void TCP_Server::clientDisconnected(void)
 {
     emit info("Клиент отключился");
     clientConnection->deleteLater();
+}
+//--------------------------------------------------------------------------------
+bool TCP_Server::is_opened(void)
+{
+    return is_open;
 }
 //--------------------------------------------------------------------------------
 void TCP_Server::updateText(void)

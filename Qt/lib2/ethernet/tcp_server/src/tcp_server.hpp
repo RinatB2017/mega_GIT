@@ -37,8 +37,11 @@ public:
     explicit TCP_Server(QWidget *parent = nullptr);
     ~TCP_Server();
 
+    bool is_opened(void);
+
 signals:
     void output(const QByteArray &);
+    void server_is_open(bool);
 
 public slots:    
     bool createServerOnPort(const QHostAddress address, quint16 port);
@@ -54,6 +57,8 @@ private:
     //Processor *processor = nullptr;
     QTcpServer *tcpServer = nullptr;
     QTcpSocket *clientConnection = nullptr;
+
+    bool is_open = false;
 
     void updateText(void);
     bool programm_is_exit(void);

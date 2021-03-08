@@ -94,7 +94,7 @@ void MainBox::f_disconnect(void)
 void MainBox::f_get_data(const QByteArray &data)
 {
     emit trace("get_data");
-    emit trace(data.data());
+    emit debug(data.toHex().toUpper());
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

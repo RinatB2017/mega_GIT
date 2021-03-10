@@ -11,6 +11,7 @@ include (mainwindow/mainwindow.pri)
 include (aboutbox/aboutbox.pri)
 include (findbox/findbox.pri)
 #include (keeper/keeper.pri)
+include (mylogger/mylogger.pri)
 include (log/log.pri)
 
 RESOURCES   *= $$PWD/doc/doc.qrc

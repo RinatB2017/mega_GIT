@@ -20,6 +20,9 @@
 **********************************************************************************/
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
+#include "mylogger.hpp"
+MyLogger *logger = nullptr;
+//--------------------------------------------------------------------------------
 MainWindow::MainWindow(QMainWindow *parent)
     : QMainWindow(parent),
       orgName(ORGNAME),
@@ -50,6 +53,13 @@ MainWindow::~MainWindow()
     if(lb)
     {
         delete lb;
+    }
+#endif
+
+#ifdef LOGGER_ON
+    if(logger)
+    {
+        delete logger;
     }
 #endif
 }
@@ -254,6 +264,20 @@ void MainWindow::init(void)
         setWindowFlags(windowFlags() & ~Qt::WindowStaysOnTopHint);
     }
     //---
+
+#ifdef LOGGER_ON
+#if 0
+    MyLogger *logg = new MyLogger();
+    logger = logg;
+#else
+    logger = new MyLogger();
+#endif
+    qInstallMessageHandler(myMessageOutput);
+    QObject::connect(logger,    &MyLogger::info,    this,   &MainWindow::info);
+    QObject::connect(logger,    &MyLogger::debug,   this,   &MainWindow::debug);
+    QObject::connect(logger,    &MyLogger::error,   this,   &MainWindow::error);
+    QObject::connect(logger,    &MyLogger::trace,   this,   &MainWindow::trace);
+#endif
 
     //TODO не стоит именно здесь взводить эти аттрибуты, лучше в mywidget
     setAttribute(Qt::WA_DeleteOnClose);

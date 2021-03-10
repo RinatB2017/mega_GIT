@@ -64,8 +64,10 @@ MyWidget::~MyWidget()
     {
         on = "no name";
     }
+#ifndef LOGGER_ON
     qDebug() << "~MyWidget()" << on;
     //qDebug() << "~MyWidget()" << objectName();
+#endif
 #endif
 }
 //--------------------------------------------------------------------------------

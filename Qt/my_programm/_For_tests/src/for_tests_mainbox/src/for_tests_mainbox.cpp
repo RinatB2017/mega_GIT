@@ -280,12 +280,33 @@ void MainBox::test_function(int delay)
 }
 //--------------------------------------------------------------------------------
 #include "qyuvopenglwidget.h"
+#include <QUiLoader>
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    MyFileDialog *dlg = new MyFileDialog("MainBox", "MainBox", this);
+    dlg->setNameFilter("UI files (*.ui)");
+    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
+    int btn = dlg->exec();
+    if(btn == MyFileDialog::Accepted)
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        QUiLoader loader;
+        QFile file(filename);
+        file.open(QFile::ReadOnly);
+        QWidget *formWidget = loader.load(&file);
+        formWidget->show();
+        file.close();
+    }
+    delete dlg;
+#endif
+
+#if 0
     qInfo()    << "qInfo";
     qDebug()   << "qDebug";
     qWarning() << "qWarning";

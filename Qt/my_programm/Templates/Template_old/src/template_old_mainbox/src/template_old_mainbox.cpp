@@ -77,7 +77,7 @@ void MainBox::init(void)
                                 "mainbox",
                                 Qt::TopDockWidgetArea,
                                 this);
-            //            setVisible(false);    //TODO не надо это разкомментировать
+            // setVisible(false);    //TODO не надо это разкомментировать
         }
 #endif
     });
@@ -115,10 +115,10 @@ void MainBox::createTestBar(void)
                                               "choice_test");
     btn_choice_test->setObjectName("btn_choice_test");
 
-    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+    connect(btn_choice_test,    &QToolButton::clicked,  this,   &MainBox::choice_test);
 
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
+    connect(cb_block,   &QCheckBox::clicked,    cb_test,           &QComboBox::setDisabled);
+    connect(cb_block,   &QCheckBox::clicked,    btn_choice_test,   &QToolButton::setDisabled);
 
 #ifndef NO_MENU
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());

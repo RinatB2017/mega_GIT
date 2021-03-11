@@ -44,6 +44,9 @@ void MyMediaPlayer::init(void)
             this,   &MyMediaPlayer::processFrame);
     probe->setSource(player); // Returns true, hopefully.
 
+    ui->sl_movie->setProperty(NO_SAVE, true);
+    ui->te_position->setProperty(NO_SAVE, true);
+
     ui->btn_load->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogOpenButton));
     ui->btn_start->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
     ui->btn_pause->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPause));
@@ -70,6 +73,9 @@ void MyMediaPlayer::init(void)
     connect(ui->sl_movie,   &QSlider::sliderMoved,          this,           &MyMediaPlayer::set_position);
 
     connect(ui->te_position,    &QTimeEdit::timeChanged,    this,           &MyMediaPlayer::timeChanged);
+
+    ui->btn_start->setEnabled(true);
+    ui->btn_stop->setEnabled(false);
 }
 //--------------------------------------------------------------------------------
 void MyMediaPlayer::processFrame(const QVideoFrame &frame)
@@ -150,6 +156,9 @@ void MyMediaPlayer::load(void)
 void MyMediaPlayer::start(void)
 {
     player->play();
+
+    ui->btn_start->setEnabled(false);
+    ui->btn_stop->setEnabled(true);
 }
 //--------------------------------------------------------------------------------
 void MyMediaPlayer::pause(void)
@@ -160,6 +169,9 @@ void MyMediaPlayer::pause(void)
 void MyMediaPlayer::stop(void)
 {
     player->stop();
+
+    ui->btn_start->setEnabled(true);
+    ui->btn_stop->setEnabled(false);
 }
 //--------------------------------------------------------------------------------
 void MyMediaPlayer::first(void)

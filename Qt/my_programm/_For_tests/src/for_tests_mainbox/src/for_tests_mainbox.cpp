@@ -286,7 +286,7 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
     MyFileDialog *dlg = new MyFileDialog("MainBox", "MainBox", this);
     dlg->setNameFilter("UI files (*.ui)");
     dlg->setOption(MyFileDialog::DontUseNativeDialog, true);

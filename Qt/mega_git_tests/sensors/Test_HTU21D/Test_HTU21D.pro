@@ -7,18 +7,11 @@ TARGET   = Test_HTU21D
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-#DEFINES += NO_TOOLBAR
-#DEFINES += SHOW_SIZE
-#DEFINES += NO_MENU
-
-DEFINES += PROGRAMM_IN_UTF8
-#DEFINES += NO_LOG
 
 HEADERS += \
     defines.hpp \
@@ -54,10 +47,10 @@ include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 
 include (src/test_HTU21D_mainbox/test_HTU21D_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

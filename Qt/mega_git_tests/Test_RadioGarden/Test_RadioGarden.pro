@@ -7,17 +7,11 @@ TARGET   = Test_RadioGarden
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += USE_DOCK_WIDGETS
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += NO_LOG
-
-DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     defines.hpp \
@@ -49,9 +43,9 @@ include ($$LIB_PATH2/web/mybrowser/mybrowser.pri)
 
 include (src/test_radiogarden_mainbox/test_radiogarden_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

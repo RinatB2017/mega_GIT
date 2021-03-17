@@ -7,18 +7,11 @@ TARGET   = Test_OpenRPT
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-#DEFINES += FIXED_SIZE
-
-DEFINES += NO_TRAYICON
-#DEFINES += NO_TOOLBAR
-#DEFINES += NO_LOG
-
-DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     defines.hpp \
@@ -39,9 +32,9 @@ include ($$LIB_PATH2/OpenRPT/OpenRPT.pri)
 
 include (src/test_OpenRPT_mainbox/test_OpenRPT_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

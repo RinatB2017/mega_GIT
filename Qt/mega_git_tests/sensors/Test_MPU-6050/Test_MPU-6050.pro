@@ -7,23 +7,11 @@ TARGET   = Test_MPU-6050
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += SHOW_SIZE
-
-#DEFINES += NO_TOOLBAR
-#DEFINES += NO_MENU
-#DEFINES += NO_LOG
-
-#DEFINES += LOGO_GL
-
-DEFINES += PROGRAMM_IN_UTF8
-
-#DEFINES += NO_GRAPHER
 
 HEADERS += \
     defines.hpp \
@@ -74,10 +62,10 @@ include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 
 include (src/test_MPU-6050_mainbox/test_MPU-6050_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

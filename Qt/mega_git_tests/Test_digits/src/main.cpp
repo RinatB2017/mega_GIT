@@ -32,8 +32,6 @@
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
-
-#define SINGLE_APP
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {

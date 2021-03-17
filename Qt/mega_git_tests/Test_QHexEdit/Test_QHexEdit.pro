@@ -7,14 +7,11 @@ TARGET   = Test_QHexEdit
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-
-DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     defines.hpp \
@@ -37,9 +34,9 @@ include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 
 include (src/test_QHexEdit_mainbox/test_QHexEdit_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

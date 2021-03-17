@@ -7,19 +7,14 @@ TARGET   = Test_Trader
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/trader \
     $$PWD/src/test_trader_mainbox \
     $$PWD/src/test_trader_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-#DEFINES += NO_TOOLBAR
-#DEFINES += NO_LOG
-
-DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     curvedata.hpp \
@@ -60,10 +55,10 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/csvreader/csvreader.pri)
 include ($$LIB_PATH2/qwt/qwt.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 win32 {
     CONFIG(debug, debug|release) {

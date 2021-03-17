@@ -7,21 +7,11 @@ TARGET   = Test_RGB_display
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-
-#DEFINES += SAVE_INI
-
-#DEFINES += DEMO
-#DEFINES += "DEMO_YEAR=2017"
-#DEFINES += "DEMO_MONTH=9"
-#DEFINES += "DEMO_DAY=9"
-
-DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     defines.hpp \
@@ -58,10 +48,10 @@ include ($$LIB_PATH2/serial5/serial5.pri)
 include (src/test_rgb_display_mainbox/test_rgb_display_mainbox.pri)
 include (src/rgb_display/rgb_display.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

@@ -7,13 +7,11 @@ TARGET   = TestPropertyBrowser
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
 
 HEADERS += \
     defines.hpp \
@@ -36,9 +34,9 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/QtPropertyBrowser/qtpropertybrowser.pri)
 include (src/test_PropertyBrowser_mainbox/test_PropertyBrowser_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

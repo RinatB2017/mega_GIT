@@ -85,7 +85,7 @@ void Scene3::init_ship(void)
 //--------------------------------------------------------------------------------
 void Scene3::init_rocks(void)
 {
-    qsrand(QTime(0,0,0).msecsTo(QTime::currentTime()));
+    //qsrand(QTime(0,0,0).msecsTo(QTime::currentTime()));
     int x = 0;
     for(int n=0; n<20; n++)
     {

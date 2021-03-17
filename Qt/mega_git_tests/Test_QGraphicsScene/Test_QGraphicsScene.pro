@@ -7,13 +7,11 @@ TARGET   = Test_QGraphicsScene
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_TRAYICON
 
 HEADERS += \
     defines.hpp \
@@ -35,9 +33,9 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_QGraphicsScene_mainbox/test_QGraphicsScene_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

@@ -7,14 +7,13 @@ TARGET   = Test_triangle
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/test_triangle_mainbox \
     $$PWD/src/test_triangle_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_TRAYICON
 
 HEADERS += \
     test_triangle_mainbox.hpp \
@@ -36,9 +35,9 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

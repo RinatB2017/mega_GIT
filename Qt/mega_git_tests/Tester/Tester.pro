@@ -7,13 +7,10 @@ TARGET   = Tester
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-
-
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_TRAYICON
 
 HEADERS += \
     defines.hpp \

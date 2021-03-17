@@ -36,16 +36,8 @@
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-#ifdef Q_OS_LINUX
-    //set_signals();
-#endif
-#if QT_VERSION >= 0x050000
-    //qInstallMessageHandler(log_to_file);
-#else
-    //qInstallMsgHandler(log_to_file);
-#endif
-
     set_codecs();
+
 #ifdef SINGLE_APP
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
@@ -66,13 +58,12 @@ int main(int argc, char *argv[])
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     splash->show();
 
-    
-
     MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);
 
     MainBox *mainBox = new MainBox(main_window, splash);
     Q_ASSERT(mainBox);
+
     main_window->setCentralWidget(mainBox);
     main_window->show();
 

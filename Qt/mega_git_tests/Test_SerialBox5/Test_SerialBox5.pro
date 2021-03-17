@@ -7,24 +7,13 @@ TARGET   = Test_SerialBox5
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += SHOW_SIZE
-
 DEFINES += RS232_SEND
-#DEFINES += RS232_LOG
-
-#DEFINES += NO_TOOLBAR
-#DEFINES += NO_MENU
-#DEFINES += NO_LOG
-
-#DEFINES += LOGO_GL
-
-DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     defines.hpp \
@@ -66,10 +55,10 @@ include ($$LIB_PATH2/serial5/serial5.pri)
 
 include (src/test_SerialBox5_mainbox/test_SerialBox5_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

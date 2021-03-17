@@ -7,6 +7,8 @@ TARGET   = Test_CRC
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
@@ -35,15 +37,14 @@ CONFIG(debug, debug|release) {
 LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
-include (src/config.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/crc/crc.pri)
 
 include (src/test_CRC_mainbox/test_CRC_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

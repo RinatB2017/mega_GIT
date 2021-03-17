@@ -7,20 +7,13 @@ TARGET   = Test_Box2D
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += opengl
-
-#DEFINES += FIXED_SIZE
-
-#DEFINES += NO_TRAYICON
-DEFINES += NO_STYLETOOLBAR
-#DEFINES += NO_TOOLBAR
-#DEFINES += NO_LOG
-
-DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     defines.hpp \
@@ -51,9 +44,9 @@ include (src/test_Box2D_mainbox/test_Box2D_mainbox.pri)
 include (src/world/world.pri)
 include ($$LIB_PATH2/Box2D/Box2D.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

@@ -7,15 +7,11 @@ TARGET   = Test_OscilloscopeBox
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_TRAYICON
-
-DEFINES += SAVE_INI
 
 HEADERS += \
     defines.hpp \
@@ -38,9 +34,9 @@ include ($$LIB_PATH2/meta/oscilloscopebox.pri)
 
 include (src/test_OscilloscopeBox_mainbox/test_OscilloscopeBox_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

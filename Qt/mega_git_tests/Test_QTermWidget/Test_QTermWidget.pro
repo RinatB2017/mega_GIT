@@ -7,15 +7,12 @@ TARGET   = Test_QTermWidget
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     /usr/include/qtermwidget5 \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_LOG
 
 HEADERS += \
     defines.hpp \
@@ -48,9 +45,9 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_qtermwidget_mainbox/test_qtermwidget_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

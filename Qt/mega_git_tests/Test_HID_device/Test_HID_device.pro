@@ -7,13 +7,11 @@ TARGET   = Test_HID_device
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
 
 DEFINES += HEX16
 
@@ -43,9 +41,9 @@ include ($$LIB_PATH2/hexspinbox/hexspinbox.pri)
 include (src/HID_device/HID_device.pri)
 include (src/AD9106_box/AD9106_box.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 #----------------------------------------------
 VPATH = $$INCLUDEPATH

@@ -7,16 +7,12 @@ TARGET   = Test_SerialTerm
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     /usr/include/qtermwidget5 \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-#DEFINES += RS232_SEND
-DEFINES += NO_LOG
 
 HEADERS += \
     defines.hpp \
@@ -51,9 +47,9 @@ include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri
 include (src/test_serialterm_mainbox/test_serialterm_mainbox.pri)
 include (src/serialterm/serialterm.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

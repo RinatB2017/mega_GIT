@@ -7,6 +7,8 @@ TARGET      = Test_RGB_Matrix
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/diod \
@@ -15,16 +17,6 @@ DEPENDPATH  += \
     $$PWD/src/test_RGB_Matrix_mainbox \
     $$PWD/src/test_RGB_Matrix_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-#DEFINES += RS232_FIXED_SIZE
-#DEFINES += RS232_SEND
-#DEFINES += RS232_LOG
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += PROGRAMM_IN_UTF8
-
-DEFINES += NO_TRAYICON
-#DEFINES += NO_LOG
 
 DEFINES += MODBUS
 
@@ -56,9 +48,9 @@ include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
 include ($$LIB_PATH2/display/display.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

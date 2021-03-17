@@ -7,17 +7,14 @@ TARGET   = Test_TCP_UDP_bridge
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/test_tcp_udp_thread_mainbox \
     $$PWD/src/test_tcp_udp_thread_mainbox/ui \
     $$PWD/src/worker
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += PROGRAMM_IN_UTF8
-#DEFINES += NO_LOG
 
 QT  += network
 
@@ -45,9 +42,9 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

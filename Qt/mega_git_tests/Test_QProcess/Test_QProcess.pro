@@ -7,28 +7,13 @@ TARGET   = Test_QProcess
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/test_QProcess_mainbox \
     $$PWD/src/test_QProcess_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-#DEFINES += LOGO_GL
-#DEFINES += FIXED_SIZE
-#
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += SHOW_SIZE
-
-#DEFINES += NO_TOOLBAR_BUTTON_EXIT
-#DEFINES += NO_TOOLBAR_BUTTON_FONT
-#DEFINES += NO_TOOLBAR_BUTTON_LANG
-#DEFINES += NO_TOOLBAR_BUTTON_STYLE
-#DEFINES += NO_TOOLBAR_BUTTON_ABOUT
-#DEFINES += NO_TOOLBAR_BUTTON_HELP
-#DEFINES += NO_TOOLBAR_SEPARATORS
-
-DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     test_QProcess_mainbox.hpp \
@@ -60,9 +45,9 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

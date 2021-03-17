@@ -7,16 +7,11 @@ TARGET   = Test_CandleStick_Box
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-#DEFINES += NO_TOOLBAR
-#DEFINES += NO_LOG
-
-DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     defines.hpp \
@@ -43,10 +38,10 @@ include (src/test_candlestick_box_mainbox/test_candlestick_box_mainbox.pri)
 # https://forum.qt.io/topic/69626/visualize-value-on-qt-chart-view/3
 # mapToValue
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 win32 {
     CONFIG(debug, debug|release) {

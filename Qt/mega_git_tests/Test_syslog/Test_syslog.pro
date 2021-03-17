@@ -7,16 +7,11 @@ TARGET      = Test_syslog
 
 FOLDER      = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += SYSLOG_LOG
-
-#DEFINES += UNDER_CONSTRUCTION
 
 HEADERS += \
     defines.hpp \
@@ -46,9 +41,9 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include (src/sender_syslog/sender_syslog.pri)
 include (src/test_syslog_mainbox/test_syslog_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

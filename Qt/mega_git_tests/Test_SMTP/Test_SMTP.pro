@@ -7,17 +7,14 @@ TARGET      = Test_SMTP
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 PROGRAMM_PATH  += \
     $$PWD/src
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
 QT  += network
-
-#DEFINES += NO_STYLETOOLBAR
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_TRAYICON
-#DEFINES += NO_LOG
 
 SOURCES += \
     main.cpp
@@ -32,9 +29,9 @@ include ($$LIB_PATH/turbo.pri)
 include (src/sendemail/sendemail.pri)
 include (src/smtp/smtp.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

@@ -5,30 +5,13 @@
 TEMPLATE = app
 TARGET   = Test_SDLWidget
 
-FOLDER  = old_programm
+FOLDER  = tests
+
+include (conf/conf.pri)
 
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-#DEFINES += LOGO_GL
-#DEFINES += FIXED_SIZE
-
-#
-DEFINES += NO_STYLETOOLBAR
-#DEFINES += NO_STATUSBAR
-DEFINES += NO_TRAYICON
-#DEFINES += NO_TOOLBAR
-#DEFINES += NO_MENU
-#DEFINES += NO_LOG
-
-#DEFINES += ONLY_ENGLISH
-
-#DEFINES += LOG_READ_ONLY
-#DEFINES += NEED_CORRECT_LOG
-
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += SINGLE_APP
 
 HEADERS += \
     defines.hpp \
@@ -50,9 +33,9 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/SDLWidget/SDLWidget.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

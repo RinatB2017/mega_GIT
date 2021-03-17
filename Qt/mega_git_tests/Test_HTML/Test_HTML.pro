@@ -7,17 +7,14 @@ TARGET   = Test_HTML
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT += webenginewidgets
 CONFIG += c++11
-
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += SAVE_INI
 
 HEADERS += \
     defines.hpp \
@@ -50,9 +47,9 @@ include ($$LIB_PATH2/codeeditor/codeeditor.pri)
 
 include (src/test_html_mainbox/test_html_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

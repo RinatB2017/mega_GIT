@@ -7,17 +7,13 @@ TARGET   = Test_WebKit
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/test_WebKit_mainbox \
     $$PWD/src/test_WebKit_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += PROGRAMM_IN_UTF8
-
-DEFINES += NO_LOG
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
 
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += webkitwidgets
@@ -58,9 +54,9 @@ include ($$LIB_PATH2/web/findlinks/findlinks.pri)
 include ($$LIB_PATH2/web/waiting/waiting.pri)
 include ($$LIB_PATH2/web/webview/webview.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

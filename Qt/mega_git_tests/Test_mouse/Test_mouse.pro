@@ -7,13 +7,11 @@ TARGET   = Test_mouse
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
 
 HEADERS += \
     defines.hpp \
@@ -50,9 +48,9 @@ LIB_PATH2 = "$$PWD/../../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include (src/test_mouse_mainbox/test_mouse_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 #----------------------------------------------
 VPATH = $$INCLUDEPATH

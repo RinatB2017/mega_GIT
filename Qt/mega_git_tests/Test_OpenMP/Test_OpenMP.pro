@@ -6,6 +6,8 @@ TARGET      = Test_OpenMP
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH

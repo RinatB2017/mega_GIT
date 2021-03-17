@@ -7,6 +7,8 @@ TARGET   = Test_HC-05
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/test_hc05_mainbox \
@@ -14,17 +16,6 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += serialport
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += NO_RESIZE
-
-#DEFINES += DEMO
-#DEFINES += "DEMO_YEAR=2017"
-#DEFINES += "DEMO_MONTH=9"
-#DEFINES += "DEMO_DAY=9"
-
-DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     defines.hpp \
@@ -55,10 +46,10 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_hc05_mainbox/test_hc05_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

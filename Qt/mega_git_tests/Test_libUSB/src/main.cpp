@@ -38,8 +38,6 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-#define SINGLE_APP  1
-//--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
     set_codecs();
@@ -63,8 +61,6 @@ int main(int argc, char *argv[])
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     Q_ASSERT(splash);
     splash->show();
-
-    
 
     MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);

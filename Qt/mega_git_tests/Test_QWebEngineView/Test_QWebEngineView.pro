@@ -7,16 +7,13 @@ TARGET   = Test_QWebEngineView
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-
 DEFINES += USE_CUSTOMPAGE
-DEFINES += SAVE_INI
 
 HEADERS += \
     defines.hpp \
@@ -42,10 +39,10 @@ include ($$LIB_PATH2/widgets/multiedit/multiedit.pri)
 
 include (src/test_qwebengineview_mainbox/test_qwebengineview_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 RESOURCES += \
     proxy/proxies.qrc

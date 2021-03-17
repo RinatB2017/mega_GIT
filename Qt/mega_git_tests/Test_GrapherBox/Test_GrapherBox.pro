@@ -7,6 +7,8 @@ TARGET   = Test_GrapherBox
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
@@ -32,7 +34,6 @@ win32 {
 LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
-include (src/config.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH2/icons/digits.pri)
@@ -40,10 +41,10 @@ include ($$LIB_PATH2/icons/digits.pri)
 include (src/test_GrapherBox_mainbox/test_GrapherBox_mainbox.pri)
 include (src/testdialog/testdialog.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

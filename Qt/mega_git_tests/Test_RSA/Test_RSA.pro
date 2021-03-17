@@ -7,42 +7,14 @@ TARGET   = Test_RSA
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-#DEFINES += LOGO_GL
-#DEFINES += FIXED_SIZE
-#
-DEFINES += NO_STYLETOOLBAR
-#DEFINES += NO_STATUSBAR
-DEFINES += NO_TRAYICON
-#DEFINES += NO_TOOLBAR
-#DEFINES += SHOW_SIZE
-#DEFINES += NO_MENU
-#DEFINES += NO_LOG
-
-#DEFINES += ONLY_ENGLISH
-
-#DEFINES += LOG_READ_ONLY
-
-#DEFINES += NO_TOOLBAR_BUTTON_EXIT
-#DEFINES += NO_TOOLBAR_BUTTON_FONT
-#DEFINES += NO_TOOLBAR_BUTTON_LANG
-#DEFINES += NO_TOOLBAR_BUTTON_STYLE
-#DEFINES += NO_TOOLBAR_BUTTON_ABOUT
-#DEFINES += NO_TOOLBAR_BUTTON_HELP
-#DEFINES += NO_TOOLBAR_SEPARATORS
-
-#DEFINES += DEMO
-#DEFINES += "DEMO_YEAR=2017"
-#DEFINES += "DEMO_MONTH=9"
-#DEFINES += "DEMO_DAY=9"
-
 CONFIG += crypto
 LIBS += -lqca-qt5
-
-DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     defines.hpp \
@@ -74,9 +46,9 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_rsa_mainbox/test_rsa_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

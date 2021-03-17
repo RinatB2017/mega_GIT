@@ -7,18 +7,11 @@ TARGET   = Test_mesh
 
 FOLDER  = tests
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-#DEFINES += SHOW_SIZE
-#DEFINES += NO_LOG
-
-#DEFINES += SAVE_INI
-
-DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     defines.hpp \
@@ -56,10 +49,10 @@ include (src/mesh_mainbox/mesh_mainbox.pri)
 include (src/mesh_control/mesh_control.pri)
 include (src/mesh_led/mesh_led.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

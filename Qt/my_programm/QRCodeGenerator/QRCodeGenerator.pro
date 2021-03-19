@@ -1,6 +1,8 @@
 TARGET      = "QRCode Generator"
 TEMPLATE    = app
 
+include (conf/conf.pri)
+
 PROGRAMM_PATH  += \
     $$PWD/src \
     $$PWD/src/ui

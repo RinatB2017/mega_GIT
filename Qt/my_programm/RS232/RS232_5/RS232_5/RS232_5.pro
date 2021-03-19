@@ -5,21 +5,16 @@
 TEMPLATE    = app
 TARGET      = RS232_5
 
+include (conf/conf.pri)
+
 FOLDER      = RS232
 
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_TRAYICON
-DEFINES += NO_LOG
-
 DEFINES += RS232_SEND
 DEFINES += RS232_LOG
-
-#DEFINES += SAVE_INI
 
 HEADERS += \
     defines.hpp \
@@ -45,10 +40,10 @@ include ($$LIB_PATH2/serial5/serial5.pri)
 
 include (src/rs232_5_mainbox/rs232_5_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+# !exists(OBJECTS_DIR) {
+#     VERSION_HEADER = $$PWD/src/version.hpp
+#     include ($$LIB_PATH/auto_inc_version.pri)
+# }
 
 lessThan(QT_MAJOR_VERSION, 5) {
     error (Only Qt5)

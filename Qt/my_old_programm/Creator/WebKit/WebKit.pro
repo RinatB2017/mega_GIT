@@ -7,15 +7,11 @@ TARGET   = WebKit
 
 FOLDER  = old_programm
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += PROGRAMM_IN_UTF8
-
-DEFINES += NO_LOG
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
 
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += webkitwidgets
@@ -60,9 +56,9 @@ include ($$LIB_PATH2/web/webview/webview.pri)
 
 include (src/webkit_mainbox/webkit_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

@@ -7,15 +7,13 @@ TARGET   = UDP_Server
 
 FOLDER  = old_programm
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += network
-
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
 
 HEADERS += \
     defines.hpp \
@@ -30,10 +28,10 @@ win32 {
 
 LIB_PATH = "$$PWD/../../../lib"
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 

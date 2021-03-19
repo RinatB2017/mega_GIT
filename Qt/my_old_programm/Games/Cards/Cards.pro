@@ -7,17 +7,14 @@ TARGET   = Cards
 
 FOLDER  = old_programm
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT	+= svg
 QT      += xml
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-
-DEFINES += PROGRAMM_IN_UTF8
 
 DEFINES += SAVE_CARD
 
@@ -41,13 +38,13 @@ include (src/card/card.pri)
 
 include (src/cards_mainbox/cards_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
-
-VPATH = $$INCLUDEPATH
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 RESOURCES += \
     cards/cards.qrc \
     pictures/pictures.qrc
+
+VPATH = $$INCLUDEPATH

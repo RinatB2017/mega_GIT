@@ -6,7 +6,7 @@ DESTDIR     = ../Debug
 QT          += core gui
 CONFIG      += debug
 
-DEFINES     += QT_LARGEFILE_SUPPORT
+#DEFINES     += QT_LARGEFILE_SUPPORT
 
 INCLUDEPATH += \
     $$PWD/src \

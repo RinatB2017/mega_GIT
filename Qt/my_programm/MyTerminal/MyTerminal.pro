@@ -5,19 +5,11 @@
 TEMPLATE = app
 TARGET   = MyTerminal
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_TRAYICON
-#DEFINES += NO_LOG
-
-#DEFINES += RS232_SEND
-#DEFINES += RS232_LOG
-
-#DEFINES += SAVE_INI
 
 HEADERS += \
     defines.hpp \
@@ -56,10 +48,10 @@ include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri
 include (src/myterminal_mainbox/myterminal_mainbox.pri)
 #include (src/qtermwidget/qtermwidget.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+# !exists(OBJECTS_DIR) {
+#     VERSION_HEADER = $$PWD/src/version.hpp
+#     include ($$LIB_PATH/auto_inc_version.pri)
+# }
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

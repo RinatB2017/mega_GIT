@@ -7,15 +7,13 @@ TARGET   = Analyzer
 
 FOLDER  = old_programm
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     /usr/include/libftdi1 \
     $$PWD/src \
     $$PWD/src/ft2232h_thread
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_TRAYICON
 
 HEADERS += \
     ft2232h_thread.hpp \
@@ -52,9 +50,9 @@ win32 {
     include ($$LIB_PATH/ftdi/ftdi.pri)
 }
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

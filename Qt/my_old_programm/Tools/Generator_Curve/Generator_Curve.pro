@@ -7,18 +7,13 @@ TARGET   = Generator_Curve
 
 FOLDER  = old_programm
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 QT      += multimedia
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-
-#DEFINES += RS232_FIXED_SIZE
-
-DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     defines.hpp \
@@ -45,9 +40,9 @@ include (src/generator_curve_mainbox/generator_curve_mainbox.pri)
 
 include (src/widgets/widgets.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+#!exists(OBJECTS_DIR) {
+#    VERSION_HEADER = $$PWD/src/version.hpp
+#    include ($$LIB_PATH/auto_inc_version.pri)
+#}
 
 VPATH = $$INCLUDEPATH

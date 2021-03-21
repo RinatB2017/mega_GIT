@@ -14,8 +14,7 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -34,10 +33,5 @@ include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
 #include ($$LIB_PATH/ethernet/fake/fake.pri)
 
 include (src/tcp_client_mainbox/tcp_client_mainbox.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

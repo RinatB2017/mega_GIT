@@ -14,8 +14,7 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -48,11 +47,6 @@ include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri
 include (src/mesh_mainbox/mesh_mainbox.pri)
 include (src/mesh_control/mesh_control.pri)
 include (src/mesh_led/mesh_led.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

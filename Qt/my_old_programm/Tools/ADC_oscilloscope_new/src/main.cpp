@@ -27,7 +27,6 @@
 #include "mainwindow.hpp"
 #include "adc_oscilloscope_new_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------

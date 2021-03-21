@@ -25,15 +25,12 @@
 #include "mainwindow.hpp"
 #include "rs232_5_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include "test.hpp"
 #endif
-//--------------------------------------------------------------------------------
-//#define SINGLE_APP
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -58,9 +55,7 @@ int main(int argc, char *argv[])
 
     MySplashScreen *splash = new MySplashScreen(pixmap);
     splash->show();
-    splash->showMessage(QObject::tr("Подождите ..."));
-
-    
+    splash->showMessage(QObject::tr("Подождите ..."));    
 
     MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);

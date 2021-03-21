@@ -14,8 +14,7 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -32,10 +31,5 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/game_15_mainbox/game_15_mainbox.pri)
 include (src/bone/bone.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

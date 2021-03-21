@@ -7,6 +7,8 @@ TARGET   = HLK-RM04_OpenWRT
 
 FOLDER  = WiFi
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/HLK-RM04_OpenWRT_mainbox \
@@ -15,14 +17,9 @@ INCLUDEPATH = $$DEPENDPATH
 
 QT      += serialport
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_TRAYICON
-
 HEADERS += \
     HLK-RM04_OpenWRT_mainbox.hpp \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     HLK-RM04_OpenWRT_mainbox.cpp \
@@ -39,10 +36,5 @@ win32 {
 LIB_PATH = "$$PWD/../../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 
 VPATH = $$INCLUDEPATH

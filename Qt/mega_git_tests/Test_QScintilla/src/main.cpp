@@ -29,7 +29,6 @@
 #include "mainwindow.hpp"
 #include "qscintilla_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------

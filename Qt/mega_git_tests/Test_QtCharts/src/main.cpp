@@ -29,7 +29,6 @@
 #include "mainwindow.hpp"
 #include "test_QtCharts_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include "posix.hpp"
@@ -64,12 +63,11 @@ int main(int argc, char *argv[])
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     splash->show();
 
-    
-
     MainWindow *main_window = new MainWindow;
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    Q_ASSERT(main_window);
 
     MainBox *mainBox = new MainBox(main_window, splash);
+    Q_ASSERT(mainBox);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

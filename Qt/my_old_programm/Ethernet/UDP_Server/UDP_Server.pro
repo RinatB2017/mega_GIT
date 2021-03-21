@@ -16,8 +16,7 @@ INCLUDEPATH = $$DEPENDPATH
 QT  += network
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -27,11 +26,6 @@ win32 {
 }
 
 LIB_PATH = "$$PWD/../../../lib"
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 

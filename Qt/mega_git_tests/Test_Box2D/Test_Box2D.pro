@@ -16,8 +16,7 @@ INCLUDEPATH = $$DEPENDPATH
 QT  += opengl
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -43,10 +42,5 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include (src/test_Box2D_mainbox/test_Box2D_mainbox.pri)
 include (src/world/world.pri)
 include ($$LIB_PATH2/Box2D/Box2D.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

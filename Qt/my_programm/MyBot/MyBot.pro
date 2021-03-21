@@ -12,8 +12,7 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 unix {
     HEADERS += other.hpp
@@ -46,10 +45,5 @@ LIB_PATH2 = "$$PWD/../../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/WebCamera/WebCamera.pri)
 include (src/mybot_mainbox/mybot_mainbox.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

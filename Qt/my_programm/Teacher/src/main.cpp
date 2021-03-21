@@ -29,7 +29,6 @@
 #include "mainwindow.hpp"
 #include "teacher_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include "posix.hpp"

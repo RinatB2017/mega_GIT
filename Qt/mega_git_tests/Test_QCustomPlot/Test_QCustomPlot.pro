@@ -14,8 +14,7 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
-    defines.hpp \
-    version.hpp \
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -34,11 +33,6 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/QCustomPlot/qcustomplot.pri)
 
 include (src/test_QCustomPlot_mainbox/test_QCustomPlot_mainbox.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += printsupport

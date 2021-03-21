@@ -18,8 +18,7 @@ INCLUDEPATH = $$DEPENDPATH
 DEFINES += RS232_LOG
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -36,11 +35,6 @@ include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
 
 include (src/rs232_5_echo_mainbox/rs232_5_echo_mainbox.pri)
-
-# !exists(OBJECTS_DIR) {
-#     VERSION_HEADER = $$PWD/src/version.hpp
-#     include ($$LIB_PATH/auto_inc_version.pri)
-# }
 
 lessThan(QT_MAJOR_VERSION, 5) {
     error (Only Qt5)

@@ -279,12 +279,24 @@ void MainBox::test_function(int delay)
     });
 }
 //--------------------------------------------------------------------------------
-#include "qyuvopenglwidget.h"
-#include <QUiLoader>
+//#include "qyuvopenglwidget.h"
+//#include <QUiLoader>
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 0
+    lock_this_button();
+    QElapsedTimer *timer = new QElapsedTimer();
+    timer->start();
+    while(timer->elapsed() < 1000)
+    {
+
+    }
+    emit info("OK");
+    unlock_this_button();
+#endif
 
 #if 0
     MyFileDialog *dlg = new MyFileDialog("MainBox", "MainBox", this);

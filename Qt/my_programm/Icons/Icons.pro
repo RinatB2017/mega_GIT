@@ -12,8 +12,7 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -32,10 +31,5 @@ include ($$LIB_PATH2/icons.pri)
 include (src/icons_mainbox/icons_mainbox.pri)
 
 QMAKE_RESOURCE_FLAGS += -no-compress
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

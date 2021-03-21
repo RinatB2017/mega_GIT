@@ -29,9 +29,9 @@ include ($$LIB_PATH/turbo.pri)
 include (src/sendemail/sendemail.pri)
 include (src/smtp/smtp.pri)
 
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
+
+
+
+
 
 VPATH = $$INCLUDEPATH

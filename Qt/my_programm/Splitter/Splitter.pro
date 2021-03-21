@@ -5,17 +5,14 @@
 TEMPLATE = app
 TARGET   = Splitter
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -40,10 +37,5 @@ LIB_PATH2 = "$$PWD/../../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/splitter_mainbox/splitter_mainbox.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 
 VPATH = $$INCLUDEPATH

@@ -26,7 +26,6 @@
 #include "mainwindow.hpp"
 #include "test_GY-652_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------

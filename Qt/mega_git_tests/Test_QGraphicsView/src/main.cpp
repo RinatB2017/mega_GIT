@@ -29,7 +29,6 @@
 #include "mainwindow.hpp"
 #include "test_QGraphicsView_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------

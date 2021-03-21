@@ -29,7 +29,6 @@
 #include "mainwindow.hpp"
 #include "test_wwWidgets_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
@@ -59,12 +58,10 @@ int main(int argc, char *argv[])
     QPixmap pixmap(":/logo/logo.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
-    splash->show();
-
-    
+    splash->show();   
 
     MainWindow *main_window = new MainWindow;
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    Q_ASSERT(main_window);
 
     //---
     //qDebug() << "OpenGL Versions Supported: " << QGLFormat::openGLVersionFlags();
@@ -74,6 +71,7 @@ int main(int argc, char *argv[])
     //---
 
     MainBox *mainBox = new MainBox(main_window, splash);
+
     main_window->setCentralWidget(mainBox);
     main_window->show();
 

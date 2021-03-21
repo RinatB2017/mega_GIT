@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = Get_acceleration_data
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
@@ -16,8 +18,7 @@ DEFINES += NO_RESIZE
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    defines.hpp \
-    version.hpp \
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -50,11 +51,6 @@ include (src/get_acceleration_data/get_acceleration_data.pri)
 
 include (src/glwidget/glwidget_qt5.pri)
 include (src/lcd_widget/lcd_widget.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

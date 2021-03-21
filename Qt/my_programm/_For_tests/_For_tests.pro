@@ -16,7 +16,6 @@ DEPENDPATH  += $$PROGRAMM_PATH
 
 HEADERS += \
     defines.hpp
-    version.hpp
 
 SOURCES += \
     main.cpp
@@ -34,16 +33,14 @@ RESOURCES += \
 OTHER_FILES += \
     doc/notebook.txt
 
+# профилирование
+#include (conf/prof.pri)
+
 LIB_PATH  = "$$PWD/../../lib"
 LIB_PATH2 = "$$PWD/../../lib2"
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)
-
-    # профилирование
-    # QMAKE_CXXFLAGS_DEBUG += -pg
-    # QMAKE_LFLAGS_DEBUG += -pg
-    #---
 }
 
 win32 {
@@ -60,11 +57,5 @@ include (src/for_tests_mainbox/for_tests_mainbox.pri)
 include (src/mymainwindow/mymainwindow.pri)
 
 include (src/widgets/widgets.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    message($$VERSION_HEADER)
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

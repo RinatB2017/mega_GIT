@@ -29,7 +29,6 @@
 #include "serialbox5.hpp"
 #include "serialbox5_lite.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "codecs.h"
@@ -39,8 +38,6 @@
 #endif
 //--------------------------------------------------------------------------------
 #include "test_widget.hpp"
-//--------------------------------------------------------------------------------
-#define SINGLE_APP
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -67,8 +64,7 @@ int main(int argc, char *argv[])
     Q_ASSERT(splash);
 
     splash->show();
-    splash->showMessage(QObject::tr("Подождите ..."));
-    
+    splash->showMessage(QObject::tr("Подождите ..."));    
 
     TestWidget *cw = new TestWidget(main_window);
 //    QObject::connect(cw, &TestWidget::info,  main_window, &MainWindow::info);

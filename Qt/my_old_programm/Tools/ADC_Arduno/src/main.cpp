@@ -27,7 +27,6 @@
 #include "mainwindow.hpp"
 #include "adc_arduino_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------

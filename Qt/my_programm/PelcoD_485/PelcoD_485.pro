@@ -19,8 +19,7 @@ QT  += multimediawidgets
 DEFINES += WIN32_LEAN_AND_MEAN
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -51,11 +50,6 @@ include ($$LIB_PATH2/widgets/hexspinbox/hexspinbox.pri)
 include ($$LIB_PATH2/icons/arrows.pri)
 
 include (src/pelco_d_485_mainbox/pelco_d_485_mainbox.pri)
-
-# !exists(OBJECTS_DIR) {
-#     VERSION_HEADER = $$PWD/src/version.hpp
-#     include ($$LIB_PATH/auto_inc_version.pri)
-# }
 
 lessThan(QT_MAJOR_VERSION, 5) {
     error (Only Qt5)

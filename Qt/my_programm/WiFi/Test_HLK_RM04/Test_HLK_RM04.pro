@@ -7,26 +7,21 @@ TARGET   = Test_HLK_RM04
 
 FOLDER  = WiFi
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/test_HLK_RM04_mainbox \
     $$PWD/src/test_HLK_RM04_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += PROGRAMM_IN_UTF8
-#DEFINES += RS232_SEND
-
-DEFINES += NO_LOG
 DEFINES += SAVE_INI
 
 QT      += serialport
 
 HEADERS += \
     test_HLK_RM04_mainbox.hpp \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     test_HLK_RM04_mainbox.cpp \
@@ -60,10 +55,5 @@ include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
 include ($$LIB_PATH2/ethernet/tcp_server/tcp_server.pri)
 
 include (src/hlk_rm04_widget/hlk_rm04_widget.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 
 VPATH = $$INCLUDEPATH

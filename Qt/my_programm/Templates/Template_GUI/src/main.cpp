@@ -33,7 +33,6 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include "posix.hpp"
@@ -46,8 +45,6 @@
 #   include "test.hpp"
 #   include <QDebug>
 #endif
-//--------------------------------------------------------------------------------
-#define SINGLE_APP
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -80,13 +77,11 @@ int main(int argc, char *argv[])
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     Q_ASSERT(splash);
-    splash->show();
-
-    
+    splash->show();    
 
     MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    Q_ASSERT(main_window);
 
     //---
     // Workaround: Removing the /usr/lib/libGL.so.1 file fixes the problem.

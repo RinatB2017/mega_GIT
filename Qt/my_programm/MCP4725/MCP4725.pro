@@ -5,18 +5,14 @@
 TEMPLATE = app
 TARGET   = MCP4725
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-
-DEFINES += PROGRAMM_IN_UTF8
-
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -47,10 +43,5 @@ include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/qwt/qwt.pri)
 
 include (src/mcp4725_mainbox/mcp4725_mainbox.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 
 VPATH = $$INCLUDEPATH

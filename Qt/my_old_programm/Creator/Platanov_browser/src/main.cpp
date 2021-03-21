@@ -27,7 +27,6 @@
 #include "mainwindow.hpp"
 #include "platanov_browser_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
@@ -47,6 +46,7 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow();
 
     MainBox *mainBox = new MainBox(main_window);
+
     main_window->setCentralWidget(mainBox);
 
     main_window->showMaximized();

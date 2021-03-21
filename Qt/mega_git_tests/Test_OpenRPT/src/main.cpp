@@ -29,7 +29,6 @@
 #include "mainwindow.hpp"
 #include "test_OpenRPT_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
@@ -59,12 +58,12 @@ int main(int argc, char *argv[])
     MySplashScreen splash(pixmap, 3);
     splash.show();
     splash.showMessage(QObject::tr("Подождите ..."));
-    
 
     MainWindow *main_window = new MainWindow;
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    Q_ASSERT(main_window);
 
     MainBox *mainBox = new MainBox(main_window);
+    Q_ASSERT(mainBox);
 
     main_window->setCentralWidget(mainBox);
     main_window->show();

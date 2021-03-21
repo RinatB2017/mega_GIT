@@ -33,7 +33,6 @@
 #include "mainwindow.hpp"
 #include "mybot_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------

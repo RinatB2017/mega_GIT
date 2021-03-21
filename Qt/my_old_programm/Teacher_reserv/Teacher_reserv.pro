@@ -21,8 +21,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 QT += network
 
 HEADERS += \
-    defines.hpp \
-    version.hpp \
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -40,10 +39,5 @@ LIB_PATH = "$$PWD/../../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/teacher_mainbox/teacher_mainbox.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

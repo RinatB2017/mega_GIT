@@ -21,8 +21,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 QT += network
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -46,10 +45,5 @@ include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
 include (src/double_browser_mainbox/double_browser_mainbox.pri)
 
 DESTDIR = bin
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

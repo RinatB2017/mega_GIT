@@ -27,7 +27,6 @@
 #include "mainwindow.hpp"
 #include "proxy_walker_m_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "mymainwindow.hpp"
 //--------------------------------------------------------------------------------
@@ -51,6 +50,7 @@ int main(int argc, char *argv[])
     // main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
 
     MainBox *mainBox = new MainBox(main_window);
+
     main_window->setCentralWidget(mainBox);
     //main_window->showMaximized();
     main_window->show();

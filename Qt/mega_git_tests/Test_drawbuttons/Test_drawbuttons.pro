@@ -16,8 +16,7 @@ INCLUDEPATH = $$DEPENDPATH
 #LIBS    += -lusb
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -38,10 +37,5 @@ include ($$LIB_PATH2/csvreader/csvreader.pri)
 include ($$LIB_PATH2/CarefulMessageBox/CarefulMessageBox.pri)
 
 include (src/test_drawbuttons_mainbox/test_drawbuttons_mainbox.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

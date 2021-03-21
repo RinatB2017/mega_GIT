@@ -33,7 +33,6 @@
 #include "mymainwindow.hpp"
 #include "mainwidget_gui.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include "posix.hpp"
@@ -45,8 +44,6 @@
 #   include "test.hpp"
 #   include <QDebug>
 #endif
-//--------------------------------------------------------------------------------
-#define SINGLE_APP
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {

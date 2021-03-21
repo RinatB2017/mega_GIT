@@ -17,8 +17,7 @@ INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
     test_Widgets_mainbox.hpp \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     test_Widgets_mainbox.cpp \
@@ -43,10 +42,5 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include (src/primitives/hline/hline.pri)
 include (src/primitives/vline/vline.pri)
 include (src/primitives/widget/widget.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

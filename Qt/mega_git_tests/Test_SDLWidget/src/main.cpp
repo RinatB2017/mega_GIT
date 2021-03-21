@@ -28,7 +28,6 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "SDLWidget.h"
 //--------------------------------------------------------------------------------

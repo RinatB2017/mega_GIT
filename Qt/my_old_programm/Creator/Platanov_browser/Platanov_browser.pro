@@ -22,8 +22,7 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 QT += network
 
 HEADERS += \
-    defines.hpp \
-    version.hpp \
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -45,10 +44,5 @@ include ($$LIB_PATH2/web/waiting/waiting.pri)
 include ($$LIB_PATH2/web/webview/webview.pri)
 
 include (src/platanov_browser_mainbox/platanov_browser_mainbox.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

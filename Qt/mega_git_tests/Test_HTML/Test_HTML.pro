@@ -17,8 +17,7 @@ QT += webenginewidgets
 CONFIG += c++11
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -46,10 +45,5 @@ include ($$LIB_PATH2/highlighter/highlighter.pri)
 include ($$LIB_PATH2/codeeditor/codeeditor.pri)
 
 include (src/test_html_mainbox/test_html_mainbox.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

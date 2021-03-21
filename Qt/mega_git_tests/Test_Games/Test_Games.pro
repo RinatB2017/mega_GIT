@@ -15,8 +15,7 @@ INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
     other.hpp \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -46,10 +45,5 @@ LIB_PATH  = "$$PWD/../../../Qt/lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_games_mainbox/test_games_mainbox.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

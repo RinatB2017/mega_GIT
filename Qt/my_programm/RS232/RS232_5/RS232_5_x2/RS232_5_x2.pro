@@ -36,10 +36,10 @@ include ($$LIB_PATH2/serial5/serial5.pri)
 
 include (src/test_widget/test_widget.pri)
 
-# !exists(OBJECTS_DIR) {
-#     VERSION_HEADER = $$PWD/src/version.hpp
-#     include ($$LIB_PATH/auto_inc_version.pri)
-# }
+
+
+
+
 
 RESOURCES += \
     ico/icons.qrc

@@ -31,7 +31,6 @@
 #include "mainwindow.hpp"
 #include "for_tests_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "mymainwindow.hpp"
 //--------------------------------------------------------------------------------

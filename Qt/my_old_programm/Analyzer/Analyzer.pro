@@ -17,8 +17,7 @@ INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
     ft2232h_thread.hpp \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     ft2232h_thread.cpp \
@@ -49,10 +48,5 @@ include (src/analizer_mainbox/analizer_mainbox.pri)
 win32 {
     include ($$LIB_PATH/ftdi/ftdi.pri)
 }
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

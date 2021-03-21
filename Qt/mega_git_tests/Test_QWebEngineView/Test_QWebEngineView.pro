@@ -16,8 +16,7 @@ INCLUDEPATH = $$DEPENDPATH
 DEFINES += USE_CUSTOMPAGE
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -38,11 +37,6 @@ include ($$LIB_PATH2/web/mybrowser/mybrowser.pri)
 include ($$LIB_PATH2/widgets/multiedit/multiedit.pri)
 
 include (src/test_qwebengineview_mainbox/test_qwebengineview_mainbox.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 RESOURCES += \
     proxy/proxies.qrc

@@ -19,8 +19,7 @@ QT  += dbus
 
 HEADERS += \
     test_qdbus_mainbox.hpp \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     test_qdbus_mainbox.cpp \
@@ -47,11 +46,6 @@ LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

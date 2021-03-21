@@ -7,6 +7,8 @@ TARGET   = MODBUS_test
 
 FOLDER  = modbus
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/modbus_test_mainbox \
@@ -18,17 +20,11 @@ QT  += \
     serialbus \
     network
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-
-DEFINES += PROGRAMM_IN_UTF8
-
 DEFINES += HEX16
 
 HEADERS += \
     modbus_test_mainbox.hpp \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     modbus_test_mainbox.cpp \
@@ -60,10 +56,5 @@ include (../lib/MODBUS_client/MODBUS_client.pri)
 
 include ($$LIB_PATH2/widgets/hexview16/hexview16.pri)
 include ($$LIB_PATH2/widgets/hexspinbox/hexspinbox.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 
 VPATH = $$INCLUDEPATH

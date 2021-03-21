@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = Walkers
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/walkers \
@@ -13,16 +15,11 @@ INCLUDEPATH = $$DEPENDPATH
 
 QT  += webenginewidgets
 
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-
 DEFINES += SAVE_INI
 
 HEADERS += \
     walkers.hpp \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     walkers.cpp \
@@ -39,10 +36,5 @@ LIB_PATH = "$$PWD/../../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include (src/youtube_walker/youtube_walker.pri)
 include (src/google_walker/google_walker.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 
 VPATH = $$INCLUDEPATH

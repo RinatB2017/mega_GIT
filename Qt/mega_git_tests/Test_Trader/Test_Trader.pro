@@ -32,7 +32,6 @@ SOURCES += \
 HEADERS += \
     traderplot.hpp \
     defines.hpp \
-    version.hpp \
     test_trader_mainbox.hpp
 
 SOURCES += \
@@ -54,11 +53,6 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/csvreader/csvreader.pri)
 include ($$LIB_PATH2/qwt/qwt.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 win32 {
     CONFIG(debug, debug|release) {

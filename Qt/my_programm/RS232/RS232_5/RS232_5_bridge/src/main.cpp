@@ -25,12 +25,9 @@
 #include "mainwindow.hpp"
 #include "rs232_5_bridge_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "codecs.h"
-//--------------------------------------------------------------------------------
-#define SINGLE_APP
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -56,11 +53,13 @@ int main(int argc, char *argv[])
 
     splash->show();
     splash->showMessage(QObject::tr("Подождите ..."));
-    
 
     MainWindow *main_window = new MainWindow();
+    Q_ASSERT(main_window);
 
     MainBox *mainBox = new MainBox(main_window, splash);
+    Q_ASSERT(mainBox);
+
     main_window->setCentralWidget(mainBox);
 
     main_window->show();

@@ -16,8 +16,7 @@ INCLUDEPATH = $$DEPENDPATH
 QT      += network
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -35,10 +34,5 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_broadcast_udp_mainbox/test_broadcast_udp_mainbox.pri)
 include (src/worker/worker.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

@@ -19,8 +19,7 @@ unix {
 }
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -51,11 +50,6 @@ win32 {
     include ($$LIB_PATH2/QScintilla/QScintilla.pri)
 }
 include (src/qscintilla_mainbox/qscintilla_mainbox.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

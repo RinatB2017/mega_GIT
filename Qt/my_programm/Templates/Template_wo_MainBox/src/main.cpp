@@ -33,7 +33,6 @@
 #include "mainwindow.hpp"
 #include "newmainwindow.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include "posix.hpp"
@@ -78,9 +77,7 @@ int main(int argc, char *argv[])
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     Q_ASSERT(splash);
-    splash->show();
-
-    
+    splash->show();    
 
     NewMainWindow *main_window = new NewMainWindow();
     main_window->show();

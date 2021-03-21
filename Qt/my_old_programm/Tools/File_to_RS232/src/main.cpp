@@ -27,7 +27,6 @@
 #include "mainwindow.hpp"
 #include "file_to_rs232_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include "posix.hpp"

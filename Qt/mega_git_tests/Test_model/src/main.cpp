@@ -29,7 +29,6 @@
 #include "mainwindow.hpp"
 #include "test_model_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
@@ -63,7 +62,7 @@ int main(int argc, char *argv[])
     
 
     MainWindow *main_window = new MainWindow;
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    Q_ASSERT(main_window);
 
     MainBox *mainBox = new MainBox(main_window, splash);
     main_window->setCentralWidget(mainBox);

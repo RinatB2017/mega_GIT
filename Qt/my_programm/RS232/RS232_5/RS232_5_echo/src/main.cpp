@@ -25,7 +25,6 @@
 #include "mainwindow.hpp"
 #include "rs232_5_echo_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "../lib/codecs.h"
 //--------------------------------------------------------------------------------

@@ -9,6 +9,8 @@ TEMPLATE    = app
 
 FOLDER  = _Templates
 
+include (conf/conf.pri)
+
 QT       += core gui
 
 unix:!macx {

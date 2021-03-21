@@ -7,25 +7,20 @@ TARGET      = Emulator_MODBUS
 
 FOLDER  = modbus
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT      += serialport network
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += PROGRAMM_IN_UTF8
-
-DEFINES += NO_TRAYICON
-#DEFINES += NO_LOG
-
 #DEFINES += USE_HTONS
 DEFINES += USE_CRC16
 DEFINES += TEST
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -47,11 +42,6 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/emulator_modbus_mainbox/emulator_modbus_mainbox.pri)
 include (src/settingsdialog/settingsdialog.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 
 VPATH = $$INCLUDEPATH
 

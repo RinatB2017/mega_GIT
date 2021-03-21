@@ -5,21 +5,16 @@
 TEMPLATE = app
 TARGET   = Get_MyIP
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += network
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += PROGRAMM_IN_UTF8
-DEFINES += NO_LOG
-DEFINES += SHOW_SIZE
-
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -38,10 +33,5 @@ LIB_PATH = "$$PWD/../../lib"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/get_myip_mainbox/get_myip_mainbox.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 
 VPATH = $$INCLUDEPATH

@@ -5,16 +5,13 @@
 TEMPLATE = app
 TARGET   = Labyrinth
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/labyrinth_mainbox \
     $$PWD/src/labyrinth_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
-
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-
-DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
     labyrinth_mainbox.hpp \
@@ -47,9 +44,9 @@ include (src/minimap/minimap.pri)
 include (src/map/map.pri)
 include (src/mouse/mouse.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
+# !exists(OBJECTS_DIR) {
+#     VERSION_HEADER = src/version.hpp
+#     include ($$LIB_PATH/auto_inc_version.pri)
+# }
 
 VPATH = $$INCLUDEPATH

@@ -7,6 +7,8 @@ TARGET   = MODBUS_server
 
 FOLDER  = modbus
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
@@ -14,26 +16,8 @@ INCLUDEPATH = $$DEPENDPATH
 QT  += serialport network
 QT  += serialbus
 
-#DEFINES += LOGO_GL
-#DEFINES += FIXED_SIZE
-
-#DEFINES += NO_TESTBAR_GRAPHER
-DEFINES += NO_STYLETOOLBAR
-#DEFINES += NO_STATUSBAR
-DEFINES += NO_TRAYICON
-#DEFINES += NO_TOOLBAR
-#DEFINES += NO_MENU
-#DEFINES += NO_LOG
-
-#DEFINES += ONLY_ENGLISH
-
-#DEFINES += LOG_READ_ONLY
-
-DEFINES += PROGRAMM_IN_UTF8
-
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -58,10 +42,5 @@ include ($$LIB_PATH2/widgets/hexview16/hexview16.pri)
 include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 
 include (../lib/MODBUS_server/MODBUS_server.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 
 VPATH = $$INCLUDEPATH

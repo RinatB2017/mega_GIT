@@ -7,6 +7,8 @@ TARGET   = Template_game
 
 FOLDER  = _Templates
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/game
@@ -14,14 +16,9 @@ INCLUDEPATH = $$DEPENDPATH
 
 QT += network opengl
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += PROGRAMM_IN_UTF8
-
 HEADERS += \
     game.hpp \
     defines.hpp \
-    version.hpp \
     map.hpp \
     player.hpp \
     alien.hpp
@@ -41,10 +38,5 @@ LIB_PATH = "$$PWD/../../../lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include (resources.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 
 VPATH = $$INCLUDEPATH

@@ -25,8 +25,7 @@ QT += network
 QT += testlib network webkit
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -51,10 +50,5 @@ include ($$LIB_PATH2/web/waiting/waiting.pri)
 include (src/mymainwindow/mymainwindow.pri)
 
 include (src/proxy_walker_m_mainbox/proxy_walker_m_mainbox.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

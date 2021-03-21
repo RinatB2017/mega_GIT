@@ -7,7 +7,7 @@
 #    MOC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/moc
 #    UI_DIR      = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
 #    RCC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/rc
-#}
+
 
 # https://stackoverflow.com/questions/36871334/qmake-conditional-for-raspberrypi
 linux {

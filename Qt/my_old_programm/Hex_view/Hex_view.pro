@@ -14,8 +14,7 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
-    defines.hpp \
-    version.hpp \
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -34,10 +33,5 @@ include ($$LIB_PATH2/serial5/serial5.pri)
 include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 
 include (src/hex_view_mainbox/hex_view_mainbox.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

@@ -27,7 +27,6 @@
 #include "mainwindow.hpp"
 #include "tcp_server_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
@@ -45,7 +44,7 @@ int main(int argc, char *argv[])
     app.setWindowIcon(QIcon(QLatin1String(":/mainwindow/computer.png")));
 
     MainWindow *main_window = new MainWindow();
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    Q_ASSERT(main_window);
 
     MainBox *mainBox = new MainBox(main_window);
 

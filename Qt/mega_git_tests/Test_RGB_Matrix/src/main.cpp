@@ -28,7 +28,6 @@
 #include "mainwindow.hpp"
 #include "test_RGB_Matrix_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "codecs.h"
@@ -56,7 +55,6 @@ int main(int argc, char *argv[])
     Q_ASSERT(splash);
     splash->show();
     splash->showMessage(QObject::tr("Подождите ..."));
-    
 
     MainWindow *main_window = new MainWindow();
 

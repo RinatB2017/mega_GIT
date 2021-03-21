@@ -16,8 +16,7 @@ INCLUDEPATH = $$DEPENDPATH
 #QT  += serialbus
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -47,11 +46,6 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_Game_mainbox/test_Game_mainbox.pri)
 include (src/scenes/scenes.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

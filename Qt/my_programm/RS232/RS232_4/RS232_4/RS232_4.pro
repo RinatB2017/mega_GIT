@@ -21,8 +21,7 @@ DEFINES += RS232_SEND
 
 HEADERS += \
     rs232_4_mainbox.hpp \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     rs232_4_mainbox.cpp \
@@ -39,10 +38,5 @@ LIB_PATH2 = "$$PWD/../../../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/serial4/serial4.pri)
-
-# !exists(OBJECTS_DIR) {
-#     VERSION_HEADER = $$PWD/src/version.hpp
-#     include ($$LIB_PATH/auto_inc_version.pri)
-# }
 
 VPATH = $$INCLUDEPATH

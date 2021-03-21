@@ -16,8 +16,7 @@ INCLUDEPATH = $$DEPENDPATH
 DEFINES += HEX16
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -40,10 +39,5 @@ include ($$LIB_PATH2/hexspinbox/hexspinbox.pri)
 #include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 include (src/HID_device/HID_device.pri)
 include (src/AD9106_box/AD9106_box.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 #----------------------------------------------
 VPATH = $$INCLUDEPATH

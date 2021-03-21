@@ -7,6 +7,8 @@ TARGET   = Test_MODBUS
 
 FOLDER  = modbus
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     /usr/include/modbus \
     $$PWD/src
@@ -14,19 +16,16 @@ INCLUDEPATH = $$DEPENDPATH
 
 QT      += serialport
 
-DEFINES += NO_TESTBAR_GRAPHER
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += PROGRAMM_IN_UTF8
-
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp \
 
 OTHER_FILES += doc/notebook.txt
+
+RESOURCES += \
+    src/master.qrc
 
 win32 {
     RC_ICONS = ico/computer.ico
@@ -40,12 +39,4 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_modbus_mainbox/test_modbus_mainbox.pri)
 
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
-
 VPATH = $$INCLUDEPATH
-
-RESOURCES += \
-    src/master.qrc

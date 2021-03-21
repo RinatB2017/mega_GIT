@@ -31,9 +31,9 @@ include ($$LIB_PATH2/meta/grapherbox.pri)
 
 include (src/oscilloscope_mainbox/oscilloscope_mainbox.pri)
 
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
+
+
+
+
 
 VPATH = $$INCLUDEPATH

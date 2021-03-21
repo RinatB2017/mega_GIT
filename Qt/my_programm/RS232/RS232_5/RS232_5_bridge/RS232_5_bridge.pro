@@ -14,8 +14,7 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -41,11 +40,6 @@ use_worker {
 }
 include ($$LIB_PATH2/serial5/serial5.pri)
 #----------------------------------------------
-
-# !exists(OBJECTS_DIR) {
-#     VERSION_HEADER = $$PWD/src/version.hpp
-#     include ($$LIB_PATH/auto_inc_version.pri)
-# }
 
 lessThan(QT_MAJOR_VERSION, 5) {
     error (Only Qt5)

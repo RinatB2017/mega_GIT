@@ -7,6 +7,8 @@ TARGET      = VRM04
 
 FOLDER  = WiFi
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/VRM04_mainbox \
@@ -17,16 +19,9 @@ INCLUDEPATH = $$DEPENDPATH
 #DEFINES += RS232_SEND
 #DEFINES += RS232_LOG
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += PROGRAMM_IN_UTF8
-
-DEFINES += NO_TRAYICON
-#DEFINES += NO_LOG
-
 HEADERS += \
     VRM04_mainbox.hpp \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     VRM04_mainbox.cpp \
@@ -50,10 +45,5 @@ include ($$LIB_PATH/time/time.pri)
 include ($$LIB_PATH2/QHexEdit_QT5/QHexEdit_QT5.pri)
 
 include ($$LIB_PATH2/wifi_frame/wifi_frame.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 
 VPATH = $$INCLUDEPATH

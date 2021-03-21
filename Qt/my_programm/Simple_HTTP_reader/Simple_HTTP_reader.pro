@@ -5,19 +5,16 @@
 TEMPLATE = app
 TARGET   = Simple_HTTP_reader
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += network
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += SHOW_SIZE
-DEFINES += PROGRAMM_IN_UTF8
-
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -44,11 +41,6 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/widgets/ipv4/ipv4.pri)
 
 include (src/simple_http_reader_mainbox/simple_http_reader_mainbox.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

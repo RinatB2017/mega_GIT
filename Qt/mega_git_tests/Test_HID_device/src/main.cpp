@@ -29,7 +29,6 @@
 #include "mainwindow.hpp"
 #include "HID_device.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------

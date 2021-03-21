@@ -7,6 +7,8 @@ TARGET   = Template
 
 FOLDER  = _Templates
 
+include (conf/conf.pri)
+
 PROGRAMM_PATH  += \
     $$PWD/src
 INCLUDEPATH += $$PROGRAMM_PATH
@@ -48,8 +50,7 @@ DEFINES += TOOLBAR_ORIENTATION
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -75,11 +76,6 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/mymainwindow/mymainwindow.pri)
 include (src/mainwidget/mainwidget.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 #----------------------------------------------
 
 #message ($$DEFINES)

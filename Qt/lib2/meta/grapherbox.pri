@@ -20,7 +20,7 @@ INCLUDEPATH += $$PWD/../qwt/include # надо исправить
 # подключаем библиотеки
 #unix {
 #    LIBS    += -lqwt
-#}
+
 
 #win32 {
 #    message (need QWT libs)
@@ -28,4 +28,4 @@ INCLUDEPATH += $$PWD/../qwt/include # надо исправить
 #    LIBS    += -L$$PWD/../qwt/lib
 #    LIBS    += -lqwt
 #    LIBS    += -lqwtmathml
-#}
+

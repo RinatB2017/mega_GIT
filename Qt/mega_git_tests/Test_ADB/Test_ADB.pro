@@ -48,10 +48,10 @@ include (src/autoclicker/autoclicker.pri)
 include (src/adb_widget/adb_widget.pri)
 include (src/ocv_widget/ocv_widget.pri)
 
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    message($$VERSION_HEADER)
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
+
+
+
+
+
 
 VPATH = $$INCLUDEPATH

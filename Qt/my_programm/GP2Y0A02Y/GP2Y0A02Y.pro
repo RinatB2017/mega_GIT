@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = GP2Y0A02Y
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src 
 INCLUDEPATH = $$DEPENDPATH
@@ -13,15 +15,8 @@ DEFINES += RS232_FIXED_SIZE
 #DEFINES += RS232_SEND
 #DEFINES += RS232_LOG
 
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-DEFINES += SHOW_SIZE
-
-DEFINES += PROGRAMM_IN_UTF8
-
 HEADERS += \
-    defines.hpp \
-    version.hpp \
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -55,11 +50,6 @@ include (src/viewer/viewer.pri)
 include (src/grapher/grapher.pri)
 
 include (src/gp2y0a02y_mainbox/gp2y0a02y_mainbox.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

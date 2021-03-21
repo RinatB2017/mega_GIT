@@ -54,9 +54,9 @@ include ($$LIB_PATH2/web/findlinks/findlinks.pri)
 include ($$LIB_PATH2/web/waiting/waiting.pri)
 include ($$LIB_PATH2/web/webview/webview.pri)
 
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
+
+
+
+
 
 VPATH = $$INCLUDEPATH

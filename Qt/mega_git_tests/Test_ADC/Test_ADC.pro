@@ -55,11 +55,11 @@ include ($$LIB_PATH2/serial5/serial5.pri)
 
 include (src/test_ADC_mainbox/test_ADC_mainbox.pri)
 
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    message($$VERSION_HEADER)
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
+
+
+
+
+
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

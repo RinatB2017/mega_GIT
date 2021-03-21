@@ -28,7 +28,6 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "modbus_server.hpp"
 //--------------------------------------------------------------------------------
@@ -61,12 +60,10 @@ int main(int argc, char *argv[])
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     Q_ASSERT(splash);
-    splash->show();
-
-    
+    splash->show();    
 
     MainWindow *main_window = new MainWindow;
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    Q_ASSERT(main_window);
 
     MODBUS_server *mainBox = new MODBUS_server(main_window);
     main_window->setCentralWidget(mainBox);

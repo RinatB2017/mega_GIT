@@ -37,7 +37,6 @@
 #include "helpbrowser.hpp"
 #include "aboutbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "syslog.hpp"
 #include "logbox.hpp"

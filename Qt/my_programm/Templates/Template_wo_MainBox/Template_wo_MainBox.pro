@@ -7,6 +7,8 @@ TARGET   = Template_wo_MainBox
 
 FOLDER  = _Templates
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/newmainwindow
@@ -14,34 +16,9 @@ INCLUDEPATH = $$DEPENDPATH
 
 #QT  += serialbus
 
-#DEFINES += LOGO_GL
-#DEFINES += FIXED_SIZE
-#
-#DEFINES += NO_STYLETOOLBAR
-#DEFINES += NO_STATUSBAR
-DEFINES += NO_TRAYICON
-#DEFINES += NO_TOOLBAR
-DEFINES += SHOW_SIZE
-#DEFINES += NO_MENU
-#DEFINES += NO_LOG
-
-#DEFINES += ONLY_ENGLISH
-
-#DEFINES += LOG_READ_ONLY
-
-#DEFINES += SYSLOG_LOG
-
-#DEFINES += DEMO
-#DEFINES += "DEMO_YEAR=2017"
-#DEFINES += "DEMO_MONTH=9"
-#DEFINES += "DEMO_DAY=9"
-
-DEFINES += PROGRAMM_IN_UTF8
-
 HEADERS += \
     newmainwindow.hpp \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     newmainwindow.cpp \
@@ -73,11 +50,6 @@ greaterThan(QT_MAJOR_VERSION, 4) {
     include ($$LIB_PATH2/serial5/serial5.pri)
 } esle {
     include ($$LIB_PATH2/serial4/serial4.pri)
-}
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
 }
 #----------------------------------------------
 

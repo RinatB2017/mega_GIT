@@ -28,7 +28,6 @@
 
 #include "game.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
@@ -47,7 +46,7 @@ int main(int argc, char *argv[])
 
 #ifdef SINGLE_APP
     MainWindow *main_window = new MainWindow();
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    Q_ASSERT(main_window);
 
     Game *mainBox = new Game(main_window);
     mainBox->setFocusPolicy(Qt::StrongFocus);

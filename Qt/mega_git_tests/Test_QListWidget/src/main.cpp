@@ -29,7 +29,6 @@
 #include "mainwindow.hpp"
 #include "test_QListWidget_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
@@ -66,7 +65,7 @@ int main(int argc, char *argv[])
 
     MainWindow *main_window = new MainWindow;
     Q_ASSERT(main_window);
-    //main_window->setWindowFlags(Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint);
+    Q_ASSERT(main_window);
 
     MainBox *mainBox = new MainBox(main_window, splash);
     Q_ASSERT(mainBox);

@@ -27,7 +27,6 @@
 #include "mainwindow.hpp"
 #include "test_QCustomPlot_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------

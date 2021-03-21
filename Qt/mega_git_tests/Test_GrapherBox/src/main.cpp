@@ -25,7 +25,6 @@
 #include "mainwindow.hpp"
 #include "test_GrapherBox_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------

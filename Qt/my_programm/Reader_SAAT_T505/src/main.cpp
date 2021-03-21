@@ -29,7 +29,6 @@
 #include "mainwindow.hpp"
 #include "reader_saat_t505_mainbox.hpp"
 #include "defines.hpp"
-#include "version.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
@@ -60,9 +59,7 @@ int main(int argc, char *argv[])
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     Q_ASSERT(splash);
 
-    splash->show();
-
-    
+    splash->show();    
 
     MainWindow *main_window = new MainWindow();
 

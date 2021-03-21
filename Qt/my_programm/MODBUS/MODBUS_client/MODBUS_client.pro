@@ -7,34 +7,18 @@ TARGET   = MODBUS_client
 
 FOLDER  = modbus
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 QT  += serialport network
 
-#DEFINES += LOGO_GL
-#DEFINES += FIXED_SIZE
-
-#DEFINES += NO_TESTBAR_GRAPHER
-DEFINES += NO_STYLETOOLBAR
-#DEFINES += NO_STATUSBAR
-DEFINES += NO_TRAYICON
-#DEFINES += NO_TOOLBAR
-#DEFINES += NO_MENU
-#DEFINES += NO_LOG
-
-#DEFINES += ONLY_ENGLISH
-
-#DEFINES += LOG_READ_ONLY
-
-DEFINES += PROGRAMM_IN_UTF8
-
 DEFINES += HEX16
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -60,10 +44,5 @@ include ($$LIB_PATH2/widgets/hexspinbox/hexspinbox.pri)
 QT  += serialbus
 
 include (../lib/MODBUS_client/MODBUS_client.pri)
-
-!exists(/OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 
 VPATH = $$INCLUDEPATH

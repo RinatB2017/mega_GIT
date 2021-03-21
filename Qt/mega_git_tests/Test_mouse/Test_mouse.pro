@@ -15,7 +15,6 @@ INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
     defines.hpp \
-    version.hpp \
     other.hpp
 
 SOURCES += \
@@ -47,10 +46,5 @@ LIB_PATH2 = "$$PWD/../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include (src/test_mouse_mainbox/test_mouse_mainbox.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 #----------------------------------------------
 VPATH = $$INCLUDEPATH

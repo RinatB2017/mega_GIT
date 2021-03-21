@@ -7,6 +7,8 @@ TARGET   = Template_GUI
 
 FOLDER  = _Templates
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
@@ -44,8 +46,7 @@ INCLUDEPATH = $$DEPENDPATH
 DEFINES += PROGRAMM_IN_UTF8
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -69,10 +70,5 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/template_mainbox/template_mainbox.pri)
 include (src/template_mainbox_GUI/template_mainbox_GUI.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 
 VPATH = $$INCLUDEPATH

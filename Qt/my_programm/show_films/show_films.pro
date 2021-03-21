@@ -5,6 +5,8 @@
 TEMPLATE = app
 TARGET   = show_films
 
+include (conf/conf.pri)
+
 DEPENDPATH  += \
     $$PWD/src \
     $$PWD/src/show_films_mainbox \
@@ -14,16 +16,8 @@ DEPENDPATH  += \
 
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += PROGRAMM_IN_UTF8
-
-DEFINES += NO_LOG
-DEFINES += NO_TOOLBAR
-DEFINES += NO_STYLETOOLBAR
-DEFINES += NO_TRAYICON
-
 HEADERS += \
     defines.hpp \
-    version.hpp \
     show_films_mainbox.hpp \
     treefilms.hpp
 
@@ -47,11 +41,6 @@ LIB_PATH2 = "$$PWD/../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
-
-!exists(OBJECTS_DIR) {
-    VERSION_HEADER = $$PWD/src/version.hpp
-    include ($$LIB_PATH/auto_inc_version.pri)
-}
 
 include (resources.pri)
 

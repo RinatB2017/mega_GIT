@@ -12,8 +12,7 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     main.cpp
@@ -24,11 +23,6 @@ win32 {
 
 LIB_PATH  = "$$PWD/../../../lib"
 LIB_PATH2 = "$$PWD/../../../lib2"
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/ethernet/udp_client/udp_client.pri)

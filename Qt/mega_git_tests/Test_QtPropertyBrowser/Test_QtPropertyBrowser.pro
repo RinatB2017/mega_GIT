@@ -17,8 +17,7 @@ INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
     test_QtPropertyBrowser_mainbox.hpp \
-    defines.hpp \
-    version.hpp
+    defines.hpp
 
 SOURCES += \
     test_QtPropertyBrowser_mainbox.cpp \
@@ -38,10 +37,5 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include ($$LIB_PATH2/QtPropertyBrowser/qtpropertybrowser.pri)
-
-#!exists(OBJECTS_DIR) {
-#    VERSION_HEADER = $$PWD/src/version.hpp
-#    include ($$LIB_PATH/auto_inc_version.pri)
-#}
 
 VPATH = $$INCLUDEPATH

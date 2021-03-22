@@ -139,6 +139,7 @@ void MainBox::createTestBar(void)
 
     commands.clear(); int id = 0;
     commands.append({ id++, "test",                 &MainBox::test });
+    commands.append({ id++, "test2",                &MainBox::test2 });
     commands.append({ id++, "load QSS",             &MainBox::load_qss });
     commands.append({ id++, "Theme (Windows).css",  &MainBox::set_theme_windows });
     commands.append({ id++, "Norton Commander.qss", &MainBox::set_norton_commander });
@@ -282,9 +283,82 @@ void MainBox::test_function(int delay)
 //#include "qyuvopenglwidget.h"
 //#include <QUiLoader>
 
+#include "grapherbox.hpp"
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 1
+    int s = 32;
+
+    QPixmap *pixmap = new QPixmap(s, s);
+    QPainter p;
+    p.begin(pixmap);
+    p.setBrush(QBrush(Qt::red));
+    p.drawEllipse(0, 0, s, s);
+    p.end();
+
+    QIcon icon(*pixmap);
+
+    QToolButton *btn = new QToolButton();
+    btn->setMinimumSize(s, s);
+    btn->setIcon(icon);
+    btn->setCheckable(true);
+    btn->show();
+#endif
+
+#if 0
+    MyFileDialog *dlg = new MyFileDialog("MainBox", "MainBox", this);
+    dlg->setNameFilter("PNG files (*.png)");
+    dlg->setDefaultSuffix("png");
+    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
+    int btn = dlg->exec();
+    if(btn == MyFileDialog::Accepted)
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        QPixmap *pixmap = new QPixmap();
+        bool ok = pixmap->load(filename);
+        if(ok)
+        {
+            QLabel *label = new QLabel();
+            label->setPixmap(*pixmap);
+            label->show();
+
+            int buf[360] = { 0 };
+
+            QImage image;
+            image = pixmap->toImage();
+            int w = image.width();
+            int h = image.height();
+            for(int y=0; y<h; y++)
+            {
+                for(int x=0; x<w; x++)
+                {
+                    QColor color = image.pixelColor(x, y);
+                    int h_v;
+                    int s_v;
+                    int v_v;
+                    color.getHsv(&h_v, &s_v, &v_v);
+                    buf[h_v]++;
+                }
+            }
+            GrapherBox *gb = new GrapherBox();
+            int curve = gb->add_curve("Hue");
+            for(int n=0;n<360; n++)
+            {
+                gb->add_curve_data(curve, n, buf[n]);
+            }
+            gb->setMinimumSize(1024, 300);
+            gb->push_btn_Horizontal(true);
+            gb->push_btn_Vertical(true);
+            gb->show();
+        }
+    }
+    delete dlg;
+#endif
 
 #if 0
     lock_this_button();
@@ -364,9 +438,21 @@ bool MainBox::test(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test2(void)
+bool MainBox::test2(void)
 {
-    emit info("YES");
+    const QWidgetList allWidgets = QApplication::allWidgets();
+    for (QWidget *widget : allWidgets)
+    {
+        MyWidget *mw = reinterpret_cast<MyWidget *>(widget);
+        if(mw)
+        {
+            if(widget->objectName().isEmpty())
+            {
+                emit info("objectName is empty");
+            }
+        }
+    }
+    return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f1(int value)

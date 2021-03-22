@@ -54,6 +54,18 @@ MyWidget::MyWidget(QWidget *parent) :
     sl_properties_of_widgets.append("currentIndex");
 
     setAttribute(Qt::WA_DeleteOnClose);
+
+#if 0
+    QTimer::singleShot(100, [this]{
+        //TODO контроль за objectName
+        QString oname = objectName();
+        if(oname.isEmpty())
+        {
+            qDebug() << "objectname is empty";
+        }
+        Q_ASSERT(!objectName().isEmpty());
+    });
+#endif
 }
 //--------------------------------------------------------------------------------
 MyWidget::~MyWidget()

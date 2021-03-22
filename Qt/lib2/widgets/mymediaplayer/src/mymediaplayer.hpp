@@ -43,6 +43,8 @@ public:
     explicit MyMediaPlayer(QWidget *parent = nullptr);
     ~MyMediaPlayer();
 
+    void test(void);
+
 private:
     Ui::MyMediaPlayer *ui;
 
@@ -61,6 +63,12 @@ private:
     void prev(void);
     void next(void);
     void last(void);
+
+    void prev_frame(void);
+    void next_frame(void);
+
+    void lock_buttons(void);
+    void unlock_buttons(void);
 
     void set_position(int pos);
     void durationChanged(qint64 pos);

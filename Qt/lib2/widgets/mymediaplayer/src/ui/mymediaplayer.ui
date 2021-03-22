@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>MyMediaPlayer</class>
  <widget class="QWidget" name="MyMediaPlayer">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>554</width>
-    <height>33</height>
-   </rect>
-  </property>
   <property name="sizePolicy">
    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
     <horstretch>0</horstretch>
@@ -107,6 +99,20 @@
       </widget>
      </item>
      <item>
+      <widget class="QToolButton" name="btn_prev_frame">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="btn_next_frame">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QToolButton" name="btn_next">
        <property name="text">
         <string>...</string>
@@ -133,6 +139,8 @@
   <tabstop>te_position</tabstop>
   <tabstop>btn_first</tabstop>
   <tabstop>btn_prev</tabstop>
+  <tabstop>btn_prev_frame</tabstop>
+  <tabstop>btn_next_frame</tabstop>
   <tabstop>btn_next</tabstop>
   <tabstop>btn_last</tabstop>
  </tabstops>

@@ -52,6 +52,9 @@ void MyMediaPlayer::init(void)
     ui->btn_pause->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPause));
     ui->btn_stop->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaStop));
 
+    ui->btn_prev_frame->setIcon(qApp->style()->standardIcon(QStyle::SP_ArrowBack));
+    ui->btn_next_frame->setIcon(qApp->style()->standardIcon(QStyle::SP_ArrowForward));
+
     ui->btn_first->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSkipBackward));
     ui->btn_prev->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekBackward));
     ui->btn_next->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekForward));
@@ -67,6 +70,9 @@ void MyMediaPlayer::init(void)
     connect(ui->btn_pause,  &QToolButton::clicked,  this,   &MyMediaPlayer::pause);
     connect(ui->btn_stop,   &QToolButton::clicked,  this,   &MyMediaPlayer::stop);
 
+    connect(ui->btn_prev_frame, &QToolButton::clicked,  this,   &MyMediaPlayer::prev_frame);
+    connect(ui->btn_next_frame, &QToolButton::clicked,  this,   &MyMediaPlayer::next_frame);
+
     connect(player,         &QMediaPlayer::durationChanged, this,           &MyMediaPlayer::durationChanged);
     connect(player,         &QMediaPlayer::positionChanged, this,           &MyMediaPlayer::positionChanged);
     connect(player,         &QMediaPlayer::positionChanged, ui->sl_movie,   &QSlider::setValue);
@@ -74,8 +80,35 @@ void MyMediaPlayer::init(void)
 
     connect(ui->te_position,    &QTimeEdit::timeChanged,    this,           &MyMediaPlayer::timeChanged);
 
+    lock_buttons();
+}
+//--------------------------------------------------------------------------------
+void MyMediaPlayer::lock_buttons(void)
+{
     ui->btn_start->setEnabled(true);
     ui->btn_stop->setEnabled(false);
+    ui->btn_pause->setEnabled(false);
+
+    ui->btn_first->setEnabled(false);
+    ui->btn_last->setEnabled(false);
+    ui->btn_next->setEnabled(false);
+    ui->btn_prev->setEnabled(false);
+    ui->btn_prev_frame->setEnabled(false);
+    ui->btn_next_frame->setEnabled(false);
+}
+//--------------------------------------------------------------------------------
+void MyMediaPlayer::unlock_buttons(void)
+{
+    ui->btn_start->setEnabled(false);
+    ui->btn_stop->setEnabled(true);
+    ui->btn_pause->setEnabled(true);
+
+    ui->btn_first->setEnabled(true);
+    ui->btn_last->setEnabled(true);
+    ui->btn_next->setEnabled(true);
+    ui->btn_prev->setEnabled(true);
+    ui->btn_prev_frame->setEnabled(true);
+    ui->btn_next_frame->setEnabled(true);
 }
 //--------------------------------------------------------------------------------
 void MyMediaPlayer::processFrame(const QVideoFrame &frame)
@@ -156,9 +189,7 @@ void MyMediaPlayer::load(void)
 void MyMediaPlayer::start(void)
 {
     player->play();
-
-    ui->btn_start->setEnabled(false);
-    ui->btn_stop->setEnabled(true);
+    unlock_buttons();
 }
 //--------------------------------------------------------------------------------
 void MyMediaPlayer::pause(void)
@@ -169,9 +200,7 @@ void MyMediaPlayer::pause(void)
 void MyMediaPlayer::stop(void)
 {
     player->stop();
-
-    ui->btn_start->setEnabled(true);
-    ui->btn_stop->setEnabled(false);
+    lock_buttons();
 }
 //--------------------------------------------------------------------------------
 void MyMediaPlayer::first(void)
@@ -206,6 +235,31 @@ void MyMediaPlayer::set_position(int pos)
 void MyMediaPlayer::last(void)
 {
     player->setPosition(player->duration());
+}
+//--------------------------------------------------------------------------------
+void MyMediaPlayer::test(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MyMediaPlayer::prev_frame(void)
+{
+    qint64 pos = player->position();
+    emit info(QString("%1")
+              .arg(pos));
+    pos += 1;
+    player->setPosition(pos);   //TODO msec
+    player->pause();
+}
+//--------------------------------------------------------------------------------
+void MyMediaPlayer::next_frame(void)
+{
+    qint64 pos = player->position();
+    emit info(QString("%1")
+              .arg(pos));
+    pos -= 1;
+    player->setPosition(pos);   //TODO msec
+    player->pause();
 }
 //--------------------------------------------------------------------------------
 void MyMediaPlayer::updateText(void)

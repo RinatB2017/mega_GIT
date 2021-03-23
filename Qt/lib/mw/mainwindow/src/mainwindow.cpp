@@ -1075,6 +1075,7 @@ bool MainWindow::add_action(QMenu *menu,
         if(pos == pos_y)
         {
             menu->insertAction(current_action, action);
+            app_actions.append(current_action);
             return true;
         }
         pos++;
@@ -1102,6 +1103,7 @@ bool MainWindow::add_filemenu_action(int pos_y,
         if(pos == pos_y)
         {
             m_app_filemenu->insertAction(current_action, action);
+            app_actions.append(action);
             return true;
         }
         pos++;
@@ -1129,6 +1131,7 @@ bool MainWindow::add_optionsmenu_action(int pos_y,
         if(pos == pos_y)
         {
             m_app_optionsmenu->insertAction(current_action, action);
+            app_actions.append(current_action);
             return true;
         }
         pos++;

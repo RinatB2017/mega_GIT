@@ -36,6 +36,7 @@ public:
     ~Show_HSV_color();
 
     void set_color(QColor color);
+    QColor get_color(void);
 
 private:
     Ui::Show_HSV_color *ui;

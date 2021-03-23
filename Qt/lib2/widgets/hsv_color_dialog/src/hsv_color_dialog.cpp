@@ -18,31 +18,28 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QPainter>
-#include "color_widget.hpp"
+#include "hsv_color_dialog.hpp"
+#include "ui_hsv_color_dialog.h"
 //--------------------------------------------------------------------------------
-Color_widget::Color_widget(QWidget *parent) :
-    QWidget(parent)
+HSV_color_dialog::HSV_color_dialog(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::HSV_color_dialog)
 {
-
+    ui->setupUi(this);
 }
 //--------------------------------------------------------------------------------
-void Color_widget::set_color(QColor color)
+HSV_color_dialog::~HSV_color_dialog()
 {
-    current_color = color;
-    update();
+    delete ui;
 }
 //--------------------------------------------------------------------------------
-QColor Color_widget::get_color(void)
+void HSV_color_dialog::set_color(QColor color)
 {
-    return current_color;
+    ui->HSV_widget->set_color(color);
 }
 //--------------------------------------------------------------------------------
-void Color_widget::paintEvent(QPaintEvent *)
+QColor HSV_color_dialog::get_color(void)
 {
-    QPainter painter(this);
-    painter.setPen(QPen(Qt::black));
-    painter.setBrush(QBrush(current_color));
-    painter.fillRect(0, 0, width(), height(), current_color);
+    return ui->HSV_widget->get_color();
 }
 //--------------------------------------------------------------------------------

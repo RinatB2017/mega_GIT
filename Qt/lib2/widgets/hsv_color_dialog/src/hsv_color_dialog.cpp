@@ -26,6 +26,8 @@ HSV_color_dialog::HSV_color_dialog(QWidget *parent) :
     ui(new Ui::HSV_color_dialog)
 {
     ui->setupUi(this);
+
+    setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
 HSV_color_dialog::~HSV_color_dialog()

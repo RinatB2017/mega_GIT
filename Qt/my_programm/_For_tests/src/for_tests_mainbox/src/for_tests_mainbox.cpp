@@ -440,6 +440,28 @@ bool MainBox::test(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test2(void)
 {
+#if 1
+    int size = 5;
+    QPixmap *pixmap = new QPixmap(size,
+                                  size);
+    pixmap->fill(Qt::transparent);
+    QPainter p;
+    p.begin(pixmap);
+    p.setPen(QPen(Qt::white));
+    p.setBrush(QBrush(Qt::blue));
+    p.drawEllipse(0, 0, pixmap->width() - 1, pixmap->height() - 1);
+    p.drawRect(0, 0, pixmap->width() - 1, pixmap->height() - 1);
+    p.end();
+    QCursor cursor(*pixmap);
+
+    MainBox *mainBox = topLevelWidget()->findChild<MainBox *>();
+    if(mainBox)
+    {
+        mainBox->setCursor(cursor);
+    }
+#endif
+
+#if 0
     const QWidgetList allWidgets = QApplication::allWidgets();
     for (QWidget *widget : allWidgets)
     {
@@ -452,6 +474,7 @@ bool MainBox::test2(void)
             }
         }
     }
+#endif
     return true;
 }
 //--------------------------------------------------------------------------------

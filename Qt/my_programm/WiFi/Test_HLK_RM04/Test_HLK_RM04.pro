@@ -15,7 +15,7 @@ DEPENDPATH  += \
     $$PWD/src/test_HLK_RM04_mainbox/ui
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += SAVE_INI
+#DEFINES += SAVE_INI
 
 QT      += serialport
 

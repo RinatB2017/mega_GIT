@@ -15,7 +15,7 @@ INCLUDEPATH = $$DEPENDPATH
 
 QT  += webenginewidgets
 
-DEFINES += SAVE_INI
+#DEFINES += SAVE_INI
 
 HEADERS += \
     walkers.hpp \

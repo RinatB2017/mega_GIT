@@ -290,6 +290,35 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    int s = 300;
+    QPixmap *pixmap = new QPixmap(s, s);
+    QPainter p;
+    p.begin(pixmap);
+    p.fillRect(0,0, s, s, Qt::black);
+
+    qreal xxx = 200.0;
+    qreal center_x = xxx;
+    qreal center_y = xxx;
+    QColor color;
+    qreal v = 0;
+    for(qreal r=0; r<xxx; r+=0.1)
+    {
+        color.setHsv(287, 200, v);;
+        v+=0.12;
+        p.setPen(QPen(color));
+        p.drawEllipse(center_x - r,
+                      center_y - r,
+                      r,
+                      r);
+    }
+    p.end();
+
+    QLabel *label = new QLabel();
+    label->setPixmap(*pixmap);
+    label->show();
+#endif
+
+#if 0
     int s = 32;
 
     QPixmap *pixmap = new QPixmap(s, s);

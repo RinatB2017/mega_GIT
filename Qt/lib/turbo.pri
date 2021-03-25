@@ -104,15 +104,15 @@ unix:!macx {
 }
 ###############################################################################
 # ccache в винде нет, проверю, может это поможет
-win32 {
-    CONFIG	 += precompile_header
-    PRECOMPILED_HEADER  = stable.h
+#win32 {
+#    CONFIG	 += precompile_header
+#    PRECOMPILED_HEADER  = stable.h
 
-    HEADERS += stable.h
-    precompile_header:!isEmpty(PRECOMPILED_HEADER) {
-        DEFINES += USING_PCH
-    }
-}
+#    HEADERS += stable.h
+#    precompile_header:!isEmpty(PRECOMPILED_HEADER) {
+#        DEFINES += USING_PCH
+#    }
+#}
 ###############################################################################
 #
 # не факт, что это правильно будет в будущем

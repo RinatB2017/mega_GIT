@@ -21,6 +21,7 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include "color_widget.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -75,6 +76,8 @@ private:
     void createTestBar(void);
 
     bool load_picture(QString fileName);
+
+    void show_only_color(QSpinBox *min_value, QSpinBox *max_value);
 
     void updateText(void);
     bool programm_is_exit(void);

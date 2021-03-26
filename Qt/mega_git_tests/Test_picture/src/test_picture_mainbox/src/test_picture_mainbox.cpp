@@ -60,16 +60,31 @@ void MainBox::init(void)
     ui->grapher_widget->set_visible_btn_Statistic(false);
     ui->grapher_widget->set_visible_btn_Options(false);
 
+    ui->sb_R_min->setRange(0, 359);
+    ui->sb_R_max->setRange(0, 359);
+    ui->sb_G_min->setRange(0, 359);
+    ui->sb_G_max->setRange(0, 359);
+    ui->sb_B_min->setRange(0, 359);
+    ui->sb_B_max->setRange(0, 359);
+
+    //TODO находим и НЕ показываем лишнее
+    Color_widget *widget = findChild<Color_widget *>();
+    if(widget)
+    {
+        widget->setVisible(false);
+    }
+    //---
+
     grapher_curve = ui->grapher_widget->add_curve("data");
     emit debug(QString("grapher_curve %1").arg(grapher_curve));
 
-    connect(ui->btn_load_picture,   SIGNAL(clicked(bool)),  this,   SLOT(load_picture()));
-    connect(ui->btn_find_max_color, SIGNAL(clicked(bool)),  this,   SLOT(find_max_color()));
-    connect(ui->btn_redraw_picture, SIGNAL(clicked(bool)),  this,   SLOT(redraw_picture()));
+    connect(ui->btn_load_picture,   &QPushButton::clicked,  this,   static_cast<void (MainBox::*)(void)>(&MainBox::load_picture));
+    connect(ui->btn_find_max_color, &QPushButton::clicked,  this,   &MainBox::find_max_color);
+    connect(ui->btn_redraw_picture, &QPushButton::clicked,  this,   &MainBox::redraw_picture);
 
-    connect(ui->btn_show_only_R,    SIGNAL(clicked(bool)),  this,   SLOT(show_only_R()));
-    connect(ui->btn_show_only_G,    SIGNAL(clicked(bool)),  this,   SLOT(show_only_G()));
-    connect(ui->btn_show_only_B,    SIGNAL(clicked(bool)),  this,   SLOT(show_only_B()));
+    connect(ui->btn_show_only_R,    &QPushButton::clicked,  this,   &MainBox::show_only_R);
+    connect(ui->btn_show_only_G,    &QPushButton::clicked,  this,   &MainBox::show_only_G);
+    connect(ui->btn_show_only_B,    &QPushButton::clicked,  this,   &MainBox::show_only_B);
 
     load_widgets();
 }
@@ -282,7 +297,7 @@ void MainBox::redraw_picture(void)
     ui->new_picture->setPixmap(QPixmap::fromImage(tmp));
 }
 //--------------------------------------------------------------------------------
-void MainBox::show_only_R(void)
+void MainBox::show_only_color(QSpinBox *min_value, QSpinBox *max_value)
 {
     if(picture.isNull())
     {
@@ -311,6 +326,18 @@ void MainBox::show_only_R(void)
 
             QRgb color = picture.toImage().pixel(x, y);
 
+#if 1
+            int h;
+            int s;
+            int v;
+            QColor t_color = color;
+            t_color.getHsv(&h, &s, &v);
+            if((h>=min_value->value()) && (h<=max_value->value()))
+            {
+                v = 0;
+            }
+            tmp.setPixelColor(x, y, QColor::fromHsv(h, s, v));
+#else
             int color_R = qRed(color);
             int color_G = qGreen(color);
             int color_B = qBlue(color);
@@ -322,6 +349,70 @@ void MainBox::show_only_R(void)
             {
                 tmp.setPixelColor(x, y, Qt::white);
             }
+#endif
+        }
+    }
+    pd->close();
+    pd->deleteLater();
+
+    ui->new_picture->setPixmap(QPixmap::fromImage(tmp));
+}
+//--------------------------------------------------------------------------------
+void MainBox::show_only_R(void)
+{
+    //show_only_color(ui->sb_R_min, ui->sb_R_max);
+
+    if(picture.isNull())
+    {
+        emit error("picture is null!");
+        return;
+    }
+
+    int max_x = picture.width();
+    int max_y = picture.height();
+    int max_cnt = max_x * max_y;
+    int cnt = 0;
+
+    QImage tmp = picture.toImage();
+
+    QProgressDialog *pd = new QProgressDialog("Operation in progress.", "Cancel", 0, max_cnt);
+    pd->setWindowModality(Qt::WindowModal);
+    for(int y=0; y<max_y; y++)
+    {
+        for(int x=0; x<max_x; x++)
+        {
+            pd->setValue(cnt++);
+            if(pd->wasCanceled())
+            {
+                break;
+            }
+
+            QRgb color = picture.toImage().pixel(x, y);
+
+#if 1
+            int h;
+            int s;
+            int v;
+            QColor t_color = color;
+            t_color.getHsv(&h, &s, &v);
+            if((h>=ui->sb_R_min->value()) && (h<=ui->sb_R_max->value()))
+            {
+                v = 0;
+            }
+            tmp.setPixelColor(x, y, QColor::fromHsv(h, s, v));
+#else
+            int color_R = qRed(color);
+            int color_G = qGreen(color);
+            int color_B = qBlue(color);
+            if((color_R > color_G) && (color_R > color_B))
+            {
+                tmp.setPixel(x, y, color);
+            }
+            else
+            {
+                tmp.setPixelColor(x, y, Qt::white);
+            }
+#endif
         }
     }
     pd->close();
@@ -359,6 +450,18 @@ void MainBox::show_only_G(void)
 
             QRgb color = picture.toImage().pixel(x, y);
 
+#if 1
+            int h;
+            int s;
+            int v;
+            QColor t_color = color;
+            t_color.getHsv(&h, &s, &v);
+            if((h>=ui->sb_G_min->value()) && (h<=ui->sb_G_max->value()))
+            {
+                v = 0;
+            }
+            tmp.setPixelColor(x, y, QColor::fromHsv(h, s, v));
+#else
             int color_R = qRed(color);
             int color_G = qGreen(color);
             int color_B = qBlue(color);
@@ -370,6 +473,7 @@ void MainBox::show_only_G(void)
             {
                 tmp.setPixelColor(x, y, Qt::white);
             }
+#endif
         }
     }
     pd->close();
@@ -407,6 +511,18 @@ void MainBox::show_only_B(void)
 
             QRgb color = picture.toImage().pixel(x, y);
 
+#if 1
+            int h;
+            int s;
+            int v;
+            QColor t_color = color;
+            t_color.getHsv(&h, &s, &v);
+            if((h>=ui->sb_B_min->value()) && (h<=ui->sb_B_max->value()))
+            {
+                v = 0;
+            }
+            tmp.setPixelColor(x, y, QColor::fromHsv(h, s, v));
+#else
             int color_R = qRed(color);
             int color_G = qGreen(color);
             int color_B = qBlue(color);
@@ -418,6 +534,7 @@ void MainBox::show_only_B(void)
             {
                 tmp.setPixelColor(x, y, Qt::white);
             }
+#endif
         }
     }
     pd->close();

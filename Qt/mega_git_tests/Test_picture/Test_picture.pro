@@ -38,6 +38,8 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
+include ($$LIB_PATH2/widgets/show_hsv_color/show_hsv_color.pri)
+include ($$LIB_PATH2/widgets/color_widget/color_widget.pri)
 
 include (src/test_picture_mainbox/test_picture_mainbox.pri)
 

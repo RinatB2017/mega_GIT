@@ -5,10 +5,10 @@ HexSpinBox::HexSpinBox(QWidget *parent)
     : QSpinBox(parent)
 {
 #ifdef HEX16
-    setRange(0,0xFFFF);
+    setRange(0, 0xFFFF);
     validator = new QRegExpValidator(QRegExp(QLatin1String("[0-9A-Fa-f]{1,4}")), this);
 #else
-    setRange(0,0xFF);
+    setRange(0, 0xFF);
     validator = new QRegExpValidator(QRegExp(QLatin1String("[0-9A-Fa-f]{1,2}")), this);
 #endif
 }

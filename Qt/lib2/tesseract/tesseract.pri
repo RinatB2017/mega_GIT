@@ -25,7 +25,9 @@ win32 {
     CONFIG(debug, debug|release) {
         LIBS += $$PWD/lib/libtesseractd.lib
     } else {
-        LIBS += $$PWD/lib/libtesseract.lib
+        PRE_TARGETDEPS += $$PWD/lib/libtesseract.lib
+#        LIBS += $$PWD/lib/libtesseract.lib
+#        $$PWD/lib/libtesseract.lib
     }
 }
 

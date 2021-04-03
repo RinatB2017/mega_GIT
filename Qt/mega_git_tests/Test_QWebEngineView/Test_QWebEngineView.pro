@@ -13,8 +13,6 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += USE_CUSTOMPAGE
-
 HEADERS += \
     defines.hpp
 

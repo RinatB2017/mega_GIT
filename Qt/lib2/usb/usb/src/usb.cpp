@@ -68,11 +68,13 @@ bool Usb::f_open(uint16_t vid, uint16_t pid)
     if (handle == nullptr)
     {
         emit error("Устройство не подключено");
+        emit is_opened(false);
         return false;
     }
     else
     {
         emit info("Устройство найдено");
+        emit is_opened(true);
     }
     return true;
 }
@@ -82,6 +84,7 @@ bool Usb::f_read(void)
     if(handle == nullptr)
     {
         emit error("Device not open!");
+        emit is_opened(false);
         return false;
     }
 
@@ -111,6 +114,7 @@ bool Usb::f_write(void)
     if(handle == nullptr)
     {
         emit error("Device not open!");
+        emit is_opened(false);
         return false;
     }
 
@@ -168,6 +172,7 @@ bool Usb::f_close(void)
     libusb_close(handle);
     handle = nullptr;
     ctx = nullptr;
+    emit is_opened(false);
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -178,6 +183,7 @@ bool Usb::f_send_cmd(uint8_t cmd,
     if(handle == nullptr)
     {
         emit error("Device not open!");
+        emit is_opened(false);
         return false;
     }
 
@@ -239,6 +245,7 @@ void Usb::print_info(void)
     if(handle == nullptr)
     {
         emit error("Device not open!");
+        emit is_opened(false);
         return;
     }
 

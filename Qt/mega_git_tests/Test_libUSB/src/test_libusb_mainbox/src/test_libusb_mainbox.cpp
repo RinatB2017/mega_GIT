@@ -64,6 +64,14 @@ void MainBox::init(void)
     connect(ui->btn_write,  &QToolButton::clicked,  this,   &MainBox::s_write);
     connect(ui->btn_close,  &QToolButton::clicked,  this,   &MainBox::s_close);
 
+    connect(this,   &Usb::is_opened,    ui->btn_info,   &QPushButton::setEnabled);
+    connect(this,   &Usb::is_opened,    ui->btn_read,   &QPushButton::setEnabled);
+    connect(this,   &Usb::is_opened,    ui->btn_write,  &QPushButton::setEnabled);
+
+    ui->btn_info->setEnabled(false);
+    ui->btn_read->setEnabled(false);
+    ui->btn_write->setEnabled(false);
+
     load_widgets();
 }
 //--------------------------------------------------------------------------------

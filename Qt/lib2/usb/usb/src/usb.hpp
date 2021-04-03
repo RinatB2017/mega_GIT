@@ -51,6 +51,9 @@ class Usb : public MyWidget
 {
     Q_OBJECT
 
+signals:
+    void is_opened(bool);
+
 public:
     explicit Usb(QWidget *parent = nullptr);
     ~Usb();

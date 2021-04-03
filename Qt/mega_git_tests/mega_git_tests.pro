@@ -91,7 +91,7 @@ SUBDIRS += \
     $$PWD/Test_Qt3D \
     $$PWD/Tests_QtPlot3D \
     $$PWD/Test_QScintilla \
-    $$PWD/Test_LibVLC \
+    $$PWD/Test_libVLC \
     $$PWD/Test_NeuronNet \
     $$PWD/Test_PGP \
     $$PWD/Test_syslog \

@@ -3,7 +3,7 @@
 #**********************************************************************************
 
 TEMPLATE = app
-TARGET   = Test_LibVLC
+TARGET   = Test_libVLC
 
 FOLDER  = tests
 

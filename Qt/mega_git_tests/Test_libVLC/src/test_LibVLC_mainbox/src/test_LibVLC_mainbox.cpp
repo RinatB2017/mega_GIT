@@ -58,9 +58,9 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
-#ifdef QT_DEBUG
+//#ifdef QT_DEBUG
     createTestBar();
-#endif
+//#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -93,7 +93,7 @@ void MainBox::test(void)
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Image"),
                                                     ".",
-                                                    tr("Video Files (*.avi *.mpg *.mov)"));
+                                                    tr("Video Files (*.avi *.mpg *.mov *.mp4 *.mkv)"));
 
     if(fileName.isEmpty())
     {

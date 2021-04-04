@@ -26,6 +26,11 @@
 #ifndef VLC_LIBVLC_MEDIA_H
 #define VLC_LIBVLC_MEDIA_H 1
 
+//---
+#include <stddef.h>
+#include <BaseTsd.h>
+//---
+
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -365,7 +370,7 @@ typedef int (*libvlc_media_open_cb)(void *opaque, void **datap,
  * In particular, the callback should return an error if playback is stopped;
  * if it does not return, then libvlc_media_player_stop() will never return.
  */
-typedef ssize_t (*libvlc_media_read_cb)(void *opaque, unsigned char *buf,
+typedef SSIZE_T (*libvlc_media_read_cb)(void *opaque, unsigned char *buf,
                                         size_t len);
 
 /**

@@ -29,7 +29,7 @@ win32 {
     include (src/vlc/vlc.pri)
 
     LIBS    += -L$$PWD/lib
-    LIBS    += -lvlc
+    LIBS    += -llibvlc
 }
 
 win32 {
@@ -39,7 +39,6 @@ win32 {
 LIB_PATH = "$$PWD/../../../Qt/lib"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-
 include (src/test_LibVLC_mainbox/test_LibVLC_mainbox.pri)
 
 VPATH = $$INCLUDEPATH

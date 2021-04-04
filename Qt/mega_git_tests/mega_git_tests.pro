@@ -53,6 +53,7 @@ SUBDIRS += \
     $$PWD/Test_SerialBox5 \
     $$PWD/Test_SerialTerm \
     $$PWD/Test_libUSB \
+    $$PWD/Test_libVLC \
     $$PWD/Test_model \
     $$PWD/Test_pixmap \
     $$PWD/Test_Polar \
@@ -91,7 +92,6 @@ SUBDIRS += \
     $$PWD/Test_Qt3D \
     $$PWD/Tests_QtPlot3D \
     $$PWD/Test_QScintilla \
-    $$PWD/Test_libVLC \
     $$PWD/Test_NeuronNet \
     $$PWD/Test_PGP \
     $$PWD/Test_syslog \

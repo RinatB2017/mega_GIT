@@ -13,9 +13,6 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += RS232_SEND
-DEFINES += RS232_LOG
-
 HEADERS += \
     defines.hpp
 

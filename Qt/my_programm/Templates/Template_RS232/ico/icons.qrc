@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/ico">
         <file>computer.ico</file>
+        <file>RS232.ico</file>
+	<file>RS232.png</file>
     </qresource>
 </RCC>

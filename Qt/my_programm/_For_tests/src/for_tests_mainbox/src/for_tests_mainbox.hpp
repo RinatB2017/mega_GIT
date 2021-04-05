@@ -78,6 +78,11 @@ public slots:
     bool test2(void);
     bool load_qss(void);
 
+    void xxx(void)
+    {
+        fail();
+    }
+
     void print_mp(QWidget *widget);
 
     //TODO здесь только для теста

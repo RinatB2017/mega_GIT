@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>455</width>
-    <height>332</height>
+    <height>334</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
@@ -61,8 +61,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>407</width>
-               <height>84</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -78,8 +78,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>407</width>
-               <height>84</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -95,8 +95,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>407</width>
-               <height>84</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -113,7 +113,7 @@
                <x>0</x>
                <y>0</y>
                <width>407</width>
-               <height>84</height>
+               <height>86</height>
               </rect>
              </property>
              <attribute name="icon">

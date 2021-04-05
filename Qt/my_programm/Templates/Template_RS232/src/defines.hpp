@@ -39,6 +39,6 @@
 #define VER_ORIGINALFILENAME_STR    APPNAME
 #define VER_PRODUCTNAME_STR         APPNAME
 //--------------------------------------------------------------------------------
-#define ICON_PROGRAMM   ":/mainwindow/computer.png"
+#define ICON_PROGRAMM   ":/ico/RS232.png"
 //--------------------------------------------------------------------------------
 #endif

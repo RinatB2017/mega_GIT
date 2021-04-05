@@ -13,11 +13,6 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-DEFINES += RS232_SEND
-DEFINES += RS232_LOG
-
-#DEFINES += SAVE_INI
-
 HEADERS += \
     defines.hpp
 
@@ -25,12 +20,12 @@ SOURCES += \
     main.cpp
 
 win32 {
-    RC_ICONS = ico/computer.ico
+    RC_ICONS = ico/RS232.ico
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win
 RESOURCES += \
-    images/images.qrc
+    ico/icons.qrc
 
 OTHER_FILES += doc/notebook.txt
 

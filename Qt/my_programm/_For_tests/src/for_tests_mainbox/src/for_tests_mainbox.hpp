@@ -57,13 +57,59 @@ public:
     }
 };
 //--------------------------------------------------------------------------------
+class Code
+{
+public:
+    Code()
+    {
+//        mb = qApp->findChild<MainBox *>();
+//        Q_ASSERT(mb);
+    }
+
+    void xxx()
+    {
+        qDebug() << "xxx";
+//        mb->info("Code");
+    }
+
+private:
+    MainBox *mb = nullptr;
+};
+
+class Code_G : public Code
+{
+public:
+    Code_G()
+    {
+
+    }
+
+    void G000(void)
+    {
+        xxx();
+    }
+};
+class Code_M : public Code
+{
+public:
+    Code_M()
+    {
+
+    }
+
+    void M000(void)
+    {
+        xxx();
+    }
+};
+//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 //--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class MainBox : public MyWidget, public Code_G, public Code_M
 {
     Q_OBJECT
 

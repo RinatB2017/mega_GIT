@@ -290,6 +290,11 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    G000();
+    M000();
+#endif
+
+#if 0
     int s = 300;
     QPixmap *pixmap = new QPixmap(s, s);
     QPainter p;

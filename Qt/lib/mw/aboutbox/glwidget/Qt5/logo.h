@@ -51,7 +51,7 @@
 #ifndef LOGO_H
 #define LOGO_H
 
-#include <qopengl.h"
+#include <qopengl.h>
 #include <QVector>
 #include <QVector3D>
 

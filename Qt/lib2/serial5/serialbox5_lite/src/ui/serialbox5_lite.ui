@@ -2,7 +2,15 @@
 <ui version="4.0">
  <class>SerialBox5_lite</class>
  <widget class="QWidget" name="SerialBox5_lite">
-  <layout class="QVBoxLayout" name="verticalLayout_4">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>273</width>
+    <height>72</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="main_layout">
    <item>
     <widget class="QFrame" name="frame">
      <property name="frameShape">

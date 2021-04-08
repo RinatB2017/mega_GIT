@@ -93,16 +93,13 @@ void SerialBox5_lite::init(void)
     createWidgets();
     initEnumerator();
     initSerial();
+
+    ui->PortBox->setMinimumWidth(150);
+    ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
+
 #ifdef RS232_FIXED_SIZE
     setFixedSize(sizeHint());
 #endif
-
-    ui->PortBox->setMinimumWidth(150);
-
-    ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
-
-    //setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    setFixedWidth(sizeHint().width());
 
     setCloseState();
     updateText();

@@ -289,9 +289,19 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
-    G000();
-    M000();
+#if 0
+    QString name = QFileDialog::getSaveFileName(0, "Create Project File", "/Users/igor/Documents/Gro3.prj");
+#endif
+
+#if 0
+    QFileDialog *dlg = new QFileDialog();
+    dlg->setWindowTitle("Create Project File");
+    dlg->selectFile("/Users/igor/Documents/Gro3.prj");
+    int res = dlg->exec();
+    if(res == QFileDialog::Accepted)
+    {
+        QString name = dlg->selectedFiles().at(0);
+    }
 #endif
 
 #if 0

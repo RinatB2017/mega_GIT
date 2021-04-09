@@ -30,33 +30,6 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-class TestClass
-{
-public:
-    template<class T>
-    void test_function(void)
-    {
-        T::test2();
-    }
-
-    template<typename T2>
-    void test_function2(void)
-    {
-        T2();
-    }
-
-    void test2(void)
-    {
-        qDebug() << "### YES ###";
-    }
-
-    void test(void)
-    {
-        test_function<TestClass>();
-        //test_function2<decltype(&TestClass::test2)>();
-    }
-};
-//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }

@@ -281,9 +281,6 @@ void MainBox::test_function(int delay)
 }
 //--------------------------------------------------------------------------------
 //#include "qyuvopenglwidget.h"
-//#include <QUiLoader>
-
-#include "grapherbox.hpp"
 
 bool MainBox::test(void)
 {
@@ -304,7 +301,7 @@ bool MainBox::test(void)
     }
 #endif
 
-#if 0
+#if 1
     int s = 300;
     QPixmap *pixmap = new QPixmap(s, s);
     QPainter p;
@@ -334,128 +331,6 @@ bool MainBox::test(void)
 #endif
 
 #if 0
-    int s = 32;
-
-    QPixmap *pixmap = new QPixmap(s, s);
-    QPainter p;
-    p.begin(pixmap);
-    p.setBrush(QBrush(Qt::red));
-    p.drawEllipse(0, 0, s, s);
-    p.end();
-
-    QIcon icon(*pixmap);
-
-    QToolButton *btn = new QToolButton();
-    btn->setMinimumSize(s, s);
-    btn->setIcon(icon);
-    btn->setCheckable(true);
-    btn->show();
-#endif
-
-#if 0
-    MyFileDialog *dlg = new MyFileDialog("MainBox", "MainBox", this);
-    dlg->setNameFilter("PNG files (*.png)");
-    dlg->setDefaultSuffix("png");
-    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
-    int btn = dlg->exec();
-    if(btn == MyFileDialog::Accepted)
-    {
-        QStringList files = dlg->selectedFiles();
-        QString filename = files.at(0);
-
-        QPixmap *pixmap = new QPixmap();
-        bool ok = pixmap->load(filename);
-        if(ok)
-        {
-            QLabel *label = new QLabel();
-            label->setPixmap(*pixmap);
-            label->show();
-
-            int buf[360] = { 0 };
-
-            QImage image;
-            image = pixmap->toImage();
-            int w = image.width();
-            int h = image.height();
-            for(int y=0; y<h; y++)
-            {
-                for(int x=0; x<w; x++)
-                {
-                    QColor color = image.pixelColor(x, y);
-                    int h_v;
-                    int s_v;
-                    int v_v;
-                    color.getHsv(&h_v, &s_v, &v_v);
-                    buf[h_v]++;
-                }
-            }
-            GrapherBox *gb = new GrapherBox();
-            int curve = gb->add_curve("Hue");
-            for(int n=0;n<360; n++)
-            {
-                gb->add_curve_data(curve, n, buf[n]);
-            }
-            gb->setMinimumSize(1024, 300);
-            gb->push_btn_Horizontal(true);
-            gb->push_btn_Vertical(true);
-            gb->show();
-        }
-    }
-    delete dlg;
-#endif
-
-#if 0
-    lock_this_button();
-    QElapsedTimer *timer = new QElapsedTimer();
-    timer->start();
-    while(timer->elapsed() < 1000)
-    {
-
-    }
-    emit info("OK");
-    unlock_this_button();
-#endif
-
-#if 0
-    MyFileDialog *dlg = new MyFileDialog("MainBox", "MainBox", this);
-    dlg->setNameFilter("UI files (*.ui)");
-    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
-    int btn = dlg->exec();
-    if(btn == MyFileDialog::Accepted)
-    {
-        QStringList files = dlg->selectedFiles();
-        QString filename = files.at(0);
-
-        QUiLoader loader;
-        QFile file(filename);
-        file.open(QFile::ReadOnly);
-        QWidget *formWidget = loader.load(&file);
-        formWidget->show();
-        file.close();
-    }
-    delete dlg;
-#endif
-
-#if 0
-    qInfo()    << "qInfo";
-    qDebug()   << "qDebug";
-    qWarning() << "qWarning";
-#endif
-
-#if 0
-    TestClass tc;
-    tc.test();
-#endif
-
-#if 0
-    test_function<MainBox>(1000);
-#endif
-
-#if 0
-    test_template<QToolButton, QDoubleSpinBox>();
-#endif
-
-#if 0
     // AVFrame *frame = new AVFrame();
 
     QYUVOpenGLWidget *w = new QYUVOpenGLWidget();
@@ -468,7 +343,17 @@ bool MainBox::test(void)
 #endif
 
 #if 0
+    test_template<QToolButton, QDoubleSpinBox>();
+#endif
+
+#if 0
     emit info("Copyright \\251 2020-2025");
+#endif
+
+#if 0
+    qInfo()    << "qInfo";
+    qDebug()   << "qDebug";
+    qWarning() << "qWarning";
 #endif
 
 #if 0

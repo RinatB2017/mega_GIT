@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,88 +18,30 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef VIEWFINDER_HPP
+#define VIEWFINDER_HPP
 //--------------------------------------------------------------------------------
-#include <QOpenGLWidget>
-
-#include "ui_for_tests_mainbox.h"
-#include "mywidget.hpp"
-
-#include "viewfinder.hpp"
+#include <QWidget>
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class ViewFinder : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent, MySplashScreen *splash);
-    ~MainBox();
+    explicit ViewFinder(QWidget *parent = nullptr);
+    virtual ~ViewFinder();
 
-public slots:
-    void choice_test(void);
+    void install(QWidget* widget);
+    void remove(void);
 
-    bool test(void);
-    bool test2(void);
-    bool load_qss(void);
+    void test(void);
 
-    void xxx(void)
-    {
-        fail();
-    }
-
-    void print_mp(QWidget *widget);
-
-    //TODO здесь только для теста
-    bool f1(int value);
-    bool f2(int value);
-    bool f3(int value);
+protected:
+    bool eventFilter(QObject*, QEvent* event);
+    void paintEvent(QPaintEvent *);
 
 private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } *cmd_t;
-    QList<CMD> commands;
-
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QComboBox> cb_test;
-    QPointer<QSpinBox>  sb_test;
-    QPointer<QCheckBox> cb_block;
-
-    QPointer<ViewFinder> glass;
-
-    bool set_theme_windows(void);
-    bool set_norton_commander(void);
-    bool set_styles(void);
-
-    void init(void);
-    void createTestBar(void);
-
-    template<typename T1, typename T2>
-    void test_template(void);
-
-    template<class T>
-    void test_function(int delay);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    QPoint center;
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif

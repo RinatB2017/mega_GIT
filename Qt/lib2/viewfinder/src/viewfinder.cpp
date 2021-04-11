@@ -23,28 +23,24 @@
 #include <QEvent>
 #include <QDebug>
 //--------------------------------------------------------------------------------
-#include <QtMath>
+#include "mainwindow.hpp"
+#include "viewfinder.hpp"
 //--------------------------------------------------------------------------------
-#include "glass.hpp"
-//--------------------------------------------------------------------------------
-Glass::Glass(QWidget *parent) :
+ViewFinder::ViewFinder(QWidget *parent) :
     QWidget(parent)
 {
     center.setX(width() / 2);
     center.setY(height() / 2);
-    radius = 0;
 
     installEventFilter(this);
-
-    qDebug() << "constructor";
 }
 //--------------------------------------------------------------------------------
-Glass::~Glass()
+ViewFinder::~ViewFinder()
 {
-    qDebug() << "destructor";
+
 }
 //--------------------------------------------------------------------------------
-void Glass::install(QWidget* widget)
+void ViewFinder::install(QWidget* widget)
 {
     remove();
     setParent(widget);
@@ -56,7 +52,7 @@ void Glass::install(QWidget* widget)
     eventFilter(0, &event);
 }
 //--------------------------------------------------------------------------------
-void Glass::remove(void)
+void ViewFinder::remove(void)
 {
     // Если стекло было установлено, то удаляем его
     if (parentWidget() != 0)
@@ -70,60 +66,73 @@ void Glass::remove(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Glass::test(void)
+void ViewFinder::test(void)
 {
 
 }
 //--------------------------------------------------------------------------------
-bool Glass::eventFilter(QObject* object, QEvent* event)
+bool ViewFinder::eventFilter(QObject* , QEvent* event)
 {
-    Q_UNUSED(object);
-    QMouseEvent *mouseEvent = (QMouseEvent *) event;
-    //---
-    if(event->type() == QEvent::MouseButtonPress)
-    {
-        center= mouseEvent->pos();
-        return true;
-    }
-    //---
-    if(event->type() == QEvent::MouseMove)
-    {
-        QPoint end = mouseEvent->pos();
-        radius = qSqrt((end.x() - center.x())*(end.x() - center.x()) + (end.y() - center.y())*(end.y() - center.y()));
-        repaint();
-        return true;
-    }
-    //---
     if ((event->type() == QEvent::Show) || (event->type() == QEvent::Resize))
     {
         resize(parentWidget()->size());
         move(0,0);
-        qDebug() << "resize" << parentWidget()->size();
+        qDebug() << "######### resize" << parentWidget()->size();
         return true;
     }
-    //---
+
     return false;
 }
 //--------------------------------------------------------------------------------
-void Glass::paintEvent(QPaintEvent *)
+void ViewFinder::paintEvent(QPaintEvent *)
 {
     //FIXME дурь, конечно. Но eventFilter как то странно отрабатывает
     resize(parentWidget()->size());
     move(0,0);
-    
+
+    int w = parentWidget()->size().width();
+    int h = parentWidget()->size().height();
+
+    int x1 = w / 3;
+    int x2 = x1 * 2;
+
+    int y1 = h / 3;
+    int y2 = y1 * 2;
+
+    int marker_w = 20;
+    int marker_h = 20;
+
     QPainter painter;
     painter.begin(this);
 
-    painter.setPen(QPen(Qt::red, 1, Qt::SolidLine));
-    painter.drawEllipse(center, radius, radius);
+    painter.setPen(QPen(Qt::blue, 3, Qt::SolidLine));
 
-    int x1 = center.x() - radius;
-    int y1 = center.y() - radius;
-    int x2 = center.x() + radius;
-    int y2 = center.y() + radius;
+    //painter.drawRect(x1, y1, (x2 - x1), (y2 - y1));
+
+    painter.drawRect(x1 - marker_w / 2,
+                     y1 - marker_h / 2,
+                     marker_w,
+                     marker_h);
+    painter.drawRect(x2 - marker_w / 2,
+                     y1 - marker_h / 2,
+                     marker_w,
+                     marker_h);
+    painter.drawRect(x1 - marker_w / 2,
+                     y2 - marker_h / 2,
+                     marker_w,
+                     marker_h);
+    painter.drawRect(x2 - marker_w / 2,
+                     y2 - marker_h / 2,
+                     marker_w,
+                     marker_h);
 
     painter.setPen(QPen(Qt::blue, 1, Qt::SolidLine));
-    painter.drawRect(x1, y1, (x2 - x1), (y2 - y1));
+
+    painter.drawLine(x1, 0,  x1, h);
+    painter.drawLine(x2, 0,  x2, h);
+    painter.drawLine(0,  y1, w,  y1);
+    painter.drawLine(0,  y2, w,  y2);
+
     painter.end();
 }
 //--------------------------------------------------------------------------------

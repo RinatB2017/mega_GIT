@@ -57,6 +57,11 @@ void MainBox::init(void)
     add_digital_clock();
 
 #if 1
+    glass = new ViewFinder();
+    glass->install(this);
+#endif
+
+#if 1
     //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else
     if(sizeHint().height() > 0)
@@ -286,6 +291,13 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    if(glass)
+    {
+        glass->remove();
+    }
+#endif
+
 #if 0
     QString name = QFileDialog::getSaveFileName(0, "Create Project File", "/Users/igor/Documents/Gro3.prj");
 #endif
@@ -301,7 +313,7 @@ bool MainBox::test(void)
     }
 #endif
 
-#if 1
+#if 0
     int s = 300;
     QPixmap *pixmap = new QPixmap(s, s);
     QPainter p;

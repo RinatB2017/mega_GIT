@@ -56,10 +56,8 @@ void MainBox::init(void)
     // add_digital_clock(false);
     add_digital_clock();
 
-#if 1
     glass = new ViewFinder();
-    glass->install(this);
-#endif
+//    glass->install(this);
 
 #if 1
     //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -294,7 +292,7 @@ bool MainBox::test(void)
 #if 1
     if(glass)
     {
-        glass->remove();
+        glass->install(this);
     }
 #endif
 
@@ -382,6 +380,14 @@ bool MainBox::test(void)
 bool MainBox::test2(void)
 {
 #if 1
+    if(glass)
+    {
+        glass->remove();
+    }
+#endif
+
+
+#if 0
     int size = 5;
     QPixmap *pixmap = new QPixmap(size,
                                   size);

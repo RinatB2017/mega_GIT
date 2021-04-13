@@ -41,7 +41,7 @@ protected:
     void paintEvent(QPaintEvent *);
 
 private:
-    QPoint center;
+
 };
 //--------------------------------------------------------------------------------
 #endif

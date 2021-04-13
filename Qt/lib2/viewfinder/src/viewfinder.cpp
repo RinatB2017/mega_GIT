@@ -29,10 +29,27 @@
 ViewFinder::ViewFinder(QWidget *parent) :
     QWidget(parent)
 {
-    center.setX(width() / 2);
-    center.setY(height() / 2);
-
     installEventFilter(this);
+
+#if 0
+    QGraphicsOpacityEffect * effect = new QGraphicsOpacityEffect(this);
+    effect->setOpacity(0.5);
+    setGraphicsEffect(effect);
+#endif
+
+//    setStyleSheet("background-color: none;");
+
+//    auto editorPalette = palette();
+//    editorPalette.setColor(QPalette::Active, QPalette::Base, Qt::transparent);
+//    editorPalette.setColor(QPalette::Inactive, QPalette::Base, Qt::transparent);
+//    setPalette(editorPalette);
+
+//    setBackgroundRole (QPalette::NoRole);
+
+
+//    auto transparencyEffect = new QGraphicsOpacityEffect(this);
+//    transparencyEffect->setOpacity(0.5);
+//    setGraphicsEffect(transparencyEffect);
 }
 //--------------------------------------------------------------------------------
 ViewFinder::~ViewFinder()
@@ -104,10 +121,7 @@ void ViewFinder::paintEvent(QPaintEvent *)
 
     QPainter painter;
     painter.begin(this);
-
     painter.setPen(QPen(Qt::blue, 3, Qt::SolidLine));
-
-    //painter.drawRect(x1, y1, (x2 - x1), (y2 - y1));
 
     painter.drawRect(x1 - marker_w / 2,
                      y1 - marker_h / 2,

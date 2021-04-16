@@ -290,6 +290,11 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    fail();
+    fail("Фэйл");
+#endif
+
+#if 0
     if(glass)
     {
         glass->install(this);

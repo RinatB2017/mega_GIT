@@ -646,11 +646,11 @@ void MyWidget::check_tooltips(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MyWidget::fail(void)
+bool MyWidget::fail(const QString &text)
 {
     emit trace(Q_FUNC_INFO);
-
-    emit error("Пока не сделано");
+    emit error(text);
+    return false;
 }
 //--------------------------------------------------------------------------------
 bool MyWidget::add_digital_clock(bool add_spacer)

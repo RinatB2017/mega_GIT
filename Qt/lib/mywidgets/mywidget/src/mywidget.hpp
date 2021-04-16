@@ -136,7 +136,7 @@ public:
 
     bool connect_log_signals(QWidget *src, QWidget *dest);
 
-    void fail(void);
+    bool fail(const QString &text = "Пока не сделано");
 
     void check_file(const QString &orig_file, const QString &copy_file);
 

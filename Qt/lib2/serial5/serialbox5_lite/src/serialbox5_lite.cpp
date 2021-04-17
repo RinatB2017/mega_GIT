@@ -155,7 +155,9 @@ void SerialBox5_lite::initEnumerator(void)
     refresh();
     //---
     ui->BaudBox->clear();
+#ifdef Q_OS_LINUX
     ui->BaudBox->addItem("Undefined Baud",  QSerialPort::UnknownBaud);
+#endif
     ui->BaudBox->addItem("1200 baud",       QSerialPort::Baud1200);
     ui->BaudBox->addItem("2400 baud",       QSerialPort::Baud2400);
     ui->BaudBox->addItem("4800 baud",       QSerialPort::Baud4800);

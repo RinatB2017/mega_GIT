@@ -2,7 +2,7 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-#DEFINES += LOGO_GL
+DEFINES += LOGO_GL
 #DEFINES += FIXED_SIZE
 
 #DEFINES += NO_STYLETOOLBAR

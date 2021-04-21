@@ -7,6 +7,8 @@ TARGET   = _For_tests
 
 include (conf/conf.pri)
 
+CONFIG += c++14
+
 QT += uitools
 
 PROGRAMM_PATH  += \

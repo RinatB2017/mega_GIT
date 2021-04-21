@@ -290,8 +290,8 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
-    fail();
-    fail("Фэйл");
+    int asd = 0x1234'5678;
+    emit info(QString("asd %1").arg(asd, 4, 16, QChar('0')));
 #endif
 
 #if 0

@@ -119,8 +119,8 @@ unix:!macx {
 #
 greaterThan(QT_MAJOR_VERSION, 5) {
     QT += core5compat
-    CONFIG += c++11
-    message(Qt6)
+    QMAKE_CXXFLAGS += /std:c++17
+    message(Qt6 = $$QT)
 }
 ###############################################################################
 CONFIG(debug, debug|release) {

@@ -25,8 +25,6 @@
 
 #include "ui_for_tests_mainbox.h"
 #include "mywidget.hpp"
-
-#include "viewfinder.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -80,8 +78,6 @@ private:
     QPointer<QComboBox> cb_test;
     QPointer<QSpinBox>  sb_test;
     QPointer<QCheckBox> cb_block;
-
-    QPointer<ViewFinder> glass;
 
     bool set_theme_windows(void);
     bool set_norton_commander(void);

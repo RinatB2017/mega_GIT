@@ -56,9 +56,6 @@ void MainBox::init(void)
     // add_digital_clock(false);
     add_digital_clock();
 
-    glass = new ViewFinder();
-//    glass->install(this);
-
 #if 1
     //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else
@@ -283,8 +280,6 @@ void MainBox::test_function(int delay)
     });
 }
 //--------------------------------------------------------------------------------
-//#include "qyuvopenglwidget.h"
-
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -292,73 +287,6 @@ bool MainBox::test(void)
 #if 1
     int asd = 0x1234'5678;
     emit info(QString("asd %1").arg(asd, 4, 16, QChar('0')));
-#endif
-
-#if 0
-    if(glass)
-    {
-        glass->install(this);
-    }
-#endif
-
-#if 0
-    QString name = QFileDialog::getSaveFileName(0, "Create Project File", "/Users/igor/Documents/Gro3.prj");
-#endif
-
-#if 0
-    QFileDialog *dlg = new QFileDialog();
-    dlg->setWindowTitle("Create Project File");
-    dlg->selectFile("/Users/igor/Documents/Gro3.prj");
-    int res = dlg->exec();
-    if(res == QFileDialog::Accepted)
-    {
-        QString name = dlg->selectedFiles().at(0);
-    }
-#endif
-
-#if 0
-    int s = 300;
-    QPixmap *pixmap = new QPixmap(s, s);
-    QPainter p;
-    p.begin(pixmap);
-    p.fillRect(0,0, s, s, Qt::black);
-
-    qreal xxx = 200.0;
-    qreal center_x = xxx;
-    qreal center_y = xxx;
-    QColor color;
-    qreal v = 0;
-    for(qreal r=0; r<xxx; r+=0.1)
-    {
-        color.setHsv(287, 200, v);;
-        v+=0.12;
-        p.setPen(QPen(color));
-        p.drawEllipse(center_x - r,
-                      center_y - r,
-                      r,
-                      r);
-    }
-    p.end();
-
-    QLabel *label = new QLabel();
-    label->setPixmap(*pixmap);
-    label->show();
-#endif
-
-#if 0
-    // AVFrame *frame = new AVFrame();
-
-    QYUVOpenGLWidget *w = new QYUVOpenGLWidget();
-    // w->updateTextures(frame->data[0], frame->data[1], frame->data[2], frame->linesize[0], frame->linesize[1], frame->linesize[2]);
-    w->show();
-#endif
-
-#if 0
-    emit info(QString("ver. [%1]").arg(qApp->applicationVersion()));
-#endif
-
-#if 0
-    test_template<QToolButton, QDoubleSpinBox>();
 #endif
 
 #if 0
@@ -384,49 +312,8 @@ bool MainBox::test(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test2(void)
 {
-#if 1
-    if(glass)
-    {
-        glass->remove();
-    }
-#endif
+    emit trace(Q_FUNC_INFO);
 
-
-#if 0
-    int size = 5;
-    QPixmap *pixmap = new QPixmap(size,
-                                  size);
-    pixmap->fill(Qt::transparent);
-    QPainter p;
-    p.begin(pixmap);
-    p.setPen(QPen(Qt::white));
-    p.setBrush(QBrush(Qt::blue));
-    p.drawEllipse(0, 0, pixmap->width() - 1, pixmap->height() - 1);
-    p.drawRect(0, 0, pixmap->width() - 1, pixmap->height() - 1);
-    p.end();
-    QCursor cursor(*pixmap);
-
-    MainBox *mainBox = topLevelWidget()->findChild<MainBox *>();
-    if(mainBox)
-    {
-        mainBox->setCursor(cursor);
-    }
-#endif
-
-#if 0
-    const QWidgetList allWidgets = QApplication::allWidgets();
-    for (QWidget *widget : allWidgets)
-    {
-        MyWidget *mw = reinterpret_cast<MyWidget *>(widget);
-        if(mw)
-        {
-            if(widget->objectName().isEmpty())
-            {
-                emit info("objectName is empty");
-            }
-        }
-    }
-#endif
     return true;
 }
 //--------------------------------------------------------------------------------

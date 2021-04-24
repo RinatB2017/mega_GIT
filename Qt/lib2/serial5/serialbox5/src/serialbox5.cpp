@@ -145,7 +145,9 @@ void SerialBox5::initEnumerator(void)
     refresh();
     //---
     ui->BaudBox->clear();
+#ifdef Q_OS_LINUX
     ui->BaudBox->addItem("Undefined Baud",  QSerialPort::UnknownBaud);
+#endif
     ui->BaudBox->addItem("1200 baud",       QSerialPort::Baud1200);
     ui->BaudBox->addItem("2400 baud",       QSerialPort::Baud2400);
     ui->BaudBox->addItem("4800 baud",       QSerialPort::Baud4800);
@@ -157,14 +159,18 @@ void SerialBox5::initEnumerator(void)
 
     //---
     ui->DataBitsBox->clear();
+#ifdef Q_OS_LINUX
     ui->DataBitsBox->addItem("Undefined data bits", QSerialPort::UnknownDataBits);
+#endif
     ui->DataBitsBox->addItem("5 bit",               QSerialPort::Data5);
     ui->DataBitsBox->addItem("6 bit",               QSerialPort::Data6);
     ui->DataBitsBox->addItem("7 bit",               QSerialPort::Data7);
     ui->DataBitsBox->addItem("8 bit",               QSerialPort::Data8);
     //---
     ui->ParityBox->clear();
+#ifdef Q_OS_LINUX
     ui->ParityBox->addItem("Undefined parity",  QSerialPort::UnknownParity);
+#endif
     ui->ParityBox->addItem("None",              QSerialPort::NoParity);
     ui->ParityBox->addItem("Even",              QSerialPort::EvenParity);
     ui->ParityBox->addItem("Odd",               QSerialPort::OddParity);
@@ -172,13 +178,17 @@ void SerialBox5::initEnumerator(void)
     ui->ParityBox->addItem("Mark",              QSerialPort::MarkParity);
     //---
     ui->StopBitsBox->clear();
+#ifdef Q_OS_LINUX
     ui->StopBitsBox->addItem("Undefined stop bits", QSerialPort::UnknownStopBits);
+#endif
     ui->StopBitsBox->addItem("1",                   QSerialPort::OneStop);
     ui->StopBitsBox->addItem("1.5",                 QSerialPort::OneAndHalfStop);
     ui->StopBitsBox->addItem("2",                   QSerialPort::TwoStop);
     //---
     ui->FlowBox->clear();
+#ifdef Q_OS_LINUX
     ui->FlowBox->addItem("Undefined flow",  QSerialPort::UnknownFlowControl);
+#endif
     ui->FlowBox->addItem("Disable",         QSerialPort::NoFlowControl);
     ui->FlowBox->addItem("Hardware",        QSerialPort::HardwareControl);
     ui->FlowBox->addItem("Software",        QSerialPort::SoftwareControl);

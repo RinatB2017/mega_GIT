@@ -9,8 +9,6 @@ include (conf/conf.pri)
 
 CONFIG += c++14
 
-QT += uitools
-
 PROGRAMM_PATH  += \
     $$PWD/src
 INCLUDEPATH += $$PROGRAMM_PATH
@@ -50,8 +48,6 @@ win32 {
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/icons/digits.pri)
-
-include ($$LIB_PATH2/viewfinder/viewfinder.pri)
 
 include ($$LIB_PATH/mywidgets/mylistwidget/mylistwidget.pri)
 include ($$LIB_PATH2/widgets/QLongLongSpinBox/QLongLongSpinBox.pri)

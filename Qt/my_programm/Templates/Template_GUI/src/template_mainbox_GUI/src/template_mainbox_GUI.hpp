@@ -21,20 +21,21 @@
 #ifndef MAINBOX_GUI_HPP
 #define MAINBOX_GUI_HPP
 //--------------------------------------------------------------------------------
+#include "mywaitsplashscreen.hpp"
+#include "mysplashscreen.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox_GUI;
+    class MainBox_GUI;
 }
-//--------------------------------------------------------------------------------
-class MySplashScreen;
 //--------------------------------------------------------------------------------
 class MainBox_GUI : public MyWidget
 {
     Q_OBJECT
 
 signals:
-    void push_btn_test(void);
+    void btn_plus_push(void);
+    void btn_minus_push(void);
 
 public:
     explicit MainBox_GUI(QWidget *parent,

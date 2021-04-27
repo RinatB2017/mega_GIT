@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,10 +18,12 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include "ui_test_ui_mainbox.h"
+//--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "template_mainbox.hpp"
+#include "test_ui_mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -30,53 +32,28 @@
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
-    MainBox_GUI(parent, splash)
+    MyWidget(parent),
+    splash(splash),
+    ui(new Ui::MainBox)
 {
     init();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-
+    save_widgets();
+    delete ui;
 }
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
+    ui->setupUi(this);
+
 #ifdef QT_DEBUG
     createTestBar();
 #endif
 
-    set_range(-100, 100);
-
-    connect(this,   &MainBox::btn_plus_push,    this,   &MainBox::plus);
-    connect(this,   &MainBox::btn_minus_push,   this,   &MainBox::minus);
-}
-//--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
-{
-    bool ok = false;
-    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
-    if(!ok) return;
-
-    auto cmd_it = std::find_if(
-        commands.begin(),
-        commands.end(),
-        [cmd](CMD command){ return command.cmd == cmd; }
-    );
-    if (cmd_it != commands.end())
-    {
-        typedef bool (MainBox::*function)(void);
-        function x;
-        x = cmd_it->func;
-        if(x)
-        {
-            (this->*x)();
-        }
-        else
-        {
-            emit error("no func");
-        }
-    }
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -85,8 +62,7 @@ void MainBox::createTestBar(void)
     Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "+",    &MainBox::test_plus });
-    commands.append({ id++, "-",    &MainBox::test_minus });
+    commands.append({ id++, "test",     &MainBox::test });
 
     testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -111,38 +87,78 @@ void MainBox::createTestBar(void)
                                               "choice_test");
     btn_choice_test->setObjectName("btn_choice_test");
 
-    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+    connect(btn_choice_test,    &QToolButton::clicked,  this,   &MainBox::choice_test);
 
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
+    connect(cb_block,   &QCheckBox::clicked,    cb_test,           &QComboBox::setDisabled);
+    connect(cb_block,   &QCheckBox::clicked,    btn_choice_test,   &QToolButton::setDisabled);
 
+#ifndef NO_MENU
     mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+#endif    
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_plus(void)
+void MainBox::choice_test(void)
 {
-    //emit info("Test");
-    //set_value(get_value()+1);
-    inc_value();
+    bool ok = false;
+    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok) return;
+
+    auto cmd_it = std::find_if(
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
+    if (cmd_it != commands.end())
+    {
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
+        {
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test(void)
+{
+    emit info("Test");
+    emit info(qApp->applicationVersion());
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_minus(void)
+bool MainBox::f1(int value)
 {
-    //emit info("Test2");
-    //set_value(get_value()-1);
-    dec_value();
-    return true;
+    return (value > 0);
 }
 //--------------------------------------------------------------------------------
-void MainBox::plus(void)
+bool MainBox::f2(int value)
 {
-    inc_value();
+    return (value > 0);
 }
 //--------------------------------------------------------------------------------
-void MainBox::minus(void)
+bool MainBox::f3(int value)
 {
-    dec_value();
+    return (value > 0);
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_value(int value)
+{
+    ui->sb_value->setValue(value);
+}
+
+int MainBox::get_value(void)
+{
+    return ui->sb_value->value();
+}
+//--------------------------------------------------------------------------------
+void MainBox::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)

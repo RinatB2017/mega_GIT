@@ -36,8 +36,11 @@ public:
 
 private slots:
     void choice_test(void);
-    bool test(void);
-    bool test2(void);
+    bool test_plus(void);
+    bool test_minus(void);
+
+    void plus(void);
+    void minus(void);
 
 private:
     typedef struct CMD

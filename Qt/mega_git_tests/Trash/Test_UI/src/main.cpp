@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,50 +18,80 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QObject>
-#include <QWidget>
-#include <QList>
-#include <QTest>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
-#define private public
-//--------------------------------------------------------------------------------
+#include "test_ui_mainbox.hpp"
+#include "qtsingleapplication.h"
+#include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "template_mainbox.hpp"
-#include "test.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
-Test::Test()
-{
-    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
-}
+#include "codecs.h"
 //--------------------------------------------------------------------------------
-void Test::test_GUI(void)
-{
-    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
-    QVERIFY(cb);
-    QTest::keyClick(cb, Qt::Key_Down);
-    QTest::keyClick(cb, Qt::Key_Down);
-
-    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
-    QVERIFY(tb);
-    QTest::mouseClick(tb, Qt::LeftButton);
-}
+#ifdef QT_DEBUG
+#   include "test.hpp"
+#   include <QDebug>
+#endif
 //--------------------------------------------------------------------------------
-void Test::test_func(void)
+int main(int argc, char *argv[])
 {
-    MainBox *mb = mw->findChild<MainBox *>("MainBox_GUI");
-    QVERIFY(mb);
+    set_codecs();
+#ifdef SINGLE_APP
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        //QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
+        if(app.sendMessage("Wake up!")) return 0;
+    }
+#else
+    QApplication app(argc, argv);
+#endif
 
-    QCOMPARE(mb->test_plus(), true);
-    QCOMPARE(mb->test_minus(), true);
+    app.setOrganizationName(QObject::tr(ORGNAME));
+    app.setApplicationName(QObject::tr(APPNAME));
+#ifdef Q_OS_LINUX
+    app.setApplicationVersion(QString("%1.%2.%3.%4")
+                              .arg(VER_MAJOR)
+                              .arg(VER_MINOR)
+                              .arg(VER_PATCH)
+                              .arg(VER_BUILD));
+#endif
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-    mb->set_value(666);
-    mb->clear_log();
-}
-//--------------------------------------------------------------------------------
-void Test::test_signals(void)
-{
+    QPixmap pixmap(":/logo/logo.png");
 
+    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    Q_ASSERT(splash);
+    splash->show();
+
+    MainWindow *main_window = new MainWindow();
+    Q_ASSERT(main_window);
+
+    MainBox *mainBox = new MainBox(main_window, splash);
+    Q_ASSERT(mainBox);
+
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
+
+    splash->finish(main_window);
+
+#ifdef SINGLE_APP
+    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
+#endif
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
+
+#ifdef QT_DEBUG
+    int test_result = QTest::qExec(new Test(), argc, argv);
+    if (test_result != EXIT_SUCCESS)
+    {
+        return test_result;
+    }
+#endif
+
+    return app.exec();
 }
 //--------------------------------------------------------------------------------

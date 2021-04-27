@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,50 +18,12 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QObject>
-#include <QWidget>
-#include <QList>
-#include <QTest>
+#ifndef DEFINES_HPP
+#define DEFINES_HPP
 //--------------------------------------------------------------------------------
-#define private public
+#define ORGNAME "Work"
+#define APPNAME "Test_UI"
 //--------------------------------------------------------------------------------
-#include "mainwindow.hpp"
-#include "template_mainbox.hpp"
-#include "test.hpp"
+#define ICON_PROGRAMM   ":/mainwindow/computer.png"
 //--------------------------------------------------------------------------------
-Test::Test()
-{
-    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
-}
-//--------------------------------------------------------------------------------
-void Test::test_GUI(void)
-{
-    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
-    QVERIFY(cb);
-    QTest::keyClick(cb, Qt::Key_Down);
-    QTest::keyClick(cb, Qt::Key_Down);
-
-    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
-    QVERIFY(tb);
-    QTest::mouseClick(tb, Qt::LeftButton);
-}
-//--------------------------------------------------------------------------------
-void Test::test_func(void)
-{
-    MainBox *mb = mw->findChild<MainBox *>("MainBox_GUI");
-    QVERIFY(mb);
-
-    QCOMPARE(mb->test_plus(), true);
-    QCOMPARE(mb->test_minus(), true);
-
-    mb->set_value(666);
-    mb->clear_log();
-}
-//--------------------------------------------------------------------------------
-void Test::test_signals(void)
-{
-
-}
-//--------------------------------------------------------------------------------
+#endif

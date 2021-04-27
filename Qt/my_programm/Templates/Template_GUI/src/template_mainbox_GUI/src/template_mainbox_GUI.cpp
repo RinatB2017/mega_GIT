@@ -20,8 +20,6 @@
 **********************************************************************************/
 #include "ui_template_mainbox_GUI.h"
 //--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
-#include "mysplashscreen.hpp"
 #include "template_mainbox_GUI.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -47,12 +45,8 @@ void MainBox_GUI::init(void)
 {
     ui->setupUi(this);
 
-    connect(ui->btn_plus, &QPushButton::clicked, [this]() {
-            ui->sb_value->setValue(ui->sb_value->value()+1);
-        });
-    connect(ui->btn_minus, &QPushButton::clicked, [this]() {
-            ui->sb_value->setValue(ui->sb_value->value()-1);
-        });
+    connect(ui->btn_plus,   &QPushButton::clicked,  this,   &MainBox_GUI::btn_plus_push);
+    connect(ui->btn_minus,  &QPushButton::clicked,  this,   &MainBox_GUI::btn_minus_push);
 
     load_widgets();
 }

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,50 +18,67 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QObject>
-#include <QWidget>
-#include <QList>
-#include <QTest>
+#ifndef MAINBOX_HPP
+#define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#define private public
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#include "mainwindow.hpp"
-#include "template_mainbox.hpp"
-#include "test.hpp"
-//--------------------------------------------------------------------------------
-Test::Test()
-{
-    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
+namespace Ui {
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
-void Test::test_GUI(void)
-{
-    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
-    QVERIFY(cb);
-    QTest::keyClick(cb, Qt::Key_Down);
-    QTest::keyClick(cb, Qt::Key_Down);
-
-    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
-    QVERIFY(tb);
-    QTest::mouseClick(tb, Qt::LeftButton);
-}
+class MySplashScreen;
 //--------------------------------------------------------------------------------
-void Test::test_func(void)
+class MainBox : public MyWidget
 {
-    MainBox *mb = mw->findChild<MainBox *>("MainBox_GUI");
-    QVERIFY(mb);
+    Q_OBJECT
 
-    QCOMPARE(mb->test_plus(), true);
-    QCOMPARE(mb->test_minus(), true);
+public:
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
+    ~MainBox();
 
-    mb->set_value(666);
-    mb->clear_log();
-}
+public slots:
+    bool test(void);
+
+    //TODO здесь только для теста
+    bool f1(int value);
+    bool f2(int value);
+    bool f3(int value);
+
+private slots:
+    void choice_test(void);
+
+private:
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        bool (MainBox::*func)(void);
+    } CMD_t;
+
+    QPointer<MySplashScreen> splash;
+    Ui::MainBox *ui;
+
+    QPointer<QToolBar> testbar;
+    QPointer<QComboBox> cb_test;
+    QPointer<QCheckBox> cb_block;
+    QList<CMD> commands;
+
+    void set_value(int value);
+    int get_value(void);
+//    void set_value(int value)
+//    {
+//        ui->sb_value->setValue(value);
+//    }
+
+    void init(void);
+    void createTestBar(void);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
+};
 //--------------------------------------------------------------------------------
-void Test::test_signals(void)
-{
-
-}
-//--------------------------------------------------------------------------------
+#endif // MAINBOX_HPP

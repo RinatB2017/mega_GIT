@@ -42,6 +42,13 @@ int main(int argc, char *argv[])
 
     app.setOrganizationName(QObject::tr(ORGNAME));
     app.setApplicationName(QObject::tr(APPNAME));
+#ifdef Q_OS_LINUX
+    app.setApplicationVersion(QString("%1.%2.%3.%4")
+                              .arg(VER_MAJOR)
+                              .arg(VER_MINOR)
+                              .arg(VER_PATCH)
+                              .arg(VER_BUILD));
+#endif
     app.setWindowIcon(QIcon(QLatin1String(":/programm.png")));
 
 #ifdef SINGLE_APP
@@ -49,6 +56,8 @@ int main(int argc, char *argv[])
     Q_ASSERT(main_window);
 
     Game *mainBox = new Game(main_window);
+    Q_ASSERT(mainBox);
+
     mainBox->setFocusPolicy(Qt::StrongFocus);
     main_window->setCentralWidget(mainBox);
 

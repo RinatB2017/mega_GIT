@@ -3,32 +3,30 @@
 #**********************************************************************************
 
 TEMPLATE = app
-TARGET   = Template_wo_MainBox
+TARGET   = Test_UI
 
-FOLDER  = _Templates
+FOLDER  = tests
 
 include (conf/conf.pri)
 
 DEPENDPATH  += \
-    $$PWD/src \
-    $$PWD/src/newmainwindow
+    $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
-    newmainwindow.hpp \
     defines.hpp
 
 SOURCES += \
-    newmainwindow.cpp \
     main.cpp
 
 win32 {
-    RC_ICONS = ico/computer.ico
+    RC_ICONS = "ico/computer.ico"
+    # RC_FILE  = programm.rc
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win
 RESOURCES += \
-    images/images.qrc
+    ico/icons.qrc
 
 OTHER_FILES += doc/notebook.txt
 
@@ -36,19 +34,12 @@ CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
 
-#----------------------------------------------
-LIB_PATH  = "$$PWD/../../../lib"
-LIB_PATH2 = "$$PWD/../../../lib2"
+LIB_PATH  = "$$PWD/../../../Qt/lib"
+LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/meta/grapherbox.pri)
 
-greaterThan(QT_MAJOR_VERSION, 4) {
-    include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
-    include ($$LIB_PATH2/serial5/serial5.pri)
-} esle {
-    include ($$LIB_PATH2/serial4/serial4.pri)
-}
-#----------------------------------------------
+include (src/test_ui_mainbox/test_ui_mainbox.pri)
+#include (src/ui_mainbox/ui_mainbox.pri)
 
 VPATH = $$INCLUDEPATH

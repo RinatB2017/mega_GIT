@@ -21,6 +21,8 @@
 #ifndef MAINBOX_GUI_HPP
 #define MAINBOX_GUI_HPP
 //--------------------------------------------------------------------------------
+#include "ui_template_mainbox_GUI.h"
+//--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mywidget.hpp"
@@ -45,9 +47,6 @@ public:
     void set_value(int value);
     int  get_value(void);
 
-    void inc_value(void);
-    void dec_value(void);
-
     void set_range(int min, int max);
 
 private:
@@ -58,4 +57,4 @@ private:
     void updateText(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MainBox_GUI_HPP
+#endif // MAINBOX_GUI_HPP

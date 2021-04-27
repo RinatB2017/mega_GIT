@@ -121,28 +121,28 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test_plus(void)
 {
-    //emit info("Test");
-    //set_value(get_value()+1);
-    inc_value();
+    emit trace(Q_FUNC_INFO);
+    set_value(get_value()+1);
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_minus(void)
 {
-    //emit info("Test2");
-    //set_value(get_value()-1);
-    dec_value();
+    emit trace(Q_FUNC_INFO);
+    set_value(get_value()-1);
     return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::plus(void)
 {
-    inc_value();
+    emit trace(Q_FUNC_INFO);
+    set_value(get_value()+1);
 }
 //--------------------------------------------------------------------------------
 void MainBox::minus(void)
 {
-    dec_value();
+    emit trace(Q_FUNC_INFO);
+    set_value(get_value()-1);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)

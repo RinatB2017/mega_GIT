@@ -18,8 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "ui_template_mainbox_GUI.h"
-//--------------------------------------------------------------------------------
 #include "template_mainbox_GUI.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -59,16 +57,6 @@ void MainBox_GUI::set_value(int value)
 int  MainBox_GUI::get_value(void)
 {
     return ui->sb_value->value();
-}
-//--------------------------------------------------------------------------------
-void MainBox_GUI::inc_value(void)
-{
-    ui->sb_value->setValue(ui->sb_value->value()+1);
-}
-//--------------------------------------------------------------------------------
-void MainBox_GUI::dec_value(void)
-{
-    ui->sb_value->setValue(ui->sb_value->value()-1);
 }
 //--------------------------------------------------------------------------------
 void MainBox_GUI::set_range(int min, int max)

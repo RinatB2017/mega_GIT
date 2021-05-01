@@ -48,10 +48,4 @@ include (src/autoclicker/autoclicker.pri)
 include (src/adb_widget/adb_widget.pri)
 include (src/ocv_widget/ocv_widget.pri)
 
-
-
-
-
-
-
 VPATH = $$INCLUDEPATH

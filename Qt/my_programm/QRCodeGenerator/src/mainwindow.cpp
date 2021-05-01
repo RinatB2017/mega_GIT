@@ -136,11 +136,49 @@ void MainWindow::setScale(int scale)
 
 void MainWindow::on_pButtonSave_clicked()
 {
-    const QString & path = QFileDialog::getSaveFileName( this, QString(), "qrcode", saveFormats() );
+#if 1
+    QFileDialog *dlg = new QFileDialog();
+    dlg->setAcceptMode(QFileDialog::AcceptSave);
+    dlg->setNameFilters(QStringList() <<
+                        "*.png" <<
+                        "*.bmp" <<
+                        "*.jpg");
+    dlg->setDefaultSuffix("png");
+    dlg->setOption(QFileDialog::DontUseNativeDialog, true);
+    dlg->setDirectory(".");
+    dlg->selectFile("qrcode");
+    dlg->setOption(QFileDialog::DontConfirmOverwrite, false);
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        QString path = files.at(0);
+        if ( path.isNull() )
+        {
+            return;
+        }
+        bool ok = ui->image_label->pixmap(Qt::ReturnByValue).save( path );
+        if(!ok)
+        {
+            QMessageBox::critical(nullptr, "ERROR", QString("file %1 not saved").arg(path));
+        }
+    }
+    delete dlg;
+#else
+    const QString &path = QFileDialog::getSaveFileName( this,
+                                                        QString(),
+                                                        "qrcode",
+                                                        "Images (*.png *.bmp *.jpg)" );
     if ( path.isNull() )
+    {
         return;
+    }
 
-    ui->image_label->pixmap(Qt::ReturnByValue).save( path );
+    bool ok = ui->image_label->pixmap(Qt::ReturnByValue).save( path );
+    if(!ok)
+    {
+        QMessageBox::critical(nullptr, "ERROR", QString("file %1 not saved").arg(path));
+    }
+#endif
 }
 
 void MainWindow::on_sBoxScale_valueChanged(int arg1)

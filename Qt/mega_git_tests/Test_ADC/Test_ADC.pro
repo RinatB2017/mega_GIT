@@ -52,14 +52,7 @@ use_worker {
 }
 include ($$LIB_PATH2/serial5/serial5.pri)
 #----------------------------------------------
-
 include (src/test_ADC_mainbox/test_ADC_mainbox.pri)
-
-
-
-
-
-
-#----------------------------------------------
+----------------------------------------------
 
 VPATH = $$INCLUDEPATH

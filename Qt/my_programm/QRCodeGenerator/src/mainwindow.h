@@ -25,6 +25,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMessageBox>
+#include <QFileDialog>
 #include <QEvent>
 
 #include "QRCodeGenerator.hpp"

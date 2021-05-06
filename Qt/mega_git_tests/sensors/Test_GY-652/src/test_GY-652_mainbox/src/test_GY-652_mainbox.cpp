@@ -126,7 +126,7 @@ void MainBox::createTestBar(void)
                                        "test");
 
     connect(btn_test,   SIGNAL(clicked()),  this,   SLOT(test()));
-    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+    //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 QString MainBox::convert(qreal value)

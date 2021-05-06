@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINWINDOW_HPP
-#define MAINWINDOW_HPP
+#ifndef CREATORWINDOW_HPP
+#define CREATORWINDOW_HPP
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
 #   include <QtWidgets>
@@ -117,13 +117,13 @@ typedef struct {
     QString icon_name;                      // P_ICON_RU
 } TRANSLATOR;
 //--------------------------------------------------------------------------------
-class MainWindow : public QMainWindow, public MySettings
+class CreatorWindow : public QMainWindow, public MySettings
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QMainWindow* parent = nullptr);
-    virtual ~MainWindow();
+    explicit CreatorWindow(QMainWindow* parent = nullptr);
+    virtual ~CreatorWindow();
 
     void setCentralWidget(MyWidget *widget);
     void setCentralWidget(QWidget *widget);
@@ -131,34 +131,14 @@ public:
 
     void setWindowTitle(const QString &title);
 
-    bool add_menu(int pos_x, QMenu *menu);
-
-    bool add_filemenu_menu(int pos_y,
-                           QMenu *menu);
-    bool add_optionsmenu_menu(int pos_y,
-                              QMenu *menu);
-    bool add_helpmenu_menu(int pos_y,
-                           QMenu *menu);
-
     bool add_action(QMenu *menu,
                     int pos_y,
                     QAction *action);
-    bool add_filemenu_action(int pos_y,
-                             QAction *action);
-    bool add_optionsmenu_action(int pos_y,
-                                QAction *action);
-    bool add_windowsmenu_action(QWidget *widget, QAction *action);
-    bool add_helpmenu_action(int pos_y,
-                             QAction *action);
 
     bool add_separator(QMenu *menu,
                        int pos_y);
 
     bool add_mdi_sorting(void);
-
-    bool add_filemenu_separator(int pos_y);
-    bool add_optionsmenu_separator(int pos_y);
-    bool add_helpmenu_separator(int pos_y);
 
     bool add_dock_widget(QString title,
                          QString objectname,
@@ -203,15 +183,13 @@ public slots:
     void showNormal(void);
     void quit(void);
 
-private slots:
+//private slots:
     void log(const QString &data);
     void set_app_font(void);
     void setStyles(void);
     void closeOnExit(bool state);
     void alwaysOnTop(bool state);
     void about(void);
-    void setMenuLanguage(void);
-    void setToolBarLanguage(void);
     void help(void);
 
     void choice_translator(QAction *menu);
@@ -224,9 +202,16 @@ private slots:
     void showHide(QSystemTrayIcon::ActivationReason r);
     //void iconActivated(QSystemTrayIcon::ActivationReason reason);
 
-    void setToolBarStyles(void);
+    void setToolBarLanguage(void);
+    void setMenuLanguage(void);
 
     void change_value(void);
+
+#ifndef NO_STYLETOOLBAR
+#ifdef USE_CUSTOM_STYLE
+    void set_norton_style(void);
+#endif
+#endif
 
 #if defined (DEMO) && defined (DEMO_YEAR) && defined (DEMO_MONTH) && defined (DEMO_DAY)
     void kill(void);
@@ -241,11 +226,9 @@ private:
         BLUE_THEME
     };
 
-    QMenu* add_new_menu(QMenu   *parent,
-                        QString text,
-                        QIcon   *icon);
-    typedef void (MainWindow::*v_saveSlot)(void);
-    typedef bool (MainWindow::*b_saveSlot)(void);
+//    bool add_windowsmenu_action(QWidget *widget, QAction *action);
+    typedef void (CreatorWindow::*v_saveSlot)(void);
+    typedef bool (CreatorWindow::*b_saveSlot)(void);
     bool add_new_action(QMenu   *parent,
                         QString text,
                         QIcon   *icon,
@@ -254,9 +237,9 @@ private:
                         QString text,
                         QIcon   *icon,
                         b_saveSlot slot);
-
-    QPointer<QTranslator> translator_system;
-    QList<TRANSLATOR> l_translators;
+#ifdef USE_CUSTOM_STYLE
+    void app_menu_add_custom_style(QMenu *menu);
+#endif
 
     QString orgName;
     QString appName;
@@ -269,6 +252,8 @@ private:
     QPointer<QSystemTrayIcon> trayIcon;
     QPointer<QMenu> trayIconMenu;
 
+//    QPointer<QMenu> m_app_windowsmenu;
+
     //TODO тест
     QPointer<MyWidget> c_widget;
 
@@ -279,24 +264,13 @@ private:
 
     void load_translations(void);
 
-    void createMenus(void);
+    void setToolBarStyles(void);
 
     void createStatusBar(void);
     void createTrayIcon(void);
 
     void set_tileSubWindows(void);
     void set_cascadeSubWindows(void);
-
-#ifndef NO_TOOLBAR
-    QPointer<QToolBar> toolbar;
-    void createToolBar(void);
-#endif
-
-#ifndef NO_STYLETOOLBAR
-#ifdef USE_CUSTOM_STYLE
-    void set_norton_style(void);
-#endif
-#endif
 
 #ifndef NO_STYLETOOLBAR
     QPointer<QToolBar> styletoolbar;
@@ -324,42 +298,8 @@ private:
 
     QPointer<QMenuBar> app_mainBar;
 
-    QList<QMenu   *> app_menus;
     QList<QAction *> app_actions;
     QList<QAbstractButton *> app_buttons;
-
-    QPointer<QMenu> m_app_filemenu;
-    QPointer<QMenu> m_app_optionsmenu;
-    QPointer<QMenu> m_app_windowsmenu;
-    QPointer<QMenu> m_app_helpmenu;
-
-    void app_menu_add_separator(QMenu *menu);
-    void app_menu_add_exit(QMenu *menu);
-    void app_menu_add_fonts(QMenu *menu);
-
-    void app_menu_add_theme(QMenu *menu);
-    void app_menu_add_lang(QMenu *menu);
-    void app_menu_add_style(QMenu *menu);
-#ifdef USE_CUSTOM_STYLE
-    void app_menu_add_custom_style(QMenu *menu);
-#endif
-    void app_menu_add_confirm_exit(QMenu *menu);
-    void app_menu_add_show_on_top(QMenu *menu);
-    void app_menu_add_about(QMenu *menu);
-    void app_menu_add_help(QMenu *menu);
-
-    void app_toolbar_add_separator(void);
-    void app_toolbar_add_exit(void);
-#ifndef NO_LOG
-    void app_toolbar_add_font(void);
-#endif
-    void app_toolbar_add_lang(void);
-    void app_toolbar_add_style(void);
-#ifdef USE_CUSTOM_STYLE
-    void app_toolbar_add_custom_style(void);
-#endif
-    void app_toolbar_add_about(void);
-    void app_toolbar_add_help(void);
 
     void app_updateText(void);
     void dockwidget_updateText(void);
@@ -374,6 +314,9 @@ protected:
     bool flag_close = false;
     bool flag_always_on_top = false;
 
+    QPointer<QTranslator> translator_system;
+    QList<TRANSLATOR> l_translators;
+
     void changeEvent(QEvent *event);
     void closeEvent(QCloseEvent *event);
 #ifdef SHOW_SIZE
@@ -381,4 +324,4 @@ protected:
 #endif
 };
 //--------------------------------------------------------------------------------
-#endif //MAINWINDOW_HPP
+#endif //CREATORWINDOW_HPP

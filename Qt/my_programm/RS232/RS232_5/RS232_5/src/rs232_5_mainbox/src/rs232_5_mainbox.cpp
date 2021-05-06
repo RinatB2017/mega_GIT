@@ -89,7 +89,7 @@ void MainBox::createTestBar(void)
     
     connect(btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
 
-    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+    //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)

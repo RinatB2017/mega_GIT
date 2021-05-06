@@ -104,7 +104,7 @@ void MainBox::createTestBar(void)
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 
-    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());    //TODO странно
+    //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());    //TODO странно
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)

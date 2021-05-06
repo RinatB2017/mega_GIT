@@ -109,7 +109,7 @@ void MainBox::createTestBar(void)
                                        "test");
 
     connect(btn_test,   &QToolButton::clicked,  this,   &MainBox::test);
-    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+    //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MainBox::serial_data(QByteArray data)

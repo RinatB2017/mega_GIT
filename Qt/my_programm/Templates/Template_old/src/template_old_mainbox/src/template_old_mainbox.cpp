@@ -121,7 +121,7 @@ void MainBox::createTestBar(void)
     connect(cb_block,   &QCheckBox::clicked,    btn_choice_test,   &QToolButton::setDisabled);
 
 #ifndef NO_MENU
-    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+    //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 #endif    
 }
 //--------------------------------------------------------------------------------

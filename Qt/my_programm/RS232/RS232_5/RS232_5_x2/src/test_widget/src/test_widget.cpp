@@ -94,7 +94,7 @@ void TestWidget::createTestBar(void)
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 
-    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+    //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 QToolButton *TestWidget::add_button(QToolBar *tool_bar,

@@ -65,7 +65,7 @@ void AboutBox::init(void)
     });
 #endif
 
-    ui->btn_about_qt->setIcon(QPixmap(QLatin1String(ICON_ABOUT_QT)));
+    ui->btn_about_qt->setIcon(QIcon(QLatin1String(ICON_ABOUT_QT)));
     ui->btn_about_qt->setToolTip(tr("About Qt"));
     ui->btn_about_qt->setStatusTip(tr("About Qt"));
     connect(ui->btn_about_qt,   &QToolButton::clicked,  qApp,   &QApplication::aboutQt);

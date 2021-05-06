@@ -21,7 +21,7 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QOpenGLWidget>
+//#include <QOpenGLWidget>
 
 #include "ui_for_tests_mainbox.h"
 #include "mywidget.hpp"
@@ -29,6 +29,40 @@
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
+//--------------------------------------------------------------------------------
+class C
+{
+public:
+    C() {
+        qDebug() << "C";
+    }
+    virtual ~C()
+    {
+        qDebug() << "destroy C";
+    }
+};
+class B : public C
+{
+public:
+    B() {
+        qDebug() << "B";
+    }
+    virtual ~B()
+    {
+        qDebug() << "destroy B";
+    }
+};
+class A : public B
+{
+public:
+    A() {
+        qDebug() << "A";
+    }
+    virtual ~A()
+    {
+        qDebug() << "destroy A";
+    }
+};
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;

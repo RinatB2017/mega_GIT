@@ -3,9 +3,13 @@
 #**********************************************************************************
 
 DEPENDPATH  += \
-    $$PWD/src \
+    $$PWD/mainwindow \
     $$PWD/mw_images
 INCLUDEPATH = $$DEPENDPATH
+
+include (creatorwindow/creatorwindow.pri)
+include (creatortoolbars/creatortoolbars.pri)
+include (creatormenus/creatormenus.pri)
 
 HEADERS   += mainwindow.hpp
 SOURCES   += mainwindow.cpp

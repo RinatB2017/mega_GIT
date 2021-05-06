@@ -74,7 +74,7 @@
 </context>
 
 <context>
-    <name>MainWindow</name>
+    <name>CreatorToolBars</name>
     <message>
         <source>Windows</source>
         <translation>Окна</translation>
@@ -106,7 +106,7 @@
 </context>
 
 <context>
-    <name>MainWindow</name>
+    <name>CreatorMenus</name>
     <message>
         <source>information</source>
         <translation>Информация</translation>
@@ -194,7 +194,7 @@
 </context>
 
 <context>
-    <name>MainWindow</name>
+    <name>CreatorToolBars</name>
     <message>
         <source>log</source>
         <translation>Лог</translation>

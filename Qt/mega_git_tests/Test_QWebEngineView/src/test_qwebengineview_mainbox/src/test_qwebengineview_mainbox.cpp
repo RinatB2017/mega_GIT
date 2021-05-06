@@ -347,7 +347,7 @@ void MainBox::createTestBar(void)
     connect(btn_choice_test,    &QToolButton::clicked,
             this,               &MainBox::choice_test);
 
-    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+    //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)

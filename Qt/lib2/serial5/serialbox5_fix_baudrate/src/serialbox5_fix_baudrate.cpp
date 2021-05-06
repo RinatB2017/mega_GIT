@@ -393,7 +393,8 @@ bool SerialBox5_fix_baudrate::add_menu(int index)
     connect(action_flag_byte_by_byte,   &QAction::triggered,    this,   &SerialBox5_fix_baudrate::set_flag_byte_by_byte);
 
     //---
-    mw->add_optionsmenu_menu(index, menu);
+    //FIXME недо исправить
+//    mw->add_optionsmenu_menu(index, menu);
     //---
 
     return false;
@@ -422,7 +423,10 @@ bool SerialBox5_fix_baudrate::add_menu(int index, const QString &title)
     connect(action_flag_in_hex, &QAction::triggered, this, &SerialBox5_fix_baudrate::set_flag_in_hex);
     connect(action_flag_byte_by_byte, &QAction::triggered, this, &SerialBox5_fix_baudrate::set_flag_byte_by_byte);
 
-    mw->add_menu(index, menu);
+    //---
+    //FIXME недо исправить
+//    mw->add_menu(index, menu);
+    //---
 
     return true;
 }

@@ -119,7 +119,7 @@ void MainBox::createTestBar(void)
     connect(btn_seek_forward,   SIGNAL(clicked(bool)),  this,   SLOT(seek_forward()));
     connect(btn_skip_forward,   SIGNAL(clicked(bool)),  this,   SLOT(skip_forward()));
 
-    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+    //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
 void MainBox::test(void)

@@ -1260,7 +1260,6 @@ void MainWindow::set_tileSubWindows(void)
     if(l_obj.count() <= 1)
     {
         l_obj.at(0)->tileSubWindows();
-        return;
     }
 }
 //--------------------------------------------------------------------------------
@@ -1270,7 +1269,6 @@ void MainWindow::set_cascadeSubWindows(void)
     if(l_obj.count() <= 1)
     {
         l_obj.at(0)->cascadeSubWindows();
-        return;
     }
 }
 //--------------------------------------------------------------------------------
@@ -2041,7 +2039,7 @@ void MainWindow::app_toolbar_add_exit(void)
 {
     QToolButton *btnExit = new QToolButton(this);
     btnExit->setObjectName("btnExit");
-    btnExit->setIcon(QPixmap(P_ICON_EXIT));
+    btnExit->setIcon(QIcon(P_ICON_EXIT));
     btnExit->setToolTip("Exit");
     btnExit->setStatusTip("Exit");
     btnExit->setProperty(P_APP_ENG_TEXT, "Exit");
@@ -2079,7 +2077,7 @@ void MainWindow::app_toolbar_add_font(void)
     QToolButton *btn_font = new QToolButton(this);
     btn_font->setObjectName("btn_font");
     btn_font->setMenu(menu_fonts);
-    btn_font->setIcon(QPixmap(P_ICON_FONT));
+    btn_font->setIcon(QIcon(P_ICON_FONT));
     btn_font->setPopupMode(QToolButton::MenuButtonPopup);
 
 #ifndef NO_TOOLBAR
@@ -2100,7 +2098,7 @@ void MainWindow::app_toolbar_add_lang(void)
 
     QAction *a_us = new QAction(this);
     a_us->setObjectName("a_us");
-    a_us->setIcon(QPixmap(P_ICON_US));
+    a_us->setIcon(QIcon(P_ICON_US));
     a_us->setToolTip(lang);
     a_us->setStatusTip(lang);
     a_us->setProperty(P_APP_ENG_TEXT, lang);
@@ -2153,7 +2151,7 @@ void MainWindow::app_toolbar_add_style(void)
 
     QToolButton *btnStyle = new QToolButton(this);
     btnStyle->setObjectName("btnStyle");
-    btnStyle->setIcon(QPixmap(P_ICON_STYLE));
+    btnStyle->setIcon(QIcon(P_ICON_STYLE));
     btnStyle->setToolTip("Style");
     btnStyle->setStatusTip("Style");
     btnStyle->setProperty(P_APP_ENG_TEXT, "Style");
@@ -2180,7 +2178,7 @@ void MainWindow::app_toolbar_add_custom_style(void)
 
     QToolButton *btnStyle = new QToolButton(this);
     btnStyle->setObjectName("btn_norton");
-    btnStyle->setIcon(QPixmap(ICON_STYLE));
+    btnStyle->setIcon(QIcon(ICON_STYLE));
     btnStyle->setMenu(menu);
     btnStyle->setPopupMode(QToolButton::InstantPopup);
 
@@ -2196,7 +2194,7 @@ void MainWindow::app_toolbar_add_about(void)
 {
     QToolButton *btnAbout = new QToolButton(this);
     btnAbout->setObjectName("btnExit");
-    btnAbout->setIcon(QPixmap(ICON_PROGRAMM));
+    btnAbout->setIcon(QIcon(ICON_PROGRAMM));
     btnAbout->setToolTip("About");
     btnAbout->setStatusTip("About");
     btnAbout->setProperty(P_APP_ENG_TEXT, "About");
@@ -2212,7 +2210,7 @@ void MainWindow::app_toolbar_add_help(void)
 {
     QToolButton *btnHelp = new QToolButton(this);
     btnHelp->setObjectName("btnHelp");
-    btnHelp->setIcon(QPixmap(P_ICON_HELP));
+    btnHelp->setIcon(QIcon(P_ICON_HELP));
     btnHelp->setToolTip("Help");
     btnHelp->setStatusTip("Help");
     btnHelp->setProperty(P_APP_ENG_TEXT, "Help");

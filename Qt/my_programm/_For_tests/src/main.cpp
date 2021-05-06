@@ -95,6 +95,8 @@ int main(int argc, char *argv[])
 
     splash->show();
 
+    //CreatorToolBars *main_window = new CreatorToolBars();
+    //CreatorMenus *main_window = new CreatorMenus();
     MyMainWindow *main_window = new MyMainWindow();
     //MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);

@@ -41,7 +41,9 @@ MyMainWindow::MyMainWindow(MainWindow *parent) :
     //qInstallMsgHandler(messageHandler);
 #endif
 
+#ifndef NO_MENU
     create_local_menus();
+#endif
     create_toolbars();
 
     setUnifiedTitleAndToolBarOnMac(true);
@@ -112,15 +114,18 @@ void MyMainWindow::messageHandler(QtMsgType type,
 void MyMainWindow::create_local_menus(void)
 {
     QAction *file_action = new QAction(this);
-    file_action->setText(QObject::tr("file_action"));
+//    file_action->setText(QObject::tr("file_action"));
+    file_action->setText("file_action");
     file_action->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
 
     QAction *options_action = new QAction(this);
-    options_action->setText(QObject::tr("options_action"));
+//    options_action->setText(QObject::tr("options_action"));
+    options_action->setText("options_action");
     options_action->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
 
     QAction *help_action = new QAction(this);
-    help_action->setText(QObject::tr("help_action"));
+//    help_action->setText(QObject::tr("help_action"));
+    help_action->setText("help_action");
     help_action->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
 
     connect(file_action,    &QAction::triggered,    this,   &MyMainWindow::file_action_click);
@@ -159,7 +164,9 @@ void MyMainWindow::create_toolbars(void)
     }
 
     toolBar->setMovable(true);
-    add_windowsmenu_action(toolBar, toolBar->toggleViewAction());
+//#ifndef NO_MENU
+//    add_windowsmenu_action(toolBar, toolBar->toggleViewAction());
+//#endif
 
     //---
 
@@ -182,7 +189,9 @@ void MyMainWindow::create_toolbars(void)
     }
 
     toolBar2->setMovable(true);
-    add_windowsmenu_action(toolBar2, toolBar2->toggleViewAction());
+//#ifndef NO_MENU
+//    add_windowsmenu_action(toolBar2, toolBar2->toggleViewAction());
+//#endif
 }
 //--------------------------------------------------------------------------------
 void MyMainWindow::click_btn(void)

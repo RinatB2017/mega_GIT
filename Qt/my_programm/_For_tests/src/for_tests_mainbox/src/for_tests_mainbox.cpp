@@ -70,7 +70,9 @@ void MainBox::init(void)
         MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
         if(mw)
         {
+#ifndef NO_MENU
             mw->add_mdi_sorting();
+#endif
             mw->add_dock_widget("test_dock",
                                 "test_dock",
                                 Qt::BottomDockWidgetArea,
@@ -181,7 +183,9 @@ void MainBox::createTestBar(void)
 
     // testbar->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-    mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+//#ifndef NO_MENU
+    //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+//#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -285,6 +289,10 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    A();
+#endif
+
+#if 0
     int asd = 0x1234'5678;
     emit info(QString("asd %1").arg(asd, 4, 16, QChar('0')));
 #endif

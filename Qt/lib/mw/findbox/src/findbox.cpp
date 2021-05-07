@@ -37,9 +37,9 @@ FindBox::~FindBox()
 //--------------------------------------------------------------------------------
 void FindBox::init(void)
 {
-    ui->btn_close->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_DialogCloseButton)));
-    ui->btn_prev->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_ArrowUp)));
-    ui->btn_next->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_ArrowDown)));
+    ui->btn_close->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogCloseButton));
+    ui->btn_prev->setIcon(qApp->style()->standardIcon(QStyle::SP_ArrowUp));
+    ui->btn_next->setIcon(qApp->style()->standardIcon(QStyle::SP_ArrowDown));
 
     connect(ui->btn_close,  &QToolButton::clicked,  this,   &FindBox::f_hide);
     connect(ui->btn_prev,   &QToolButton::clicked,  this,   &FindBox::f_prev);

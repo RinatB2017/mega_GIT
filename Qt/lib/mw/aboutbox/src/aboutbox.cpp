@@ -72,7 +72,7 @@ void AboutBox::init(void)
 
     connect(ui->buttonBox,  &QDialogButtonBox::rejected, this, &AboutBox::close);
 
-    ui->btn_env->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MessageBoxInformation)));
+    ui->btn_env->setIcon(qApp->style()->standardIcon(QStyle::SP_MessageBoxInformation));
     ui->btn_env->setToolTip(tr("Get ENV"));
     ui->btn_env->setStatusTip(tr("Get ENV"));
 

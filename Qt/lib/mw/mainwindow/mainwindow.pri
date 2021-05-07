@@ -10,6 +10,7 @@ INCLUDEPATH = $$DEPENDPATH
 include (creatorwindow/creatorwindow.pri)
 include (creatortoolbars/creatortoolbars.pri)
 include (creatormenus/creatormenus.pri)
+# include (mainwindow/mainwindow.pri)
 
 HEADERS   += mainwindow.hpp
 SOURCES   += mainwindow.cpp

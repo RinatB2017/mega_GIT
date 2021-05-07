@@ -39,7 +39,7 @@ void Controls_widget::init(void)
 
     ui->horizontalSlider->setRange(0, 1000);
 
-    ui->toolButton->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon)));
+    ui->toolButton->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
     connect(ui->toolButton, &QToolButton::clicked,  this,   &Controls_widget::delete_string);
 
     //---

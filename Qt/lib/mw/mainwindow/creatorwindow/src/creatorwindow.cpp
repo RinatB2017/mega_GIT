@@ -1249,7 +1249,7 @@ bool CreatorWindow::add_new_action(QMenu   *parent,
     Q_UNUSED(slot); //FIXME
 #endif
 
-    parent->addAction(action);
+    //parent->addAction(action);
 
     return action;
 }

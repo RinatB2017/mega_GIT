@@ -53,11 +53,19 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 #endif
 
-    app.setOrganizationName(QObject::tr(ORGNAME));
-    app.setApplicationName(QObject::tr(APPNAME));
+    app.setOrganizationName(ORGNAME);
+    app.setApplicationName(APPNAME);
+#ifdef Q_OS_LINUX
+    app.setApplicationVersion(QString("%1.%2.%3.%4")
+                              .arg(VER_MAJOR)
+                              .arg(VER_MINOR)
+                              .arg(VER_PATCH)
+                              .arg(VER_BUILD));
+#endif
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     MainWindow *main_window = new MainWindow();
+    Q_ASSERT(main_window);
 
     QPixmap pixmap(":/logo/logo.png");
     MySplashScreen *splash = new MySplashScreen(pixmap);
@@ -67,6 +75,7 @@ int main(int argc, char *argv[])
     splash->showMessage(QObject::tr("Подождите ..."));    
 
     TestWidget *cw = new TestWidget(main_window);
+    Q_ASSERT(cw);
 //    QObject::connect(cw, &TestWidget::info,  main_window, &MainWindow::info);
 
     main_window->setCentralWidget(cw);

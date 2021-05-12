@@ -165,10 +165,15 @@ private slots:
 private:
     static QFile *m_logFile;
 
+    QPointer<QAction> file_action;
+    QPointer<QAction> options_action;
+    QPointer<QAction> help_action;
+
     void create_local_menus(void);
     void create_toolbars(void);
 
 protected:
+//    void changeEvent(QEvent *event);
     void closeEvent(QCloseEvent *event);
 };
 //--------------------------------------------------------------------------------

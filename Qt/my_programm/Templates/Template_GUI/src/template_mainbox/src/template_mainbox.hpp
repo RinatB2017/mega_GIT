@@ -22,8 +22,9 @@
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
 #include "template_mainbox_GUI.hpp"
-//--------------------------------------------------------------------------------
-class MySplashScreen;
+#include "mywaitsplashscreen.hpp"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
 class MainBox : public MainBox_GUI
 {
@@ -32,7 +33,7 @@ class MainBox : public MainBox_GUI
 public:
     explicit MainBox(QWidget *parent,
                      MySplashScreen *splash);
-    ~MainBox();
+    virtual ~MainBox();
 
 private slots:
     void choice_test(void);

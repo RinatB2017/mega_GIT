@@ -122,7 +122,7 @@ class CreatorWindow : public QMainWindow, public MySettings
     Q_OBJECT
 
 public:
-    explicit CreatorWindow(QMainWindow* parent = nullptr);
+    explicit CreatorWindow(QMainWindow* parent);
     virtual ~CreatorWindow();
 
     void setCentralWidget(MyWidget *widget);
@@ -131,9 +131,9 @@ public:
 
     void setWindowTitle(const QString &title);
 
-    bool add_action(QMenu *menu,
-                    int pos_y,
-                    QAction *action);
+//    bool add_action(QMenu *menu,
+//                    int pos_y,
+//                    QAction *action);
 
     bool add_separator(QMenu *menu,
                        int pos_y);
@@ -298,10 +298,6 @@ private:
 
     QPointer<QMenuBar> app_mainBar;
 
-    QList<QAction *> app_actions;
-    QList<QAbstractButton *> app_buttons;
-
-    void app_updateText(void);
     void dockwidget_updateText(void);
 
     // void show_docs(void);

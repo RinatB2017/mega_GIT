@@ -42,7 +42,7 @@ signals:
 public:
     explicit MainBox_GUI(QWidget *parent,
                          MySplashScreen *splash);
-    ~MainBox_GUI();
+    virtual ~MainBox_GUI();
 
     void set_value(int value);
     int  get_value(void);

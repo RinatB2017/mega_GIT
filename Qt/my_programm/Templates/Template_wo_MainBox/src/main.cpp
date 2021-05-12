@@ -24,10 +24,6 @@
 #   include <QtGui>
 #endif
 //--------------------------------------------------------------------------------
-#if QT_VERSION >= 0x050000
-#   include <QtMessageHandler>
-#endif
-//--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
@@ -51,11 +47,6 @@ int main(int argc, char *argv[])
 #ifdef Q_OS_LINUX
     //set_signals();
 #endif
-#if QT_VERSION >= 0x050000
-    //qInstallMessageHandler(log_to_file);
-#else
-    //qInstallMsgHandler(log_to_file);
-#endif
 
     set_codecs();
 #ifdef SINGLE_APP
@@ -69,8 +60,8 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 #endif
 
-    app.setOrganizationName(QObject::tr(ORGNAME));
-    app.setApplicationName(QObject::tr(APPNAME));
+    app.setOrganizationName(ORGNAME);
+    app.setApplicationName(APPNAME);
 #ifdef Q_OS_LINUX
     app.setApplicationVersion(QString("%1.%2.%3.%4")
                               .arg(VER_MAJOR)
@@ -87,6 +78,7 @@ int main(int argc, char *argv[])
     splash->show();    
 
     NewMainWindow *main_window = new NewMainWindow();
+    Q_ASSERT(main_window);
     main_window->show();
 
     splash->finish(main_window);
@@ -94,7 +86,7 @@ int main(int argc, char *argv[])
 #ifdef SINGLE_APP
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
 #endif
-    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
 
 #ifdef QT_DEBUG
     int test_result = QTest::qExec(new Test(), argc, argv);

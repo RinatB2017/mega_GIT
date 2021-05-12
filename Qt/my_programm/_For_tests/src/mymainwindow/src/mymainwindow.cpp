@@ -59,6 +59,10 @@ MyMainWindow::~MyMainWindow()
 #endif
     //TODO не надо отсюда это убирать
     save_setting();
+
+    if(file_action)     delete file_action;
+    if(options_action)  delete options_action;
+    if(help_action)     delete help_action;
 }
 //--------------------------------------------------------------------------------
 #ifdef HAVE_QT5
@@ -113,18 +117,21 @@ void MyMainWindow::messageHandler(QtMsgType type,
 //--------------------------------------------------------------------------------
 void MyMainWindow::create_local_menus(void)
 {
-    QAction *file_action = new QAction(this);
+    file_action = new QAction(this);
 //    file_action->setText(QObject::tr("file_action"));
+    file_action->setProperty(P_APP_ENG_TEXT, "file_action");
     file_action->setText("file_action");
     file_action->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
 
-    QAction *options_action = new QAction(this);
+    options_action = new QAction(this);
 //    options_action->setText(QObject::tr("options_action"));
+    options_action->setProperty(P_APP_ENG_TEXT, "options_action");
     options_action->setText("options_action");
     options_action->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
 
-    QAction *help_action = new QAction(this);
+    help_action = new QAction(this);
 //    help_action->setText(QObject::tr("help_action"));
+    help_action->setProperty(P_APP_ENG_TEXT, "help_action");
     help_action->setText("help_action");
     help_action->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
 
@@ -279,6 +286,28 @@ void MyMainWindow::setCentralWidget(MyWidget *widget)
     MainWindow::setCentralWidget(w);
     MainWindow::set_c_widget(widget);   //TODO проба
 }
+//--------------------------------------------------------------------------------
+//void MyMainWindow::changeEvent(QEvent *event)
+//{
+//    if(event == nullptr)
+//    {
+//        return;
+//    }
+
+//    switch (event->type())
+//    {
+//    case QEvent::LanguageChange:
+//        file_action->setText("1");
+//        options_action->setText("2");
+//        help_action->setText("3");
+//        break;
+
+//    default:
+//        QWidget::changeEvent(event);
+//        break;
+//    }
+//    MainWindow::changeEvent(event);
+//}
 //--------------------------------------------------------------------------------
 void MyMainWindow::closeEvent(QCloseEvent *event)
 {

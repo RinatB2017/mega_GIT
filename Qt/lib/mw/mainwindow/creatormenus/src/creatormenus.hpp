@@ -33,7 +33,7 @@ class CreatorMenus : public CreatorToolBars
 
 public:
     explicit CreatorMenus(CreatorToolBars *parent = nullptr);
-    ~CreatorMenus();
+    virtual ~CreatorMenus();
 
     bool add_menu(int pos_x, QMenu *menu);
     bool add_filemenu_menu(int pos_y,

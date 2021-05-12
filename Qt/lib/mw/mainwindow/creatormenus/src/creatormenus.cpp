@@ -660,9 +660,10 @@ void CreatorMenus::app_updateText(void)
     }
     foreach (auto action, app_actions)
     {
-        action->setText(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
-        action->setToolTip(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
-        action->setStatusTip(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
+        QString text = tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit());
+        action->setText(text);
+        action->setToolTip(text);
+        action->setStatusTip(text);
     }
 }
 //--------------------------------------------------------------------------------
@@ -683,5 +684,6 @@ void CreatorMenus::changeEvent(QEvent *event)
         QWidget::changeEvent(event);
         break;
     }
+    CreatorToolBars::changeEvent(event);
 }
 //--------------------------------------------------------------------------------

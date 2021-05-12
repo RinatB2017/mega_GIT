@@ -33,10 +33,19 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    app.setOrganizationName(QObject::tr(ORGNAME));
-    app.setApplicationName(QObject::tr(APPNAME));
+    app.setOrganizationName(ORGNAME);
+    app.setApplicationName(APPNAME);
+#ifdef Q_OS_LINUX
+    app.setApplicationVersion(QString("%1.%2.%3.%4")
+                              .arg(VER_MAJOR)
+                              .arg(VER_MINOR)
+                              .arg(VER_PATCH)
+                              .arg(VER_BUILD));
+#endif
+    //app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     Tester *main_window = new Tester;
+    Q_ASSERT(main_window);
     main_window->setWindowFlags( Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint );
     main_window->move(0, 0);
     main_window->show();

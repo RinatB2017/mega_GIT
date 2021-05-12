@@ -74,7 +74,7 @@
 </context>
 
 <context>
-    <name>MainWindow</name>
+    <name>CreatorWindow</name>
     <message>
         <source>Windows</source>
         <translation>Окна</translation>
@@ -103,10 +103,6 @@
         <source>Blue theme</source>
         <translation>Синяя тема</translation>
     </message>
-</context>
-
-<context>
-    <name>MainWindow</name>
     <message>
         <source>information</source>
         <translation>Информация</translation>
@@ -187,10 +183,6 @@
         <source>English</source>
         <translation>Английский</translation>
     </message>
-</context>
-
-<context>
-    <name>MainWindow</name>
     <message>
         <source>log</source>
         <translation>Лог</translation>
@@ -215,10 +207,6 @@
         <source>Show buttons</source>
         <translation>Показать кнопки</translation>
     </message>
-</context>
-
-<context>
-    <name>QObject</name>
     <message>
         <source>Starting application %1</source>
         <translation>Программа %1 запущена</translation>

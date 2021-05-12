@@ -109,7 +109,6 @@ void CreatorWindow::changeEvent(QEvent *event)
     switch (event->type())
     {
     case QEvent::LanguageChange:
-        app_updateText();
         dockwidget_updateText();
 #ifndef NO_STYLETOOLBAR
         if(styletoolbar)
@@ -873,35 +872,6 @@ void CreatorWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 }
 #endif
 //--------------------------------------------------------------------------------
-bool CreatorWindow::add_action(QMenu *menu,
-                            int pos_y,
-                            QAction *action)
-{
-    Q_ASSERT(menu);
-    Q_ASSERT(action);
-
-    QList<QAction *> actions = menu->actions();
-    if(actions.count() == 0)
-    {
-        emit error("add_action: actions.count() == 0!");
-        return false;
-    }
-
-    int pos = 0;
-    foreach (QAction *current_action, actions)
-    {
-        if(pos == pos_y)
-        {
-            menu->insertAction(current_action, action);
-            app_actions.append(current_action);
-            return true;
-        }
-        pos++;
-    }
-
-    return false;
-}
-//--------------------------------------------------------------------------------
 void CreatorWindow::change_value(void)
 {
     emit info(QString("change_value %1").arg(sender()->metaObject()->className()));
@@ -1307,23 +1277,6 @@ void CreatorWindow::showNormal(void)
 void CreatorWindow::quit(void)
 {
     qApp->quit();
-}
-
-//--------------------------------------------------------------------------------
-void CreatorWindow::app_updateText(void)
-{
-    foreach (auto action, app_actions)
-    {
-        action->setText(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
-        action->setToolTip(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
-        action->setStatusTip(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
-    }
-    foreach (auto btn, app_buttons)
-    {
-        btn->setText(tr(btn->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
-        btn->setToolTip(tr(btn->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
-        btn->setStatusTip(tr(btn->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
-    }
 }
 //--------------------------------------------------------------------------------
 void CreatorWindow::dockwidget_updateText(void)

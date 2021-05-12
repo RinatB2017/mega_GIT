@@ -55,8 +55,8 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 #endif
 
-    app.setOrganizationName(QObject::tr(ORGNAME));
-    app.setApplicationName(QObject::tr(APPNAME));
+    app.setOrganizationName(ORGNAME);
+    app.setApplicationName(APPNAME);
 #ifdef Q_OS_LINUX
     app.setApplicationVersion(QString("%1.%2.%3.%4")
                               .arg(VER_MAJOR)
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 
     splash->finish(main_window);
 
-    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
 
     return app.exec();
 }

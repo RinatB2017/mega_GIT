@@ -33,7 +33,7 @@ class CreatorToolBars : public CreatorWindow
 
 public:
     explicit CreatorToolBars(CreatorWindow *parent);
-    ~CreatorToolBars();
+    virtual ~CreatorToolBars();
 
 private:
     QPointer<QToolBar> toolbar;

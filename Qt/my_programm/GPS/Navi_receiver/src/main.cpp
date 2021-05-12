@@ -50,8 +50,15 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 #endif
 
-    app.setOrganizationName(QObject::tr(ORGNAME));
-    app.setApplicationName(QObject::tr(APPNAME));
+    app.setOrganizationName(ORGNAME);
+    app.setApplicationName(APPNAME);
+#ifdef Q_OS_LINUX
+    app.setApplicationVersion(QString("%1.%2.%3.%4")
+                              .arg(VER_MAJOR)
+                              .arg(VER_MINOR)
+                              .arg(VER_PATCH)
+                              .arg(VER_BUILD));
+#endif
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/logo.png");
@@ -60,11 +67,12 @@ int main(int argc, char *argv[])
     splash->showMessage(QObject::tr("Подождите ..."));    
 
     MainWindow *main_window = new MainWindow();
+    Q_ASSERT(main_window);
 
     MainBox *mainBox = new MainBox(main_window, splash);
+    Q_ASSERT(mainBox);
 
     main_window->setCentralWidget(mainBox);
-
     main_window->show();
 
     splash->finish(main_window);

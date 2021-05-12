@@ -39,18 +39,29 @@ int main(int argc, char *argv[])
     set_codecs();
     QApplication app(argc, argv);
 
-    app.setOrganizationName(QObject::tr(ORGNAME));
-    app.setApplicationName(QObject::tr(APPNAME));
+    app.setOrganizationName(ORGNAME);
+    app.setApplicationName(APPNAME);
+#ifdef Q_OS_LINUX
+    app.setApplicationVersion(QString("%1.%2.%3.%4")
+                              .arg(VER_MAJOR)
+                              .arg(VER_MINOR)
+                              .arg(VER_PATCH)
+                              .arg(VER_BUILD));
+#endif
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     MainWindow *main_window = new MainWindow;
+    Q_ASSERT(main_window);
+
     main_window->show();
 
     MainBox *mainBox = new MainBox(main_window);
+    Q_ASSERT(mainBox);
+
     main_window->setCentralWidget(mainBox);
 
 #ifdef QT_DEBUG
-    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
 #endif
 
     return app.exec();

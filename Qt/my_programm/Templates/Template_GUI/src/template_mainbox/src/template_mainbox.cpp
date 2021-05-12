@@ -18,9 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "mywaitsplashscreen.hpp"
-#include "mysplashscreen.hpp"
-#include "mainwindow.hpp"
 #include "template_mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------

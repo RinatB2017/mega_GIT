@@ -95,10 +95,10 @@ int main(int argc, char *argv[])
 
     splash->show();
 
-    //CreatorToolBars *main_window = new CreatorToolBars();
-    //CreatorMenus *main_window = new CreatorMenus();
+//    CreatorToolBars *main_window = new CreatorToolBars();
+//    CreatorMenus *main_window = new CreatorMenus();
     MyMainWindow *main_window = new MyMainWindow();
-    //MainWindow *main_window = new MainWindow();
+//    MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);
 
     // отключает заголовок
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
 #endif
 
 #ifdef QT_DEBUG
-    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(QObject::tr(APPNAME)));
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
 
     int test_result = QTest::qExec(new Test(), argc, argv);
     if (test_result != EXIT_SUCCESS)

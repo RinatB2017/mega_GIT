@@ -179,6 +179,7 @@ void CreatorToolBars::app_toolbar_add_lang(void)
     a_us->setStatusTip(lang);
     a_us->setProperty(P_APP_ENG_TEXT, lang);
     a_us->setProperty(P_LANG, P_US);
+    a_us->setText(lang);
     connect(a_us,  &QAction::triggered,    this,   &CreatorWindow::setToolBarLanguage);
     app_actions.append(a_us);
     menu->addAction(a_us);
@@ -291,15 +292,17 @@ void CreatorToolBars::app_updateText(void)
 {
     foreach (auto btn, app_buttons)
     {
-        btn->setText(tr(btn->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
-        btn->setToolTip(tr(btn->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
-        btn->setStatusTip(tr(btn->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
+        QString text = tr(btn->property(P_APP_ENG_TEXT).toString().toLocal8Bit());
+        btn->setText(text);
+        btn->setToolTip(text);
+        btn->setStatusTip(text);
     }
     foreach (auto action, app_actions)
     {
-        action->setText(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
-        action->setToolTip(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
-        action->setStatusTip(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
+        QString text = tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit());
+        action->setText(text);
+        action->setToolTip(text);
+        action->setStatusTip(text);
     }
 }
 //--------------------------------------------------------------------------------

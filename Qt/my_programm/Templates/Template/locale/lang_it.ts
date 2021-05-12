@@ -70,7 +70,7 @@
 </context>
 
 <context>
-    <name>MainWindow</name>
+    <name>CreatorWindow</name>
     <message>
         <source>Windows</source>
         <translation>Finestre</translation>
@@ -99,10 +99,6 @@
         <source>Blue theme</source>
         <translation>Tema blu</translation>
     </message>
-</context>
-
-<context>
-    <name>MainWindow</name>
     <message>
         <source>information</source>
         <translation>information</translation>
@@ -175,10 +171,6 @@
         <source>English</source>
         <translation>Inglese</translation>
     </message>
-</context>
-
-<context>
-    <name>MainWindow</name>
     <message>
         <source>log</source>
         <translation>Log</translation>
@@ -203,10 +195,6 @@
         <source>Show buttons</source>
         <translation>Mostra pulsanti</translation>
     </message>
-</context>
-
-<context>
-    <name>QObject</name>
     <message>
         <source>Starting application %1</source>
         <translation>Programma HHH %1 avviato</translation>

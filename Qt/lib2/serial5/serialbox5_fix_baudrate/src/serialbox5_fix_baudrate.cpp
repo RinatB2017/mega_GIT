@@ -394,7 +394,11 @@ bool SerialBox5_fix_baudrate::add_menu(int index)
 
     //---
     //FIXME недо исправить
-//    mw->add_optionsmenu_menu(index, menu);
+#if 0
+    mw->add_optionsmenu_menu(index, menu);
+#else
+    Q_UNUSED(index);
+#endif
     //---
 
     return false;
@@ -425,7 +429,11 @@ bool SerialBox5_fix_baudrate::add_menu(int index, const QString &title)
 
     //---
     //FIXME недо исправить
-//    mw->add_menu(index, menu);
+#if 0
+    mw->add_menu(index, menu);
+#else
+    Q_UNUSED(index);
+#endif
     //---
 
     return true;

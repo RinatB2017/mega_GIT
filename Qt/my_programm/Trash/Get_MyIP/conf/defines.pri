@@ -54,9 +54,4 @@ DEFINES += USE_DOCK_WIDGETS
 
 CONFIG(debug, debug|release) {
     DEFINES += LOGGER_ON
-} else {
-    DEFINES += NO_TOOLBAR
-    DEFINES += NO_MENU
-    DEFINES += NO_LOG
-    DEFINES += FIXED_SIZE
 }

@@ -18,9 +18,17 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include <QHostAddress>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+//--------------------------------------------------------------------------------
 #include "ui_get_myip_mainbox.h"
 //--------------------------------------------------------------------------------
+#include "mywaitsplashscreen.hpp"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
 #include "get_myip_mainbox.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
@@ -45,15 +53,13 @@ void MainBox::init(void)
     ui->lcd_1->display("---");
     ui->lcd_2->display("---");
     ui->lcd_3->display("---");
-
-    show_my_IP();
 }
 //--------------------------------------------------------------------------------
 void MainBox::show_my_IP(void)
 {
     block_this_button(true);
 
-    request.setUrl(QUrl("https://api.ipify.org/"));
+    request.setUrl(QUrl("https://2ip.ru/"));
     QNetworkReply *reply = networkManager.get(QNetworkRequest(request));
     while (!reply->isFinished())
     {
@@ -65,15 +71,26 @@ void MainBox::show_my_IP(void)
         ba = reply->readLine();
         if(ba.isEmpty() == false)
         {
-            emit debug(ba);
-            QString temp = ba.data();
-            QStringList sl = temp.split('.');
-            if(sl.count() == 4)
+            if(ba.contains("Ваш IP адрес"))
             {
-                ui->lcd_0->display(sl.at(0));
-                ui->lcd_1->display(sl.at(1));
-                ui->lcd_2->display(sl.at(2));
-                ui->lcd_3->display(sl.at(3));
+                QString begin_str = "<big id=\"d_clip_button\">";
+                int begin = ba.lastIndexOf(begin_str.toLocal8Bit());
+                int end = ba.lastIndexOf("</big>");
+                emit debug(QString("begin %1").arg(begin));
+                emit debug(QString("end %1").arg(end));
+                if((end - begin) > 6)
+                {
+                    QString str = ba.mid(begin+begin_str.length(), end-begin-begin_str.length());
+                    emit debug(QString("%1").arg(str));
+                    quint32 ip = QHostAddress(str).toIPv4Address();
+                    ui->lcd_0->display(static_cast<int>((ip >> 24) & 0xFF ));
+                    ui->lcd_1->display(static_cast<int>((ip >> 16) & 0xFF ));
+                    ui->lcd_2->display(static_cast<int>((ip >> 8) & 0xFF ));
+                    ui->lcd_3->display(static_cast<int>(ip & 0xFF ));
+
+                    block_this_button(false);
+                    return;
+                }
             }
         }
     } while(ba.isEmpty() == false);

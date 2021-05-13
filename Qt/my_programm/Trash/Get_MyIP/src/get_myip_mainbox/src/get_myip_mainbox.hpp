@@ -23,27 +23,23 @@
 //--------------------------------------------------------------------------------
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QHostAddress>
 //--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
-#include "mysplashscreen.hpp"
-#include "mainwindow.hpp"
-#include "defines.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
 //--------------------------------------------------------------------------------
+class MySplashScreen;
+//--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox();
+    MainBox(QWidget *parent,
+            MySplashScreen *splash);
+    ~MainBox();
 
 private slots:
     void show_my_IP(void);

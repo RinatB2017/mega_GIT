@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,49 +18,71 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QHostAddress>
-//--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
+#include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
+#include "get_myip_mainbox.hpp"
 #include "defines.hpp"
-#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+#include "codecs.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+    set_codecs();
+#ifdef SINGLE_APP
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        if(app.sendMessage("Wake up!")) return 0;
+    }
+#else
+    QApplication app(argc, argv);
+#endif
+
+    app.setOrganizationName(ORGNAME);
+    app.setApplicationName(APPNAME);
+#ifdef Q_OS_LINUX
+    app.setApplicationVersion(QString("%1.%2.%3.%4")
+                              .arg(VER_MAJOR)
+                              .arg(VER_MINOR)
+                              .arg(VER_PATCH)
+                              .arg(VER_BUILD));
+#endif
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+    QPixmap pixmap(":/logo/logo.png");
+
+    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    Q_ASSERT(splash);
+    splash->show();
+
+    MainWindow *main_window = new MainWindow();
+    Q_ASSERT(main_window);
+    //qDebug() << main_window->windowFlags();
+
+    MainBox *mainBox = new MainBox(main_window, splash);
+    Q_ASSERT(mainBox);
+
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
+
+    splash->finish(main_window);
+
+#ifdef SINGLE_APP
+    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
+#endif
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
+
+    return app.exec();
 }
 //--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox();
-
-private slots:
-    void show_my_IP(void);
-
-private:
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QNetworkRequest request;
-    QNetworkAccessManager networkManager;
-
-    void init(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
-//--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP

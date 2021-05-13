@@ -31,6 +31,7 @@ SUBDIRS += \
     $$PWD/test_serialport_win7 \
     $$PWD/Templates \
     $$PWD/WiFi \
+    $$PWD/UPS \
 
 unix {
 SUBDIRS += \

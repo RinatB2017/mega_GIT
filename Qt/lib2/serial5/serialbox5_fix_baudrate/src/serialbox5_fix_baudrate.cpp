@@ -26,10 +26,6 @@
 #include "serialbox5_fix_baudrate.hpp"
 #include "ui_serialbox5_fix_baudrate.h"
 //--------------------------------------------------------------------------------
-#ifdef RS232_SEND
-#   include "sendbox5.hpp"
-#endif
-//--------------------------------------------------------------------------------
 #include "logbox.hpp"
 //--------------------------------------------------------------------------------
 #define MAX_TIME_MSEC   100
@@ -91,6 +87,11 @@ bool SerialBox5_fix_baudrate::set_fix_baudrate(int value)
     fix_baudrate = value;
     return setBaudRate(value);
 }
+//--------------------------------------------------------------------------------
+//bool SerialBox5_fix_baudrate::set_settings_restored_on_close(bool state)
+//{
+//    return setSettingsRestoredOnClose(state);
+//}
 //--------------------------------------------------------------------------------
 qint32 SerialBox5_fix_baudrate::get_baudRate(void)
 {

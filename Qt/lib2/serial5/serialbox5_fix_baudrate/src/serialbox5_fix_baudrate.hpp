@@ -55,6 +55,8 @@ public:
     void set_caption(const QString &value);
 
     bool set_fix_baudrate(int value);
+//    bool set_settings_restored_on_close(bool state);
+//    bool setSettingsRestoredOnClose(bool state);
 
     qint32 get_baudRate(void);
     QSerialPort::DataBits       get_dataBits(void);

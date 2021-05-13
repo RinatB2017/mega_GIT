@@ -113,6 +113,12 @@ bool SerialWidget::setBaudRate(qint32 value)
     return serial5->setBaudRate(value);
 }
 //--------------------------------------------------------------------------------
+//void SerialWidget::setSettingsRestoredOnClose(bool state)
+//{
+//    Q_ASSERT(serial5);
+//    serial5->setSettingsRestoredOnClose(state);
+//}
+//--------------------------------------------------------------------------------
 bool SerialWidget::setDataBits(QSerialPort::DataBits value)
 {
     Q_ASSERT(serial5);
@@ -244,15 +250,14 @@ void SerialWidget::serial5_error(QSerialPort::SerialPortError err)
         break;
     }
 
-    if(err != QSerialPort::NoError)
+    if(err != QSerialPort::NoError && err != QSerialPort::ReadError)
     {
         if(serial5->isOpen())
         {
             serial5->close();
         }
+        emit port_close();
     }
-
-    emit port_close();
 }
 //--------------------------------------------------------------------------------
 void SerialWidget::timer_stop(void)

@@ -31,9 +31,7 @@
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
-    MyWidget(parent),
-    splash(splash),
-    ui(new Ui::MainBox)
+    MainBox_GUI(parent, splash)
 {
     init();
 }
@@ -41,16 +39,11 @@ MainBox::MainBox(QWidget *parent,
 MainBox::~MainBox()
 {
     save_widgets();
-    delete ui;
 }
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
-    ui->setupUi(this);
-
     createTestBar();
-
-    connect_log_signals(ui->controls_widget, this);
 
     // add_lcd_clock();
     // add_digital_clock(false);
@@ -63,23 +56,6 @@ void MainBox::init(void)
     {
         setMinimumHeight(sizeHint().height());
     }
-#endif
-
-#ifdef USE_DOCK_WIDGETS
-    QTimer::singleShot(0, [this]{
-        MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-        if(mw)
-        {
-#ifndef NO_MENU
-            mw->add_mdi_sorting();
-#endif
-            mw->add_dock_widget("test_dock",
-                                "test_dock",
-                                Qt::BottomDockWidgetArea,
-                                ui->test_frame);
-        }
-        load_widgets();
-    });
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -338,11 +314,6 @@ bool MainBox::f2(int value)
 bool MainBox::f3(int value)
 {
     return (value > 0);
-}
-//--------------------------------------------------------------------------------
-void MainBox::updateText(void)
-{
-    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)

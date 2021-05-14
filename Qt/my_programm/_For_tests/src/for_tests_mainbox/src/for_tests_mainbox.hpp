@@ -21,9 +21,8 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-//#include <QOpenGLWidget>
-
 #include "ui_for_tests_mainbox.h"
+#include "for_tests_mainbox_gui.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
@@ -70,7 +69,7 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 //--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class MainBox : public MainBox_GUI
 {
     Q_OBJECT
 
@@ -106,9 +105,6 @@ private:
     } *cmd_t;
     QList<CMD> commands;
 
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
     QPointer<QComboBox> cb_test;
     QPointer<QSpinBox>  sb_test;
     QPointer<QCheckBox> cb_block;
@@ -126,7 +122,6 @@ private:
     template<class T>
     void test_function(int delay);
 
-    void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);

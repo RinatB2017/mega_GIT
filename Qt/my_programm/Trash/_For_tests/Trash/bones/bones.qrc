@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/bones">
+        <file>black1.png</file>
+        <file>black2.png</file>
+        <file>black3.png</file>
+        <file>black4.png</file>
+        <file>black5.png</file>
+        <file>black6.png</file>
+        <file>black7.png</file>
+        <file>black8.png</file>
+        <file>black9.png</file>
+        <file>black10.png</file>
+        <file>black11.png</file>
+        <file>white1.png</file>
+        <file>white2.png</file>
+        <file>white3.png</file>
+        <file>white4.png</file>
+        <file>white5.png</file>
+        <file>white6.png</file>
+        <file>white7.png</file>
+        <file>white8.png</file>
+        <file>white9.png</file>
+        <file>white10.png</file>
+        <file>white11.png</file>
+    </qresource>
+</RCC>

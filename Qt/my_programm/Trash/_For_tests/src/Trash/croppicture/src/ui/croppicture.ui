@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CropPicture</class>
+ <widget class="QWidget" name="CropPicture">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>510</width>
+    <height>391</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QToolButton" name="btn_up_left">
+       <property name="icon">
+        <iconset resource="../../../../../../lib2/icons/arrows/arrows.qrc">
+         <normaloff>:/arrows/up_left.png</normaloff>:/arrows/up_left.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QToolButton" name="btn_down_right">
+       <property name="icon">
+        <iconset resource="../../../../../../lib2/icons/arrows/arrows.qrc">
+         <normaloff>:/arrows/down_right.png</normaloff>:/arrows/down_right.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QToolButton" name="btn_up">
+         <property name="icon">
+          <iconset resource="../../../../../../lib2/icons/arrows/arrows.qrc">
+           <normaloff>:/arrows/up.png</normaloff>:/arrows/up.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="2">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QToolButton" name="btn_down">
+         <property name="icon">
+          <iconset resource="../../../../../../lib2/icons/arrows/arrows.qrc">
+           <normaloff>:/arrows/down.png</normaloff>:/arrows/down.png</iconset>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QToolButton" name="btn_left">
+         <property name="icon">
+          <iconset resource="../../../../../../lib2/icons/arrows/arrows.qrc">
+           <normaloff>:/arrows/left.png</normaloff>:/arrows/left.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QToolButton" name="btn_plus">
+         <property name="icon">
+          <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+           <normaloff>:/plus_minus/plus.png</normaloff>:/plus_minus/plus.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="btn_minus">
+         <property name="icon">
+          <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+           <normaloff>:/plus_minus/minus.png</normaloff>:/plus_minus/minus.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="sb_inc"/>
+       </item>
+       <item>
+        <widget class="QToolButton" name="btn_load"/>
+       </item>
+       <item>
+        <widget class="QToolButton" name="btn_save"/>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QToolButton" name="btn_right">
+         <property name="icon">
+          <iconset resource="../../../../../../lib2/icons/arrows/arrows.qrc">
+           <normaloff>:/arrows/right.png</normaloff>:/arrows/right.png</iconset>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="picture_label">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>btn_up_left</tabstop>
+  <tabstop>btn_left</tabstop>
+  <tabstop>btn_up</tabstop>
+  <tabstop>btn_down</tabstop>
+  <tabstop>btn_plus</tabstop>
+  <tabstop>btn_minus</tabstop>
+  <tabstop>sb_inc</tabstop>
+  <tabstop>btn_load</tabstop>
+  <tabstop>btn_save</tabstop>
+  <tabstop>btn_right</tabstop>
+  <tabstop>btn_down_right</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../../../../../lib2/icons/arrows/arrows.qrc"/>
+  <include location="../../../../../../lib2/icons/digits/digits.qrc"/>
+ </resources>
+ <connections/>
+</ui>

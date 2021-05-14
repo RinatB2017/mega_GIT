@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -34,18 +34,15 @@ namespace Ui {
     class MainBox_GUI;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
 class MainBox_GUI : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox_GUI(QWidget *parent, MySplashScreen *splash);
+    explicit MainBox_GUI(QWidget *parent);
     ~MainBox_GUI();
 
 private:
-    QPointer<MySplashScreen> splash;
     Ui::MainBox_GUI *ui;
 
     void init(void);

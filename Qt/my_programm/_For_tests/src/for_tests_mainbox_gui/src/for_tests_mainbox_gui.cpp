@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -22,10 +22,8 @@
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-MainBox_GUI::MainBox_GUI(QWidget *parent,
-                 MySplashScreen *splash) :
+MainBox_GUI::MainBox_GUI(QWidget *parent) :
     MyWidget(parent),
-    splash(splash),
     ui(new Ui::MainBox_GUI)
 {
     init();

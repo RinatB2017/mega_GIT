@@ -21,7 +21,6 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include "ui_for_tests_mainbox.h"
 #include "for_tests_mainbox_gui.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -104,6 +103,8 @@ private:
         bool (MainBox::*func)(void);
     } *cmd_t;
     QList<CMD> commands;
+
+    QPointer<MySplashScreen> splash;
 
     QPointer<QComboBox> cb_test;
     QPointer<QSpinBox>  sb_test;

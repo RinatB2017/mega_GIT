@@ -18,8 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "ui_for_tests_mainbox.h"
-//--------------------------------------------------------------------------------
 #include <algorithm>    // std::find_if
 #include <vector>       // std::vector
 
@@ -31,7 +29,8 @@
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
-    MainBox_GUI(parent, splash)
+    MainBox_GUI(parent),
+    splash(splash)
 {
     init();
 }

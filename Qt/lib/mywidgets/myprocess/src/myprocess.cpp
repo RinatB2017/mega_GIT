@@ -18,30 +18,38 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
+#include "myprocess.hpp"
 //--------------------------------------------------------------------------------
-#include <QApplication>
-#include <QSignalSpy>
-#include <QTest>
+MyProcess::MyProcess(QObject *parent) :
+    QProcess(parent)
+{
+    init();
+}
 //--------------------------------------------------------------------------------
-class MainWindow;
-class MainBox;
-//--------------------------------------------------------------------------------
-class Test : public QObject {
-    Q_OBJECT
+MyProcess::~MyProcess()
+{
 
-public:
-    Test();
-
-private slots:
-    void test_GUI(void);
-    void test_signals(void);
-
-private:
-    //TODO не надо тут использовать QPointer
-    MainWindow *mw;
-    MainBox    *mb;
-};
+}
 //--------------------------------------------------------------------------------
-#endif
+void MyProcess::init(void)
+{
+    setProcessChannelMode(QProcess::SeparateChannels);
+    //setReadChannel(QProcess::StandardOutput);
+
+    connect(this,   &QProcess::started,                 this,   &MyProcess::started);
+    connect(this,   &QProcess::readyReadStandardOutput, this,   &MyProcess::read_data);
+    connect(this,   &QProcess::readyReadStandardError,  this,   &MyProcess::read_error);
+    connect(this,   static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+            this,   static_cast<void (MyProcess::*)(int, QProcess::ExitStatus)>(&MyProcess::finished));
+    connect(this,   static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::errorOccurred),
+            this,   static_cast<void (MyProcess::*)(QProcess::ProcessError)>(&MyProcess::process_error));
+
+//    connect(this,   &QProcess::started,                 this,   &MyProcess::started);
+//    connect(this,   &QProcess::readyReadStandardOutput, this,   &MyProcess::read_data);
+//    connect(this,   &QProcess::readyReadStandardError,  this,   &MyProcess::read_error);
+//    connect(this,   static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+//            this,   static_cast<void (MyProcess::*)(int, QProcess::ExitStatus)>(&MyProcess::finished));
+//    connect(this,   static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::errorOccurred),
+//            this,   static_cast<void (MyProcess::*)(QProcess::ProcessError)>(&MyProcess::process_error));
+}
+//--------------------------------------------------------------------------------

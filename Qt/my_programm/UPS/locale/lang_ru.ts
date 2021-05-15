@@ -76,34 +76,6 @@
 <context>
     <name>CreatorMenus</name>
     <message>
-        <source>Windows</source>
-        <translation>Окна</translation>
-    </message>
-    <message>
-        <source>Themes</source>
-        <translation>Темы</translation>
-    </message>
-    <message>
-        <source>Fonts</source>
-        <translation>Шрифты</translation>
-    </message>
-    <message>
-        <source>System theme</source>
-        <translation>Системная тема</translation>
-    </message>
-    <message>
-        <source>Light theme</source>
-        <translation>Светлая тема</translation>
-    </message>
-    <message>
-        <source>Dark theme</source>
-        <translation>Темная тема</translation>
-    </message>
-    <message>
-        <source>Blue theme</source>
-        <translation>Синяя тема</translation>
-    </message>
-    <message>
         <source>information</source>
         <translation>Информация</translation>
     </message>
@@ -184,50 +156,14 @@
         <translation>Английский</translation>
     </message>
     <message>
-        <source>log</source>
-        <translation>Лог</translation>
-    </message>
-    <message>
-        <source>toolbar</source>
-        <translation>Панель инструментов</translation>
-    </message>
-    <message>
-        <source>styletoolbar</source>
-        <translation>Панель стилей</translation>
+        <source>Italiano</source>
+        <translation>Итальянский</translation>
     </message>
 </context>
 
 <context>
     <name>CreatorToolBars</name>
     <message>
-        <source>Windows</source>
-        <translation>Окна</translation>
-    </message>
-    <message>
-        <source>Themes</source>
-        <translation>Темы</translation>
-    </message>
-    <message>
-        <source>Fonts</source>
-        <translation>Шрифты</translation>
-    </message>
-    <message>
-        <source>System theme</source>
-        <translation>Системная тема</translation>
-    </message>
-    <message>
-        <source>Light theme</source>
-        <translation>Светлая тема</translation>
-    </message>
-    <message>
-        <source>Dark theme</source>
-        <translation>Темная тема</translation>
-    </message>
-    <message>
-        <source>Blue theme</source>
-        <translation>Синяя тема</translation>
-    </message>
-    <message>
         <source>information</source>
         <translation>Информация</translation>
     </message>
@@ -308,28 +244,8 @@
         <translation>Английский</translation>
     </message>
     <message>
-        <source>log</source>
-        <translation>Лог</translation>
-    </message>
-    <message>
-        <source>toolbar</source>
-        <translation>Панель инструментов</translation>
-    </message>
-    <message>
-        <source>styletoolbar</source>
-        <translation>Панель стилей</translation>
-    </message>
-</context>
-
-<context>
-    <name>QObject</name>
-    <message>
-        <source>Styles</source>
-        <translation>Стили</translation>
-    </message>
-    <message>
-        <source>Show buttons</source>
-        <translation>Показать кнопки</translation>
+        <source>Italiano</source>
+        <translation>Итальянский</translation>
     </message>
 </context>
 

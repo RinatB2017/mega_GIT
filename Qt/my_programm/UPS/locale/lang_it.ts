@@ -72,34 +72,6 @@
 <context>
     <name>CreatorMenus</name>
     <message>
-        <source>Windows</source>
-        <translation>Finestre</translation>
-    </message>
-    <message>
-        <source>Themes</source>
-        <translation>Temi</translation>
-    </message>
-    <message>
-        <source>Fonts</source>
-        <translation>Caratteri</translation>
-    </message>
-    <message>
-        <source>System theme</source>
-        <translation>Tema di sistema</translation>
-    </message>
-    <message>
-        <source>Light theme</source>
-        <translation>Tema chiaro</translation>
-    </message>
-    <message>
-        <source>Dark theme</source>
-        <translation>Tema scuro</translation>
-    </message>
-    <message>
-        <source>Blue theme</source>
-        <translation>Tema blu</translation>
-    </message>
-    <message>
         <source>information</source>
         <translation>information</translation>
     </message>
@@ -170,52 +142,12 @@
     <message>
         <source>English</source>
         <translation>Inglese</translation>
-    </message>
-    <message>
-        <source>log</source>
-        <translation>Log</translation>
-    </message>
-    <message>
-        <source>toolbar</source>
-        <translation>Barra degli strumenti</translation>
-    </message>
-    <message>
-        <source>styletoolbar</source>
-        <translation>Pannello Stili</translation>
     </message>
 </context>
 
 <context>
     <name>CreatorToolBars</name>
     <message>
-        <source>Windows</source>
-        <translation>Finestre</translation>
-    </message>
-    <message>
-        <source>Themes</source>
-        <translation>Temi</translation>
-    </message>
-    <message>
-        <source>Fonts</source>
-        <translation>Caratteri</translation>
-    </message>
-    <message>
-        <source>System theme</source>
-        <translation>Tema di sistema</translation>
-    </message>
-    <message>
-        <source>Light theme</source>
-        <translation>Tema chiaro</translation>
-    </message>
-    <message>
-        <source>Dark theme</source>
-        <translation>Tema scuro</translation>
-    </message>
-    <message>
-        <source>Blue theme</source>
-        <translation>Tema blu</translation>
-    </message>
-    <message>
         <source>information</source>
         <translation>information</translation>
     </message>
@@ -286,30 +218,6 @@
     <message>
         <source>English</source>
         <translation>Inglese</translation>
-    </message>
-    <message>
-        <source>log</source>
-        <translation>Log</translation>
-    </message>
-    <message>
-        <source>toolbar</source>
-        <translation>Barra degli strumenti</translation>
-    </message>
-    <message>
-        <source>styletoolbar</source>
-        <translation>Pannello Stili</translation>
-    </message>
-</context>
-
-<context>
-    <name>QObject</name>
-    <message>
-        <source>Styles</source>
-        <translation>Stili</translation>
-    </message>
-    <message>
-        <source>Show buttons</source>
-        <translation>Mostra pulsanti</translation>
     </message>
 </context>
 

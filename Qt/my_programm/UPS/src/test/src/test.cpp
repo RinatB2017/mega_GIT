@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,72 +18,34 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QSignalSpy>
-#include <QObject>
-#include <QWidget>
-#include <QList>
-#include <QTest>
-//--------------------------------------------------------------------------------
-#define private public
-//--------------------------------------------------------------------------------
-#include "serialbox5_fix_baudrate.hpp"
+#include "ups_mainbox.hpp"
 #include "mainwindow.hpp"
-#include "rs232_5_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()
 {
-    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    mw = reinterpret_cast<MainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
+
+    mb = mw->findChild<MainBox *>();
+    QVERIFY(mb);
 }
 //--------------------------------------------------------------------------------
-void Test::check_serial(void)
+void Test::test_GUI(void)
 {
-    SerialBox5_fix_baudrate *sb1 = mw->findChild<SerialBox5_fix_baudrate *>("RS232_5");
-    QVERIFY(sb1);
+    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
+    QVERIFY(cb);
+    QTest::keyClick(cb, Qt::Key_Down);
+    QTest::keyClick(cb, Qt::Key_Down);
+    QTest::keyClick(cb, Qt::Key_Up);
+    QTest::keyClick(cb, Qt::Key_Up);
 
-    QPushButton *pb1 = sb1->findChild<QPushButton *>("btn_power");
-    QVERIFY(pb1);
+    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
+    QVERIFY(tb);
+}
+//--------------------------------------------------------------------------------
+void Test::test_signals(void)
+{
 
-    QTest::mouseClick(pb1, Qt::LeftButton);
-    QCOMPARE(sb1->isOpen(),  true);
-
-    QSignalSpy spy_port_open(sb1,           SIGNAL(port_open()));
-    QSignalSpy spy_port_close(sb1,          SIGNAL(port_close()));
-    QSignalSpy spy_readyRead(sb1,           SIGNAL(readyRead()));
-    QSignalSpy spy_readChannelFinished(sb1, SIGNAL(readChannelFinished()));
-    QSignalSpy spy_output(sb1,              SIGNAL(output(QByteArray)));
-    QSignalSpy spy_port_is_active(sb1,      SIGNAL(port_is_active(bool)));
-
-    QSignalSpy spy_baudRateChanged(sb1,         SIGNAL(baudRateChanged(qint32, QSerialPort::Directions)));
-    QSignalSpy spy_breakEnabledChanged(sb1,     SIGNAL(breakEnabledChanged(bool)));
-    QSignalSpy spy_dataBitsChanged(sb1,         SIGNAL(dataBitsChanged(QSerialPort::DataBits)));
-    QSignalSpy spy_dataTerminalReadyChanged(sb1,SIGNAL(dataTerminalReadyChanged(bool)));
-    QSignalSpy spy_flowControlChanged(sb1,      SIGNAL(flowControlChanged(QSerialPort::FlowControl)));
-    QSignalSpy spy_parityChanged(sb1,           SIGNAL(parityChanged(QSerialPort::Parity)));
-    QSignalSpy spy_requestToSendChanged(sb1,    SIGNAL(requestToSendChanged(bool)));
-    QSignalSpy spy_stopBitsChanged(sb1,         SIGNAL(stopBitsChanged(QSerialPort::StopBits)));
-
-    QCOMPARE(spy_port_open.isValid(),           true); // signal exists
-    QCOMPARE(spy_port_close.isValid(),          true); // signal exists
-    QCOMPARE(spy_readyRead.isValid(),           true); // signal exists
-    QCOMPARE(spy_readChannelFinished.isValid(), true); // signal exists
-    QCOMPARE(spy_output.isValid(),              true); // signal exists
-    QCOMPARE(spy_port_is_active.isValid(),      true); // signal exists
-
-    QCOMPARE(spy_baudRateChanged.isValid(),             true); // signal exists
-    QCOMPARE(spy_breakEnabledChanged.isValid(),         true); // signal exists
-    QCOMPARE(spy_dataBitsChanged.isValid(),             true); // signal exists
-    QCOMPARE(spy_dataTerminalReadyChanged.isValid(),    true); // signal exists
-    QCOMPARE(spy_flowControlChanged.isValid(),          true); // signal exists
-    QCOMPARE(spy_parityChanged.isValid(),               true); // signal exists
-    QCOMPARE(spy_requestToSendChanged.isValid(),        true); // signal exists
-    QCOMPARE(spy_stopBitsChanged.isValid(),             true); // signal exists
-
-    QTest::qWait(1000);
-
-    QTest::mouseClick(pb1, Qt::LeftButton);
-    QCOMPARE(sb1->isOpen(),  false);
 }
 //--------------------------------------------------------------------------------

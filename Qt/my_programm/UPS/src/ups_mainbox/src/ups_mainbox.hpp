@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2021                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,30 +18,78 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
+#ifndef MAINBOX_HPP
+#define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QApplication>
-#include <QSignalSpy>
-#include <QTest>
+#include "ui_ups_mainbox.h"
 //--------------------------------------------------------------------------------
-class MainWindow;
-class MainBox;
+#include "mywaitsplashscreen.hpp"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class Test : public QObject {
+namespace Ui {
+    class MainBox;
+}
+//--------------------------------------------------------------------------------
+class MainBox : public MyWidget
+{
     Q_OBJECT
 
 public:
-    Test();
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
+    virtual ~MainBox();
+
+public slots:
+    bool test(void);
 
 private slots:
-    void test_GUI(void);
-    void test_signals(void);
+    void choice_test(void);
+
+    void read_data(void);
+    void read_error(void);
+
+    void started(void);
+    void finished(int result, QProcess::ExitStatus exitStatus);
+
+    void process_error(QProcess::ProcessError p_error);
+
+    void run(void);
 
 private:
-    //TODO не надо тут использовать QPointer
-    MainWindow *mw;
-    MainBox    *mb;
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        bool (MainBox::*func)(void);
+    } CMD_t;
+    typedef struct DATA
+    {
+        QString data_name;
+        QLCDNumber *display;
+    } DATA_t;
+
+    QPointer<MySplashScreen> splash;
+    Ui::MainBox *ui;
+
+    QPointer<QToolBar> testbar;
+    QPointer<QComboBox> cb_test;
+    QList<CMD> commands;
+    QList<DATA> display_data;
+
+    QProcess *process = nullptr;
+
+    void init(void);
+    void createTestBar(void);
+
+    void prepare_QProcess(void);
+    void show_data(const QString &line);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // MAINBOX_HPP

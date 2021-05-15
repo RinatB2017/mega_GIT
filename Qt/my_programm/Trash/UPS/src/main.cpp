@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2021                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,30 +18,71 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
-//--------------------------------------------------------------------------------
 #include <QApplication>
-#include <QSignalSpy>
-#include <QTest>
 //--------------------------------------------------------------------------------
-class MainWindow;
-class MainBox;
+#include "qtsingleapplication.h"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "rs232_5_mainbox.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
-class Test : public QObject {
-    Q_OBJECT
-
-public:
-    Test();
-
-private slots:
-    void test_GUI(void);
-    void test_signals(void);
-
-private:
-    //TODO не надо тут использовать QPointer
-    MainWindow *mw;
-    MainBox    *mb;
-};
+#include "codecs.h"
 //--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include "test.hpp"
 #endif
+//--------------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+    set_codecs();
+
+#ifdef SINGLE_APP
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        //QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
+        if(app.sendMessage("Wake up!")) return 0;
+    }
+#else
+    QApplication app(argc, argv);
+#endif
+
+    app.setOrganizationName(ORGNAME);
+    app.setApplicationName(APPNAME);
+#ifdef Q_OS_LINUX
+    app.setApplicationVersion(QString("%1.%2.%3.%4")
+                              .arg(VER_MAJOR)
+                              .arg(VER_MINOR)
+                              .arg(VER_PATCH)
+                              .arg(VER_BUILD));
+#endif
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+    QPixmap pixmap(":/logo/logo.png");
+
+    MySplashScreen *splash = new MySplashScreen(pixmap);
+    splash->show();
+    splash->showMessage(QObject::tr("Подождите ..."));    
+
+    MainWindow *main_window = new MainWindow();
+    Q_ASSERT(main_window);
+
+    MainBox *mainBox = new MainBox(main_window, splash);
+    Q_ASSERT(mainBox);
+
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
+
+    splash->finish(main_window);
+
+#ifdef QT_DEBUG
+    int test_result = QTest::qExec(new Test(), argc, argv);
+    if (test_result != EXIT_SUCCESS)
+    {
+        return test_result;
+    }
+#endif
+    
+    return app.exec();
+}
+//--------------------------------------------------------------------------------

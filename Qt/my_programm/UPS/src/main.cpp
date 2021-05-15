@@ -18,22 +18,31 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
+#ifdef HAVE_QT5
+#   include <QtWidgets>
+#else
+#   include <QtGui>
+#endif
 //--------------------------------------------------------------------------------
+#include "ups_mainbox.hpp"
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "rs232_5_mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include "test.hpp"
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_LINUX
+    //set_signals();
+#endif
+
     set_codecs();
 
 #ifdef SINGLE_APP
@@ -60,9 +69,9 @@ int main(int argc, char *argv[])
 
     QPixmap pixmap(":/logo/logo.png");
 
-    MySplashScreen *splash = new MySplashScreen(pixmap);
+    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    Q_ASSERT(splash);
     splash->show();
-    splash->showMessage(QObject::tr("Подождите ..."));    
 
     MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);
@@ -75,6 +84,11 @@ int main(int argc, char *argv[])
 
     splash->finish(main_window);
 
+#ifdef SINGLE_APP
+    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
+#endif
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
+
 #ifdef QT_DEBUG
     int test_result = QTest::qExec(new Test(), argc, argv);
     if (test_result != EXIT_SUCCESS)
@@ -82,7 +96,7 @@ int main(int argc, char *argv[])
         return test_result;
     }
 #endif
-    
+
     return app.exec();
 }
 //--------------------------------------------------------------------------------

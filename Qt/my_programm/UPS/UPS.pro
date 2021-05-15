@@ -2,8 +2,8 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-TEMPLATE    = app
-TARGET      = UPS
+TEMPLATE = app
+TARGET   = UPS
 
 include (conf/conf.pri)
 
@@ -17,29 +17,26 @@ HEADERS += \
 SOURCES += \
     main.cpp
 
-CONFIG(debug, debug|release) {
-    include (src/test/test.pri)
+win32 {
+    RC_ICONS = "ico/computer.ico"
+    # RC_FILE  = programm.rc
 }
 
-win32 {
-    RC_ICONS = ico/RS232.ico
+# не забыть при смене Qt изменить файлы в каталоге win
+RESOURCES += \
+    ico/icons.qrc
+
+OTHER_FILES += doc/notebook.txt
+
+CONFIG(debug, debug|release) {
+    include (src/test/test.pri)
 }
 
 LIB_PATH  = "$$PWD/../../lib"
 LIB_PATH2 = "$$PWD/../../lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
-include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 
-include (src/rs232_5_mainbox/rs232_5_mainbox.pri)
-
-lessThan(QT_MAJOR_VERSION, 5) {
-    error (Only Qt5)
-}
-
-RESOURCES += \
-    ico/icons.qrc
+include (src/ups_mainbox/ups_mainbox.pri)
 
 VPATH = $$INCLUDEPATH
-

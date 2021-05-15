@@ -28,9 +28,4 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/calcmd5_mainbox/calcmd5_mainbox.pri)
 
-
-
-
-
-
 VPATH = $$INCLUDEPATH

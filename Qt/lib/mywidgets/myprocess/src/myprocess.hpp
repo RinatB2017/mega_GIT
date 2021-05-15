@@ -18,30 +18,26 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
+#ifndef MYPROCESS_HPP
+#define MYPROCESS_HPP
 //--------------------------------------------------------------------------------
-#include <QApplication>
-#include <QSignalSpy>
-#include <QTest>
+#include <QProcess>
 //--------------------------------------------------------------------------------
-class MainWindow;
-class MainBox;
-//--------------------------------------------------------------------------------
-class Test : public QObject {
-    Q_OBJECT
-
+class MyProcess : public QProcess
+{
 public:
-    Test();
-
-private slots:
-    void test_GUI(void);
-    void test_signals(void);
+    explicit MyProcess(QObject *parent = nullptr);
+    ~MyProcess();
 
 private:
-    //TODO не надо тут использовать QPointer
-    MainWindow *mw;
-    MainBox    *mb;
+    void init(void);
+
+protected:
+    virtual void started(void) = 0;
+    virtual qint64 read_data(void) = 0;
+    virtual qint64 read_error(void) = 0;
+    virtual void finished(int exitCode, QProcess::ExitStatus exitStatus) = 0;
+    virtual void process_error(QProcess::ProcessError error) = 0;
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // MYPROCESS_HPP

@@ -68,6 +68,8 @@ void MainBox::init(void)
         //obj->setDigitCount(14);
     }
 
+    ui->btn_run->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+
     connect(ui->le_ups,     &QLineEdit::returnPressed,  this,   &MainBox::run);
     connect(ui->btn_run,    &QToolButton::clicked,      this,   &MainBox::run);
 

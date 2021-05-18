@@ -162,6 +162,7 @@ void MainBox::prepare_QProcess(void)
 void MainBox::started(void)
 {
     emit info("Процесс начат!");
+    ui->btn_run->setDisabled(true);
 }
 //--------------------------------------------------------------------------------
 void MainBox::finished(int result, QProcess::ExitStatus exitStatus)
@@ -183,6 +184,7 @@ void MainBox::finished(int result, QProcess::ExitStatus exitStatus)
 
     delete process;
     process = 0;
+    ui->btn_run->setEnabled(true);
 }
 //--------------------------------------------------------------------------------
 void MainBox::process_error(QProcess::ProcessError p_error)

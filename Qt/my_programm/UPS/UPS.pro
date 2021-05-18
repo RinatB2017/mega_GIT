@@ -18,7 +18,8 @@ SOURCES += \
     main.cpp
 
 win32 {
-    RC_ICONS = "ico/computer.ico"
+    RC_ICONS = "ico/icons8-ups-32.ico"
+    # RC_ICONS = "ico/computer.ico"
     # RC_FILE  = programm.rc
 }
 

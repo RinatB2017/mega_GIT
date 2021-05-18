@@ -24,6 +24,6 @@
 #define ORGNAME "Work"
 #define APPNAME "UPS"
 //--------------------------------------------------------------------------------
-#define ICON_PROGRAMM   ":/mainwindow/computer.png"
+#define ICON_PROGRAMM   ":/ico/icons8-ups-32.png"
 //--------------------------------------------------------------------------------
 #endif

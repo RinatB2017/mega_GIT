@@ -43,7 +43,7 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
-    set_range(-100, 100);
+    set_sb_value_range(-100, 100);
 
     connect(this,   &MainBox::btn_plus_push,    this,   &MainBox::plus);
     connect(this,   &MainBox::btn_minus_push,   this,   &MainBox::minus);
@@ -119,27 +119,27 @@ void MainBox::createTestBar(void)
 bool MainBox::test_plus(void)
 {
     emit trace(Q_FUNC_INFO);
-    set_value(get_value()+1);
+    set_sb_value(get_sb_value()+1);
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test_minus(void)
 {
     emit trace(Q_FUNC_INFO);
-    set_value(get_value()-1);
+    set_sb_value(get_sb_value()-1);
     return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::plus(void)
 {
     emit trace(Q_FUNC_INFO);
-    set_value(get_value()+1);
+    set_sb_value(get_sb_value()+1);
 }
 //--------------------------------------------------------------------------------
 void MainBox::minus(void)
 {
     emit trace(Q_FUNC_INFO);
-    set_value(get_value()-1);
+    set_sb_value(get_sb_value()-1);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)

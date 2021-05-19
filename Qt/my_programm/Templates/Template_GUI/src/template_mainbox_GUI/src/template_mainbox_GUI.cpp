@@ -49,17 +49,17 @@ void MainBox_GUI::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox_GUI::set_value(int value)
+void MainBox_GUI::set_sb_value(int value)
 {
     ui->sb_value->setValue(value);
 }
 //--------------------------------------------------------------------------------
-int  MainBox_GUI::get_value(void)
+int  MainBox_GUI::get_sb_value(void)
 {
     return ui->sb_value->value();
 }
 //--------------------------------------------------------------------------------
-void MainBox_GUI::set_range(int min, int max)
+void MainBox_GUI::set_sb_value_range(int min, int max)
 {
     ui->sb_value->setRange(min, max);
 }

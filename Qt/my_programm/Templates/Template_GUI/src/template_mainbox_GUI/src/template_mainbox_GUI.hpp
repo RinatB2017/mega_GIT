@@ -44,10 +44,10 @@ public:
                          MySplashScreen *splash);
     virtual ~MainBox_GUI();
 
-    void set_value(int value);
-    int  get_value(void);
+    void set_sb_value(int value);
+    int  get_sb_value(void);
 
-    void set_range(int min, int max);
+    void set_sb_value_range(int min, int max);
 
 private:
     QPointer<MySplashScreen> splash;

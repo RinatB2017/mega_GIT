@@ -56,7 +56,7 @@ void Test::test_func(void)
     QCOMPARE(mb->test_plus(), true);
     QCOMPARE(mb->test_minus(), true);
 
-    mb->set_value(666);
+    mb->set_sb_value(666);
     mb->clear_log();
 }
 //--------------------------------------------------------------------------------

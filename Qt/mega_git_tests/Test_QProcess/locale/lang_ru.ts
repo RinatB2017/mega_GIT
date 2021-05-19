@@ -74,7 +74,7 @@
 </context>
 
 <context>
-    <name>MainWindow</name>
+    <name>CreatorMenus</name>
     <message>
         <source>Windows</source>
         <translation>Окна</translation>
@@ -103,10 +103,6 @@
         <source>Blue theme</source>
         <translation>Синяя тема</translation>
     </message>
-</context>
-
-<context>
-    <name>MainWindow</name>
     <message>
         <source>information</source>
         <translation>Информация</translation>
@@ -187,10 +183,130 @@
         <source>English</source>
         <translation>Английский</translation>
     </message>
+    <message>
+        <source>log</source>
+        <translation>Лог</translation>
+    </message>
+    <message>
+        <source>toolbar</source>
+        <translation>Панель инструментов</translation>
+    </message>
+    <message>
+        <source>styletoolbar</source>
+        <translation>Панель стилей</translation>
+    </message>
 </context>
 
 <context>
-    <name>MainWindow</name>
+    <name>CreatorToolBars</name>
+    <message>
+        <source>Windows</source>
+        <translation>Окна</translation>
+    </message>
+    <message>
+        <source>Themes</source>
+        <translation>Темы</translation>
+    </message>
+    <message>
+        <source>Fonts</source>
+        <translation>Шрифты</translation>
+    </message>
+    <message>
+        <source>System theme</source>
+        <translation>Системная тема</translation>
+    </message>
+    <message>
+        <source>Light theme</source>
+        <translation>Светлая тема</translation>
+    </message>
+    <message>
+        <source>Dark theme</source>
+        <translation>Темная тема</translation>
+    </message>
+    <message>
+        <source>Blue theme</source>
+        <translation>Синяя тема</translation>
+    </message>
+    <message>
+        <source>information</source>
+        <translation>Информация</translation>
+    </message>
+    <message>
+        <source>programm is hidden</source>
+        <translation>Программа скрыта</translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translation>Выход</translation>
+    </message>
+    <message>
+        <source>Exit the program</source>
+        <translation>Выход из программы</translation>
+    </message>
+    <message>
+        <source>Exit the program?</source>
+        <translation>Выйти из программы?</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Файл</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Настройки</translation>
+    </message>
+    <message>
+        <source>Select the font program</source>
+        <translation>Выбрать шрифт программы</translation>
+    </message>
+    <message>
+        <source>Select the font logging</source>
+        <translation>Выбрать шрифт лога</translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation>Стиль</translation>
+    </message>
+    <message>
+        <source>Do not ask when you exit</source>
+        <translation>Не спрашивать при выходе</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation>Помощь</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation>О программе</translation>
+    </message>
+    <message>
+        <source>Always on top</source>
+        <translation>Всегда наверху</translation>
+    </message>
+    <message>
+        <source>Author: Bikbao Rinat Zinorovich</source>
+        <translation>Автор: Бикбао Ринат Зинорович</translation>
+    </message>
+    <message>
+        <source>Yes, sir!</source>
+        <translation>Есть</translation>
+    </message>
+    <message>
+        <source>No, sir!</source>
+        <translation>Отставить</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation>Язык</translation>
+    </message>
+    <message>
+        <source>Russian</source>
+        <translation>Русский</translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation>Английский</translation>
+    </message>
     <message>
         <source>log</source>
         <translation>Лог</translation>

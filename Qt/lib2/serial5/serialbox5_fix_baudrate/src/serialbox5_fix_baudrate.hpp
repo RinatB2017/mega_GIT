@@ -26,12 +26,14 @@
 #else
 #   include <QtGui>
 #endif
+#ifdef RS232_SEND
+#   include "sendbox5.hpp"
+#endif
 //--------------------------------------------------------------------------------
 #include "serialwidget.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class LogBox;
-class SendBox5;
 //--------------------------------------------------------------------------------
 namespace Ui
 {

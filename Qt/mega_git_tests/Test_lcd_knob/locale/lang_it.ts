@@ -70,7 +70,7 @@
 </context>
 
 <context>
-    <name>MainWindow</name>
+    <name>CreatorMenus</name>
     <message>
         <source>Windows</source>
         <translation>Finestre</translation>
@@ -102,7 +102,7 @@
 </context>
 
 <context>
-    <name>MainWindow</name>
+    <name>CreatorMenus</name>
     <message>
         <source>information</source>
         <translation>information</translation>
@@ -178,7 +178,7 @@
 </context>
 
 <context>
-    <name>MainWindow</name>
+    <name>CreatorMenus</name>
     <message>
         <source>log</source>
         <translation>Log</translation>

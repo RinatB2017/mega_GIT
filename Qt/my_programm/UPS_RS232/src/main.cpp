@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2012                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,88 +18,71 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#include <QApplication>
 //--------------------------------------------------------------------------------
-#include "ui_ups_mainbox.h"
-//--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
+#include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "mywidget.hpp"
+#include "rs232_5_mainbox.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+#include "codecs.h"
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include "test.hpp"
+#endif
+//--------------------------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+    set_codecs();
+
+#ifdef SINGLE_APP
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        //QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
+        if(app.sendMessage("Wake up!")) return 0;
+    }
+#else
+    QApplication app(argc, argv);
+#endif
+
+    app.setOrganizationName(ORGNAME);
+    app.setApplicationName(APPNAME);
+#ifdef Q_OS_LINUX
+    app.setApplicationVersion(QString("%1.%2.%3.%4")
+                              .arg(VER_MAJOR)
+                              .arg(VER_MINOR)
+                              .arg(VER_PATCH)
+                              .arg(VER_BUILD));
+#endif
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+    QPixmap pixmap(":/logo/logo.png");
+
+    MySplashScreen *splash = new MySplashScreen(pixmap);
+    splash->show();
+    splash->showMessage(QObject::tr("Подождите ..."));    
+
+    MainWindow *main_window = new MainWindow();
+    Q_ASSERT(main_window);
+
+    MainBox *mainBox = new MainBox(main_window, splash);
+    Q_ASSERT(mainBox);
+
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
+
+    splash->finish(main_window);
+
+#ifdef QT_DEBUG
+    int test_result = QTest::qExec(new Test(), argc, argv);
+    if (test_result != EXIT_SUCCESS)
+    {
+        return test_result;
+    }
+#endif
+    
+    return app.exec();
 }
 //--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox();
-
-public slots:
-    bool test(void);
-
-private slots:
-    void choice_test(void);
-
-    void read_data(void);
-    void read_error(void);
-
-    void started(void);
-    void finished(int result, QProcess::ExitStatus exitStatus);
-
-    void process_error(QProcess::ProcessError p_error);
-
-    void run(void);
-
-private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-    typedef struct DATA
-    {
-        QString data_name;
-        QLCDNumber *lcd_display;
-        int curve_id;
-    } DATA_t;
-
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QToolBar> testbar;
-    QPointer<QComboBox> cb_test;
-    QList<CMD> commands;
-
-    QList<DATA> display_data;
-
-    QProcess *process = nullptr;
-    QPointer<QTimer> timer;
-
-    void init(void);
-    void init_display_data(void);
-    void init_grapher(void);
-    void init_timer(void);
-    void createTestBar(void);
-
-    void prepare_QProcess(void);
-    void show_data(const QString &line);
-
-    void t_start(void);
-    void t_stop(void);
-    void t_update(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
-//--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP

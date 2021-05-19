@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>MainBox</class>
  <widget class="QWidget" name="MainBox">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>410</width>
+    <height>433</height>
+   </rect>
+  </property>
   <property name="sizePolicy">
    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
     <horstretch>0</horstretch>
@@ -81,28 +89,21 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
+          <widget class="QCheckBox" name="cb_auto">
+           <property name="text">
+            <string>auto</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>Interval, sec:</string>
+            <string>Interval, msec:</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QSpinBox" name="sb_interval"/>
-         </item>
-         <item>
-          <widget class="QToolButton" name="btn_start">
-           <property name="text">
-            <string>...</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="btn_stop">
-           <property name="text">
-            <string>...</string>
-           </property>
-          </widget>
          </item>
          <item>
           <spacer name="horizontalSpacer">
@@ -122,58 +123,103 @@
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="8" column="1">
+        <item row="9" column="1">
+         <widget class="QLabel" name="lbl_input_voltage_nominal">
+          <property name="text">
+           <string>input.voltage.nominal:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLCDNumber" name="lcd_battery_charge"/>
+        </item>
+        <item row="8" column="2">
          <widget class="QLCDNumber" name="lcd_input_voltage_fault"/>
         </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="lbl_battery_charge">
-          <property name="text">
-           <string>battery.charge:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="lbl_battery_voltage_high">
-          <property name="text">
-           <string>battery.voltage.high:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="lbl_battery_voltage_low">
-          <property name="text">
-           <string>battery.voltage.low:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="11" column="0">
+        <item row="11" column="1">
          <widget class="QLabel" name="lbl_ups_temperature">
           <property name="text">
            <string>ups.temperature:</string>
           </property>
          </widget>
         </item>
-        <item row="5" column="0">
+        <item row="3" column="1">
+         <widget class="QLabel" name="lbl_battery_voltage_low">
+          <property name="text">
+           <string>battery.voltage.low:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
          <widget class="QLabel" name="lbl_battery_voltage_nominal">
           <property name="text">
            <string>battery.voltage.nominal:</string>
           </property>
          </widget>
         </item>
-        <item row="7" column="0">
+        <item row="11" column="2">
+         <widget class="QLCDNumber" name="lcd_ups_temperature"/>
+        </item>
+        <item row="6" column="1">
+         <widget class="QLabel" name="llb_input_frequency">
+          <property name="text">
+           <string>input.frequency:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="lbl_battery_charge">
+          <property name="text">
+           <string>battery.charge:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="2">
+         <widget class="QLCDNumber" name="lcd_input_voltage_nominal"/>
+        </item>
+        <item row="5" column="2">
+         <widget class="QLCDNumber" name="lcd_battery_voltage_nominal"/>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLCDNumber" name="lcd_battery_voltage"/>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="lbl_battery_voltage_high">
+          <property name="text">
+           <string>battery.voltage.high:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="2">
+         <widget class="QLCDNumber" name="lcd_output_voltage"/>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLCDNumber" name="lcd_battery_voltage_high"/>
+        </item>
+        <item row="3" column="2">
+         <widget class="QLCDNumber" name="lcd_battery_voltage_low"/>
+        </item>
+        <item row="6" column="2">
+         <widget class="QLCDNumber" name="lcd_input_frequency"/>
+        </item>
+        <item row="8" column="1">
+         <widget class="QLabel" name="lbl_input_voltage_fault">
+          <property name="text">
+           <string>input.voltage.fault:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="2">
+         <widget class="QLCDNumber" name="lcd_input_voltage"/>
+        </item>
+        <item row="7" column="1">
          <widget class="QLabel" name="lbl_input_voltage">
           <property name="text">
            <string>input.voltage:</string>
           </property>
          </widget>
         </item>
-        <item row="7" column="1">
-         <widget class="QLCDNumber" name="lcd_input_voltage"/>
-        </item>
-        <item row="3" column="1">
-         <widget class="QLCDNumber" name="lcd_battery_voltage_low"/>
-        </item>
-        <item row="1" column="0">
+        <item row="1" column="1">
          <widget class="QLabel" name="lbl_battery_voltage">
           <property name="text">
            <string>battery.voltage:</string>
@@ -181,54 +227,86 @@
          </widget>
         </item>
         <item row="10" column="1">
-         <widget class="QLCDNumber" name="lcd_output_voltage"/>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLCDNumber" name="lcd_battery_charge"/>
-        </item>
-        <item row="9" column="1">
-         <widget class="QLCDNumber" name="lcd_input_voltage_nominal"/>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLCDNumber" name="lcd_battery_voltage"/>
-        </item>
-        <item row="5" column="1">
-         <widget class="QLCDNumber" name="lcd_battery_voltage_nominal"/>
-        </item>
-        <item row="11" column="1">
-         <widget class="QLCDNumber" name="lcd_ups_temperature"/>
-        </item>
-        <item row="9" column="0">
-         <widget class="QLabel" name="lbl_input_voltage_nominal">
-          <property name="text">
-           <string>input.voltage.nominal:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="QLCDNumber" name="lcd_input_frequency"/>
-        </item>
-        <item row="8" column="0">
-         <widget class="QLabel" name="lbl_input_voltage_fault">
-          <property name="text">
-           <string>input.voltage.fault:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="0">
          <widget class="QLabel" name="lbl_output_voltage">
           <property name="text">
            <string>output.voltage:</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QLCDNumber" name="lcd_battery_voltage_high"/>
+        <item row="0" column="0">
+         <widget class="QCheckBox" name="cb_battery_charge">
+          <property name="text">
+           <string>battery.charge:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="cb_battery_voltage">
+          <property name="text">
+           <string>battery.voltage:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QCheckBox" name="cb_battery_voltage_high">
+          <property name="text">
+           <string>battery.voltage.high:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QCheckBox" name="cb_battery_voltage_low">
+          <property name="text">
+           <string>battery.voltage.low:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QCheckBox" name="cb_battery_voltage_nominal">
+          <property name="text">
+           <string>battery.voltage.nominal:</string>
+          </property>
+         </widget>
         </item>
         <item row="6" column="0">
-         <widget class="QLabel" name="llb_input_frequency">
+         <widget class="QCheckBox" name="cb_input_frequency">
           <property name="text">
            <string>input.frequency:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QCheckBox" name="cb_input_voltage">
+          <property name="text">
+           <string>input.voltage:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="0">
+         <widget class="QCheckBox" name="cb_input_voltage_fault">
+          <property name="text">
+           <string>input.voltage.fault:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0">
+         <widget class="QCheckBox" name="cb_input_voltage_nominal">
+          <property name="text">
+           <string>input.voltage.nominal:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="0">
+         <widget class="QCheckBox" name="cb_output_voltage">
+          <property name="text">
+           <string>output.voltage:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="0">
+         <widget class="QCheckBox" name="cb_ups_temperature">
+          <property name="text">
+           <string>ups.temperature:</string>
           </property>
          </widget>
         </item>

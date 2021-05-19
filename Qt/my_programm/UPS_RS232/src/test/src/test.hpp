@@ -18,88 +18,26 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef TEST_HPP
+#define TEST_HPP
 //--------------------------------------------------------------------------------
-#include "ui_ups_mainbox.h"
+#include <QObject>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
-#include "mysplashscreen.hpp"
-#include "mainwindow.hpp"
-#include "mywidget.hpp"
+class MainWindow;
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
+class Test : public QObject {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox();
-
-public slots:
-    bool test(void);
+    Test();
 
 private slots:
-    void choice_test(void);
-
-    void read_data(void);
-    void read_error(void);
-
-    void started(void);
-    void finished(int result, QProcess::ExitStatus exitStatus);
-
-    void process_error(QProcess::ProcessError p_error);
-
-    void run(void);
 
 private:
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-    typedef struct DATA
-    {
-        QString data_name;
-        QLCDNumber *lcd_display;
-        int curve_id;
-    } DATA_t;
+    MainWindow *mw;
 
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    QPointer<QToolBar> testbar;
-    QPointer<QComboBox> cb_test;
-    QList<CMD> commands;
-
-    QList<DATA> display_data;
-
-    QProcess *process = nullptr;
-    QPointer<QTimer> timer;
-
-    void init(void);
-    void init_display_data(void);
-    void init_grapher(void);
-    void init_timer(void);
-    void createTestBar(void);
-
-    void prepare_QProcess(void);
-    void show_data(const QString &line);
-
-    void t_start(void);
-    void t_stop(void);
-    void t_update(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void check_serial(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif

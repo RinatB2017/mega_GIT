@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -21,10 +21,12 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 //--------------------------------------------------------------------------------
-#include <QObject>
+#include <QApplication>
+#include <QSignalSpy>
 #include <QTest>
 //--------------------------------------------------------------------------------
 class MainWindow;
+class MainBox;
 //--------------------------------------------------------------------------------
 class Test : public QObject {
     Q_OBJECT
@@ -33,11 +35,13 @@ public:
     Test();
 
 private slots:
+    void test_GUI(void);
+    void test_signals(void);
 
 private:
+    //TODO не надо тут использовать QPointer
     MainWindow *mw;
-
-    void check_serial(void);
+    MainBox    *mb;
 };
 //--------------------------------------------------------------------------------
 #endif

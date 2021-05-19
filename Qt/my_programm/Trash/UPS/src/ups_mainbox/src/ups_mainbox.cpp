@@ -36,12 +36,6 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    if(timer)
-    {
-        timer->stop();
-        delete timer;
-    }
-
     save_widgets();
     delete ui;
 }
@@ -54,9 +48,17 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
-    init_display_data();
-    init_grapher();
-    init_timer();
+    display_data.append({ "battery.charge",             ui->lcd_battery_charge });
+    display_data.append({ "battery.voltage",            ui->lcd_battery_voltage });
+    display_data.append({ "battery.voltage.high",       ui->lcd_battery_voltage_high });
+    display_data.append({ "battery.voltage.low",        ui->lcd_battery_voltage_low });
+    display_data.append({ "battery.voltage.nominal",    ui->lcd_battery_voltage_nominal });
+    display_data.append({ "input.frequency",            ui->lcd_input_frequency });
+    display_data.append({ "input.voltage",              ui->lcd_input_voltage });
+    display_data.append({ "input.voltage.fault",        ui->lcd_input_voltage_fault });
+    display_data.append({ "input.voltage.nominal",      ui->lcd_input_voltage_nominal });
+    display_data.append({ "output.voltage",             ui->lcd_output_voltage });
+    display_data.append({ "ups.temperature",            ui->lcd_ups_temperature });
 
     QList<QLCDNumber *> allobj = findChildren<QLCDNumber *>();
     foreach (QLCDNumber *obj, allobj)
@@ -66,57 +68,12 @@ void MainBox::init(void)
         //obj->setDigitCount(14);
     }
 
+    ui->btn_run->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+
     connect(ui->le_ups,     &QLineEdit::returnPressed,  this,   &MainBox::run);
     connect(ui->btn_run,    &QToolButton::clicked,      this,   &MainBox::run);
 
     load_widgets();
-}
-//--------------------------------------------------------------------------------
-void MainBox::init_display_data(void)
-{
-    display_data.append({ "battery.charge",             ui->lcd_battery_charge,             0 });
-    display_data.append({ "battery.voltage",            ui->lcd_battery_voltage,            1 });
-    display_data.append({ "battery.voltage.high",       ui->lcd_battery_voltage_high,       2 });
-    display_data.append({ "battery.voltage.low",        ui->lcd_battery_voltage_low,        3 });
-    display_data.append({ "battery.voltage.nominal",    ui->lcd_battery_voltage_nominal,    4 });
-    display_data.append({ "input.frequency",            ui->lcd_input_frequency,            5 });
-    display_data.append({ "input.voltage",              ui->lcd_input_voltage,              6 });
-    display_data.append({ "input.voltage.fault",        ui->lcd_input_voltage_fault,        7 });
-    display_data.append({ "input.voltage.nominal",      ui->lcd_input_voltage_nominal,      8 });
-    display_data.append({ "output.voltage",             ui->lcd_output_voltage,             9 });
-    display_data.append({ "ups.temperature",            ui->lcd_ups_temperature,            10 });
-}
-//--------------------------------------------------------------------------------
-void MainBox::init_grapher(void)
-{
-    foreach (DATA data, display_data)
-    {
-        data.curve_id = ui->grapher_widget->add_curve(data.data_name);
-    }
-
-    ui->grapher_widget->set_visible_btn_Options(false);
-    ui->grapher_widget->set_visible_btn_Load(false);
-    ui->grapher_widget->set_visible_btn_Save(false);
-    ui->grapher_widget->set_visible_btn_Autoscroll(false);
-    ui->grapher_widget->set_visible_btn_Statistic(false);
-}
-//--------------------------------------------------------------------------------
-void MainBox::init_timer(void)
-{
-    timer = new QTimer(this);
-    connect(timer,  &QTimer::timeout,   this,   &MainBox::t_update);
-
-    ui->btn_start->setEnabled(true);
-    ui->btn_stop->setEnabled(false);
-
-    ui->sb_interval->setRange(1, 3600);
-
-    ui->btn_run->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
-    ui->btn_start->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
-    ui->btn_stop->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaStop));
-
-    connect(ui->btn_start,  &QToolButton::clicked,      this,   &MainBox::t_start);
-    connect(ui->btn_stop,   &QToolButton::clicked,      this,   &MainBox::t_stop);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -202,49 +159,15 @@ void MainBox::prepare_QProcess(void)
     process->setProcessEnvironment(env);
 }
 //--------------------------------------------------------------------------------
-void MainBox::t_start(void)
-{
-    timer->start(ui->sb_interval->value() * 1000);
-
-    ui->le_ups->setEnabled(false);
-
-    ui->btn_run->setEnabled(false);
-    ui->btn_start->setEnabled(false);
-    ui->btn_stop->setEnabled(true);
-}
-//--------------------------------------------------------------------------------
-void MainBox::t_stop(void)
-{
-    timer->stop();
-
-    ui->le_ups->setEnabled(true);
-
-    ui->btn_run->setEnabled(true);
-    ui->btn_start->setEnabled(true);
-    ui->btn_stop->setEnabled(false);
-}
-//--------------------------------------------------------------------------------
-void MainBox::t_update(void)
-{
-    run();
-}
-//--------------------------------------------------------------------------------
 void MainBox::started(void)
 {
-#ifdef QT_DEBUG
-    emit debug("Процесс начат!");
-#endif
-    if(timer->isActive() == false)
-    {
-        ui->btn_run->setDisabled(true);
-    }
+    emit info("Процесс начат!");
+    ui->btn_run->setDisabled(true);
 }
 //--------------------------------------------------------------------------------
 void MainBox::finished(int result, QProcess::ExitStatus exitStatus)
 {
-#ifdef QT_DEBUG
-    emit debug(tr("Процесс завершен!"));
-#endif
+    emit info(tr("Процесс завершен!"));
     if(result)
     {
         emit info(QString(tr("code %1")).arg(result));
@@ -261,11 +184,7 @@ void MainBox::finished(int result, QProcess::ExitStatus exitStatus)
 
     delete process;
     process = 0;
-
-    if(timer->isActive() == false)
-    {
-        ui->btn_run->setEnabled(true);
-    }
+    ui->btn_run->setEnabled(true);
 }
 //--------------------------------------------------------------------------------
 void MainBox::process_error(QProcess::ProcessError p_error)
@@ -327,17 +246,24 @@ void MainBox::show_data(const QString &line)
     {
         if(data.data_name == sl.at(0))
         {
-            QString temp = sl.at(1);
-            qreal t_data = temp.toDouble();
-            data.lcd_display->display(t_data);
-
-            if(timer->isActive())
-            {
-                ui->grapher_widget->add_curve_data(data.curve_id, t_data);
-            }
+            data.display->display(sl.at(1));
         }
     }
 }
+//--------------------------------------------------------------------------------
+#if 0
+battery.charge: 100
+battery.voltage: 13.60
+battery.voltage.high: 13.60
+battery.voltage.low: 10.60
+battery.voltage.nominal: 12.0
+input.frequency: 50.1
+input.voltage: 231.3
+input.voltage.fault: 231.3
+input.voltage.nominal: 220
+output.voltage: 231.3
+ups.temperature: 25.0
+#endif
 //--------------------------------------------------------------------------------
 void MainBox::read_error(void)
 {

@@ -67,8 +67,7 @@ private:
     typedef struct DATA
     {
         QString data_name;
-        QLCDNumber *lcd_display;
-        int curve_id;
+        QLCDNumber *display;
     } DATA_t;
 
     QPointer<MySplashScreen> splash;
@@ -77,24 +76,15 @@ private:
     QPointer<QToolBar> testbar;
     QPointer<QComboBox> cb_test;
     QList<CMD> commands;
-
     QList<DATA> display_data;
 
     QProcess *process = nullptr;
-    QPointer<QTimer> timer;
 
     void init(void);
-    void init_display_data(void);
-    void init_grapher(void);
-    void init_timer(void);
     void createTestBar(void);
 
     void prepare_QProcess(void);
     void show_data(const QString &line);
-
-    void t_start(void);
-    void t_stop(void);
-    void t_update(void);
 
     void updateText(void);
     bool programm_is_exit(void);

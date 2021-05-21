@@ -1221,7 +1221,9 @@ bool HLK_RM04_widget::eventFilter(QObject*, QEvent* event)
 {
     if(event->type() == QEvent::Wheel)
     {
+#ifdef QT_DEBUG
         qDebug() << "Wheel event blocked";
+#endif
         return true;
     }
     return false;

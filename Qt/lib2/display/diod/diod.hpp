@@ -21,7 +21,10 @@
 #ifndef DIOD_HPP
 #define DIOD_HPP
 //--------------------------------------------------------------------------------
+#include <QColorDialog>
+#include <QMouseEvent>
 #include <QToolButton>
+#include <QPainter>
 //--------------------------------------------------------------------------------
 #define MAX_LED_SIZE_W  32
 #define MAX_LED_SIZE_H  32

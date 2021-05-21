@@ -33,7 +33,7 @@ class HSV_color_dialog : public QDialog
 
 public:
     explicit HSV_color_dialog(QWidget *parent = nullptr);
-    ~HSV_color_dialog();
+    virtual ~HSV_color_dialog();
 
     void set_color(QColor color);
     QColor get_color(void);

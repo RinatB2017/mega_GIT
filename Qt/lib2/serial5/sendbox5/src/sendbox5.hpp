@@ -21,11 +21,7 @@
 #ifndef SENDBOX_HPP
 #define SENDBOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QFrame>
 //--------------------------------------------------------------------------------
 namespace Ui {
     class SendBox5;
@@ -37,7 +33,7 @@ class SendBox5 : public QFrame
 
 public:
     explicit SendBox5(QWidget *parent);
-    ~SendBox5();
+    virtual ~SendBox5();
 
     void block_interface(bool state);
     void updateText(void);

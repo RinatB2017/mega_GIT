@@ -21,6 +21,11 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QScrollArea>
+#include <QFileDialog>
+#include <QProcess>
+#include <QPointer>
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -37,9 +42,9 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
+    virtual ~MainBox();
 
 private slots:
     void load(void);
@@ -55,7 +60,6 @@ private slots:
 private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
-    QWidget *parent;
     int index = 0;
 
     QList<Plot *> plot_tickets;

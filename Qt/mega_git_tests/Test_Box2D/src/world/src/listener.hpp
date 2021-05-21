@@ -13,7 +13,7 @@ public:
     vector<b2ContactListener> _contacts;
 
     MyContactListener(b2World *world);
-    ~MyContactListener();
+    virtual ~MyContactListener();
 
   void BeginContact(b2Contact* contact);
   void EndContact(b2Contact* contact);

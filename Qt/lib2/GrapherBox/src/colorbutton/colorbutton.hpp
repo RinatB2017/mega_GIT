@@ -21,11 +21,14 @@
 #ifndef COLORBUTTON_HPP
 #define COLORBUTTON_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QColorDialog>
+#include <QInputDialog>
+#include <QToolButton>
+#include <QPushButton>
+#include <QHBoxLayout>
+#include <QLineEdit>
+#include <QPointer>
+#include <QWidget>
 //--------------------------------------------------------------------------------
 namespace Ui {
     class ColorButton;
@@ -37,7 +40,7 @@ class ColorButton : public QWidget
 
 public:
     explicit ColorButton(QWidget *parent = nullptr);
-    ~ColorButton();
+    virtual ~ColorButton();
 
     void setColor(QColor new_color);
     QColor getColor(void);

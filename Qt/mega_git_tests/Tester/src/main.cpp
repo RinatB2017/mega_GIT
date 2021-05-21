@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <QApplication>
 //--------------------------------------------------------------------------------
 #include "tester.hpp"
@@ -46,11 +40,14 @@ int main(int argc, char *argv[])
 
     Tester *main_window = new Tester;
     Q_ASSERT(main_window);
+
     main_window->setWindowFlags( Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint );
     main_window->move(0, 0);
     main_window->show();
 
+#ifdef QT_DEBUG
     main_window->setWindowIcon(QIcon(QLatin1String(":/programm.png")));
+#endif
 
     return app.exec();
 }

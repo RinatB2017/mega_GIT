@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "adc_oscilloscope_mainbox.hpp"
 #include "defines.hpp"
@@ -62,7 +56,9 @@ int main(int argc, char *argv[])
 
     main_window->show();
 
+#ifdef QT_DEBUG
     qDebug() << QString(QObject::tr("Starting application %1")).arg(APPNAME);
+#endif
 
     return app.exec();
 }

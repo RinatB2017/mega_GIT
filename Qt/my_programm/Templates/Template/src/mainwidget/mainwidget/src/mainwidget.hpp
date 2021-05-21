@@ -21,11 +21,7 @@
 #ifndef MAINWIDGET_HPP
 #define MAINWIDGET_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QObject>
 //--------------------------------------------------------------------------------
 class MainWidget : public QObject
 {
@@ -33,7 +29,7 @@ class MainWidget : public QObject
 
 public:
     explicit MainWidget(QObject *parent = nullptr);
-    ~MainWidget();
+    virtual ~MainWidget();
 
 signals:
     void info(const QString &);

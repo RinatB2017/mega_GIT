@@ -21,6 +21,8 @@
 #ifndef AD9106_BOX_HPP
 #define AD9106_BOX_HPP
 //--------------------------------------------------------------------------------
+#include <QTableWidget>
+#include <QHeaderView>
 #include <stdint.h>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -82,7 +84,7 @@ class AD9106_Box : public MyWidget
 
 public:
     explicit AD9106_Box(QWidget *parent = nullptr);
-    ~AD9106_Box();
+    virtual ~AD9106_Box();
 
 signals:
     void block_widget(bool);

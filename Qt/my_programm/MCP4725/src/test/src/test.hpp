@@ -21,17 +21,14 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QObject>
 //--------------------------------------------------------------------------------
 #include <QTest>
 //--------------------------------------------------------------------------------
 class MainWindow;
 //--------------------------------------------------------------------------------
-class Test : public QObject {
+class Test : public QObject
+{
     Q_OBJECT
 
 public:

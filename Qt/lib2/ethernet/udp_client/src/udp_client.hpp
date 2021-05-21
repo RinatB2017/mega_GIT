@@ -17,7 +17,7 @@ class UDP_Client : public MyWidget
 
 public:
     explicit UDP_Client(QWidget *parent = nullptr);
-    ~UDP_Client();
+    virtual ~UDP_Client();
 
     void setAddress(const QHostAddress &address);
     void setPort(quint16 port);

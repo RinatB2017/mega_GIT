@@ -18,7 +18,7 @@ public:
                       unsigned int width_leds,
                       unsigned int height_leds,
                       QWidget *parent = nullptr);
-    ~LedPanel();
+    virtual ~LedPanel();
 
 signals:
     void log(const QString &);

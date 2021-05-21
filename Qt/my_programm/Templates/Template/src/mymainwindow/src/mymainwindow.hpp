@@ -21,6 +21,9 @@
 #ifndef MYMAINWINDOW_HPP
 #define MYMAINWINDOW_HPP
 //--------------------------------------------------------------------------------
+#include <QTextStream>
+#include <QFile>
+//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
 class MyMainWindow : public MainWindow
@@ -29,7 +32,7 @@ class MyMainWindow : public MainWindow
 
 public:
     MyMainWindow(MainWindow *parent = nullptr);
-    ~MyMainWindow();
+    virtual ~MyMainWindow();
 
     void install_handler(void);
 

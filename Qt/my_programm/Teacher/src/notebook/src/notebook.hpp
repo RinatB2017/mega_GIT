@@ -21,19 +21,20 @@
 #ifndef NOTEBOOK_HPP
 #define NOTEBOOK_HPP
 //--------------------------------------------------------------------------------
+#include <QStackedWidget>
+#include <QApplication>
+#include <QPushButton>
+#include <QTextEdit>
 #include <QFrame>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-class QStackedWidget;
-class QPushButton;
 //--------------------------------------------------------------------------------
 class Notebook : public MyWidget
 {
     Q_OBJECT
 public:
     Notebook(QWidget *parent = nullptr);
-    ~Notebook();
+    virtual ~Notebook();
 
     void check_modified(void);
 

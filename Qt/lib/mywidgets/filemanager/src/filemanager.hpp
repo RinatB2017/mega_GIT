@@ -21,13 +21,16 @@
 #ifndef FILEMANAGER_HPP
 #define FILEMANAGER_HPP
 //--------------------------------------------------------------------------------
+#include <QFileSystemModel>
+#include <QUrl>
+//--------------------------------------------------------------------------------
+#include "myfiledialog.hpp"
+#include "highlighter.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class FileManager;
 }
-//--------------------------------------------------------------------------------
-class Highlighter;
 //--------------------------------------------------------------------------------
 class FileManager : public MyWidget
 {
@@ -39,7 +42,7 @@ signals:
 
 public:
     explicit FileManager(QWidget *parent = nullptr);
-    ~FileManager();
+    virtual ~FileManager();
 
     void set_extension(QString value);
     bool isModified(void);

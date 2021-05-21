@@ -30,6 +30,8 @@
 
 #include <QNetworkCookie>
 #include <QNetworkReply>
+
+#include <QMouseEvent>
 //--------------------------------------------------------------------------------
 #include "custompage.h"
 #include "qxmlputget.h"
@@ -46,7 +48,7 @@ class MyBrowser : public MyWidget
 
 public:
     explicit MyBrowser(QWidget *parent = nullptr);
-    ~MyBrowser();
+    virtual ~MyBrowser();
 
     void setUrl(const QUrl &url);
     void run(void);

@@ -33,7 +33,7 @@ class MainBox : public MyWidget
 
 public:
     explicit MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+    virtual ~MainBox();
 
 private slots:
     void test(void);

@@ -21,11 +21,8 @@
 #ifndef IPV6_HPP
 #define IPV6_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QPointer>
+#include <QUrl>
 //--------------------------------------------------------------------------------
 #include "hexspinbox.hpp"
 #include "mywidget.hpp"
@@ -39,7 +36,7 @@ signals:
 
 public:
     explicit IPV6(QWidget *parent = nullptr);
-    ~IPV6();
+    virtual ~IPV6();
 
     void setObjectName(const QString &name);
 

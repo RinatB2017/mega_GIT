@@ -21,11 +21,14 @@
 #ifndef SENDER_SYSLOG_HPP
 #define SENDER_SYSLOG_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QPushButton>
+#include <QLineEdit>
+#include <QDateTime>
+#include <QComboBox>
+#include <QToolBar>
+#include <QSpinBox>
+#include <QLabel>
+#include <QTimer>
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include </usr/include/syslog.h>
@@ -45,12 +48,6 @@ enum SYSLOG_LEVELS
 };
 #endif
 //--------------------------------------------------------------------------------
-class QPushButton;
-class QDateTime;
-class QLineEdit;
-class QSpinBox;
-class QComboBox;
-//--------------------------------------------------------------------------------
 class Sender_syslog : public QToolBar
 {
     Q_OBJECT
@@ -60,7 +57,7 @@ public:
                   int default_src,
                   int default_level,
                   QWidget *parent = Q_NULLPTR);
-    ~Sender_syslog();
+    virtual ~Sender_syslog();
 
 signals:
     void syslog(QDateTime,
@@ -77,18 +74,18 @@ private:
     int def_src = 0;
     int def_level = 0;
 
-    QComboBox *cb_level;
+    QComboBox *cb_level = nullptr;
 
-    QSpinBox *sb_src;
+    QSpinBox *sb_src = nullptr;
 
-    QSpinBox *sb_interval;
+    QSpinBox *sb_interval = nullptr;
 
-    QLineEdit *le_message;
+    QLineEdit *le_message = nullptr;
 
-    QPushButton *btn_start;
-    QPushButton *btn_stop;
+    QPushButton *btn_start = nullptr;
+    QPushButton *btn_stop = nullptr;
 
-    QTimer *timer;
+    QTimer *timer = nullptr;
 
     void init(void);
     void init_timer(void);

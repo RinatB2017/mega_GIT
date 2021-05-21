@@ -156,7 +156,9 @@ bool IPV4::eventFilter(QObject*, QEvent* event)
 {
     if(event->type() == QEvent::Wheel)
     {
+#ifdef Q_DEBUG
         qDebug() << "Wheel event blocked";
+#endif
         return true;
     }
     return false;

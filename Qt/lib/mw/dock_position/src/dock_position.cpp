@@ -74,7 +74,9 @@ void Dock_position::move_up(void)
     }
     else
     {
+#ifdef Q_DEBUG
         qDebug() << "mw is null!";
+#endif
     }
 }
 //--------------------------------------------------------------------------------
@@ -90,12 +92,16 @@ void Dock_position::move_down(void)
         }
         else
         {
+#ifdef Q_DEBUG
             qDebug() << dock_name << "not found!";
+#endif
         }
     }
     else
     {
+#ifdef Q_DEBUG
         qDebug() << "mw is null!";
+#endif
     }
 }
 //--------------------------------------------------------------------------------
@@ -111,12 +117,16 @@ void Dock_position::move_left(void)
         }
         else
         {
+#ifdef Q_DEBUG
             qDebug() << dock_name << "not found!";
+#endif
         }
     }
     else
     {
+#ifdef Q_DEBUG
         qDebug() << "mw is null!";
+#endif
     }
 }
 //--------------------------------------------------------------------------------
@@ -132,12 +142,16 @@ void Dock_position::move_right(void)
         }
         else
         {
+#ifdef Q_DEBUG
             qDebug() << dock_name << "not found!";
+#endif
         }
     }
     else
     {
+#ifdef Q_DEBUG
         qDebug() << "mw is null!";
+#endif
     }
 }
 //--------------------------------------------------------------------------------

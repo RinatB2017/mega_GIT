@@ -21,11 +21,12 @@
 #ifndef LOGBOX_HPP
 #define LOGBOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QProgressBar>
+#include <QTextEdit>
+#include <QColor>
+#include <QFont>
+#include <QDate>
+#include <QTime>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -69,7 +70,7 @@ public:
     explicit LogBox(QWidget *parent);
     explicit LogBox(const QString &o_name,
                     QWidget *parent);
-    ~LogBox();
+    virtual ~LogBox();
 
     void set_o_name(const QString &value);
 

@@ -285,7 +285,7 @@ signals:
 
 /*! \cond docNever */
 public:
-    ~QHexEdit();
+    virtual ~QHexEdit();
 
     // Properties
     bool addressArea();

@@ -19,7 +19,7 @@ public:
     enum SpellCheckAction {AbortCheck, IgnoreOnce, IgnoreAll, ReplaceOnce, ReplaceAll, AddToDict};
 
     explicit SpellCheckDialog(SpellChecker *spellChecker, QWidget *parent = 0);
-    ~SpellCheckDialog();
+    virtual ~SpellCheckDialog();
 
     QString replacement() const;
 

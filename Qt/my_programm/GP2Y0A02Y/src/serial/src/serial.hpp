@@ -35,7 +35,7 @@ class Serial : public MyWidget
 
 public:
     Serial(QWidget *parent = nullptr);
-    ~Serial();
+    virtual ~Serial();
 
 signals:
     void set_value(int channel, int value);

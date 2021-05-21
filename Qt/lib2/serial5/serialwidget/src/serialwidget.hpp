@@ -21,12 +21,6 @@
 #ifndef SERIALWIDGET_HPP
 #define SERIALWIDGET_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #define MAX_TIME_MSEC   100
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -57,7 +51,7 @@ signals:
 
 public:
     explicit SerialWidget(QWidget *parent = nullptr);
-    ~SerialWidget();
+    virtual ~SerialWidget();
 
     bool serial_open(void);
     bool serial_close(void);

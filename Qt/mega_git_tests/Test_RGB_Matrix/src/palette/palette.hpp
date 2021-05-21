@@ -34,7 +34,7 @@ public:
     explicit MyPalette(int max_x,
                        int max_y,
                        QWidget *parent = nullptr);
-    ~MyPalette();
+    virtual ~MyPalette();
 
     void set_data(QByteArray data);
     QByteArray get_data(void);

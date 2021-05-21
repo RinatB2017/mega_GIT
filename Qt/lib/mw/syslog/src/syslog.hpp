@@ -21,11 +21,10 @@
 #ifndef SYSLOG_HPP
 #define SYSLOG_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QStandardItemModel>
+#include <QDateTime>
+#include <QPointer>
+#include <QWidget>
 //--------------------------------------------------------------------------------
 #define P_SYSLOG_VALUE "value"
 //--------------------------------------------------------------------------------
@@ -48,6 +47,7 @@ class SysLog : public QWidget
 public:
     explicit SysLog(const QString &title,
                     QWidget *parent = nullptr);
+    virtual ~SysLog();
 
 signals:
     void info(const QString &);

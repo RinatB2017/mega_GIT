@@ -40,7 +40,7 @@ class MyListWidget : public QListWidget
 
 public:
     explicit MyListWidget(QWidget *parent = nullptr);
-    ~MyListWidget();
+    virtual ~MyListWidget();
 
 private:
     void init(void);

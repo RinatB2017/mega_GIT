@@ -21,11 +21,8 @@
 #ifndef IPV4_HPP
 #define IPV4_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QEvent>
+#include <QUrl>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -39,7 +36,7 @@ signals:
 
 public:
     explicit IPV4(QWidget *parent = nullptr);
-    ~IPV4();
+    virtual ~IPV4();
 
     void setObjectName(const QString &name);
 

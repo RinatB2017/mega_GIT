@@ -21,10 +21,14 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QWebElement>
+#include <QListWidgetItem>
 #include <QSqlTableModel>
+#include <QProgressBar>
+#include <QWebElement>
+#include <QHeaderView>
 #include <QSqlRecord>
 #include <QSqlQuery>
+#include <QUrl>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -36,10 +40,9 @@ struct page
 };
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
-class QListWidgetItem;
 class QNetworkReply;
 class TableView;
 class WebView;
@@ -50,7 +53,7 @@ class MainBox : public MyWidget
 
 public:
     explicit MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+    virtual ~MainBox();
 
 private slots:
     void open_url(void);

@@ -71,7 +71,9 @@ void WebAttributeDialog::init(void)
 
     int pos_x = 0;
     int pos_y = 0;
+#ifdef QT_DEBUG
     qDebug() << QString("cnt: %1").arg(sl_attr.count());
+#endif
     foreach(ATTR attr, sl_attr)
     {
         QCheckBox *cb_attr = new QCheckBox(this);

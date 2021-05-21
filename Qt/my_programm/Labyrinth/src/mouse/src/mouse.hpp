@@ -38,7 +38,7 @@ class Mouse : public MyWidget
 
 public:
     Mouse(QWidget *parent = nullptr);
-    ~Mouse();
+    virtual ~Mouse();
 
     bool set(int x, int y, int id);
     bool get(int x, int y, int *id);

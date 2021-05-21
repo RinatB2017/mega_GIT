@@ -21,11 +21,8 @@
 #ifndef MULTIEDIT_HPP
 #define MULTIEDIT_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QTextDocument>
+#include <QTextEdit>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -39,7 +36,7 @@ class MultiEdit : public MyWidget
 
 public:
     explicit MultiEdit(QWidget *parent = nullptr);
-    ~MultiEdit();
+    virtual ~MultiEdit();
 
     void setPlainText(const QString &text);
     QString toPlainText(void) const;

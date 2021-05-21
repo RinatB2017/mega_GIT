@@ -33,7 +33,7 @@ class MainWindow : public CreatorMenus
 
 public:
     explicit MainWindow(CreatorMenus *parent = nullptr);
-    ~MainWindow();
+    virtual ~MainWindow();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINWINDOW_HPP

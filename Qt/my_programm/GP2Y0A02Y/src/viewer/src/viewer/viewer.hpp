@@ -37,7 +37,7 @@ class Viewer : public MyWidget
 
 public:
     Viewer(QWidget *parent = nullptr);
-    ~Viewer();
+    virtual ~Viewer();
 
 public slots:
     bool set_value(int channel, int value);

@@ -195,7 +195,9 @@ bool ShowPicture::correct(int id, QRect rect)
     {
         if(band->property(P_ID).toInt() == id)
         {
+#ifdef QT_DEBUG
             qDebug() << id << "found";
+#endif
             band->setGeometry(rect.x(),
                               rect.y(),
                               rect.width(),

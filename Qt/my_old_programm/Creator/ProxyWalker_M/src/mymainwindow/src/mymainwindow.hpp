@@ -29,7 +29,7 @@ class MyMainWindow : public MainWindow
 
 public:
     explicit MyMainWindow(MainWindow *parent = nullptr);
-    ~MyMainWindow();
+    virtual ~MyMainWindow();
 
 private:
     QAction *save_action;

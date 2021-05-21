@@ -2,11 +2,6 @@
 #ifndef SDLWIDGET_H
 #define SDLWIDGET_H
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 struct SDL_Surface;

@@ -35,7 +35,7 @@ class MainBox : public MyWidget
 
 public:
     MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+    virtual ~MainBox();
 
 private slots:
     void f_get_data(const QByteArray &data);

@@ -21,11 +21,10 @@
 #ifndef SHOWPICTURE_HPP
 #define SHOWPICTURE_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QRubberBand>
+#include <QMouseEvent>
+#include <QLabel>
+#include <QList>
 //--------------------------------------------------------------------------------
 class ShowPicture : public QLabel
 {
@@ -37,7 +36,7 @@ signals:
 
 public:
     explicit ShowPicture(QWidget *parent = nullptr);
-    ~ShowPicture();
+    virtual ~ShowPicture();
 
     QList<QRubberBand *> get_rects(void);
     bool clr_rects(void);

@@ -21,11 +21,7 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QObject>
 //--------------------------------------------------------------------------------
 #include <QTest>
 //--------------------------------------------------------------------------------
@@ -39,7 +35,7 @@ class Test : public QObject
 
 public:
     Test();
-    ~Test();
+    virtual ~Test();
 
 private slots:
     void test_GUI_network(void);

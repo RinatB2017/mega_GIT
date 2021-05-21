@@ -21,12 +21,6 @@
 #ifndef SHOWJSON_HPP
 #define SHOWJSON_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 #include "qjsonmodel.h"
 //--------------------------------------------------------------------------------
@@ -40,7 +34,7 @@ class ShowJSON : public MyWidget
 
 public:
     explicit ShowJSON(QWidget *parent = nullptr);
-    ~ShowJSON();
+    virtual ~ShowJSON();
 
     void loadJson(QByteArray data);
 

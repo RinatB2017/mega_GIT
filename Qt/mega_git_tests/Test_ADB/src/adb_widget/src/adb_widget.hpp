@@ -21,7 +21,10 @@
 #ifndef ADB_WIDGET_HPP
 #define ADB_WIDGET_HPP
 //--------------------------------------------------------------------------------
+#include <QElapsedTimer>
 #include <QProcess>
+//--------------------------------------------------------------------------------
+#include <QTcpServer>
 //--------------------------------------------------------------------------------
 #include "tcp_local_server.hpp"
 
@@ -32,15 +35,13 @@ namespace Ui {
     class ADB_widget;
 }
 //--------------------------------------------------------------------------------
-#include <QTcpServer>
-//--------------------------------------------------------------------------------
 class ADB_widget : public MyWidget
 {
     Q_OBJECT
 
 public:
     explicit ADB_widget(QWidget *parent = nullptr);
-    ~ADB_widget();
+    virtual ~ADB_widget();
 
 signals:
     void r_programm(QString program, QStringList arguments);

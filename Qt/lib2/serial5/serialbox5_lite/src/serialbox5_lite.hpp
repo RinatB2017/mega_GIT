@@ -21,12 +21,6 @@
 #ifndef SERIALBOX5_LITE_HPP
 #define SERIALBOX5_LITE_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "serialwidget.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -49,7 +43,7 @@ public:
                              const QString &caption,
                              const QString &o_name);
     explicit SerialBox5_lite(QWidget *parent = nullptr);
-    ~SerialBox5_lite();
+    virtual ~SerialBox5_lite();
 
     bool add_menu(int index);
     bool add_menu(int index, const QString &title);

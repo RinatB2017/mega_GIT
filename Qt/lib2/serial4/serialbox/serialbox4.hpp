@@ -21,16 +21,10 @@
 #ifndef SERIALBOX4_HPP
 #define SERIALBOX4_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QFrame>
 //--------------------------------------------------------------------------------
 class SerialDeviceEnumerator;
 class AbstractSerial;
-class QHBoxLayout;
-class QPushButton;
 class LogBox;
 class SendBox4;
 //--------------------------------------------------------------------------------
@@ -53,7 +47,7 @@ public:
 
     SerialBox4(QWidget *parent, const QString &caption);
     SerialBox4(QWidget *parent = nullptr);
-    ~SerialBox4();
+    virtual ~SerialBox4();
 
     bool isOpen(void);
     void updateText(void);

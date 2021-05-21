@@ -21,6 +21,11 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QTableWidget>
+#include <QHeaderView>
+#include <QLCDNumber>
+#include <QComboBox>
+#include <QPointer>
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -54,21 +59,15 @@ typedef struct data_NMIST
 #pragma pack(pop)
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class QTableWidget;
-class QTextEdit;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QLCDNumber;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
+    virtual ~MainBox();
 
     void test_ptr(QWidget *ptr);
 

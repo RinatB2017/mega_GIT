@@ -21,10 +21,10 @@
 #ifndef DOCK_POSITION_HPP
 #define DOCK_POSITION_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
+#include <QWidget>
+//--------------------------------------------------------------------------------
+#ifdef Q_DEBUG
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -37,7 +37,7 @@ class Dock_position : public QWidget
 
 public:
     explicit Dock_position(const QString &doc_name, QWidget *parent = nullptr);
-    ~Dock_position();
+    virtual ~Dock_position();
 
 private:
     Ui::Dock_position *ui;

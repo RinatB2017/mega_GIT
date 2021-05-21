@@ -21,6 +21,8 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QFileDialog>
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
@@ -37,7 +39,7 @@ class MainBox : public MyWidget
 
 public:
     explicit MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+    virtual ~MainBox();
 
 signals:
     void double_click(void);
@@ -50,14 +52,13 @@ private slots:
 
 private:
     Ui::MainBox *ui;
-    QWidget *parent;
 
     QPixmap current_picture;
     QString current_picture_name;
 
-    QAction *change_player_action;
-    QAction *save_action;
-    QAction *last_film;
+    QPointer<QAction> change_player_action;
+    QPointer<QAction> save_action;
+    QPointer<QAction> last_film;
 
     void init(void);
 

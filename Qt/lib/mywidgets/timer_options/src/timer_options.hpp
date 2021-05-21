@@ -34,7 +34,7 @@ class Timer_options : public QDialog
 
 public:
     explicit Timer_options(QWidget *parent = nullptr);
-    ~Timer_options();
+    virtual ~Timer_options();
 
     void  set_time(const QTime &time);
     QTime get_time(void);

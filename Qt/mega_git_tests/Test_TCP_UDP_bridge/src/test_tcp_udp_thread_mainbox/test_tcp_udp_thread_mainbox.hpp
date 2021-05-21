@@ -21,6 +21,8 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QThread>
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -35,9 +37,9 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
-    ~MainBox();
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
+    virtual ~MainBox();
 
 private slots:
     void thread_is_finished(void);
@@ -48,8 +50,8 @@ private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-    QThread *thread;
-    MyThread *worker;
+    QThread *thread = nullptr;
+    MyThread *worker = nullptr;
 
     void init(void);
 

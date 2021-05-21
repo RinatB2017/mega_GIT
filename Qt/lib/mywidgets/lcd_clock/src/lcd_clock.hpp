@@ -21,11 +21,12 @@
 #ifndef LCD_CLOCK_HPP
 #define LCD_CLOCK_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QLCDNumber>
+#include <QSettings>
+#include <QPointer>
+#include <QTimer>
+#include <QLabel>
+#include <QMenu>
 //--------------------------------------------------------------------------------
 #include "timer_messagebox.hpp"
 #include "timer_options.hpp"
@@ -41,7 +42,7 @@ signals:
 
 public:
     explicit LCD_clock(QWidget *parent = nullptr);
-    ~LCD_clock();
+    virtual ~LCD_clock();
 
 private:
     QPointer<QTimer> timer;

@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mainwindow.hpp"
 #include "show_films_mainbox.hpp"
@@ -69,7 +63,9 @@ int main(int argc, char *argv[])
     main_window->setCentralWidget(mainBox);
     main_window->show();
 
+#ifdef QT_DEBUG
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
+#endif
 
     return app.exec();
 }

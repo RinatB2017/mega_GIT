@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <QtMath>
 //--------------------------------------------------------------------------------
 #include "ui_test_polar.h"
@@ -92,12 +86,7 @@ void MainBox::createTestBar(void)
     Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &MainBox::test_0 });
-    commands.append({ id++, "test 1", &MainBox::test_1 });
-    commands.append({ id++, "test 2", &MainBox::test_2 });
-    commands.append({ id++, "test 3", &MainBox::test_3 });
-    commands.append({ id++, "test 4", &MainBox::test_4 });
-    commands.append({ id++, "test 5", &MainBox::test_5 });
+    commands.append({ id++, "test", &MainBox::test });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -150,74 +139,9 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+bool MainBox::test(void)
 {
-    emit info("Test_0()");
-
-#if 0
-    if(orig_image == nullptr)
-    {
-        emit error("orig_image not created");
-        return false;
-    }
-
-    qreal BIG_R = pic_width / 2.0;
-    qreal SMALL_R = (qreal)(pic_width / 8.0);
-
-    qreal len_big_circle   = M_PI * (qreal)pic_width;
-    qreal len_small_circle = M_PI * 2.0 * SMALL_R;
-
-    emit info(QString("Длина большой окружности %1 pix").arg(len_big_circle));
-    emit info(QString("Длина малой окружности %1 pix").arg(len_small_circle));
-    emit info(QString("Отношения длин %1").arg(len_big_circle / len_small_circle));
-    emit info(QString("pict_point %1").arg(pic_width * pic_height, 0, 'f', 0));
-    emit info(QString("cnt_sin  %1").arg(cnt_sin));
-    emit info(QString("cnt_cos  %1").arg(cnt_cos));
-    emit info(QString("cnt_point  %1").arg(cnt_sin + cnt_cos));
-
-    qreal big_square   = M_PI * BIG_R * BIG_R;
-    qreal small_square = M_PI * SMALL_R * SMALL_R;
-    emit info(QString("Эффективная площадь %1").arg(big_square - small_square, 0, 'f', 2));
-
-    int stride = orig_image->bytesPerLine();
-    emit info(QString("stride %1").arg(stride));
-#endif
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
-{
-    emit info("Test_1()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
-{
-    emit info("Test_2()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
-{
-    emit info("Test_3()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
-{
-    emit info("Test_4()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
-{
-    emit info("Test_5()");
-
+    emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------

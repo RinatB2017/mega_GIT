@@ -21,8 +21,9 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <stdint.h>
+#include <QStandardItemModel>
 #include <QWidget>
+#include <stdint.h>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -39,7 +40,7 @@ class MainBox : public MyWidget
 public:
     explicit MainBox(QWidget *parent,
                      MySplashScreen *splash);
-    ~MainBox();
+    virtual ~MainBox();
 
     QString convert_int_to_string(uint32_t value);
 
@@ -68,7 +69,7 @@ private:
     QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
-    QStandardItemModel *model;
+    QStandardItemModel *model = nullptr;
 
     void init(void);
 

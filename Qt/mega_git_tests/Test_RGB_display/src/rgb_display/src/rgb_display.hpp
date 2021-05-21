@@ -21,6 +21,8 @@
 #ifndef RGB_DISLPAY_HPP
 #define RGB_DISLPAY_HPP
 //--------------------------------------------------------------------------------
+#include <QFileDialog>
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
@@ -35,7 +37,7 @@ signals:
 
 public:
     explicit RGB_display(QWidget *parent = nullptr);
-    ~RGB_display();
+    virtual ~RGB_display();
 
     bool set_param(int cnt_led_x,
                    int cnt_led_y,

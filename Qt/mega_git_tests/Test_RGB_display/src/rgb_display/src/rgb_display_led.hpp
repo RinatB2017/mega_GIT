@@ -21,8 +21,13 @@
 #ifndef RGB_DISLPAY_LED_HPP
 #define RGB_DISLPAY_LED_HPP
 //--------------------------------------------------------------------------------
+#include <QColorDialog>
+#include <QApplication>
 #include <QToolButton>
 #include <QMouseEvent>
+#include <QPainter>
+#include <QScreen>
+//--------------------------------------------------------------------------------
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 class RGB_dislpay_led : public QToolButton
@@ -31,7 +36,7 @@ class RGB_dislpay_led : public QToolButton
 
 public:
     explicit RGB_dislpay_led(QWidget *parent = nullptr);
-    ~RGB_dislpay_led();
+    virtual ~RGB_dislpay_led();
 
     void set_R(int value);
     void set_G(int value);

@@ -21,6 +21,9 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QFileDialog>
+#include <QProcess>
+
 #include <QtCharts/QCandlestickSet>
 QT_CHARTS_USE_NAMESPACE
 
@@ -41,7 +44,7 @@ class MainBox : public MyWidget
 public:
     explicit MainBox(QWidget *parent,
                      MySplashScreen *splash);
-    ~MainBox();
+    virtual ~MainBox();
 
 private slots:
     void load(void);

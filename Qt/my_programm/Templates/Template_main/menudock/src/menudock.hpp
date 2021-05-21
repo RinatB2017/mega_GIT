@@ -32,7 +32,7 @@ class MenuDock : public QDockWidget
 
 public:
     explicit MenuDock(QWidget *parent = nullptr);
-    ~MenuDock();
+    virtual ~MenuDock();
 
 signals:
     void info(const QString &);

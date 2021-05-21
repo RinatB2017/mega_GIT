@@ -21,10 +21,19 @@
 #ifndef MYSPLASHSCREEN_HPP
 #define MYSPLASHSCREEN_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
+#include <QGuiApplication>
+#include <QSplashScreen>
+#include <QProgressBar>
+#include <QVBoxLayout>
+#include <QPointer>
+#include <QPixmap>
+#include <QScreen>
+#include <QEvent>
+#include <QColor>
+#include <QLabel>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 class MySplashScreen : public QSplashScreen

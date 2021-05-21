@@ -18,23 +18,22 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef VLINE_H
-#define VLINE_H
+#ifndef VLINE_HPP
+#define VLINE_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QPaintEvent>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QWidget>
 //--------------------------------------------------------------------------------
 class VLine : public QWidget
 {
     Q_OBJECT
     
 public:
-    VLine(unsigned int len,
-          QWidget *parent);
-    ~VLine();
+    explicit VLine(unsigned int len,
+                   QWidget *parent);
+    virtual ~VLine();
 
 public slots:
     

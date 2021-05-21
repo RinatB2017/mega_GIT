@@ -1,5 +1,4 @@
 #if defined __cplusplus
-#include <QtWidgets>
 
 #include "mainwindow.hpp"
 #include "aboutbox.hpp"

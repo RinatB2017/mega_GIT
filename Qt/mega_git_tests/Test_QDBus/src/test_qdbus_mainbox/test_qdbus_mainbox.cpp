@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <QDBusConnectionInterface>
 #include <QDBusConnection>
 #include <QDBusInterface>
@@ -64,7 +58,7 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::connect_system_bus(void)
 {
-    bool ok = false;
+    bool ok;
     if (QDBusConnection::systemBus().isConnected())
     {
         QDBusConnection system_bus = QDBusConnection::systemBus();
@@ -116,14 +110,16 @@ void MainBox::connect_system_bus(void)
     }
     else
     {
+#ifdef QT_DEBUG
         qDebug() << "NO QDBusConnection";
+#endif
         emit error("NO QDBusConnection");
     }
 }
 //--------------------------------------------------------------------------------
 void MainBox::connect_session_bus(void)
 {
-    bool ok = false;
+    bool ok;
     if (QDBusConnection::sessionBus().isConnected())
     {
         QDBusConnection session_bus = QDBusConnection::sessionBus();
@@ -164,7 +160,9 @@ void MainBox::connect_session_bus(void)
     }
     else
     {
+#ifdef QT_DEBUG
         qDebug() << "NO QDBusConnection";
+#endif
         emit error("NO QDBusConnection");
     }
 }
@@ -304,7 +302,9 @@ bool MainBox::test_1(void)
     foreach (QVariant name, dbus_iface.call("ListNames").arguments())
     {
         emit info(QString("name %1").arg(name.toString()));
+#ifdef QT_DEBUG
         qDebug() << name;
+#endif
     }
     //---
 

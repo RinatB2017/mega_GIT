@@ -18,13 +18,37 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_H
-#define MAINBOX_H
+#ifndef MAINBOX_HPP
+#define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QNetworkAccessManager>
+#include <QNetworkCookieJar>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QNetworkProxy>
+#include <QWebElementCollection>
+#include <QWebSettings>
+#include <QWebHistory>
 #include <QWebElement>
+#include <QWebFrame>
+//--------------------------------------------------------------------------------
 #include <QSqlTableModel>
+#include <QInputDialog>
+#include <QHeaderView>
 #include <QSqlRecord>
 #include <QSqlQuery>
+//--------------------------------------------------------------------------------
+#include "persistentcookiejar.hpp"
+#include "helpbrowser.hpp"
+#include "javascript.hpp"
+#include "mainwindow.hpp"
+#include "tableview.hpp"
+#include "findlinks.hpp"
+#include "database.hpp"
+#include "qxmlputget.h"
+#include "waiting.hpp"
+#include "webview.hpp"
+#include "logbox.hpp"
 //--------------------------------------------------------------------------------
 struct page
 {
@@ -50,7 +74,7 @@ class MainBox : public MyWidget
 
 public:
     MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+    virtual ~MainBox();
 
 private slots:
     void open_url(void);
@@ -135,4 +159,4 @@ private:
     void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_H
+#endif // MAINBOX_HPP

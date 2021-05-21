@@ -16,7 +16,7 @@ class SerialTerm : public QTermWidget
     Q_OBJECT
 public:
     explicit SerialTerm(QWidget *parent = nullptr);
-    ~SerialTerm();
+    virtual ~SerialTerm();
 
     void show_data(QByteArray data);
 

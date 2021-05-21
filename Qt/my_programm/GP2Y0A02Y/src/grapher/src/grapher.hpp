@@ -35,7 +35,7 @@ class Grapher : public MyWidget
 
 public:
     Grapher(QWidget *parent = nullptr);
-    ~Grapher();
+    virtual ~Grapher();
 
     void clean_all(void);
 

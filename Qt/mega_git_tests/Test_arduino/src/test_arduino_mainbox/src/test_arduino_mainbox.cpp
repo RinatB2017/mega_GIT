@@ -282,13 +282,17 @@ void MainBox::set_color_frame(int color_R,
 void MainBox::set_color(void)
 {
     QColorDialog *dlg = new QColorDialog(this);
+#ifdef QT_DEBUG
     qDebug() << ui->Slider_R->value() << ui->Slider_G->value() << ui->Slider_B->value();
+#endif
 
     QColor color;
     color.setRed(ui->Slider_R->value() - 1);
     color.setGreen(ui->Slider_G->value() - 1);
     color.setBlue(ui->Slider_B->value() - 1);
+#ifdef QT_DEBUG
     qDebug() << color;
+#endif
 
     dlg->setCurrentColor(color);
 //    dlg->setCurrentColor(QColor(ui->Slider_R->value(),

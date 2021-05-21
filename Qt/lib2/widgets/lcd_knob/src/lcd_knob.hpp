@@ -15,7 +15,7 @@ class LCD_Knob : public QFrame
     
 public:
     explicit LCD_Knob(QWidget *parent = nullptr);
-    ~LCD_Knob();
+    virtual ~LCD_Knob();
 
     void setRange(double, double);
     void setScaleMaxMajor(int);

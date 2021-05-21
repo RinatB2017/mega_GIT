@@ -21,11 +21,9 @@
 #ifndef OSCILLOSCOPEBOX_CONTROLS_HPP
 #define OSCILLOSCOPEBOX_CONTROLS_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QToolButton>
+#include <QPushButton>
+#include <QWidget>
 //--------------------------------------------------------------------------------
 namespace Ui {
     class Oscilloscopebox_controls;
@@ -41,7 +39,7 @@ signals:
 
 public:
     explicit Oscilloscopebox_controls(QWidget *parent = nullptr);
-    ~Oscilloscopebox_controls();
+    virtual ~Oscilloscopebox_controls();
 
     bool add_control(QColor color,  QString text);
     bool set_curve_color(int index, QColor color);

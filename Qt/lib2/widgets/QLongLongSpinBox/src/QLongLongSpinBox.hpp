@@ -26,7 +26,7 @@ class QLongLongSpinBox : public QAbstractSpinBox
 
 public:
     explicit QLongLongSpinBox(QWidget *parent = nullptr);
-    ~QLongLongSpinBox();
+    virtual ~QLongLongSpinBox();
 
     qlonglong value() const;
 

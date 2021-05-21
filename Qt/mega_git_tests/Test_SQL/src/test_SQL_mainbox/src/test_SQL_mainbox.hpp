@@ -21,12 +21,7 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
+#include <QTableView>
 #include <QtSql>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -41,14 +36,13 @@ class MainBox : public MyWidget
 
 public:
     MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+    virtual ~MainBox();
 
 private slots:
     void test(void);
 
 private:
     Ui::MainBox *ui;
-    QWidget *parent;
 
     void init(void);
     void createTestBar(void);

@@ -18,16 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QColorDialog>
-#   include <QHBoxLayout>
-#   include <QLineEdit>
-#   include <QEvent>
-#   include <QLabel>
-#endif
-//--------------------------------------------------------------------------------
 #include "histogram_curvebox.hpp"
 //--------------------------------------------------------------------------------
 Histogram_CurveBox::Histogram_CurveBox(QWidget *parent) :

@@ -68,7 +68,7 @@ class Sound_widget : public MyWidget
 
 public:
     Sound_widget(QWidget *parent = nullptr);
-    ~Sound_widget();
+    virtual ~Sound_widget();
 
     void set_generator(Generator_Curve *gen);
     QByteArray get_m_buffer(void);

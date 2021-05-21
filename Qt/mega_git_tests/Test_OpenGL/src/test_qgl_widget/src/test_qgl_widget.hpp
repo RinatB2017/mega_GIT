@@ -21,8 +21,6 @@
 #ifndef TEST_QGLWIDGET_HPP
 #define TEST_QGLWIDGET_HPP
 //--------------------------------------------------------------------------------
-#include <QtWidgets>
-//--------------------------------------------------------------------------------
 #include <QGLWidget>
 #include <GL/glu.h>
 //--------------------------------------------------------------------------------
@@ -32,7 +30,7 @@ class Test_QGLWidget : public QGLWidget
 
 public:
     Test_QGLWidget(QWidget *parent = nullptr);
-    ~Test_QGLWidget();
+    virtual ~Test_QGLWidget();
 
     qreal get_x(void);
     qreal get_y(void);

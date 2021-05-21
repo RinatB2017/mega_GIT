@@ -31,7 +31,7 @@ class SendEmail : public QWidget
 
 public:
     explicit SendEmail(QWidget *parent = nullptr);
-    ~SendEmail();
+    virtual ~SendEmail();
 
     static EmailAddress * stringToEmail(const QString & str);
 

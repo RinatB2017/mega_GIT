@@ -21,6 +21,9 @@
 #ifndef MYFILEDIALOG_HPP
 #define MYFILEDIALOG_HPP
 //--------------------------------------------------------------------------------
+#include <QFileDialog>
+#include <QDebug>
+//--------------------------------------------------------------------------------
 #include "mysettings.hpp"
 //--------------------------------------------------------------------------------
 class MyFileDialog : public QFileDialog, public MySettings
@@ -31,7 +34,7 @@ public:
     explicit MyFileDialog(const QString &gName,
                           const QString &oName,
                           QWidget *parent = nullptr);
-    ~MyFileDialog();
+    virtual ~MyFileDialog();
 
 public slots:
     int exec(void);

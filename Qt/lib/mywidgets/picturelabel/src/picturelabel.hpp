@@ -21,11 +21,10 @@
 #ifndef PICTURELABEL_HPP
 #define PICTURELABEL_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QMimeData>
+#include <QLabel>
 //--------------------------------------------------------------------------------
 namespace Ui {
     class PictureLabel;
@@ -37,7 +36,7 @@ class PictureLabel : public QLabel
 
 public:
     explicit PictureLabel(QWidget *parent = nullptr);
-    ~PictureLabel();
+    virtual ~PictureLabel();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);

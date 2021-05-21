@@ -23,6 +23,7 @@
 //--------------------------------------------------------------------------------
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
+#include <QApplication>
 #include <QKeyEvent>
 #include <QObject>
 #include <QTimer>
@@ -37,7 +38,7 @@ class BaseScene : public QGraphicsScene
 
 public:
     BaseScene(QObject *parent = nullptr);
-    ~BaseScene();
+    virtual ~BaseScene();
 
     QGraphicsPixmapItem *get_item(QString filename);
     QGraphicsItemGroup *get_text_rect(int num,
@@ -66,8 +67,8 @@ public slots:
     virtual void update(void) = 0;
 
 private:
-    QTimer *timer;
-    QGraphicsPixmapItem *background;
+    QTimer *timer = nullptr;
+    QGraphicsPixmapItem *background = nullptr;
 
     void create_timer(void);
 

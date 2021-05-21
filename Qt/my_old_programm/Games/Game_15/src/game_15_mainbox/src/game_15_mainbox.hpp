@@ -39,7 +39,7 @@ class MainBox : public MyWidget
 public:
     MainBox(QWidget *parent,
             MySplashScreen *splash);
-    ~MainBox();
+    virtual ~MainBox();
 
     int get_direction(int pos_x, int pos_y);
 

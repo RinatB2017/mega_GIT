@@ -21,6 +21,8 @@
 #ifndef TABLE_WIDGET_HPP
 #define TABLE_WIDGET_HPP
 //--------------------------------------------------------------------------------
+#include <QStandardItemModel>
+//--------------------------------------------------------------------------------
 #include "default_widget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -33,7 +35,7 @@ class Table_widget : public Default_widget
 
 public:
     explicit Table_widget(QWidget *parent = nullptr);
-    ~Table_widget();
+    virtual ~Table_widget();
 
 private:
     Ui::Table_widget *ui;

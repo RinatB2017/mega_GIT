@@ -31,7 +31,7 @@ class Scene2 : public BaseScene
 
 public:
     Scene2(void);
-    ~Scene2();
+    virtual ~Scene2();
 
 signals:
     void info(const QString &);

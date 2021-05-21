@@ -34,7 +34,7 @@ class Timer_messagebox : public QWidget
 
 public:
     explicit Timer_messagebox(const QString &message, QWidget *parent = nullptr);
-    ~Timer_messagebox();
+    virtual ~Timer_messagebox();
 
 private:
     Ui::Timer_messagebox *ui;

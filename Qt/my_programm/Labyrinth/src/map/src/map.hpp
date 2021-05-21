@@ -33,7 +33,7 @@ class Map : public MyWidget
 
 public:
     Map(QWidget *parent = nullptr);
-    ~Map();
+    virtual ~Map();
 
     void remove_player(void);
     bool set_player(int pos_x, int pos_y);

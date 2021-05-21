@@ -21,19 +21,21 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QFileDialog>
+//--------------------------------------------------------------------------------
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+    explicit MainBox(QWidget *parent = nullptr);
+    virtual ~MainBox();
 
 signals:
     void send_data(const QString &);
@@ -47,8 +49,7 @@ private slots:
 
 private:
     Ui::MainBox *ui;
-    QWidget *parent;
-    QTimer *timer;
+    QTimer *timer = nullptr;
     int index = 0;
 
     void init(void);

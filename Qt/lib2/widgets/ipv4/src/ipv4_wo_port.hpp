@@ -21,11 +21,8 @@
 #ifndef IPV4_WO_PORT_HPP
 #define IPV4_WO_PORT_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QEvent>
+#include <QUrl>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -41,7 +38,7 @@ signals:
 
 public:
     explicit IPV4_wo_port(QWidget *parent = nullptr);
-    ~IPV4_wo_port();
+    virtual ~IPV4_wo_port();
 
     void setObjectName(const QString &name);
 

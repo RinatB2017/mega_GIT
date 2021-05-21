@@ -21,6 +21,8 @@
 #ifndef HSV_WIDGET_HPP
 #define HSV_WIDGET_HPP
 //--------------------------------------------------------------------------------
+#include <QElapsedTimer>
+//--------------------------------------------------------------------------------
 #include "myfiledialog.hpp"
 #include "mywidget.hpp"
 #include "defines.hpp"
@@ -35,7 +37,7 @@ class HSV_widget : public MyWidget
 
 public:
     explicit HSV_widget(QWidget *parent = nullptr);
-    ~HSV_widget();
+    virtual ~HSV_widget();
 
 private:
     Ui::HSV_widget *ui;

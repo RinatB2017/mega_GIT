@@ -42,7 +42,7 @@ class MainBox : public MyWidget
 
 public:
     MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+    virtual ~MainBox();
 
 private:
     Ui::MainBox *ui;

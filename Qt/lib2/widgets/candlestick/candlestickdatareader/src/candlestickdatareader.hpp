@@ -39,7 +39,7 @@ class CandlestickDataReader : public QTextStream
 {
 public:
     explicit CandlestickDataReader(QIODevice *device);
-    ~CandlestickDataReader();
+    virtual ~CandlestickDataReader();
 
     void readFile(QIODevice *device);
     QCandlestickSet *readCandlestickSet();

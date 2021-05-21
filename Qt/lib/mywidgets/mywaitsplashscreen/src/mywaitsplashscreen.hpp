@@ -21,11 +21,15 @@
 #ifndef MYWAITSPLASHSCREEN_HPP
 #define MYWAITSPLASHSCREEN_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QGuiApplication>
+#include <QSplashScreen>
+#include <QProgressBar>
+#include <QVBoxLayout>
+#include <QPointer>
+#include <QScreen>
+#include <QPixmap>
+#include <QColor>
+#include <QLabel>
 //--------------------------------------------------------------------------------
 class MyWaitSplashScreen : public QSplashScreen
 {

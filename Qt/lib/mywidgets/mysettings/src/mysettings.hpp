@@ -21,10 +21,14 @@
 #ifndef MYSETTINGS_HPP
 #define MYSETTINGS_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
+#include <QListWidget>
+#include <QSplitter>
+#include <QSettings>
+#include <QPointer>
+#include <QWidget>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
@@ -33,7 +37,7 @@ class MySettings
 {
 public:
     MySettings();
-    ~MySettings();
+    virtual ~MySettings();
 
     bool is_my_widget(const QString &o_name);
     bool compare_name(const char *widget_name, QString class_name);

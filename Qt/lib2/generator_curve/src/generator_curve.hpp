@@ -2,25 +2,21 @@
 #ifndef GENERATOR_CURVE_HPP
 #define GENERATOR_CURVE_HPP
 //--------------------------------------------------------------------------------
+#include <QScrollArea>
 #include <QByteArray>
 #include <QWidget>
+#include <QtMath>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #define MAX_SLIDER  32
 //--------------------------------------------------------------------------------
-class QRadioButton;
-class QPushButton;
-class QGroupBox;
-class QSlider;
-class QTimer;
-//--------------------------------------------------------------------------------
 class Generator_Curve : public MyWidget
 {
     Q_OBJECT
 public:
-    Generator_Curve(QWidget *parent = nullptr);
-    ~Generator_Curve(void);
+    explicit Generator_Curve(QWidget *parent = nullptr);
+    virtual ~Generator_Curve(void);
 
     QByteArray get_data(void);
 
@@ -39,10 +35,10 @@ private slots:
     void set_slider_tooltip(int value);
 
 private:
-    QPushButton *btnSinus;
-    QPushButton *btnTriangle;
-    QPushButton *btnSaw;
-    QPushButton *btnMeandr;
+    QPushButton *btnSinus = nullptr;
+    QPushButton *btnTriangle = nullptr;
+    QPushButton *btnSaw = nullptr;
+    QPushButton *btnMeandr = nullptr;
 
     QList<QSlider *> sliders;
 

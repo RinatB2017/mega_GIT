@@ -33,7 +33,7 @@ class Controls_widget : public Default_widget
 
 public:
     explicit Controls_widget(QWidget *parent = nullptr);
-    ~Controls_widget();
+    virtual ~Controls_widget();
 
 private:
     Ui::Controls_widget *ui;

@@ -18,22 +18,10 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkProxy>
-#include <QWebElement>
-#include <QWebFrame>
-//--------------------------------------------------------------------------------
 #include "ui_proxy_walker_m_mainbox.h"
 //--------------------------------------------------------------------------------
-#include "mainwindow.hpp"
-#include "javascript.hpp"
-#include "qxmlputget.h"
-#include "defines.hpp"
-#include "webview.hpp"
-#include "waiting.hpp"
 #include "proxy_walker_m_mainbox.hpp"
-#include "logbox.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

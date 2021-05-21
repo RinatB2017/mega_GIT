@@ -2,6 +2,8 @@
 #ifndef WORLD_HPP
 #define WORLD_HPP
 //--------------------------------------------------------------------------------
+#include <QTimerEvent>
+#include <QtMath>
 #include <Box2D.h>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -32,7 +34,7 @@ class World : public MyWidget
 
 public:
     explicit World(QWidget *parent = nullptr);
-    ~World();
+    virtual ~World();
 
     Object createWall(float32 x,
                       float32 y,

@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mainwindow.hpp"
 #include "generator_curve_mainbox.hpp"
@@ -81,7 +75,10 @@ int main(int argc, char *argv[])
 #ifdef SINGLE_APP
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
 #endif
+
+#ifdef QT_DEBUG
     qDebug() << QString(QObject::tr("Starting application %1")).arg(APPNAME);
+#endif
 
     return app.exec();
 }

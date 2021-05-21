@@ -18,16 +18,15 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_QGLWIDGET_H
-#define TEST_QGLWIDGET_H
+#ifndef TEST_QGLWIDGET_HPP
+#define TEST_QGLWIDGET_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
+#include <QApplication>
+#include <QMouseEvent>
+#include <QKeyEvent>
 #include <QGLWidget>
+#include <QPointer>
+#include <QTimer>
 //--------------------------------------------------------------------------------
 #define MAX_OBJECTS 4
 //--------------------------------------------------------------------------------

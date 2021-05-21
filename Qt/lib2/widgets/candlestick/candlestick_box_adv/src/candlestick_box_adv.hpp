@@ -47,7 +47,7 @@ class CandleStick_Box_adv : public MyWidget
 
 public:
     explicit CandleStick_Box_adv(QWidget *parent = nullptr);
-    ~CandleStick_Box_adv();
+    virtual ~CandleStick_Box_adv();
 
     void append(QCandlestickSet *set, qreal volume);
     void update_data(void);

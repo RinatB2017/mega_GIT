@@ -21,11 +21,7 @@
 #ifndef TESTDIALOG_HPP
 #define TESTDIALOG_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QDialog>
 //--------------------------------------------------------------------------------
 namespace Ui {
     class TestDialog;
@@ -39,7 +35,7 @@ public:
     explicit TestDialog(int max_index,
                         int max_offset,
                         QWidget *parent = nullptr);
-    ~TestDialog();
+    virtual ~TestDialog();
 
     int get_index(void);
     int get_offset(void);

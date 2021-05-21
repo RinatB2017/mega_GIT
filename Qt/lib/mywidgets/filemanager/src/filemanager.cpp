@@ -18,11 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "filemanager.hpp"
 #include "ui_filemanager.h"
-
-#include "myfiledialog.hpp"
-#include "highlighter.hpp"
+#include "filemanager.hpp"
 //--------------------------------------------------------------------------------
 FileManager::FileManager(QWidget *parent) :
     MyWidget(parent),

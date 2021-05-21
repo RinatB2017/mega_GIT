@@ -21,13 +21,20 @@
 #ifndef CREATORWINDOW_HPP
 #define CREATORWINDOW_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-
+#include <QSystemTrayIcon>
+#include <QMdiSubWindow>
+#include <QStyleFactory>
+#include <QApplication>
+#include <QDockWidget>
+#include <QFontDialog>
+#include <QCloseEvent>
+#include <QMainWindow>
+#include <QTranslator>
+#include <QStatusBar>
+#include <QMdiArea>
 #include <QtGlobal>
+#include <QMenuBar>
+#include <QMenu>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>

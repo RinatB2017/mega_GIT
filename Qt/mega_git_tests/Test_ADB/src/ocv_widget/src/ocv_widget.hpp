@@ -21,6 +21,8 @@
 #ifndef OCV_WIDGET_HPP
 #define OCV_WIDGET_HPP
 //--------------------------------------------------------------------------------
+#include <QMouseEvent>
+//--------------------------------------------------------------------------------
 #include <opencv2/objdetect.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
@@ -44,7 +46,7 @@ class OCV_widget : public MyWidget
 
 public:
     explicit OCV_widget(QWidget *parent = nullptr);
-    ~OCV_widget();
+    virtual ~OCV_widget();
 
 signals:
     bool f_tap(int pos_x, int pos_y);

@@ -685,7 +685,9 @@ void MainBox::setTextTermFormatting(QTextEdit * textEdit,
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
+#ifdef QT_DEBUG
     qDebug() << "Test";
+#endif
 
 #if 1
     QFile file(":/data/CSI_codes.txt");

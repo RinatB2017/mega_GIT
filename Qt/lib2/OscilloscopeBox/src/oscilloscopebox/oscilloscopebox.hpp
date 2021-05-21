@@ -21,11 +21,8 @@
 #ifndef OscilloscopeBOX_HPP
 #define OscilloscopeBOX_HPP
 //--------------------------------------------------------------------------------
-#define CURVE_COLORS "curve_colors"
-//#define COLOR "color"
-#define COLOR_R "color_r"
-#define COLOR_G "color_g"
-#define COLOR_B "color_b"
+#include <QColorDialog>
+//#include <limits.h>
 //--------------------------------------------------------------------------------
 #include <qwt_picker_machine.h>
 #include <qwt_plot_magnifier.h>
@@ -43,16 +40,20 @@
 #include <qwt_knob.h>
 #include <qwt_plot.h>
 //--------------------------------------------------------------------------------
-//#include <limits.h>
-//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
+//--------------------------------------------------------------------------------
+#define CURVE_COLORS "curve_colors"
+//#define COLOR "color"
+#define COLOR_R "color_r"
+#define COLOR_G "color_g"
+#define COLOR_B "color_b"
+//--------------------------------------------------------------------------------
+#define MIN_CURVES  1
+#define MAX_CURVES  8
 //--------------------------------------------------------------------------------
 namespace Ui {
     class OscilloscopeBox;
 }
-//--------------------------------------------------------------------------------
-#define MIN_CURVES  1
-#define MAX_CURVES  8
 //--------------------------------------------------------------------------------
 class QwtPlotPicker;
 class QwtPlotCurve;
@@ -87,7 +88,7 @@ class OscilloscopeBox : public MyWidget
 
 public:
     explicit OscilloscopeBox(QWidget *parent = nullptr);
-    ~OscilloscopeBox();
+    virtual ~OscilloscopeBox();
 
     void test(void);
     bool set_curve_color(int index, QColor color);

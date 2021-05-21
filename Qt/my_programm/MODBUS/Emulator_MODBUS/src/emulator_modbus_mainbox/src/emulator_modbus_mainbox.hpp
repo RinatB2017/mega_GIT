@@ -22,6 +22,7 @@
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
 #include <QModbusServer>
+#include <QButtonGroup>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -42,7 +43,7 @@ class MainBox : public MyWidget
 public:
     explicit MainBox(QWidget *parent,
                      MySplashScreen *splash);
-    ~MainBox(void);
+    virtual ~MainBox(void);
 
 private slots:
     void test(void);

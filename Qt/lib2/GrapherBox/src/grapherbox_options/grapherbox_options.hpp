@@ -21,11 +21,7 @@
 #ifndef GRAPHERBOX_OPTIONS_HPP
 #define GRAPHERBOX_OPTIONS_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QDialog>
 //--------------------------------------------------------------------------------
 namespace Ui {
     class GrapherBox_Options;
@@ -49,7 +45,7 @@ public:
     };
 
     explicit GrapherBox_Options(QWidget *parent = nullptr);
-    ~GrapherBox_Options();
+    virtual ~GrapherBox_Options();
 
     void set_type_device(GrapherBox_Options::Device device);
     GrapherBox_Options::Device get_type_device(void);

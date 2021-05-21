@@ -21,6 +21,7 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QFileDialog>
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -42,7 +43,7 @@ class MainBox : public MyWidget
 
 public:
     explicit MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+    virtual ~MainBox();
 
 signals:
     void send(QString);

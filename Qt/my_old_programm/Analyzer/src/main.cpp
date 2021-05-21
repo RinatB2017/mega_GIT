@@ -78,7 +78,9 @@ int main(int argc, char *argv[])
 
     splash->finish(main_window);
 
+#ifdef Q_DEBUG
     qDebug() << QString(QObject::tr("Starting application %1")).arg(APPNAME);
+#endif
 
     return app.exec();
 }

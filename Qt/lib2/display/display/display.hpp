@@ -41,7 +41,7 @@ public:
                      unsigned int led_width = 32,
                      unsigned int led_height = 32,
                      QWidget *parent = nullptr);
-    ~Display();
+    virtual ~Display();
 
     bool set_color(unsigned int x,
                    unsigned int y,

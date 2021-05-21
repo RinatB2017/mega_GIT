@@ -21,11 +21,12 @@
 #ifndef DIGITAL_CLOCK_HPP
 #define DIGITAL_CLOCK_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QSettings>
+#include <QPointer>
+#include <QAction>
+#include <QTimer>
+#include <QLabel>
+#include <QMenu>
 //--------------------------------------------------------------------------------
 #include "timer_messagebox.hpp"
 #include "timer_options.hpp"

@@ -27,14 +27,17 @@
 MyMainWindow::MyMainWindow(MainWindow *parent) :
     MainWindow(parent)
 {
+#ifdef QT_DEBUG
     qDebug() << "MyMainWindow()";
-
+#endif
     create_local_menus();
 }
 //--------------------------------------------------------------------------------
 MyMainWindow::~MyMainWindow()
 {
+#ifdef QT_DEBUG
     qDebug() << "~NyMainWindow()";
+#endif
 }
 //--------------------------------------------------------------------------------
 #ifndef NO_MENU

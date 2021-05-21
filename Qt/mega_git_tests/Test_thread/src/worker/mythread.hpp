@@ -30,7 +30,7 @@ class MyThread : public QObject
 
 public:
     MyThread(QObject *parent = nullptr);
-    ~MyThread();
+    virtual ~MyThread();
 
 signals:
     void info(const QString &);

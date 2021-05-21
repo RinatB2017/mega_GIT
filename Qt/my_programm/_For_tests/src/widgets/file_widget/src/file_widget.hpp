@@ -21,6 +21,8 @@
 #ifndef FILE_WIDGET_HPP
 #define FILE_WIDGET_HPP
 //--------------------------------------------------------------------------------
+#include <QFileSystemModel>
+//--------------------------------------------------------------------------------
 #include "default_widget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -33,7 +35,7 @@ class File_widget : public Default_widget
 
 public:
     explicit File_widget(QWidget *parent = nullptr);
-    ~File_widget();
+    virtual ~File_widget();
 
 private:
     Ui::File_widget *ui;

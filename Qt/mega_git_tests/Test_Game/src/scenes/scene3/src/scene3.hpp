@@ -21,6 +21,7 @@
 #ifndef SCENE3_HPP
 #define SCENE3_HPP
 //--------------------------------------------------------------------------------
+#include <QRandomGenerator>
 #include <QGraphicsScene>
 //--------------------------------------------------------------------------------
 #include "basescene.hpp"
@@ -35,7 +36,7 @@ class Scene3 : public BaseScene
 
 public:
     Scene3(void);
-    ~Scene3();
+    virtual ~Scene3();
 
 signals:
     void info(const QString &);
@@ -53,11 +54,11 @@ private:
     qreal w_item = 0;
     qreal h_item = 0;
 
-    Player  *player;
-    Ship    *ship;
+    Player  *player = nullptr;
+    Ship    *ship = nullptr;
     QList<Rock *> rocks;
 
-    Ship    *moved_ship;
+    Ship    *moved_ship = nullptr;
 
     bool is_worked = false;
 

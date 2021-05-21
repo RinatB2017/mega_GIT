@@ -22,6 +22,12 @@
 #define MAINWINDOW_HPP
 //--------------------------------------------------------------------------------
 #include <QMainWindow>
+#include <QMessageBox>
+#include <QCloseEvent>
+#include <QToolButton>
+#include <QToolBar>
+#include <QMenuBar>
+#include <QMenu>
 //--------------------------------------------------------------------------------
 class MainWindow : public QMainWindow
 {
@@ -29,7 +35,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    virtual ~MainWindow();
 
 signals:
     void info(const QString &);

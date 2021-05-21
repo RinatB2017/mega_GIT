@@ -16,7 +16,7 @@ class LedsPanel : public QFrame
     
 public:
     explicit LedsPanel(QWidget *parent = nullptr);
-    ~LedsPanel();
+    virtual ~LedsPanel();
 
     void set_text(unsigned int, const QString &);
 

@@ -320,6 +320,8 @@ void MainBox::save_setting(void)
 void MainBox::closeEvent(QCloseEvent *event)
 {
     QWidget::closeEvent(event);
+#ifdef Q_DEBUG
     qDebug() << "MainBox::closeEvent";
+#endif
 }
 //--------------------------------------------------------------------------------

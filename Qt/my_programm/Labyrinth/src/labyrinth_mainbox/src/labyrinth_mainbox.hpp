@@ -21,6 +21,9 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QDialogButtonBox>
+#include <QFileDialog>
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
@@ -37,7 +40,7 @@ class MainBox : public MyWidget
 public:
     explicit MainBox(QWidget *parent,
                      MySplashScreen *splash);
-    ~MainBox();
+    virtual ~MainBox();
 
 private slots:
     void start(void);

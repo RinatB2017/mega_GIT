@@ -35,7 +35,7 @@ class TCP_Server : public MyWidget
 
 public:
     explicit TCP_Server(QWidget *parent = nullptr);
-    ~TCP_Server();
+    virtual ~TCP_Server();
 
 signals:
     void output(const QByteArray &);

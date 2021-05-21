@@ -43,7 +43,7 @@ class MyMediaRecorder : public MyWidget
 
 public:
     explicit MyMediaRecorder(QWidget *parent = nullptr);
-    ~MyMediaRecorder();
+    virtual ~MyMediaRecorder();
 
 public slots:
     void get_frame(QVideoFrame frame);

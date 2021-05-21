@@ -21,12 +21,6 @@
 #ifndef ADC_LABEL_HPP
 #define ADC_LABEL_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -39,7 +33,7 @@ class ADC_label : public MyWidget
 
 public:
     explicit ADC_label(QString lbl_name, QWidget *parent = nullptr);
-    ~ADC_label();
+    virtual ~ADC_label();
 
     void display(double num);
     void display(int num);

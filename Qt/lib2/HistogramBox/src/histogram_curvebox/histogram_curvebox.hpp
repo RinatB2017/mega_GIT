@@ -21,16 +21,19 @@
 #ifndef HISTOGRAMCURVEBOX_HPP
 #define HISTOGRAMCURVEBOX_HPP
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+#include <QColorDialog>
+#include <QLineEdit>
+#include <QLabel>
+#include <QEvent>
 //--------------------------------------------------------------------------------
-class QLineEdit;
-class QLabel;
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class Histogram_CurveBox : public MyWidget
 {
     Q_OBJECT
+
 public:
-    Histogram_CurveBox(QWidget *parent);
+    explicit Histogram_CurveBox(QWidget *parent);
 
     void set_color(int r, int g, int b);
     void set_caption(const QString &caption);
@@ -45,8 +48,8 @@ private slots:
 
 private:
     int index;
-    QLineEdit *caption_curve;
-    QLabel *color_curve;
+    QLineEdit *caption_curve = nullptr;
+    QLabel *color_curve = nullptr;
 
     void updateText(void);
     bool programm_is_exit(void);

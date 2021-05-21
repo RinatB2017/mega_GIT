@@ -33,7 +33,7 @@ class Mesh_control : public MyWidget
 
 public:
     explicit Mesh_control(QString o_name, QWidget *parent = nullptr);
-    ~Mesh_control();
+    virtual ~Mesh_control();
 
 signals:
     void send(QString msg);

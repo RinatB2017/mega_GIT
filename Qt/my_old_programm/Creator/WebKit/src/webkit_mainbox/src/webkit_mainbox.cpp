@@ -18,29 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QNetworkAccessManager>
-#include <QNetworkCookieJar>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QNetworkProxy>
-#include <QWebElementCollection>
-#include <QWebSettings>
-#include <QWebHistory>
-#include <QWebElement>
-#include <QWebFrame>
-//--------------------------------------------------------------------------------
-#include "persistentcookiejar.hpp"
-#include "helpbrowser.hpp"
-#include "javascript.hpp"
-#include "mainwindow.hpp"
-#include "tableview.hpp"
-#include "findlinks.hpp"
-#include "database.hpp"
-#include "qxmlputget.h"
 #include "webkit_mainbox.hpp"
-#include "waiting.hpp"
-#include "webview.hpp"
-#include "logbox.hpp"
 //--------------------------------------------------------------------------------
 #include "listwidget_site.hpp"
 #include "listwidget_link.hpp"

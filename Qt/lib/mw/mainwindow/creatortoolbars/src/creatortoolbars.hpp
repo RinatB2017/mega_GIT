@@ -21,11 +21,14 @@
 #ifndef CREATORTOOLBARS_HPP
 #define CREATORTOOLBARS_HPP
 //--------------------------------------------------------------------------------
-#include "creatorwindow.hpp"
+#include <QStyleFactory>
+#include <QMenu>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
+//--------------------------------------------------------------------------------
+#include "creatorwindow.hpp"
 //--------------------------------------------------------------------------------
 class CreatorToolBars : public CreatorWindow
 {

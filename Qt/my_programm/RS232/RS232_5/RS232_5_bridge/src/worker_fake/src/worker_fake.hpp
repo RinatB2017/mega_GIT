@@ -42,7 +42,7 @@ signals:
 
 public:
     explicit Worker_fake(QWidget *parent = nullptr);
-    ~Worker_fake();
+    virtual ~Worker_fake();
 
     void input(QByteArray data);
     void port_open(void);

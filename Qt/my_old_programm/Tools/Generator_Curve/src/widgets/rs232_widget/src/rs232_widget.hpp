@@ -38,7 +38,7 @@ signals:
 
 public:
     explicit RS232_widget(QWidget *parent = nullptr);
-    ~RS232_widget();
+    virtual ~RS232_widget();
 
     void set_generator(Generator_Curve *gen);
 

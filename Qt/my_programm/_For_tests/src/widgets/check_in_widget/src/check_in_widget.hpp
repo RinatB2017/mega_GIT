@@ -33,7 +33,7 @@ class Check_in_widget : public Default_widget
 
 public:
     explicit Check_in_widget(QWidget *parent = nullptr);
-    ~Check_in_widget();
+    virtual ~Check_in_widget();
 
 private:
     Ui::Check_in_widget *ui;

@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
@@ -77,7 +71,9 @@ int main(int argc, char *argv[])
 
     splash->finish(main_window);
 
+#ifdef QT_DEBUG
     qDebug() << QString(QObject::tr("Starting application %1")).arg(APPNAME);
+#endif
 
     return app.exec();
 }

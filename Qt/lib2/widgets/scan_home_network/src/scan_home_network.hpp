@@ -21,6 +21,9 @@
 #ifndef SCAN_HOME_NETWORK_HPP
 #define SCAN_HOME_NETWORK_HPP
 //--------------------------------------------------------------------------------
+#include <QProcess>
+#include <QPointer>
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -33,7 +36,7 @@ class Scan_home_network : public MyWidget
 
 public:
     explicit Scan_home_network(QWidget *parent = nullptr);
-    ~Scan_home_network();
+    virtual ~Scan_home_network();
 
 private:
     Ui::Scan_home_network *ui;

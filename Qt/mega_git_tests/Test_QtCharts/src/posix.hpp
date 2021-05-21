@@ -1,4 +1,5 @@
 //--------------------------------------------------------------------------------
+#include <QTextStream>
 #include <QString>
 #include <unistd.h>
 #include <execinfo.h>
@@ -115,7 +116,9 @@ void posix_death_signal(int signum)
     const int max_deep = 100;
     void  *traces[max_deep];
 
+#ifdef QT_DEBUG
     qDebug() << get_signame(signum);
+#endif
     int ntprs = backtrace(traces, max_deep);
     backtrace_symbols_fd(traces, ntprs, STDERR_FILENO);
 

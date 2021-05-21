@@ -37,7 +37,7 @@ class MainWidget_GUI : public MyWidget
 public:
     explicit MainWidget_GUI(QWidget *parent,
                             MySplashScreen *splash);
-    ~MainWidget_GUI();
+    virtual ~MainWidget_GUI();
 
 private slots:
     void choice_test(void);

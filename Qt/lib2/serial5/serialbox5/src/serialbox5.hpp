@@ -21,19 +21,14 @@
 #ifndef SERIALBOX5_HPP
 #define SERIALBOX5_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QHBoxLayout>
+#include <QPushButton>
 //--------------------------------------------------------------------------------
 #include "serialwidget.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class QHBoxLayout;
-class QPushButton;
-class LogBox;
 class SendBox5;
+class LogBox;
 //--------------------------------------------------------------------------------
 namespace Ui
 {
@@ -56,7 +51,7 @@ public:
                const QString &caption,
                const QString &o_name = "SerialBox5");
     explicit SerialBox5(QWidget *parent = nullptr);
-    ~SerialBox5();
+    virtual ~SerialBox5();
 
     bool add_menu(int index);
     bool add_menu(int index, const QString &title);

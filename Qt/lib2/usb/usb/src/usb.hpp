@@ -56,7 +56,7 @@ signals:
 
 public:
     explicit Usb(QWidget *parent = nullptr);
-    ~Usb();
+    virtual ~Usb();
 
     bool f_list(void);
     bool f_open(uint16_t vid, uint16_t pid);

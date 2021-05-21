@@ -21,11 +21,8 @@
 #ifndef GOOGLE_WALKER_HPP
 #define GOOGLE_WALKER_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QPointer>
+#include <QWidget>
 //--------------------------------------------------------------------------------
 #include <QWebEngineView>
 //--------------------------------------------------------------------------------
@@ -35,7 +32,7 @@ class Google_walker : public QWidget
 
 public:
     explicit Google_walker(QWidget *parent = nullptr);
-    ~Google_walker();
+    virtual ~Google_walker();
 
     void setUrl(QUrl url);
 

@@ -21,11 +21,8 @@
 #ifndef LCD_WIDGET_HPP
 #define LCD_WIDGET_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QLCDNumber>
+#include <QWidget>
 //--------------------------------------------------------------------------------
 namespace Ui {
     class LCD_widget;
@@ -37,7 +34,7 @@ class LCD_widget : public QWidget
 
 public:
     explicit LCD_widget(QWidget *parent = nullptr);
-    ~LCD_widget();
+    virtual ~LCD_widget();
 
     bool display(QString object_name, qreal value);
 

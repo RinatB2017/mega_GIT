@@ -21,12 +21,13 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include "for_tests_mainbox_gui.hpp"
-#include "mywidget.hpp"
+#include <QMetaProperty>
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
+#include "for_tests_mainbox_gui.hpp"
+#include "mysplashscreen.hpp"
+#include "mymainwindow.hpp"
+#include "myfiledialog.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 class C
 {
@@ -74,7 +75,7 @@ class MainBox : public MainBox_GUI
 
 public:
     explicit MainBox(QWidget *parent, MySplashScreen *splash);
-    ~MainBox();
+    virtual ~MainBox();
 
 public slots:
     void choice_test(void);

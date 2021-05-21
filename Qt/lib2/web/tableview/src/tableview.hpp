@@ -31,7 +31,7 @@ class TableView : public QTableView
     Q_OBJECT
 public:
     TableView(QWidget *parent = nullptr);
-    ~TableView();
+    virtual ~TableView();
 
     void init(const QString &query);
 

@@ -21,6 +21,9 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QProgressDialog>
+#include <QFileDialog>
+//--------------------------------------------------------------------------------
 #include "color_widget.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -37,7 +40,7 @@ class MainBox : public MyWidget
 public:
     explicit MainBox(QWidget *parent,
                      MySplashScreen *splash);
-    ~MainBox();
+    virtual ~MainBox();
 
 private slots:
     void choice_test(void);

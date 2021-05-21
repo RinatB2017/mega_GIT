@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "test_qtermwidget_mainbox.hpp"
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
@@ -53,6 +47,13 @@ int main(int argc, char *argv[])
 
     app.setOrganizationName(ORGNAME);
     app.setApplicationName(APPNAME);
+#ifdef Q_OS_LINUX
+    app.setApplicationVersion(QString("%1.%2.%3.%4")
+                              .arg(VER_MAJOR)
+                              .arg(VER_MINOR)
+                              .arg(VER_PATCH)
+                              .arg(VER_BUILD));
+#endif
     app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
     QPixmap pixmap(":/logo/logo.png");
@@ -75,9 +76,10 @@ int main(int argc, char *argv[])
 #ifdef SINGLE_APP
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
 #endif
-    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
 
 #ifdef QT_DEBUG
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
+
     int test_result = QTest::qExec(new Test(), argc, argv);
     if (test_result != EXIT_SUCCESS)
     {

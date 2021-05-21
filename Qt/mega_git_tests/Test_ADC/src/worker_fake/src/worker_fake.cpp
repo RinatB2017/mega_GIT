@@ -87,7 +87,9 @@ void Worker_fake::update(void)
 //--------------------------------------------------------------------------------
 void Worker_fake::port_open(void)
 {
+#ifdef Q_DEBUG
     qDebug() << "port_open";
+#endif
     if(timer)
     {
         timer->start(ui->sb_interval->value());
@@ -96,7 +98,9 @@ void Worker_fake::port_open(void)
 //--------------------------------------------------------------------------------
 void Worker_fake::port_close(void)
 {
+#ifdef Q_DEBUG
     qDebug() << "port_close";
+#endif
     if(timer)
     {
         timer->stop();

@@ -21,11 +21,13 @@
 #ifndef YOUTUBE_WALKER_HPP
 #define YOUTUBE_WALKER_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QApplication>
+#include <QVBoxLayout>
+#include <QMouseEvent>
+#include <QPointer>
+#include <QWidget>
+#include <QEvent>
+#include <QTimer>
 //--------------------------------------------------------------------------------
 #include <QWebEngineView>
 //--------------------------------------------------------------------------------
@@ -35,7 +37,7 @@ class Youtube_walker : public QWidget
 
 public:
     explicit Youtube_walker(QWidget *parent = nullptr);
-    ~Youtube_walker();
+    virtual ~Youtube_walker();
 
     void setUrl(QUrl url);
     void run(int delay_ms);

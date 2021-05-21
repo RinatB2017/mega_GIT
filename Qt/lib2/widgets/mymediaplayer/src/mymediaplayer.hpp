@@ -41,7 +41,7 @@ signals:
 
 public:
     explicit MyMediaPlayer(QWidget *parent = nullptr);
-    ~MyMediaPlayer();
+    virtual ~MyMediaPlayer();
 
     void test(void);
 

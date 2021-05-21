@@ -18,9 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_H
-#define MAINBOX_H
+#ifndef MAINBOX_HPP
+#define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QScrollArea>
+#include <QPushButton>
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -40,25 +42,24 @@ class MainBox : public MyWidget
 
 public:
     MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+    virtual ~MainBox();
 
 private slots:
     void test(void);
 
 private:
     Ui::MainBox *ui;
-    QWidget *parent;
-    QtEnumEditorFactory *comboBoxFactory;
-    QtEnumPropertyManager *enumManager;
-    QtTreePropertyBrowser *editor;
+    QtEnumEditorFactory *comboBoxFactory = nullptr;
+    QtEnumPropertyManager *enumManager = nullptr;
+    QtTreePropertyBrowser *editor = nullptr;
 
-    QtProperty *item0;
-    QtProperty *device;
-    QtProperty *baudrate;
-    QtProperty *databits;
-    QtProperty *parity;
-    QtProperty *stopbits;
-    QtProperty *flow;
+    QtProperty *item0 = nullptr;
+    QtProperty *device = nullptr;
+    QtProperty *baudrate = nullptr;
+    QtProperty *databits = nullptr;
+    QtProperty *parity = nullptr;
+    QtProperty *stopbits = nullptr;
+    QtProperty *flow = nullptr;
 
     void init(void);
 

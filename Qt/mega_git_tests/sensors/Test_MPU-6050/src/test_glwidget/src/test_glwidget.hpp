@@ -62,7 +62,7 @@ class Test_GLWidget : public QGLWidget
 
 public:
     explicit Test_GLWidget(QWidget *parent = nullptr);
-    ~Test_GLWidget();
+    virtual ~Test_GLWidget();
 
 public slots:
     void setXRotation(int angle);

@@ -21,11 +21,7 @@
 #ifndef HISTOGRAMBOX_HPP
 #define HISTOGRAMBOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QFileDialog>
 //--------------------------------------------------------------------------------
 #include "qwt_plot_histogram.h"
 #include "qwt_series_data.h"
@@ -69,7 +65,7 @@ class HistogramBox : public MyWidget
 
 public:
     HistogramBox(QWidget *parent = nullptr);
-    ~HistogramBox();
+    virtual ~HistogramBox();
 
     void set_axis_scale_x(double new_axis_X_min, double new_axis_X_max);
     void set_axis_scale_y(double new_axis_Y_min, double new_axis_Y_max);

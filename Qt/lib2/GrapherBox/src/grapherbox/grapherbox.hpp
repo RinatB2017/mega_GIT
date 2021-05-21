@@ -101,7 +101,7 @@ class GrapherBox : public MyWidget
 
 public:
     explicit GrapherBox(QWidget *parent = nullptr);
-    ~GrapherBox();
+    virtual ~GrapherBox();
 
     void set_axis_scale_x(qreal new_axis_X_min, qreal new_axis_X_max);
     void set_axis_scale_y(qreal new_axis_Y_min, qreal new_axis_Y_max);

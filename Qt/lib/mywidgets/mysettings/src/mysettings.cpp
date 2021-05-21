@@ -170,7 +170,9 @@ bool MySettings::save_splitter_property(QWidget *widget)
         QString o_name = widget->objectName();
         if(o_name == "main_splitter")
         {
+#ifdef QT_DEBUG
             qDebug() << "found splitter!";
+#endif
         }
         if(o_name.isEmpty() == false)
         {

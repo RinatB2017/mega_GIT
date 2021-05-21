@@ -33,7 +33,7 @@ class LogDock : public QDockWidget
 
 public:
     explicit LogDock(QWidget *parent = nullptr);
-    ~LogDock();
+    virtual ~LogDock();
 
 public slots:
     void infoLog(QString text);

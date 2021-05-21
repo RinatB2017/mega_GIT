@@ -21,6 +21,8 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QElapsedTimer>
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 #include <QSerialPortInfo>
@@ -31,10 +33,6 @@ namespace Ui {
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
-class QToolButton;
-class QToolBar;
-class QComboBox;
-class QCheckBox;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget
 {
@@ -43,7 +41,7 @@ class MainBox : public MyWidget
 public:
     explicit MainBox(QWidget *parent,
                      MySplashScreen *splash);
-    ~MainBox();
+    virtual ~MainBox();
 
 private slots:
     void choice_test(void);
@@ -60,7 +58,6 @@ private slots:
     void test(void);
 
 private:
-
     MySplashScreen *splash = 0;
     Ui::MainBox *ui = 0;
 

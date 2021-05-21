@@ -118,19 +118,16 @@ void MyMainWindow::messageHandler(QtMsgType type,
 void MyMainWindow::create_local_menus(void)
 {
     file_action = new QAction(this);
-//    file_action->setText(QObject::tr("file_action"));
     file_action->setProperty(P_APP_ENG_TEXT, "file_action");
     file_action->setText("file_action");
     file_action->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
 
     options_action = new QAction(this);
-//    options_action->setText(QObject::tr("options_action"));
     options_action->setProperty(P_APP_ENG_TEXT, "options_action");
     options_action->setText("options_action");
     options_action->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));
 
     help_action = new QAction(this);
-//    help_action->setText(QObject::tr("help_action"));
     help_action->setProperty(P_APP_ENG_TEXT, "help_action");
     help_action->setText("help_action");
     help_action->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogSaveButton));

@@ -36,7 +36,7 @@ signals:
 
 public:
     explicit MyComboBox(QWidget *parent = nullptr);
-    ~MyComboBox();
+    virtual ~MyComboBox();
 
     QString get_command(void);
 

@@ -2,11 +2,13 @@
 #ifndef ABOUTBOX_HPP
 #define ABOUTBOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QProcessEnvironment>
+#include <QDesktopServices>
+#include <QTextEdit>
+#include <QDialog>
+#include <QStyle>
+#include <QTimer>
+#include <QUrl>
 //--------------------------------------------------------------------------------
 #define P_AVATAR        "avatar"
 #define P_ORGNAME       "orgName"
@@ -35,7 +37,7 @@ class AboutBox : public QDialog
 
 public:
     explicit AboutBox(QWidget *parent = nullptr);
-    ~AboutBox();
+    virtual ~AboutBox();
 
 private slots:
     void send_mail(QString link);

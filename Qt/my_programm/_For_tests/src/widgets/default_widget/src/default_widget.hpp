@@ -29,7 +29,7 @@ class Default_widget : public MyWidget
 
 public:
     explicit Default_widget(QWidget *parent);
-    ~Default_widget();
+    virtual ~Default_widget();
 
 private:
     void updateText(void);

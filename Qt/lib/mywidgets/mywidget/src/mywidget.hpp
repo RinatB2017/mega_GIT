@@ -21,11 +21,16 @@
 #ifndef MYWIDGET_HPP
 #define MYWIDGET_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QDoubleSpinBox>
+#include <QStringList>
+#include <QToolButton>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QFileInfo>
+#include <QLineEdit>
+#include <QToolBar>
+#include <QPainter>
+#include <QDir>
 //--------------------------------------------------------------------------------
 #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
 #   include <QTextCodec>

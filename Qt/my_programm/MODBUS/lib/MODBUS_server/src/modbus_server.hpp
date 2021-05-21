@@ -44,7 +44,7 @@ class MODBUS_server : public MyWidget
 
 public:
     MODBUS_server(QWidget *parent = nullptr);
-    ~MODBUS_server();
+    virtual ~MODBUS_server();
 
 private slots:
     void errorOccurred(QModbusDevice::Error);

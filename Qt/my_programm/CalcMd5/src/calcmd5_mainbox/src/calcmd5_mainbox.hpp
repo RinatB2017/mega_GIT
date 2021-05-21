@@ -33,7 +33,7 @@ class MainBox : public MyWidget
 
 public:
     MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+    virtual ~MainBox();
 
 public slots:
     QString get_md5(const QString &filename);

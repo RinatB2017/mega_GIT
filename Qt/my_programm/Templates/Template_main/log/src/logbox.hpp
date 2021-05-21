@@ -18,14 +18,17 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef LOGBOX_H
-#define LOGBOX_H
+#ifndef LOGBOX_HPP
+#define LOGBOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QApplication>
+#include <QProgressBar>
+#include <QFileDialog>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QDateTime>
+#include <QTextEdit>
+#include <QFrame>
 //--------------------------------------------------------------------------------
 class LogBox : public QFrame
 {
@@ -35,7 +38,7 @@ public:
     explicit LogBox(QWidget *parent = nullptr,
                     unsigned int min_width  = 1,
                     unsigned int min_height = 1);
-    ~LogBox();
+    virtual ~LogBox();
 
     void load_settings(void);
     void save_settings(void);
@@ -106,4 +109,4 @@ protected:
 
 };
 //--------------------------------------------------------------------------------
-#endif // LOGBOX_H
+#endif // LOGBOX_HPP

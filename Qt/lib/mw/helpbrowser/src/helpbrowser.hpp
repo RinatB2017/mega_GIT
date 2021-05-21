@@ -21,11 +21,14 @@
 #ifndef HELPBROWSER_HPP
 #define HELPBROWSER_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QGuiApplication>
+#include <QTextBrowser>
+#include <QPushButton>
+#include <QPointer>
+#include <QScreen>
+#include <QWidget>
+#include <QEvent>
+#include <QUrl>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -35,7 +38,7 @@ class HelpBrowser : public QWidget
 public: 
     explicit HelpBrowser(QString &page,
                          QWidget *parent = nullptr);
-    ~HelpBrowser();
+    virtual ~HelpBrowser();
 
     static void showPage(QString page,
                          bool is_maximized = true);

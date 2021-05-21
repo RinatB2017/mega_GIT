@@ -41,7 +41,7 @@ class MainBox : public MyWidget
 public:
     MainBox(QWidget *parent,
             MySplashScreen *splash);
-    ~MainBox();
+    virtual ~MainBox();
 
 signals:
     void send(QByteArray);

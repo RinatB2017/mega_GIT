@@ -21,11 +21,18 @@
 #ifndef TREEFILMS_HPP
 #define TREEFILMS_HPP
 //--------------------------------------------------------------------------------
+#include <QProgressDialog>
+#include <QApplication>
+#include <QInputDialog>
+#include <QFileDialog>
+#include <QMessageBox>
 #include <QDomElement>
 #include <QTreeWidget>
+#include <QDropEvent>
+#include <QAction>
+#include <QMenu>
 #include <QDir>
 //--------------------------------------------------------------------------------
-class QProgressDialog;
 class QXmlPut;
 //--------------------------------------------------------------------------------
 class TreeFilms : public QTreeWidget
@@ -34,7 +41,7 @@ class TreeFilms : public QTreeWidget
 
 public:
     explicit TreeFilms(QWidget *parent = nullptr);
-    ~TreeFilms();
+    virtual ~TreeFilms();
     
 signals:
     void info(const QString &);

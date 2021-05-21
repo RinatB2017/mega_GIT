@@ -14,7 +14,7 @@ protected:
 
 public:
     PersistentCookieJar(QObject *parent, const QString& fname);
-    ~PersistentCookieJar ();
+    virtual ~PersistentCookieJar ();
 
     void save(void);
     void load(void);

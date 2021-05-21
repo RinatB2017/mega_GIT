@@ -152,7 +152,9 @@ void MainBox::test(void)
         {
             emit debug(sl.at(1));
         }
+#ifdef QT_DEBUG
         qDebug() << str.count();
+#endif
     }
 }
 //--------------------------------------------------------------------------------

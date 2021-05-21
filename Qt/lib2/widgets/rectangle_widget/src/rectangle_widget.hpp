@@ -33,7 +33,7 @@ class RectangeWidget : public QFrame
 
 public:
     explicit RectangeWidget(QWidget *parent = nullptr);
-    ~RectangeWidget();
+    virtual ~RectangeWidget();
 
 private:
     QPointer<QSizeGrip> sizeGrip;

@@ -9,7 +9,7 @@ class Pixel final: public QSGSimpleRectNode
 {
 public:
     Pixel(const QRectF& rect, const QColor& color);
-    ~Pixel();
+    virtual ~Pixel();
 private:
     QSGSimpleRectNode *border;
 };

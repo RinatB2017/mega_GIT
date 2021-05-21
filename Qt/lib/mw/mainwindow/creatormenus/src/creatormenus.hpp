@@ -21,11 +21,13 @@
 #ifndef CREATORMENUS_HPP
 #define CREATORMENUS_HPP
 //--------------------------------------------------------------------------------
-#include "creatortoolbars.hpp"
+#include <QMenuBar>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
+//--------------------------------------------------------------------------------
+#include "creatortoolbars.hpp"
 //--------------------------------------------------------------------------------
 class CreatorMenus : public CreatorToolBars
 {

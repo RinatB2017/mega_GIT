@@ -26,10 +26,6 @@
 #include "mainwindow.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox_GUI;
 }
@@ -40,7 +36,7 @@ class MainBox_GUI : public MyWidget
 
 public:
     explicit MainBox_GUI(QWidget *parent);
-    ~MainBox_GUI();
+    virtual ~MainBox_GUI();
 
 private:
     Ui::MainBox_GUI *ui;

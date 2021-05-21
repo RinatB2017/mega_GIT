@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "ui_test_QtPropertyBrowser_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -306,6 +300,8 @@ void MainBox::save_setting(void)
 void MainBox::closeEvent(QCloseEvent *event)
 {
     QWidget::closeEvent(event);
+#ifdef QT_DEBUG
     qDebug() << "MainBox::closeEvent";
+#endif
 }
 //--------------------------------------------------------------------------------

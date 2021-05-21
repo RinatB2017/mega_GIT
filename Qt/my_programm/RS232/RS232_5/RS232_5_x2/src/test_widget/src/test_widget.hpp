@@ -21,12 +21,6 @@
 #ifndef TEST_WIDGET_HPP
 #define TEST_WIDGET_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -39,7 +33,7 @@ class TestWidget : public MyWidget
 
 public:
     explicit TestWidget(QWidget *parent = nullptr);
-    ~TestWidget();
+    virtual ~TestWidget();
 
 public slots:
     void choice_test(void);

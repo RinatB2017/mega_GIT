@@ -21,7 +21,9 @@
 #ifndef HLK_RM04_WIDGET_HPP
 #define HLK_RM04_WIDGET_HPP
 //--------------------------------------------------------------------------------
+#include <QElapsedTimer>
 #include <QSerialPort>
+
 #include <limits.h>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -39,7 +41,7 @@ signals:
 
 public:
     explicit HLK_RM04_widget(QWidget *parent = nullptr);
-    ~HLK_RM04_widget();
+    virtual ~HLK_RM04_widget();
 
 private slots:
     void readChannelFinished(void);

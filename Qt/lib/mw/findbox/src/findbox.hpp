@@ -21,11 +21,8 @@
 #ifndef FINDBOX_HPP
 #define FINDBOX_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QWidget>
+#include <QStyle>
 //--------------------------------------------------------------------------------
 namespace Ui {
     class FindBox;
@@ -41,7 +38,7 @@ signals:
 
 public:
     explicit FindBox(QWidget *parent = nullptr);
-    ~FindBox();
+    virtual ~FindBox();
 
 private:
     Ui::FindBox *ui;

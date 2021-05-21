@@ -34,7 +34,7 @@ class MiniMap : public MyWidget
 
 public:
     MiniMap(QWidget *parent = nullptr);
-    ~MiniMap();
+    virtual ~MiniMap();
 
     bool set(int x, int y, int id);
     bool get(int x, int y, int *id);

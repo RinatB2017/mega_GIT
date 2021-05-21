@@ -21,6 +21,8 @@
 #ifndef SHOW_HSV_COLOR_HPP
 #define SHOW_HSV_COLOR_HPP
 //--------------------------------------------------------------------------------
+#include <QMouseEvent>
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -33,7 +35,7 @@ class Show_HSV_color : public MyWidget
 
 public:
     explicit Show_HSV_color(QWidget *parent = nullptr);
-    ~Show_HSV_color();
+    virtual ~Show_HSV_color();
 
     void set_color(QColor color);
     QColor get_color(void);

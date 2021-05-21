@@ -37,7 +37,7 @@ public:
                       double min_axis_Y,
                       double max_axis_Y,
                       QWidget *parent = nullptr);
-    ~Histogram_Options();
+    virtual ~Histogram_Options();
 
     int get_min_axis_x(void);
     int get_max_axis_x(void);

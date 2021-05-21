@@ -75,9 +75,10 @@ int main(int argc, char *argv[])
 #ifdef SINGLE_APP
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
 #endif
-    qDebug() << QString(QObject::tr("Starting application %1")).arg(APPNAME);
 
 #ifdef QT_DEBUG
+    qDebug() << QString(QObject::tr("Starting application %1")).arg(APPNAME);
+
     int test_result = QTest::qExec(new Test(), argc, argv);
     if (test_result != EXIT_SUCCESS)
     {

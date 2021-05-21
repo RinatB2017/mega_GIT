@@ -317,7 +317,9 @@ int SerialBox5_fix_baudrate::input(const QByteArray &sending_data)
 //--------------------------------------------------------------------------------
 int SerialBox5_fix_baudrate::input(const QString &data)
 {
+#ifdef Q_DEBUG
     qDebug() << data;
+#endif
     if(!isOpen())
     {
         emit error("E_PORT_NOT_OPEN");

@@ -21,15 +21,28 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QElapsedTimer>
+#include <QProgressBar>
+//--------------------------------------------------------------------------------
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkProxy>
+#include <QWebElement>
+#include <QWebFrame>
+//--------------------------------------------------------------------------------
+#include "mainwindow.hpp"
+#include "javascript.hpp"
+#include "qxmlputget.h"
+#include "mywidget.hpp"
+#include "webview.hpp"
+#include "waiting.hpp"
+#include "logbox.hpp"
+//--------------------------------------------------------------------------------
+class WebView;
+//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }
-//--------------------------------------------------------------------------------
-#include <QWebFrame>
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-class WebView;
 //--------------------------------------------------------------------------------
 struct web_struct
 {
@@ -48,7 +61,7 @@ class MainBox : public MyWidget
 
 public:
     explicit MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+    virtual ~MainBox();
 
 private slots:
     void get_proxies_list(void);

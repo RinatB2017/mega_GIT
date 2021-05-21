@@ -21,7 +21,10 @@
 #ifndef DIP_WIDGET_HPP
 #define DIP_WIDGET_HPP
 //--------------------------------------------------------------------------------
-#include <QtWidgets>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QWidget>
+#include <QPen>
 //--------------------------------------------------------------------------------
 #define MAX_WIDTH   100
 #define MAX_HEIGHT  50
@@ -47,7 +50,7 @@ class DIP_widget : public QWidget
 
 public:
     explicit DIP_widget(QWidget *parent = nullptr);
-    ~DIP_widget();
+    virtual ~DIP_widget();
 
 signals:
     void info(const QString &);
@@ -82,8 +85,8 @@ private:
     bool check_pos(QRect rect, QPoint pos);
 
 protected:
-    void paintEvent (QPaintEvent * event);
-    void mousePressEvent(QMouseEvent * event);
+    void paintEvent (QPaintEvent *event);
+    void mousePressEvent(QMouseEvent *event);
 };
 //--------------------------------------------------------------------------------
 #endif // DIP_WIDGET_HPP

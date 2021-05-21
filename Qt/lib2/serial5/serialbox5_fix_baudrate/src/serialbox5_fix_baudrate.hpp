@@ -21,11 +21,6 @@
 #ifndef SERIALBOX5_FIX_BAUDRATE_HPP
 #define SERIALBOX5_FIX_BAUDRATE_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
 #ifdef RS232_SEND
 #   include "sendbox5.hpp"
 #endif
@@ -49,7 +44,7 @@ public:
                                      const QString &caption,
                                      const QString &o_name);
     explicit SerialBox5_fix_baudrate(QWidget *parent = nullptr);
-    ~SerialBox5_fix_baudrate();
+    virtual ~SerialBox5_fix_baudrate();
 
     bool add_menu(int index);
     bool add_menu(int index, const QString &title);

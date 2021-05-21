@@ -21,11 +21,10 @@
 #ifndef LOG_OPTIONS_HPP
 #define LOG_OPTIONS_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include<QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QTextCodec>
+#include <QTextEdit>
+#include <QPointer>
+#include <QDialog>
 //--------------------------------------------------------------------------------
 #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
 #   include <QTextCodec>
@@ -53,7 +52,7 @@ class Log_options : public QDialog
 
 public:
     explicit Log_options(QWidget *parent = nullptr);
-    ~Log_options();
+    virtual ~Log_options();
 
     QTextCodec *get_text_codec(void);
 

@@ -37,7 +37,7 @@ signals:
 
 public:
     explicit MyLogger(QObject *parent = nullptr);
-    ~MyLogger();
+    virtual ~MyLogger();
 
     void sender_info(const QString  &text);
     void sender_debug(const QString &text);

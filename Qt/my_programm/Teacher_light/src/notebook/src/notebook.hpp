@@ -21,19 +21,20 @@
 #ifndef NOTEBOOK_HPP
 #define NOTEBOOK_HPP
 //--------------------------------------------------------------------------------
+#include <QStackedWidget>
+#include <QApplication>
+#include <QPushButton>
+#include <QTextEdit>
 #include <QFrame>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-class QStackedWidget;
-class QPushButton;
 //--------------------------------------------------------------------------------
 class Notebook : public MyWidget
 {
     Q_OBJECT
 public:
-    Notebook(QWidget *parent = nullptr);
-    ~Notebook();
+    explicit Notebook(QWidget *parent = nullptr);
+    virtual ~Notebook();
 
     void check_modified(void);
 
@@ -48,8 +49,8 @@ private:
     bool save_data(QString name, QStringList *data);
 
     QStringList alphabet;
-    QStackedWidget *sw;
-    QPushButton *btn_save_all;
+    QStackedWidget *sw = nullptr;
+    QPushButton *btn_save_all = nullptr;
 
     void updateText(void);
     bool programm_is_exit(void);

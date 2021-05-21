@@ -43,7 +43,7 @@ class MainBox : public MyWidget
 public:
     MainBox(QWidget *parent,
             MySplashScreen *splash);
-    ~MainBox();
+    virtual ~MainBox();
 
     int xxx(int x);
     void test_ptr(QWidget *ptr);

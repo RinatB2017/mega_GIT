@@ -23,12 +23,6 @@
 #ifndef FAKE_SERIALWIDGET_HPP
 #define FAKE_SERIALWIDGET_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include <QSerialPort>
 //--------------------------------------------------------------------------------
 // это шаблон, не надо его переписывать
@@ -59,7 +53,7 @@ signals:
 
 public:
     explicit SerialWidget(QWidget *parent = nullptr);
-    ~SerialWidget();
+    virtual ~SerialWidget();
 
     bool serial_open(void);
     bool serial_close(void);

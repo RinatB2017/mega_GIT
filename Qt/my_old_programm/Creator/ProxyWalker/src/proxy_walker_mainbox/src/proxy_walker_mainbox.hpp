@@ -22,6 +22,7 @@
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
 #include <QNetworkReply>
+#include <QProgressBar>
 #include <QWebFrame>
 #include <QWidget>
 //--------------------------------------------------------------------------------
@@ -39,7 +40,7 @@ class MainBox : public MyWidget
 
 public:
     explicit MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+    virtual ~MainBox();
 
 private slots:
     void get_proxies_list(void);

@@ -21,9 +21,14 @@
 #ifndef WEBVIEW_H
 #define WEBVIEW_H
 //--------------------------------------------------------------------------------
+#include <QContextMenuEvent>
+#include <QInputDialog>
+#include <QLineEdit>
 #include <QCheckBox>
 #include <QWebView>
 #include <QVector>
+#include <QAction>
+#include <QMenu>
 //--------------------------------------------------------------------------------
 #include <QNetworkAccessManager>
 #include <QNetworkReply>

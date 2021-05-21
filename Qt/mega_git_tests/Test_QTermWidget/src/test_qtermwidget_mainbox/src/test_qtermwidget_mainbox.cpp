@@ -146,7 +146,9 @@ bool MainBox::test(void)
 bool MainBox::test2(void)
 {
     emit info("Test2");
+#ifdef QT_DEBUG
     qDebug()<<"\033[37;1;41m Внимание \033[0m";
+#endif
     return true;
 }
 //--------------------------------------------------------------------------------

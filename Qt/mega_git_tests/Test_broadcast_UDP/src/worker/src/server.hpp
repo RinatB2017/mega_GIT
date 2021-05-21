@@ -31,7 +31,7 @@ class Server : public QObject
     Q_OBJECT
 public:
     explicit Server(QObject *parent = nullptr);
-    ~Server();
+    virtual ~Server();
 
 signals:
     void info(const QString &);

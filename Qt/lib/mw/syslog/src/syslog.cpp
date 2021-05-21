@@ -89,6 +89,11 @@ SysLog::SysLog(const QString &title,
     //---
 }
 //--------------------------------------------------------------------------------
+SysLog::~SysLog()
+{
+
+}
+//--------------------------------------------------------------------------------
 void SysLog::syslog_info(const QString &text)
 {
     s_syslog(QDateTime::currentDateTime(), LOG_INFO, 0, text);

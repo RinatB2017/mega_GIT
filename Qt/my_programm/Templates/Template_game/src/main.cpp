@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 
 #include "game.hpp"
@@ -67,7 +61,9 @@ int main(int argc, char *argv[])
     mainBox->show();
 #endif
 
+#ifdef QT_DEBUG
     qDebug() << QString(QObject::tr("Starting application %1")).arg(APPNAME);
+#endif
     return app.exec();
 }
 //--------------------------------------------------------------------------------

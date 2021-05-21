@@ -21,6 +21,7 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QElapsedTimer>
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
@@ -45,7 +46,7 @@ class MainBox : public MyWidget
 public:
     explicit MainBox(QWidget *parent,
                      MySplashScreen *splash);
-    ~MainBox();
+    virtual ~MainBox();
 
 signals:
     void send(QByteArray);

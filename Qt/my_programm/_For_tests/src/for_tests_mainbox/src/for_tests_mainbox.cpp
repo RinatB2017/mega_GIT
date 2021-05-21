@@ -22,9 +22,6 @@
 #include <vector>       // std::vector
 
 #include "for_tests_mainbox.hpp"
-#include "mysplashscreen.hpp"
-#include "mymainwindow.hpp"
-#include "myfiledialog.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,

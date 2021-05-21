@@ -21,11 +21,19 @@
 #ifndef MYTEXTEDIT_HPP
 #define MYTEXTEDIT_HPP
 //--------------------------------------------------------------------------------
+#include <QContextMenuEvent>
+#include <QApplication>
+#include <QFileDialog>
 #include <QTextEdit>
+#include <QPointer>
+#include <QAction>
+#include <QStyle>
+#include <QMenu>
 //--------------------------------------------------------------------------------
 class MyTextEdit : public QTextEdit
 {
     Q_OBJECT
+
 public:
     explicit MyTextEdit(QWidget *parent = nullptr);
     
@@ -45,7 +53,6 @@ private:
 
 protected:
     void contextMenuEvent(QContextMenuEvent *event);
-
 };
 //--------------------------------------------------------------------------------
 #endif // MYTEXTEDIT_HPP

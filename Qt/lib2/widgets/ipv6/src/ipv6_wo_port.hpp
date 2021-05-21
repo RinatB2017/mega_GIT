@@ -21,11 +21,8 @@
 #ifndef IPV6_WO_PORT_HPP
 #define IPV6_WO_PORT_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QPointer>
+#include <QUrl>
 //--------------------------------------------------------------------------------
 #include "hexspinbox.hpp"
 #include "mywidget.hpp"
@@ -41,7 +38,7 @@ signals:
 
 public:
     explicit IPV6_wo_port(QWidget *parent = nullptr);
-    ~IPV6_wo_port();
+    virtual ~IPV6_wo_port();
 
     void setObjectName(const QString &name);
 

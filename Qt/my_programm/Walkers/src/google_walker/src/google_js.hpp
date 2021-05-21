@@ -21,11 +21,11 @@
 #ifndef GOOGLE_JS_HPP
 #define GOOGLE_JS_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QTextEdit>
+#include <QPointer>
+#include <QWidget>
 //--------------------------------------------------------------------------------
 class Google_JS : public QWidget
 {
@@ -33,7 +33,7 @@ class Google_JS : public QWidget
 
 public:
     explicit Google_JS(QWidget *parent = nullptr);
-    ~Google_JS();
+    virtual ~Google_JS();
 
 signals:
     void send(const QString &);
@@ -43,7 +43,6 @@ private slots:
 
 private:
     QPointer<QTextEdit> te;
-
 };
 //--------------------------------------------------------------------------------
 #endif // GOOGLE_JS_HPP

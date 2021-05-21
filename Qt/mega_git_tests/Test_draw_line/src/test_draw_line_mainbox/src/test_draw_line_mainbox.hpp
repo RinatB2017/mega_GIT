@@ -21,6 +21,7 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QColorDialog>
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -39,7 +40,7 @@ class MainBox : public MyWidget
 public:
     explicit MainBox(QWidget *parent,
                      MySplashScreen *splash);
-    ~MainBox();
+    virtual ~MainBox();
 
 signals:
     void send(QByteArray);

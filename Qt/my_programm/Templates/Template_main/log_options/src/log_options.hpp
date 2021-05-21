@@ -21,11 +21,7 @@
 #ifndef LOG_OPTIONS_HPP
 #define LOG_OPTIONS_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QDialog>
 //--------------------------------------------------------------------------------
 namespace Ui {
     class Log_options;
@@ -39,7 +35,7 @@ class Log_options : public QDialog
     
 public:
     explicit Log_options(QWidget *parent = nullptr);
-    ~Log_options();
+    virtual ~Log_options();
 
     Q_PROPERTY(bool flag_ReadOnly       READ get_flag_ReadOnly          WRITE set_flag_ReadOnly)
     Q_PROPERTY(bool flag_AcceptRichText READ get_flag_AcceptRichText    WRITE set_flag_AcceptRichText)

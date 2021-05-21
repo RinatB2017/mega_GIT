@@ -21,11 +21,9 @@
 #ifndef WEBATTRIBUTEDIALOG_HPP
 #define WEBATTRIBUTEDIALOG_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
+#include <QCheckBox>
+#include <QDialog>
+#include <QLabel>
 //--------------------------------------------------------------------------------
 #include <QWebEngineSettings>
 //--------------------------------------------------------------------------------
@@ -41,7 +39,7 @@ class WebAttributeDialog : public QDialog
 
 public:
     explicit WebAttributeDialog(QWidget *parent = nullptr);
-    ~WebAttributeDialog();
+    virtual ~WebAttributeDialog();
 
     bool set(const QString &attribute_name, bool value);
     bool get(const QString &attribute_name);

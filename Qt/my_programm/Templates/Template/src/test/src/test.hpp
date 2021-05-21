@@ -33,7 +33,7 @@ class Test : public QObject
 
 public:
     Test();
-    ~Test();
+    virtual ~Test();
 
 private slots:
     void test_GUI(void);

@@ -70,7 +70,7 @@ class ParportBox : public MyWidget
 
 public:
     ParportBox(QWidget *parent = nullptr);
-    ~ParportBox();
+    virtual ~ParportBox();
 
 private slots:
     void pressed();

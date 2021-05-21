@@ -37,7 +37,7 @@ class MainBox : public MyWidget
 public:
     MainBox(QWidget *parent,
             MySplashScreen *splash);
-    ~MainBox();
+    virtual ~MainBox();
 
 private slots:
     void test(void);

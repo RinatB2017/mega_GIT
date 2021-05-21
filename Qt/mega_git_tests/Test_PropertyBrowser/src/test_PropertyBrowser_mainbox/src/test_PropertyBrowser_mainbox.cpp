@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "ui_test_PropertyBrowser_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "test_PropertyBrowser_mainbox.hpp"
@@ -40,8 +34,7 @@
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
-    ui(new Ui::MainBox),
-    parent(parent)
+    ui(new Ui::MainBox)
 {
     ui->setupUi(this);
 

@@ -11,7 +11,7 @@ class SpellChecker
 {
 public:
     SpellChecker(const QString &dictionaryPath, const QString &userDictionary);
-    ~SpellChecker();
+    virtual ~SpellChecker();
 
     bool spell(const QString &word);
     QStringList suggest(const QString &word);

@@ -117,8 +117,10 @@ void MainBox::test(void)
     /* No need to keep the media now */
     libvlc_media_release (m);
 
+#ifdef QT_DEBUG
     qDebug() << "time" << libvlc_media_player_get_time(mp);
     qDebug() << "title" << libvlc_media_player_get_title(mp);
+#endif
 
     /* play the media_player */
     libvlc_media_player_play (mp);

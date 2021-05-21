@@ -43,7 +43,7 @@ class DataGrapherBox : public MyWidget
 
 public:
     explicit DataGrapherBox(QWidget *parent = nullptr);
-    ~DataGrapherBox();
+    virtual ~DataGrapherBox();
 
     int add_curve(QString curve_name);
     void add_curves(QStringList sl);

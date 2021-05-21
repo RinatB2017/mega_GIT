@@ -18,9 +18,11 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-//--------------------------------------------------------------------------------
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
+//--------------------------------------------------------------------------------
+#include <QCryptographicHash>
+#include <QElapsedTimer>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -33,8 +35,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+    explicit MainBox(QWidget *parent = nullptr);
+    virtual ~MainBox();
 
 public slots:
     QString get_md5(const QString &filename);

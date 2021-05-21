@@ -21,6 +21,8 @@
 #ifndef MDI_WIDGET_HPP
 #define MDI_WIDGET_HPP
 //--------------------------------------------------------------------------------
+#include <QMdiSubWindow>
+//--------------------------------------------------------------------------------
 #include "default_widget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -33,7 +35,7 @@ class MDI_widget : public Default_widget
 
 public:
     explicit MDI_widget(QWidget *parent = nullptr);
-    ~MDI_widget();
+    virtual ~MDI_widget();
 
 private:
     Ui::MDI_widget *ui;

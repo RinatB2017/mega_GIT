@@ -29,7 +29,7 @@ class MainWidget : public QTabWidget
 
 public:
     explicit MainWidget(QWidget *parent = nullptr);
-    ~MainWidget();
+    virtual ~MainWidget();
 
 signals:
     void info(const QString &);

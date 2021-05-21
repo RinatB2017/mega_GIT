@@ -22,6 +22,7 @@
 #define MODBUS_CLIENT_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
+#include <QUrl>
 //--------------------------------------------------------------------------------
 #include <QModbusDataUnit>
 #include <QModbusDevice>
@@ -41,7 +42,7 @@ class MODBUS_client : public MyWidget
 
 public:
     MODBUS_client(QWidget *parent = nullptr);
-    ~MODBUS_client();
+    virtual ~MODBUS_client();
 
 private slots:
     void readReady(void);

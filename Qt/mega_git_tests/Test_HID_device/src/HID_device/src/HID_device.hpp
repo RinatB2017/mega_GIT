@@ -100,7 +100,7 @@ class HID_device : public MyWidget
 
 public:
     explicit HID_device(QWidget *parent);
-    ~HID_device();
+    virtual ~HID_device();
 
 signals:
     void block_widget(bool);

@@ -67,7 +67,7 @@ class CQR_Encode
 {
 public:
     CQR_Encode();
-    ~CQR_Encode();
+    virtual ~CQR_Encode();
 
 public:
     int m_nLevel;

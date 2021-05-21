@@ -34,7 +34,7 @@ public:
     Database(const QString &driver_name,
                       const QString &database_name,
                       QObject *parent = nullptr);
-    ~Database();
+    virtual ~Database();
 
     bool isValid(void);
     QString get_lastError(void);

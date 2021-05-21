@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
@@ -71,7 +65,6 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);
 
-    //MainBox *mainBox = new MainBox(0, splash);
     MainBox *mainBox = new MainBox(main_window, splash);
     Q_ASSERT(mainBox);
 
@@ -83,9 +76,10 @@ int main(int argc, char *argv[])
 #ifdef SINGLE_APP
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
 #endif
-    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
 
 #ifdef QT_DEBUG
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
+
     int test_result = QTest::qExec(new Test(), argc, argv);
     if (test_result != EXIT_SUCCESS)
     {

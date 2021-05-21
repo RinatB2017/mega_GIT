@@ -21,6 +21,11 @@
 #ifndef AUTOCLICKER_HPP
 #define AUTOCLICKER_HPP
 //--------------------------------------------------------------------------------
+#include <QStringListModel>
+#include <QElapsedTimer>
+#include <QInputDialog>
+#include <QPointer>
+//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -33,7 +38,7 @@ class AutoClicker : public MyWidget
 
 public:
     explicit AutoClicker(QWidget *parent = nullptr);
-    ~AutoClicker();
+    virtual ~AutoClicker();
 
     bool test_command(const QString &command_str);
 

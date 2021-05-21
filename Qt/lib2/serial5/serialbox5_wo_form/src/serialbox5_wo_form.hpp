@@ -21,12 +21,6 @@
 #ifndef SERIALBOX5_WO_FORM_HPP
 #define SERIALBOX5_WO_FORM_HPP
 //--------------------------------------------------------------------------------
-#ifdef HAVE_QT5
-#   include <QtWidgets>
-#else
-#   include <QtGui>
-#endif
-//--------------------------------------------------------------------------------
 #include "serialwidget.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -49,7 +43,7 @@ public:
                                 const QString &caption,
                                 const QString &o_name = "SerialBox5_wo_form");
     explicit SerialBox5_wo_form(QWidget *parent = nullptr);
-    ~SerialBox5_wo_form();
+    virtual ~SerialBox5_wo_form();
 
     bool add_menu(int index);
     bool add_menu(int index, const QString &title);

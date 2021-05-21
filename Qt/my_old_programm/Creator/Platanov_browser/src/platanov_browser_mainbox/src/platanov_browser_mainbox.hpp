@@ -21,6 +21,13 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QProgressBar>
+#include <QWebFrame>
+//--------------------------------------------------------------------------------
+#include "mainwindow.hpp"
+#include "javascript.hpp"
+#include "waiting.hpp"
+#include "webview.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -36,7 +43,7 @@ class MainBox : public MyWidget
 
 public:
     MainBox(QWidget *parent = nullptr);
-    ~MainBox();
+    virtual ~MainBox();
 
 private slots:
     void run(void);

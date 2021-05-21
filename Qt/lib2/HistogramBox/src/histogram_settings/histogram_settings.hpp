@@ -21,6 +21,11 @@
 #ifndef GRAPHER_SETTINGS_HPP
 #define GRAPHER_SETTINGS_HPP
 //--------------------------------------------------------------------------------
+#include <QDialogButtonBox>
+#include <QApplication>
+#include <QComboBox>
+#include <QLabel>
+//--------------------------------------------------------------------------------
 #include "qwt_picker.h"
 //--------------------------------------------------------------------------------
 #include "histogrambox.hpp"
@@ -46,8 +51,8 @@ signals:
 private:
     QVector<HISTOGRAM_CURVE> temp_curves;
     QVector<Histogram_CurveBox *> curve_boxs;
-    QComboBox *rubberband_curve;
-    QLabel *rubberband_color;
+    QComboBox *rubberband_curve = nullptr;
+    QLabel *rubberband_color = nullptr;
 
     void connect_log(void);
     void change_rubberband_color(void);

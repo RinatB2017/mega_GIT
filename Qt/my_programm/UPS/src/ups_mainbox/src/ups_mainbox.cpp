@@ -58,10 +58,13 @@ void MainBox::init(void)
     init_grapher();
     init_timer();
 
+    ui->btn_run_upsdrvctl->setIcon(qApp->style()->standardIcon(QStyle::SP_CommandLink));
+    connect(ui->btn_run_upsdrvctl,  &QToolButton::clicked,  this,   &MainBox::run_upsdrvctl);
+
     QList<QLCDNumber *> allobj = findChildren<QLCDNumber *>();
     foreach (QLCDNumber *obj, allobj)
     {
-        obj->setFixedSize(200, 38);
+        obj->setFixedSize(120, 38);
         obj->setProperty(NO_SAVE, true);
         //obj->setDigitCount(14);
     }
@@ -361,6 +364,21 @@ void MainBox::run(void)
         params << ui->le_ups->text();
         process->start("upsc", params);
     }
+}
+//--------------------------------------------------------------------------------
+void MainBox::run_upsdrvctl(void)
+{
+    if(process)
+    {
+        emit error("process is running");
+        return;
+    }
+
+    prepare_QProcess();
+    QStringList params;
+    params << "upsdrvctl";
+    params << "start";
+    process->start("sudo", params);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)

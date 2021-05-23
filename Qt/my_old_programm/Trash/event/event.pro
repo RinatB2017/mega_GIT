@@ -21,12 +21,17 @@ macx {
     RCC_DIR     = build/rc
 }
 
-HEADERS += src/eventwidget.h
-SOURCES += src/eventwidget.cpp src/main.cpp
+HEADERS += \
+    src/eventwidget.h
+SOURCES += \
+    src/eventwidget.cpp \
+    src/main.cpp
 
-QMAKE_CFLAGS    += -std=c++11
-QMAKE_CXXFLAGS  += -std=c++11
-QMAKE_LFLAGS    += -std=c++11
+unix {
+    QMAKE_CFLAGS    += -std=c++11
+    QMAKE_CXXFLAGS  += -std=c++11
+    QMAKE_LFLAGS    += -std=c++11
+}
 
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets

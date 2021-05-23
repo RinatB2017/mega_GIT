@@ -7,8 +7,8 @@ CONFIG   += ordered
 
 SUBDIRS += \
     Template \
-    Template_GUI \
     Template_game \
+    Template_GUI \
     Template_main \
     Template_old \
     Template_RS232 \

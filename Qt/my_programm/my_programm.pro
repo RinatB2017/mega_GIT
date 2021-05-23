@@ -26,21 +26,21 @@ SUBDIRS += \
     $$PWD/Labyrinth \
     $$PWD/MCP4725 \
     $$PWD/MODBUS \
-    $$PWD/MyTerminal \
     $$PWD/show_films \
     $$PWD/test_serialport_win7 \
     $$PWD/Templates \
     $$PWD/WiFi \
     $$PWD/UPS_RS232 \
-    $$PWD/UPS \
+    $$PWD/UPS
 
 unix {
 SUBDIRS += \
-    $$PWD/MyBot \
     $$PWD/QRCodeGenerator \
+    $$PWD/MyBot \
+    $$PWD/MyTerminal \
     $$PWD/Teacher \
     $$PWD/Teacher_light \
-    $$PWD/Walkers \
+    $$PWD/Walkers
 }
     
 lessThan(QT_MAJOR_VERSION, 5) {

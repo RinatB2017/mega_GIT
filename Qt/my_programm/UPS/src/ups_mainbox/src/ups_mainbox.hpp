@@ -56,6 +56,7 @@ private slots:
     void process_error(QProcess::ProcessError p_error);
 
     void run(void);
+    void run_upsdrvctl(void);
 
 private:
     typedef struct CMD

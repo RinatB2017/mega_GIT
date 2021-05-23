@@ -89,9 +89,9 @@ typedef struct
     QPen symbol_pen;
     QSize symbol_size;
 
-    QwtPlotCurve *plot_curve = nullptr;
+    QwtPlotCurve *plot_curve;
 
-    CurveData *view_curve = nullptr;
+    CurveData *view_curve;
     QVector<QPointF> real_data;
 } GRAPHER_CURVE;
 //--------------------------------------------------------------------------------

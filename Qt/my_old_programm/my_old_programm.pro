@@ -9,7 +9,6 @@ SUBDIRS += \
     $$PWD/ADNS_2610 \
     $$PWD/Bluetooth \
     $$PWD/Ethernet \
-    $$PWD/event \
     $$PWD/Games \
     $$PWD/GY_521 \
     $$PWD/Hex_view \
@@ -18,7 +17,7 @@ SUBDIRS += \
     $$PWD/QTextToSpeech \
     $$PWD/SBGlass \
     $$PWD/Sniffer_PCA10000 \
-    $$PWD/Tools \
+    $$PWD/Tools
 
 unix {
 SUBDIRS += \

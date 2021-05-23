@@ -24,8 +24,9 @@
 #include <QSignalSpy>
 #include <QTest>
 //--------------------------------------------------------------------------------
-class MainWindow;
-class MainBox;
+#include "mainwindow.hpp"
+#include "for_tests_mainbox.hpp"
+#include "logbox.hpp"
 //--------------------------------------------------------------------------------
 class Test : public QObject {
     Q_OBJECT
@@ -42,8 +43,8 @@ private slots:
     void check_f3(void);
 
 private:
-    MainWindow *mw;
-    MainBox    *mb;
+    MainWindow *mw = nullptr;
+    MainBox    *mb = nullptr;
 };
 //--------------------------------------------------------------------------------
 #endif

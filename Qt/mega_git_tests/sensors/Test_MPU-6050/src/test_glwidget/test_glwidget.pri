@@ -9,4 +9,12 @@ HEADERS += test_glwidget.hpp
 SOURCES	+= test_glwidget.cpp
 
 QT *= opengl
-LIBS    += -lglut -lGLU
+
+#unix {
+#    LIBS    += -lglut -lGLU
+#}
+
+win32 {
+    LIBS += h:\Qt\5.15.2\mingw81_64\lib\libQt5OpenGL.a 
+    LIBS += -lopengl32 -glu32
+}

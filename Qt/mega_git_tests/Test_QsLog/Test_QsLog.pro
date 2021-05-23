@@ -11,8 +11,10 @@ INCLUDEPATH 	+= . 3rdparty/QsLog
 
 SOURCES += src/main.cpp
 
-QMAKE_CFLAGS    += -std=c++11
-QMAKE_CXXFLAGS  += -std=c++11
-QMAKE_LFLAGS    += -std=c++11
+unix {
+    QMAKE_CFLAGS    += -std=c++11
+    QMAKE_CXXFLAGS  += -std=c++11
+    QMAKE_LFLAGS    += -std=c++11
+}
 
 include (3rdparty/QsLog/QsLog.pri)

@@ -38,9 +38,11 @@ CONFIG(debug,debug|release) {
 
 include(SBGlass.pri)
 
-QMAKE_CFLAGS    += -std=c++11
-QMAKE_CXXFLAGS  += -std=c++11
-QMAKE_LFLAGS    += -std=c++11
+unix {
+    QMAKE_CFLAGS    += -std=c++11
+    QMAKE_CXXFLAGS  += -std=c++11
+    QMAKE_LFLAGS    += -std=c++11
+}
 
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT += widgets

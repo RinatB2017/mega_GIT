@@ -1035,54 +1035,6 @@ release\connectdialog.obj: connectdialog.cpp connectdialog.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qvector2d.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtouchdevice.h \
 		ui_connectdialog.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\QVariant \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QApplication \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qcoreapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qeventloop.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qdesktopwidget.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qguiapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qinputmethod.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QCheckBox \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qcheckbox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractbutton.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qicon.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QComboBox \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qcombobox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractitemdelegate.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qstyleoption.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractspinbox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qvalidator.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qregularexpression.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qslider.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractslider.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qstyle.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qtabbar.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qtabwidget.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qrubberband.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qframe.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qabstractitemmodel.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QGridLayout \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qgridlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlayoutitem.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qboxlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QGroupBox \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qgroupbox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QHBoxLayout \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QLabel \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlabel.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QLineEdit \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlineedit.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextcursor.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextformat.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qpen.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextoption.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QPushButton \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qpushbutton.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QSpacerItem \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QVBoxLayout \
-		bitratebox.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtSerialBus\QCanBus \
 		H:\Qt\5.15.2\msvc2019_64\include\QtSerialBus\qcanbus.h
 
@@ -1321,56 +1273,13 @@ release\mainwindow.obj: mainwindow.cpp mainwindow.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qtabwidget.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qicon.h \
 		ui_mainwindow.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\QVariant \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QAction \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qaction.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qactiongroup.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QApplication \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qcoreapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qeventloop.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qdesktopwidget.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qguiapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qinputmethod.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QGroupBox \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qgroupbox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qframe.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QLabel \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlabel.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QMenu \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qmenu.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QMenuBar \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qmenubar.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QStatusBar \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qstatusbar.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QTextEdit \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qtextedit.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractscrollarea.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextdocument.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextoption.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextcursor.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextformat.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qpen.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QToolBar \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qtoolbar.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QVBoxLayout \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qboxlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlayoutitem.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qgridlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QWidget \
-		sendframebox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtSerialBus\QCanBusFrame \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\QRegularExpression \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qregularexpression.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\QValidator \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qvalidator.h \
 		connectdialog.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtSerialBus\QCanBusDeviceInfo \
 		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QDialog \
 		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qdialog.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtSerialBus\QCanBus \
 		H:\Qt\5.15.2\msvc2019_64\include\QtSerialBus\qcanbus.h \
+		H:\Qt\5.15.2\msvc2019_64\include\QtSerialBus\QCanBusFrame \
 		H:\Qt\5.15.2\msvc2019_64\include\QtGui\QCloseEvent \
 		H:\Qt\5.15.2\msvc2019_64\include\QtGui\QDesktopServices \
 		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qdesktopservices.h \
@@ -1493,38 +1402,7 @@ release\sendframebox.obj: sendframebox.cpp sendframebox.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qregularexpression.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtGui\QValidator \
 		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qvalidator.h \
-		ui_sendframebox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\QVariant \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QApplication \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qcoreapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qeventloop.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qdesktopwidget.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qguiapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qinputmethod.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QCheckBox \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qcheckbox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractbutton.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qicon.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QHBoxLayout \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qboxlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlayoutitem.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qgridlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QLabel \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlabel.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QLineEdit \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlineedit.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextcursor.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextformat.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qpen.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextoption.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QPushButton \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qpushbutton.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QRadioButton \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qradiobutton.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QSpacerItem \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QVBoxLayout
+		ui_sendframebox.h
 
 release\qrc_can.obj: release\qrc_can.cpp 
 

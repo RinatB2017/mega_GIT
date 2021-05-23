@@ -724,67 +724,6 @@ E:\temp\my_programm\QNeutralNet\obj\mainwindow.obj: src\mainwindow.cpp src\mainw
 		H:\Qt\5.15.2\msvc2019_64\include\QtNetwork\qtnetworkglobal.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtNetwork\qtnetwork-config.h \
 		E:\temp\my_programm\QNeutralNet\ui\ui_mainwindow.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\QVariant \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QApplication \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qcoreapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qeventloop.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qdesktopwidget.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qguiapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qinputmethod.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QFormLayout \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qformlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QLayout \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlayoutitem.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qboxlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qgridlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QGridLayout \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QGroupBox \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qgroupbox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qframe.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QHeaderView \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qheaderview.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractitemview.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractscrollarea.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qabstractitemmodel.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qitemselectionmodel.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractitemdelegate.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qstyleoption.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractspinbox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qvalidator.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qregularexpression.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qslider.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractslider.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qstyle.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qtabbar.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qrubberband.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QLabel \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlabel.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QLineEdit \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlineedit.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextcursor.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextformat.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextoption.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QMenuBar \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qmenubar.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qmenu.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qaction.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qactiongroup.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QPushButton \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qpushbutton.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractbutton.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QSpacerItem \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QStatusBar \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qstatusbar.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QTabWidget \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QTableWidget \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qtablewidget.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qtableview.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QToolBar \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qtoolbar.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QVBoxLayout \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QWidget \
 		src\network.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtCore\QString \
 		H:\Qt\5.15.2\msvc2019_64\include\QtCore\QList \
@@ -803,6 +742,11 @@ E:\temp\my_programm\QNeutralNet\obj\mainwindow.obj: src\mainwindow.cpp src\mainw
 		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qmessagebox.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QInputDialog \
 		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qinputdialog.h \
+		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlineedit.h \
+		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qframe.h \
+		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextcursor.h \
+		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextformat.h \
+		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextoption.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtCore\QTimer \
 		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qtimer.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qbasictimer.h \

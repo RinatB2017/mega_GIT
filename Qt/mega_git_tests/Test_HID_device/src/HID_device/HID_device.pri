@@ -12,8 +12,8 @@ unix {
     LIBS    *= -lhidapi-libusb
 }
 win32 {
-    HEADERS += src/hidapi_win/hidapi.h
-    SOURCES += src/hidapi_win/hid.c
+    HEADERS += hidapi_win/hidapi.h
+    SOURCES += hidapi_win/hid.c
     LIBS    += -lsetupapi
 }
 

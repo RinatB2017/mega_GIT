@@ -752,71 +752,6 @@ release\mainwindow.obj: src\mainwindow.cpp src\mainwindow.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtSerialBus\QModbusDataUnit \
 		H:\Qt\5.15.2\msvc2019_64\include\QtSerialBus\qmodbusdataunit.h \
 		ui_mainwindow.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\QVariant \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QAction \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qaction.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qactiongroup.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QApplication \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qcoreapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qeventloop.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qdesktopwidget.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qguiapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qinputmethod.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QComboBox \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qcombobox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractitemdelegate.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qstyleoption.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractspinbox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qvalidator.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qregularexpression.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qslider.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractslider.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qstyle.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qtabbar.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qrubberband.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qframe.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qabstractitemmodel.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QGridLayout \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qgridlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlayoutitem.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qboxlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QGroupBox \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qgroupbox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QHBoxLayout \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QHeaderView \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qheaderview.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractitemview.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractscrollarea.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qitemselectionmodel.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QLabel \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlabel.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QLineEdit \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlineedit.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextcursor.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextformat.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qpen.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qtextoption.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QListWidget \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlistwidget.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlistview.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QMenu \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qmenu.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QMenuBar \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qmenubar.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QPushButton \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qpushbutton.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractbutton.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QSpacerItem \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QSpinBox \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qspinbox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QStatusBar \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qstatusbar.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QTreeView \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qtreeview.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QVBoxLayout \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QWidget \
 		src\settingsdialog.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QDialog \
 		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qdialog.h \
@@ -825,6 +760,7 @@ release\mainwindow.obj: src\mainwindow.cpp src\mainwindow.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtSerialPort\qserialportglobal.h \
 		src\writeregistermodel.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtCore\QAbstractItemModel \
+		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qabstractitemmodel.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtCore\QBitArray \
 		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qbitarray.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtCore\QObject \
@@ -840,6 +776,8 @@ release\mainwindow.obj: src\mainwindow.cpp src\mainwindow.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtSerialBus\qmodbusrtuserialmaster.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtGui\QStandardItemModel \
 		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qstandarditemmodel.h \
+		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QStatusBar \
+		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qstatusbar.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtCore\QUrl
 
 release\settingsdialog.obj: src\settingsdialog.cpp src\settingsdialog.h \
@@ -950,46 +888,7 @@ release\settingsdialog.obj: src\settingsdialog.cpp src\settingsdialog.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtSerialPort\QSerialPort \
 		H:\Qt\5.15.2\msvc2019_64\include\QtSerialPort\qserialport.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtSerialPort\qserialportglobal.h \
-		ui_settingsdialog.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\QVariant \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QApplication \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qcoreapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qeventloop.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qdesktopwidget.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qguiapplication.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qinputmethod.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QComboBox \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qcombobox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractitemdelegate.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qstyleoption.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractspinbox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qvalidator.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qregularexpression.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtGui\qicon.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qslider.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractslider.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qstyle.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qtabbar.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qtabwidget.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qrubberband.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qframe.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtCore\qabstractitemmodel.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QGridLayout \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qgridlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlayoutitem.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qboxlayout.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QGroupBox \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qgroupbox.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QLabel \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qlabel.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QPushButton \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qpushbutton.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qabstractbutton.h \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QSpacerItem \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\QSpinBox \
-		H:\Qt\5.15.2\msvc2019_64\include\QtWidgets\qspinbox.h
+		ui_settingsdialog.h
 
 release\writeregistermodel.obj: src\writeregistermodel.cpp src\writeregistermodel.h \
 		H:\Qt\5.15.2\msvc2019_64\include\QtCore\QAbstractItemModel \

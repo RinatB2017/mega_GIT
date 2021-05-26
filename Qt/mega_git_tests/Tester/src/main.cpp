@@ -19,6 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QApplication>
+#include <QIcon>
 //--------------------------------------------------------------------------------
 #include "tester.hpp"
 #include "defines.hpp"

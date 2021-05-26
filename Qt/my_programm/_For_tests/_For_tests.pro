@@ -59,6 +59,4 @@ include (src/mymainwindow/mymainwindow.pri)
 
 include (src/widgets/widgets.pri)
 
-include (src/inventory/inventory.pri)
-
 VPATH = $$INCLUDEPATH

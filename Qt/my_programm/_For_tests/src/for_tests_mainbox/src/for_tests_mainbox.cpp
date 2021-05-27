@@ -256,11 +256,30 @@ void MainBox::test_function(int delay)
     });
 }
 //--------------------------------------------------------------------------------
+#include <QPropertyAnimation>
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QWidget *w = new QWidget();
+    w->setFixedSize(800, 600);
+
+    QPushButton *button = new QPushButton("Animated Button", w);
+    button->show();
+
+    w->show();
+
+    QPropertyAnimation *animation = new QPropertyAnimation(button, "geometry");
+    animation->setDuration(10000);
+    animation->setStartValue(QRect(0, 0, 100, 30));
+    animation->setEndValue(QRect(250, 250, 100, 30));
+
+    animation->start();
+#endif
+
+#if 0
     A();
 #endif
 

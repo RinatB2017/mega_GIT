@@ -41,10 +41,9 @@ public:
 
 private slots:
     void choice_test(void);
-    void test_0(void);
-    void test_1(void);
-    void test_2(void);
-    void test_3(void);
+    bool insert_data(void);
+    bool test_sql(void);
+    bool test_sql2(void);
 
     bool open_database(void);
 
@@ -63,6 +62,14 @@ private slots:
     bool close_database(void);
 
 private:
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        bool (MainBox::*func)(void);
+    } *cmd_t;
+    QList<CMD> commands;
+
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 

@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/local_fonts">
-        <file>HANDGOTN.TTF</file>
-        <file>VENUSRIS.TTF</file>
-    </qresource>
-</RCC>

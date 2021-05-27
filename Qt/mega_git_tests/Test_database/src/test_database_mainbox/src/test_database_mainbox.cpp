@@ -66,12 +66,18 @@ void MainBox::createTestBar(void)
 
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
+    commands.clear(); int id = 0;
+    commands.append({ id++, "insert_data",  &MainBox::insert_data });
+    commands.append({ id++, "test_sql",     &MainBox::test_sql });
+    commands.append({ id++, "test_sql2",    &MainBox::test_sql2 });
+
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
-    cb_test->addItem(TEST_0_TEXT, QVariant(Qt::UserRole + TEST_0));
-    cb_test->addItem(TEST_1_TEXT, QVariant(Qt::UserRole + TEST_1));
-    cb_test->addItem(TEST_2_TEXT, QVariant(Qt::UserRole + TEST_2));
-    cb_test->addItem(TEST_3_TEXT, QVariant(Qt::UserRole + TEST_3));
+    cb_test->setProperty(NO_SAVE, true);
+    foreach (CMD command, commands)
+    {
+        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+    }
 
     testbar->addWidget(cb_test);
     QToolButton *btn_choice_test = add_button(testbar,
@@ -86,15 +92,27 @@ void MainBox::createTestBar(void)
 void MainBox::choice_test(void)
 {
     bool ok = false;
-    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
+    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
     if(!ok) return;
-    switch (cmd)
+
+    auto cmd_it = std::find_if(
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
+    if (cmd_it != commands.end())
     {
-    case TEST_0: test_0(); break;
-    case TEST_1: test_1(); break;
-    case TEST_2: test_2(); break;
-    case TEST_3: test_3(); break;
-    default: break;
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
+        {
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
+        }
     }
 }
 //--------------------------------------------------------------------------------
@@ -206,9 +224,9 @@ void MainBox::drop_tables()
     drop_table_main();
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_0(void)
+bool MainBox::insert_data(void)
 {
-    emit info("Test_0");
+    emit info("insert_data");
 
     bool ok = false;
     emit info("open database");
@@ -216,7 +234,7 @@ void MainBox::test_0(void)
     if(!ok)
     {
         emit error("db not open!");
-        return;
+        return false;
     }
 
     drop_tables();
@@ -228,36 +246,43 @@ void MainBox::test_0(void)
         QCoreApplication::processEvents();
         ok = insert_film(QString("name %1").arg(n),
                          QString("comment %1").arg(n));
-        if(!ok) return;
+        if(!ok)
+        {
+            return false;
+        }
     }
 
     emit info("close database");
     close_database();
     emit info("OK");
+
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_1(void)
+bool MainBox::test_sql(void)
 {
     bool ok = false;
     ok = open_database();
     if(!ok)
     {
         emit error("db not open!");
-        return;
+        return false;
     }
     db->view("SELECT * FROM FILM");
     close_database();
     emit info("OK");
+
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_2(void)
+bool MainBox::test_sql2(void)
 {
     bool ok = false;
     ok = open_database();
     if(!ok)
     {
         emit error("db not open!");
-        return;
+        return false;
     }
     QSqlQuery sql;
     ok = sql.exec("DELETE FROM FILM WHERE name!='name 1'");
@@ -265,14 +290,12 @@ void MainBox::test_2(void)
     {
         emit error("(film) deleted!");
         emit error(sql.lastError().text());
+        return false;
     }
     close_database();
     emit info("OK");
-}
-//--------------------------------------------------------------------------------
-void MainBox::test_3(void)
-{
-    emit error("не готово!");
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

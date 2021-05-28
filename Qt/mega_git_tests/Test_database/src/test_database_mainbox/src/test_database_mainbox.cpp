@@ -18,18 +18,10 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QSqlQuery>
-#include <QSqlError>
-//--------------------------------------------------------------------------------
 #include "ui_test_database_mainbox.h"
 //--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
-#include "mysplashscreen.hpp"
-#include "mainwindow.hpp"
 #include "test_database_mainbox.hpp"
 #include "defines.hpp"
-//--------------------------------------------------------------------------------
-#include "database.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -46,14 +38,36 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    if(model)
+    {
+        delete model;
+    }
     delete ui;
 }
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
     ui->setupUi(this);
+
+#ifdef QT_DEBUG
     createTestBar();
-    setVisible(false);
+#endif
+
+    model = new QSqlQueryModel;
+
+    connect(ui->btn_open_database,          &QPushButton::clicked,  this,   &MainBox::f_open_database);
+    connect(ui->btn_close_database,         &QPushButton::clicked,  this,   &MainBox::f_close_database);
+
+    connect(ui->btn_create_all_tables,      &QPushButton::clicked,  this,   &MainBox::f_create_all_tables);
+    connect(ui->btn_create_inventory_table, &QPushButton::clicked,  this,   &MainBox::f_create_inventory_table);
+    connect(ui->btn_create_item_table,      &QPushButton::clicked,  this,   &MainBox::f_create_item_table);
+    connect(ui->btn_drop_all_tables,        &QPushButton::clicked,  this,   &MainBox::f_drop_all_tables);
+    connect(ui->btn_drop_inventory_table,   &QPushButton::clicked,  this,   &MainBox::f_drop_inventory_table);
+    connect(ui->btn_drop_item_table,        &QPushButton::clicked,  this,   &MainBox::f_drop_item_table);
+    connect(ui->btn_view_inventory_table,   &QPushButton::clicked,  this,   &MainBox::f_view_inventory_table);
+    connect(ui->btn_view_item_table,        &QPushButton::clicked,  this,   &MainBox::f_view_item_table);
+    connect(ui->btn_append_data_inventory,  &QPushButton::clicked,  this,   &MainBox::f_append_data_inventory);
+    connect(ui->btn_append_data_item,       &QPushButton::clicked,  this,   &MainBox::f_append_data_item);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -67,9 +81,7 @@ void MainBox::createTestBar(void)
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "insert_data",  &MainBox::insert_data });
-    commands.append({ id++, "test_sql",     &MainBox::test_sql });
-    commands.append({ id++, "test_sql2",    &MainBox::test_sql2 });
+    commands.append({ id++, "test",  &MainBox::test });
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
@@ -116,39 +128,50 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::open_database(void)
+bool MainBox::f_open_database(void)
 {
     db = new Database("QSQLITE", "test.db");
     //db = new Database("QPSQL", "test.db", this);
     return db->open();
 }
 //--------------------------------------------------------------------------------
-bool MainBox::create_table_main(void)
+bool MainBox::f_close_database(void)
 {
-    QSqlQuery sql;
-    bool ok = sql.exec("CREATE TABLE main (folder_ID INTEGER, film_ID INTEGER, comment TEXT)");
-    if(!ok)
-    {
-        emit error("table (main) not created!");
-    }
-    return ok;
+    db->close();
+    return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::create_table_folder(void)
+bool MainBox::test(void)
 {
-    QSqlQuery sql;
-    bool ok = sql.exec("CREATE TABLE folder (parent_ID INTEGER, ID INTEGER, name TEXT)");
-    if(!ok)
-    {
-        emit error("table (folder) not created!");
-    }
-    return ok;
+    emit info("Test");
+    return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::create_table_film(void)
+bool MainBox::f_create_all_tables(void)
 {
+    emit trace(Q_FUNC_INFO);
+
+    bool ok;
+    ok = f_create_inventory_table();
+    if(!ok)
+    {
+        return ok;
+    }
+    ok = f_create_item_table();
+    if(!ok)
+    {
+        return ok;
+    }
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_create_inventory_table(void)
+{
+    emit trace(Q_FUNC_INFO);
+    emit info("Create inventory");
+
     QSqlQuery sql;
-    bool ok = sql.exec("CREATE TABLE film (ID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, comment TEXT)");
+    bool ok = sql.exec("CREATE TABLE inventory (pos_x INTEGER, pos_y INTEGER, name TEXT)");
     if(!ok)
     {
         emit error("table (film) not created!");
@@ -156,145 +179,133 @@ bool MainBox::create_table_film(void)
     return ok;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::drop_table_main(void)
+bool MainBox::f_create_item_table(void)
 {
-    bool ok = db->drop_table("main");
+    emit trace(Q_FUNC_INFO);
+    emit info("Create item");
+
+    QSqlQuery sql;
+    bool ok = sql.exec("CREATE TABLE item (name TEXT)");
     if(!ok)
     {
-        emit error("table (main) not drop!");
+        emit error("table (film) not created!");
     }
     return ok;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::drop_table_folder(void)
+bool MainBox::f_drop_all_tables(void)
 {
-    bool ok = db->drop_table("folder");
-    if(!ok)
-    {
-        emit error("table (folder) not drop!");
-    }
-    return ok;
+    emit trace(Q_FUNC_INFO);
+
+    f_drop_inventory_table();
+    f_drop_item_table();
+    return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::drop_table_film(void)
+bool MainBox::f_drop_inventory_table(void)
 {
-    bool ok = db->drop_table("film");
+    int res = messagebox_question("Drop", "Вы уверены, что хотите сбросить таблицу inventory");
+    if(res != QMessageBox::Yes)
+    {
+        return false;
+    }
+
+    emit trace(Q_FUNC_INFO);
+    emit info("Drop inventory");
+    bool ok = db->drop_table("inventory");
     if(!ok)
     {
         emit error("table (film) not drop!");
     }
+    emit info("OK");
     return ok;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::close_database(void)
+bool MainBox::f_drop_item_table(void)
 {
-    db->close();
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::insert_film(QString film_name, QString comment)
-{
-    QSqlQuery query;
-    query.prepare("INSERT INTO film (name, comment) VALUES (:name, :comment)");
-    query.bindValue(":name", film_name);
-    query.bindValue(":comment", comment);
-    bool ok = query.exec();
-    if(!ok)
+    int res = messagebox_question("Drop", "Вы уверены, что хотите сбросить таблицу item");
+    if(res != QMessageBox::Yes)
     {
-        emit error(QString("query [%1] not exec!").arg(query.lastQuery()));
-    }
-    return ok;
-}
-//--------------------------------------------------------------------------------
-void MainBox::create_tables(void)
-{
-    bool ok = false;
-    ok = create_table_film();
-    if(!ok) return;
-    ok = create_table_folder();
-    if(!ok) return;
-    ok = create_table_main();
-    if(!ok) return;
-}
-//--------------------------------------------------------------------------------
-void MainBox::drop_tables()
-{
-    drop_table_film();
-    drop_table_folder();
-    drop_table_main();
-}
-//--------------------------------------------------------------------------------
-bool MainBox::insert_data(void)
-{
-    emit info("insert_data");
-
-    bool ok = false;
-    emit info("open database");
-    ok = open_database();
-    if(!ok)
-    {
-        emit error("db not open!");
         return false;
     }
 
-    drop_tables();
-    create_tables();
+    emit trace(Q_FUNC_INFO);
+    emit info("Drop item");
+    bool ok = db->drop_table("item");
+    if(!ok)
+    {
+        emit error("table (film) not drop!");
+    }
+    emit info("OK");
+    return ok;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_view_inventory_table(void)
+{
+    emit trace(Q_FUNC_INFO);
 
-    emit info("insert film");
+    QString query = "SELECT * FROM inventory";
+    emit info(query);
+
+    model->setQuery(query);
+    ui->tv_table->setModel(model);
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_view_item_table(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    QString query = "SELECT * FROM item";
+    emit info(query);
+
+    model->setQuery(query);
+    ui->tv_table->setModel((model));
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_append_data_inventory(void)
+{
+    QSqlQuery query;
+
+    for(int y=0; y<3; y++)
+    {
+        for(int x=0; x<3; x++)
+        {
+            query.prepare("INSERT INTO inventory (pos_x, pos_y, name) VALUES (:pos_x, :pos_y, :name)");
+            query.bindValue(":pos_x", x);
+            query.bindValue(":pos_y", y);
+            query.bindValue(":name", "test");
+            emit info(query.executedQuery());
+            bool ok = query.exec();
+            if(!ok)
+            {
+                emit error(QString("query [%1] not exec!").arg(query.lastQuery()));
+                emit error(query.lastError().text());
+                return false;
+            }
+        }
+    }
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::f_append_data_item(void)
+{
+    QSqlQuery query;
+
     for(int n=0; n<5; n++)
     {
-        QCoreApplication::processEvents();
-        ok = insert_film(QString("name %1").arg(n),
-                         QString("comment %1").arg(n));
+        query.prepare("INSERT INTO item (name) VALUES (:name)");
+        query.bindValue(":name", QString("test %1").arg(n));
+        emit info(query.executedQuery());
+        bool ok = query.exec();
         if(!ok)
         {
+            emit error(QString("query [%1] not exec!").arg(query.lastQuery()));
+            emit error(query.lastError().text());
             return false;
         }
     }
-
-    emit info("close database");
-    close_database();
-    emit info("OK");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_sql(void)
-{
-    bool ok = false;
-    ok = open_database();
-    if(!ok)
-    {
-        emit error("db not open!");
-        return false;
-    }
-    db->view("SELECT * FROM FILM");
-    close_database();
-    emit info("OK");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_sql2(void)
-{
-    bool ok = false;
-    ok = open_database();
-    if(!ok)
-    {
-        emit error("db not open!");
-        return false;
-    }
-    QSqlQuery sql;
-    ok = sql.exec("DELETE FROM FILM WHERE name!='name 1'");
-    if(!ok)
-    {
-        emit error("(film) deleted!");
-        emit error(sql.lastError().text());
-        return false;
-    }
-    close_database();
-    emit info("OK");
-
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -21,10 +21,18 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QSqlQueryModel>
+#include <QSqlQuery>
+#include <QSqlError>
+//--------------------------------------------------------------------------------
+#include "mywaitsplashscreen.hpp"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "database.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -41,25 +49,22 @@ public:
 
 private slots:
     void choice_test(void);
-    bool insert_data(void);
-    bool test_sql(void);
-    bool test_sql2(void);
 
-    bool open_database(void);
+    bool test(void);
 
-    void create_tables(void);
-    bool create_table_main(void);
-    bool create_table_folder(void);
-    bool create_table_film(void);
+    bool f_open_database(void);
+    bool f_close_database(void);
 
-    bool insert_film(QString film_name, QString comment);
-
-    void drop_tables(void);
-    bool drop_table_main(void);
-    bool drop_table_folder(void);
-    bool drop_table_film(void);
-
-    bool close_database(void);
+    bool f_create_all_tables(void);
+    bool f_create_inventory_table(void);
+    bool f_create_item_table(void);
+    bool f_drop_all_tables(void);
+    bool f_drop_inventory_table(void);
+    bool f_drop_item_table(void);
+    bool f_view_inventory_table(void);
+    bool f_view_item_table(void);
+    bool f_append_data_inventory(void);
+    bool f_append_data_item(void);
 
 private:
     typedef struct CMD
@@ -74,6 +79,8 @@ private:
     Ui::MainBox *ui;
 
     QPointer<QComboBox> cb_test;
+
+    QPointer<QSqlQueryModel> model;
     QPointer<Database>  db;
 
     void init(void);

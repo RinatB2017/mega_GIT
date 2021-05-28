@@ -241,6 +241,7 @@ void MyWidget::add_widget_to_w_lists(QWidget *widget)
 void MyWidget::lock_interface(void)
 {
     emit trace(Q_FUNC_INFO);
+    Q_ASSERT(w_lists.count() > 0);
 
     foreach (QWidget *btn, w_lists)
     {
@@ -251,6 +252,7 @@ void MyWidget::lock_interface(void)
 void MyWidget::unlock_interface(void)
 {
     emit trace(Q_FUNC_INFO);
+    Q_ASSERT(w_lists.count() > 0);
 
     foreach (QWidget *btn, w_lists)
     {

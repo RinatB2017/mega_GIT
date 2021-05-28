@@ -123,6 +123,7 @@ private:
 
     template<class T>
     void test_function(int delay);
+    void test_function2(bool (MainBox::*func)(void));
 
     bool programm_is_exit(void);
     void load_setting(void);

@@ -256,6 +256,17 @@ void MainBox::test_function(int delay)
     });
 }
 //--------------------------------------------------------------------------------
+void MainBox::test_function2(bool (MainBox::*func)(void))
+{
+    typedef bool (MainBox::*function)(void);
+    function f;
+    f = func;
+
+    block_interface(true);
+    (this->*f)();
+    block_interface(false);
+}
+//--------------------------------------------------------------------------------
 #include <QPropertyAnimation>
 
 bool MainBox::test(void)
@@ -263,6 +274,10 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    test_function2(&MainBox::test2);
+#endif
+
+#if 0
     QWidget *w = new QWidget();
     w->setFixedSize(800, 600);
 
@@ -312,7 +327,7 @@ bool MainBox::test(void)
 bool MainBox::test2(void)
 {
     emit trace(Q_FUNC_INFO);
-
+    messagebox_info("Info", Q_FUNC_INFO);
     return true;
 }
 //--------------------------------------------------------------------------------

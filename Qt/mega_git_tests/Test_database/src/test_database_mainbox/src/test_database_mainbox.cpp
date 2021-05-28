@@ -144,52 +144,110 @@ bool MainBox::f_close_database(void)
 bool MainBox::test(void)
 {
     emit info("Test");
+    block_interface(true);
+
+    QString query;
+    for(int y=0; y<5; y++)
+    {
+        for(int x=0; x<5; x++)
+        {
+            QString name = QString("name %1 %2")
+                    .arg(x)
+                    .arg(y);
+            query = QString("UPDATE inventory SET name = '%1' WHERE pos_x = %2 AND pos_y = %3;")
+                    .arg(name)
+                    .arg(x)
+                    .arg(y);
+            emit info(query);
+
+            model->setQuery(query);
+        }
+    }
+    ui->tv_table->setModel((model));
+
+    f_view_inventory_table();
+    block_interface(false);
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_create_all_tables(void)
 {
     emit trace(Q_FUNC_INFO);
+    block_interface(true);
 
     bool ok;
     ok = f_create_inventory_table();
     if(!ok)
     {
+        block_interface(false);
         return ok;
     }
     ok = f_create_item_table();
     if(!ok)
     {
+        block_interface(false);
         return ok;
     }
+
+    block_interface(false);
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_create_inventory_table(void)
 {
     emit trace(Q_FUNC_INFO);
+    block_interface(true);
+
+    int res = messagebox_question("Create", "Вы уверены, что хотите создать таблицу inventory");
+    if(res != QMessageBox::Yes)
+    {
+        block_interface(false);
+        return false;
+    }
+
     emit info("Create inventory");
 
     QSqlQuery sql;
-    bool ok = sql.exec("CREATE TABLE inventory (pos_x INTEGER, pos_y INTEGER, name TEXT)");
+    QString name = "inventory";
+    bool ok = sql.exec(QString("CREATE TABLE %1 (pos_x INTEGER, pos_y INTEGER, name TEXT)").arg(name));
     if(!ok)
     {
-        emit error("table (film) not created!");
+        block_interface(false);
+        emit error(QString("table (%1) not created! ERROR: %2")
+                   .arg(name)
+                   .arg(sql.lastError().text()));
     }
+
+    block_interface(false);
     return ok;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_create_item_table(void)
 {
     emit trace(Q_FUNC_INFO);
+    block_interface(true);
+
+    int res = messagebox_question("Create", "Вы уверены, что хотите создать таблицу item");
+    if(res != QMessageBox::Yes)
+    {
+        block_interface(false);
+        return false;
+    }
+
     emit info("Create item");
 
     QSqlQuery sql;
-    bool ok = sql.exec("CREATE TABLE item (name TEXT)");
+    QString name = "item";
+    bool ok = sql.exec(QString("CREATE TABLE %1 (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, path TEXT);").arg(name));
     if(!ok)
     {
-        emit error("table (film) not created!");
+        block_interface(false);
+        emit error(QString("table (%1) not created! ERROR: %2")
+                   .arg(name)
+                   .arg(sql.lastError().text()));
     }
+
+    block_interface(false);
     return ok;
 }
 //--------------------------------------------------------------------------------
@@ -204,73 +262,94 @@ bool MainBox::f_drop_all_tables(void)
 //--------------------------------------------------------------------------------
 bool MainBox::f_drop_inventory_table(void)
 {
+    block_interface(true);
+
     int res = messagebox_question("Drop", "Вы уверены, что хотите сбросить таблицу inventory");
     if(res != QMessageBox::Yes)
     {
+        block_interface(false);
         return false;
     }
 
     emit trace(Q_FUNC_INFO);
     emit info("Drop inventory");
-    bool ok = db->drop_table("inventory");
+    QString name = "inventory";
+    bool ok = db->drop_table(name);
     if(!ok)
     {
-        emit error("table (film) not drop!");
+        block_interface(false);
+        emit error(QString("table (%1) not drop!").arg(name));
     }
     emit info("OK");
+
+    block_interface(false);
     return ok;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_drop_item_table(void)
 {
+    block_interface(true);
+
     int res = messagebox_question("Drop", "Вы уверены, что хотите сбросить таблицу item");
     if(res != QMessageBox::Yes)
     {
+        block_interface(false);
         return false;
     }
 
     emit trace(Q_FUNC_INFO);
     emit info("Drop item");
-    bool ok = db->drop_table("item");
+    QString name = "item";
+    bool ok = db->drop_table(name);
     if(!ok)
     {
-        emit error("table (film) not drop!");
+        block_interface(false);
+        emit error(QString("table (%1) not drop!").arg(name));
     }
     emit info("OK");
+
+    block_interface(false);
     return ok;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_view_inventory_table(void)
 {
     emit trace(Q_FUNC_INFO);
+    block_interface(true);
 
     QString query = "SELECT * FROM inventory";
     emit info(query);
 
     model->setQuery(query);
     ui->tv_table->setModel(model);
+
+    block_interface(false);
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_view_item_table(void)
 {
     emit trace(Q_FUNC_INFO);
+    block_interface(true);
 
     QString query = "SELECT * FROM item";
     emit info(query);
 
     model->setQuery(query);
     ui->tv_table->setModel((model));
+
+    block_interface(false);
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_append_data_inventory(void)
 {
     QSqlQuery query;
+    block_interface(true);
 
-    for(int y=0; y<3; y++)
+    for(int y=0; y<5; y++)
     {
-        for(int x=0; x<3; x++)
+        for(int x=0; x<5; x++)
         {
             query.prepare("INSERT INTO inventory (pos_x, pos_y, name) VALUES (:pos_x, :pos_y, :name)");
             query.bindValue(":pos_x", x);
@@ -280,32 +359,41 @@ bool MainBox::f_append_data_inventory(void)
             bool ok = query.exec();
             if(!ok)
             {
-                emit error(QString("query [%1] not exec!").arg(query.lastQuery()));
-                emit error(query.lastError().text());
+                emit error(QString("query [%1] not exec! ERROR: %2")
+                           .arg(query.lastQuery())
+                           .arg(query.lastError().text()));
+                block_interface(false);
                 return false;
             }
         }
     }
+
+    block_interface(false);
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_append_data_item(void)
 {
     QSqlQuery query;
+    block_interface(true);
 
     for(int n=0; n<5; n++)
     {
-        query.prepare("INSERT INTO item (name) VALUES (:name)");
-        query.bindValue(":name", QString("test %1").arg(n));
+        query.prepare("INSERT INTO item (path) VALUES (:path)");
+        query.bindValue(":path", QString("test %1").arg(n));
         emit info(query.executedQuery());
         bool ok = query.exec();
         if(!ok)
         {
-            emit error(QString("query [%1] not exec!").arg(query.lastQuery()));
-            emit error(query.lastError().text());
+            emit error(QString("query [%1] not exec! ERROR: %2")
+                       .arg(query.lastQuery())
+                       .arg(query.lastError().text()));
+            block_interface(false);
             return false;
         }
     }
+
+    block_interface(false);
     return true;
 }
 //--------------------------------------------------------------------------------

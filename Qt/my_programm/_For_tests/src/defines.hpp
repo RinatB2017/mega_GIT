@@ -7,6 +7,12 @@
 //  float c = 1.123456789f;
 //  emit info(QString("%1").arg(c, 0, 'f', 3));
 //--------------------------------------------------------------------------------
+#define MAX_X       4
+#define MAX_Y       3
+#define ITEM_SIZE   64
+#define DEFAULT_NAME    "dafault"
+#define DEFAULT_PIXMAP  ":/images/default.png"
+//--------------------------------------------------------------------------------
 #define ORGNAME "Home"
 #define APPNAME "_For_tests"
 //--------------------------------------------------------------------------------

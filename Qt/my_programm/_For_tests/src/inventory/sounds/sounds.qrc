@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/sounds">
+        <file>ukus-yabloka-korotkiy.wav</file>
+    </qresource>
+</RCC>

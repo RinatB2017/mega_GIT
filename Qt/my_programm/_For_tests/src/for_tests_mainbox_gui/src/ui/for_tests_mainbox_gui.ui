@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>455</width>
+    <width>543</width>
     <height>334</height>
    </rect>
   </property>
@@ -61,8 +61,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>96</width>
+               <height>26</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -78,8 +78,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>96</width>
+               <height>26</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -95,8 +95,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>96</width>
+               <height>26</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -112,7 +112,7 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>407</width>
+               <width>495</width>
                <height>86</height>
               </rect>
              </property>
@@ -152,7 +152,7 @@
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
-           <widget class="Table_widget" name="table_widget" native="true"/>
+           <widget class="Table_widget" name="table_widget"/>
           </item>
          </layout>
         </widget>
@@ -167,6 +167,20 @@
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <item>
            <widget class="MDI_widget" name="mdi_widget" native="true"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_6">
+         <attribute name="icon">
+          <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+           <normaloff>:/red/6.png</normaloff>:/red/6.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Tab 6</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="Inventory_widget" name="widget" native="true"/>
           </item>
          </layout>
         </widget>
@@ -197,6 +211,12 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>Table_widget</class>
+   <extends>QTableWidget</extends>
+   <header>table_widget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>Check_in_widget</class>
    <extends>QWidget</extends>
    <header>check_in_widget.hpp</header>
@@ -215,15 +235,15 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>Table_widget</class>
-   <extends>QWidget</extends>
-   <header>table_widget.hpp</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>Controls_widget</class>
    <extends>QWidget</extends>
    <header>controls_widget.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Inventory_widget</class>
+   <extends>QWidget</extends>
+   <header>inventory_widget.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

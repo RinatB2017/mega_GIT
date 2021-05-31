@@ -268,12 +268,18 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
 }
 //--------------------------------------------------------------------------------
 #include <QPropertyAnimation>
+#include "inventory_widget.hpp"
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    Inventory_widget *iw = new Inventory_widget();
+    iw->show();
+#endif
+
+#if 0
     test_function2(&MainBox::test2);
 #endif
 

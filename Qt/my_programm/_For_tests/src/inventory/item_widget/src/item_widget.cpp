@@ -50,14 +50,6 @@ void Item_widget::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton)
     {
-//        pos_x = event->pos().x();
-//        pos_y = event->pos().y();
-
-//        int x = event->mimeData()->property("pos_x").toInt();
-//        int y = event->mimeData()->property("pos_y").toInt();
-//        int id = 0; //TODO надо сделать
-//        emit item_drag(x, y, id);
-
         setCursor(Qt::ClosedHandCursor);
 
         pixmap = QPixmap(pixmap_name);

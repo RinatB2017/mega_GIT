@@ -71,13 +71,29 @@ void Table_widget::item_drag(int x, int y, int id)
 {
     qDebug() << "item_drag:" << x << y << id;
 
-    items[x][y].cnt = 0;
+    //items[x][y].cnt = 0;
+
+#if 0
+    drag_pos_x = x;
+    drag_pos_y = y;
+    is_dragging = true;
+#endif
 }
 //--------------------------------------------------------------------------------
 void Table_widget::item_drop(int x, int y, int id)
 {
     qDebug() << "Drop:" << x << y << id;
     items[x][y].cnt++;
+
+#if 0
+    if(is_dragging)
+    {
+        is_dragging = false;
+
+        items[drag_pos_x][drag_pos_y].item->item_clear();
+        items[drag_pos_x][drag_pos_y].cnt = 0;
+    }
+#endif
 
     update_inventory();
 }

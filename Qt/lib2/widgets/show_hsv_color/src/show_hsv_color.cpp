@@ -38,7 +38,7 @@ Show_HSV_color::Show_HSV_color(QWidget *parent) :
 //--------------------------------------------------------------------------------
 Show_HSV_color::~Show_HSV_color()
 {
-//    save_widgets();
+    save_widgets();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -91,7 +91,7 @@ void Show_HSV_color::init(void)
         lcd->setStyleSheet("background:black; color:lightgreen;");
     }
 
-//    load_widgets();
+    load_widgets();
 
     QTimer::singleShot(0, [this]{
         update_image();

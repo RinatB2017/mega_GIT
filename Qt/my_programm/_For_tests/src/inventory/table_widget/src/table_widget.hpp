@@ -58,6 +58,10 @@ private:
 
     ITEM items[MAX_X][MAX_Y];
 
+    bool is_dragging = false;
+    int drag_pos_x = 0;
+    int drag_pos_y = 0;
+
     void item_drag(int x, int y, int id);
     void item_drop(int x, int y, int id);
     void item_update(int x, int y);

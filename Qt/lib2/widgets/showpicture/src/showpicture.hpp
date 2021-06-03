@@ -26,6 +26,10 @@
 #include <QLabel>
 #include <QList>
 //--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
 class ShowPicture : public QLabel
 {
     Q_OBJECT

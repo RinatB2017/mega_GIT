@@ -240,6 +240,7 @@ void MainBox::started(void)
     if(timer->isActive() == false)
     {
         ui->btn_run->setDisabled(true);
+        ui->btn_run_upsdrvctl->setDisabled(true);
     }
 }
 //--------------------------------------------------------------------------------
@@ -268,6 +269,7 @@ void MainBox::finished(int result, QProcess::ExitStatus exitStatus)
     if(timer->isActive() == false)
     {
         ui->btn_run->setEnabled(true);
+        ui->btn_run_upsdrvctl->setEnabled(true);
     }
 }
 //--------------------------------------------------------------------------------

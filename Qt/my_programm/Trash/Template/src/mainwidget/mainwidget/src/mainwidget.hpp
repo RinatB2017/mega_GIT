@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,26 +18,23 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINWIDGET_GUI_HPP
-#define MAINWIDGET_GUI_HPP
+#ifndef MAINWIDGET_HPP
+#define MAINWIDGET_HPP
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+#include "mysplashscreen.hpp"
+#include "mainwidget_gui.hpp"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainWidget_GUI;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-class MainWidget;
-//--------------------------------------------------------------------------------
-class MainWidget_GUI : public MyWidget
+class MainWidget : public MainWidget_GUI
 {
     Q_OBJECT
 
 public:
-    explicit MainWidget_GUI(QWidget *parent,
-                            MySplashScreen *splash);
-    virtual ~MainWidget_GUI();
+    explicit MainWidget(QWidget *parent,
+                        MySplashScreen *splash);
+    virtual ~MainWidget();
+
+public slots:
+    bool test(void);
 
 private slots:
     void choice_test(void);
@@ -49,26 +46,14 @@ private:
         QString cmd_text;
         bool (MainWidget::*func)(void);
     } CMD_t;
-
-    QPointer<MySplashScreen> splash;
-    Ui::MainWidget_GUI *ui;
-
-    MainWidget *w;
-
-    QPointer<QToolBar> testbar;
-
-    QPointer<QComboBox> cb_test;
-    QPointer<QCheckBox> cb_block;
     QList<CMD> commands;
 
+    QPointer<QToolBar> testbar;
+    QPointer<QComboBox> cb_test;
+    QPointer<QCheckBox> cb_block;
+
     void init(void);
-
     void createTestBar(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINWIDGET_GUI_HPP
+#endif // MAINWIDGET_HPP

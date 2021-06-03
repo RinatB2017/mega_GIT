@@ -53,16 +53,19 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
-    connect(ui->btn_run_sh,         SIGNAL(clicked(bool)),  this,   SLOT(run_sh()));
-    connect(ui->btn_run_gcc,        SIGNAL(clicked(bool)),  this,   SLOT(run_gcc()));
-    connect(ui->btn_run_kate,       SIGNAL(clicked(bool)),  this,   SLOT(run_kate()));
-    connect(ui->btn_run_command,    SIGNAL(clicked(bool)),  this,   SLOT(run_command()));
+    connect(ui->btn_run_sh,         &QToolButton::clicked,  this,   &MainBox::run_sh);
+    connect(ui->btn_run_gcc,        &QToolButton::clicked,  this,   &MainBox::run_gcc);
+    connect(ui->btn_run_kate,       &QToolButton::clicked,  this,   &MainBox::run_kate);
+    connect(ui->btn_run_command,    &QToolButton::clicked,
+            this,                   static_cast<bool (MainBox::*)(void)>(&MainBox::run_command));
 
     connect(ui->le_script_filename, &QLineEdit::editingFinished,    this,   &MainBox::run_sh);
     connect(ui->le_gcc_param,       &QLineEdit::editingFinished,    this,   &MainBox::run_gcc);
     connect(ui->le_kate_param,      &QLineEdit::editingFinished,    this,   &MainBox::run_kate);
-    connect(ui->le_command,         &QLineEdit::editingFinished,    this,   &MainBox::run_command);
-    connect(ui->le_param,           &QLineEdit::editingFinished,    this,   &MainBox::run_command);
+    connect(ui->le_command,         &QLineEdit::editingFinished,
+            this,                   static_cast<bool (MainBox::*)(void)>(&MainBox::run_command));
+    connect(ui->le_param,           &QLineEdit::editingFinished,
+            this,                   static_cast<bool (MainBox::*)(void)>(&MainBox::run_command));
 
     ui->btn_run_sh->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
     ui->btn_run_gcc->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
@@ -86,6 +89,7 @@ void MainBox::createTestBar(void)
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
+    cb_test->setProperty(NO_SAVE, true);
     foreach (CMD command, commands)
     {
         cb_test->addItem(command.cmd_text, QVariant(command.cmd));
@@ -135,14 +139,20 @@ void MainBox::choice_test(void)
 //--------------------------------------------------------------------------------
 void MainBox::read_data(void)
 {
-    QByteArray data = process->readAllStandardOutput();
-    emit info(data);
+    if(process)
+    {
+        QByteArray data = process->readAllStandardOutput();
+        emit info(data);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_error(void)
 {
-    QByteArray data = process->readAllStandardError();
-    emit error(data);
+    if(process)
+    {
+        QByteArray data = process->readAllStandardError();
+        emit error(data);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::started(void)
@@ -167,7 +177,10 @@ void MainBox::finished(int result, QProcess::ExitStatus exitStatus)
         }
     }
 
-    delete process;
+    if(process)
+    {
+        delete process;
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::process_error(QProcess::ProcessError p_error)
@@ -203,6 +216,7 @@ void MainBox::process_error(QProcess::ProcessError p_error)
 void MainBox::prepare_QProcess(void)
 {
     process = new QProcess();
+    Q_ASSERT(process);
     process->setProcessChannelMode(QProcess::SeparateChannels);
     //process->setReadChannel(QProcess::StandardOutput);
 
@@ -251,13 +265,32 @@ void MainBox::run_kate(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::run_command(void)
+bool MainBox::run_command(void)
 {
-    prepare_QProcess();
-    if(ui->le_command->text().isEmpty() == false)
+    QString command = ui->le_command->text();
+    QString param = ui->le_param->text();
+    if(command.isEmpty())
     {
-        process->start(ui->le_command->text(), QStringList() << ui->le_param->text());
+        emit error((QString("[%1] is empty")).arg(command));
+        return false;
     }
+
+    prepare_QProcess();
+    process->start(command, QStringList() << param);
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::run_command(const QString &command, const QString &param)
+{
+    if(command.isEmpty())
+    {
+        emit error((QString("[%1] is empty")).arg(command));
+        return false;
+    }
+
+    prepare_QProcess();
+    process->start(command, QStringList() << param);
+    return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)

@@ -47,7 +47,8 @@ private slots:
     void run_sh(void);
     void run_gcc(void);
     void run_kate(void);
-    void run_command(void);
+    bool run_command(void);
+    bool run_command(const QString &command, const QString &param);
 
     void read_data(void);
     void read_error(void);

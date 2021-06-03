@@ -18,28 +18,44 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TEST_HPP
-#define TEST_HPP
+#ifndef MAINWIDGET_GUI_HPP
+#define MAINWIDGET_GUI_HPP
 //--------------------------------------------------------------------------------
-#include <QObject>
-#include <QTest>
+#include "mywaitsplashscreen.hpp"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "mainwidget.hpp"
+#include "mywidget.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
-class MainWindow;
+namespace Ui {
+    class MainWidget_GUI;
+}
 //--------------------------------------------------------------------------------
-class Test : public QObject {
+class MySplashScreen;
+//--------------------------------------------------------------------------------
+class MainWidget_GUI : public MyWidget
+{
     Q_OBJECT
 
 public:
-    Test();
+    explicit MainWidget_GUI(QWidget *parent,
+                            MySplashScreen *splash);
+    virtual ~MainWidget_GUI();
 
 private slots:
-    
-private:
-    MainWindow *mw = nullptr;
+    void choice_test(void);
 
-    void test_GUI(void);
-    void test_func(void);
-    void test_signals(void);
+private:
+    QPointer<MySplashScreen> splash;
+    Ui::MainWidget_GUI *ui;
+
+    void init(void);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // MAINWIDGET_GUI_HPP

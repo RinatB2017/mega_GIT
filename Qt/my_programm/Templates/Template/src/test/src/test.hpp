@@ -25,23 +25,20 @@
 #include <QTest>
 //--------------------------------------------------------------------------------
 class MainWindow;
-class Test_function;
 //--------------------------------------------------------------------------------
-class Test : public QObject
-{
+class Test : public QObject {
     Q_OBJECT
 
 public:
     Test();
-    virtual ~Test();
 
 private slots:
     void test_GUI(void);
     void test_func(void);
-    
+    void test_signals(void);
+
 private:
-    MainWindow *mw;
-    Test_function *tf;
+    MainWindow *mw = nullptr;
 };
 //--------------------------------------------------------------------------------
 #endif

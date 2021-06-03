@@ -18,8 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QTest>
-//--------------------------------------------------------------------------------
 #define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
@@ -50,5 +48,56 @@ void Test::test_func(void)
     QVERIFY(mb);
 
     QCOMPARE(mb->test(), true);
+
+    QString cmd = "python";
+    QString filename = "test2.py";
+
+    QCOMPARE(remove_file(filename), true);
+    QCOMPARE(create_python_test_file(filename), true);
+
+    QCOMPARE(mb->run_command(cmd, filename), true);
+    QTimer::singleShot(100, [this, filename]{
+        QCOMPARE(remove_file(filename), true);
+    });
+}
+//--------------------------------------------------------------------------------
+bool Test::create_python_test_file(const QString &filename)
+{
+    QString text;
+    text.append("if __name__ == \"__main__\":\n");
+    text.append("    print(\"All OK\")\n");
+
+    if(filename.isEmpty())
+    {
+        qDebug() << "file" << filename << "is empty!";
+        return false;
+    }
+
+    QFile file(filename);
+    if (!file.open(QIODevice::NewOnly | QIODevice::Text))
+    {
+        qDebug() << "file" << filename << "not open";
+        return false;
+    }
+
+    qint64 len = file.write(text.toLocal8Bit());
+    if(len != text.length())
+    {
+        qDebug() << len << "!=" << text.length();
+        return false;
+    }
+
+    file.close();
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool Test::remove_file(const QString &filename)
+{
+    if(!QFile::exists(filename))
+    {
+        return true;
+    }
+    return QFile::remove(filename);
 }
 //--------------------------------------------------------------------------------

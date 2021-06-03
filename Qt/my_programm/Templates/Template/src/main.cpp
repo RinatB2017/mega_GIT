@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2017                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,19 +18,16 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#if QT_VERSION >= 0x050000
-#   include <QtMessageHandler>
-#endif
-//--------------------------------------------------------------------------------
+#include "template_mainbox.hpp"
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
-#include "mymainwindow.hpp"
-#include "mainwidget_gui.hpp"
+#include "mainwindow.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include "posix.hpp"
 #endif
+#include "log_to_file.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"
 //--------------------------------------------------------------------------------
@@ -72,14 +69,13 @@ int main(int argc, char *argv[])
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     Q_ASSERT(splash);
-    splash->show();
+    splash->show();    
 
-    MyMainWindow *main_window = new MyMainWindow();
+    MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);
 
-    main_window->setAttribute(Qt::WA_DeleteOnClose);
-
-    MainWidget_GUI *mainBox = new MainWidget_GUI(main_window, splash);
+    //MainBox *mainBox = new MainBox(0, splash);
+    MainBox *mainBox = new MainBox(main_window, splash);
     Q_ASSERT(mainBox);
 
     main_window->setCentralWidget(mainBox);

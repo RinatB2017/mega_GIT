@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2021                                                       **
+**     Copyright (C) 2017                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,34 +18,34 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "template_mainbox.hpp"
-#include "defines.hpp"
+#include "mainwidget.hpp"
 //--------------------------------------------------------------------------------
-MainBox::MainBox(QWidget *parent,
-                 MySplashScreen *splash) :
-    MainBox_GUI(parent, splash)
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
+MainWidget::MainWidget(QWidget *parent,
+                       MySplashScreen *splash) :
+    MainWidget_GUI(parent, splash)
 {
     init();
 }
 //--------------------------------------------------------------------------------
-MainBox::~MainBox()
+MainWidget::~MainWidget()
 {
-
+#ifdef QT_DEBUG
+    qDebug() << "~MainWidget()";
+#endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainWidget::init(void)
 {
 #ifdef QT_DEBUG
     createTestBar();
 #endif
-
-    set_sb_value_range(-100, 100);
-
-    connect(this,   &MainBox::btn_plus_push,    this,   &MainBox::plus);
-    connect(this,   &MainBox::btn_minus_push,   this,   &MainBox::minus);
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainWidget::choice_test(void)
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -58,7 +58,7 @@ void MainBox::choice_test(void)
     );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainWidget::*function)(void);
         function x;
         x = cmd_it->func;
         if(x)
@@ -72,14 +72,13 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainWidget::createTestBar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "+",    &MainBox::test_plus });
-    commands.append({ id++, "-",    &MainBox::test_minus });
+    commands.append({ id++, "+",    &MainWidget::test });
 
     testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -112,52 +111,11 @@ void MainBox::createTestBar(void)
     //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_plus(void)
+bool MainWidget::test(void)
 {
     emit trace(Q_FUNC_INFO);
-    set_sb_value(get_sb_value()+1);
+
+    emit info("Test");
     return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_minus(void)
-{
-    emit trace(Q_FUNC_INFO);
-    set_sb_value(get_sb_value()-1);
-    return true;
-}
-//--------------------------------------------------------------------------------
-void MainBox::plus(void)
-{
-    emit trace(Q_FUNC_INFO);
-    set_sb_value(get_sb_value()+1);
-}
-//--------------------------------------------------------------------------------
-void MainBox::minus(void)
-{
-    emit trace(Q_FUNC_INFO);
-    set_sb_value(get_sb_value()-1);
-}
-//--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
-{
-    return true;
-}
-//--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
-{
-    if(cb_block)
-    {
-        bool is_checked = load_bool("cb_block");
-        cb_block->setChecked(is_checked);
-        cb_block->clicked(is_checked);
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
-{
-    if(cb_block)
-    {
-        save_int("cb_block", cb_block->isChecked());
-    }
 }
 //--------------------------------------------------------------------------------

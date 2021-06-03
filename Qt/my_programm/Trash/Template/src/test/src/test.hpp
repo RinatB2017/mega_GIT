@@ -18,50 +18,30 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
+#ifndef TEST_HPP
+#define TEST_HPP
+//--------------------------------------------------------------------------------
 #include <QObject>
-#include <QWidget>
-#include <QList>
 #include <QTest>
 //--------------------------------------------------------------------------------
-#define private public
+class MainWindow;
+class Test_function;
 //--------------------------------------------------------------------------------
-#include "mainwindow.hpp"
-#include "template_mainbox.hpp"
-#include "test.hpp"
-//--------------------------------------------------------------------------------
-Test::Test()
+class Test : public QObject
 {
-    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
-}
-//--------------------------------------------------------------------------------
-void Test::test_GUI(void)
-{
-    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
-    QVERIFY(cb);
-    QTest::keyClick(cb, Qt::Key_Down);
-    QTest::keyClick(cb, Qt::Key_Down);
+    Q_OBJECT
 
-    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
-    QVERIFY(tb);
-    QTest::mouseClick(tb, Qt::LeftButton);
-}
-//--------------------------------------------------------------------------------
-void Test::test_func(void)
-{
-    MainBox *mb = mw->findChild<MainBox *>("MainBox_GUI");
-    QVERIFY(mb);
+public:
+    Test();
+    virtual ~Test();
 
-    QCOMPARE(mb->test_plus(), true);
-    QCOMPARE(mb->test_minus(), true);
-
-    mb->set_sb_value(666);
-    mb->clear_log();
-}
+private slots:
+    void test_GUI(void);
+    void test_func(void);
+    
+private:
+    MainWindow *mw;
+    Test_function *tf;
+};
 //--------------------------------------------------------------------------------
-void Test::test_signals(void)
-{
-
-}
-//--------------------------------------------------------------------------------
+#endif

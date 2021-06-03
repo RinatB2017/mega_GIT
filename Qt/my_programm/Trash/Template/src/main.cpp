@@ -18,50 +18,89 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#if QT_VERSION >= 0x050000
+#   include <QtMessageHandler>
+#endif
+//--------------------------------------------------------------------------------
+#include "qtsingleapplication.h"
+#include "mysplashscreen.hpp"
+#include "mymainwindow.hpp"
 #include "mainwidget.hpp"
+#include "defines.hpp"
+//--------------------------------------------------------------------------------
+#ifdef Q_OS_LINUX
+#   include "posix.hpp"
+#endif
+//--------------------------------------------------------------------------------
+#include "codecs.h"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
+#   include "test.hpp"
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-MainWidget::MainWidget(QObject *parent)
-    : QObject(parent)
+int main(int argc, char *argv[])
 {
-    setObjectName("MainWidget");
-}
-//--------------------------------------------------------------------------------
-MainWidget::~MainWidget()
-{
+#ifdef Q_OS_LINUX
+    //set_signals();
+#endif
+
+    set_codecs();
+#ifdef SINGLE_APP
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        //QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
+        if(app.sendMessage("Wake up!")) return 0;
+    }
+#else
+    QApplication app(argc, argv);
+#endif
+
+    app.setOrganizationName(ORGNAME);
+    app.setApplicationName(APPNAME);
+#ifdef Q_OS_LINUX
+    app.setApplicationVersion(QString("%1.%2.%3.%4")
+                              .arg(VER_MAJOR)
+                              .arg(VER_MINOR)
+                              .arg(VER_PATCH)
+                              .arg(VER_BUILD));
+#endif
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+
+    QPixmap pixmap(":/logo/logo.png");
+
+    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    Q_ASSERT(splash);
+    splash->show();
+
+    MyMainWindow *main_window = new MyMainWindow();
+    Q_ASSERT(main_window);
+
+    main_window->setAttribute(Qt::WA_DeleteOnClose);
+
+    MainWidget *mainBox = new MainWidget(main_window, splash);
+    Q_ASSERT(mainBox);
+
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
+
+    splash->finish(main_window);
+
+#ifdef SINGLE_APP
+    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
+#endif
+
 #ifdef QT_DEBUG
-    qDebug() << "~MainWidget()";
-#endif
-}
-//--------------------------------------------------------------------------------
-void MainWidget::get(void)
-{
-    emit trace(Q_FUNC_INFO);
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
 
-    x++;
-    emit set(QString("%1").arg(x));
-}
-//--------------------------------------------------------------------------------
-bool MainWidget::test(void)
-{
-    emit info("Test");
-    emit trace(Q_FUNC_INFO);
-
-#if 0
-    emit error(QString("%1 %2").arg(__FILE__).arg(__LINE__));
-    emit error(QString("%1 %2").arg(__DATE__).arg(__TIME__));
+    int test_result = QTest::qExec(new Test(), argc, argv);
+    if (test_result != EXIT_SUCCESS)
+    {
+        return test_result;
+    }
 #endif
 
-#if 0
-    emit info("info");
-    emit debug("debug");
-    emit error("error");
-    emit trace("trace");
-#endif
-
-    return true;
+    return app.exec();
 }
 //--------------------------------------------------------------------------------

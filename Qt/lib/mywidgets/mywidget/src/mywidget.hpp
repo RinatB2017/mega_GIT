@@ -30,6 +30,7 @@
 #include <QLineEdit>
 #include <QToolBar>
 #include <QPainter>
+#include <QWidget>
 #include <QDir>
 //--------------------------------------------------------------------------------
 #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)

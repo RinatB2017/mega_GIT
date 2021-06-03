@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2017                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,28 +18,55 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef DEFINES_HPP
-#define DEFINES_HPP
+#include "ui_mainwidget_gui.h"
 //--------------------------------------------------------------------------------
-#define ORGNAME "Work"
-#define APPNAME "template_GUI"
+#include "mainwidget_gui.hpp"
 //--------------------------------------------------------------------------------
-#define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
-#define QMAKE_TARGET_COMPANY    ORGNAME
-#define QMAKE_TARGET_PRODUCT    APPNAME
-#define QMAKE_TARGET_COPYRIGHT  "Copyright 2020-2025"
-#define RC_ICONS                ":/images/computer.ico"
-//--------------------------------------------------------------------------------
-#define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
-#define VER_FILEVERSION_STR         VER_STR
-#define VER_PRODUCTVERSION          VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
-#define VER_PRODUCTVERSION_STR      VER_STR
-#define VER_FILEDESCRIPTION_STR     APPNAME
-#define VER_INTERNALNAME_STR        APPNAME
-#define VER_LEGALCOPYRIGHT_STR      QMAKE_TARGET_COPYRIGHT
-#define VER_ORIGINALFILENAME_STR    APPNAME
-#define VER_PRODUCTNAME_STR         APPNAME
-//--------------------------------------------------------------------------------
-#define ICON_PROGRAMM   ":/mainwindow/computer.png"
-//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
 #endif
+//--------------------------------------------------------------------------------
+MainWidget_GUI::MainWidget_GUI(QWidget *parent,
+                               MySplashScreen *splash) :
+    MyWidget(parent),
+    splash(splash),
+    ui(new Ui::MainWidget_GUI)
+{
+    init();
+}
+//--------------------------------------------------------------------------------
+MainWidget_GUI::~MainWidget_GUI()
+{
+    save_widgets();
+#ifdef QT_DEBUG
+    qDebug() << "~MainWidget_GUI()";
+#endif
+    delete ui;
+}
+//--------------------------------------------------------------------------------
+void MainWidget_GUI::init(void)
+{
+    ui->setupUi(this);
+    load_widgets();
+}
+//--------------------------------------------------------------------------------
+void MainWidget_GUI::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool MainWidget_GUI::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MainWidget_GUI::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MainWidget_GUI::save_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------

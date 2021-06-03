@@ -22,6 +22,7 @@
 #define TEST_HPP
 //--------------------------------------------------------------------------------
 #include <QObject>
+#include <QFile>
 #include <QTest>
 //--------------------------------------------------------------------------------
 class MainWindow;
@@ -33,12 +34,14 @@ public:
     Test();
 
 private slots:
-
-private:
-    MainWindow *mw;
-
     void test_GUI(void);
     void test_func(void);
+
+private:
+    MainWindow *mw = nullptr;
+
+    bool create_python_test_file(const QString &filename);
+    bool remove_file(const QString &filename);
 };
 //--------------------------------------------------------------------------------
 #endif

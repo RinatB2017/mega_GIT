@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2017                                                       **
+**     Copyright (C) 2015                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,36 +18,44 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINWIDGET_HPP
-#define MAINWIDGET_HPP
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include <QObject>
+#define private public
 //--------------------------------------------------------------------------------
-class MainWidget : public QObject
+#include "mainwidget_gui.hpp"
+#include "mainwindow.hpp"
+#include "mainwidget.hpp"
+//--------------------------------------------------------------------------------
+#include "test_function.hpp"
+#include "test.hpp"
+//--------------------------------------------------------------------------------
+Test::Test()
 {
-    Q_OBJECT
+    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
+    QVERIFY(mw);
 
-public:
-    explicit MainWidget(QObject *parent = nullptr);
-    virtual ~MainWidget();
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
-    void set(QString);
-
-public slots:
-    bool test(void);
-
-public slots:
-    void get(void);
-
-private:
-    int x = 0;
-
-};
+    tf = new Test_function;
+    QVERIFY(tf);
+}
 //--------------------------------------------------------------------------------
-#endif // MAINWIDGET_HPP
+Test::~Test()
+{
+    if(tf)
+    {
+        tf->deleteLater();
+    }
+}
+//--------------------------------------------------------------------------------
+void Test::test_GUI(void)
+{
+    tf->combobox_key_down_and_check_value("cb_test", "test");
+}
+//--------------------------------------------------------------------------------
+void Test::test_func(void)
+{
+    MainWidget *mb = mw->findChild<MainWidget *>("MainWidget");
+    QVERIFY(mb);
+
+    QCOMPARE(mb->test(), true);
+}
+//--------------------------------------------------------------------------------

@@ -21,7 +21,6 @@ SOURCES += \
 
 win32 {
     RC_ICONS = "ico/computer.ico"
-    # RC_FILE  = programm.rc
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win

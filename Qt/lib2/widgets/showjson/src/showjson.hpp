@@ -36,7 +36,7 @@ public:
     explicit ShowJSON(QWidget *parent = nullptr);
     virtual ~ShowJSON();
 
-    void loadJson(QByteArray data);
+    bool loadJson(QByteArray data);
 
 private:
     Ui::ShowJSON *ui;

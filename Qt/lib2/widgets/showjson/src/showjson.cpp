@@ -25,8 +25,6 @@ ShowJSON::ShowJSON(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::ShowJSON)
 {
-    ui->setupUi(this);
-
     init();
 }
 //--------------------------------------------------------------------------------
@@ -42,16 +40,27 @@ ShowJSON::~ShowJSON()
 //--------------------------------------------------------------------------------
 void ShowJSON::init(void)
 {
+    ui->setupUi(this);
+
     model = new QJsonModel;
     ui->view->setModel(model);
 }
 //--------------------------------------------------------------------------------
-void ShowJSON::loadJson(QByteArray data)
+bool ShowJSON::loadJson(QByteArray data)
 {
     emit trace(Q_FUNC_INFO);
 
-    model->loadJson(data);
-    ui->view->setModel(model);
+    bool ok = model->loadJson(data);
+    if(ok)
+    {
+        ui->view->setModel(model);
+        return true;
+    }
+    else
+    {
+        emit error("loadJson return false");
+    }
+    return false;
 }
 //--------------------------------------------------------------------------------
 void ShowJSON::updateText(void)

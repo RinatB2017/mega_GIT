@@ -241,6 +241,14 @@ bool MySettings::load_property(QWidget *widget, const QString &property_name)
 {
     Q_ASSERT(widget);
 
+    //TODO временный костыль
+    QLabel *label = dynamic_cast<QLabel *>(widget);
+    if(label)
+    {
+        return false;
+    }
+    //---
+
     QVariant property = settings->value(property_name);
     if(property.isValid() == false)
     {
@@ -257,6 +265,14 @@ bool MySettings::load_property(QWidget *widget, const QString &property_name)
 bool MySettings::save_property(QWidget *widget, const QString &property_name)
 {
     Q_ASSERT(widget);
+
+    //TODO временный костыль
+    QLabel *label = dynamic_cast<QLabel *>(widget);
+    if(label)
+    {
+        return false;
+    }
+    //---
 
     QVariant property = widget->property(property_name.toLocal8Bit());
     if(property.isValid() == false)

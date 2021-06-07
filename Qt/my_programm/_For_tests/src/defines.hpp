@@ -12,6 +12,8 @@
 #define ITEM_SIZE   64
 #define DEFAULT_NAME    "dafault"
 #define DEFAULT_PIXMAP  ":/images/default.png"
+
+#define HEAVY_DELAY 1
 //--------------------------------------------------------------------------------
 #define ORGNAME "Home"
 #define APPNAME "_For_tests"

@@ -155,9 +155,9 @@ void MainBox::createTestBar(void)
 
     // testbar->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 
-//#ifndef NO_MENU
+    //#ifndef NO_MENU
     //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
-//#endif
+    //#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -333,7 +333,7 @@ bool MainBox::test(void)
 bool MainBox::test2(void)
 {
     emit trace(Q_FUNC_INFO);
-    messagebox_info("Info", Q_FUNC_INFO);
+    emit info("Test2");
     return true;
 }
 //--------------------------------------------------------------------------------

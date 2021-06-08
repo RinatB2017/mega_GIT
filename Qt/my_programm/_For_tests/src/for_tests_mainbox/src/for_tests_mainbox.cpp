@@ -185,6 +185,10 @@ void MainBox::choice_test(void)
             emit error("no func");
         }
     }
+    else
+    {
+        emit error("not found");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::print_mp(QWidget *widget)

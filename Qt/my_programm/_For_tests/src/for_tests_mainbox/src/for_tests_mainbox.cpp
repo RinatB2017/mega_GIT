@@ -271,56 +271,18 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-#include <QPropertyAnimation>
-#include "inventory_widget.hpp"
-
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
-    Inventory_widget *iw = new Inventory_widget();
-    iw->show();
-#endif
-
-#if 0
-    test_function2(&MainBox::test2);
-#endif
-
-#if 0
-    QWidget *w = new QWidget();
-    w->setFixedSize(800, 600);
-
-    QPushButton *button = new QPushButton("Animated Button", w);
-    button->show();
-
-    w->show();
-
-    QPropertyAnimation *animation = new QPropertyAnimation(button, "geometry");
-    animation->setDuration(10000);
-    animation->setStartValue(QRect(0, 0, 100, 30));
-    animation->setEndValue(QRect(250, 250, 100, 30));
-
-    animation->start();
-#endif
-
-#if 0
-    A();
-#endif
-
-#if 0
-    int asd = 0x1234'5678;
-    emit info(QString("asd %1").arg(asd, 4, 16, QChar('0')));
+    emit info(Q_FUNC_INFO);
+    emit info(get_class_name(Q_FUNC_INFO));
+    emit info(get_func_name(Q_FUNC_INFO));
 #endif
 
 #if 0
     emit info("Copyright \\251 2020-2025");
-#endif
-
-#if 0
-    qInfo()    << "qInfo";
-    qDebug()   << "qDebug";
-    qWarning() << "qWarning";
 #endif
 
 #if 0

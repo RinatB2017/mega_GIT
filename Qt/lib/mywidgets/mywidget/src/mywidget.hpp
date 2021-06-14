@@ -149,6 +149,9 @@ public:
     bool add_digital_clock(bool add_spacer = true);
     bool add_lcd_clock(bool add_spacer = true);
 
+    QString get_class_name(const QString &fullname);
+    QString get_func_name(const QString &fullname);
+
     virtual void updateText(void) = 0;
     virtual bool programm_is_exit(void) = 0;
     virtual void load_setting(void) = 0;

@@ -718,6 +718,41 @@ void MyWidget::check_file(const QString &orig_file, const QString &copy_file)
     }
 }
 //--------------------------------------------------------------------------------
+QString MyWidget::get_class_name(const QString &fullname)
+{
+    QString temp = fullname;
+
+    temp = temp.replace("::", ":")
+            .replace("()", "")
+            .replace("(void)", "")
+            .replace("void ", "");
+    QStringList sl = temp.split(":");
+    if(sl.count() != 2)
+    {
+        return fullname;
+    }
+
+    QString classname = sl.at(0);
+    sl = classname.split(" ");
+    return sl.at(sl.count() - 1);
+}
+//--------------------------------------------------------------------------------
+QString MyWidget::get_func_name(const QString &fullname)
+{
+    QString temp = fullname;
+
+    temp = temp.replace("::", ":")
+            .replace("()", "")
+            .replace("(void)", "")
+            .replace("void ", "");
+    QStringList sl = temp.split(":");
+    if(sl.count() != 2)
+    {
+        return fullname;
+    }
+    return sl.at(1);
+}
+//--------------------------------------------------------------------------------
 void MyWidget::changeEvent(QEvent *event)
 {
     switch (event->type())

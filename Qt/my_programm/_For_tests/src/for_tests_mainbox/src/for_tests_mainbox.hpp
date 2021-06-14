@@ -84,6 +84,15 @@ public slots:
     bool test2(void);
     bool load_qss(void);
 
+    void get_temp(int *result)
+    {
+        *result = 666;
+    }
+    void get_temp(QString *result)
+    {
+        *result = "t666";
+    }
+
     void xxx(void)
     {
         fail();

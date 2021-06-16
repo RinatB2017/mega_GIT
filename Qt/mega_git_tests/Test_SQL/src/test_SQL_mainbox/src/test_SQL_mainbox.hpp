@@ -50,10 +50,10 @@ private:
     QSqlDatabase db;
     int  open_database(const QString &driver_name, const QString &database_name);
     void view_table(const QString &table_name);
-    void drop_table(const QString &table_name);
+    bool drop_table(const QString &table_name);
     void close_database(const QString &database_name);
 
-    bool execTableBuild(QString &qryStr, QTextStream &out);
+    bool execTableBuild(const QString &qryStr, QTextStream &out);
     bool odbcSanityCheck(QSqlDatabase &db, QString &dbServer);
     void displayNotSupportedMesg(QSqlDatabase &db, QTextStream &out);
     bool buildTable(QSqlDatabase &db, QTextStream &out, QString &dbServer);

@@ -135,10 +135,10 @@ void MainBox::view_table(const QString &table_name)
     view->show();
 }
 //--------------------------------------------------------------------------------
-void MainBox::drop_table(const QString &table_name)
+bool MainBox::drop_table(const QString &table_name)
 {
     QSqlQuery sql;
-    sql.exec(QString("DROP TABLE %1").arg(table_name));
+    return sql.exec(QString("DROP TABLE %1").arg(table_name));
 }
 //--------------------------------------------------------------------------------
 void MainBox::close_database(const QString &database_name)
@@ -149,7 +149,7 @@ void MainBox::close_database(const QString &database_name)
 }
 //--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
-bool MainBox::execTableBuild(QString &qryStr, QTextStream &out)
+bool MainBox::execTableBuild(const QString &qryStr, QTextStream &out)
 {
     bool result;
     QSqlQuery qry;
@@ -290,8 +290,13 @@ void MainBox::create_report_tables(void)
     " report_source TEXT) " }
     */
     QSqlQuery sql;
-    sql.prepare("INSERT INTO report (report_id, report_name, report_descrip, report_grade, report_source) "
-                "VALUES (:report_id, :report_name, :report_descrip, :report_grade, :report_source)");
+    bool ok = sql.prepare("INSERT INTO report (report_id, report_name, report_descrip, report_grade, report_source) "
+                          "VALUES (:report_id, :report_name, :report_descrip, :report_grade, :report_source)");
+    if(!ok)
+    {
+        emit error("error sql prepare");
+        return;
+    }
     sql.bindValue(":report_id", 0);
     sql.bindValue(":report_name", "my_report");
     sql.bindValue(":report_descrip", "my_descr");
@@ -313,8 +318,13 @@ void MainBox::create_report_tables(void)
     " labeldef_horizontal_gap integer NOT NULL, "
     " labeldef_vertical_gap integer NOT NULL ) "}
     */
-    sql.prepare("INSERT INTO labeldef (labeldef_id, labeldef_name, labeldef_papersize, labeldef_columns, labeldef_rows, labeldef_width, labeldef_height, labeldef_start_offset_x, labeldef_start_offset_y, labeldef_horizontal_gap, labeldef_vertical_gap ) "
-                "VALUES (:labeldef_id, :labeldef_name, :labeldef_papersize, :labeldef_columns, :labeldef_rows, :labeldef_width, :labeldef_height, :labeldef_start_offset_x, :labeldef_start_offset_y, :labeldef_horizontal_gap, :labeldef_vertical_gap)");
+    ok = sql.prepare("INSERT INTO labeldef (labeldef_id, labeldef_name, labeldef_papersize, labeldef_columns, labeldef_rows, labeldef_width, labeldef_height, labeldef_start_offset_x, labeldef_start_offset_y, labeldef_horizontal_gap, labeldef_vertical_gap ) "
+                     "VALUES (:labeldef_id, :labeldef_name, :labeldef_papersize, :labeldef_columns, :labeldef_rows, :labeldef_width, :labeldef_height, :labeldef_start_offset_x, :labeldef_start_offset_y, :labeldef_horizontal_gap, :labeldef_vertical_gap)");
+    if(!ok)
+    {
+        emit error("error sql prepare");
+        return;
+    }
     sql.bindValue(":labeldef_id", 0);
     sql.bindValue(":labeldef_name", "label_1");
     sql.bindValue(":labeldef_papersize", "A4");
@@ -335,18 +345,22 @@ void MainBox::test(void)
     int err = open_database("QSQLITE5", "./rus-tat.dict");
     qDebug() << "open_database return" << err;
     if(err)
+    {
         return;
-
-    QSqlQuery dict_sql;
-    dict_sql.prepare("select * from sqlite_master where type = 'table'");
-    qDebug() << dict_sql.exec();
-
-
-    return;
-
+    }
 
     bool ok;
+    QSqlQuery dict_sql;
+    ok = dict_sql.prepare("select * from sqlite_master where type = 'table'");
+    if(!ok)
+    {
+        emit error("error sql prepare");
+        return;
+    }
+    qDebug() << dict_sql.exec();
+    return;
 
+#if 0
     QString temp =
             "<!DOCTYPE openRPTDef>"
             "<report>"
@@ -407,6 +421,7 @@ void MainBox::test(void)
             "   </detail>"
             "   </section>"
             "</report>";
+#endif
 
     //QPrinter *printer = new QPrinter(QPrinter::HighResolution);
 
@@ -454,11 +469,16 @@ void MainBox::test(void)
     return;
 
     QSqlQuery sql;
-    sql.prepare("create table person ("
-                "id integer primary key, "
-                "firstname varchar(20), "
-                "lastname varchar(30), "
-                "age integer)");
+    ok = sql.prepare("create table person ("
+                     "id integer primary key, "
+                     "firstname varchar(20), "
+                     "lastname varchar(30), "
+                     "age integer)");
+    if(!ok)
+    {
+        emit error("error sql prepare");
+        return;
+    }
     ok = sql.exec();
     if(!ok)
     {
@@ -466,8 +486,13 @@ void MainBox::test(void)
         return;
     }
 
-    sql.prepare("create table test_table "
-                "(id integer primary key)");
+    ok = sql.prepare("create table test_table "
+                     "(id integer primary key)");
+    if(!ok)
+    {
+        emit error("error sql prepare");
+        return;
+    }
     ok = sql.exec();
     if(!ok)
     {
@@ -475,15 +500,24 @@ void MainBox::test(void)
         return;
     }
 
-    sql.prepare("INSERT INTO person (id, firstname, lastname, age) "
-                "VALUES (:id, :firstname, :lastname, :age)");
+    ok = sql.prepare("INSERT INTO person (id, firstname, lastname, age) "
+                     "VALUES (:id, :firstname, :lastname, :age)");
+    if(!ok)
+    {
+        emit error("error sql prepare");
+        return;
+    }
     for(int i=0; i<10; i++)
     {
         sql.bindValue(":id", i);
         sql.bindValue(":age", 30);
         sql.bindValue(":firstname", "Иван");
         sql.bindValue(":lastname",  "Петров");
-        sql.exec();
+        ok = sql.exec();
+        if(!ok)
+        {
+            emit error("sql not exec");
+        }
     }
 
     QMapIterator<QString, QVariant> i(sql.boundValues());

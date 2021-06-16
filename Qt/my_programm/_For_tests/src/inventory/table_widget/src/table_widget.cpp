@@ -153,21 +153,25 @@ void Table_widget::f_play_sound(void)
 void Table_widget::dragEnterEvent(QDragEnterEvent *event)
 {
     qDebug() << Q_FUNC_INFO;
+    Q_UNUSED(event);
 }
 //--------------------------------------------------------------------------------
 void Table_widget::dragMoveEvent(QDragMoveEvent *event)
 {
     qDebug() << Q_FUNC_INFO;
+    Q_UNUSED(event);
 }
 //--------------------------------------------------------------------------------
 void Table_widget::dragLeaveEvent(QDragLeaveEvent *event)
 {
     qDebug() << Q_FUNC_INFO;
+    Q_UNUSED(event);
 }
 //--------------------------------------------------------------------------------
 void Table_widget::dropEvent(QDropEvent *event)
 {
     qDebug() << Q_FUNC_INFO;
+    Q_UNUSED(event);
 }
 //--------------------------------------------------------------------------------
 QSize Table_widget::sizeHint()

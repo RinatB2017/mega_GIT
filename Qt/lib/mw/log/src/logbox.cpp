@@ -370,7 +370,13 @@ void LogBox::append_string(LOG_DATA log_data)
 
     if(flagNoCRLF)
     {
-        logBox->moveCursor(QTextCursor::End);
+        try {
+            logBox->moveCursor(QTextCursor::End);
+        } catch(...)
+        {
+            qDebug() << "error";
+        }
+
 #ifdef NEED_CODEC
         //TODO проверить надо
         logBox->insertPlainText(current_codec->toUnicode(ba));
@@ -387,7 +393,12 @@ void LogBox::append_string(LOG_DATA log_data)
         logBox->append(temp);
 #endif
     }
-    logBox->moveCursor(QTextCursor::End);
+    try {
+        logBox->moveCursor(QTextCursor::End);
+    } catch(...)
+    {
+        qDebug() << "error";
+    }
 }
 //--------------------------------------------------------------------------------
 void LogBox::infoLog(const QString &text)
@@ -520,9 +531,13 @@ void LogBox::syslogLog(QDateTime dt,
     else
         logBox->append(temp);
 
-    logBox->moveCursor(QTextCursor::End);
+    try {
+        logBox->moveCursor(QTextCursor::End);
+    } catch(...)
+    {
+        qDebug() << "error";
+    }
     //---
-    
 }
 //--------------------------------------------------------------------------------
 void LogBox::syslogLog(int level,
@@ -542,9 +557,13 @@ void LogBox::syslogLog(int level,
     else
         logBox->append(temp);
 
-    logBox->moveCursor(QTextCursor::End);
+    try {
+        logBox->moveCursor(QTextCursor::End);
+    } catch(...)
+    {
+        qDebug() << "error";
+    }
     //---
-    
 }
 //--------------------------------------------------------------------------------
 void LogBox::save_to(void)

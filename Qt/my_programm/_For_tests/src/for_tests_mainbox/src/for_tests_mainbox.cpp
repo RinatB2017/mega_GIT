@@ -271,11 +271,35 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
+#include <QImageWriter>
+#include <QPicture>
+#include <QImage>
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QByteArray ba = QByteArray::fromBase64("/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAIAAgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCt9kH9m8svm534yOmKKKKiMmymj//Z");
+
+    QPixmap *pixmap = new QPixmap();
+    if(!pixmap->loadFromData(ba, "JPEG"))
+    {
+        emit error("bad pixmap");
+        return false;
+    }
+    emit info(QString("size: %1 %2")
+              .arg(pixmap->width())
+              .arg(pixmap->height()));
+
+    QLabel *lbl = new QLabel();
+    lbl->setPixmap(*pixmap);
+    lbl->show();
+
+    emit info(QString("size: %1").arg(ba.size()));
+#endif
+
+#if 0
     emit info(Q_FUNC_INFO);
     emit info(get_class_name(Q_FUNC_INFO));
     emit info(get_func_name(Q_FUNC_INFO));

@@ -75,7 +75,9 @@ void ColorButton::init(void)
     btn_color = new QToolButton(this);
 
     QHBoxLayout *box = new QHBoxLayout();
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     box->setMargin(0);
+#endif
     box->addWidget(btn_color);
     box->addWidget(btn_text);
 

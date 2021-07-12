@@ -24,10 +24,13 @@
 #include <QDragEnterEvent>
 #include <QTableWidget>
 #include <QHeaderView>
-#include <QSound>
 #include <QLabel>
 #include <QDebug>
 #include <QSize>
+
+#ifdef USE_SOUND
+#   include <QSound>
+#endif
 
 #include "item_widget.hpp"
 #include "defines.hpp"

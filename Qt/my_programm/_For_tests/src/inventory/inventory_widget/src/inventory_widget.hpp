@@ -22,8 +22,11 @@
 #define INVENTORY_WIDGET_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
-#include <QSound>
 #include <QDebug>
+
+#ifdef USE_SOUND
+#   include <QSound>
+#endif
 
 #include "defines.hpp"
 //--------------------------------------------------------------------------------

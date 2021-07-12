@@ -147,7 +147,9 @@ void Table_widget::update_inventory(void)
 //--------------------------------------------------------------------------------
 void Table_widget::f_play_sound(void)
 {
+#ifdef USE_SOUND
     QSound::play(":/sounds/ukus-yabloka-korotkiy.wav");
+#endif
 }
 //--------------------------------------------------------------------------------
 void Table_widget::dragEnterEvent(QDragEnterEvent *event)

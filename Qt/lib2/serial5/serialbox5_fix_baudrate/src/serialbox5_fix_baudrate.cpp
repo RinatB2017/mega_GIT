@@ -140,7 +140,9 @@ void SerialBox5_fix_baudrate::init(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::createWidgets(void)
 {
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     ui->gridLayout->setMargin(0);
+#endif
     ui->gridLayout->setSpacing(0);
 
     ui->btn_refresh->setProperty(NO_BLOCK, true);
@@ -163,7 +165,9 @@ void SerialBox5_fix_baudrate::add_frame_text(QFrame *parent,
                                              const QString &text)
 {
     QHBoxLayout *hbox = new QHBoxLayout();
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     hbox->setMargin(0);
+#endif
     hbox->setSpacing(0);
     QLabel *label = new QLabel(text);
     label->setAlignment(Qt::AlignHCenter);

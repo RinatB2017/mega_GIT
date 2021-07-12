@@ -119,7 +119,10 @@ unix:!macx {
 #
 greaterThan(QT_MAJOR_VERSION, 5) {
     QT += core5compat
+win32 {
     QMAKE_CXXFLAGS += /std:c++17
+    QMAKE_CXXFLAGS += /Zc:__cplusplus
+}
     message(Qt6 = $$QT)
 }
 ###############################################################################

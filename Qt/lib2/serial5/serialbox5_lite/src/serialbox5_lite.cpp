@@ -107,7 +107,9 @@ void SerialBox5_lite::init(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::createWidgets(void)
 {
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     ui->gridLayout->setMargin(0);
+#endif
     ui->gridLayout->setSpacing(0);
 
     ui->PortBox->setProperty(NO_BLOCK, true);
@@ -134,7 +136,9 @@ void SerialBox5_lite::add_frame_text(QFrame *parent,
                                      const QString &text)
 {
     QHBoxLayout *hbox = new QHBoxLayout();
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     hbox->setMargin(0);
+#endif
     hbox->setSpacing(0);
     QLabel *label = new QLabel(text);
     label->setAlignment(Qt::AlignHCenter);

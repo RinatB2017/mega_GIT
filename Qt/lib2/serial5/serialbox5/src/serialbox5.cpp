@@ -115,7 +115,9 @@ void SerialBox5::createWidgets(void)
     ui->captionBox->setFont(font);
     ui->captionBox->setText(caption);
 
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     ui->gridLayout->setMargin(0);
+#endif
     ui->gridLayout->setSpacing(0);
 }
 //--------------------------------------------------------------------------------
@@ -124,7 +126,9 @@ void SerialBox5::add_frame_text(QFrame *parent,
                                 const QString &text)
 {
     QHBoxLayout *hbox = new QHBoxLayout();
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     hbox->setMargin(0);
+#endif
     hbox->setSpacing(0);
     QLabel *label = new QLabel(text);
     label->setAlignment(Qt::AlignHCenter);

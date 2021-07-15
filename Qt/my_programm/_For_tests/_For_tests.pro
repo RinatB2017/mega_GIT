@@ -7,7 +7,8 @@ TARGET   = _For_tests
 
 include (conf/conf.pri)
 
-CONFIG += c++14
+CONFIG  += c++14
+QT      += multimedia
 
 PROGRAMM_PATH  += \
     $$PWD/src

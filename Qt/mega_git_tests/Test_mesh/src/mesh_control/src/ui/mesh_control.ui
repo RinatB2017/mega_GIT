@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>Mesh_control</class>
  <widget class="QWidget" name="Mesh_control">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>400</width>
-    <height>300</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -52,7 +44,14 @@
     </layout>
    </item>
    <item>
-    <widget class="LogBox" name="widget_log" native="true"/>
+    <widget class="LogBox" name="widget_log" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

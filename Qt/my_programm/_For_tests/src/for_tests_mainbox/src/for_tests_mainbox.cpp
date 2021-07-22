@@ -280,6 +280,42 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QString filename = "symbols.txt";
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        emit error(QString("File %1 not open").arg(filename));
+        return false;
+    }
+
+    QStringList sl;
+
+    int cnt = 0;
+    while (!file.atEnd()) {
+        QByteArray line = file.readLine();
+        sl.append(line);
+        cnt++;
+    }
+    emit info(QString("Read %1 lines").arg(cnt));
+
+    sl.sort();
+
+    QFile file2("result.txt");
+    if (!file2.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        emit error(QString("File %1 not open").arg(filename));
+        return false;
+    }
+    foreach (QString line, sl)
+    {
+        //file2.write(QString("%1\n").arg(line).toLatin1());
+        file2.write(line.toLatin1());
+    }
+    file2.close();
+    emit info("OK");
+#endif
+
+#if 0
     QByteArray ba = QByteArray::fromBase64("/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAIAAgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCt9kH9m8svm534yOmKKKKiMmymj//Z");
 
     QPixmap *pixmap = new QPixmap();

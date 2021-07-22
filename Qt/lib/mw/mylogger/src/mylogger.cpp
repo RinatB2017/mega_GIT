@@ -28,11 +28,11 @@ void myMessageOutput(QtMsgType type,
 {
     switch (type)
     {
-    case QtDebugMsg:    logger->sender_debug(QString("QtDebugMsg: %1").arg(msg));       break;
-    case QtInfoMsg:     logger->sender_info(QString("QtInfoMsg: %1").arg(msg));         break;
-    case QtWarningMsg:  logger->sender_warning(QString("QtWarningMsg: %1").arg(msg));   break;
-    case QtCriticalMsg: logger->sender_critical(QString("QtCriticalMsg: %1").arg(msg)); break;
-    case QtFatalMsg:    logger->sender_fatal(QString("QtFatalMsg: %1").arg(msg));       break;
+    case QtDebugMsg:    if(logger) logger->sender_debug(QString("QtDebugMsg: %1").arg(msg));       break;
+    case QtInfoMsg:     if(logger) logger->sender_info(QString("QtInfoMsg: %1").arg(msg));         break;
+    case QtWarningMsg:  if(logger) logger->sender_warning(QString("QtWarningMsg: %1").arg(msg));   break;
+    case QtCriticalMsg: if(logger) logger->sender_critical(QString("QtCriticalMsg: %1").arg(msg)); break;
+    case QtFatalMsg:    if(logger) logger->sender_fatal(QString("QtFatalMsg: %1").arg(msg));       break;
     }
     Q_UNUSED(context);
 }

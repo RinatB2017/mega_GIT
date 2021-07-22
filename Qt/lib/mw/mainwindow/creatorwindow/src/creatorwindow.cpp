@@ -59,6 +59,10 @@ CreatorWindow::~CreatorWindow()
 #ifdef LOGGER_ON
     if(logger)
     {
+        QObject::disconnect(logger,    &MyLogger::info,    this,   &CreatorWindow::info);
+        QObject::disconnect(logger,    &MyLogger::debug,   this,   &CreatorWindow::debug);
+        QObject::disconnect(logger,    &MyLogger::error,   this,   &CreatorWindow::error);
+        QObject::disconnect(logger,    &MyLogger::trace,   this,   &CreatorWindow::trace);
         delete logger;
     }
 #endif

@@ -722,7 +722,7 @@ void GrapherBox::clear_d_picker(void)
 {
     if(d_picker)
     {
-        d_picker->deleteLater();
+        delete d_picker;
     }
 }
 //--------------------------------------------------------------------------------
@@ -1321,7 +1321,6 @@ void GrapherBox::save_curves(void)
         QStringList files = dlg->selectedFiles();
         QString filename = files.at(0);
         f_save_curves(filename);
-        dlg->deleteLater();
     }
 }
 //--------------------------------------------------------------------------------

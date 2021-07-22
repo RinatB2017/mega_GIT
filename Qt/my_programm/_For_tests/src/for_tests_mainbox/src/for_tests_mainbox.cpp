@@ -271,15 +271,11 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-#include <QImageWriter>
-#include <QPicture>
-#include <QImage>
-
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
     QString filename = "symbols.txt";
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))

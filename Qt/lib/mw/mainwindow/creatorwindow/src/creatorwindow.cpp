@@ -20,6 +20,10 @@
 **********************************************************************************/
 #include "creatorwindow.hpp"
 //--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
 #include "mylogger.hpp"
 MyLogger *logger = nullptr;
 //--------------------------------------------------------------------------------
@@ -38,6 +42,8 @@ CreatorWindow::CreatorWindow(QMainWindow *parent)
 //--------------------------------------------------------------------------------
 CreatorWindow::~CreatorWindow()
 {
+    qInstallMessageHandler(0);
+
 #ifdef QT_DEBUG
     qDebug() << "~CreatorWindow()";
 #endif
@@ -266,10 +272,13 @@ void CreatorWindow::init(void)
     logger = new MyLogger();
 #endif
     qInstallMessageHandler(myMessageOutput);
-    QObject::connect(logger,    &MyLogger::info,    this,   &CreatorWindow::info);
-    QObject::connect(logger,    &MyLogger::debug,   this,   &CreatorWindow::debug);
-    QObject::connect(logger,    &MyLogger::error,   this,   &CreatorWindow::error);
-    QObject::connect(logger,    &MyLogger::trace,   this,   &CreatorWindow::trace);
+    if(logger)
+    {
+        QObject::connect(logger,    &MyLogger::info,    this,   &CreatorWindow::info);
+        QObject::connect(logger,    &MyLogger::debug,   this,   &CreatorWindow::debug);
+        QObject::connect(logger,    &MyLogger::error,   this,   &CreatorWindow::error);
+        QObject::connect(logger,    &MyLogger::trace,   this,   &CreatorWindow::trace);
+    }
 #endif
 
     //TODO не стоит именно здесь взводить эти аттрибуты, лучше в mywidget

@@ -201,7 +201,7 @@ protected:
 #ifdef BLOCK_WHEEL
     bool eventFilter(QObject*, QEvent* event);
 #endif
-    void closeEvent(QCloseEvent *);
+    virtual void closeEvent(QCloseEvent *);
 };
 //--------------------------------------------------------------------------------
 #endif

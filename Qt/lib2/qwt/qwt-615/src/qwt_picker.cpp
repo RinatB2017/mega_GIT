@@ -1532,8 +1532,8 @@ void QwtPicker::updateDisplay()
             if ( !rw.isNull() )
             {
                 rw->hide();
-                rw->deleteLater();
-                rw = NULL;
+                delete rw;
+                rw = nullptr;
             }
         }
         else
@@ -1563,8 +1563,8 @@ void QwtPicker::updateDisplay()
             if ( !tw.isNull() )
             {
                 tw->hide();
-                tw->deleteLater();
-                tw = NULL;
+                delete tw;
+                tw = nullptr;
             }
         }
         else

@@ -24,10 +24,6 @@
 #include <QStyleFactory>
 #include <QMenu>
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
 #include "creatorwindow.hpp"
 //--------------------------------------------------------------------------------
 class CreatorToolBars : public CreatorWindow

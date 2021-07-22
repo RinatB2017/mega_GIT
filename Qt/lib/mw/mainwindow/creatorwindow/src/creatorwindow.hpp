@@ -36,10 +36,6 @@
 #include <QMenuBar>
 #include <QMenu>
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
 #include "dock_position.hpp"
 #include "helpbrowser.hpp"
 #include "aboutbox.hpp"
@@ -321,7 +317,7 @@ protected:
     QList<TRANSLATOR> l_translators;
 
     void changeEvent(QEvent *event);
-    void closeEvent(QCloseEvent *event);
+    virtual void closeEvent(QCloseEvent *event);
 #ifdef SHOW_SIZE
     void resizeEvent (QResizeEvent * event);
 #endif

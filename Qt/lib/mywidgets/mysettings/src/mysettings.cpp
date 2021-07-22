@@ -19,6 +19,10 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include <QtGlobal>
+//--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
 
 #ifdef Q_OS_LINUX
 #   include </usr/include/linux/stddef.h>

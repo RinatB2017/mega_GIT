@@ -29,40 +29,6 @@
 #include "myfiledialog.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class C
-{
-public:
-    C() {
-        qDebug() << "C";
-    }
-    virtual ~C()
-    {
-        qDebug() << "destroy C";
-    }
-};
-class B : public C
-{
-public:
-    B() {
-        qDebug() << "B";
-    }
-    virtual ~B()
-    {
-        qDebug() << "destroy B";
-    }
-};
-class A : public B
-{
-public:
-    A() {
-        qDebug() << "A";
-    }
-    virtual ~A()
-    {
-        qDebug() << "destroy A";
-    }
-};
-//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }

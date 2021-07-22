@@ -57,19 +57,6 @@ SysLog::SysLog(const QString &title,
 
     ui->table->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-    //---
-//    ui->btn_first->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSkipBackward));
-//    ui->btn_prev->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekBackward));
-//    ui->btn_next->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSeekForward));
-//    ui->btn_last->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaSkipForward));
-
-//    connect(ui->btn_first,  &QToolButton::clicked,  this,   &SysLog::seek_first);
-//    connect(ui->btn_prev,   &QToolButton::clicked,  this,   &SysLog::seek_prev);
-//    connect(ui->btn_next,   &QToolButton::clicked,  this,   &SysLog::seek_next);
-//    connect(ui->btn_last,   &QToolButton::clicked,  this,   &SysLog::seek_last);
-
-//    connect(btn_test,   SIGNAL(clicked(bool)),  this,   SLOT(test()));
-
     if(topLevelWidget())
     {
         connect(topLevelWidget(),   SIGNAL(info(QString)),  this,   SLOT(syslog_info(QString)));
@@ -77,16 +64,6 @@ SysLog::SysLog(const QString &title,
         connect(topLevelWidget(),   SIGNAL(error(QString)), this,   SLOT(syslog_error(QString)));
         connect(topLevelWidget(),   SIGNAL(trace(QString)), this,   SLOT(syslog_trace(QString)));
     }
-
-    //---
-#ifndef QT_DEBUG
-//    ui->btn_first->setEnabled(false);
-//    ui->btn_prev->setEnabled(false);
-//    ui->btn_next->setEnabled(false);
-//    ui->btn_last->setEnabled(false);
-//    btn_test->setEnabled(false);
-#endif
-    //---
 }
 //--------------------------------------------------------------------------------
 SysLog::~SysLog()

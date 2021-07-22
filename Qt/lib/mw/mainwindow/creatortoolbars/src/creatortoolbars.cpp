@@ -23,10 +23,6 @@
 #include "mywidget.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
 CreatorToolBars::CreatorToolBars(CreatorWindow *parent) :
     CreatorWindow(parent)
 {

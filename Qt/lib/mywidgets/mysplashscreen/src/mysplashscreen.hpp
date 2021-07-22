@@ -32,10 +32,6 @@
 #include <QColor>
 #include <QLabel>
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
 class MySplashScreen : public QSplashScreen
 {
     Q_OBJECT

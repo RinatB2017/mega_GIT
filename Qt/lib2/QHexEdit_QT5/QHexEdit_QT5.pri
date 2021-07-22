@@ -36,5 +36,7 @@ OTHER_FILES += \
     README.md
 
 greaterThan(QT_MAJOR_VERSION, 4) {
-    QMAKE_CXXFLAGS += -std=c++11
+    unix {
+        QMAKE_CXXFLAGS += -std=c++11
+    }
 }

@@ -408,7 +408,7 @@ void QwtLegend::updateLegend( const QVariant &itemInfo,
             // itself. So we better don't delete it here.
 
             w->hide();
-            w->deleteLater();
+            delete w;
         }
 
 #if QT_VERSION >= 0x040700

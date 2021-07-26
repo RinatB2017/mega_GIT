@@ -271,9 +271,16 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
+#include "analog_clock.hpp"
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 1
+    Analog_clock *clock = new Analog_clock();
+    clock->show();
+#endif
 
 #if 0
     QString filename = "symbols.txt";

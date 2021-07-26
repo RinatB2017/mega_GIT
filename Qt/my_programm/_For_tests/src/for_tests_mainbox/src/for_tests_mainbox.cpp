@@ -114,7 +114,6 @@ void MainBox::createTestBar(void)
     commands.clear(); int id = 0;
     commands.append({ id++, "test",                 &MainBox::test });
     commands.append({ id++, "test2",                &MainBox::test2 });
-    commands.append({ id++, "load QSS",             &MainBox::load_qss });
     commands.append({ id++, "Theme (Windows).css",  &MainBox::set_theme_windows });
     commands.append({ id++, "Norton Commander.qss", &MainBox::set_norton_commander });
     commands.append({ id++, "styles.qss",           &MainBox::set_styles });
@@ -191,52 +190,6 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::print_mp(QWidget *widget)
-{
-    emit error(QString("objectName %1").arg(widget->objectName()));
-
-    const QMetaObject* metaObject = widget->metaObject();
-    emit info(QString("propertyCount  = %1").arg(metaObject->propertyCount()));
-    emit info(QString("propertyOffset = %1").arg(metaObject->propertyOffset()));
-    emit error("---");
-    for(int i = metaObject->propertyOffset(); i < metaObject->propertyCount(); ++i)
-    {
-        emit error(QString("%1").arg(QString::fromLatin1(metaObject->property(i).name())));
-    }
-    emit error("---");
-    emit info(QString("methodCount    = %1").arg(metaObject->methodCount()));
-    emit info(QString("methodOffset   = %1").arg(metaObject->methodOffset()));
-    emit error("---");
-    for(int i = metaObject->methodOffset(); i < metaObject->methodCount(); ++i)
-    {
-        emit error(QString("%1").arg(QString::fromLatin1(metaObject->method(i).methodSignature())));
-    }
-    emit error("---");
-}
-//--------------------------------------------------------------------------------
-bool MainBox::load_qss(void)
-{
-    emit trace(Q_FUNC_INFO);
-
-    MyFileDialog *dlg = new MyFileDialog("qss_file", "qss_file");
-    dlg->setNameFilter("QSS files (*.qss)");
-    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
-    dlg->setDirectory(".");
-    if(dlg->exec())
-    {
-        QStringList files = dlg->selectedFiles();
-
-        QFile file(files.at(0));
-        file.open(QFile::ReadOnly);
-        QString styleSheet = QLatin1String(file.readAll());
-        file.close();
-        qApp->setStyleSheet(styleSheet);
-    }
-    dlg->deleteLater();
-
-    return true;
-}
-//--------------------------------------------------------------------------------
 template<typename T1, typename T2>
 void MainBox::test_template(void)
 {
@@ -271,16 +224,9 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-#include "analog_clock.hpp"
-
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
-
-#if 1
-    Analog_clock *clock = new Analog_clock();
-    clock->show();
-#endif
 
 #if 0
     QString filename = "symbols.txt";
@@ -364,21 +310,6 @@ bool MainBox::test2(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test2");
     return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::f1(int value)
-{
-    return (value > 0);
-}
-//--------------------------------------------------------------------------------
-bool MainBox::f2(int value)
-{
-    return (value > 0);
-}
-//--------------------------------------------------------------------------------
-bool MainBox::f3(int value)
-{
-    return (value > 0);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)

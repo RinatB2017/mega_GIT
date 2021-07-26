@@ -86,33 +86,3 @@ void Test::test_signals(void)
     });
 }
 //--------------------------------------------------------------------------------
-void Test::check_f1(void)
-{
-    QVERIFY(mw);
-    QVERIFY(mb);
-
-    QCOMPARE(mb->f1(-1), false);
-    QCOMPARE(mb->f1(0),  false);
-    QCOMPARE(mb->f1(1),  true);
-}
-//--------------------------------------------------------------------------------
-void Test::check_f2(void)
-{
-    QVERIFY(mw);
-    QVERIFY(mb);
-
-    QCOMPARE(mb->f2(-1), false);
-    QCOMPARE(mb->f2(0),  false);
-    QCOMPARE(mb->f2(1),  true);
-}
-//--------------------------------------------------------------------------------
-void Test::check_f3(void)
-{
-    QVERIFY(mw);
-    QVERIFY(mb);
-
-    QCOMPARE(mb->f3(-1), false);
-    QCOMPARE(mb->f3(0),  false);
-    QCOMPARE(mb->f3(1),  true);
-}
-//--------------------------------------------------------------------------------

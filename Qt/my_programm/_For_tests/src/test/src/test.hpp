@@ -38,10 +38,6 @@ private slots:
     void test_GUI(void);
     void test_signals(void);
 
-    void check_f1(void);
-    void check_f2(void);
-    void check_f3(void);
-
 private:
     MainWindow *mw = nullptr;
     MainBox    *mb = nullptr;

@@ -42,7 +42,6 @@ private:
     Ui::MainBox_GUI *ui;
 
     void init(void);
-
     void updateText(void);
 };
 //--------------------------------------------------------------------------------

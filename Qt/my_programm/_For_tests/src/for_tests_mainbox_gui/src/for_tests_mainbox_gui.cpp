@@ -49,10 +49,12 @@ void MainBox_GUI::init(void)
 #ifndef NO_MENU
             mw->add_mdi_sorting();
 #endif
+#ifdef TEST_DOCK
             mw->add_dock_widget("test_dock",
                                 "test_dock",
                                 Qt::BottomDockWidgetArea,
                                 ui->test_frame);
+#endif
         }
         load_widgets();
     });

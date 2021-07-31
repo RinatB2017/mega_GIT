@@ -4,6 +4,10 @@
 #include <execinfo.h>
 #include <signal.h>
 //--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
 QString get_signame(int signum)
 {
     QString temp;

@@ -30,7 +30,7 @@ class FieldEditor : public QDialog, public Ui::FieldEditor
     Q_OBJECT
 
 public:
-    FieldEditor(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    FieldEditor(QWidget* parent = nullptr);
     ~FieldEditor();
 
 public slots:

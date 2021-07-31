@@ -156,7 +156,7 @@ void MainBox::create_engine(void)
 
     m_engine->setProgram("gnuchess");
     m_engine->start();
-    m_pid = m_engine->pid();
+    m_pid = m_engine->processId();  //pid();
 
 #if 1
     //TODO

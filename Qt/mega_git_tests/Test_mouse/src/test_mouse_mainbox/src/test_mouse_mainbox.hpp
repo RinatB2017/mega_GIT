@@ -23,8 +23,12 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#   include <QDebug>
+#endif
+//--------------------------------------------------------------------------------
 namespace Ui {
-class MainBox;
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -34,18 +38,13 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     virtual ~MainBox();
 
 private slots:
     void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
+    bool test(void);
 
     void click(void);
 
@@ -61,7 +60,7 @@ private:
     Ui::MainBox *ui;
 
     QPointer<QComboBox> cb_test;
-    QCheckBox *cb_block;
+    QPointer<QCheckBox> cb_block;
     QList<CMD> commands;
 
     void mouse_click(unsigned int button, QPoint pos);

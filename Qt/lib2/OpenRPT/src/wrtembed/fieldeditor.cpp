@@ -26,8 +26,8 @@
 
 #include <builtinformatfunctions.h>
 
-FieldEditor::FieldEditor(QWidget* parent, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+FieldEditor::FieldEditor(QWidget* parent)
+    : QDialog(parent)
 {
     setupUi(this);
 

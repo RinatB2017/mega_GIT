@@ -224,9 +224,16 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
+#include "om_widget.hpp"
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 1
+    OM_widget *w = new OM_widget();
+    w->show();
+#endif
 
 #if 0
     QString filename = "symbols.txt";

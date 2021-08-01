@@ -23,7 +23,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>5</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="icon">
@@ -169,37 +169,6 @@
            <widget class="MDI_widget" name="mdi_widget" native="true"/>
           </item>
          </layout>
-        </widget>
-        <widget class="QWidget" name="tab_6">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <attribute name="icon">
-          <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
-           <normaloff>:/red/6.png</normaloff>:/red/6.png</iconset>
-         </attribute>
-         <attribute name="title">
-          <string>Tab 6</string>
-         </attribute>
-         <widget class="QLabel" name="label">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>10</y>
-            <width>441</width>
-            <height>181</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="pixmap">
-           <pixmap>../../../../images/kisspng-om-symbol-clip-art-5ada.png</pixmap>
-          </property>
-         </widget>
         </widget>
        </widget>
       </item>

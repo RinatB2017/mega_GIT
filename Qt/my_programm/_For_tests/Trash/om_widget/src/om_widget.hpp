@@ -18,36 +18,33 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "om_widget.hpp"
+#ifndef OM_WIDGET_HPP
+#define OM_WIDGET_HPP
 //--------------------------------------------------------------------------------
-OM_widget::OM_widget(QWidget *parent) :
-    QWidget(parent)
-{
-    init();
+#include <QPaintEvent>
+#include <QPainter>
+#include <QWidget>
+//--------------------------------------------------------------------------------
+namespace Ui {
+    class OM_widget;
 }
 //--------------------------------------------------------------------------------
-OM_widget::~OM_widget()
+class OM_widget : public QWidget
 {
+    Q_OBJECT
 
-}
+public:
+    explicit OM_widget(QWidget *parent = nullptr);
+    virtual ~OM_widget();
+
+private:
+    Ui::OM_widget *ui;
+
+    void init(void);
+
+protected:
+    void paintEvent(QPaintEvent *);
+
+};
 //--------------------------------------------------------------------------------
-void OM_widget::init(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void OM_widget::paintEvent(QPaintEvent *)
-{
-    QPainter painter;
-
-    painter.begin(this);
-    //painter.setPen(Qt::red);
-    //painter.drawLine(0, 0, 200, 200);
-
-    //painter.drawPixmap(QPointF(0, 0), QPixmap(":/om/kisspng-om-symbol-clip-art-5ada.png"));
-    //painter.drawPixmap(0, 0, width(), height(), QPixmap(":/om/kisspng-om-symbol-clip-art-5ada.png"));
-    painter.drawPixmap(0, 0, QPixmap(":/om/kisspng-om-symbol-clip-art-5ada.png").scaled(width(), height(), Qt::KeepAspectRatio));
-
-    painter.end();
-}
-//--------------------------------------------------------------------------------
+#endif // OM_WIDGET_HPP

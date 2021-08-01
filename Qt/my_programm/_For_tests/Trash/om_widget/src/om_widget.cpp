@@ -19,21 +19,23 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include "om_widget.hpp"
+#include "ui_om_widget.h"
 //--------------------------------------------------------------------------------
 OM_widget::OM_widget(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    ui(new Ui::OM_widget)
 {
     init();
 }
 //--------------------------------------------------------------------------------
 OM_widget::~OM_widget()
 {
-
+    delete ui;
 }
 //--------------------------------------------------------------------------------
 void OM_widget::init(void)
 {
-
+    ui->setupUi(this);
 }
 //--------------------------------------------------------------------------------
 void OM_widget::paintEvent(QPaintEvent *)

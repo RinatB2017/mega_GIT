@@ -25,10 +25,6 @@
 #include <QPainter>
 #include <QWidget>
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class OM_widget;
-}
-//--------------------------------------------------------------------------------
 class OM_widget : public QWidget
 {
     Q_OBJECT
@@ -38,13 +34,10 @@ public:
     virtual ~OM_widget();
 
 private:
-    Ui::OM_widget *ui;
-
     void init(void);
 
 protected:
     void paintEvent(QPaintEvent *);
-
 };
 //--------------------------------------------------------------------------------
 #endif // OM_WIDGET_HPP

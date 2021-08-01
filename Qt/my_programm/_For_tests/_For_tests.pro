@@ -26,7 +26,6 @@ RESOURCES += \
     $$PWD/ico/icons.qrc \
     $$PWD/themes/themes_css/themes_css.qrc \
     $$PWD/themes/themes_qss/themes_qss.qrc \
-    $$PWD/images/om.qrc
 
 #можно поставить новое logo
 #RESOURCES += about/about.qrc

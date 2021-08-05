@@ -231,6 +231,17 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QString text = "тест";
+    const char *temp  = text.toStdString().c_str();
+    const char *temp2 = text.toLocal8Bit().constData();
+    const char *temp3 = text.toLatin1().constData();
+    const char *temp4 = text.toUtf8().constData();
+    const char *temp5 = text.toLocal8Bit().data();
+
+    qDebug() << temp << temp2 << temp3 << temp4;
+#endif
+
+#if 0
     OM_widget *w = new OM_widget();
     w->show();
 #endif

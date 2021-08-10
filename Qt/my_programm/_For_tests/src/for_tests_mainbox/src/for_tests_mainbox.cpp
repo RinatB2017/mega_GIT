@@ -231,6 +231,28 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QList<int> a_temp;
+    for(int n=0; n<10; n++)
+    {
+        a_temp.append(n);
+    }
+
+    int x = 5;
+    auto res = std::find_if(
+                std::begin(a_temp),
+                std::end(a_temp),
+                [x](int v) { return v == x;  } );
+    if(res != std::end(a_temp))
+    {
+        emit info("Found");
+    }
+    else
+    {
+        emit error("Not found!");
+    }
+#endif
+
+#if 0
     qDebug() << "qdebug";
     qInfo() << "qinfo";
     qWarning() << "qwarning";

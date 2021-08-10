@@ -230,7 +230,7 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
     QString text = "тест";
     const char *temp  = text.toStdString().c_str();
     const char *temp2 = text.toLocal8Bit().constData();
@@ -238,7 +238,7 @@ bool MainBox::test(void)
     const char *temp4 = text.toUtf8().constData();
     const char *temp5 = text.toLocal8Bit().data();
 
-    qDebug() << temp << temp2 << temp3 << temp4;
+    qDebug() << temp << temp2 << temp3 << temp4 << temp5;
 #endif
 
 #if 0

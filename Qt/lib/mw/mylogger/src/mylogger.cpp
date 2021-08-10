@@ -43,21 +43,29 @@ void myMessageOutput(QtMsgType type,
         if(logger) logger->sender_debug(msg);
 #endif
         break;
+
     case QtInfoMsg:
-#ifndef NO_LOG_QDEBUG
+#ifndef NO_LOG_QINFO
         if(logger) logger->sender_info(msg);
 #endif
         break;
+
     case QtWarningMsg:
-#ifndef NO_LOG_QDEBUG
+#ifndef NO_LOG_QTRACE
         if(logger) logger->sender_warning(msg);
 #endif
         break;
+
     case QtCriticalMsg:
+#ifndef NO_LOG_QTRACE
         if(logger) logger->sender_critical(msg);
         break;
+#endif
+
     case QtFatalMsg:
+#ifndef NO_LOG_QTRACE
         if(logger) logger->sender_fatal(msg);
+#endif
         break;
     }
 #endif

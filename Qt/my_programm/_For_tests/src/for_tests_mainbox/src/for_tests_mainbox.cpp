@@ -230,6 +230,13 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    qDebug() << "qdebug";
+    qInfo() << "qinfo";
+    qWarning() << "qwarning";
+    qCritical() << "qcritical";
+#endif
+
 #if 0
     QString text = "тест";
     const char *temp  = text.toStdString().c_str();

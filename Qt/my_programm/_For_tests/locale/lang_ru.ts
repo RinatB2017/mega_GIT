@@ -301,4 +301,16 @@
     </message>
 </context>
 
+<context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Exit the program</source>
+        <translation>Выход из программы</translation>
+    </message>
+    <message>
+        <source>Exit the program?</source>
+        <translation>Выйти из программы?</translation>
+    </message>
+</context>
+
 </TS>

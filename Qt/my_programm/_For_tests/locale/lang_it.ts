@@ -281,4 +281,16 @@
     </message>
 </context>
 
+<context>
+    <name>QMessageBox</name>
+    <message>
+        <source>Exit the program</source>
+        <translation>Uscita dal programma</translation>
+    </message>
+    <message>
+        <source>Exit the program?</source>
+        <translation>Uscire dal programma?</translation>
+    </message>
+</context>
+
 </TS>

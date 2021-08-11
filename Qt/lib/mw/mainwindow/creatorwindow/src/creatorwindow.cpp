@@ -1086,7 +1086,6 @@ void CreatorWindow::set_log_font(void)
 void CreatorWindow::set_system_palette(void)
 {
     state_theme = SYSTEM_THEME;
-
     qApp->setPalette(style()->standardPalette());
 }
 //--------------------------------------------------------------------------------
@@ -1233,7 +1232,6 @@ bool CreatorWindow::add_new_action(QMenu   *parent,
 #endif
 
     //parent->addAction(action);
-
     return action;
 }
 //--------------------------------------------------------------------------------

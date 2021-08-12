@@ -177,8 +177,8 @@ void CreatorWindow::closeEvent(QCloseEvent *event)
 
     QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::Question);
-    msgBox.setWindowTitle(tr("Exit the program"));
-    msgBox.setText(tr("Exit the program?"));
+    msgBox.setWindowTitle(QObject::tr("Exit the program"));
+    msgBox.setText(QObject::tr("Exit the program?"));
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     msgBox.setDefaultButton(QMessageBox::Yes);
     int btn = msgBox.exec();

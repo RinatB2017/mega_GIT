@@ -94,7 +94,7 @@
 #define P_WINDOW_STATE "windowState"
 #define P_GEOMETRY     "geometry"
 
-#define P_MAIN    "Main"
+#define P_MAIN    "main"
 
 #define P_FLAG_READ_ONLY          "flag_ReadOnly"
 #define P_FLAG_ACCEPT_RICH_TEXT   "flag_AcceptRichText"

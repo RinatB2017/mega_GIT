@@ -7,4 +7,4 @@ include (candlestick_box_adv/candlestick_box_adv.pri)
 include (candlestickdatareader/candlestickdatareader.pri)
 #include (myqchartview/myqchartview.pri)
 
-include ($$LIB_PATH2/icons/digits.pri)
+#include ($$LIB_PATH2/icons/digits.pri)

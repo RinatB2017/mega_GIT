@@ -230,7 +230,16 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
+    QString s_dt = "2020.09.22 06:00";
+    QDateTime dt = QDateTime::fromString(s_dt, "yyyy.MM.dd hh:mm");
+    if(dt.isValid())
+        emit info(QString("dt: [%1]").arg(dt.toString()));
+    else
+        emit error("dt invalid");
+#endif
+
+#if 0
     QList<int> a_temp;
     for(int n=0; n<10; n++)
     {

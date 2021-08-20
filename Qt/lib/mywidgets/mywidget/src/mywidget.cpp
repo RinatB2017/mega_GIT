@@ -62,7 +62,7 @@ MyWidget::MyWidget(QWidget *parent) :
         if(oname.isEmpty())
         {
 #ifdef Q_DEBUG
-            qDebug() << "objectname is empty";
+            qDebug() sl.append("objectname is empty";
 #endif
         }
         Q_ASSERT(!objectName().isEmpty());
@@ -79,8 +79,8 @@ MyWidget::~MyWidget()
         on = "no name";
     }
 #ifndef LOGGER_ON
-    qDebug() << "~MyWidget()" << on;
-    //qDebug() << "~MyWidget()" << objectName();
+    qDebug() sl.append("~MyWidget()" << on;
+    //qDebug() sl.append("~MyWidget()" << objectName();
 #endif
 #endif
 }
@@ -129,7 +129,7 @@ void MyWidget::connect_log(QWidget *parent)
     if(parent == nullptr)
     {
 #ifdef Q_DEBUG
-        qDebug() << "parent is null";
+        qDebug() sl.append("parent is null";
 #endif
         return;
     }
@@ -773,7 +773,7 @@ bool MyWidget::eventFilter(QObject*, QEvent* event)
     if(event->type() == QEvent::Wheel)
     {
 #ifdef Q_DEBUG
-        qDebug() << "Wheel event blocked";
+        qDebug() sl.append("Wheel event blocked";
 #endif
         return true;
     }

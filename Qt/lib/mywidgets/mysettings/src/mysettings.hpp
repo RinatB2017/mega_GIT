@@ -29,6 +29,13 @@
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
+#define PARAMS_GROUP_NAME   "Params"
+#define NO_BLOCK    "no_block"
+#define NO_SAVE     "no_save"
+
+#define STATE_PROPERTY  "state"
+#define FLAG_NO_CLOSE   "flag_no_close"
+//--------------------------------------------------------------------------------
 class MySettings
 {
 public:

@@ -43,7 +43,8 @@ SysLog::SysLog(const QString &title,
 
     model = new QStandardItemModel(0, 3, this);
     model->setHeaderData(0, Qt::Horizontal, tr("syslog"));
-    model->setHorizontalHeaderLabels(QStringList() << "datetime"
+    model->setHorizontalHeaderLabels(QStringList()
+                                     << "datetime"
                                      << "level"
                                      << "src"
                                      << "message");
@@ -138,23 +139,23 @@ void SysLog::s_syslog(QDateTime dtime,
 //--------------------------------------------------------------------------------
 void SysLog::seek_first(void)
 {
-//    emit trace(Q_FUNC_INFO);
+    //    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void SysLog::seek_prev(void)
 {
-//    emit trace(Q_FUNC_INFO);
+    //    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 void SysLog::seek_next(void)
 {
-//    emit trace(Q_FUNC_INFO);
+    //    emit trace(Q_FUNC_INFO);
     ui->table->setCurrentIndex(QModelIndex());
 }
 //--------------------------------------------------------------------------------
 void SysLog::seek_last(void)
 {
-//    emit trace(Q_FUNC_INFO);
+    //    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
 QString SysLog::syslog_to_str(int level)

@@ -104,10 +104,10 @@ public slots:
     void syslogLog(QDateTime dt,
                    int level,
                    int src,
-                   QString message);
+                   const QString &message);
     void syslogLog(int level,
-                   QString src,
-                   QString message);
+                   const QString &src,
+                   const QString &message);
 
     void update_log(void);
 

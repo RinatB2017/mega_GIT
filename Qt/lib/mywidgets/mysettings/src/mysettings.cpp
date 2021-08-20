@@ -18,7 +18,9 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include <QComboBox>
 #include <QtGlobal>
+#include <QLabel>
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -29,7 +31,8 @@
 #endif
 //--------------------------------------------------------------------------------
 #include "mysettings.hpp"
-#include "mywidget.hpp"
+
+//#include "mywidget.hpp" //FIXME это из-за NO_SAVE (надо исправить)
 //--------------------------------------------------------------------------------
 MySettings::MySettings()
 {
@@ -199,7 +202,7 @@ bool MySettings::load_mdi_subwindows(QWidget *widget)
     {
         if(widget->objectName().isEmpty() == false)
         {
-            //qDebug() << "### found" << widget->objectName();
+            //qDebug() sl.append("### found" << widget->objectName();
             int x = 0;
             int y = 0;
             int w = 0;
@@ -230,7 +233,7 @@ bool MySettings::save_mdi_subwindows(QWidget *widget)
     {
         if(widget->objectName().isEmpty() == false)
         {
-            //qDebug() << "### found" << widget->objectName();
+            //qDebug() sl.append("### found" << widget->objectName();
             save_int("pos_x", widget->x());
             save_int("pos_y", widget->y());
             save_int("widget_w", widget->width());

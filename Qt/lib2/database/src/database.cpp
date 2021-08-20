@@ -95,7 +95,7 @@ bool Database::open(void)
     if(ok == false)
     {
         emit error(QString(tr("База данных %1 не открыта! Error: %2"))
-                   .arg(database_name)
+                   .arg(database_name.toLatin1().data())
                    .arg(db.lastError().text()));
         return false;
     }

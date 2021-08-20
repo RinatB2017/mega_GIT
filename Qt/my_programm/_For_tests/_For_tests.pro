@@ -7,9 +7,6 @@ TARGET   = _For_tests
 
 include (conf/conf.pri)
 
-CONFIG  += c++14
-QT      += multimedia
-
 PROGRAMM_PATH  += \
     $$PWD/src
 INCLUDEPATH += $$PROGRAMM_PATH
@@ -53,8 +50,6 @@ include ($$LIB_PATH2/icons/digits.pri)
 
 include ($$LIB_PATH/mywidgets/mylistwidget/mylistwidget.pri)
 include ($$LIB_PATH2/widgets/QLongLongSpinBox/QLongLongSpinBox.pri)
-
-include ($$LIB_PATH2/widgets/candlestick/candlestick.pri)
 
 include (src/for_tests_mainbox_gui/for_tests_mainbox_gui.pri)
 include (src/for_tests_mainbox/for_tests_mainbox.pri)

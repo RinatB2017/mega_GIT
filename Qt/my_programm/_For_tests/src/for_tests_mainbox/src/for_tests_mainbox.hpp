@@ -21,8 +21,6 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QMetaProperty>
-//--------------------------------------------------------------------------------
 #include "for_tests_mainbox_gui.hpp"
 #include "mysplashscreen.hpp"
 #include "mymainwindow.hpp"

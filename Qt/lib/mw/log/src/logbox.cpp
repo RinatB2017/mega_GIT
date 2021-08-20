@@ -516,7 +516,7 @@ QString LogBox::syslog_to_str(int level)
 void LogBox::syslogLog(QDateTime dt,
                        int level,
                        int src,
-                       QString message)
+                       const QString &message)
 {
     QString temp = QString("%1   %2   %3   %4")
             .arg(dt.toString("dd-MM-yy hh:mm:ss"))
@@ -541,8 +541,8 @@ void LogBox::syslogLog(QDateTime dt,
 }
 //--------------------------------------------------------------------------------
 void LogBox::syslogLog(int level,
-                       QString src,
-                       QString message)
+                       const QString &src,
+                       const QString &message)
 {
     QString temp = QString("%1   %2   %3   %4")
             .arg(QDateTime::currentDateTime().toString("dd-MM-yy hh:mm:ss"))

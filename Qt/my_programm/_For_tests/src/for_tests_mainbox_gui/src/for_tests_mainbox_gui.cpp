@@ -41,6 +41,10 @@ void MainBox_GUI::init(void)
 
     connect_log_signals(ui->controls_widget, this);
 
+    connect(ui->btn_show, &QPushButton::clicked, [this]() {
+                emit info(ui->calendarWidget->selectedDate().toString("yyyy.MM.dd"));
+            });
+
 #ifdef USE_DOCK_WIDGETS
     QTimer::singleShot(0, [this]{
         MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());

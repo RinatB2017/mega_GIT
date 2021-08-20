@@ -224,42 +224,9 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-#include "om_widget.hpp"
-
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
-
-#if 0
-    QString s_dt = "2020.09.22 06:00";
-    QDateTime dt = QDateTime::fromString(s_dt, "yyyy.MM.dd hh:mm");
-    if(dt.isValid())
-        emit info(QString("dt: [%1]").arg(dt.toString()));
-    else
-        emit error("dt invalid");
-#endif
-
-#if 0
-    QList<int> a_temp;
-    for(int n=0; n<10; n++)
-    {
-        a_temp.append(n);
-    }
-
-    int x = 5;
-    auto res = std::find_if(
-                std::begin(a_temp),
-                std::end(a_temp),
-                [x](int v) { return v == x;  } );
-    if(res != std::end(a_temp))
-    {
-        emit info("Found");
-    }
-    else
-    {
-        emit error("Not found!");
-    }
-#endif
 
 #if 0
     qDebug() << "qdebug";
@@ -268,77 +235,6 @@ bool MainBox::test(void)
     qCritical() << "qcritical";
 #endif
 
-#if 0
-    QString text = "тест";
-    const char *temp  = text.toStdString().c_str();
-    const char *temp2 = text.toLocal8Bit().constData();
-    const char *temp3 = text.toLatin1().constData();
-    const char *temp4 = text.toUtf8().constData();
-    const char *temp5 = text.toLocal8Bit().data();
-
-    qDebug() << temp << temp2 << temp3 << temp4 << temp5;
-#endif
-
-#if 0
-    OM_widget *w = new OM_widget();
-    w->show();
-#endif
-
-#if 0
-    QString filename = "symbols.txt";
-    QFile file(filename);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        emit error(QString("File %1 not open").arg(filename));
-        return false;
-    }
-
-    QStringList sl;
-
-    int cnt = 0;
-    while (!file.atEnd()) {
-        QByteArray line = file.readLine();
-        sl.append(line);
-        cnt++;
-    }
-    emit info(QString("Read %1 lines").arg(cnt));
-
-    sl.sort();
-
-    QFile file2("result.txt");
-    if (!file2.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        emit error(QString("File %1 not open").arg(filename));
-        return false;
-    }
-    foreach (QString line, sl)
-    {
-        //file2.write(QString("%1\n").arg(line).toLatin1());
-        file2.write(line.toLatin1());
-    }
-    file2.close();
-    emit info("OK");
-#endif
-
-#if 0
-    QByteArray ba = QByteArray::fromBase64("/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDACgcHiMeGSgjISMtKygwPGRBPDc3PHtYXUlkkYCZlo+AjIqgtObDoKrarYqMyP/L2u71////m8H////6/+b9//j/2wBDASstLTw1PHZBQXb4pYyl+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj/wAARCAAIAAgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCt9kH9m8svm534yOmKKKKiMmymj//Z");
-
-    QPixmap *pixmap = new QPixmap();
-    if(!pixmap->loadFromData(ba, "JPEG"))
-    {
-        emit error("bad pixmap");
-        return false;
-    }
-    emit info(QString("size: %1 %2")
-              .arg(pixmap->width())
-              .arg(pixmap->height()));
-
-    QLabel *lbl = new QLabel();
-    lbl->setPixmap(*pixmap);
-    lbl->show();
-
-    emit info(QString("size: %1").arg(ba.size()));
-#endif
 
 #if 0
     emit info(Q_FUNC_INFO);

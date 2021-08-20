@@ -23,7 +23,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>5</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="icon">
@@ -61,8 +61,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>98</width>
+               <height>28</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -78,8 +78,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>98</width>
+               <height>28</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -95,8 +95,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>98</width>
+               <height>28</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -167,6 +167,57 @@
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <item>
            <widget class="MDI_widget" name="mdi_widget" native="true"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_6">
+         <attribute name="icon">
+          <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+           <normaloff>:/red/6.png</normaloff>:/red/6.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Tab 6</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QCalendarWidget" name="calendarWidget"/>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_show">
+              <property name="text">
+               <string>show</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>292</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>

@@ -104,7 +104,7 @@ void MainBox::createTestBar(void)
 int MainBox::open_database(const QString &driver_name, const QString &database_name)
 {
     emit info(QString("Open driver %1, database_name %2")
-              .arg(driver_name)
+              .arg(driver_name.toLatin1().data())
               .arg(database_name));
     if(QSqlDatabase::contains(QSqlDatabase::defaultConnection))
     {

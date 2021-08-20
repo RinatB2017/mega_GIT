@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,54 +18,40 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef DATABASE_HPP
-#define DATABASE_HPP
+#ifndef SIMPLE_PROCESS_HPP
+#define SIMPLE_PROCESS_HPP
 //--------------------------------------------------------------------------------
-#include <QSqlDatabase>
-#include <QStringList>
-#include <QObject>
+#include <QPointer>
+#include <QProcess>
 //--------------------------------------------------------------------------------
-class QTableView;
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class Database : public QObject
+class Simple_process : public MyWidget
 {
     Q_OBJECT
+
 public:
-    explicit Database(const QString &driver_name,
-                      const QString &database_name,
-                      QObject *parent = nullptr);
-    virtual ~Database();
+    explicit Simple_process(QWidget *parent = nullptr);
+    ~Simple_process();
 
-    bool isValid(void);
-    QString get_lastError(void);
-    void removeDatabase(const QString &database_name);
-    bool drop_table(const QString &table_name);
-    int get_count_tables(void);
-    QSqlDatabase get_db(void);
-
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
-public slots:
-    bool open(void);
-    void close(void);
-    void view(const QString &query);
-    bool sql(const QString &query);
-    QStringList tables(void);
-    bool isOpen(void);
-    QStringList list_drivers(void);
+    void programm_start(const QString &program,
+                        const QStringList &arguments);
 
 private slots:
-    void log(const QString &text);
+    void started(void);
+    void finished(int result, QProcess::ExitStatus exitStatus);
+    void process_error(QProcess::ProcessError err);
+    void read_data(void);
 
 private:
-    QSqlDatabase db;
-    QString driver_name;
-    QString database_name;
-    QTableView *table_view = nullptr;
+    QPointer<QProcess> myProcess;
+
+    void init(void);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // DATABASE_HPP
+#endif // SIMPLE_PROCESS_HPP

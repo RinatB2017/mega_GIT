@@ -242,14 +242,14 @@ void CandleStick_Box_adv::append(QCandlestickSet *set, qreal volume)
     volume_bar->append(temp_volume+=10.0);
     volume_series->append(volume_bar);
 
-    volumes_categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString();
+    volumes_categories << QDateTime::fromSecsSinceEpoch(set->timestamp()).toString();
 #endif
     //---
 
-    qDebug() << "cnt"  << candleSeries->count();
+    qDebug() << "cnt" << candleSeries->count();
 
-    //categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString("yyyy.MM.dd");
-    categories << QDateTime::fromMSecsSinceEpoch(set->timestamp()).toString();
+    //categories << QDateTime::fromSecsSinceEpoch(set->timestamp()).toString("yyyy.MM.dd");
+    categories << QDateTime::fromSecsSinceEpoch(set->timestamp()).toString();
     volumes.append(volume);
 }
 //--------------------------------------------------------------------------------

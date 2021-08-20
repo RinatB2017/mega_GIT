@@ -860,7 +860,7 @@ void CreatorWindow::createTrayIcon(void)
 //--------------------------------------------------------------------------------
 void CreatorWindow::showHide(QSystemTrayIcon::ActivationReason r)
 {
-    //qDebug() << "### showHide ###" << r;
+    //qDebug() sl.append("### showHide ###" << r;
     if (r == QSystemTrayIcon::Trigger)
     {
         if (!this->isVisible())

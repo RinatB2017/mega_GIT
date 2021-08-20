@@ -7,3 +7,4 @@ include (file_widget/file_widget.pri)
 include (mdi_widget/mdi_widget.pri)
 include (render/render.pri)
 include (om_widget/om_widget.pri)
+

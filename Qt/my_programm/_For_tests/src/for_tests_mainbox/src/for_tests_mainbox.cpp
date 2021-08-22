@@ -45,6 +45,28 @@ void MainBox::init(void)
     // add_digital_clock(false);
     add_digital_clock();
 
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        QWidgetList lw = qApp->allWidgets();
+        foreach (QWidget *widget, lw)
+        {
+            QGroupBox *w = reinterpret_cast<QGroupBox *>(widget);
+            if(w)
+            {
+                QString o_name = w->objectName();
+                if(o_name.left(3) == "gb_")
+                {
+                    emit info(o_name);
+                    mw->add_dock_widget(o_name,
+                                        o_name,
+                                        Qt::LeftDockWidgetArea,
+                                        w);
+                }
+            }
+        }
+    }
+
 #if 1
     //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 #else
@@ -53,6 +75,8 @@ void MainBox::init(void)
         setMinimumHeight(sizeHint().height());
     }
 #endif
+
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 bool MainBox::set_theme_windows(void)
@@ -224,9 +248,35 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
+#include <QGroupBox>
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 1
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    if(mw)
+    {
+        QWidgetList lw = qApp->allWidgets();
+        foreach (QWidget *widget, lw)
+        {
+            QGroupBox *w = reinterpret_cast<QGroupBox *>(widget);
+            if(w)
+            {
+                QString o_name = w->objectName();
+                if(o_name.left(3) == "gb_")
+                {
+                    emit info(o_name);
+                    mw->add_dock_widget(o_name,
+                                        o_name,
+                                        Qt::LeftDockWidgetArea,
+                                        w);
+                }
+            }
+        }
+    }
+#endif
 
 #if 0
     qDebug() << "qdebug";

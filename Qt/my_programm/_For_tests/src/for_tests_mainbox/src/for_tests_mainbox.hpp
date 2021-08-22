@@ -23,6 +23,7 @@
 //--------------------------------------------------------------------------------
 #include "for_tests_mainbox_gui.hpp"
 #include "mysplashscreen.hpp"
+#include "creatorwindow.hpp"
 #include "mymainwindow.hpp"
 #include "myfiledialog.hpp"
 #include "mywidget.hpp"

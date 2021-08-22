@@ -23,7 +23,7 @@
 #include "mywidget.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-CreatorToolBars::CreatorToolBars(CreatorWindow *parent) :
+CreatorToolBars::CreatorToolBars(QWidget *parent) :
     CreatorWindow(parent)
 {
 #ifndef NO_TOOLBAR

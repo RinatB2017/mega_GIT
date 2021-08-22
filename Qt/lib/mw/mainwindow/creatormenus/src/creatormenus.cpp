@@ -23,7 +23,7 @@
 #include "mywidget.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-CreatorMenus::CreatorMenus(CreatorToolBars *parent) :
+CreatorMenus::CreatorMenus(QWidget *parent) :
     CreatorToolBars(parent)
 {
 #ifndef NO_MENU

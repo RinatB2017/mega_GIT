@@ -31,7 +31,7 @@ class CreatorToolBars : public CreatorWindow
     Q_OBJECT
 
 public:
-    explicit CreatorToolBars(CreatorWindow *parent);
+    explicit CreatorToolBars(QWidget *parent);
     virtual ~CreatorToolBars();
 
 private:

@@ -125,7 +125,7 @@ class CreatorWindow : public QMainWindow, public MySettings
     Q_OBJECT
 
 public:
-    explicit CreatorWindow(QMainWindow* parent);
+    explicit CreatorWindow(QWidget *parent);
     virtual ~CreatorWindow();
 
     void setCentralWidget(MyWidget *widget);
@@ -148,6 +148,9 @@ public:
                          Qt::DockWidgetArea area,
                          QWidget *widget,
                          bool no_dock_position = false);
+
+    //template<typename T>
+    void find_and_add_widget_to_dock(const QString &left_oname);
 
     void load_setting(void);
     void save_setting(void);

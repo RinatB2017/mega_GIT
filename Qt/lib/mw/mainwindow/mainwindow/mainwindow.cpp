@@ -20,7 +20,7 @@
 **********************************************************************************/
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
-MainWindow::MainWindow(CreatorMenus *parent) :
+MainWindow::MainWindow(QWidget *parent) :
     CreatorMenus(parent)
 {
 

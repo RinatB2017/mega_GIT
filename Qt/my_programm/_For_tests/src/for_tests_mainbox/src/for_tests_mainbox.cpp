@@ -18,9 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <algorithm>    // std::find_if
-#include <vector>       // std::vector
-
 #include "for_tests_mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
@@ -37,6 +34,8 @@ MainBox::~MainBox()
     save_widgets();
 }
 //--------------------------------------------------------------------------------
+#include "test_widget.hpp"
+
 void MainBox::init(void)
 {
     createTestBar();
@@ -45,35 +44,19 @@ void MainBox::init(void)
     // add_digital_clock(false);
     add_digital_clock();
 
+#if 1
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
-        QWidgetList lw = qApp->allWidgets();
-        foreach (QWidget *widget, lw)
-        {
-            QGroupBox *w = reinterpret_cast<QGroupBox *>(widget);
-            if(w)
-            {
-                QString o_name = w->objectName();
-                if(o_name.left(3) == "gb_")
-                {
-                    emit info(o_name);
-                    mw->add_dock_widget(o_name,
-                                        o_name,
-                                        Qt::LeftDockWidgetArea,
-                                        w);
-                }
-            }
-        }
+        mw->find_and_add_widget_to_dock("gb_");
+        //mw->find_and_add_widget_to_dock<QCalendarWidget>("cw_");
     }
+#endif
 
-#if 1
-    //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-#else
-    if(sizeHint().height() > 0)
-    {
-        setMinimumHeight(sizeHint().height());
-    }
+#if 0
+    TestClass *tc = new TestClass(this);
+    tc->f_test<QGroupBox>("gb_");
+    delete tc;
 #endif
 
     load_widgets();

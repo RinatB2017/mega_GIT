@@ -27,7 +27,7 @@
 #include "mylogger.hpp"
 MyLogger *logger = nullptr;
 //--------------------------------------------------------------------------------
-CreatorWindow::CreatorWindow(QMainWindow *parent)
+CreatorWindow::CreatorWindow(QWidget *parent)
     : QMainWindow(parent),
       orgName(ORGNAME),
       appName(APPNAME),
@@ -73,6 +73,56 @@ CreatorWindow::~CreatorWindow()
     }
 #endif
 }
+//--------------------------------------------------------------------------------
+#if 1
+#include <QGroupBox>
+void CreatorWindow::find_and_add_widget_to_dock(const QString &left_oname)
+{
+    QWidgetList lw = qApp->allWidgets();
+    foreach (QWidget *widget, lw)
+    {
+        QGroupBox *wt = reinterpret_cast<QGroupBox *>(widget);
+        if(wt)
+        {
+            QString o_name = wt->objectName();
+            if(o_name.isEmpty() == false)
+            {
+                if(o_name.left(left_oname.length()) == left_oname)
+                {
+                    add_dock_widget(o_name,
+                                    o_name,
+                                    Qt::LeftDockWidgetArea,
+                                    wt);
+                }
+            }
+        }
+    }
+}
+#else
+template<typename T>
+void CreatorWindow::find_and_add_widget_to_dock(const QString &left_oname)
+{
+    QWidgetList lw = qApp->allWidgets();
+    foreach (QWidget *widget, lw)
+    {
+        T *wt = reinterpret_cast<T *>(widget);
+        if(wt)
+        {
+            QString o_name = wt->objectName();
+            if(o_name.isEmpty() == false)
+            {
+                if(o_name.left(left_oname.length()) == left_oname)
+                {
+                    add_dock_widget(o_name,
+                                    o_name,
+                                    Qt::LeftDockWidgetArea,
+                                    wt);
+                }
+            }
+        }
+    }
+}
+#endif
 //--------------------------------------------------------------------------------
 void CreatorWindow::setCentralWidget(MyWidget *widget)
 {
@@ -213,7 +263,7 @@ void CreatorWindow::init(void)
     flag_close = true;
 
     app_mainBar = menuBar();
-//    m_app_windowsmenu = new QMenu(app_mainBar);
+    //    m_app_windowsmenu = new QMenu(app_mainBar);
 
     load_translations();
     setWindowTitle(QString("%1 (ver. %2)")
@@ -793,9 +843,9 @@ void CreatorWindow::createCustomStyleToolBar(void)
     customStyletoolbar->addWidget(btnTemp);
 
     addToolBar(Qt::LeftToolBarArea, customStyletoolbar);
-//#ifndef NO_MENU
-//    add_windowsmenu_action(customStyletoolbar, customStyletoolbar->toggleViewAction());
-//#endif
+    //#ifndef NO_MENU
+    //    add_windowsmenu_action(customStyletoolbar, customStyletoolbar->toggleViewAction());
+    //#endif
 }
 #endif
 #endif
@@ -891,7 +941,7 @@ void CreatorWindow::change_value(void)
 }
 //--------------------------------------------------------------------------------
 bool CreatorWindow::add_separator(QMenu *menu,
-                               int pos_y)
+                                  int pos_y)
 {
     Q_ASSERT(menu);
 
@@ -976,10 +1026,10 @@ void CreatorWindow::set_cascadeSubWindows(void)
 }
 //--------------------------------------------------------------------------------
 bool CreatorWindow::add_dock_widget(QString title,
-                                 QString objectname,
-                                 Qt::DockWidgetArea area,
-                                 QWidget *widget,
-                                 bool no_dock_position)
+                                    QString objectname,
+                                    Qt::DockWidgetArea area,
+                                    QWidget *widget,
+                                    bool no_dock_position)
 {
     Q_ASSERT(widget);
     //FIXME надо сделать так, чтобы можно было перенести this
@@ -1202,9 +1252,9 @@ void CreatorWindow::set_light_palette(void)
 //}
 //--------------------------------------------------------------------------------
 bool CreatorWindow::add_new_action(QMenu   *parent,
-                                QString text,
-                                QIcon   *icon,
-                                v_saveSlot slot)
+                                   QString text,
+                                   QIcon   *icon,
+                                   v_saveSlot slot)
 {
     Q_ASSERT(parent);
 
@@ -1236,9 +1286,9 @@ bool CreatorWindow::add_new_action(QMenu   *parent,
 }
 //--------------------------------------------------------------------------------
 bool CreatorWindow::add_new_action(QMenu   *parent,
-                                QString text,
-                                QIcon   *icon,
-                                b_saveSlot slot)
+                                   QString text,
+                                   QIcon   *icon,
+                                   b_saveSlot slot)
 {
     Q_ASSERT(parent);
 

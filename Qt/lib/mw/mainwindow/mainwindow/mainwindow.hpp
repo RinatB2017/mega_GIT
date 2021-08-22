@@ -28,7 +28,7 @@ class MainWindow : public CreatorMenus
     Q_OBJECT
 
 public:
-    explicit MainWindow(CreatorMenus *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     virtual ~MainWindow();
 };
 //--------------------------------------------------------------------------------

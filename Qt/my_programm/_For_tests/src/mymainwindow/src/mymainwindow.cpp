@@ -29,7 +29,7 @@
 //--------------------------------------------------------------------------------
 QFile *MyMainWindow::m_logFile = nullptr;
 //--------------------------------------------------------------------------------
-MyMainWindow::MyMainWindow(MainWindow *parent) :
+MyMainWindow::MyMainWindow(QWidget *parent) :
     MainWindow(parent)
 {
     //m_logFile = new QFile(QString("%1.log").arg(qAppName()));

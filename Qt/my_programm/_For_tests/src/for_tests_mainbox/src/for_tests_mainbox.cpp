@@ -261,6 +261,18 @@ bool MainBox::test(void)
     }
 #endif
 
+#if 1
+    TestClass *tc = new TestClass();
+    tc->f_test<QWidget>();
+    delete tc;
+#endif
+
+#if 1
+    TestClass2 *tc = new TestClass2();
+    tc->f_test<QWidget>();
+    delete tc;
+#endif
+
 #if 0
     qDebug() << "qdebug";
     qInfo() << "qinfo";

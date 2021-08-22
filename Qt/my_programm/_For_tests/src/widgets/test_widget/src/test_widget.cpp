@@ -1,7 +1,6 @@
 #include "test_widget.hpp"
 //--------------------------------------------------------------------------------
-TestClass::TestClass(QWidget *parent) :
-    QWidget(parent)
+TestClass::TestClass()
 {
 
 }
@@ -12,8 +11,8 @@ TestClass::~TestClass()
 }
 //--------------------------------------------------------------------------------
 template<typename T>
-void TestClass::f_test(const QString &left_oname)
+void TestClass::f_test(void)
 {
-    qDebug() << left_oname;
+
 }
 //--------------------------------------------------------------------------------

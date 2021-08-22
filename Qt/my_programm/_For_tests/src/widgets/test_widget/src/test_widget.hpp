@@ -1,19 +1,14 @@
 #ifndef TEST_WIDGET_HPP
 #define TEST_WIDGET_HPP
 //--------------------------------------------------------------------------------
-#include <QWidget>
-#include <QDebug>
-//--------------------------------------------------------------------------------
-class TestClass : public QWidget
+class TestClass
 {
-    Q_OBJECT
-
 public:
-    explicit TestClass(QWidget *parent = nullptr);
+    explicit TestClass();
     virtual ~TestClass();
 
     template<typename T>
-    void f_test(const QString &left_oname);
+    void f_test(void);
 };
 //--------------------------------------------------------------------------------
 #endif

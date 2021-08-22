@@ -3,7 +3,7 @@
 TestClass::TestClass(QWidget *parent) :
     QWidget(parent)
 {
-    f_test<QGroupBox>("gb_");
+
 }
 //--------------------------------------------------------------------------------
 TestClass::~TestClass()
@@ -15,10 +15,5 @@ template<typename T>
 void TestClass::f_test(const QString &left_oname)
 {
     qDebug() << left_oname;
-}
-//--------------------------------------------------------------------------------
-void TestClass::f_test2(void)
-{
-
 }
 //--------------------------------------------------------------------------------

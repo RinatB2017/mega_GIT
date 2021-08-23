@@ -27,16 +27,6 @@
 #include "myfiledialog.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class TestClass2
-{
-public:
-    explicit TestClass2() {}
-    virtual ~TestClass2() {}
-
-    template<typename T>
-    void f_test(void) {}
-};
-//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }

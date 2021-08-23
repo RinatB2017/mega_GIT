@@ -8,7 +8,10 @@ public:
     virtual ~TestClass();
 
     template<typename T>
-    void f_test(void);
+    void f_test(void)
+    {
+
+    }
 };
 //--------------------------------------------------------------------------------
 #endif

@@ -34,8 +34,6 @@ MainBox::~MainBox()
     save_widgets();
 }
 //--------------------------------------------------------------------------------
-#include "test_widget.hpp"
-
 void MainBox::init(void)
 {
     createTestBar();
@@ -48,15 +46,9 @@ void MainBox::init(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
-        mw->find_and_add_widget_to_dock("gb_");
-        //mw->find_and_add_widget_to_dock<QCalendarWidget>("cw_");
+        mw->find_and_add_widget_to_dock<QGroupBox>("gb_");
+        mw->find_and_add_widget_to_dock<QCalendarWidget>("cw_");
     }
-#endif
-
-#if 0
-    TestClass *tc = new TestClass(this);
-    tc->f_test<QGroupBox>("gb_");
-    delete tc;
 #endif
 
     load_widgets();
@@ -231,47 +223,9 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-#include <QGroupBox>
-
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
-
-#if 1
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        QWidgetList lw = qApp->allWidgets();
-        foreach (QWidget *widget, lw)
-        {
-            QGroupBox *w = reinterpret_cast<QGroupBox *>(widget);
-            if(w)
-            {
-                QString o_name = w->objectName();
-                if(o_name.left(3) == "gb_")
-                {
-                    emit info(o_name);
-                    mw->add_dock_widget(o_name,
-                                        o_name,
-                                        Qt::LeftDockWidgetArea,
-                                        w);
-                }
-            }
-        }
-    }
-#endif
-
-#if 1
-    TestClass *tc = new TestClass();
-    tc->f_test<QWidget>();
-    delete tc;
-#endif
-
-#if 1
-    TestClass2 *tc = new TestClass2();
-    tc->f_test<QWidget>();
-    delete tc;
-#endif
 
 #if 0
     qDebug() << "qdebug";

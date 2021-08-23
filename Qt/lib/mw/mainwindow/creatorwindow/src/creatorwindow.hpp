@@ -149,8 +149,29 @@ public:
                          QWidget *widget,
                          bool no_dock_position = false);
 
-    //template<typename T>
-    void find_and_add_widget_to_dock(const QString &left_oname);
+    template<typename T>
+    void find_and_add_widget_to_dock(const QString &left_oname)
+    {
+        QWidgetList lw = qApp->allWidgets();
+        foreach (QWidget *widget, lw)
+        {
+            T *wt = reinterpret_cast<T *>(widget);
+            if(wt)
+            {
+                QString o_name = wt->objectName();
+                if(o_name.isEmpty() == false)
+                {
+                    if(o_name.left(left_oname.length()) == left_oname)
+                    {
+                        add_dock_widget(o_name,
+                                        o_name,
+                                        Qt::LeftDockWidgetArea,
+                                        wt);
+                    }
+                }
+            }
+        }
+    }
 
     void load_setting(void);
     void save_setting(void);

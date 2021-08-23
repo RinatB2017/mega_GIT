@@ -10,9 +10,9 @@ TestClass::~TestClass()
 
 }
 //--------------------------------------------------------------------------------
-template<typename T>
-void TestClass::f_test(void)
-{
+//template<typename T>
+//void TestClass::f_test(void)
+//{
 
-}
+//}
 //--------------------------------------------------------------------------------

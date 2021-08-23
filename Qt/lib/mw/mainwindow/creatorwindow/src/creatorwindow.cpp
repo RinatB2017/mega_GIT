@@ -74,56 +74,6 @@ CreatorWindow::~CreatorWindow()
 #endif
 }
 //--------------------------------------------------------------------------------
-#if 1
-#include <QGroupBox>
-void CreatorWindow::find_and_add_widget_to_dock(const QString &left_oname)
-{
-    QWidgetList lw = qApp->allWidgets();
-    foreach (QWidget *widget, lw)
-    {
-        QGroupBox *wt = reinterpret_cast<QGroupBox *>(widget);
-        if(wt)
-        {
-            QString o_name = wt->objectName();
-            if(o_name.isEmpty() == false)
-            {
-                if(o_name.left(left_oname.length()) == left_oname)
-                {
-                    add_dock_widget(o_name,
-                                    o_name,
-                                    Qt::LeftDockWidgetArea,
-                                    wt);
-                }
-            }
-        }
-    }
-}
-#else
-template<typename T>
-void CreatorWindow::find_and_add_widget_to_dock(const QString &left_oname)
-{
-    QWidgetList lw = qApp->allWidgets();
-    foreach (QWidget *widget, lw)
-    {
-        T *wt = reinterpret_cast<T *>(widget);
-        if(wt)
-        {
-            QString o_name = wt->objectName();
-            if(o_name.isEmpty() == false)
-            {
-                if(o_name.left(left_oname.length()) == left_oname)
-                {
-                    add_dock_widget(o_name,
-                                    o_name,
-                                    Qt::LeftDockWidgetArea,
-                                    wt);
-                }
-            }
-        }
-    }
-}
-#endif
-//--------------------------------------------------------------------------------
 void CreatorWindow::setCentralWidget(MyWidget *widget)
 {
     Q_ASSERT(widget);

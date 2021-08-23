@@ -227,6 +227,13 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    QDate dt = QDate::fromString("01.01.2021", "dd.MM.yyyy");
+    emit info(QString("day=%1").arg(dt.day()));
+    emit info(QString("month=%1").arg(dt.month()));
+    emit info(QString("month=%1").arg(dt.year()));
+#endif
+
 #if 0
     qDebug() << "qdebug";
     qInfo() << "qinfo";

@@ -42,15 +42,6 @@ void MainBox::init(void)
     // add_digital_clock(false);
     add_digital_clock();
 
-#if 1
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        mw->find_and_add_widget_to_dock<QGroupBox>("gb_");
-        mw->find_and_add_widget_to_dock<QCalendarWidget>("cw_");
-    }
-#endif
-
     load_widgets();
 }
 //--------------------------------------------------------------------------------
@@ -226,13 +217,6 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
-
-#if 1
-    QDate dt = QDate::fromString("01.01.2021", "dd.MM.yyyy");
-    emit info(QString("day=%1").arg(dt.day()));
-    emit info(QString("month=%1").arg(dt.month()));
-    emit info(QString("month=%1").arg(dt.year()));
-#endif
 
 #if 0
     qDebug() << "qdebug";

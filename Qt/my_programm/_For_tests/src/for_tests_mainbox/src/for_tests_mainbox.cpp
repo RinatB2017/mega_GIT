@@ -218,6 +218,12 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    int a = 5;
+    int b = 0;
+    int c = a / b;
+#endif
+
 #if 0
     qDebug() << "qdebug";
     qInfo() << "qinfo";

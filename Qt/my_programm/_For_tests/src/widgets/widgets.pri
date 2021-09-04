@@ -8,4 +8,3 @@ include (mdi_widget/mdi_widget.pri)
 include (render/render.pri)
 include (om_widget/om_widget.pri)
 include (test_widget/test_widget.pri)
-

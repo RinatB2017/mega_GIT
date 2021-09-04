@@ -214,9 +214,24 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
+#include "dialog.hpp"
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 1
+    Dialog *dlg = new Dialog();
+    int res = dlg->exec();
+    if(res == QDialog::Accepted)
+    {
+        emit info("OK");
+    }
+    else
+    {
+        emit error("Cancel");
+    }
+#endif
 
 #if 0
     qDebug() << "qdebug";

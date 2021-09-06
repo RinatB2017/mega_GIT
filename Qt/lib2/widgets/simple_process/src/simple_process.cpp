@@ -37,8 +37,9 @@ Simple_process::~Simple_process()
 void Simple_process::init(void)
 {
     myProcess = new QProcess(this);
-    connect(myProcess,  &QProcess::started,                                this,   &Simple_process::started);
-    connect(myProcess,  &QProcess::readyReadStandardOutput,                this,   &Simple_process::read_data);
+    connect(myProcess,  &QProcess::started,                 this,   &Simple_process::started);
+    connect(myProcess,  &QProcess::readyReadStandardOutput, this,   &Simple_process::read_data);
+    connect(myProcess,  &QProcess::readyReadStandardError,  this,   &Simple_process::read_error);
     connect(myProcess,  static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
             this,       static_cast<void (Simple_process::*)(int, QProcess::ExitStatus)>(&Simple_process::finished));
     connect(myProcess,  static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::errorOccurred),
@@ -54,6 +55,11 @@ void Simple_process::programm_start(const QString &program,
         emit debug(arg);
     }
     myProcess->start(program, arguments);
+}
+//--------------------------------------------------------------------------------
+void Simple_process::setProcessEnvironment(QProcessEnvironment env)
+{
+    myProcess->setProcessEnvironment(env);
 }
 //--------------------------------------------------------------------------------
 void Simple_process::started(void)
@@ -80,18 +86,24 @@ void Simple_process::process_error(QProcess::ProcessError err)
 {
     switch(err)
     {
-    case QProcess::FailedToStart:   emit error("Killer: FailedToStart");    break;
-    case QProcess::Crashed:         emit error("Killer: Crashed");          break;
-    case QProcess::Timedout:        emit error("Killer: Timedout");         break;
-    case QProcess::ReadError:       emit error("Killer: ReadError");        break;
-    case QProcess::WriteError:      emit error("Killer: WriteError");       break;
-    case QProcess::UnknownError:    emit error("Killer: UnknownError");     break;
+    case QProcess::FailedToStart:   emit error("process_error: FailedToStart");    break;
+    case QProcess::Crashed:         emit error("process_error: Crashed");          break;
+    case QProcess::Timedout:        emit error("process_error: Timedout");         break;
+    case QProcess::ReadError:       emit error("process_error: ReadError");        break;
+    case QProcess::WriteError:      emit error("process_error: WriteError");       break;
+    case QProcess::UnknownError:    emit error("process_error: UnknownError");     break;
     }
 }
 //--------------------------------------------------------------------------------
 void Simple_process::read_data(void)
 {
     QString output = myProcess->readAllStandardOutput();
+    emit info(output);
+}
+//--------------------------------------------------------------------------------
+void Simple_process::read_error(void)
+{
+    QString output = myProcess->readAllStandardError();
     emit info(output);
 }
 //--------------------------------------------------------------------------------

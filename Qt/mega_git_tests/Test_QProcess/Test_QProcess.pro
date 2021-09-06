@@ -37,6 +37,7 @@ LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+include ($$LIB_PATH2/widgets/simple_process/simple_process.pri)
 
 include (src/test_QProcess_mainbox/test_QProcess_mainbox.pri)
 

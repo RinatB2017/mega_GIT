@@ -21,9 +21,12 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QProcess>
-//--------------------------------------------------------------------------------
+#include "mywaitsplashscreen.hpp"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "simple_process.hpp"
 #include "mywidget.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -50,14 +53,6 @@ private slots:
     bool run_command(void);
     bool run_command(const QString &command, const QString &param);
 
-    void read_data(void);
-    void read_error(void);
-
-    void started(void);
-    void finished(int result, QProcess::ExitStatus exitStatus);
-
-    void process_error(QProcess::ProcessError p_error);
-
 private:
     typedef struct CMD
     {
@@ -72,7 +67,7 @@ private:
     QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
-    QProcess *process = nullptr;
+    QPointer <Simple_process> s_process;
 
     void init(void);
     void createTestBar(void);

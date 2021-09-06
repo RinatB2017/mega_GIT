@@ -36,12 +36,14 @@ public:
 
     void programm_start(const QString &program,
                         const QStringList &arguments);
+    void setProcessEnvironment(QProcessEnvironment env);
 
 private slots:
     void started(void);
     void finished(int result, QProcess::ExitStatus exitStatus);
     void process_error(QProcess::ProcessError err);
     void read_data(void);
+    void read_error(void);
 
 private:
     QPointer<QProcess> myProcess;

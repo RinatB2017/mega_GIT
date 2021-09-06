@@ -19,12 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include "ui_test_QProcess_mainbox.h"
-//--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
-#include "mysplashscreen.hpp"
-#include "mainwindow.hpp"
 #include "test_QProcess_mainbox.hpp"
-#include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -41,6 +36,11 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    if(s_process)
+    {
+        delete s_process;
+    }
+
     save_widgets();
     delete ui;
 }
@@ -52,6 +52,8 @@ void MainBox::init(void)
 #ifdef QT_DEBUG
     createTestBar();
 #endif
+
+    prepare_QProcess();
 
     connect(ui->btn_run_sh,         &QToolButton::clicked,  this,   &MainBox::run_sh);
     connect(ui->btn_run_gcc,        &QToolButton::clicked,  this,   &MainBox::run_gcc);
@@ -137,131 +139,42 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_data(void)
-{
-    if(process)
-    {
-        QByteArray data = process->readAllStandardOutput();
-        emit info(data);
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::read_error(void)
-{
-    if(process)
-    {
-        QByteArray data = process->readAllStandardError();
-        emit error(data);
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::started(void)
-{
-    emit info(tr("Процесс начат!"));
-}
-//--------------------------------------------------------------------------------
-void MainBox::finished(int result, QProcess::ExitStatus exitStatus)
-{
-    emit info(tr("Процесс завершен!"));
-    if(result)
-    {
-        emit info(QString(tr("code %1")).arg(result));
-        switch (exitStatus)
-        {
-        case QProcess::NormalExit:
-            emit info("The process exited normally.");
-            break;
-        case QProcess::CrashExit:
-            emit error("The process crashed.");
-            break;
-        }
-    }
-
-    if(process)
-    {
-        delete process;
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::process_error(QProcess::ProcessError p_error)
-{
-    switch(p_error)
-    {
-    case QProcess::FailedToStart:
-        emit error("FailedToStart");
-        break;
-
-    case QProcess::Crashed:
-        emit error("Crashed");
-        break;
-
-    case QProcess::Timedout:
-        emit error("Timedout");
-        break;
-
-    case QProcess::ReadError:
-        emit error("ReadError");
-        break;
-
-    case QProcess::WriteError:
-        emit error("WriteError");
-        break;
-
-    case QProcess::UnknownError:
-        emit error("UnknownError");
-        break;
-    }
-}
-//--------------------------------------------------------------------------------
 void MainBox::prepare_QProcess(void)
 {
-    process = new QProcess();
-    Q_ASSERT(process);
-    process->setProcessChannelMode(QProcess::SeparateChannels);
-    //process->setReadChannel(QProcess::StandardOutput);
-
-    connect(process,    &QProcess::started,                 this,   &MainBox::started);
-    connect(process,    &QProcess::readyReadStandardOutput, this,   &MainBox::read_data);
-    connect(process,    &QProcess::readyReadStandardError,  this,   &MainBox::read_error);
-    connect(process,    static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
-            this,       static_cast<void (MainBox::*)(int, QProcess::ExitStatus)>(&MainBox::finished));
-    connect(process,    static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::errorOccurred),
-            this,       static_cast<void (MainBox::*)(QProcess::ProcessError)>(&MainBox::process_error));
+    s_process = new Simple_process(this);
+    Q_ASSERT(s_process);
 
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 
     QString fullPath = env.value("PATH")+ ":/home/boss/bin";
     env.insert("PATH", fullPath);
-    process->setProcessEnvironment(env);
+    s_process->setProcessEnvironment(env);
 }
 //--------------------------------------------------------------------------------
 void MainBox::run_sh(void)
 {
-    prepare_QProcess();
     if(ui->le_script_filename->text().isEmpty() == false)
     {
         QStringList params = ui->le_script_filename->text().split(" ");
-        process->start("sh", params);
+        s_process->programm_start("sh", params);
     }
 }
 //--------------------------------------------------------------------------------
 void MainBox::run_gcc(void)
 {
-    prepare_QProcess();
     if(ui->le_gcc_param->text().isEmpty() == false)
     {
         QStringList params = ui->le_gcc_param->text().split(" ");
-        process->start("gcc", params);
+        s_process->programm_start("gcc", params);
     }
 }
 //--------------------------------------------------------------------------------
 void MainBox::run_kate(void)
 {
-    prepare_QProcess();
     if(ui->le_kate_param->text().isEmpty() == false)
     {
         QStringList params = ui->le_kate_param->text().split(" ");
-        process->start("kate", params);
+        s_process->programm_start("kate", params);
     }
 }
 //--------------------------------------------------------------------------------
@@ -275,8 +188,7 @@ bool MainBox::run_command(void)
         return false;
     }
 
-    prepare_QProcess();
-    process->start(command, QStringList() << param);
+    s_process->programm_start(command, QStringList() << param);
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -288,8 +200,7 @@ bool MainBox::run_command(const QString &command, const QString &param)
         return false;
     }
 
-    prepare_QProcess();
-    process->start(command, QStringList() << param);
+    s_process->programm_start(command, QStringList() << param);
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -54,20 +54,6 @@ MyWidget::MyWidget(QWidget *parent) :
     sl_properties_of_widgets.append("currentIndex");
 
     setAttribute(Qt::WA_DeleteOnClose);
-
-#if 0
-    QTimer::singleShot(100, [this]{
-        //TODO контроль за objectName
-        QString oname = objectName();
-        if(oname.isEmpty())
-        {
-#ifdef Q_DEBUG
-            qDebug() sl.append("objectname is empty";
-#endif
-        }
-        Q_ASSERT(!objectName().isEmpty());
-    });
-#endif
 }
 //--------------------------------------------------------------------------------
 MyWidget::~MyWidget()
@@ -105,14 +91,19 @@ bool MyWidget::check_exists_signals(QWidget *parent)
     if(m_trace == -1)   return false;
     if(m_colorlog == -1)   return false;
 
+#if 1
+#if 1   //TODO надо продумать
     connect(this,   SIGNAL(info(QString)),  parent, SIGNAL(info(QString)));
     connect(this,   SIGNAL(debug(QString)), parent, SIGNAL(debug(QString)));
     connect(this,   SIGNAL(error(QString)), parent, SIGNAL(error(QString)));
     connect(this,   SIGNAL(trace(QString)), parent, SIGNAL(trace(QString)));
+#endif
 
     connect(this,   SIGNAL(clear_log()),    parent, SIGNAL(clear_log()));
 
-    connect(this,   SIGNAL(colorLog(QString, QColor, QColor)),  parent, SIGNAL(colorLog(QString, QColor, QColor)));
+    connect(this,   SIGNAL(colorLog(QString, QColor, QColor)),
+            parent, SIGNAL(colorLog(QString, QColor, QColor)));
+#endif
 
     return true;
 }

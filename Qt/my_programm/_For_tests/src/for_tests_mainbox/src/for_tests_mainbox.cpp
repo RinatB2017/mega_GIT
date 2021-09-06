@@ -218,6 +218,19 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+//    QWidgetList wl = qApp->allWidgets();
+    QList<LogBox *> wl = topLevelWidget()->findChildren<LogBox *>();
+    foreach (QWidget *w, wl)
+    {
+        LogBox *lb = reinterpret_cast<LogBox *>(w);
+        if(lb)
+        {
+            emit info(QString("find %1").arg(lb->objectName()));
+        }
+    }
+#endif
+
 #if 0
     qDebug() << "qdebug";
     qInfo() << "qinfo";
@@ -240,7 +253,7 @@ bool MainBox::test(void)
     emit debug("Debug");
     emit error("Error");
     emit trace("Trace");
-    //emit colorLog("yellow on blue", Qt::yellow, Qt::blue);
+    emit colorLog("yellow on blue", Qt::yellow, Qt::blue);
 #endif
 
     return true;

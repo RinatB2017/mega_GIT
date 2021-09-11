@@ -23,6 +23,11 @@
 //--------------------------------------------------------------------------------
 #include <QSerialPortInfo>
 #include <QSerialPort>
+#include <QPointer>
+//--------------------------------------------------------------------------------
+#include "mywaitsplashscreen.hpp"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -54,11 +59,11 @@ private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-    QToolButton *btn_refresh_devices;
-    QToolButton *btn_open;
-    QToolButton *btn_close;
-    QToolButton *btn_load_firmvare;
-    QComboBox   *cb_ports;
+    QPointer<QToolButton> btn_refresh_devices;
+    QPointer<QToolButton> btn_open;
+    QPointer<QToolButton> btn_close;
+    QPointer<QToolButton> btn_load_firmvare;
+    QPointer<QComboBox>   cb_ports;
 
     QSerialPort serial;
     QByteArray  serial_data;

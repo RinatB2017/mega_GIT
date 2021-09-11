@@ -24,9 +24,6 @@
 //--------------------------------------------------------------------------------
 #include "ui_HLK-RM04_OpenWRT_mainbox.h"
 //--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
-#include "mysplashscreen.hpp"
-#include "mainwindow.hpp"
 #include "HLK-RM04_OpenWRT_mainbox.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,

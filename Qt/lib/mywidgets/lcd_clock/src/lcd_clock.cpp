@@ -28,7 +28,7 @@
 LCD_clock::LCD_clock(QWidget *parent) :
     QLCDNumber(parent)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 LCD_clock::~LCD_clock()

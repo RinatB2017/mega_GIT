@@ -34,7 +34,7 @@ MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MainBox)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -254,7 +254,7 @@ void MainBox::change_player(void)
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
 {
-    ui->retranslateUi(this);
+    ui->retranslateUi(this); 
 
     change_player_action->setText(QObject::tr("change player"));
     save_action->setText(QObject::tr("save"));

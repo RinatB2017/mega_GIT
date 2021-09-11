@@ -34,7 +34,7 @@ MODBUS_client::MODBUS_client(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MODBUS_client)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 MODBUS_client::~MODBUS_client()

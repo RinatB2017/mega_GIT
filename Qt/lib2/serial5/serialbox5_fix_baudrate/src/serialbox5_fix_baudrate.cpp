@@ -45,7 +45,7 @@ SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent) :
     flag_in_hex(false),
     flag_byte_by_byte(false)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent,
@@ -59,7 +59,7 @@ SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent,
     flag_in_hex(false),
     flag_byte_by_byte(false)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 SerialBox5_fix_baudrate::~SerialBox5_fix_baudrate()

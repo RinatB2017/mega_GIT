@@ -595,7 +595,7 @@ void DocumentScene::querySourceList(QWidget * parent)
 void DocumentScene::editLabelDefinitions(QWidget * parent)
 {
   LabelDefinitions * ld = new LabelDefinitions(parent);
-  ld->init();
+  ld->init();;
   ld->exec();
   delete ld;
 }

@@ -33,7 +33,7 @@
 WebView::WebView(QWidget *parent)
     : QWebView(parent)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 void WebView::init(void)

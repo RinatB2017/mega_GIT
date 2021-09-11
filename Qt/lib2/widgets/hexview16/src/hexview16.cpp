@@ -23,7 +23,7 @@
 HexView16::HexView16(QWidget *parent) :
     QWidget(parent)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 HexView16::~HexView16()

@@ -35,7 +35,7 @@ public:
 QwtTextLabel::QwtTextLabel( QWidget *parent ):
     QFrame( parent )
 {
-    init();
+    init();;
 }
 
 /*!
@@ -46,7 +46,7 @@ QwtTextLabel::QwtTextLabel( QWidget *parent ):
 QwtTextLabel::QwtTextLabel( const QwtText &text, QWidget *parent ):
     QFrame( parent )
 {
-    init();
+    init();;
     d_data->text = text;
 }
 

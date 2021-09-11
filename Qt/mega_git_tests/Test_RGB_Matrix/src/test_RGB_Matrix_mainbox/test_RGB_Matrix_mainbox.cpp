@@ -43,7 +43,7 @@ MainBox::MainBox(QWidget *parent,
     splash(splash),
     ui(new Ui::MainBox)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -406,7 +406,7 @@ void MainBox::wait(int max_time_ms)
     time.start();
     while(time.elapsed() < max_time_ms)
     {
-        QCoreApplication::processEvents();
+        QCoreApplication::processEvents(); 
         if(is_ready)
         {
             return;

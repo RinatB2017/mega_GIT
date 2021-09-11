@@ -359,7 +359,7 @@ bool MQLEdit::saveAs()
 
     tmpfilename = QFileDialog::getSaveFileName(this, tr("Save MetaSQL File"),
                                                tmpfilename,
-                                               tr("MetaSQL Files (*.mql);;"
+                                               tr("MetaSQL Files (*.mql); "
                                                   "Text Files (*.txt)"));
     if(tmpfilename.isEmpty())
         return false;

@@ -25,7 +25,7 @@ LCD_widget::LCD_widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::LCD_widget)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 LCD_widget::~LCD_widget()

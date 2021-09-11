@@ -38,7 +38,7 @@ public:
 QwtPlotBarChart::QwtPlotBarChart( const QwtText &title ):
     QwtPlotAbstractBarChart( title )
 {
-    init();
+    init();;
 }
 
 /*!
@@ -48,7 +48,7 @@ QwtPlotBarChart::QwtPlotBarChart( const QwtText &title ):
 QwtPlotBarChart::QwtPlotBarChart( const QString &title ):
     QwtPlotAbstractBarChart( QwtText( title ) )
 {
-    init();
+    init();;
 }
 
 //! Destructor

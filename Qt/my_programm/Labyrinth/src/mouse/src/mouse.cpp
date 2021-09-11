@@ -28,7 +28,7 @@ Mouse::Mouse(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::Mouse)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 Mouse::~Mouse()

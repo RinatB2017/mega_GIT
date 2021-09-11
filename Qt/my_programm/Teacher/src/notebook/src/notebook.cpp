@@ -26,7 +26,7 @@
 Notebook::Notebook(QWidget *parent) :
     MyWidget(parent)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 Notebook::~Notebook()

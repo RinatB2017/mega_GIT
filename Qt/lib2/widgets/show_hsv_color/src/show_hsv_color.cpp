@@ -33,7 +33,7 @@ Show_HSV_color::Show_HSV_color(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::Show_HSV_color)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 Show_HSV_color::~Show_HSV_color()

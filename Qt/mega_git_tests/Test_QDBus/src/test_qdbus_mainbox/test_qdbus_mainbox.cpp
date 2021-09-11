@@ -41,7 +41,7 @@ MainBox::MainBox(QWidget *parent,
     splash(splash),
     ui(new Ui::MainBox)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -113,7 +113,7 @@ void MainBox::connect_system_bus(void)
 #ifdef QT_DEBUG
         qDebug() << "NO QDBusConnection";
 #endif
-        emit error("NO QDBusConnection");
+        emit error("NO QDBusConnection"); 
     }
 }
 //--------------------------------------------------------------------------------

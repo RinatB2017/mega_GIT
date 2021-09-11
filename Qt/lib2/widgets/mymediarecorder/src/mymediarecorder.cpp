@@ -25,7 +25,7 @@ MyMediaRecorder::MyMediaRecorder(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MyMediaRecorder)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 MyMediaRecorder::~MyMediaRecorder()

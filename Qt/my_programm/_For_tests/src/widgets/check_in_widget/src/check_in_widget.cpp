@@ -25,7 +25,7 @@ Check_in_widget::Check_in_widget(QWidget *parent) :
     Default_widget(parent),
     ui(new Ui::Check_in_widget)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 Check_in_widget::~Check_in_widget()

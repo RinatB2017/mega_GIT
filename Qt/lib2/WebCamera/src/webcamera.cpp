@@ -46,7 +46,7 @@ WebCamera::WebCamera(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::WebCamera)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 WebCamera::~WebCamera()

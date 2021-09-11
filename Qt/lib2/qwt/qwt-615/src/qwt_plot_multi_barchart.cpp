@@ -50,7 +50,7 @@ public:
 QwtPlotMultiBarChart::QwtPlotMultiBarChart( const QwtText &title ):
     QwtPlotAbstractBarChart( title )
 {
-    init();
+    init();;
 }
 
 /*!
@@ -60,7 +60,7 @@ QwtPlotMultiBarChart::QwtPlotMultiBarChart( const QwtText &title ):
 QwtPlotMultiBarChart::QwtPlotMultiBarChart( const QString &title ):
     QwtPlotAbstractBarChart( QwtText( title ) )
 {
-    init();
+    init();;
 }
 
 //! Destructor

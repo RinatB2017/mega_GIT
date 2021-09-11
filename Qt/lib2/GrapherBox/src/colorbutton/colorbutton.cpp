@@ -23,7 +23,7 @@
 ColorButton::ColorButton(QWidget *parent) :
     QWidget(parent)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 void ColorButton::setColor(QColor new_color)

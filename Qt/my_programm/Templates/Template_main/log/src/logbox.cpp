@@ -55,7 +55,7 @@ LogBox::LogBox(QWidget *parent,
     flagErrorAsMessage(false),
     flagTextIsWindows(false)
 {
-    init();
+    init();;
 
     //TODO
     logBox->document()->setMaximumBlockCount(1000);

@@ -43,7 +43,7 @@ public:
 QwtPlotSpectroCurve::QwtPlotSpectroCurve( const QwtText &title ):
     QwtPlotSeriesItem( title )
 {
-    init();
+    init();;
 }
 
 /*!
@@ -53,7 +53,7 @@ QwtPlotSpectroCurve::QwtPlotSpectroCurve( const QwtText &title ):
 QwtPlotSpectroCurve::QwtPlotSpectroCurve( const QString &title ):
     QwtPlotSeriesItem( QwtText( title ) )
 {
-    init();
+    init();;
 }
 
 //! Destructor

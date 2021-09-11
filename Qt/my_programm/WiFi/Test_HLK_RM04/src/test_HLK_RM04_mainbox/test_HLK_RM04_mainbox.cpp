@@ -42,7 +42,7 @@ MainBox::MainBox(QWidget *parent,
     ui(new Ui::MainBox),
     parent(parent)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -83,7 +83,7 @@ void MainBox::init(void)
 
     //setLayout(main_layout);
 
-    load_widgets();
+    load_widgets(); 
     load_widgets_ipv4();
 }
 //--------------------------------------------------------------------------------
@@ -93,13 +93,7 @@ void MainBox::createTestBar(void)
     Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test 0", &MainBox::test_0 });
-    commands.append({ id++, "test 1", &MainBox::test_1 });
-    commands.append({ id++, "test 2", &MainBox::test_2 });
-    commands.append({ id++, "test 3", &MainBox::test_3 });
-    commands.append({ id++, "test 4", &MainBox::test_4 });
-    commands.append({ id++, "test 5", &MainBox::test_5 });
-    commands.append({ id++, "test 6", nullptr });
+    commands.append({ id++, "test", &MainBox::test });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -196,9 +190,9 @@ void MainBox::save_widgets_ipv4(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+bool MainBox::test(void)
 {
-    emit info("Test_0()");
+    emit info("Test()");
 
     //ui->tcp_widget->createServerOnPort(QHostAddress::AnyIPv4, 5000);
 
@@ -217,36 +211,6 @@ bool MainBox::test_0(void)
         }
     }
 
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
-{
-    emit info("Test_1()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
-{
-    emit info("Test_2()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
-{
-    emit info("Test_3()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
-{
-    emit info("Test_4()");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
-{
-    emit info("Test_5()");
     return true;
 }
 //--------------------------------------------------------------------------------

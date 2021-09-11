@@ -38,7 +38,7 @@ MainBox::MainBox(QWidget *parent,
     splash(splash),
     ui(new Ui::MainBox)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -51,7 +51,7 @@ void MainBox::init(void)
     ui->setupUi(this);
 
 #ifdef QT_DEBUG
-    createTestBar();
+    createTestBar(); 
 #endif
 }
 //--------------------------------------------------------------------------------

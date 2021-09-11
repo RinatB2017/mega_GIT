@@ -28,7 +28,7 @@ ADC_label::ADC_label(QString lbl_name, QWidget *parent) :
     if(lbl_name.isEmpty())  lbl_name = "ADC";
     label = lbl_name;
 
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 ADC_label::~ADC_label()

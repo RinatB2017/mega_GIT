@@ -25,7 +25,7 @@ ShowJSON::ShowJSON(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::ShowJSON)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 ShowJSON::~ShowJSON()

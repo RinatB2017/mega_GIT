@@ -25,7 +25,7 @@ File_widget::File_widget(QWidget *parent) :
     Default_widget(parent),
     ui(new Ui::File_widget)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 File_widget::~File_widget()

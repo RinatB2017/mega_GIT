@@ -59,7 +59,7 @@ QwtDynGridLayout::QwtDynGridLayout( QWidget *parent,
         int margin, int spacing ):
     QLayout( parent )
 {
-    init();
+    init();;
 
     setSpacing( spacing );
     setMargin( margin );
@@ -71,7 +71,7 @@ QwtDynGridLayout::QwtDynGridLayout( QWidget *parent,
 
 QwtDynGridLayout::QwtDynGridLayout( int spacing )
 {
-    init();
+    init();;
     setSpacing( spacing );
 }
 

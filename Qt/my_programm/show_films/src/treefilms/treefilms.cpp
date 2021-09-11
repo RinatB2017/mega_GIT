@@ -31,7 +31,7 @@ TreeFilms::TreeFilms(QWidget *parent) :
     QTreeWidget(parent),
     is_modified(false)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 TreeFilms::~TreeFilms()

@@ -25,7 +25,7 @@
 RGB_display::RGB_display(QWidget *parent) :
     MyWidget(parent)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 RGB_display::~RGB_display()

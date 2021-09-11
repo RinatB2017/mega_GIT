@@ -52,7 +52,7 @@ QHexEdit::QHexEdit(QWidget *parent) : QAbstractScrollArea(parent)
     setHighlighting(true);
     setReadOnly(false);
 
-    init();
+    init();;
 
 }
 
@@ -316,7 +316,7 @@ bool QHexEdit::dynamicBytesPerLine()
 bool QHexEdit::setData(QIODevice &iODevice)
 {
     bool ok = _chunks->setIODevice(iODevice);
-    init();
+    init();;
     dataChangedPrivate();
     return ok;
 }

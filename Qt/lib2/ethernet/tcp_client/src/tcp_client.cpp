@@ -29,7 +29,7 @@
 TCP_Client::TCP_Client(QWidget* parent)
     : MyWidget(parent)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 void TCP_Client::init(void)

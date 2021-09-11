@@ -28,7 +28,7 @@
 Digital_clock::Digital_clock(QWidget *parent) :
     QLabel(parent)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 Digital_clock::~Digital_clock()

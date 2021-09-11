@@ -25,7 +25,7 @@ HSV_widget::HSV_widget(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::HSV_widget)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 HSV_widget::~HSV_widget()

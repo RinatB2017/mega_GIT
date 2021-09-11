@@ -25,7 +25,7 @@ WebAttributeDialog::WebAttributeDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::WebAttributeDialog)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 WebAttributeDialog::~WebAttributeDialog()

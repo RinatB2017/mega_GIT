@@ -25,7 +25,7 @@ Viewer::Viewer(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::Viewer)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 Viewer::~Viewer()

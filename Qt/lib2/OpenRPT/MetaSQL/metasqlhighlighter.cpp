@@ -715,19 +715,19 @@ void MetaSQLHighlighter::init()
 MetaSQLHighlighter::MetaSQLHighlighter(QObject *parent)
   : QSyntaxHighlighter(parent)
 {
-  init();
+  init();;
 }
 
 MetaSQLHighlighter::MetaSQLHighlighter(QTextDocument *document)
   : QSyntaxHighlighter(document)
 {
-  init();
+  init();;
 }
 
 MetaSQLHighlighter::MetaSQLHighlighter(QTextEdit *editor)
   : QSyntaxHighlighter(editor)
 {
-  init();
+  init();;
 }
 
 MetaSQLHighlighter::~MetaSQLHighlighter()

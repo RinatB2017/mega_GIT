@@ -27,7 +27,7 @@ Log_options::Log_options(QWidget *parent):
     QDialog(parent),
     ui(new Ui::Log_options)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 void Log_options::choice_file(void)

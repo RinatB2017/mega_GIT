@@ -25,7 +25,7 @@ MyComboBox::MyComboBox(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MyComboBox)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 MyComboBox::~MyComboBox()

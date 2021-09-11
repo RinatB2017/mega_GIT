@@ -25,7 +25,7 @@ ADB_widget::ADB_widget(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::ADB_widget)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 ADB_widget::~ADB_widget()

@@ -134,7 +134,7 @@ GrapherBox::GrapherBox(QWidget *parent) :
     title_axis_X = "X";
     title_axis_Y = "Y";
 
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 QColor GrapherBox::get_curve_color(int channel)

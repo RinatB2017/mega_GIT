@@ -25,7 +25,7 @@ MDI_widget::MDI_widget(QWidget *parent) :
     Default_widget(parent),
     ui(new Ui::MDI_widget)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 MDI_widget::~MDI_widget()

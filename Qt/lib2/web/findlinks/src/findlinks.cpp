@@ -40,7 +40,7 @@ FindLinks::FindLinks(QWebFrame *frame, QWidget *parent) :
     QDialog(parent),
     main_frame(frame)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 void FindLinks::connect_log(void)

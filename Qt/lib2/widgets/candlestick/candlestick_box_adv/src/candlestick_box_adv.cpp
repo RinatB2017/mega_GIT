@@ -30,7 +30,7 @@ CandleStick_Box_adv::CandleStick_Box_adv(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::CandleStick_Box_adv)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 CandleStick_Box_adv::~CandleStick_Box_adv()

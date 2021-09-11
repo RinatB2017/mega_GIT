@@ -21,13 +21,7 @@
 #include <QWebEngineView>
 //--------------------------------------------------------------------------------
 #include "ui_walkers.h"
-//--------------------------------------------------------------------------------
-#include "mainwindow.hpp"
 #include "walkers.hpp"
-#include "defines.hpp"
-//--------------------------------------------------------------------------------
-#include "youtube_walker.hpp"
-#include "google_walker.hpp"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -37,7 +31,7 @@ MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MainBox)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -47,7 +41,7 @@ MainBox::~MainBox()
     if(youtube_walker)
     {
         youtube_walker->close();
-        youtube_walker->deleteLater();
+        youtube_walker->deleteLater(); 
     }
     if(google_walker)
     {

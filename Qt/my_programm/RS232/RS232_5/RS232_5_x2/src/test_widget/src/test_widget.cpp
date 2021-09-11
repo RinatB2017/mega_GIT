@@ -28,7 +28,7 @@ TestWidget::TestWidget(QWidget *parent)
     : MyWidget(parent),
       ui(new Ui::TestWidget)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 TestWidget::~TestWidget()

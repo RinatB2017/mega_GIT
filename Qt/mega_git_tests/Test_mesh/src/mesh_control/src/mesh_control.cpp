@@ -27,7 +27,7 @@ Mesh_control::Mesh_control(QString o_name, QWidget *parent) :
 {
     if(o_name.isEmpty())    o_name = "noname";
     setObjectName(o_name);
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 Mesh_control::~Mesh_control()

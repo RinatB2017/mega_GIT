@@ -25,7 +25,7 @@ Table_widget::Table_widget(QWidget *parent) :
     Default_widget(parent),
     ui(new Ui::Table_widget)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 Table_widget::~Table_widget()

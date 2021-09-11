@@ -30,7 +30,7 @@ MainBox::MainBox(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MainBox)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -72,7 +72,7 @@ void MainBox::init(void)
     QTableView *view = new QTableView(this);
     view->setModel(model);
 //    view->show();
-    ui->layout_SQL->addWidget(view);
+    ui->layout_SQL->addWidget(view); 
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

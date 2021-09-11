@@ -49,7 +49,7 @@ AD9106_Box::AD9106_Box(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::AD9106_Box)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 AD9106_Box::~AD9106_Box()

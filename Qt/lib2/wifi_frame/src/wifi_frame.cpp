@@ -36,7 +36,7 @@ WIFI_frame::WIFI_frame(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::WIFI_frame)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 WIFI_frame::WIFI_frame(const QString &caption,
@@ -46,7 +46,7 @@ WIFI_frame::WIFI_frame(const QString &caption,
     caption(caption),
     is_server(is_server)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 void WIFI_frame::connect_serial(void)

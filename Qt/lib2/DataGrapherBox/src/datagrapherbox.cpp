@@ -25,7 +25,7 @@ DataGrapherBox::DataGrapherBox(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::DataGrapherBox)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 DataGrapherBox::~DataGrapherBox()

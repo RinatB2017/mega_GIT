@@ -36,7 +36,7 @@ MainBox::MainBox(QWidget *parent,
     ui(new Ui::MainBox),
     is_blocked(false)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()

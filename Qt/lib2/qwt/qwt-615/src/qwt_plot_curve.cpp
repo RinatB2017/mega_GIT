@@ -103,7 +103,7 @@ public:
 QwtPlotCurve::QwtPlotCurve( const QwtText &title ):
     QwtPlotSeriesItem( title )
 {
-    init();
+    init();;
 }
 
 /*!
@@ -113,7 +113,7 @@ QwtPlotCurve::QwtPlotCurve( const QwtText &title ):
 QwtPlotCurve::QwtPlotCurve( const QString &title ):
     QwtPlotSeriesItem( QwtText( title ) )
 {
-    init();
+    init();;
 }
 
 //! Destructor

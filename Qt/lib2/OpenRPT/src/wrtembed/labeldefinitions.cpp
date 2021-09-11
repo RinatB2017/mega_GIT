@@ -89,7 +89,7 @@ void LabelDefinitions::editLabelDef(QListWidgetItem* lbitem)
 
       if (xqry.lastError().type() == QSqlError::NoError)
       {
-        init();
+        init();;
       }
       else
       {
@@ -173,7 +173,7 @@ void LabelDefinitions::btnAdd_clicked()
 
     if (xqry.lastError().type() == QSqlError::NoError)
     {
-      init();
+      init();;
     }
     else
     {

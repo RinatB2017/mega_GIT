@@ -41,7 +41,7 @@ MainBox::MainBox(QWidget *parent,
     splash(splash),
     ui(new Ui::MainBox)
 {
-    init();
+    init();;
 
 #ifdef QT_DEBUG
     QList<QWidget *> all_obj = topLevelWidget()->findChildren<QWidget *>();

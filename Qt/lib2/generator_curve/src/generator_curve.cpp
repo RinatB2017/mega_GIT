@@ -10,7 +10,7 @@
 Generator_Curve::Generator_Curve(QWidget *parent) :
     MyWidget(parent)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 Generator_Curve::~Generator_Curve(void)

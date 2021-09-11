@@ -27,7 +27,7 @@ Serial::Serial(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::Serial)
 {
-    init();
+    init();;
 }
 //--------------------------------------------------------------------------------
 Serial::~Serial()

@@ -39,7 +39,7 @@
 class MySettings
 {
 public:
-    MySettings();
+    explicit MySettings();
     virtual ~MySettings();
 
     bool is_my_widget(const QString &o_name);

@@ -40,8 +40,8 @@ class MainBox : public MyWidget
     Q_OBJECT
 
 public:
-    MainBox(QWidget *parent,
-            MySplashScreen *splash);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
     virtual ~MainBox();
 
 #ifdef QT_DEBUG
@@ -53,12 +53,7 @@ signals:
 
 private slots:
     void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
+    bool test(void);
 
 private:
     struct CMD

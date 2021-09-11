@@ -30,7 +30,7 @@
 class MyMessages
 {
 public:
-    MyMessages();
+    explicit MyMessages();
 
     static int messagebox_noicon(const QString &title,
                                  const QString &text,

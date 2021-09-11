@@ -42,6 +42,7 @@
 #include "lcd_clock.hpp"
 #include "mymessages.hpp"
 #include "mysettings.hpp"
+#include "imywidget.hpp"
 //--------------------------------------------------------------------------------
 //
 //  шаблон для хранения разнообразных данных
@@ -82,7 +83,7 @@ typedef struct d_spin_box
     double  default_value;
 } d_spin_box_t;
 //--------------------------------------------------------------------------------
-class MyWidget : public QWidget, public MyMessages, public MySettings
+class MyWidget : public QWidget, public MyMessages, public MySettings, public iMyWidget
 {
     Q_OBJECT
 
@@ -144,11 +145,6 @@ public:
 
     QString get_class_name(const QString &fullname);
     QString get_func_name(const QString &fullname);
-
-    virtual void updateText(void) = 0;
-    virtual bool programm_is_exit(void) = 0;
-    virtual void load_setting(void) = 0;
-    virtual void save_setting(void) = 0;
 
 signals:
     void info(const QString &);

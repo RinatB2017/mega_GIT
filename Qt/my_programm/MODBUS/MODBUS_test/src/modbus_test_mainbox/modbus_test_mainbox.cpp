@@ -66,13 +66,7 @@ void MainBox::createTestBar(void)
 
     commands.clear(); int id = 0;
     CMD command;
-    command.cmd = id++; command.cmd_text = "test 0";   command.func = &MainBox::test_0;  commands.append(command);
-    command.cmd = id++; command.cmd_text = "test 1";   command.func = &MainBox::test_1;  commands.append(command);
-    command.cmd = id++; command.cmd_text = "test 2";   command.func = &MainBox::test_2;  commands.append(command);
-    command.cmd = id++; command.cmd_text = "test 3";   command.func = &MainBox::test_3;  commands.append(command);
-    command.cmd = id++; command.cmd_text = "test 4";   command.func = &MainBox::test_4;  commands.append(command);
-    command.cmd = id++; command.cmd_text = "test 5";   command.func = &MainBox::test_5;  commands.append(command);
-    command.cmd = id++; command.cmd_text = "test 6";   command.func = 0;    commands.append(command);
+    command.cmd = id++; command.cmd_text = "test";   command.func = &MainBox::test;  commands.append(command);
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -123,45 +117,9 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+bool MainBox::test(void)
 {
-    emit info("Test_0()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
-{
-    emit info("Test_1()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
-{
-    emit info("Test_2()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
-{
-    emit info("Test_3()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
-{
-    emit info("Test_4()");
-
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
-{
-    emit info("Test_5()");
-
+    emit info("Test()");
     return true;
 }
 //--------------------------------------------------------------------------------

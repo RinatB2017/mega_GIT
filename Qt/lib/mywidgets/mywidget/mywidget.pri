@@ -6,5 +6,7 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-HEADERS += mywidget.hpp
+HEADERS += \
+    mywidget.hpp \
+    imywidget.hpp
 SOURCES += mywidget.cpp

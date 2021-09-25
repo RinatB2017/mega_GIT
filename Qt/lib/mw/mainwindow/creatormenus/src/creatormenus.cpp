@@ -103,7 +103,7 @@ void CreatorMenus::init(void)
 }
 //--------------------------------------------------------------------------------
 bool CreatorMenus::add_menu(int pos_x,
-                          QMenu *menu)
+                            QMenu *menu)
 {
     Q_ASSERT(menu);
 
@@ -135,7 +135,7 @@ bool CreatorMenus::add_menu(int pos_x,
 }
 //--------------------------------------------------------------------------------
 bool CreatorMenus::add_filemenu_menu(int pos_y,
-                                   QMenu *menu)
+                                     QMenu *menu)
 {
     Q_ASSERT(m_app_filemenu);
     Q_ASSERT(menu);
@@ -163,7 +163,7 @@ bool CreatorMenus::add_filemenu_menu(int pos_y,
 }
 //--------------------------------------------------------------------------------
 bool CreatorMenus::add_optionsmenu_menu(int pos_y,
-                                      QMenu *menu)
+                                        QMenu *menu)
 {
     Q_ASSERT(m_app_filemenu);
     Q_ASSERT(menu);
@@ -191,7 +191,7 @@ bool CreatorMenus::add_optionsmenu_menu(int pos_y,
 }
 //--------------------------------------------------------------------------------
 bool CreatorMenus::add_helpmenu_menu(int pos_y,
-                                   QMenu *menu)
+                                     QMenu *menu)
 {
     Q_ASSERT(m_app_filemenu);
     Q_ASSERT(menu);

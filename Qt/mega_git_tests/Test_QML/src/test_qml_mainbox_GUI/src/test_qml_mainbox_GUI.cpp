@@ -18,76 +18,45 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "test_qml_mainbox.hpp"
-#include "qtsingleapplication.h"
-#include "mysplashscreen.hpp"
-#include "mainwindow.hpp"
-#include "defines.hpp"
+#include "test_qml_mainbox_GUI.hpp"
 //--------------------------------------------------------------------------------
-#include "codecs.h"
-//--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include "test.hpp"
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-int main(int argc, char *argv[])
+MainBox_GUI::MainBox_GUI(QWidget *parent,
+                 MySplashScreen *splash) :
+    MyWidget(parent),
+    splash(splash),
+    ui(new Ui::MainBox_GUI)
 {
-    set_codecs();
-#ifdef SINGLE_APP
-    QtSingleApplication app(argc, argv);
-    if(app.isRunning())
-    {
-        //QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
-        if(app.sendMessage("Wake up!")) return 0;
-    }
-#else
-    QApplication app(argc, argv);
-#endif
+    init();;
+}
+//--------------------------------------------------------------------------------
+MainBox_GUI::~MainBox_GUI()
+{
+    save_widgets();
+    delete ui;
+}
+//--------------------------------------------------------------------------------
+void MainBox_GUI::init(void)
+{
+    ui->setupUi(this);
 
-    app.setOrganizationName(ORGNAME);
-    app.setApplicationName(APPNAME);
-#ifdef Q_OS_LINUX
-    app.setApplicationVersion(QString("%1.%2.%3.%4")
-                              .arg(VER_MAJOR)
-                              .arg(VER_MINOR)
-                              .arg(VER_PATCH)
-                              .arg(VER_BUILD));
-#endif
-    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+    connect(ui->btn_show_qml,   &QPushButton::clicked,
+            this,               &MainBox_GUI::btn_show_qml);
 
-    QPixmap pixmap(":/logo/logo.png");
-
-    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
-    Q_ASSERT(splash);
-    splash->show();    
-
-    MainWindow *main_window = new MainWindow();
-    Q_ASSERT(main_window);
-
-    //MainBox *mainBox = new MainBox(0, splash);
-    MainBox *mainBox = new MainBox(main_window, splash);
-    Q_ASSERT(mainBox);
-
-    main_window->setCentralWidget(mainBox);
-    main_window->show();
-
-    splash->finish(main_window);
-
-#ifdef SINGLE_APP
-    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
-#endif
-
-#ifdef QT_DEBUG
-    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
-
-    int test_result = QTest::qExec(new Test(), argc, argv);
-    if (test_result != EXIT_SUCCESS)
-    {
-        return test_result;
-    }
-#endif
-
-    return app.exec();
+    load_widgets();
+}
+//--------------------------------------------------------------------------------
+QString MainBox_GUI::get_qml_text(void)
+{
+    return ui->te_qml->toPlainText();
+}
+//--------------------------------------------------------------------------------
+void MainBox_GUI::set_qml_text(const QString &text)
+{
+    ui->te_qml->setPlainText(text);
+}
+//--------------------------------------------------------------------------------
+void MainBox_GUI::updateText(void)
+{
+    ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------

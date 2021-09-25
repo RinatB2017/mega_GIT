@@ -18,76 +18,58 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "test_qml_mainbox.hpp"
-#include "qtsingleapplication.h"
+#ifndef MAINBOX_HPP
+#define MAINBOX_HPP
+//--------------------------------------------------------------------------------
+#include <QQuickView>
+//--------------------------------------------------------------------------------
+#include "test_qml_mainbox_GUI.hpp"
+#include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
+#include "myfiledialog.hpp"
 #include "mainwindow.hpp"
-#include "defines.hpp"
 //--------------------------------------------------------------------------------
-#include "codecs.h"
-//--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include "test.hpp"
-#   include <QDebug>
-#endif
-//--------------------------------------------------------------------------------
-int main(int argc, char *argv[])
+class MainBox : public MainBox_GUI
 {
-    set_codecs();
-#ifdef SINGLE_APP
-    QtSingleApplication app(argc, argv);
-    if(app.isRunning())
+    Q_OBJECT
+
+public:
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
+    virtual ~MainBox();
+
+private slots:
+    void choice_test(void);
+
+private:
+    typedef struct CMD
     {
-        //QMessageBox::critical(nullptr, QObject::tr("Error"), QObject::tr("Application already running!"));
-        if(app.sendMessage("Wake up!")) return 0;
-    }
-#else
-    QApplication app(argc, argv);
-#endif
+        int cmd;
+        QString cmd_text;
+        bool (MainBox::*func)(void);
+    } CMD_t;
+    QList<CMD> commands;
 
-    app.setOrganizationName(ORGNAME);
-    app.setApplicationName(APPNAME);
-#ifdef Q_OS_LINUX
-    app.setApplicationVersion(QString("%1.%2.%3.%4")
-                              .arg(VER_MAJOR)
-                              .arg(VER_MINOR)
-                              .arg(VER_PATCH)
-                              .arg(VER_BUILD));
-#endif
-    app.setWindowIcon(QIcon(ICON_PROGRAMM));
+    QPointer<QToolBar> testbar;
+    QPointer<QComboBox> cb_test;
 
-    QPixmap pixmap(":/logo/logo.png");
+    QString filename = "main.qml";
 
-    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
-    Q_ASSERT(splash);
-    splash->show();    
+    void init(void);
+    void createTestBar(void);
 
-    MainWindow *main_window = new MainWindow();
-    Q_ASSERT(main_window);
+    bool test(void);
+    void add_menu(void);
+    void show_qml(void);
 
-    //MainBox *mainBox = new MainBox(0, splash);
-    MainBox *mainBox = new MainBox(main_window, splash);
-    Q_ASSERT(mainBox);
+    void new_qml(void);
+    void load_qml(void);
+    void save_qml(void);
+    void save_qml_as(void);
 
-    main_window->setCentralWidget(mainBox);
-    main_window->show();
-
-    splash->finish(main_window);
-
-#ifdef SINGLE_APP
-    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
-#endif
-
-#ifdef QT_DEBUG
-    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
-
-    int test_result = QTest::qExec(new Test(), argc, argv);
-    if (test_result != EXIT_SUCCESS)
-    {
-        return test_result;
-    }
-#endif
-
-    return app.exec();
-}
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
+};
 //--------------------------------------------------------------------------------
+#endif // MAINBOX_HPP

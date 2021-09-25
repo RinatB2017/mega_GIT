@@ -230,13 +230,7 @@ void MainBox::show_qml(void)
         file.close();
 
         QQuickView *view = new QQuickView();
-#if 0
-        QString contentPath = QApplication::applicationDirPath();
-        //emit debug(contentPath);
-        view->setSource(QUrl::fromLocalFile(contentPath + "/" + filename));
-#else
         view->setSource(QUrl::fromLocalFile(filename));
-#endif
         view->show();
     }
 }

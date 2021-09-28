@@ -9,7 +9,11 @@ Rectangle
 
      Image {
          id: logo
-         source: "../pic/tux.png"
+         source: "pic/tux.png"
+     }
+
+     Loader {
+         source: "button.qml"
      }
 
      Text {

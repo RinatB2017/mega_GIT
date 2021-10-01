@@ -18,22 +18,16 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QNetworkInterface>
-#include <QTcpServer>
-#include <QTcpSocket>
-//--------------------------------------------------------------------------------
-//#include "processor.hpp"
 #include "tcp_server.hpp"
 //--------------------------------------------------------------------------------
 TCP_Server::TCP_Server(QWidget *parent) :
     MyWidget(parent)
 {
-//    processor = new Processor;
-//    connect(this,         &TCP_Server::output,    processor,  &Processor::input);
-//    connect(processor,    &Processor::output,     this,       &TCP_Server::input);
-
     is_open = false;
-    emit server_is_open(is_open);
+
+    QTimer::singleShot(0, [this]{
+        emit server_is_open(is_open);
+    });
 
     setVisible(false);
 }

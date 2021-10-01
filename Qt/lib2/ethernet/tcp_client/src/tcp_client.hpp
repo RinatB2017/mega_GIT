@@ -57,7 +57,7 @@ public slots:
     QByteArray input(const QByteArray &data);
 
 private slots:
-    QByteArray send_data(const QByteArray);
+    QByteArray send_data(const QByteArray &);
 
 private:
     QPointer<QTcpSocket> tcpSocket;

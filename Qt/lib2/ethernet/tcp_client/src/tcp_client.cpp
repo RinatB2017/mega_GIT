@@ -62,7 +62,7 @@ void TCP_Client::setPort(unsigned int port)
     this->port = port;
 }
 //--------------------------------------------------------------------------------
-QByteArray TCP_Client::send_data(const QByteArray block)
+QByteArray TCP_Client::send_data(const QByteArray &block)
 {
     QByteArray tmp;
 
@@ -85,6 +85,7 @@ QByteArray TCP_Client::send_data(const QByteArray block)
         emit error(tr("Данные передать не удалось!"));
     }
 
+#if 0
     if(tcpSocket->waitForReadyRead (5000))
     {
         tmp = tcpSocket->readAll();
@@ -94,6 +95,7 @@ QByteArray TCP_Client::send_data(const QByteArray block)
     {
         emit error(tr("Данные получить не удалось!"));
     }
+#endif
 
     tcpSocket->disconnectFromHost();
     return tmp;

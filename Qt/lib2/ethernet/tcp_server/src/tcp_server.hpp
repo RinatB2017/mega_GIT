@@ -21,7 +21,10 @@
 #ifndef TCP_SERVER_HPP
 #define TCP_SERVER_HPP
 //--------------------------------------------------------------------------------
+#include <QNetworkInterface>
 #include <QHostAddress>
+#include <QTcpServer>
+#include <QTcpSocket>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -54,7 +57,6 @@ private slots:
     void clientDisconnected(void);
 
 private:
-    //Processor *processor = nullptr;
     QTcpServer *tcpServer = nullptr;
     QTcpSocket *clientConnection = nullptr;
 

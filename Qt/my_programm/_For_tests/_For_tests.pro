@@ -28,8 +28,7 @@ RESOURCES += \
 #RESOURCES += about/about.qrc
 
 OTHER_FILES += \
-    doc/notebook.txt \
-    doc/symbols.txt
+    doc/notebook.txt
 
 # профилирование
 #include (conf/prof.pri)

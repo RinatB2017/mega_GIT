@@ -85,8 +85,9 @@ QByteArray TCP_Client::send_data(const QByteArray &block)
         emit error(tr("Данные передать не удалось!"));
     }
 
-#if 0
-    if(tcpSocket->waitForReadyRead (5000))
+#if 1
+    //FIXME надо нормально сделать
+    if(tcpSocket->waitForReadyRead (100))
     {
         tmp = tcpSocket->readAll();
         emit info(tr("Данные получены!"));

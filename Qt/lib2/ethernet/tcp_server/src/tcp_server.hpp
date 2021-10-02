@@ -45,6 +45,7 @@ public:
 signals:
     void output(const QByteArray &);
     void server_is_open(bool);
+    void newConnection(void);
 
 public slots:    
     bool createServerOnPort(const QHostAddress address, quint16 port);

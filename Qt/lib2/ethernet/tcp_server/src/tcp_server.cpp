@@ -101,8 +101,9 @@ void TCP_Server::clientReadyRead(void)
         read_block = clientConnection->readAll();
         //emit trace(read_block);
         emit debug(read_block.toHex().toUpper());
-
         emit output(read_block);
+        // возвращаем ответ
+        clientConnection->write(read_block);
     }
 }
 //--------------------------------------------------------------------------------

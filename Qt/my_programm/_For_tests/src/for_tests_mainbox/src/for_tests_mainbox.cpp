@@ -214,12 +214,36 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
+#include "myfiledialog.hpp"
+#include "showjson.hpp"
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
-//    QWidgetList wl = qApp->allWidgets();
+    MyFileDialog *dlg = new MyFileDialog("t_mainbox", "t_mainbox");
+    int btn = dlg->exec();
+    if(btn == MyFileDialog::Accepted)
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        QFile file(filename);
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            QByteArray ba = file.readAll();
+
+            ShowJSON *sj = new ShowJSON();
+            sj->loadJson(ba);
+            sj->show();
+        }
+    }
+    delete dlg;
+#endif
+
+#if 0
+    //    QWidgetList wl = qApp->allWidgets();
     QList<LogBox *> wl = topLevelWidget()->findChildren<LogBox *>();
     foreach (QWidget *w, wl)
     {

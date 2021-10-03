@@ -62,6 +62,9 @@ void TCP_Client::setPort(unsigned int port)
     this->port = port;
 }
 //--------------------------------------------------------------------------------
+#include <QElapsedTimer>
+#include <QCoreApplication>
+
 QByteArray TCP_Client::send_data(const QByteArray &block)
 {
     QByteArray tmp;
@@ -86,6 +89,28 @@ QByteArray TCP_Client::send_data(const QByteArray &block)
     }
 
     //FIXME надо нормально сделать
+#if 1
+    QElapsedTimer timer;
+    timer.start();
+    while(timer.elapsed() < 3000)
+    {
+        QCoreApplication::processEvents();
+        QByteArray t_ba = tcpSocket->readAll();
+        if(!t_ba.isEmpty())
+        {
+            tmp = t_ba;
+            break;
+        }
+    }
+    if(tmp.isNull() == false)
+    {
+        emit info(tr("Данные получены!"));
+    }
+    else
+    {
+        emit error(tr("Данные получить не удалось!"));
+    }
+#else
     if(tcpSocket->waitForReadyRead (3000))
     {
         tmp = tcpSocket->readAll();
@@ -95,6 +120,7 @@ QByteArray TCP_Client::send_data(const QByteArray &block)
     {
         emit error(tr("Данные получить не удалось!"));
     }
+#endif
 
     tcpSocket->disconnectFromHost();
     return tmp;

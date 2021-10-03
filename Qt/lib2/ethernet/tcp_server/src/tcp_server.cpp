@@ -103,7 +103,7 @@ void TCP_Server::clientReadyRead(void)
         emit debug(read_block.toHex().toUpper());
         emit output(read_block);
         // возвращаем ответ
-        clientConnection->write(read_block);
+        //clientConnection->write(read_block);
     }
 }
 //--------------------------------------------------------------------------------

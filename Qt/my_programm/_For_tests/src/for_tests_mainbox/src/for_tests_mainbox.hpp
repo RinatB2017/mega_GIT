@@ -72,6 +72,8 @@ private:
     template<typename T1, typename T2>
     void test_template(void);
 
+    void heavy_function(int x);
+
     template<class T>
     void test_function(int delay);
     void test_function2(bool (MainBox::*func)(void));

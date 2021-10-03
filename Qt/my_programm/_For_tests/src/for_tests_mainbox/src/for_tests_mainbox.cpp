@@ -214,6 +214,20 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
+#include <QElapsedTimer>
+
+void MainBox::heavy_function(int x)
+{
+    QElapsedTimer timer;
+    timer.start();
+    while(timer.elapsed() < x)
+    {
+
+    }
+    emit info("OK");
+}
+//--------------------------------------------------------------------------------
+#include <QtConcurrent>
 #include "myfiledialog.hpp"
 #include "showjson.hpp"
 
@@ -222,6 +236,11 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QFuture <void> local_thread;
+    local_thread = QtConcurrent::run(this, &MainBox::heavy_function, 10000);
+#endif
+
+#if 0
     MyFileDialog *dlg = new MyFileDialog("t_mainbox", "t_mainbox");
     int btn = dlg->exec();
     if(btn == MyFileDialog::Accepted)

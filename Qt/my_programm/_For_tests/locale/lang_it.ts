@@ -50,26 +50,6 @@
 </context>
 
 <context>
-    <name>QObject</name>
-    <message>
-        <source>is_shows_info</source>
-        <translation>Visualizzazione di messaggi informativi</translation>
-    </message>
-    <message>
-        <source>is_shows_debug</source>
-        <translation>Visualizzazione dei messaggi di debug</translation>
-    </message>
-    <message>
-        <source>is_shows_error</source>
-        <translation>Visualizzazione dei messaggi di errore</translation>
-    </message>
-    <message>
-        <source>is_shows_trace</source>
-        <translation>Visualizzazione dei messaggi di traccia</translation>
-    </message>
-</context>
-
-<context>
     <name>CreatorMenus</name>
     <message>
         <source>information</source>
@@ -232,6 +212,22 @@
 <context>
     <name>QObject</name>
     <message>
+        <source>is_shows_info</source>
+        <translation>Visualizzazione di messaggi informativi</translation>
+    </message>
+    <message>
+        <source>is_shows_debug</source>
+        <translation>Visualizzazione dei messaggi di debug</translation>
+    </message>
+    <message>
+        <source>is_shows_error</source>
+        <translation>Visualizzazione dei messaggi di errore</translation>
+    </message>
+    <message>
+        <source>is_shows_trace</source>
+        <translation>Visualizzazione dei messaggi di traccia</translation>
+    </message>
+    <message>
         <source>Styles</source>
         <translation>Stili</translation>
     </message>
@@ -239,10 +235,6 @@
         <source>Show buttons</source>
         <translation>Mostra pulsanti</translation>
     </message>
-</context>
-
-<context>
-    <name>QObject</name>
     <message>
         <source>Starting application %1</source>
         <translation>Programma HHH %1 avviato</translation>

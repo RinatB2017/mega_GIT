@@ -54,26 +54,6 @@
 </context>
 
 <context>
-    <name>QObject</name>
-    <message>
-        <source>is_shows_info</source>
-        <translation>Отображение информационных сообщений</translation>
-    </message>
-    <message>
-        <source>is_shows_debug</source>
-        <translation>Отображение отладочных сообщений</translation>
-    </message>
-    <message>
-        <source>is_shows_error</source>
-        <translation>Отображение сообщений об ошибках</translation>
-    </message>
-    <message>
-        <source>is_shows_trace</source>
-        <translation>Отображение трассировочных сообщений</translation>
-    </message>
-</context>
-
-<context>
     <name>CreatorMenus</name>
     <message>
         <source>information</source>
@@ -263,6 +243,22 @@
 
 <context>
     <name>QObject</name>
+    <message>
+        <source>is_shows_info</source>
+        <translation>Отображение информационных сообщений</translation>
+    </message>
+    <message>
+        <source>is_shows_debug</source>
+        <translation>Отображение отладочных сообщений</translation>
+    </message>
+    <message>
+        <source>is_shows_error</source>
+        <translation>Отображение сообщений об ошибках</translation>
+    </message>
+    <message>
+        <source>is_shows_trace</source>
+        <translation>Отображение трассировочных сообщений</translation>
+    </message>
     <message>
         <source>Starting application %1</source>
         <translation>Программа %1 запущена</translation>

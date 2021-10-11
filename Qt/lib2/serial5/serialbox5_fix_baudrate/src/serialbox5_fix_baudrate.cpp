@@ -40,12 +40,11 @@ typedef enum
 SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent) :
     SerialWidget(parent),
     ui(new Ui::SerialBox5_fix_baudrate),
-    parent(parent),
     caption("no name"),
     flag_in_hex(false),
     flag_byte_by_byte(false)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent,
@@ -53,13 +52,12 @@ SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent,
                                                  const QString &o_name) :
     SerialWidget(parent),
     ui(new Ui::SerialBox5_fix_baudrate),
-    parent(parent),
     caption(caption),
     o_name(o_name),
     flag_in_hex(false),
     flag_byte_by_byte(false)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 SerialBox5_fix_baudrate::~SerialBox5_fix_baudrate()

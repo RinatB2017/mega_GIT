@@ -63,7 +63,6 @@ public:
 
 private:
     Ui::SerialBox5_fix_baudrate *ui;
-    QWidget *parent;
 
     QString caption;
     QString o_name;

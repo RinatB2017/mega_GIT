@@ -127,7 +127,7 @@ win32 {
 }
 ###############################################################################
 CONFIG(debug, debug|release) {
-    CONFIG += c++14
+    CONFIG += c++17
     CONFIG += console
     CONFIG -= app_bundle
     #message (console ON)

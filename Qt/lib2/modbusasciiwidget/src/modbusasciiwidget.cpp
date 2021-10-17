@@ -27,7 +27,7 @@
 ModbusAsciiWidget::ModbusAsciiWidget(QWidget *parent) :
     MyWidget(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 void ModbusAsciiWidget::init(void)

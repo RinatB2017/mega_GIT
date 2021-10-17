@@ -25,7 +25,7 @@ MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MainBox_GUI(parent, splash)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()

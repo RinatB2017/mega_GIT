@@ -42,7 +42,7 @@ MainBox::MainBox(QWidget *parent,
     ui(new Ui::MainBox),
     parent(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()

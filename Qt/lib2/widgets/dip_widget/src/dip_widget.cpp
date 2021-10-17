@@ -23,7 +23,7 @@
 DIP_widget::DIP_widget(QWidget *parent) :
     QWidget(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 DIP_widget::~DIP_widget()

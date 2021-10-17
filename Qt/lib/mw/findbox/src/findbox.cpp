@@ -27,7 +27,7 @@ FindBox::FindBox(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 FindBox::~FindBox()

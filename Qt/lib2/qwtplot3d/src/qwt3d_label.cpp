@@ -5,7 +5,7 @@ using namespace Qwt3D;
 
 Label::Label()
 {
-  init();;
+  init();
 }
 
 Label::Label(const QString & family, int pointSize, int weight, bool italic)
@@ -16,7 +16,7 @@ Label::Label(const QString & family, int pointSize, int weight, bool italic)
 
 void Label::init(const QString & family, int pointSize, int weight, bool italic)
 {
-  init();;
+  init();
   font_ = QFont(family, pointSize, weight, italic );
 }
 

@@ -31,7 +31,7 @@ TestDialog::TestDialog(int max_index,
 {
     ui->setupUi(this);
 
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 TestDialog::~TestDialog()

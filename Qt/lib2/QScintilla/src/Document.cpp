@@ -151,7 +151,7 @@ Document::~Document() {
 void Document::Init() {
 	for (int j=0; j<ldSize; j++) {
 		if (perLineData[j])
-			perLineData[j]->init();;
+			perLineData[j]->init();
 	}
 }
 

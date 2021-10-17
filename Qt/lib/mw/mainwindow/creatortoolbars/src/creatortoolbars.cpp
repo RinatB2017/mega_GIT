@@ -27,7 +27,7 @@ CreatorToolBars::CreatorToolBars(QWidget *parent) :
     CreatorWindow(parent)
 {
 #ifndef NO_TOOLBAR
-    init();;
+    init();
 #endif
 }
 //--------------------------------------------------------------------------------

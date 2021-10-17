@@ -23,7 +23,7 @@
 Youtube_walker::Youtube_walker(QWidget *parent) :
     QWidget(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 Youtube_walker::~Youtube_walker()

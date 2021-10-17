@@ -25,7 +25,7 @@
 Google_walker::Google_walker(QWidget *parent) :
     QWidget(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 Google_walker::~Google_walker()

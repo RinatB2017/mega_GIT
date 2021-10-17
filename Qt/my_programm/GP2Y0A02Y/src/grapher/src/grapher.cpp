@@ -26,7 +26,7 @@ Grapher::Grapher(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::Grapher)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 Grapher::~Grapher()

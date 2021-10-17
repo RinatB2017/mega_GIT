@@ -63,7 +63,7 @@ public:
 QwtPlotHistogram::QwtPlotHistogram( const QwtText &title ):
     QwtPlotSeriesItem( title )
 {
-    init();;
+    init();
 }
 
 /*!
@@ -73,7 +73,7 @@ QwtPlotHistogram::QwtPlotHistogram( const QwtText &title ):
 QwtPlotHistogram::QwtPlotHistogram( const QString &title ):
     QwtPlotSeriesItem( title )
 {
-    init();;
+    init();
 }
 
 //! Destructor

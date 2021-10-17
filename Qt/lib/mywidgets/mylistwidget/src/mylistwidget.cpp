@@ -23,7 +23,7 @@
 MyListWidget::MyListWidget(QWidget *parent) :
     QListWidget(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 MyListWidget::~MyListWidget()

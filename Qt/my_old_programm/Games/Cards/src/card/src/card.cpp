@@ -28,7 +28,7 @@
 Card::Card(QWidget *parent) :
     MyWidget(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 void Card::init(void)

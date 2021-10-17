@@ -25,7 +25,7 @@ Device::Device(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::Device)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 Device::~Device()

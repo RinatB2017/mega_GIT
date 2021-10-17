@@ -57,7 +57,7 @@ public:
 QwtPlotTradingCurve::QwtPlotTradingCurve( const QwtText &title ):
     QwtPlotSeriesItem( title )
 {
-    init();;
+    init();
 }
 
 /*!
@@ -67,7 +67,7 @@ QwtPlotTradingCurve::QwtPlotTradingCurve( const QwtText &title ):
 QwtPlotTradingCurve::QwtPlotTradingCurve( const QString &title ):
     QwtPlotSeriesItem( QwtText( title ) )
 {
-    init();;
+    init();
 }
 
 //! Destructor

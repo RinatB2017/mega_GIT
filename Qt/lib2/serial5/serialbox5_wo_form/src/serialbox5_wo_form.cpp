@@ -31,7 +31,7 @@ SerialBox5_wo_form::SerialBox5_wo_form(QWidget *parent) :
     SerialWidget(parent),
     caption("no name")
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 SerialBox5_wo_form::SerialBox5_wo_form(QWidget *parent,
@@ -41,7 +41,7 @@ SerialBox5_wo_form::SerialBox5_wo_form(QWidget *parent,
     caption(caption),
     o_name(o_name)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 SerialBox5_wo_form::~SerialBox5_wo_form()

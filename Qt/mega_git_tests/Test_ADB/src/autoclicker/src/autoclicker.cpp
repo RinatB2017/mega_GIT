@@ -28,7 +28,7 @@ AutoClicker::AutoClicker(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 AutoClicker::~AutoClicker()

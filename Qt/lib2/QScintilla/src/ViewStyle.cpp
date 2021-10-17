@@ -88,7 +88,7 @@ void FontRealised::Realise(Surface &surface, int zoomLevel, int technology, cons
 }
 
 ViewStyle::ViewStyle() {
-	init();;
+	init();
 }
 
 ViewStyle::ViewStyle(const ViewStyle &source) {

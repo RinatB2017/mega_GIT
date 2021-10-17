@@ -23,7 +23,7 @@
 Simple_process::Simple_process(QWidget *parent) :
     MyWidget(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 Simple_process::~Simple_process()

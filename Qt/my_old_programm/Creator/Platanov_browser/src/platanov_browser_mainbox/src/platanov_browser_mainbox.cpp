@@ -34,7 +34,7 @@ MainBox::MainBox(QWidget *parent) :
     progressBar(0),
     address(0)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()

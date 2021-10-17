@@ -26,7 +26,7 @@ MultiEdit::MultiEdit(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MultiEdit)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 MultiEdit::~MultiEdit()

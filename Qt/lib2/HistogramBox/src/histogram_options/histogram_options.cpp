@@ -34,7 +34,7 @@ Histogram_Options::Histogram_Options(double min_axis_X,
     min_axis_Y(min_axis_Y),
     max_axis_Y(max_axis_Y)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 Histogram_Options::~Histogram_Options()

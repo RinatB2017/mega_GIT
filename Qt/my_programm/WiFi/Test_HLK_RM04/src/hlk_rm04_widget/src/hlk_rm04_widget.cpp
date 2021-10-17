@@ -26,7 +26,7 @@ HLK_RM04_widget::HLK_RM04_widget(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::HLK_RM04_widget)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 HLK_RM04_widget::~HLK_RM04_widget()

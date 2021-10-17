@@ -120,7 +120,7 @@ void MarkerHandleSet::CombineWith(MarkerHandleSet *other) {
 }
 
 LineMarkers::~LineMarkers() {
-	init();;
+	init();
 }
 
 void LineMarkers::Init() {
@@ -489,7 +489,7 @@ int LineAnnotation::Lines(int line) const {
 }
 
 LineTabstops::~LineTabstops() {
-	init();;
+	init();
 }
 
 void LineTabstops::Init() {

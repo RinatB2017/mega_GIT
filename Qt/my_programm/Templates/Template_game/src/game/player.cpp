@@ -30,7 +30,7 @@ Player::Player(Map *map, bool is_alive, int pos_x, int pos_y)
     this->pos_x = pos_x;
     this->pos_y = pos_y;
 
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 bool Player::is_alive(void)

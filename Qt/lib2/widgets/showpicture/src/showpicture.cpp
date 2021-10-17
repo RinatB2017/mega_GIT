@@ -25,7 +25,7 @@
 ShowPicture::ShowPicture(QWidget *parent) :
     QLabel(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 ShowPicture::~ShowPicture()

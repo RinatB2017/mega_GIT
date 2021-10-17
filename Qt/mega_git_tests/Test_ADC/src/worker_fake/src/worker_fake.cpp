@@ -26,7 +26,7 @@ Worker_fake::Worker_fake(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::Worker_fake)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 Worker_fake::~Worker_fake()

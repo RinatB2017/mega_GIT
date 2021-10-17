@@ -34,7 +34,7 @@
 Widget::Widget(QWidget *parent) :
     MyWidget(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 void Widget::init(void)

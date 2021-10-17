@@ -432,14 +432,14 @@ static void qwtToRgba( const QImage* from, QImage* to,
 QwtPlotRasterItem::QwtPlotRasterItem( const QString& title ):
     QwtPlotItem( QwtText( title ) )
 {
-    init();;
+    init();
 }
 
 //! Constructor
 QwtPlotRasterItem::QwtPlotRasterItem( const QwtText& title ):
     QwtPlotItem( title )
 {
-    init();;
+    init();
 }
 
 //! Destructor

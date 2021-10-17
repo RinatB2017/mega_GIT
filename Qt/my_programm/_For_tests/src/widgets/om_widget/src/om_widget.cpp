@@ -23,7 +23,7 @@
 OM_widget::OM_widget(QWidget *parent) :
     QWidget(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 OM_widget::~OM_widget()

@@ -42,7 +42,7 @@ HistogramBox::HistogramBox(QWidget *parent) :
     title_axis_X = "X";
     title_axis_Y = "Y";
 
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 void HistogramBox::set_axis_scale_x(double new_axis_X_min, double new_axis_X_max)

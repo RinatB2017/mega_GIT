@@ -26,7 +26,7 @@ RS232_widget::RS232_widget(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::RS232_widget)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 RS232_widget::~RS232_widget()

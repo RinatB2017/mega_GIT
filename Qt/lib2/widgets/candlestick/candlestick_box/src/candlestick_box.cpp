@@ -32,7 +32,7 @@ CandleStick_Box::CandleStick_Box(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 CandleStick_Box::~CandleStick_Box()

@@ -39,7 +39,7 @@ SerialBox5::SerialBox5(QWidget *parent) :
     ui(new Ui::SerialBox5),
     caption("no name")
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 SerialBox5::SerialBox5(QWidget *parent,
@@ -50,7 +50,7 @@ SerialBox5::SerialBox5(QWidget *parent,
     caption(caption),
     o_name(o_name)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 SerialBox5::~SerialBox5()

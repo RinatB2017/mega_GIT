@@ -26,7 +26,7 @@ MainBox_GUI::MainBox_GUI(QWidget *parent,
     splash(splash),
     ui(new Ui::MainBox_GUI)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 MainBox_GUI::~MainBox_GUI()

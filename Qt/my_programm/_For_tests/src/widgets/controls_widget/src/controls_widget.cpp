@@ -25,7 +25,7 @@ Controls_widget::Controls_widget(QWidget *parent) :
     Default_widget(parent),
     ui(new Ui::Controls_widget)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 Controls_widget::~Controls_widget()

@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>SendBox5</class>
  <widget class="QFrame" name="SendBox5">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>362</width>
-    <height>84</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>

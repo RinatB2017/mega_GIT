@@ -43,7 +43,7 @@ WebSettingBox::WebSettingBox(QVector<ATTR> &attr,
         attributes.append(attr.at(n));
     }
 
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 void WebSettingBox::init(void)

@@ -43,7 +43,7 @@ MainBox::MainBox(QWidget *parent,
     splash(splash),
     ui(new Ui::MainBox)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()

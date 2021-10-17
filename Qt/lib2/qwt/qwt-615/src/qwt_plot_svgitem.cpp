@@ -36,7 +36,7 @@ public:
 QwtPlotSvgItem::QwtPlotSvgItem( const QString& title ):
     QwtPlotItem( QwtText( title ) )
 {
-    init();;
+    init();
 }
 
 /*!
@@ -51,7 +51,7 @@ QwtPlotSvgItem::QwtPlotSvgItem( const QString& title ):
 QwtPlotSvgItem::QwtPlotSvgItem( const QwtText& title ):
     QwtPlotItem( title )
 {
-    init();;
+    init();
 }
 
 //! Destructor

@@ -78,7 +78,7 @@ public:
 QwtPlotIntervalCurve::QwtPlotIntervalCurve( const QwtText &title ):
     QwtPlotSeriesItem( title )
 {
-    init();;
+    init();
 }
 
 /*!
@@ -88,7 +88,7 @@ QwtPlotIntervalCurve::QwtPlotIntervalCurve( const QwtText &title ):
 QwtPlotIntervalCurve::QwtPlotIntervalCurve( const QString &title ):
     QwtPlotSeriesItem( QwtText( title ) )
 {
-    init();;
+    init();
 }
 
 //! Destructor

@@ -28,7 +28,7 @@ Scan_home_network::Scan_home_network(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::Scan_home_network)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 Scan_home_network::~Scan_home_network()

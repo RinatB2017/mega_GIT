@@ -29,7 +29,7 @@ MyBrowser::MyBrowser(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MyBrowser)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 MyBrowser::~MyBrowser()

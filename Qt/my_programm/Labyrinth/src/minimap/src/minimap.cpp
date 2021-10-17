@@ -28,7 +28,7 @@
 MiniMap::MiniMap(QWidget *parent) :
     MyWidget(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 MiniMap::~MiniMap()

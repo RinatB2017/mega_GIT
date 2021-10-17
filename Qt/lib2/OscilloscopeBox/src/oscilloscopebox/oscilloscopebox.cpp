@@ -33,7 +33,7 @@ OscilloscopeBox::OscilloscopeBox(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::OscilloscopeBox)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 OscilloscopeBox::~OscilloscopeBox()

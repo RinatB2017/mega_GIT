@@ -25,7 +25,7 @@ OCV_widget::OCV_widget(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::OCV_widget)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 OCV_widget::~OCV_widget()

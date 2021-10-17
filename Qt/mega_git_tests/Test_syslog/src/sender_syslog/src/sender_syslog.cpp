@@ -33,7 +33,7 @@ Sender_syslog::Sender_syslog(const QString &title,
       def_level(default_level)
 {
     setObjectName(title);
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 Sender_syslog::~Sender_syslog()

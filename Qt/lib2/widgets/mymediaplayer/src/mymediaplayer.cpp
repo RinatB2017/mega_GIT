@@ -25,7 +25,7 @@ MyMediaPlayer::MyMediaPlayer(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::MyMediaPlayer)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 MyMediaPlayer::~MyMediaPlayer()

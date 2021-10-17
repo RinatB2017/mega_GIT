@@ -15,7 +15,7 @@ Proto_NMEA_0183::Proto_NMEA_0183(QWidget *parent) :
         connect(this, SIGNAL(message(QString)), parent, SIGNAL(message(QString)));
     }
 
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 void Proto_NMEA_0183::init(void)

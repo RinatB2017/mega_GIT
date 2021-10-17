@@ -37,7 +37,7 @@ MainBox::MainBox(QWidget *parent,
     ui(new Ui::MainBox),
     serialBox(0)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()

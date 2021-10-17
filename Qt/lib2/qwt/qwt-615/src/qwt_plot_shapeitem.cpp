@@ -106,7 +106,7 @@ public:
 QwtPlotShapeItem::QwtPlotShapeItem( const QString& title ):
     QwtPlotItem( QwtText( title ) )
 {
-    init();;
+    init();
 }
 
 /*!
@@ -121,7 +121,7 @@ QwtPlotShapeItem::QwtPlotShapeItem( const QString& title ):
 QwtPlotShapeItem::QwtPlotShapeItem( const QwtText& title ):
     QwtPlotItem( title )
 {
-    init();;
+    init();
 }
 
 //! Destructor

@@ -37,7 +37,7 @@ CreatorWindow::CreatorWindow(QWidget *parent)
                  .arg(VER_PATCH)
                  .arg(VER_BUILD))
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 CreatorWindow::~CreatorWindow()

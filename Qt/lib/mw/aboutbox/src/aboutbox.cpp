@@ -35,7 +35,7 @@ AboutBox::AboutBox(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AboutBox)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 AboutBox::~AboutBox()

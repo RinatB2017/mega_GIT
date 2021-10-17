@@ -32,7 +32,7 @@ LogBox::LogBox(QWidget *parent) :
     MyWidget(parent),
     o_name("logbox")
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 LogBox::LogBox(const QString &o_name,
@@ -40,7 +40,7 @@ LogBox::LogBox(const QString &o_name,
     MyWidget(parent),
     o_name(o_name)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 LogBox::~LogBox()

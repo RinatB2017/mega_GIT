@@ -27,7 +27,7 @@ CreatorMenus::CreatorMenus(QWidget *parent) :
     CreatorToolBars(parent)
 {
 #ifndef NO_MENU
-    init();;
+    init();
 #endif
 }
 //--------------------------------------------------------------------------------

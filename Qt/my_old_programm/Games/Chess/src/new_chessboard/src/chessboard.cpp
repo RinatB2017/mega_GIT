@@ -28,7 +28,7 @@
 ChessBoard::ChessBoard(QWidget *parent) :
     MyWidget(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 void ChessBoard::create_figures(void)

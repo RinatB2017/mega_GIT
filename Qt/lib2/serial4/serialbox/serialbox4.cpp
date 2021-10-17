@@ -38,7 +38,7 @@ SerialBox4::SerialBox4(QWidget *parent) :
     parent(parent),
     caption("no name")
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 SerialBox4::SerialBox4(QWidget *parent, const QString &caption) :
@@ -47,7 +47,7 @@ SerialBox4::SerialBox4(QWidget *parent, const QString &caption) :
     parent(parent),
     caption(caption)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 SerialBox4::~SerialBox4()

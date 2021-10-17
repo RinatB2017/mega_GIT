@@ -25,7 +25,7 @@ FileManager::FileManager(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::FileManager)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 FileManager::~FileManager()

@@ -23,7 +23,7 @@
 QHexEdit2::QHexEdit2(QWidget *parent) :
     QHexEdit(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 void QHexEdit2::init(void)

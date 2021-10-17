@@ -27,7 +27,7 @@ using namespace Scintilla;
 #endif
 
 LineVector::LineVector() : starts(256), perLine(0) {
-	init();;
+	init();
 }
 
 LineVector::~LineVector() {
@@ -37,7 +37,7 @@ LineVector::~LineVector() {
 void LineVector::Init() {
 	starts.DeleteAll();
 	if (perLine) {
-		perLine->init();;
+		perLine->init();
 	}
 }
 
@@ -586,7 +586,7 @@ bool CellBuffer::UTF8LineEndOverlaps(int position) const {
 
 void CellBuffer::ResetLineEnds() {
 	// Reinitialize line data -- too much work to preserve
-	lv.init();;
+	lv.init();
 
 	int position = 0;
 	int length = Length();
@@ -704,7 +704,7 @@ void CellBuffer::BasicDeleteChars(int position, int deleteLength) {
 	if ((position == 0) && (deleteLength == substance.Length())) {
 		// If whole buffer is being deleted, faster to reinitialise lines data
 		// than to delete each line.
-		lv.init();;
+		lv.init();
 	} else {
 		// Have to fix up line positions before doing deletion as looking at text in buffer
 		// to work out which lines have been removed

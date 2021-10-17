@@ -49,7 +49,7 @@ SerialBox5_lite::SerialBox5_lite(QWidget *parent) :
     flag_in_hex(false),
     flag_byte_by_byte(false)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 SerialBox5_lite::SerialBox5_lite(QWidget *parent,
@@ -63,7 +63,7 @@ SerialBox5_lite::SerialBox5_lite(QWidget *parent,
     flag_in_hex(false),
     flag_byte_by_byte(false)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 SerialBox5_lite::~SerialBox5_lite()

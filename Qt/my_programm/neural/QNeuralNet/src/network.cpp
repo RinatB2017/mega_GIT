@@ -79,7 +79,7 @@ Network::Network(QList<int> neuronsInLayers,
 
     srand((unsigned int)time(0));
 
-    init();;
+    init();
 
     //randomize weights
     for (int i = 1; i < m_layersCount; i++)

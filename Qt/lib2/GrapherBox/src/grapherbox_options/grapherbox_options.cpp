@@ -27,7 +27,7 @@ GrapherBox_Options::GrapherBox_Options(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GrapherBox_Options)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 GrapherBox_Options::~GrapherBox_Options()

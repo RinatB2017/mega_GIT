@@ -26,7 +26,7 @@
 MyThread::MyThread(QObject *parent) :
     QObject(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 MyThread::~MyThread()

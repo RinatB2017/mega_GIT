@@ -25,7 +25,7 @@
 Bone::Bone(QWidget *parent) :
     QFrame(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 void Bone::init(void)

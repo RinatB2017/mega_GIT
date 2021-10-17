@@ -44,7 +44,7 @@ HID_device::HID_device(QWidget *parent) :
     MyWidget(parent),
     ui(new Ui::HID_device)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 HID_device::~HID_device()
@@ -179,7 +179,7 @@ void HID_device::dev_open(void)
     int res = 0;
     while(dev == nullptr)
     {
-        res = hid_init();;
+        res = hid_init();
         if(res != 0)
         {
             emit error(QString("hid_int return %1").arg(res));

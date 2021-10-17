@@ -16,7 +16,7 @@ UDP_Client::UDP_Client(QWidget *parent) :
     MyWidget(parent),
     parent(parent)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 QString UDP_Client::getLocalAddress(void)

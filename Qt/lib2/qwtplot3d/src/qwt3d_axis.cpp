@@ -4,7 +4,7 @@ using namespace Qwt3D;
 
 Axis::Axis()
 {
-    init();;
+    init();
 };
 
 Axis::~Axis()
@@ -13,7 +13,7 @@ Axis::~Axis()
 
 Axis::Axis(Triple beg, Triple end)
 {
-    init();;
+    init();
     setPosition(beg,end);
 }
 

@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>SerialBox5</class>
  <widget class="QWidget" name="SerialBox5">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>319</width>
-    <height>346</height>
-   </rect>
-  </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="leftMargin">
     <number>0</number>
@@ -66,10 +58,13 @@
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
               <layout class="QGridLayout" name="gridLayout">
-               <item row="5" column="0">
-                <widget class="QLabel" name="label_5">
+               <item row="2" column="1" colspan="2">
+                <widget class="QComboBox" name="DataBitsBox"/>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_3">
                  <property name="text">
-                  <string>Упр. потоком:</string>
+                  <string>Биты данных:</string>
                  </property>
                 </widget>
                </item>
@@ -80,12 +75,11 @@
                  </property>
                 </widget>
                </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="label">
-                 <property name="text">
-                  <string>Устройство:</string>
-                 </property>
-                </widget>
+               <item row="4" column="1" colspan="2">
+                <widget class="QComboBox" name="StopBitsBox"/>
+               </item>
+               <item row="5" column="1" colspan="2">
+                <widget class="QComboBox" name="FlowBox"/>
                </item>
                <item row="4" column="0">
                 <widget class="QLabel" name="label_6">
@@ -94,14 +88,18 @@
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1">
-                <widget class="QComboBox" name="BaudBox"/>
-               </item>
                <item row="0" column="1">
                 <widget class="QComboBox" name="PortBox"/>
                </item>
-               <item row="5" column="1">
-                <widget class="QComboBox" name="FlowBox"/>
+               <item row="3" column="1" colspan="2">
+                <widget class="QComboBox" name="ParityBox"/>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label">
+                 <property name="text">
+                  <string>Устройство:</string>
+                 </property>
+                </widget>
                </item>
                <item row="1" column="0">
                 <widget class="QLabel" name="label_2">
@@ -110,19 +108,10 @@
                  </property>
                 </widget>
                </item>
-               <item row="3" column="1">
-                <widget class="QComboBox" name="ParityBox"/>
-               </item>
-               <item row="4" column="1">
-                <widget class="QComboBox" name="StopBitsBox"/>
-               </item>
-               <item row="2" column="1">
-                <widget class="QComboBox" name="DataBitsBox"/>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_3">
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_5">
                  <property name="text">
-                  <string>Биты данных:</string>
+                  <string>Упр. потоком:</string>
                  </property>
                 </widget>
                </item>
@@ -133,14 +122,17 @@
                  </property>
                 </widget>
                </item>
+               <item row="1" column="1" colspan="2">
+                <widget class="QComboBox" name="BaudBox"/>
+               </item>
+               <item row="6" column="0" colspan="3">
+                <widget class="QPushButton" name="btn_default">
+                 <property name="text">
+                  <string>По умолчанию (9600 etc.)</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btn_default">
-               <property name="text">
-                <string>По умолчанию (9600 etc.)</string>
-               </property>
-              </widget>
              </item>
              <item>
               <layout class="QGridLayout" name="layout_other"/>
@@ -220,14 +212,15 @@ QPushButton#btn_power:checked {
   </layout>
  </widget>
  <tabstops>
+  <tabstop>btn_power</tabstop>
   <tabstop>PortBox</tabstop>
+  <tabstop>btn_refresh</tabstop>
   <tabstop>BaudBox</tabstop>
   <tabstop>DataBitsBox</tabstop>
   <tabstop>ParityBox</tabstop>
   <tabstop>StopBitsBox</tabstop>
   <tabstop>FlowBox</tabstop>
-  <tabstop>btn_refresh</tabstop>
-  <tabstop>btn_power</tabstop>
+  <tabstop>btn_default</tabstop>
  </tabstops>
  <resources/>
  <connections/>

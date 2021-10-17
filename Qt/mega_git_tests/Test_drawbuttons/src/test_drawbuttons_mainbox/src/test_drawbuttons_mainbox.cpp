@@ -57,7 +57,7 @@ MainBox::MainBox(QWidget *parent,
     splash(splash),
     ui(new Ui::MainBox)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
@@ -161,7 +161,7 @@ void MainBox::test(void)
 void MainBox::usb(void)
 {
 #if 0
-    usb_init();;
+    usb_init();
     //usb_set_debug();
 
     //usb_device dev;

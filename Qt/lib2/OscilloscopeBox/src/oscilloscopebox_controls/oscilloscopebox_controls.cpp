@@ -25,7 +25,7 @@ Oscilloscopebox_controls::Oscilloscopebox_controls(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Oscilloscopebox_controls)
 {
-    init();;
+    init();
 }
 //--------------------------------------------------------------------------------
 Oscilloscopebox_controls::~Oscilloscopebox_controls()

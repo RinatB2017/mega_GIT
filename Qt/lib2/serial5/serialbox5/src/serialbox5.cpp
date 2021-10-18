@@ -103,7 +103,7 @@ void SerialBox5::init(void)
     setFixedSize(sizeHint());
 #endif
 
-    connect(ui->btn_default, &QPushButton::clicked, this, &SerialBox5::set_default);
+    connect(ui->btn_default,    &QPushButton::clicked,  this,   &SerialBox5::set_default);
 
     setCloseState();
     updateText();

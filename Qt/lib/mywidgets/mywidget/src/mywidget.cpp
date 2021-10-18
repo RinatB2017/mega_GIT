@@ -65,8 +65,8 @@ MyWidget::~MyWidget()
         on = "no name";
     }
 #ifndef LOGGER_ON
-    qDebug() sl.append("~MyWidget()" << on;
-    //qDebug() sl.append("~MyWidget()" << objectName();
+    qDebug() << "~MyWidget()" << on;
+    //qDebug() << "~MyWidget()" << objectName();
 #endif
 #endif
 }
@@ -643,7 +643,7 @@ void MyWidget::check_tooltips(void)
 //--------------------------------------------------------------------------------
 bool MyWidget::fail(const QString &text)
 {
-    emit trace(Q_FUNC_INFO);
+    //emit trace(Q_FUNC_INFO);
     emit error(text);
     return false;
 }

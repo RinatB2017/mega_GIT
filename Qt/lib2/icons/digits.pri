@@ -5,4 +5,4 @@
 DEPENDPATH  += $$PWD/digits
 INCLUDEPATH = $$DEPENDPATH
 
-RESOURCES += $$PWD/digits/digits.qrc
+RESOURCES *= $$PWD/digits/digits.qrc

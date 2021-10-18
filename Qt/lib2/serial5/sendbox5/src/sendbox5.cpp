@@ -70,6 +70,19 @@ SendBox5::SendBox5(QWidget *parent) :
     connect(ui->cb_send_text->lineEdit(),   &QLineEdit::returnPressed,  this,   &SendBox5::send_text);
     connect(ui->cb_send_bin->lineEdit(),    &QLineEdit::returnPressed,  this,   &SendBox5::send_bin);
 
+    connect(ui->btn_text_commands,  &QPushButton::clicked,  this,   &SendBox5::send_text_command);
+    connect(ui->btn_bin_commands,   &QPushButton::clicked,  this,   &SendBox5::send_bin_command);
+
+#ifndef QT_DEBUG
+    ui->btn_send_text_remove->setVisible(false);
+    ui->btn_send_bin_remove->setVisible(false);
+    ui->cb_send_text->setVisible(false);
+    ui->cb_send_bin->setVisible(false);
+    ui->cb_append->setVisible(false);
+    ui->btn_send_text->setVisible(false);
+    ui->btn_send_bin->setVisible(false);
+#endif
+
     setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 }
 //--------------------------------------------------------------------------------
@@ -148,6 +161,28 @@ void SendBox5::send_bin(void)
     emit sendData(output_data);
 }
 //--------------------------------------------------------------------------------
+void SendBox5::send_text_command(void)
+{
+    Text_widget *tw = new Text_widget();
+    connect(tw, &Text_widget::info,     this,   &SendBox5::info);
+    connect(tw, &Text_widget::debug,    this,   &SendBox5::debug);
+    connect(tw, &Text_widget::error,    this,   &SendBox5::error);
+    connect(tw, &Text_widget::trace,    this,   &SendBox5::trace);
+    connect(tw, &Text_widget::send_command, this,   &SendBox5::sendData);
+    tw->exec();
+}
+//--------------------------------------------------------------------------------
+void SendBox5::send_bin_command(void)
+{
+    Bin_widget *hw = new Bin_widget();
+    connect(hw, &Bin_widget::info,     this,   &SendBox5::info);
+    connect(hw, &Bin_widget::debug,    this,   &SendBox5::debug);
+    connect(hw, &Bin_widget::error,    this,   &SendBox5::error);
+    connect(hw, &Bin_widget::trace,    this,   &SendBox5::trace);
+    connect(hw, &Bin_widget::send_command, this,   &SendBox5::sendData);
+    hw->exec();
+}
+//--------------------------------------------------------------------------------
 void SendBox5::send_text_remove(void)
 {
     ui->cb_send_text->removeItem(ui->cb_send_text->currentIndex());
@@ -169,6 +204,9 @@ void SendBox5::block_interface(bool state)
 
     ui->btn_send_bin_remove->setDisabled(state);
     ui->btn_send_text_remove->setDisabled(state);
+
+    ui->btn_text_commands->setDisabled(state);
+    ui->btn_bin_commands->setDisabled(state);
 }
 //--------------------------------------------------------------------------------
 void SendBox5::updateText(void)

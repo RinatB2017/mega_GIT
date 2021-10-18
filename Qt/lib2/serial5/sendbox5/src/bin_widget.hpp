@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,52 +18,53 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef SENDBOX_HPP
-#define SENDBOX_HPP
+#ifndef BIN_WIDGET_HPP
+#define BIN_WIDGET_HPP
 //--------------------------------------------------------------------------------
-#include <QFrame>
+#include <QInputDialog>
+#include <QDialog>
 
-#include "text_widget.hpp"
-#include "bin_widget.hpp"
+#include "mymessages.hpp"
+#include "mysettings.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
+#define P_BIN_WIDGET           "bin_widget"
+#define P_BIN_WIDGET_GEOMETRY  "bin_widget_geometry"
+//--------------------------------------------------------------------------------
 namespace Ui {
-    class SendBox5;
+    class Bin_widget;
 }
 //--------------------------------------------------------------------------------
-class SendBox5 : public QFrame
+class Bin_widget : public QDialog, public MySettings, public MyMessages
 {
     Q_OBJECT
 
-public:
-    explicit SendBox5(QWidget *parent);
-    virtual ~SendBox5();
-
-    void block_interface(bool state);
-    void updateText(void);
-
 signals:
-    void sendData(const QByteArray &data);
+    void send_command(const QByteArray &);
 
     void info(const QString &);
     void debug(const QString &);
     void error(const QString &);
     void trace(const QString &);
 
-    void state(bool);
-
-private slots:
-    void send_text(void);
-    void send_bin(void);
-    void send_text_remove(void);
-    void send_bin_remove(void);
-
-    void send_text_command(void);
-    void send_bin_command(void);
+public:
+    explicit Bin_widget(QWidget *parent = nullptr);
+    virtual ~Bin_widget();
 
 private:
-    Ui::SendBox5 *ui;
+    Ui::Bin_widget *ui;
 
+    void init(void);
+
+    void append(void);
+    void remove(void);
+    void edit(void);
+    void run(void);
+    void up(void);
+    void down(void);
+
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // SENDBOX_HPP
+#endif // BIN_WIDGET_HPP

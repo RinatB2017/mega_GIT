@@ -2,10 +2,36 @@
 <ui version="4.0">
  <class>SendBox5</class>
  <widget class="QFrame" name="SendBox5">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>250</width>
+    <height>103</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="btn_text_commands">
+       <property name="text">
+        <string>TEXT</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_bin_commands">
+       <property name="text">
+        <string>BIN</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="1" column="1">
@@ -50,6 +76,8 @@
   </layout>
  </widget>
  <tabstops>
+  <tabstop>btn_text_commands</tabstop>
+  <tabstop>btn_bin_commands</tabstop>
   <tabstop>btn_send_text_remove</tabstop>
   <tabstop>cb_send_text</tabstop>
   <tabstop>cb_append</tabstop>

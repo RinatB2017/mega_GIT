@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>SerialBox5</class>
  <widget class="QWidget" name="SerialBox5">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>311</width>
+    <height>318</height>
+   </rect>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="leftMargin">
     <number>0</number>
@@ -58,22 +66,18 @@
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
               <layout class="QGridLayout" name="gridLayout">
-               <item row="2" column="1" colspan="2">
-                <widget class="QComboBox" name="DataBitsBox"/>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_3">
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_5">
                  <property name="text">
-                  <string>Биты данных:</string>
+                  <string>Упр. потоком:</string>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="label_4">
-                 <property name="text">
-                  <string>Четность:</string>
-                 </property>
-                </widget>
+               <item row="1" column="1" colspan="2">
+                <widget class="QComboBox" name="BaudBox"/>
+               </item>
+               <item row="0" column="1">
+                <widget class="QComboBox" name="PortBox"/>
                </item>
                <item row="4" column="1" colspan="2">
                 <widget class="QComboBox" name="StopBitsBox"/>
@@ -88,16 +92,37 @@
                  </property>
                 </widget>
                </item>
-               <item row="0" column="1">
-                <widget class="QComboBox" name="PortBox"/>
+               <item row="2" column="1" colspan="2">
+                <widget class="QComboBox" name="DataBitsBox"/>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_3">
+                 <property name="text">
+                  <string>Биты данных:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0" colspan="3">
+                <widget class="QPushButton" name="btn_default">
+                 <property name="text">
+                  <string>По умолчанию (9600 etc.)</string>
+                 </property>
+                </widget>
                </item>
                <item row="3" column="1" colspan="2">
                 <widget class="QComboBox" name="ParityBox"/>
                </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="label">
+               <item row="0" column="2">
+                <widget class="QToolButton" name="btn_refresh">
                  <property name="text">
-                  <string>Устройство:</string>
+                  <string>...</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_4">
+                 <property name="text">
+                  <string>Четность:</string>
                  </property>
                 </widget>
                </item>
@@ -108,27 +133,10 @@
                  </property>
                 </widget>
                </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="label_5">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label">
                  <property name="text">
-                  <string>Упр. потоком:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="2">
-                <widget class="QToolButton" name="btn_refresh">
-                 <property name="text">
-                  <string>...</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1" colspan="2">
-                <widget class="QComboBox" name="BaudBox"/>
-               </item>
-               <item row="6" column="0" colspan="3">
-                <widget class="QPushButton" name="btn_default">
-                 <property name="text">
-                  <string>По умолчанию (9600 etc.)</string>
+                  <string>Устройство:</string>
                  </property>
                 </widget>
                </item>

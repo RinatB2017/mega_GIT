@@ -25,7 +25,6 @@ win32 {
 
 # не забыть при смене Qt изменить файлы в каталоге win
 RESOURCES += \
-    arrows/arrows.qrc \
     images/images.qrc
 
 OTHER_FILES += \
@@ -43,6 +42,7 @@ LIB_PATH2 = "$$PWD/../../lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
+include ($$LIB_PATH2/icons/arrows.pri)
 
 include (src/test_rgb_display_mainbox/test_rgb_display_mainbox.pri)
 include (src/rgb_display/rgb_display.pri)

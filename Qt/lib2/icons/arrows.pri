@@ -5,6 +5,6 @@
 DEPENDPATH  += $$PWD/arrows
 INCLUDEPATH = $$DEPENDPATH
 
-RESOURCES += \
+RESOURCES *= \
     $$PWD/arrows/arrows.qrc
     

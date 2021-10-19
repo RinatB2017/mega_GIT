@@ -31,7 +31,7 @@ namespace Ui {
     class SendBox5;
 }
 //--------------------------------------------------------------------------------
-class SendBox5 : public QFrame
+class SendBox5 : public QWidget
 {
     Q_OBJECT
 

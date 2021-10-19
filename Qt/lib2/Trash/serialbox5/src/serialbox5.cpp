@@ -121,6 +121,23 @@ void SerialBox5::createWidgets(void)
     ui->gridLayout->setSpacing(0);
 }
 //--------------------------------------------------------------------------------
+#ifndef RS232_NO_FRAME
+void SerialBox5::add_frame_text(QFrame *parent,
+                                const QString &text)
+{
+    QHBoxLayout *hbox = new QHBoxLayout();
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+    hbox->setMargin(0);
+#endif
+    hbox->setSpacing(0);
+    QLabel *label = new QLabel(text);
+    label->setAlignment(Qt::AlignHCenter);
+    hbox->addWidget(label);
+    parent->setLayout(hbox);
+    parent->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+}
+#endif
+//--------------------------------------------------------------------------------
 void SerialBox5::refresh(void)
 {
     ui->PortBox->clear();
@@ -208,6 +225,27 @@ void SerialBox5::initSerial(void)
     Q_ASSERT(sendBox5);
     connect(sendBox5,   &SendBox5::sendData, this, &SerialBox5::sendData);
     ui->layout_other->addWidget(sendBox5);
+#endif
+
+#ifndef RS232_NO_FRAME
+    frame_ring = new QFrame(this);
+    Q_ASSERT(frame_ring);
+    add_frame_text(frame_ring, tr("ring"));
+
+    frame_dsr = new QFrame(this);
+    Q_ASSERT(frame_dsr);
+    add_frame_text(frame_dsr, tr("dsr"));
+
+    frame_cts = new QFrame(this);
+    Q_ASSERT(frame_cts);
+    add_frame_text(frame_cts, tr("cts"));
+
+    QHBoxLayout *hbox = new QHBoxLayout();
+    hbox->addWidget(frame_ring);
+    hbox->addWidget(frame_dsr);
+    hbox->addWidget(frame_cts);
+
+    ui->layout_other->addLayout(hbox, 1, 0);
 #endif
 
     connect(this,   &SerialWidget::s_baudRateChanged,    this,   &SerialBox5::set_baudRate);

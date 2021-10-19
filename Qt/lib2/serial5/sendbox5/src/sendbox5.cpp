@@ -29,7 +29,7 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 SendBox5::SendBox5(QWidget *parent) :
-    QFrame(parent),
+    QWidget(parent),
     ui(new Ui::SendBox5)
 {
     ui->setupUi(this);
@@ -44,8 +44,6 @@ SendBox5::SendBox5(QWidget *parent) :
 
     connect(ui->btn_text_commands,  &QPushButton::clicked,  this,   &SendBox5::send_text_command);
     connect(ui->btn_bin_commands,   &QPushButton::clicked,  this,   &SendBox5::send_bin_command);
-
-    setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 }
 //--------------------------------------------------------------------------------
 SendBox5::~SendBox5()

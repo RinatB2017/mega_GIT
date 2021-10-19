@@ -38,6 +38,15 @@ void Text_widget::init(void)
 {
     ui->setupUi(this);
 
+    ui->cb_append->setProperty(NO_SAVE, true);
+    ui->cb_append->clear();
+    ui->cb_append->addItems(QStringList()
+                            << "no add"
+                            << "0x00"
+                            << "0x0D"
+                            << "0x0A"
+                            << "0x0D 0x0A" );
+
     ui->btn_add->setIcon(QIcon(":/plus_minus/plus.png"));
     ui->btn_rem->setIcon(QIcon(":/plus_minus/minus.png"));
     ui->btn_edt->setIcon(qApp->style()->standardIcon(QStyle::SP_FileIcon));
@@ -100,7 +109,33 @@ void Text_widget::edit(void)
 //--------------------------------------------------------------------------------
 void Text_widget::run(void)
 {
-    emit send_command(ui->listWidget->currentItem()->text().toLatin1());
+    QByteArray ba;
+    ba.clear();
+    ba.append(ui->listWidget->currentItem()->text().toLatin1());
+    switch(ui->cb_append->currentIndex())
+    {
+    case 0: // "no add"
+        break;
+
+    case 1: //  add 0x00
+        ba.append(static_cast<char>(0x00));
+        break;
+
+    case 2: //  add 0x0D"
+        ba.append(static_cast<char>(0x0D));
+        break;
+
+    case 3: //  add "0x0A"
+        ba.append(static_cast<char>(0x0A));
+        break;
+
+    case 4: //  add 0x0D 0x0A"
+        ba.append(static_cast<char>(0x0D));
+        ba.append(static_cast<char>(0x0A));
+        break;
+    }
+
+    emit send_command(ba);
 }
 //--------------------------------------------------------------------------------
 void Text_widget::up(void)

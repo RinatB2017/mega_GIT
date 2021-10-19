@@ -91,6 +91,14 @@ private:
     QPointer<SendBox5> sendBox5;
 #endif
 
+#ifndef RS232_NO_FRAME
+    QPointer<QFrame> frame_ring;
+    QPointer<QFrame> frame_dsr;
+    QPointer<QFrame> frame_cts;
+    void add_frame_text(QFrame *parent,
+                        const QString &text);
+#endif
+
     void init(void);
     void createWidgets(void);
     void initEnumerator(void);

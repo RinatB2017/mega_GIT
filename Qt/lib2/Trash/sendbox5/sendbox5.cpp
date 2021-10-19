@@ -107,22 +107,22 @@ void SendBox5::send_text(void)
     QByteArray ba = data.toLatin1();
     switch(ui->cb_append->currentIndex())
     {
-    case 0: // tr("no add")
+    case 0: // "no add"
         break;
 
-    case 1: //  << tr("0x00")
+    case 1: //  << "0x00"
         ba.append(static_cast<char>(0x00));
         break;
 
-    case 2: //  << tr("0x0D")
+    case 2: //  << "0x0D"
         ba.append(static_cast<char>(0x0D));
         break;
 
-    case 3: //  << tr("0x0A")
+    case 3: //  << "0x0A"
         ba.append(static_cast<char>(0x0A));
         break;
 
-    case 4: //  << tr("0x0D 0x0A")
+    case 4: //  << "0x0D 0x0A"
         ba.append(static_cast<char>(0x0D));
         ba.append(static_cast<char>(0x0A));
         break;
@@ -215,10 +215,11 @@ void SendBox5::updateText(void)
     ui->btn_send_bin->setText(tr("send"));
 
     ui->cb_append->clear();
-    ui->cb_append->addItems(QStringList() << tr("no add")
-                            << tr("0x00")
-                            << tr("0x0D")
-                            << tr("0x0A")
-                            << tr("0x0D 0x0A") );
+    ui->cb_append->addItems(QStringList() 
+                            << "no add"
+                            << "0x00"
+                            << "0x0D"
+                            << "0x0A"
+                            << "0x0D 0x0A" );
 }
 //--------------------------------------------------------------------------------

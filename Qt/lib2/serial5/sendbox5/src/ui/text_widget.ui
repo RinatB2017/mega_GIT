@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>Text_widget</class>
  <widget class="QDialog" name="Text_widget">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>274</width>
-    <height>240</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>Send command</string>
   </property>
@@ -68,6 +60,9 @@
       </spacer>
      </item>
      <item>
+      <widget class="QComboBox" name="cb_append"/>
+     </item>
+     <item>
       <widget class="QToolButton" name="btn_run">
        <property name="text">
         <string>...</string>
@@ -85,6 +80,7 @@
   <tabstop>btn_edt</tabstop>
   <tabstop>btn_up</tabstop>
   <tabstop>btn_down</tabstop>
+  <tabstop>cb_append</tabstop>
   <tabstop>btn_run</tabstop>
  </tabstops>
  <resources/>

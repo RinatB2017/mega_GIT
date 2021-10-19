@@ -42,46 +42,8 @@ SendBox5::SendBox5(QWidget *parent) :
         connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
     }
 
-    ui->btn_send_text->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
-    ui->btn_send_text->setObjectName("btn_send_text");
-
-    ui->btn_send_bin->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
-    ui->btn_send_bin->setObjectName("btn_send_bin");
-
-    ui->btn_send_bin_remove->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
-    ui->btn_send_text_remove->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
-
-    ui->cb_send_text->setEditable(true);
-    ui->cb_send_text->setObjectName("cb_send_text");
-
-    ui->cb_send_bin->setEditable(true);
-    ui->cb_send_bin->setObjectName("le_send_bin");
-
-    ui->cb_append->setSizePolicy(QSizePolicy::Fixed,  QSizePolicy::Preferred);
-
-    ui->cb_append->setProperty(NO_SAVE, true);
-
-    connect(ui->btn_send_text,  &QToolButton::clicked,  this,   &SendBox5::send_text);
-    connect(ui->btn_send_bin,   &QToolButton::clicked,  this,   &SendBox5::send_bin);
-
-    connect(ui->btn_send_text_remove,  &QToolButton::clicked,  this,   &SendBox5::send_text_remove);
-    connect(ui->btn_send_bin_remove,   &QToolButton::clicked,  this,   &SendBox5::send_bin_remove);
-
-    connect(ui->cb_send_text->lineEdit(),   &QLineEdit::returnPressed,  this,   &SendBox5::send_text);
-    connect(ui->cb_send_bin->lineEdit(),    &QLineEdit::returnPressed,  this,   &SendBox5::send_bin);
-
     connect(ui->btn_text_commands,  &QPushButton::clicked,  this,   &SendBox5::send_text_command);
     connect(ui->btn_bin_commands,   &QPushButton::clicked,  this,   &SendBox5::send_bin_command);
-
-#ifndef QT_DEBUG
-    ui->btn_send_text_remove->setVisible(false);
-    ui->btn_send_bin_remove->setVisible(false);
-    ui->cb_send_text->setVisible(false);
-    ui->cb_send_bin->setVisible(false);
-    ui->cb_append->setVisible(false);
-    ui->btn_send_text->setVisible(false);
-    ui->btn_send_bin->setVisible(false);
-#endif
 
     setFrameStyle(QFrame::StyledPanel | QFrame::Raised);
 }
@@ -89,76 +51,6 @@ SendBox5::SendBox5(QWidget *parent) :
 SendBox5::~SendBox5()
 {
     delete ui;
-}
-//--------------------------------------------------------------------------------
-void SendBox5::send_text(void)
-{
-    QString data = ui->cb_send_text->currentText();
-    if(data.isEmpty())
-    {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle(tr("send data"));
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.setText(tr("nothing send"));
-        msgBox.exec();
-        return;
-    }
-
-    QByteArray ba = data.toLatin1();
-    switch(ui->cb_append->currentIndex())
-    {
-    case 0: // tr("no add")
-        break;
-
-    case 1: //  << tr("0x00")
-        ba.append(static_cast<char>(0x00));
-        break;
-
-    case 2: //  << tr("0x0D")
-        ba.append(static_cast<char>(0x0D));
-        break;
-
-    case 3: //  << tr("0x0A")
-        ba.append(static_cast<char>(0x0A));
-        break;
-
-    case 4: //  << tr("0x0D 0x0A")
-        ba.append(static_cast<char>(0x0D));
-        ba.append(static_cast<char>(0x0A));
-        break;
-    }
-    emit sendData(ba);
-}
-//--------------------------------------------------------------------------------
-void SendBox5::send_bin(void)
-{
-    QByteArray output_data;
-
-    QByteArray input_data = ui->cb_send_bin->currentText().toLatin1();
-    if(input_data.isEmpty())
-    {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle(tr("send data"));
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.setText(tr("nothing send"));
-        msgBox.exec();
-        return;
-    }
-
-    output_data.clear();
-    output_data.append(QByteArray::fromHex(input_data));
-
-    if(input_data.toUpper() != output_data.toHex().toUpper())
-    {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle(tr("send data"));
-        msgBox.setIcon(QMessageBox::Warning);
-        msgBox.setText(tr("invalid HEX-data"));
-        msgBox.exec();
-        return;
-    }
-
-    emit sendData(output_data);
 }
 //--------------------------------------------------------------------------------
 void SendBox5::send_text_command(void)
@@ -183,42 +75,14 @@ void SendBox5::send_bin_command(void)
     hw->exec();
 }
 //--------------------------------------------------------------------------------
-void SendBox5::send_text_remove(void)
-{
-    ui->cb_send_text->removeItem(ui->cb_send_text->currentIndex());
-}
-//--------------------------------------------------------------------------------
-void SendBox5::send_bin_remove(void)
-{
-    ui->cb_send_bin->removeItem(ui->cb_send_bin->currentIndex());
-}
-//--------------------------------------------------------------------------------
 void SendBox5::block_interface(bool state)
 {
-    ui->cb_send_text->setDisabled(state);
-    ui->cb_send_bin->setDisabled(state);
-    ui->cb_append->setDisabled(state);
-
-    ui->btn_send_text->setDisabled(state);
-    ui->btn_send_bin->setDisabled(state);
-
-    ui->btn_send_bin_remove->setDisabled(state);
-    ui->btn_send_text_remove->setDisabled(state);
-
     ui->btn_text_commands->setDisabled(state);
     ui->btn_bin_commands->setDisabled(state);
 }
 //--------------------------------------------------------------------------------
 void SendBox5::updateText(void)
 {
-    ui->btn_send_text->setText(tr("send"));
-    ui->btn_send_bin->setText(tr("send"));
 
-    ui->cb_append->clear();
-    ui->cb_append->addItems(QStringList() << tr("no add")
-                            << tr("0x00")
-                            << tr("0x0D")
-                            << tr("0x0A")
-                            << tr("0x0D 0x0A") );
 }
 //--------------------------------------------------------------------------------

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SendBox5</class>
+ <widget class="QFrame" name="SendBox5">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>276</width>
+    <height>82</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="1">
+      <widget class="QComboBox" name="cb_send_bin"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="cb_send_text"/>
+     </item>
+     <item row="0" column="2">
+      <widget class="QComboBox" name="cb_append"/>
+     </item>
+     <item row="0" column="3">
+      <widget class="QToolButton" name="btn_send_text">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QToolButton" name="btn_send_bin">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QToolButton" name="btn_send_text_remove">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QToolButton" name="btn_send_bin_remove">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>btn_send_text_remove</tabstop>
+  <tabstop>cb_send_text</tabstop>
+  <tabstop>cb_append</tabstop>
+  <tabstop>btn_send_text</tabstop>
+  <tabstop>btn_send_bin_remove</tabstop>
+  <tabstop>cb_send_bin</tabstop>
+  <tabstop>btn_send_bin</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

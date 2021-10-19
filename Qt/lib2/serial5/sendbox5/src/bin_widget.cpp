@@ -54,12 +54,6 @@ void Bin_widget::init(void)
 
     connect(ui->listWidget, &QListWidget::doubleClicked,    this,   &Bin_widget::edit);
 
-#ifndef QT_DEBUG
-    //FIXME надо позже сделать нормально
-    ui->btn_up->setVisible(false);
-    ui->btn_down->setVisible(false);
-#endif
-
     setAttribute(Qt::WA_DeleteOnClose);
 
     load_setting();

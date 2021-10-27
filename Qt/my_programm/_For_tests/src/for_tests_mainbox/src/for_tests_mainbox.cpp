@@ -236,6 +236,16 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QFile file(":/ico/computer.ico");
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        emit error("error open");
+        return false;
+    }
+    emit info("YES");
+#endif
+
+#if 0
     QFuture <void> local_thread;
     local_thread = QtConcurrent::run(this, &MainBox::heavy_function, 10000);
 #endif

@@ -33,11 +33,11 @@ qreal World::pixel_to_pt(qreal value)
     return (value / 10.0);
 }
 //--------------------------------------------------------------------------------
-Object World::createWall(float32 x,
-                         float32 y,
-                         float32 w,
-                         float32 h,
-                         float32 angle,
+Object World::createWall(qreal x,
+                         qreal y,
+                         qreal w,
+                         qreal h,
+                         qreal angle,
                          b2BodyType type)
 {
     Object obj;
@@ -301,6 +301,8 @@ void World::insert_objects(void)
     ball.body->ApplyLinearImpulse(b2Vec2(1.0f, 1.0f), b2Vec2(1.0f, 1.0f));          //TODO 2.2.1
 #elif BOX2D_231
     ball.body->ApplyLinearImpulse(b2Vec2(1.0f, 1.0f), b2Vec2(1.0f, 1.0f), true);    //TODO 2.3.1
+#elif BOX2D_241
+    ball.body->ApplyLinearImpulse(b2Vec2(1.0f, 1.0f), b2Vec2(1.0f, 1.0f), true);    //TODO 2.4.1
 #else
 #   error "Need verion box2d"
 #endif
@@ -362,11 +364,20 @@ void World::create_scene_0(void)
         ball.fixture->SetRestitution(1.1f);
         _objects.append(ball);
 
-        Object wall = createWall(pixel_to_pt(20), pixel_to_pt(HEIGHT/2 - 50/2), pixel_to_pt(50), pixel_to_pt(50), 50*DEGTORAD, b2_dynamicBody);
+        Object wall = createWall(pixel_to_pt(20),
+                                 pixel_to_pt(HEIGHT/2 - 50/2),
+                                 pixel_to_pt(50), pixel_to_pt(50),
+                                 50*DEGTORAD,
+                                 b2_dynamicBody);
         //wall.body->SetGravityScale(-1);
         _objects.append(wall);
 
-        Object wall2 = createWall(pixel_to_pt(400), pixel_to_pt(HEIGHT/2 - 50/2), pixel_to_pt(50), pixel_to_pt(50), 50*M_PI/180, b2_dynamicBody);
+        Object wall2 = createWall(pixel_to_pt(400),
+                                  pixel_to_pt(HEIGHT/2 - 50/2),
+                                  pixel_to_pt(50),
+                                  pixel_to_pt(50),
+                                  50*M_PI/180,
+                                  b2_dynamicBody);
         //wall2.body->SetMassData(&mass);
         _objects.append(wall2);
 
@@ -389,6 +400,8 @@ void World::create_scene_1(void)
         ball.body->ApplyLinearImpulse(b2Vec2(0.0f, 50.0f), b2Vec2(1.0f, 1.0f));   //TODO 2.2.1
 #elif BOX2D_231
         ball.body->ApplyLinearImpulse(b2Vec2(0.0f, 50.0f), b2Vec2(1.0f, 1.0f), true);   //TODO 2.3.1
+#elif BOX2D_241
+        ball.body->ApplyLinearImpulse(b2Vec2(0.0f, 50.0f), b2Vec2(1.0f, 1.0f), true);   //TODO 2.4.1
 #else
 #   error "Need verion box2d"
 #endif

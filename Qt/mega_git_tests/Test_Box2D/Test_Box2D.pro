@@ -26,21 +26,23 @@ win32 {
 }
 
 linux {
-    DEFINES += BOX2D_231
+#    DEFINES += BOX2D_231
+    DEFINES += BOX2D_241
 }
 
 win32 {
 #    CONFIG  += use_BOX2D_221
-    CONFIG  += use_BOX2D_231
+#    CONFIG  += use_BOX2D_231
+    CONFIG  += use_BOX2D_241
 }
 
 LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+include ($$LIB_PATH2/Box2D/Box2D.pri)
 
 include (src/test_Box2D_mainbox/test_Box2D_mainbox.pri)
 include (src/world/world.pri)
-include ($$LIB_PATH2/Box2D/Box2D.pri)
 
 VPATH = $$INCLUDEPATH

@@ -3,8 +3,13 @@
 #define WORLD_HPP
 //--------------------------------------------------------------------------------
 #include <QTimerEvent>
+#include <QPolygonF>
 #include <QtMath>
-#include <Box2D.h>
+#include <Box2D/Box2D.h>
+//--------------------------------------------------------------------------------
+//#ifdef BOX2D_241
+//#   define float32 float
+//#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -36,11 +41,11 @@ public:
     explicit World(QWidget *parent = nullptr);
     virtual ~World();
 
-    Object createWall(float32 x,
-                      float32 y,
-                      float32 w,
-                      float32 h,
-                      float32 angle = 0,
+    Object createWall(qreal x,
+                      qreal y,
+                      qreal w,
+                      qreal h,
+                      qreal angle = 0,
                       b2BodyType type = b2_staticBody);
 
     Object createPolygon(float32 x,

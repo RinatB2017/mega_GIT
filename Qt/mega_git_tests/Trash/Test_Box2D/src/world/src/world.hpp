@@ -8,7 +8,7 @@
 #include <Box2D/Box2D.h>
 //--------------------------------------------------------------------------------
 //#ifdef BOX2D_241
-//#   define float float
+//#   define float32 float
 //#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -48,15 +48,15 @@ public:
                       qreal angle = 0,
                       b2BodyType type = b2_staticBody);
 
-    Object createPolygon(float x,
-                         float y,
+    Object createPolygon(float32 x,
+                         float32 y,
                          b2Vec2 vertices[],
-                         int count,
-                         float angle,
+                         int32 count,
+                         float32 angle,
                          b2BodyType = b2_staticBody);
 
     Object createBall(const b2Vec2& pos,
-                      float radius,
+                      float32 radius,
                       int index,
                       b2BodyType type = b2_dynamicBody);
 

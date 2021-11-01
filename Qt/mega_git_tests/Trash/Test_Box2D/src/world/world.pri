@@ -2,10 +2,14 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-unix {
-    LIBS    += -lBox2D
-}
+DEPENDPATH  += \
+    $$PWD/src
+INCLUDEPATH = $$DEPENDPATH
 
-win32 {
-    include ($$PWD/win/Box2D.pri)
-}
+HEADERS += \
+    listener.hpp \
+    world.hpp
+
+SOURCES += \
+    listener.cpp \
+    world.cpp

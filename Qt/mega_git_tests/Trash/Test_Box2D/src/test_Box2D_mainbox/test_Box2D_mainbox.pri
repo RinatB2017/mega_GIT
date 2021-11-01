@@ -2,10 +2,11 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-unix {
-    LIBS    += -lBox2D
-}
+DEPENDPATH  += \
+    $$PWD/src \
+    $$PWD/src/ui
+INCLUDEPATH = $$DEPENDPATH
 
-win32 {
-    include ($$PWD/win/Box2D.pri)
-}
+HEADERS += test_Box2D_mainbox.hpp
+SOURCES += test_Box2D_mainbox.cpp
+FORMS   += test_Box2D_mainbox.ui

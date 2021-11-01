@@ -69,15 +69,15 @@ Object World::createWall(qreal x,
     return obj;
 }
 //--------------------------------------------------------------------------------
-Object World::createPolygon(float x,
-                            float y,
+Object World::createPolygon(float32 x,
+                            float32 y,
                             b2Vec2  vertices[],
-                            int   count,
-                            float angle,
+                            int32   count,
+                            float32 angle,
                             b2BodyType type)
 {
     Object obj;
-    //const int count = 4;
+    //const int32 count = 4;
     //b2Vec2 vertices[count];
 
     // вершины идут ПРОТИВ часовой стрелки
@@ -115,7 +115,7 @@ Object World::createPolygon(float x,
 }
 //--------------------------------------------------------------------------------
 Object World::createBall(const b2Vec2& pos,
-                         float radius,
+                         float32 radius,
                          int index,
                          b2BodyType type)
 {
@@ -185,9 +185,9 @@ void World::paintEvent(QPaintEvent *)
 void World::drawEllipse(QPainter *painter,
                         const Object& obj)
 {
-    float x = obj.body->GetPosition().x;
-    float y = obj.body->GetPosition().y;
-    float r = obj.fixture->GetShape()->m_radius;
+    float32 x = obj.body->GetPosition().x;
+    float32 y = obj.body->GetPosition().y;
+    float32 r = obj.fixture->GetShape()->m_radius;
 
     painter->drawEllipse(QPointF(x, y), r, r);
 }
@@ -195,9 +195,9 @@ void World::drawEllipse(QPainter *painter,
 void World::drawEllipse_B(QPainter *painter,
                           b2Body *body)
 {
-    float x = body->GetPosition().x;
-    float y = body->GetPosition().y;
-    float r = 1.0f; //body->GetShape()->m_radius;
+    float32 x = body->GetPosition().x;
+    float32 y = body->GetPosition().y;
+    float32 r = 1.0f; //body->GetShape()->m_radius;
 
     painter->drawEllipse(QPointF(x, y), r, r);
 }
@@ -205,13 +205,13 @@ void World::drawEllipse_B(QPainter *painter,
 void World::drawWall(QPainter *painter,
                      const Object& obj)
 {
-    float x = obj.body->GetPosition().x;
-    float y = obj.body->GetPosition().y;
-    float angle = obj.body->GetAngle();
+    float32 x = obj.body->GetPosition().x;
+    float32 y = obj.body->GetPosition().y;
+    float32 angle = obj.body->GetAngle();
 
     const b2PolygonShape *shape = dynamic_cast<b2PolygonShape*>(obj.fixture->GetShape());
-    float hx = shape->GetVertex(1).x;
-    float hy = shape->GetVertex(2).y;
+    float32 hx = shape->GetVertex(1).x;
+    float32 hy = shape->GetVertex(2).y;
     QRectF r(x-hx, y-hy, 2*hx, 2*hy);
 
     painter->save();
@@ -225,20 +225,20 @@ void World::drawWall(QPainter *painter,
 void World::drawPolygon(QPainter *painter,
                         const Object& obj)
 {
-    float x = obj.body->GetPosition().x;
-    float y = obj.body->GetPosition().y;
-    float angle = obj.body->GetAngle();
+    float32 x = obj.body->GetPosition().x;
+    float32 y = obj.body->GetPosition().y;
+    float32 angle = obj.body->GetAngle();
 
     const b2PolygonShape *shape = dynamic_cast<b2PolygonShape*>(obj.fixture->GetShape());
     int pointCount = shape->GetVertexCount();
     QPointF points[pointCount];
 
-    float hx = 0.0f;
-    float hy = 0.0f;
+    float32 hx = 0.0f;
+    float32 hy = 0.0f;
     for(int n=0; n<pointCount; ++n)
     {
-        float lx = shape->GetVertex(n).x;
-        float ly = shape->GetVertex(n).y;
+        float32 lx = shape->GetVertex(n).x;
+        float32 ly = shape->GetVertex(n).y;
         if(x>hx) hx=lx;
         if(y>hy) hy=ly;
         points[n].setX(lx);

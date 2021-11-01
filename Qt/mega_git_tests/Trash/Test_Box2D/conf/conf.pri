@@ -2,10 +2,5 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-unix {
-    LIBS    += -lBox2D
-}
-
-win32 {
-    include ($$PWD/win/Box2D.pri)
-}
+include (defines.pri)
+include (version.pri)

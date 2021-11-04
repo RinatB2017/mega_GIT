@@ -40,6 +40,7 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets();
 #ifdef QT_DEBUG
     qDebug() << "~MainBox()";
 #endif
@@ -67,10 +68,12 @@ void MainBox::init(void)
     commands.append({ id++, "create_scene_1", &World::create_scene_1 });
     commands.append({ id++, "create_scene_2", &World::create_scene_2 });
     commands.append({ id++, "create_scene_3", &World::create_scene_3 });
+    commands.append({ id++, "create_scene_4", &World::create_scene_4 });
 
+    ui->cb_tests->setProperty(NO_SAVE, true);
     foreach (CMD command, commands)
     {
-        ui->cb_block_insert_object->addItem(command.cmd_text, QVariant(Qt::UserRole + command.cmd));
+        ui->cb_tests->addItem(command.cmd_text, QVariant(Qt::UserRole + command.cmd));
     }
 
     ui->btn_choice_test->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
@@ -81,10 +84,33 @@ void MainBox::init(void)
 
     ui->world_widget->setFixedSize(WIDTH, HEIGHT);
 
+    ui->dsb_pixel_to_pt->setRange(0, 100000);
+    ui->dsb_pt_to_pixel->setRange(0, 100000);
+
+    ui->dsb_wall_x->setRange(0, 1000);
+    ui->dsb_wall_y->setRange(0, 1000);
+    ui->dsb_wall_w->setRange(0, 1000);
+    ui->dsb_wall_h->setRange(0, 1000);
+    ui->dsb_wall_angle->setRange(-359, 359);
+
+    ui->dsb_ball_x->setRange(0, 1000);
+    ui->dsb_ball_y->setRange(0, 1000);
+    ui->dsb_ball_r->setRange(0, 1000);
+
     connect(ui->btn_choice_test,    &QToolButton::clicked,  this,               &MainBox::choice_test);
-    connect(ui->btn_clear,          &QToolButton::clicked,  ui->world_widget,   &World::w_clear); //FIXME непонятно, почему крашится. Надо разобраться
+    connect(ui->btn_clear,          &QToolButton::clicked,  ui->world_widget,   &World::w_clear);
+
+    connect(ui->btn_create_wall,    &QPushButton::clicked,  this,               &MainBox::test_create_wall);
+    connect(ui->btn_create_ball,    &QPushButton::clicked,  this,               &MainBox::test_create_ball);
+
+    connect(ui->btn_pixel_to_pt_get,    &QToolButton::clicked,  this,   &MainBox::pixel_to_pt_get);
+    connect(ui->btn_pixel_to_pt_set,    &QToolButton::clicked,  this,   &MainBox::pixel_to_pt_set);
+    connect(ui->btn_pt_to_pixel_get,    &QToolButton::clicked,  this,   &MainBox::pt_to_pixel_get);
+    connect(ui->btn_pt_to_pixel_set,    &QToolButton::clicked,  this,   &MainBox::pt_to_pixel_set);
 
     ui->world_widget->start();
+
+    load_widgets();
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -92,7 +118,7 @@ void MainBox::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
 
-    QToolBar *testbar = new QToolBar(tr("testbar"));
+    QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
 
     mw->addToolBar(Qt::TopToolBarArea, testbar);
@@ -110,7 +136,7 @@ void MainBox::createTestBar(void)
 void MainBox::choice_test(void)
 {
     bool ok = false;
-    int cmd = ui->cb_block_insert_object->itemData(ui->cb_block_insert_object->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
+    int cmd = ui->cb_tests->itemData(ui->cb_tests->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
     if(!ok) return;
     auto cmd_it = std::find_if(
                 commands.begin(),
@@ -137,12 +163,52 @@ void MainBox::test(void)
 {
     emit info("Test");
 
+#if 1
+    ui->world_widget->test();
+#endif
+
 #if 0
     ui->world_widget->create_scene_0();
     ui->world_widget->create_scene_1();
     ui->world_widget->create_scene_2();
     ui->world_widget->create_scene_3();
 #endif
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_create_wall(void)
+{
+    ui->world_widget->add_wall(ui->dsb_wall_x->value(),
+                               ui->dsb_wall_y->value(),
+                               ui->dsb_wall_w->value(),
+                               ui->dsb_wall_h->value(),
+                               ui->dsb_wall_angle->value());
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_create_ball(void)
+{
+    ui->world_widget->add_ball(ui->dsb_ball_x->value(),
+                               ui->dsb_ball_y->value(),
+                               ui->dsb_ball_r->value());
+}
+//--------------------------------------------------------------------------------
+void MainBox::pixel_to_pt_get(void)
+{
+    ui->dsb_pixel_to_pt->setValue(ui->world_widget->pixel_to_pt_get());
+}
+//--------------------------------------------------------------------------------
+void MainBox::pixel_to_pt_set(void)
+{
+    ui->world_widget->pixel_to_pt_set(ui->dsb_pixel_to_pt->value());
+}
+//--------------------------------------------------------------------------------
+void MainBox::pt_to_pixel_get(void)
+{
+    ui->dsb_pt_to_pixel->setValue(ui->world_widget->pt_to_pixel_get());
+}
+//--------------------------------------------------------------------------------
+void MainBox::pt_to_pixel_set(void)
+{
+    ui->world_widget->pt_to_pixel_set(ui->dsb_pt_to_pixel->value());
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
@@ -157,11 +223,18 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
+    int index = 0;
+    bool ok = false;
 
+    ok = load_int("index_tests", &index);
+    if(ok)
+    {
+        ui->cb_tests->setCurrentIndex(index);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-
+    save_int("index_tests", ui->cb_tests->currentIndex());
 }
 //--------------------------------------------------------------------------------

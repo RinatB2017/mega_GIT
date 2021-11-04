@@ -37,6 +37,9 @@ class World : public MyWidget
 {
     Q_OBJECT
 
+signals:
+    void cnt_objects(int);
+
 public:
     explicit World(QWidget *parent = nullptr);
     virtual ~World();
@@ -78,11 +81,6 @@ public:
     void delete_objects(void);
     void test(void);
 
-//    QSize sizeHint() const;
-
-signals:
-    void cnt_objects(int);
-
 public slots:
     void block_insert_objects(bool state);
 
@@ -90,6 +88,21 @@ public slots:
     void create_scene_1(void);
     void create_scene_2(void);
     void create_scene_3(void);
+    void create_scene_4(void);
+
+    void add_wall(qreal x,
+                  qreal y,
+                  qreal w,
+                  qreal h,
+                  qreal a);
+    void add_ball(qreal x,
+                  qreal y,
+                  qreal r);
+
+    qreal pixel_to_pt_get(void);
+    void pixel_to_pt_set(qreal value);
+    qreal pt_to_pixel_get(void);
+    void pt_to_pixel_set(qreal value);
 
     void w_clear(void);
 
@@ -103,12 +116,20 @@ private:
     bool is_busy = false;
 
     int  cnt = 0;
+    float timeStep = 1.0f;
+
+    int32 velocityIterations = 6;   //8
+    int32 positionIterations = 2;   //3
+
+    qreal k_pixel_to_pt = 10;
+    qreal k_pt_to_pixel = WIDTH / 20;
 
     void insert_objects(void);
 
     void create_borders(void);
 
     qreal pixel_to_pt(qreal value);
+    qreal pt_to_pixel(qreal value);
 
     void updateText(void);
     bool programm_is_exit(void);
@@ -117,7 +138,6 @@ private:
 
 protected:
     void paintEvent(QPaintEvent *);
-
 };
 //--------------------------------------------------------------------------------
 #endif // WORLD_HPP

@@ -39,7 +39,10 @@ public:
 
 private slots:
     void choice_test(void);
+
     void test(void);
+    void test_create_wall(void);
+    void test_create_ball(void);
 
 private:
     struct CMD
@@ -55,6 +58,11 @@ private:
     void init(void);
 
     void createTestBar(void);
+
+    void pixel_to_pt_get(void);
+    void pixel_to_pt_set(void);
+    void pt_to_pixel_get(void);
+    void pt_to_pixel_set(void);
 
     void updateText(void);
     bool programm_is_exit(void);

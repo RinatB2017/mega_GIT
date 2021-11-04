@@ -5,6 +5,8 @@
 //--------------------------------------------------------------------------------
 #define DEGTORAD 0.0174532925199432957
 #define RADTODEG 57.295779513082320876
+
+#define NEW_CALC    1
 //--------------------------------------------------------------------------------
 World::World(QWidget *parent) :
     MyWidget(parent)
@@ -14,8 +16,8 @@ World::World(QWidget *parent) :
     flag_block_insert_objects = false;
     cnt = 0;
 
-    //b2Vec2 gravity(0.0f, -10.0f);
-    //b2Vec2 gravity(0.0f, -0.0f);
+    timeStep = 1.0f / 60.0f;
+
     b2Vec2 gravity(0.0f, -9.8f);
     _world = new b2World(gravity);
 
@@ -26,11 +28,6 @@ World::World(QWidget *parent) :
 World::~World()
 {
     emit debug("~World()");
-}
-//--------------------------------------------------------------------------------
-qreal World::pixel_to_pt(qreal value)
-{
-    return (value / 10.0);
 }
 //--------------------------------------------------------------------------------
 Object World::createWall(qreal x,
@@ -46,7 +43,7 @@ Object World::createWall(qreal x,
     b2BodyDef bd;
     bd.type = type;
     bd.position = b2Vec2(x+w/2.0f, y+h/2.0f);
-    bd.angle = angle;
+    bd.angle = qDegreesToRadians(angle);
     obj.body = _world->CreateBody(&bd);
 
     // shape
@@ -148,40 +145,6 @@ Object World::createBall(const b2Vec2& pos,
     return obj;
 }
 //--------------------------------------------------------------------------------
-void World::paintEvent(QPaintEvent *)
-{
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing, true);
-    painter.setTransform(_transform);
-
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-#   error (Need Qt5)
-#else
-    QPen pen;
-    pen.setWidthF(0.07);
-    painter.setBrush(QBrush(Qt::green));
-    painter.setPen(pen);
-#endif
-
-    foreach(const Object& obj, _objects)
-    {
-        switch(obj.type)
-        {
-        case BallObject:
-            drawEllipse(&painter, obj);
-            break;
-
-        case WallObject:
-            drawWall(&painter, obj);
-            break;
-
-        case PolygonObject:
-            drawPolygon(&painter, obj);
-            break;
-        }
-    }
-}
-//--------------------------------------------------------------------------------
 void World::drawEllipse(QPainter *painter,
                         const Object& obj)
 {
@@ -189,7 +152,9 @@ void World::drawEllipse(QPainter *painter,
     float y = obj.body->GetPosition().y;
     float r = obj.fixture->GetShape()->m_radius;
 
-    painter->drawEllipse(QPointF(x, y), r, r);
+    painter->drawEllipse(QPointF(x, y),
+                         r,
+                         r);
 }
 //--------------------------------------------------------------------------------
 void World::drawEllipse_B(QPainter *painter,
@@ -212,14 +177,26 @@ void World::drawWall(QPainter *painter,
     const b2PolygonShape *shape = dynamic_cast<b2PolygonShape*>(obj.fixture->GetShape());
     float hx = shape->GetVertex(1).x;
     float hy = shape->GetVertex(2).y;
-    QRectF r(x-hx, y-hy, 2*hx, 2*hy);
 
+#ifdef NEW_CALC
+    QRectF r(x-hx,
+             y-hy,
+             2*hx,
+             2*hy);
     painter->save();
-    painter->translate(r.center());
     painter->rotate(angle*180/b2_pi);
-    painter->translate(-r.center());
     painter->drawRect(r);
     painter->restore();
+#else
+    QRectF r(pt_to_pixel(x-hx),
+             pt_to_pixel(y-hy),
+             pt_to_pixel(2*hx),
+             pt_to_pixel(2*hy));
+    painter->save();
+    painter->rotate(angle*180/b2_pi);
+    painter->drawRect(r);
+    painter->restore();
+#endif
 }
 //--------------------------------------------------------------------------------
 void World::drawPolygon(QPainter *painter,
@@ -276,15 +253,23 @@ void World::delete_objects(void)
 {
     while(_objects.count() > 0)
     {
-        _objects.remove(0);
+        Object obj = _objects.takeAt(0);
+        _world->DestroyBody(obj.body);
     }
 }
 //--------------------------------------------------------------------------------
 void World::test(void)
 {
     emit info(QString("cnt obj %1").arg(_objects.count()));
-    //_world->Step(1.0f/60.0f, 8, 3);
-    //update();
+
+    b2Body *bl = _world->GetBodyList();
+    while(bl != NULL)
+    {
+        emit info(QString("pos: %1 %2")
+                  .arg(bl->GetPosition().x)
+                  .arg(bl->GetPosition().y));
+        bl = bl->GetNext();
+    }
 }
 //--------------------------------------------------------------------------------
 void World::block_insert_objects(bool state)
@@ -428,7 +413,9 @@ void World::create_scene_2(void)
         {
             for(int x=0; x<200; x+=10)
             {
-                Object ball = createBall(b2Vec2(pixel_to_pt(120.0f+x), pixel_to_pt(100.0f+y)), pixel_to_pt(3.0f), 0);
+                Object ball = createBall(b2Vec2(pixel_to_pt(120.0f+x), pixel_to_pt(100.0f+y)),
+                                         pixel_to_pt(3.0f),
+                                         0);
                 _objects.append(ball);
             }
         }
@@ -463,6 +450,72 @@ void World::create_scene_3(void)
     }
 }
 //--------------------------------------------------------------------------------
+void World::add_wall(qreal x,
+                     qreal y,
+                     qreal w,
+                     qreal h,
+                     qreal a)
+{
+    Object wall = createWall(x, y, w, h, a);
+    _objects.append(wall);
+}
+//--------------------------------------------------------------------------------
+void World::add_ball(qreal x,
+                     qreal y,
+                     qreal r)
+{
+    Object wall = createBall(b2Vec2(x, y), r, 0);
+    _objects.append(wall);
+}
+//--------------------------------------------------------------------------------
+qreal World::pixel_to_pt_get(void)
+{
+    return k_pixel_to_pt;
+}
+//--------------------------------------------------------------------------------
+void World::pixel_to_pt_set(qreal value)
+{
+    k_pixel_to_pt = value;
+}
+//--------------------------------------------------------------------------------
+qreal World::pt_to_pixel_get(void)
+{
+    return k_pt_to_pixel;
+}
+//--------------------------------------------------------------------------------
+void World::pt_to_pixel_set(qreal value)
+{
+    k_pt_to_pixel = value;
+}
+//--------------------------------------------------------------------------------
+void World::create_scene_4(void)
+{
+    /*
+    экран 1200 * 600
+    объект на высоте 5 метров и вправо на 10 метров
+    размер объекта 10 сантиметров
+    ширина земли 20 метров
+*/
+
+    Object ball = createBall(b2Vec2(10, 5),
+                             0.1,
+                             0);
+    _objects.append(ball);
+
+    Object wall = createWall(0, 0.1, 20, 0.2);
+    _objects.append(wall);
+}
+//--------------------------------------------------------------------------------
+qreal World::pixel_to_pt(qreal value)
+{
+    return (value / k_pixel_to_pt);
+}
+//--------------------------------------------------------------------------------
+qreal World::pt_to_pixel(qreal value)
+{
+    return value * k_pt_to_pixel;
+}
+//--------------------------------------------------------------------------------
 void World::w_clear(void)
 {
     emit info(QString("delete %1 objects").arg(_objects.count()));
@@ -477,15 +530,44 @@ void World::timerEvent(QTimerEvent *event)
         {
             //insert_objects();
         }
-        _world->Step(1.0f/60.0f, 8, 3);
+        _world->Step(timeStep, velocityIterations, positionIterations);
         update();
     }
 }
 //--------------------------------------------------------------------------------
-//QSize World::sizeHint() const
-//{
-//    return QSize(WIDTH, HEIGHT);
-//}
+void World::paintEvent(QPaintEvent *)
+{
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    painter.setTransform(_transform);
+
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+#   error (Need Qt5)
+#else
+    QPen pen;
+    pen.setWidthF(0.07);
+    painter.setBrush(QBrush(Qt::green));
+    painter.setPen(pen);
+#endif
+
+    foreach(const Object& obj, _objects)
+    {
+        switch(obj.type)
+        {
+        case BallObject:
+            drawEllipse(&painter, obj);
+            break;
+
+        case WallObject:
+            drawWall(&painter, obj);
+            break;
+
+        case PolygonObject:
+            drawPolygon(&painter, obj);
+            break;
+        }
+    }
+}
 //--------------------------------------------------------------------------------
 void World::updateText(void)
 {

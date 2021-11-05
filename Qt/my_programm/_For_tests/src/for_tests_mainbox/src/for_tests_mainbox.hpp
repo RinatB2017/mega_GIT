@@ -27,6 +27,25 @@
 #include "myfiledialog.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
+class TestWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit TestWidget(QWidget *parent = nullptr) :
+        QWidget(parent)
+    {
+
+    }
+
+protected:
+    void paintEvent(QPaintEvent *)
+    {
+        QPainter painter(this);
+        painter.drawLine(0, 0, 200, 100);
+    }
+};
+//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }

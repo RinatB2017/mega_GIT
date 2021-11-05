@@ -1,19 +1,14 @@
 //--------------------------------------------------------------------------------
-#include "listener.hpp"
 #include "defines.hpp"
 #include "world.hpp"
 //--------------------------------------------------------------------------------
-#define DEGTORAD 0.0174532925199432957
-#define RADTODEG 57.295779513082320876
-
-#define NEW_CALC    1
+//#define NEW_CALC    1
 //--------------------------------------------------------------------------------
 World::World(QWidget *parent) :
     MyWidget(parent)
 {
     is_busy = false;
 
-    flag_block_insert_objects = false;
     cnt = 0;
 
     timeStep = 1.0f / 60.0f;
@@ -21,21 +16,28 @@ World::World(QWidget *parent) :
     b2Vec2 gravity(0.0f, -9.8f);
     _world = new b2World(gravity);
 
+#if 0
+    //TODO компенсация координат при отрисовке
     _transform.scale(10.0, -10.0);
     _transform.translate(0.0, -pixel_to_pt(HEIGHT));
+#endif
 }
 //--------------------------------------------------------------------------------
 World::~World()
 {
+    if(_world)
+    {
+        delete _world;
+    }
     emit debug("~World()");
 }
 //--------------------------------------------------------------------------------
-Object World::createWall(qreal x,
-                         qreal y,
-                         qreal w,
-                         qreal h,
-                         qreal angle,
-                         b2BodyType type)
+void World::createWall(qreal x,
+                       qreal y,
+                       qreal w,
+                       qreal h,
+                       qreal angle,
+                       b2BodyType type)
 {
     Object obj;
 
@@ -48,7 +50,7 @@ Object World::createWall(qreal x,
 
     // shape
     b2PolygonShape shape;
-    shape.SetAsBox(w/2.0f, h/2.0f);
+    shape.SetAsBox(w / 2.0, h / 4.0);   //TODO надо разобраться
 
     // fixture
     b2FixtureDef fd;
@@ -58,20 +60,15 @@ Object World::createWall(qreal x,
     obj.fixture = obj.body->CreateFixture(&fd);
     obj.type = WallObject;
 
-    UserData *data = new UserData;
-    data->name="wall";
-    data->is_dead=false;
-    obj.body->SetUserData(data);
-
-    return obj;
+    _objects.append(obj);
 }
 //--------------------------------------------------------------------------------
-Object World::createPolygon(float x,
-                            float y,
-                            b2Vec2  vertices[],
-                            int   count,
-                            float angle,
-                            b2BodyType type)
+void World::createPolygon(float x,
+                          float y,
+                          b2Vec2  vertices[],
+                          int   count,
+                          float angle,
+                          b2BodyType type)
 {
     Object obj;
     //const int count = 4;
@@ -103,17 +100,11 @@ Object World::createPolygon(float x,
     obj.fixture = obj.body->CreateFixture(&fd);
     obj.type = PolygonObject;
 
-    UserData *data = new UserData;
-    data->name="polygon";
-    data->is_dead=false;
-    obj.body->SetUserData(data);
-
-    return obj;
+    _objects.append(obj);
 }
 //--------------------------------------------------------------------------------
 Object World::createBall(const b2Vec2& pos,
                          float radius,
-                         int index,
                          b2BodyType type)
 {
     Object obj;
@@ -137,10 +128,7 @@ Object World::createBall(const b2Vec2& pos,
     obj.fixture = obj.body->CreateFixture(&fd);
     obj.type = BallObject;
 
-    UserData *data = new UserData;
-    data->name=QString("ball%1").arg(index);
-    data->is_dead=false;
-    obj.body->SetUserData(data);
+    _objects.append(obj);
 
     return obj;
 }
@@ -152,9 +140,10 @@ void World::drawEllipse(QPainter *painter,
     float y = obj.body->GetPosition().y;
     float r = obj.fixture->GetShape()->m_radius;
 
-    painter->drawEllipse(QPointF(x, y),
-                         r,
-                         r);
+    painter->drawEllipse(QPointF(pt_to_pixel(x),
+                                 HEIGHT - pt_to_pixel(y)),
+                         pt_to_pixel(r),
+                         pt_to_pixel(r));
 }
 //--------------------------------------------------------------------------------
 void World::drawEllipse_B(QPainter *painter,
@@ -164,7 +153,10 @@ void World::drawEllipse_B(QPainter *painter,
     float y = body->GetPosition().y;
     float r = 1.0f; //body->GetShape()->m_radius;
 
-    painter->drawEllipse(QPointF(x, y), r, r);
+    painter->drawEllipse(QPointF(pt_to_pixel(x),
+                                 HEIGHT - pt_to_pixel(y)),
+                         r,
+                         r);
 }
 //--------------------------------------------------------------------------------
 void World::drawWall(QPainter *painter,
@@ -184,16 +176,16 @@ void World::drawWall(QPainter *painter,
              2*hx,
              2*hy);
     painter->save();
-    painter->rotate(angle*180/b2_pi);
+    painter->rotate(angle);
     painter->drawRect(r);
     painter->restore();
 #else
     QRectF r(pt_to_pixel(x-hx),
-             pt_to_pixel(y-hy),
+             HEIGHT - pt_to_pixel(y-hy),
              pt_to_pixel(2*hx),
              pt_to_pixel(2*hy));
     painter->save();
-    painter->rotate(angle*180/b2_pi);
+    painter->rotate(angle);
     painter->drawRect(r);
     painter->restore();
 #endif
@@ -272,52 +264,28 @@ void World::test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void World::block_insert_objects(bool state)
-{
-    flag_block_insert_objects = state;
-}
-//--------------------------------------------------------------------------------
-void World::insert_objects(void)
-{
-#if 1
-    Object ball = createBall(b2Vec2(pixel_to_pt(10), pixel_to_pt(HEIGHT - 20)), pixel_to_pt(3.0f), 0);
-    ball.body->SetLinearVelocity(b2Vec2(25.0f, 0.0f));
-#ifdef BOX2D_221
-    ball.body->ApplyLinearImpulse(b2Vec2(1.0f, 1.0f), b2Vec2(1.0f, 1.0f));          //TODO 2.2.1
-#elif BOX2D_231
-    ball.body->ApplyLinearImpulse(b2Vec2(1.0f, 1.0f), b2Vec2(1.0f, 1.0f), true);    //TODO 2.3.1
-#elif BOX2D_241
-    ball.body->ApplyLinearImpulse(b2Vec2(1.0f, 1.0f), b2Vec2(1.0f, 1.0f), true);    //TODO 2.4.1
-#else
-#   error "Need verion box2d"
-#endif
-
-    _objects.append(ball);
-
-    emit cnt_objects(_objects.count());
-#else
-    cnt++;
-    if(cnt > 5)
-    {
-        Object ball = createBall(b2Vec2(pixel_to_pt(50), pixel_to_pt(550)), pixel_to_pt(3.0f), 0);
-        ball.body->SetLinearVelocity(b2Vec2(25.0f, 0.0f));
-        ball.body->ApplyLinearImpulse(b2Vec2(1.0f, 1.0f), b2Vec2(1.0f, 1.0f));
-
-        _objects.append(ball);
-
-        emit cnt_objects(_objects.count());
-
-        cnt=0;
-    }
-#endif
-}
-//--------------------------------------------------------------------------------
 void World::create_borders(void)
 {
-    _objects.append(createWall(0.0f, 0.0f, pixel_to_pt(WIDTH), pixel_to_pt(1.0f)));                // низ
-    _objects.append(createWall(0.0f, pixel_to_pt(HEIGHT), pixel_to_pt(WIDTH), pixel_to_pt(1.0f))); // верх
-    _objects.append(createWall(0.0f, 0.0f, pixel_to_pt(1.0f),   pixel_to_pt(HEIGHT)));             // левая стена
-    _objects.append(createWall(pixel_to_pt(WIDTH), 0.0f, pixel_to_pt(1.0f), pixel_to_pt(HEIGHT))); // правая стена
+    // низ
+    createWall(0.0f,
+               0.0f,
+               20.0f,
+               0.1f);
+    // верх
+    createWall(0.0f,
+               10.0f,
+               20.0f,
+               0.1f);
+    // левая стена
+    createWall(0.0f,
+               0.0f,
+               0.1f,
+               40.0f);
+    // правая стена
+    createWall(20.0f,
+               0.0f,
+               0.1f,
+               40.0f);
 }
 //--------------------------------------------------------------------------------
 void World::create_scene_0(void)
@@ -337,34 +305,31 @@ void World::create_scene_0(void)
         //vertices[4].Set(2.0f,   13.0f);
         //vertices[5].Set(1.0f,   13.0f);
 
-        Object polygon = createPolygon(pixel_to_pt(400), pixel_to_pt(400), vertices, 4, 0*DEGTORAD, b2_dynamicBody);
-        _objects.append(polygon);
+        createPolygon(10,
+                      10,
+                      vertices,
+                      4,
+                      0,
+                      b2_dynamicBody);
 
-        //b2MassData mass;
-        //mass.mass = 50;
-        //mass.I = 10.0f;
-
-        Object ball = createBall(b2Vec2(pixel_to_pt(30), pixel_to_pt(500)), pixel_to_pt(5), 0);
+        Object ball = createBall(b2Vec2(pixel_to_pt(30), pixel_to_pt(500)),
+                                 0.15);
         ball.body->SetGravityScale(-1);
         ball.fixture->SetRestitution(1.1f);
-        _objects.append(ball);
 
-        Object wall = createWall(pixel_to_pt(20),
-                                 pixel_to_pt(HEIGHT/2 - 50/2),
-                                 pixel_to_pt(50), pixel_to_pt(50),
-                                 50*DEGTORAD,
-                                 b2_dynamicBody);
-        //wall.body->SetGravityScale(-1);
-        _objects.append(wall);
+        createWall(20,
+                   20,
+                   1,
+                   3,
+                   45,
+                   b2_dynamicBody);
 
-        Object wall2 = createWall(pixel_to_pt(400),
-                                  pixel_to_pt(HEIGHT/2 - 50/2),
-                                  pixel_to_pt(50),
-                                  pixel_to_pt(50),
-                                  50*M_PI/180,
-                                  b2_dynamicBody);
-        //wall2.body->SetMassData(&mass);
-        _objects.append(wall2);
+        createWall(40,
+                   20,
+                   1,
+                   5,
+                   50,
+                   b2_dynamicBody);
 
         create_borders();
         emit cnt_objects(_objects.count());
@@ -377,26 +342,35 @@ void World::create_scene_1(void)
     if(is_busy == false)
     {
         is_busy = true;
-        Object ball = createBall(b2Vec2(pixel_to_pt(10.0), pixel_to_pt(10.0)), pixel_to_pt(10.0), 0);
-        _objects.append(ball);
 
-        ball.body->SetLinearVelocity(b2Vec2(25.0f, 0.0f));
-#ifdef BOX2D_221
-        ball.body->ApplyLinearImpulse(b2Vec2(0.0f, 50.0f), b2Vec2(1.0f, 1.0f));   //TODO 2.2.1
-#elif BOX2D_231
-        ball.body->ApplyLinearImpulse(b2Vec2(0.0f, 50.0f), b2Vec2(1.0f, 1.0f), true);   //TODO 2.3.1
-#elif BOX2D_241
-        ball.body->ApplyLinearImpulse(b2Vec2(0.0f, 50.0f), b2Vec2(1.0f, 1.0f), true);   //TODO 2.4.1
-#else
-#   error "Need verion box2d"
-#endif
+        Object ball = createBall(b2Vec2(1.0, 1.0),
+                                 0.1);
 
-        _objects.append(createWall(50, 20, 1.0, 12.0, 90.0*M_PI/180.0, b2_dynamicBody));
+        // линейная скорость
+        //ball.body->SetLinearVelocity(b2Vec2(1.0f, 1.0f));
+        // линейный импульс
+        ball.body->ApplyLinearImpulse(b2Vec2(1.0f, 1.0f),
+                                      b2Vec2(1.0f, 1.0f),
+                                      true);
 
+        createWall(15,
+                   5,
+                   0.2,
+                   2.0,
+                   90.0,
+                   b2_dynamicBody);
+
+        /*
         for(int n=250; n<WIDTH; n+=50)
         {
-            _objects.append(createWall(pixel_to_pt(n), 0, 1.0f, 12.0f, 0, b2_dynamicBody));
+            createWall(n / 10,
+                       0,
+                       1.0f,
+                       12.0f,
+                       0,
+                       b2_dynamicBody);
         }
+*/
 
         create_borders();
         emit cnt_objects(_objects.count());
@@ -413,10 +387,8 @@ void World::create_scene_2(void)
         {
             for(int x=0; x<200; x+=10)
             {
-                Object ball = createBall(b2Vec2(pixel_to_pt(120.0f+x), pixel_to_pt(100.0f+y)),
-                                         pixel_to_pt(3.0f),
-                                         0);
-                _objects.append(ball);
+                createBall(b2Vec2(pixel_to_pt(120.0f+x), pixel_to_pt(100.0f+y)),
+                           pixel_to_pt(3.0f));
             }
         }
 
@@ -431,23 +403,41 @@ void World::create_scene_3(void)
     if(is_busy == false)
     {
         is_busy = true;
+#if 1
         for(int n=0; n<360; n++)
         {
-            Object ball = createBall(b2Vec2(pixel_to_pt(WIDTH / 2), pixel_to_pt(HEIGHT / 2)), pixel_to_pt(3.0), 0);
+            Object ball = createBall(b2Vec2(10.0, 5),
+                                     0.05);
 
             qreal angle = n;
-            qreal x = qSin(angle * DEGTORAD) * 1000.0;
-            qreal y = qCos(angle * DEGTORAD) * 1000.0;
+            qreal x = qSin(qDegreesToRadians(angle));
+            qreal y = qCos(qDegreesToRadians(angle));
             ball.body->SetLinearVelocity(b2Vec2(x, y));
-            //ball.body->ApplyLinearImpulse(b2Vec2(1.0, 1.0), b2Vec2(1.0, 1.0));
-
-            _objects.append(ball);
+            ball.body->ApplyLinearImpulse(b2Vec2(x, y),
+                                          b2Vec2(x, y),
+                                          true);
         }
+#endif
 
         create_borders();
         emit cnt_objects(_objects.count());
         is_busy = false;
     }
+}
+//--------------------------------------------------------------------------------
+void World::create_scene_4(void)
+{
+    /*
+    экран 1200 * 600
+    объект на высоте 5 метров и вправо на 10 метров
+    размер объекта 10 сантиметров
+    ширина земли 20 метров
+    */
+
+    createBall(b2Vec2(1 + qrand() % 10, 5),
+               0.1);
+
+    createWall(0, 0.1, 20, 0.1);
 }
 //--------------------------------------------------------------------------------
 void World::add_wall(qreal x,
@@ -456,16 +446,33 @@ void World::add_wall(qreal x,
                      qreal h,
                      qreal a)
 {
-    Object wall = createWall(x, y, w, h, a);
-    _objects.append(wall);
+    createWall(x, y, w, h, a);
 }
 //--------------------------------------------------------------------------------
 void World::add_ball(qreal x,
                      qreal y,
                      qreal r)
 {
-    Object wall = createBall(b2Vec2(x, y), r, 0);
-    _objects.append(wall);
+    createBall(b2Vec2(x, y), r);
+}
+//--------------------------------------------------------------------------------
+void World::add_bullet(qreal x,
+                       qreal y,
+                       qreal r,
+                       qreal linear_velocity_x,
+                       qreal linear_velocity_y,
+                       qreal impulse_x,
+                       qreal impulse_y,
+                       qreal point_x,
+                       qreal point_y)
+{
+    Object ball = createBall(b2Vec2(x, y), r);
+    // линейная скорость
+    ball.body->SetLinearVelocity(b2Vec2(linear_velocity_x, linear_velocity_y));
+    // линейный импульс
+    ball.body->ApplyLinearImpulse(b2Vec2(impulse_x, impulse_y),
+                                  b2Vec2(point_x, point_y),
+                                  true);
 }
 //--------------------------------------------------------------------------------
 qreal World::pixel_to_pt_get(void)
@@ -488,24 +495,6 @@ void World::pt_to_pixel_set(qreal value)
     k_pt_to_pixel = value;
 }
 //--------------------------------------------------------------------------------
-void World::create_scene_4(void)
-{
-    /*
-    экран 1200 * 600
-    объект на высоте 5 метров и вправо на 10 метров
-    размер объекта 10 сантиметров
-    ширина земли 20 метров
-*/
-
-    Object ball = createBall(b2Vec2(10, 5),
-                             0.1,
-                             0);
-    _objects.append(ball);
-
-    Object wall = createWall(0, 0.1, 20, 0.2);
-    _objects.append(wall);
-}
-//--------------------------------------------------------------------------------
 qreal World::pixel_to_pt(qreal value)
 {
     return (value / k_pixel_to_pt);
@@ -526,10 +515,7 @@ void World::timerEvent(QTimerEvent *event)
 {
     if(event->timerId() == _timerId)
     {
-        if(!flag_block_insert_objects)
-        {
-            //insert_objects();
-        }
+        Q_ASSERT(_world);
         _world->Step(timeStep, velocityIterations, positionIterations);
         update();
     }
@@ -539,7 +525,9 @@ void World::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
+#if 0
     painter.setTransform(_transform);
+#endif
 
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 #   error (Need Qt5)

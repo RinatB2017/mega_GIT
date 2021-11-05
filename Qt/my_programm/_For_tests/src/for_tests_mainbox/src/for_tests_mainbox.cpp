@@ -236,6 +236,12 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    TestWidget *tw = new TestWidget();
+    tw->setFixedSize(300, 300);
+    tw->show();
+#endif
+
+#if 0
     QFile file(":/ico/computer.ico");
     if (!file.open(QIODevice::ReadOnly))
     {

@@ -57,33 +57,20 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
-    ui->lcd->setSegmentStyle(QLCDNumber::Flat);
-    ui->lcd->setDigitCount(10);
-    ui->lcd->setStyleSheet("background-color:black; color:green;");
-    ui->lcd->setMinimumSize(16*10, 32);
-
-    commands.clear();
-    int id = 0;
-    commands.append({ id++, "create_scene_0", &World::create_scene_0 });
-    commands.append({ id++, "create_scene_1", &World::create_scene_1 });
-    commands.append({ id++, "create_scene_2", &World::create_scene_2 });
-    commands.append({ id++, "create_scene_3", &World::create_scene_3 });
-    commands.append({ id++, "create_scene_4", &World::create_scene_4 });
-
-    ui->cb_tests->setProperty(NO_SAVE, true);
-    foreach (CMD command, commands)
-    {
-        ui->cb_tests->addItem(command.cmd_text, QVariant(Qt::UserRole + command.cmd));
-    }
-
-    ui->btn_choice_test->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
-    ui->btn_clear->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
-
-    connect(ui->world_widget,   &World::cnt_objects,
-            ui->lcd,            static_cast<void (QLCDNumber::*)(int)>(&QLCDNumber::display));
+    set_ranges();
+    set_properties();
+    set_connects();
+    set_commands();
+    set_icons();
 
     ui->world_widget->setFixedSize(WIDTH, HEIGHT);
+    ui->world_widget->start();
 
+    load_widgets();
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_ranges(void)
+{
     ui->dsb_pixel_to_pt->setRange(0, 100000);
     ui->dsb_pt_to_pixel->setRange(0, 100000);
 
@@ -97,20 +84,68 @@ void MainBox::init(void)
     ui->dsb_ball_y->setRange(0, 1000);
     ui->dsb_ball_r->setRange(0, 1000);
 
+    ui->dsb_bullet_x->setRange(0, 1000);
+    ui->dsb_bullet_y->setRange(0, 1000);
+    ui->dsb_bullet_r->setRange(0, 1);
+    ui->dsb_bullet_linear_velocity_x->setRange(-1000, 1000);
+    ui->dsb_bullet_linear_velocity_y->setRange(-1000, 1000);
+    ui->dsb_bullet_impulse_x->setRange(-1000, 1000);
+    ui->dsb_bullet_impulse_y->setRange(-1000, 1000);
+    ui->dsb_bullet_point_x->setRange(-1000, 1000);
+    ui->dsb_bullet_point_y->setRange(-1000, 1000);
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_properties(void)
+{
+    ui->stackedWidget->setProperty(NO_SAVE, true);
+    ui->btn_options->setProperty(NO_SAVE, true);
+    ui->btn_ball->setProperty(NO_SAVE, true);
+    ui->btn_wall->setProperty(NO_SAVE, true);
+    ui->btn_bullet->setProperty(NO_SAVE, true);
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_connects(void)
+{
+    connect(ui->btn_options,    &QPushButton::clicked,  this,   &MainBox::page_select);
+    connect(ui->btn_ball,       &QPushButton::clicked,  this,   &MainBox::page_select);
+    connect(ui->btn_wall,       &QPushButton::clicked,  this,   &MainBox::page_select);
+    connect(ui->btn_bullet,     &QPushButton::clicked,  this,   &MainBox::page_select);
+
     connect(ui->btn_choice_test,    &QToolButton::clicked,  this,               &MainBox::choice_test);
     connect(ui->btn_clear,          &QToolButton::clicked,  ui->world_widget,   &World::w_clear);
 
     connect(ui->btn_create_wall,    &QPushButton::clicked,  this,               &MainBox::test_create_wall);
     connect(ui->btn_create_ball,    &QPushButton::clicked,  this,               &MainBox::test_create_ball);
+    connect(ui->btn_create_bullet,  &QPushButton::clicked,  this,               &MainBox::test_create_bullet);
 
     connect(ui->btn_pixel_to_pt_get,    &QToolButton::clicked,  this,   &MainBox::pixel_to_pt_get);
     connect(ui->btn_pixel_to_pt_set,    &QToolButton::clicked,  this,   &MainBox::pixel_to_pt_set);
     connect(ui->btn_pt_to_pixel_get,    &QToolButton::clicked,  this,   &MainBox::pt_to_pixel_get);
     connect(ui->btn_pt_to_pixel_set,    &QToolButton::clicked,  this,   &MainBox::pt_to_pixel_set);
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_commands(void)
+{
+    commands.clear();
+    int id = 0;
+    commands.append({ id++, "create_borders", &World::create_borders });
+    commands.append({ id++, "create_scene_0", &World::create_scene_0 });
+    commands.append({ id++, "create_scene_1", &World::create_scene_1 });
+    commands.append({ id++, "create_scene_2", &World::create_scene_2 });
+    commands.append({ id++, "create_scene_3", &World::create_scene_3 });
+    commands.append({ id++, "create_scene_4", &World::create_scene_4 });
 
-    ui->world_widget->start();
-
-    load_widgets();
+    ui->cb_tests->setProperty(NO_SAVE, true);
+    foreach (CMD command, commands)
+    {
+        ui->cb_tests->addItem(command.cmd_text, QVariant(Qt::UserRole + command.cmd));
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_icons(void)
+{
+    ui->btn_choice_test->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->btn_clear->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -159,6 +194,27 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
+void MainBox::page_select(void)
+{
+    QPushButton *btn = reinterpret_cast<QPushButton *>(sender());
+    if(btn == ui->btn_options)
+    {
+        ui->stackedWidget->setCurrentWidget(ui->page_options);
+    }
+    if(btn == ui->btn_ball)
+    {
+        ui->stackedWidget->setCurrentWidget(ui->page_ball);
+    }
+    if(btn == ui->btn_wall)
+    {
+        ui->stackedWidget->setCurrentWidget(ui->page_wall);
+    }
+    if(btn == ui->btn_bullet)
+    {
+        ui->stackedWidget->setCurrentWidget(ui->page_bullet);
+    }
+}
+//--------------------------------------------------------------------------------
 void MainBox::test(void)
 {
     emit info("Test");
@@ -189,6 +245,19 @@ void MainBox::test_create_ball(void)
     ui->world_widget->add_ball(ui->dsb_ball_x->value(),
                                ui->dsb_ball_y->value(),
                                ui->dsb_ball_r->value());
+}
+//--------------------------------------------------------------------------------
+void MainBox::test_create_bullet(void)
+{
+    ui->world_widget->add_bullet(ui->dsb_bullet_x->value(),
+                                 ui->dsb_bullet_y->value(),
+                                 ui->dsb_bullet_r->value(),
+                                 ui->dsb_bullet_linear_velocity_x->value(),
+                                 ui->dsb_bullet_linear_velocity_y->value(),
+                                 ui->dsb_bullet_impulse_x->value(),
+                                 ui->dsb_bullet_impulse_y->value(),
+                                 ui->dsb_bullet_point_x->value(),
+                                 ui->dsb_bullet_point_y->value());
 }
 //--------------------------------------------------------------------------------
 void MainBox::pixel_to_pt_get(void)

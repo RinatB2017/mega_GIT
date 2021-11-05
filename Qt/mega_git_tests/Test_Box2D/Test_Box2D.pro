@@ -25,17 +25,6 @@ win32 {
     RC_ICONS = ico/computer.ico
 }
 
-linux {
-#    DEFINES += BOX2D_231
-    DEFINES += BOX2D_241
-}
-
-win32 {
-#    CONFIG  += use_BOX2D_221
-#    CONFIG  += use_BOX2D_231
-    CONFIG  += use_BOX2D_241
-}
-
 LIB_PATH  = "$$PWD/../../../Qt/lib"
 LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 

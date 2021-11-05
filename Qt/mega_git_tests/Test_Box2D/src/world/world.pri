@@ -7,9 +7,7 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 HEADERS += \
-    listener.hpp \
     world.hpp
 
 SOURCES += \
-    listener.cpp \
     world.cpp

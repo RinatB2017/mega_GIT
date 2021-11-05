@@ -43,6 +43,7 @@ private slots:
     void test(void);
     void test_create_wall(void);
     void test_create_ball(void);
+    void test_create_bullet(void);
 
 private:
     struct CMD
@@ -56,6 +57,11 @@ private:
     QList<CMD> commands;
 
     void init(void);
+    void set_ranges(void);
+    void set_properties(void);
+    void set_connects(void);
+    void set_commands(void);
+    void set_icons(void);
 
     void createTestBar(void);
 
@@ -63,6 +69,8 @@ private:
     void pixel_to_pt_set(void);
     void pt_to_pixel_get(void);
     void pt_to_pixel_set(void);
+
+    void page_select(void);
 
     void updateText(void);
     bool programm_is_exit(void);

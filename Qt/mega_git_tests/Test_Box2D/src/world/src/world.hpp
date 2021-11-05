@@ -23,14 +23,9 @@ enum
 struct Object
 {
     int type;
+    QColor color;
     b2Body *body;
     b2Fixture *fixture;
-};
-
-struct UserData
-{
-    QString name;
-    bool is_dead;
 };
 //--------------------------------------------------------------------------------
 class World : public MyWidget
@@ -48,11 +43,13 @@ public:
                     qreal y,
                     qreal w,
                     qreal h,
-                    qreal angle = 0,
+                    QColor color,
+                    qreal angle,
                     b2BodyType type = b2_staticBody);
 
     void createPolygon(float x,
                        float y,
+                       QColor color,
                        b2Vec2 vertices[],
                        int count,
                        float angle,
@@ -60,6 +57,7 @@ public:
 
     Object createBall(const b2Vec2& pos,
                       float radius,
+                      QColor color,
                       b2BodyType type = b2_dynamicBody);
 
     void drawWall(QPainter *painter,
@@ -81,12 +79,13 @@ public:
     void test(void);
 
 public slots:
+    void create_borders(void);
+
     void create_scene_0(void);
     void create_scene_1(void);
     void create_scene_2(void);
     void create_scene_3(void);
     void create_scene_4(void);
-    void create_borders(void);
 
     void add_wall(qreal x,
                   qreal y,
@@ -106,8 +105,6 @@ public slots:
                     qreal point_x,
                     qreal point_y);
 
-    qreal pixel_to_pt_get(void);
-    void pixel_to_pt_set(qreal value);
     qreal pt_to_pixel_get(void);
     void pt_to_pixel_set(qreal value);
 
@@ -127,10 +124,8 @@ private:
     int32 velocityIterations = 6;   //8
     int32 positionIterations = 2;   //3
 
-    qreal k_pixel_to_pt = 10;
     qreal k_pt_to_pixel = 58;
 
-    qreal pixel_to_pt(qreal value);
     qreal pt_to_pixel(qreal value);
 
     void updateText(void);

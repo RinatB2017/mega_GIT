@@ -58,6 +58,7 @@ void MainBox::init(void)
 #endif
 
     set_ranges();
+    set_single_steps();
     set_properties();
     set_connects();
     set_commands();
@@ -71,7 +72,6 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::set_ranges(void)
 {
-    ui->dsb_pixel_to_pt->setRange(0, 100000);
     ui->dsb_pt_to_pixel->setRange(0, 100000);
 
     ui->dsb_wall_x->setRange(0, 1000);
@@ -93,6 +93,54 @@ void MainBox::set_ranges(void)
     ui->dsb_bullet_impulse_y->setRange(-1000, 1000);
     ui->dsb_bullet_point_x->setRange(-1000, 1000);
     ui->dsb_bullet_point_y->setRange(-1000, 1000);
+}
+//--------------------------------------------------------------------------------
+void MainBox::set_single_steps(void)
+{
+#if 1
+    QWidgetList l_widgets = qApp->allWidgets();
+    for (int n=0; n<l_widgets.count(); n++)
+    {
+        QDoubleSpinBox *dsb = reinterpret_cast<QDoubleSpinBox *>(l_widgets.at(n));
+        if(dsb)
+        {
+            if(dsb->objectName().left(4) == "dsb_")
+            {
+                dsb->setSingleStep(0.1);
+            }
+        }
+    }
+#else
+    QList<QDoubleSpinBox *> l_dsb;
+
+    l_dsb.append(ui->dsb_pixel_to_pt);
+    l_dsb.append(ui->dsb_pt_to_pixel);
+
+    l_dsb.append(ui->dsb_wall_x);
+    l_dsb.append(ui->dsb_wall_y);
+    l_dsb.append(ui->dsb_wall_w);
+    l_dsb.append(ui->dsb_wall_h);
+    l_dsb.append(ui->dsb_wall_angle);
+
+    l_dsb.append(ui->dsb_ball_x);
+    l_dsb.append(ui->dsb_ball_y);
+    l_dsb.append(ui->dsb_ball_r);
+
+    l_dsb.append(ui->dsb_bullet_x);
+    l_dsb.append(ui->dsb_bullet_y);
+    l_dsb.append(ui->dsb_bullet_r);
+    l_dsb.append(ui->dsb_bullet_linear_velocity_x);
+    l_dsb.append(ui->dsb_bullet_linear_velocity_y);
+    l_dsb.append(ui->dsb_bullet_impulse_x);
+    l_dsb.append(ui->dsb_bullet_impulse_y);
+    l_dsb.append(ui->dsb_bullet_point_x);
+    l_dsb.append(ui->dsb_bullet_point_y);
+
+    foreach (QDoubleSpinBox *dsb, l_dsb)
+    {
+        dsb->setSingleStep(0.1);
+    }
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::set_properties(void)
@@ -118,8 +166,6 @@ void MainBox::set_connects(void)
     connect(ui->btn_create_ball,    &QPushButton::clicked,  this,               &MainBox::test_create_ball);
     connect(ui->btn_create_bullet,  &QPushButton::clicked,  this,               &MainBox::test_create_bullet);
 
-    connect(ui->btn_pixel_to_pt_get,    &QToolButton::clicked,  this,   &MainBox::pixel_to_pt_get);
-    connect(ui->btn_pixel_to_pt_set,    &QToolButton::clicked,  this,   &MainBox::pixel_to_pt_set);
     connect(ui->btn_pt_to_pixel_get,    &QToolButton::clicked,  this,   &MainBox::pt_to_pixel_get);
     connect(ui->btn_pt_to_pixel_set,    &QToolButton::clicked,  this,   &MainBox::pt_to_pixel_set);
 }
@@ -258,16 +304,6 @@ void MainBox::test_create_bullet(void)
                                  ui->dsb_bullet_impulse_y->value(),
                                  ui->dsb_bullet_point_x->value(),
                                  ui->dsb_bullet_point_y->value());
-}
-//--------------------------------------------------------------------------------
-void MainBox::pixel_to_pt_get(void)
-{
-    ui->dsb_pixel_to_pt->setValue(ui->world_widget->pixel_to_pt_get());
-}
-//--------------------------------------------------------------------------------
-void MainBox::pixel_to_pt_set(void)
-{
-    ui->world_widget->pixel_to_pt_set(ui->dsb_pixel_to_pt->value());
 }
 //--------------------------------------------------------------------------------
 void MainBox::pt_to_pixel_get(void)

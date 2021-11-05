@@ -269,38 +269,6 @@
            <widget class="QWidget" name="page_options">
             <layout class="QVBoxLayout" name="verticalLayout_10">
              <item>
-              <widget class="QGroupBox" name="groupBox_3">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="title">
-                <string>pixel_to_pt</string>
-               </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_4">
-                <item>
-                 <widget class="QDoubleSpinBox" name="dsb_pixel_to_pt"/>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="btn_pixel_to_pt_get">
-                  <property name="text">
-                   <string>G</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="btn_pixel_to_pt_set">
-                  <property name="text">
-                   <string>S</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item>
               <widget class="QGroupBox" name="groupBox_4">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -582,9 +550,6 @@
   <tabstop>dsb_ball_y</tabstop>
   <tabstop>dsb_ball_r</tabstop>
   <tabstop>btn_create_ball</tabstop>
-  <tabstop>dsb_pixel_to_pt</tabstop>
-  <tabstop>btn_pixel_to_pt_get</tabstop>
-  <tabstop>btn_pixel_to_pt_set</tabstop>
   <tabstop>dsb_pt_to_pixel</tabstop>
   <tabstop>dsb_bullet_r</tabstop>
   <tabstop>dsb_bullet_linear_velocity_x</tabstop>

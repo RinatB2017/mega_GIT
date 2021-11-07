@@ -279,25 +279,39 @@ void MainBox::test(void)
 //--------------------------------------------------------------------------------
 void MainBox::test_create_wall(void)
 {
-    ui->world_widget->add_wall(ui->dsb_wall_x->value(),
-                               ui->dsb_wall_y->value(),
-                               ui->dsb_wall_w->value(),
-                               ui->dsb_wall_h->value(),
-                               ui->dsb_wall_angle->value());
+    Wall_param param;
+
+    param.x = ui->dsb_wall_x->value();
+    param.y = ui->dsb_wall_y->value();
+    param.w = ui->dsb_wall_w->value();
+    param.h = ui->dsb_wall_h->value();
+    param.type = b2_staticBody;
+    param.angle = ui->dsb_wall_angle->value();
+
+    ui->world_widget->add_wall(param);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_create_ball(void)
 {
-    ui->world_widget->add_ball(ui->dsb_ball_x->value(),
-                               ui->dsb_ball_y->value(),
-                               ui->dsb_ball_r->value());
+    Ball_param param;
+
+    param.pos = b2Vec2(ui->dsb_ball_x->value(),
+                       ui->dsb_ball_y->value());
+    param.radius = ui->dsb_ball_r->value();
+    param.type = b2_dynamicBody;
+
+    ui->world_widget->add_ball(param);
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_create_bullet(void)
 {
-    ui->world_widget->add_bullet(ui->dsb_bullet_x->value(),
-                                 ui->dsb_bullet_y->value(),
-                                 ui->dsb_bullet_r->value(),
+    Ball_param param;
+
+    param.pos = b2Vec2(ui->dsb_bullet_x->value(),
+                       ui->dsb_bullet_y->value());
+    param.radius = ui->dsb_bullet_r->value();
+
+    ui->world_widget->add_bullet(param,
                                  ui->dsb_bullet_linear_velocity_x->value(),
                                  ui->dsb_bullet_linear_velocity_y->value(),
                                  ui->dsb_bullet_impulse_x->value(),

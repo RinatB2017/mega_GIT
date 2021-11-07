@@ -6,19 +6,11 @@ World::World(QWidget *parent) :
     MyWidget(parent)
 {
     is_busy = false;
-
     cnt = 0;
-
     timeStep = 1.0f / 60.0f;
 
     b2Vec2 gravity(0.0f, -9.8f);
     _world = new b2World(gravity);
-
-#if 0
-    //TODO компенсация координат при отрисовке
-    _transform.scale(10.0, -10.0);
-    _transform.translate(0.0, -pixel_to_pt(HEIGHT));
-#endif
 }
 //--------------------------------------------------------------------------------
 World::~World()
@@ -30,27 +22,23 @@ World::~World()
     emit debug("~World()");
 }
 //--------------------------------------------------------------------------------
-void World::createWall(qreal x,
-                       qreal y,
-                       qreal w,
-                       qreal h,
-                       QColor color,
-                       qreal angle,
-                       b2BodyType type)
+void World::createWall(Wall_param param)
 {
     Object obj;
 
     // body
     b2BodyDef bd;
-    bd.type = type;
-    bd.position = b2Vec2(x+w/2.0f, y+h/2.0f);
-    bd.angle = qDegreesToRadians(angle);
+    bd.type = param.type;
+    bd.position = b2Vec2(param.x + param.w/2.0f,
+                         param.y + param.h/2.0f);
+    bd.angle = qDegreesToRadians(param.angle);
 //    bd.angle = angle;
     obj.body = _world->CreateBody(&bd);
 
     // shape
     b2PolygonShape shape;
-    shape.SetAsBox(w / 2.0f, h / 2.0f);
+    shape.SetAsBox(param.w / 2.0f,
+                   param.h / 2.0f);
 
     // fixture
     b2FixtureDef fd;
@@ -60,18 +48,18 @@ void World::createWall(qreal x,
     obj.fixture = obj.body->CreateFixture(&fd);
     obj.type = WallObject;
 
-    obj.color = color;
+    UserData *data = new UserData;
+    data->name="wall";
+    data->index=0;
+    obj.body->SetUserData(data);
 
+    obj.color = param.color;
     _objects.append(obj);
 }
 //--------------------------------------------------------------------------------
-void World::createPolygon(float x,
-                          float y,
-                          QColor color,
-                          b2Vec2  vertices[],
-                          int   count,
-                          float angle,
-                          b2BodyType type)
+void World::createPolygon(Polygon_param param,
+                          b2Vec2 vertices[],
+                          int count)
 {
     Object obj;
     //const int count = 4;
@@ -87,9 +75,10 @@ void World::createPolygon(float x,
 
     // body
     b2BodyDef bd;
-    bd.type = type;
-    bd.position = b2Vec2(x, y);
-    bd.angle = angle * b2_pi;
+    bd.type = param.type;
+    bd.position = b2Vec2(param.x,
+                         param.y);
+    bd.angle = param.angle * b2_pi;
     obj.body = _world->CreateBody(&bd);
 
     b2PolygonShape polygon;
@@ -103,27 +92,28 @@ void World::createPolygon(float x,
     obj.fixture = obj.body->CreateFixture(&fd);
     obj.type = PolygonObject;
 
-    obj.color = color;
+    UserData *data = new UserData;
+    data->name="polygon";
+    data->index=0;
+    obj.body->SetUserData(data);
 
+    obj.color = param.color;
     _objects.append(obj);
 }
 //--------------------------------------------------------------------------------
-Object World::createBall(const b2Vec2& pos,
-                         float radius,
-                         QColor color,
-                         b2BodyType type)
+Object World::createBall(Ball_param param)
 {
     Object obj;
 
     // body
     b2BodyDef bd;
-    bd.type = type;
-    bd.position = pos;
+    bd.type = param.type;
+    bd.position = param.pos;
     obj.body = _world->CreateBody(&bd);
 
     // shape
     b2CircleShape shape;
-    shape.m_radius = radius;
+    shape.m_radius = param.radius;
 
     // fixture
     b2FixtureDef fd;
@@ -134,9 +124,14 @@ Object World::createBall(const b2Vec2& pos,
     obj.fixture = obj.body->CreateFixture(&fd);
     obj.type = BallObject;
 
-    obj.color = color;
+    UserData *data = new UserData;
+    data->name="ball";
+    data->index=param.index;
+    obj.body->SetUserData(data);
 
+    obj.color = param.color;
     _objects.append(obj);
+
     return obj;
 }
 //--------------------------------------------------------------------------------
@@ -156,19 +151,6 @@ void World::drawEllipse(QPainter *painter,
     painter->restore();
 }
 //--------------------------------------------------------------------------------
-void World::drawEllipse_B(QPainter *painter,
-                          b2Body *body)
-{
-    float x = body->GetPosition().x;
-    float y = body->GetPosition().y;
-    float r = 1.0f; //body->GetShape()->m_radius;
-
-    painter->drawEllipse(QPointF(pt_to_pixel(x),
-                                 HEIGHT - pt_to_pixel(y)),
-                         r,
-                         r);
-}
-//--------------------------------------------------------------------------------
 qreal World::pt_to_pixel(qreal value)
 {
     return value * k_pt_to_pixel;
@@ -178,38 +160,6 @@ void World::drawWall(QPainter *painter,
                      const Object& obj)
 {
     const b2PolygonShape *shape = dynamic_cast<b2PolygonShape*>(obj.fixture->GetShape());
-
-#if 0
-    QRectF r(x-hx,
-             y-hy,
-             2*hx,
-             2*hy);
-    painter->save();
-    painter->rotate(angle);
-    painter->drawRect(r);
-    painter->restore();
-#endif
-
-#if 0
-    float x = obj.body->GetPosition().x;
-    float y = obj.body->GetPosition().y;
-    float angle = obj.body->GetAngle();
-    float32 hx = shape->GetVertex(1).x;
-    float32 hy = shape->GetVertex(2).y;
-//    QRectF r(x-hx, y-hy, 2*hx, 2*hy);
-    QRectF r(pt_to_pixel(x-hx),
-             HEIGHT - pt_to_pixel(y+hy),
-             pt_to_pixel(2*hx),
-             pt_to_pixel(2*hy));
-    painter->save();
-    painter->setBrush(QBrush(obj.color));
-    painter->rotate(angle);
-    painter->drawRect(r);
-    painter->restore();
-#endif
-
-#if 1
-    //FIXME нужно рисовать полигоном, похоже
 
     int pointCount = shape->GetVertexCount();
 //    emit info(QString("GetVertexCount: %1").arg(shape->GetVertexCount()));
@@ -235,7 +185,6 @@ void World::drawWall(QPainter *painter,
     painter->rotate(qRadiansToDegrees(angle));
     painter->drawPolygon(points, pointCount);
     painter->restore();
-#endif
 }
 //--------------------------------------------------------------------------------
 void World::drawPolygon(QPainter *painter,
@@ -314,42 +263,56 @@ void World::test(void)
 //--------------------------------------------------------------------------------
 void World::create_borders(void)
 {
-#if 1
+    Wall_param param;
+
     // низ
-    createWall(0.0f,
-               0.0f,
-               20.0f,
-               0.1f,
-               Qt::red,
-               0);
-#endif
-#if 1
+    param.x = 0.0f;
+    param.y = 0.0f,
+    param.w = scene_w;
+    param.h = wall_h;
+    param.color = Qt::red;
+    param.angle = 0;
+    param.index = 0;
+    param.type = b2_staticBody;
+
+    createWall(param);
+
     // верх
-    createWall(0.0f,
-               10.0f,
-               20.0f,
-               0.1f,
-               Qt::red,
-               0);
-#endif
-#if 1
+    param.x = 0.0f;
+    param.y = scene_h,
+    param.w = scene_w;
+    param.h = wall_h;
+    param.color = Qt::red;
+    param.angle = 0;
+    param.index = 0;
+    param.type = b2_staticBody;
+
+    createWall(param);
+
     // левая стена
-    createWall(0.0f,
-               0.0f,
-               0.1f,
-               10.0f,
-               Qt::blue,
-               0.0f);
-#endif
-#if 1
+    param.x = 0.0f;
+    param.y = 0.0f,
+    param.w = wall_h;
+    param.h = scene_h;
+    param.color = Qt::blue;
+    param.angle = 0;
+    param.index = 0;
+    param.type = b2_staticBody;
+
+    createWall(param);
+
     // правая стена
-    createWall(20.0f,
-               0.0f,
-               0.1f,
-               10.0f,
-               Qt::green,
-               0.0f);
-#endif
+    param.x = scene_w;
+    param.y = 0.0f,
+    param.w = wall_h;
+    param.h = scene_h;
+    param.color = Qt::red;
+    param.angle = 0;
+    param.index = 0;
+    param.type = b2_staticBody;
+
+    createWall(param);
+
 #if 0
     //кирпич
     createWall(15.0f,
@@ -386,35 +349,54 @@ void World::create_scene_0(void)
         vertices[2].Set(8.0f,   5.0f);
         vertices[3].Set(2.0f,   5.0f);
 
-        createPolygon(5,
-                      5,
-                      Qt::green,
-                      vertices,
-                      4,
-                      0,
-                      b2_dynamicBody);
+        Polygon_param p_param;
 
-        Object ball = createBall(b2Vec2(1.0f, 3.0f),
-                                 0.15,
-                                 Qt::red);
+        p_param.x = 5.0f;
+        p_param.y = 5.0f;
+        p_param.color = Qt::green;
+        p_param.type = b2_dynamicBody;
+        p_param.angle = 0;
+        p_param.index = 0;
+
+        int cnt = 4;
+
+        createPolygon(p_param, vertices, cnt);
+
+        Ball_param b_param;
+
+        b_param.pos = b2Vec2(1.0f, 3.0f);
+        b_param.radius = 0.15f;
+        b_param.color = Qt::red;
+        b_param.type = b2_dynamicBody;
+        b_param.index = 0;
+
+        Object ball = createBall(b_param);
         ball.body->SetGravityScale(-1);
         ball.fixture->SetRestitution(1.1f);
 
-        createWall(10.0f,
-                   3.0f,
-                   0.2f,
-                   3.0f,
-                   Qt::blue,
-                   45.0f,
-                   b2_dynamicBody);
+        Wall_param param;
 
-        createWall(15.0f,
-                   2.0f,
-                   0.2f,
-                   5.0f,
-                   Qt::blue,
-                   -45.0f,
-                   b2_dynamicBody);
+        param.x = 10.0f;
+        param.y = 3.0f,
+        param.w = 0.2f;
+        param.h = 3.0f;
+        param.color = Qt::blue;
+        param.angle = 45.0f;
+        param.index = 0;
+        param.type = b2_dynamicBody;
+
+        createWall(param);
+
+        param.x = 15.0f;
+        param.y = 2.0f,
+        param.w = 0.2f;
+        param.h = 5.0f;
+        param.color = Qt::blue;
+        param.angle = -45.0f;
+        param.index = 0;
+        param.type = b2_dynamicBody;
+
+        createWall(param);
 
         create_borders();
         emit cnt_objects(_objects.count());
@@ -428,9 +410,15 @@ void World::create_scene_1(void)
     {
         is_busy = true;
 
-        Object ball = createBall(b2Vec2(1.0, 1.0),
-                                 0.1,
-                                 Qt::red);
+        Ball_param b_param;
+
+        b_param.pos = b2Vec2(1.0f, 1.0f);
+        b_param.radius = 0.1f;
+        b_param.color = Qt::red;
+        b_param.type = b2_dynamicBody;
+        b_param.index = 0;
+
+        Object ball = createBall(b_param);
 
         // линейная скорость
         //ball.body->SetLinearVelocity(b2Vec2(1.0f, 1.0f));
@@ -439,23 +427,33 @@ void World::create_scene_1(void)
                                       b2Vec2(1.0f, 1.0f),
                                       true);
 
-        createWall(15,
-                   4,
-                   0.2,
-                   2.0,
-                   90.0,
-                   b2_dynamicBody);
+        Wall_param param;
+
+        param.x = 15.0f;
+        param.y = 4.0f,
+        param.w = 0.2f;
+        param.h = 2.0f;
+        param.color = Qt::red;
+        param.angle = 90.0f;
+        param.index = 0;
+        param.type = b2_dynamicBody;
+
+        createWall(param);
 
         int xx = 2;
+
+        param.y = 0.0f,
+        param.w = 0.05f;
+        param.h = 0.7f;
+        param.color = Qt::blue;
+        param.angle = 0.0f;
+        param.index = 0;
+        param.type = b2_dynamicBody;
+
         for(int n=0; n<10; n++)
         {
-            createWall(xx,
-                       0,
-                       0.05f,
-                       0.7f,
-                       Qt::blue,
-                       0,
-                       b2_dynamicBody);
+            param.x = xx;
+            createWall(param);
             xx = xx + 2;
         }
 
@@ -472,14 +470,19 @@ void World::create_scene_2(void)
         is_busy = true;
         int pos_x = 5;
         int pos_y = 5;
+        Ball_param b_param;
         for(int y=0; y<200; y+=10)
         {
             for(int x=0; x<200; x+=5)
             {
-                createBall(b2Vec2(pos_x+1.05f+x/25.0f,
-                                  pos_y+1.05f+y/50.0f),
-                           0.1f,
-                           Qt::red);
+                b_param.pos = b2Vec2(pos_x+1.05f+x/25.0f,
+                                     pos_y+1.05f+y/50.0f);
+                b_param.radius = 0.1f;
+                b_param.color = Qt::red;
+                b_param.type = b2_dynamicBody;
+                b_param.index = 0;
+
+                createBall(b_param);
             }
         }
 
@@ -494,11 +497,17 @@ void World::create_scene_3(void)
     if(is_busy == false)
     {
         is_busy = true;
+        Ball_param b_param;
         for(int n=0; n<360; n++)
         {
-            Object ball = createBall(b2Vec2(10.0, 5),
-                                     0.05,
-                                     Qt::red);
+            b_param.pos = b2Vec2(10.0f,
+                                 5.0f);
+            b_param.radius = 0.05f;
+            b_param.color = Qt::red;
+            b_param.type = b2_dynamicBody;
+            b_param.index = 0;
+
+            Object ball = createBall(b_param);
 
             qreal angle = n;
             qreal x = qSin(qDegreesToRadians(angle));
@@ -524,9 +533,16 @@ void World::create_scene_4(void)
     ширина земли 20 метров
     */
 
-    createBall(b2Vec2(1 + qrand() % 10, 5),
-               0.1,
-               Qt::red);
+    Ball_param b_param;
+
+    b_param.pos = b2Vec2(1.0f + qrand() % 10,
+                         5.0f);
+    b_param.radius = 0.1f;
+    b_param.color = Qt::red;
+    b_param.type = b2_dynamicBody;
+    b_param.index = 0;
+
+    createBall(b_param);
 
 #if 0
     createWall(0,
@@ -538,32 +554,25 @@ void World::create_scene_4(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void World::add_wall(qreal x,
-                     qreal y,
-                     qreal w,
-                     qreal h,
-                     qreal a)
+void World::add_wall(Wall_param param)
 {
-    createWall(x,
-               y,
-               w,
-               h,
-               a,
-               0);
+    createWall(param);
 }
 //--------------------------------------------------------------------------------
-void World::add_ball(qreal x,
-                     qreal y,
-                     qreal r)
+void World::add_ball(Ball_param param)
 {
-    createBall(b2Vec2(x, y),
-               r,
-               Qt::red);
+    Ball_param b_param;
+
+    b_param.pos = param.pos;
+    b_param.radius = param.radius;
+    b_param.color = param.color;
+    b_param.type = param.type;
+    b_param.index = param.index;
+
+    createBall(b_param);
 }
 //--------------------------------------------------------------------------------
-void World::add_bullet(qreal x,
-                       qreal y,
-                       qreal r,
+void World::add_bullet(Ball_param param,
                        qreal linear_velocity_x,
                        qreal linear_velocity_y,
                        qreal impulse_x,
@@ -571,9 +580,15 @@ void World::add_bullet(qreal x,
                        qreal point_x,
                        qreal point_y)
 {
-    Object ball = createBall(b2Vec2(x, y),
-                             r,
-                             Qt::red);
+    Ball_param b_param;
+
+    b_param.pos = param.pos;
+    b_param.radius = param.radius;
+    b_param.color = param.color;
+    b_param.type = param.type;
+    b_param.index = param.index;
+
+    Object ball = createBall(b_param);
     // линейная скорость
     ball.body->SetLinearVelocity(b2Vec2(linear_velocity_x, linear_velocity_y));
     // линейный импульс
@@ -612,9 +627,6 @@ void World::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
-#if 0
-    painter.setTransform(_transform);
-#endif
 
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 #   error (Need Qt5)

@@ -180,6 +180,7 @@ void MainBox::set_commands(void)
     commands.append({ id++, "create_scene_2", &World::create_scene_2 });
     commands.append({ id++, "create_scene_3", &World::create_scene_3 });
     commands.append({ id++, "create_scene_4", &World::create_scene_4 });
+    commands.append({ id++, "create_scene_5", &World::create_scene_5 });
 
     ui->cb_tests->setProperty(NO_SAVE, true);
     foreach (CMD command, commands)
@@ -264,17 +265,7 @@ void MainBox::page_select(void)
 void MainBox::test(void)
 {
     emit info("Test");
-
-#if 1
     ui->world_widget->test();
-#endif
-
-#if 0
-    ui->world_widget->create_scene_0();
-    ui->world_widget->create_scene_1();
-    ui->world_widget->create_scene_2();
-    ui->world_widget->create_scene_3();
-#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_create_wall(void)

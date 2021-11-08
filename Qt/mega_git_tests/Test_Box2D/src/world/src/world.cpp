@@ -32,7 +32,7 @@ void World::createWall(Wall_param param)
     bd.position = b2Vec2(param.x + param.w/2.0f,
                          param.y + param.h/2.0f);
     bd.angle = qDegreesToRadians(param.angle);
-//    bd.angle = angle;
+    //    bd.angle = angle;
     obj.body = _world->CreateBody(&bd);
 
     // shape
@@ -162,7 +162,7 @@ void World::drawWall(QPainter *painter,
     const b2PolygonShape *shape = dynamic_cast<b2PolygonShape*>(obj.fixture->GetShape());
 
     int pointCount = shape->GetVertexCount();
-//    emit info(QString("GetVertexCount: %1").arg(shape->GetVertexCount()));
+    //    emit info(QString("GetVertexCount: %1").arg(shape->GetVertexCount()));
 
     float angle = obj.body->GetAngle();
     float pos_x = obj.body->GetPosition().x;
@@ -257,6 +257,22 @@ void World::test(void)
         emit info(QString("pos: %1 %2")
                   .arg(bl->GetPosition().x)
                   .arg(bl->GetPosition().y));
+
+        UserData *data = reinterpret_cast<UserData *>(bl->GetUserData());
+        if(data)
+        {
+            int index = data->index;
+            emit info(QString("index: %1")
+                      .arg(index));
+
+            if(index == 100)
+            {
+                bl->SetTransform(b2Vec2(1.0f,
+                                        1.0f
+                                        ),
+                                 0.0f);
+            }
+        }
         bl = bl->GetNext();
     }
 }
@@ -378,7 +394,7 @@ void World::create_scene_0(void)
 
         param.x = 10.0f;
         param.y = 3.0f,
-        param.w = 0.2f;
+                param.w = 0.2f;
         param.h = 3.0f;
         param.color = Qt::blue;
         param.angle = 45.0f;
@@ -389,7 +405,7 @@ void World::create_scene_0(void)
 
         param.x = 15.0f;
         param.y = 2.0f,
-        param.w = 0.2f;
+                param.w = 0.2f;
         param.h = 5.0f;
         param.color = Qt::blue;
         param.angle = -45.0f;
@@ -431,7 +447,7 @@ void World::create_scene_1(void)
 
         param.x = 15.0f;
         param.y = 4.0f,
-        param.w = 0.2f;
+                param.w = 0.2f;
         param.h = 2.0f;
         param.color = Qt::red;
         param.angle = 90.0f;
@@ -443,7 +459,7 @@ void World::create_scene_1(void)
         int xx = 2;
 
         param.y = 0.0f,
-        param.w = 0.05f;
+                param.w = 0.05f;
         param.h = 0.7f;
         param.color = Qt::blue;
         param.angle = 0.0f;
@@ -552,6 +568,24 @@ void World::create_scene_4(void)
                Qt::red,
                0);
 #endif
+}
+//--------------------------------------------------------------------------------
+void World::create_scene_5(void)
+{
+    Ball_param b_param;
+
+    b_param.pos = b2Vec2(11.0f,
+                         5.0f);
+    b_param.radius = 0.1f;
+    b_param.color = Qt::red;
+    b_param.type = b2_staticBody;
+    b_param.index = 100;
+    createBall(b_param);
+
+    b_param.pos = b2Vec2(12.0f,
+                         5.0f);
+    b_param.index = 200;
+    createBall(b_param);
 }
 //--------------------------------------------------------------------------------
 void World::add_wall(Wall_param param)

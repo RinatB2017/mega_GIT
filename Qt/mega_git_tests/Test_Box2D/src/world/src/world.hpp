@@ -7,10 +7,6 @@
 #include <QtMath>
 #include <Box2D/Box2D.h>
 //--------------------------------------------------------------------------------
-//#ifdef BOX2D_241
-//#   define float float
-//#endif
-//--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 enum
@@ -64,7 +60,6 @@ struct Ball_param
     b2BodyType type;
     int index;
 };
-
 //--------------------------------------------------------------------------------
 class World : public MyWidget
 {
@@ -107,6 +102,7 @@ public slots:
     void create_scene_2(void);
     void create_scene_3(void);
     void create_scene_4(void);
+    void create_scene_5(void);
 
     void add_wall(Wall_param param);
     void add_ball(Ball_param param);

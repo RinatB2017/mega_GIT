@@ -96,7 +96,7 @@ void MyMediaRecorder::start(void)
              // VideoWriter::fourcc('X','V','I','D'),
              // VideoWriter::fourcc('m','p','4','v'),
              VideoWriter::fourcc('h','2','6','4'),
-             30.0,
+             frames_per_second,
              Size(frame_width, frame_height),
              true);
     if(out.isOpened())

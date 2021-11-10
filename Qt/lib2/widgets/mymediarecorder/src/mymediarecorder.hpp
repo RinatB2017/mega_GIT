@@ -54,6 +54,8 @@ private:
     QString filename = "output.avi";
     VideoWriter out;
 
+    qreal frames_per_second = 30.0f;
+
     void init(void);
 
     void set_filename(void);

@@ -227,81 +227,9 @@ void MainBox::heavy_function(int x)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-#include <QtConcurrent>
-#include "myfiledialog.hpp"
-#include "showjson.hpp"
-
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
-
-#if 1
-    TestWidget *tw = new TestWidget();
-    tw->setFixedSize(300, 300);
-    tw->show();
-#endif
-
-#if 0
-    QFile file(":/ico/computer.ico");
-    if (!file.open(QIODevice::ReadOnly))
-    {
-        emit error("error open");
-        return false;
-    }
-    emit info("YES");
-#endif
-
-#if 0
-    QFuture <void> local_thread;
-    local_thread = QtConcurrent::run(this, &MainBox::heavy_function, 10000);
-#endif
-
-#if 0
-    MyFileDialog *dlg = new MyFileDialog("t_mainbox", "t_mainbox");
-    int btn = dlg->exec();
-    if(btn == MyFileDialog::Accepted)
-    {
-        QStringList files = dlg->selectedFiles();
-        QString filename = files.at(0);
-
-        QFile file(filename);
-        if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            QByteArray ba = file.readAll();
-
-            ShowJSON *sj = new ShowJSON();
-            sj->loadJson(ba);
-            sj->show();
-        }
-    }
-    delete dlg;
-#endif
-
-#if 0
-    //    QWidgetList wl = qApp->allWidgets();
-    QList<LogBox *> wl = topLevelWidget()->findChildren<LogBox *>();
-    foreach (QWidget *w, wl)
-    {
-        LogBox *lb = reinterpret_cast<LogBox *>(w);
-        if(lb)
-        {
-            emit info(QString("find %1").arg(lb->objectName()));
-        }
-    }
-#endif
-
-#if 0
-    qDebug() << "qdebug";
-    qInfo() << "qinfo";
-    qWarning() << "qwarning";
-    qCritical() << "qcritical";
-#endif
-
-#if 0
-    emit info(Q_FUNC_INFO);
-    emit info(get_class_name(Q_FUNC_INFO));
-    emit info(get_func_name(Q_FUNC_INFO));
-#endif
 
 #if 0
     emit info("Copyright \\251 2020-2025");

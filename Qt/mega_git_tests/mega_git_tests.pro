@@ -86,7 +86,6 @@ SUBDIRS += \
     
 unix {
 SUBDIRS += \
-    $$PWD/Test_Box2D \
     $$PWD/Test_Qt3D \
     $$PWD/Tests_QtPlot3D \
     $$PWD/Test_QScintilla \

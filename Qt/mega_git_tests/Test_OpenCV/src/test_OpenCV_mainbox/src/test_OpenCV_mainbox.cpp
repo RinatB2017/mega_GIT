@@ -18,10 +18,15 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#define FEAT_FACE_FILE  "xml/haarcascade_frontalface_default.xml"
-#define FEAT_EYE_FILE   "xml/haarcascade_mcs_eyepair_big.xml"
-#define FEAT_NOSE_FILE  "xml/haarcascade_mcs_nose.xml"
-#define FEAT_MOUTH_FILE "xml/haarcascade_mcs_mouth.xml"
+#define SRC_FEAT_FACE_FILE  ":/xml/haarcascade_frontalface_default.xml"
+#define SRC_FEAT_EYE_FILE   ":/xml/haarcascade_mcs_eyepair_big.xml"
+#define SRC_FEAT_NOSE_FILE  ":/xml/haarcascade_mcs_nose.xml"
+#define SRC_FEAT_MOUTH_FILE ":/xml/haarcascade_mcs_mouth.xml"
+
+#define DST_FEAT_FACE_FILE  "xml/haarcascade_frontalface_default.xml"
+#define DST_FEAT_EYE_FILE   "xml/haarcascade_mcs_eyepair_big.xml"
+#define DST_FEAT_NOSE_FILE  "xml/haarcascade_mcs_nose.xml"
+#define DST_FEAT_MOUTH_FILE "xml/haarcascade_mcs_mouth.xml"
 //--------------------------------------------------------------------------------
 #include "test_OpenCV_mainbox.hpp"
 #include "ui_test_OpenCV_mainbox.h"
@@ -228,9 +233,14 @@ bool MainBox::create_detectors(void)
 {
     QString file;
 
+    check_file(SRC_FEAT_FACE_FILE,  DST_FEAT_FACE_FILE);
+    check_file(SRC_FEAT_EYE_FILE,   DST_FEAT_EYE_FILE);
+    check_file(SRC_FEAT_NOSE_FILE,  DST_FEAT_NOSE_FILE);
+    check_file(SRC_FEAT_MOUTH_FILE, DST_FEAT_MOUTH_FILE);
+
     if(mFaceDetector.empty())
     {
-        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_FACE_FILE);
+        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(DST_FEAT_FACE_FILE);
         if(!mFaceDetector.load(file.toLatin1().constData()))
         {
             emit error(QString("error load %1").arg(file));
@@ -240,7 +250,7 @@ bool MainBox::create_detectors(void)
 
     if(mEyeDetector.empty())
     {
-        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_EYE_FILE);
+        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(DST_FEAT_EYE_FILE);
         if(!mEyeDetector.load(file.toLatin1().constData()))
         {
             emit error(QString("error load %1").arg(file));
@@ -250,7 +260,7 @@ bool MainBox::create_detectors(void)
 
     if(mNoseDetector.empty())
     {
-        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_NOSE_FILE);
+        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(DST_FEAT_NOSE_FILE);
         if(!mNoseDetector.load(file.toLatin1().constData()))
         {
             emit error(QString("error load %1").arg(file));
@@ -260,7 +270,7 @@ bool MainBox::create_detectors(void)
 
     if(mMouthDetector.empty())
     {
-        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(FEAT_MOUTH_FILE);
+        file = QString("%1/%2").arg(QApplication::applicationDirPath()).arg(DST_FEAT_MOUTH_FILE);
         if(!mMouthDetector.load(file.toLatin1().constData()))
         {
             emit error(QString("error load %1").arg(file));
@@ -289,10 +299,11 @@ void MainBox::find_faces(void)
     cv::cvtColor(mOrigImage, grayFrames, cv::COLOR_BGR2GRAY);
     equalizeHist(grayFrames, grayFrames);
 
-    bool ok = faceCade.load(FEAT_FACE_FILE);
+    check_file(SRC_FEAT_FACE_FILE,  DST_FEAT_FACE_FILE);
+    bool ok = faceCade.load(DST_FEAT_FACE_FILE);
     if(!ok)
     {
-        emit error(QString("error load %1").arg(FEAT_FACE_FILE));
+        emit error(QString("error load %1").arg(DST_FEAT_FACE_FILE));
         return;
     }
 

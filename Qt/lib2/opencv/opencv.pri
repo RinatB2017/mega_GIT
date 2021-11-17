@@ -8,8 +8,8 @@ unix {
 }
 
 win32 {
-    INCLUDEPATH += R:/opencv/build/include/
-    DEPENDPATH  += R:/opencv/build/include/
+    INCLUDEPATH += C:/opencv/build/include/
+    DEPENDPATH  += C:/opencv/build/include/
 
 CONFIG(debug, debug|release) {
     OPENCV_VER = 430d
@@ -20,7 +20,7 @@ CONFIG(debug, debug|release) {
 }
 #    LIBS    += -lgdi32
 
-    LIBS    += -L$$PWD/lib
+    LIBS    += -LC:/opencv/lib
 
     LIBS    += -lopencv_core$${OPENCV_VER}
     LIBS    += -lopencv_highgui$${OPENCV_VER}

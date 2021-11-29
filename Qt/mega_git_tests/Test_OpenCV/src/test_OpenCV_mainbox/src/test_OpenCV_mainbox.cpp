@@ -335,9 +335,52 @@ void MainBox::find_faces(void)
                           );
 }
 //--------------------------------------------------------------------------------
+void MainBox::find_polygons(void)
+{
+    cv::Mat thresholdedMat;
+    cv::cvtColor(mOrigImage, thresholdedMat, cv::COLOR_RGB2HSV);
+
+    int hueFrom = ui->sl_HueFrom->value();
+    int hueTo = std::max(hueFrom, ui->sl_HueTo->value());
+
+    int saturationFrom = ui->sl_SaturationFrom->value();
+    int saturationTo = std::max(saturationFrom, ui->sl_SaturationTo->value());
+
+    int valueFrom = ui->sl_ValueFrom->value();
+    int valueTo = std::max(valueFrom, ui->sl_ValueTo->value());
+
+    // Отфильтровываем только то, что нужно, по диапазону цветов
+    cv::inRange(thresholdedMat,
+                cv::Scalar(hueFrom, saturationFrom, valueFrom),
+                cv::Scalar(hueTo, saturationTo, valueTo),
+                thresholdedMat
+                );
+
+    // Находим контуры
+    std::vector< std::vector< cv::Point > > countours;
+    std::vector< cv::Vec4i > hierarchy;
+    cv::findContours(thresholdedMat,
+                     countours,
+                     hierarchy,
+                     cv::RETR_TREE,
+                     cv::CHAIN_APPROX_SIMPLE,
+                     cv::Point( 0, 0 )
+                     );
+
+    emit info(QString("countours.size() = %1")
+              .arg(countours.size()));
+
+    std::vector< cv::Rect > rects;
+    for(uint i = 0; i < countours.size(); ++i)
+    {
+
+    }
+}
+//--------------------------------------------------------------------------------
 void MainBox::s_test(void)
 {
-    find_faces();
+    //find_faces();
+    find_polygons();
 }
 //--------------------------------------------------------------------------------
 void MainBox::set_scaleFactor(int value)

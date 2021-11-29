@@ -58,6 +58,7 @@ private slots:
     void set_minNeighbors(int value);
 
     void find_faces(void);
+    void find_polygons(void);
 
     void s_test(void);
 

@@ -7,8 +7,6 @@ TARGET   = _For_tests
 
 include (conf/conf.pri)
 
-QT  += concurrent
-
 PROGRAMM_PATH  += \
     $$PWD/src
 INCLUDEPATH += $$PROGRAMM_PATH

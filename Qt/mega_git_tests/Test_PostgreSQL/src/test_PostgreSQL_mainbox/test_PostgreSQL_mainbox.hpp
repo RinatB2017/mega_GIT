@@ -24,6 +24,7 @@
 #include <QTableView>
 #include <QSqlQueryModel>
 #include <QSqlDatabase>
+#include <QSqlError>
 #include <QSqlQuery>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -45,6 +46,8 @@ private:
     QSqlDatabase db;
 
     void init(void);
+
+    void open(void);
 
     void updateText(void);
     bool programm_is_exit(void);

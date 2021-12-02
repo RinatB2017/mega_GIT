@@ -235,7 +235,7 @@ bool MainBox::test(void)
     emit info("Copyright \\251 2020-2025");
 #endif
 
-#if 0
+#if 1
     emit info("Info");
     emit debug("Debug");
     emit error("Error");

@@ -35,6 +35,7 @@ MainBox::MainBox(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    save_widgets();
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -42,6 +43,14 @@ void MainBox::init(void)
 {
     ui->setupUi(this);
 
+    connect(ui->btn_open,   &QPushButton::clicked,
+            this,           &MainBox::open);
+
+    load_widgets();
+}
+//--------------------------------------------------------------------------------
+void MainBox::open(void)
+{
     if(QSqlDatabase::contains(QSqlDatabase::defaultConnection))
     {
         db = QSqlDatabase::database();
@@ -50,10 +59,10 @@ void MainBox::init(void)
     {
         db = QSqlDatabase::addDatabase("QPSQL");
     }
-    db.setHostName("localhost");
-    db.setDatabaseName("kaus_base");
-    db.setUserName("postgres");
-    db.setPassword("postgres");
+    db.setHostName(ui->le_HostName->text());
+    db.setDatabaseName(ui->le_DatabaseName->text());
+    db.setUserName(ui->le_UserName->text());
+    db.setPassword(ui->le_Password->text());
     bool ok = db.open();
 
     if(ok)
@@ -62,17 +71,15 @@ void MainBox::init(void)
     }
     else
     {
-        emit error("db failed");
+        emit error(QString("db failed:")
+                   .arg(db.lastError().text()));
         return;
     }
 
     QSqlQueryModel *model = new QSqlQueryModel;
     model->setQuery("SELECT * FROM pg_type");
 
-    QTableView *view = new QTableView(this);
-    view->setModel(model);
-//    view->show();
-    ui->layout_SQL->addWidget(view); 
+    ui->tableView->setModel(model);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

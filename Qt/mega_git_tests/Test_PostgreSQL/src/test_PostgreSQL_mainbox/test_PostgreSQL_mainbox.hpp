@@ -27,6 +27,7 @@
 #include <QSqlError>
 #include <QSqlQuery>
 //--------------------------------------------------------------------------------
+#include "mainwindow.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -41,13 +42,32 @@ public:
     explicit MainBox(QWidget *parent = nullptr);
     virtual ~MainBox();
 
+public slots:
+    void choice_test(void);
+    bool test(void);
+
 private:
     Ui::MainBox *ui;
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        bool (MainBox::*func)(void);
+    } *cmd_t;
+    QList<CMD> commands;
+
+    QPointer<QComboBox> cb_test;
+
     QSqlDatabase db;
 
     void init(void);
+    void createTestBar(void);
 
     void open(void);
+    void close(void);
+    void show(void);
+    void create_table(void);
+    void run_sql(void);
 
     void updateText(void);
     bool programm_is_exit(void);

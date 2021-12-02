@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>MainBox</class>
  <widget class="QWidget" name="MainBox">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>527</width>
-    <height>247</height>
-   </rect>
-  </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <widget class="QFrame" name="frame">
@@ -78,6 +70,46 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btn_show">
+        <property name="text">
+         <string>Show</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_create_table">
+        <property name="text">
+         <string>Create table</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_close">
+        <property name="text">
+         <string>Close</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="title">
+         <string>SQL</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QTextEdit" name="te_sql_query"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btn_run_sql">
+           <property name="text">
+            <string>Run</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -104,6 +136,11 @@
   <tabstop>le_UserName</tabstop>
   <tabstop>le_Password</tabstop>
   <tabstop>btn_open</tabstop>
+  <tabstop>btn_show</tabstop>
+  <tabstop>btn_create_table</tabstop>
+  <tabstop>btn_close</tabstop>
+  <tabstop>te_sql_query</tabstop>
+  <tabstop>btn_run_sql</tabstop>
   <tabstop>tableView</tabstop>
  </tabstops>
  <resources/>

@@ -68,9 +68,28 @@ void MainBox::init(void)
         connect(rb, &QRadioButton::clicked, this,   &MainBox::refreshHSV);
     }
 
+    ui->rb_Canny->setProperty(NO_SAVE, true);
+    ui->rb_Original->setProperty(NO_SAVE, true);
+    ui->rb_Result->setProperty(NO_SAVE, true);
+    ui->rb_Thresholded->setProperty(NO_SAVE, true);
+
     ui->sl_scale_factor->setRange(10, 50);
     ui->dsb_scalefactor->setSingleStep(0.01);
     ui->sl_minNeighbors->setRange(1, 10);
+
+    ui->sb_HueFrom->setRange(0, 359);
+    ui->sb_HueTo->setRange(0, 359);
+    ui->sb_SaturationFrom->setRange(0, 255);
+    ui->sb_SaturationTo->setRange(0, 255);
+    ui->sb_ValueFrom->setRange(0, 255);
+    ui->sb_ValueTo->setRange(0, 255);
+
+    ui->sl_HueFrom->setRange(0, 359);
+    ui->sl_HueTo->setRange(0, 359);
+    ui->sl_SaturationFrom->setRange(0, 255);
+    ui->sl_SaturationTo->setRange(0, 255);
+    ui->sl_ValueFrom->setRange(0, 255);
+    ui->sl_ValueTo->setRange(0, 255);
 
     connect(ui->sl_scale_factor,    &QSlider::sliderMoved,
             this,                   static_cast<void (MainBox::*)(double)>(&MainBox::set_scaleFactor));
@@ -169,7 +188,7 @@ void MainBox::refreshHSV(void)
             cv::Canny(thresholdedMat, thresholdedMat, 100, 50, 5 );
         }
 
-        if(ui->rbResult->isChecked())
+        if(ui->rb_Result->isChecked())
         {
             // Находим контуры
             std::vector< std::vector< cv::Point > > countours;
@@ -352,7 +371,7 @@ void MainBox::find_polygons(void)
     // Отфильтровываем только то, что нужно, по диапазону цветов
     cv::inRange(thresholdedMat,
                 cv::Scalar(hueFrom, saturationFrom, valueFrom),
-                cv::Scalar(hueTo, saturationTo, valueTo),
+                cv::Scalar(hueTo,   saturationTo,   valueTo),
                 thresholdedMat
                 );
 
@@ -369,12 +388,18 @@ void MainBox::find_polygons(void)
 
     emit info(QString("countours.size() = %1")
               .arg(countours.size()));
+    emit info(QString("hierarchy.size() = %1")
+              .arg(hierarchy.size()));
 
     std::vector< cv::Rect > rects;
-    for(uint i = 0; i < countours.size(); ++i)
+    for(uint i=0; i<countours.size(); ++i)
     {
 
     }
+
+    std::vector< cv::Point > countour = countours[0];
+    emit info(QString("countour[0].size() = %1")
+              .arg(countour.size()));
 }
 //--------------------------------------------------------------------------------
 void MainBox::s_test(void)

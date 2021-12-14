@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>MainBox</class>
  <widget class="QWidget" name="MainBox">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>426</width>
+    <height>254</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>MainBox</string>
   </property>
@@ -84,7 +92,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="rbResult">
+      <widget class="QRadioButton" name="rb_Result">
        <property name="text">
         <string>Result</string>
        </property>
@@ -127,7 +135,6 @@
       <widget class="QLabel" name="label">
        <property name="font">
         <font>
-         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -160,7 +167,6 @@
       <widget class="QLabel" name="label_2">
        <property name="font">
         <font>
-         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -174,9 +180,6 @@
      </item>
      <item row="2" column="4">
       <widget class="QSlider" name="sl_ValueTo">
-       <property name="maximum">
-        <number>255</number>
-       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -201,9 +204,6 @@
      </item>
      <item row="0" column="4">
       <widget class="QSlider" name="sl_HueTo">
-       <property name="maximum">
-        <number>255</number>
-       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -214,9 +214,6 @@
      </item>
      <item row="1" column="4">
       <widget class="QSlider" name="sl_SaturationTo">
-       <property name="maximum">
-        <number>255</number>
-       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -268,7 +265,6 @@
       <widget class="QLabel" name="label_3">
        <property name="font">
         <font>
-         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -291,7 +287,6 @@
       <widget class="QLabel" name="label_6">
        <property name="font">
         <font>
-         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -314,7 +309,6 @@
       <widget class="QLabel" name="label_8">
        <property name="font">
         <font>
-         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -344,7 +338,7 @@
   <tabstop>rb_Original</tabstop>
   <tabstop>rb_Thresholded</tabstop>
   <tabstop>rb_Canny</tabstop>
-  <tabstop>rbResult</tabstop>
+  <tabstop>rb_Result</tabstop>
   <tabstop>sl_HueFrom</tabstop>
   <tabstop>sb_HueFrom</tabstop>
   <tabstop>sl_HueTo</tabstop>

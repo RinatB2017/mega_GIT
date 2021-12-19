@@ -21,6 +21,8 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QtMath>
+//--------------------------------------------------------------------------------
 #include "for_tests_mainbox_gui.hpp"
 #include "mysplashscreen.hpp"
 #include "mymainwindow.hpp"
@@ -35,19 +37,65 @@ public:
     explicit TestWidget(QWidget *parent = nullptr) :
         QWidget(parent)
     {
+        setFixedSize(300, 300);
+    }
 
+private:
+    void calc_line(qreal center_x,
+                   qreal center_y,
+                   qreal angle,
+                   qreal radius,
+                   qreal *end_x,
+                   qreal *end_y)
+    {
+        qreal A = radius;
+        qreal B = qCos(qDegreesToRadians(angle)) * A;
+        qreal C = qSin(qDegreesToRadians(angle)) * A;
+
+        *end_x = center_x + B;
+        *end_y = center_y + C;
     }
 
 protected:
     void paintEvent(QPaintEvent *)
     {
         QPainter painter(this);
-        painter.drawLine(0, 0, 200, 100);
+
+        const int count = 12; //6 зубцов
+
+        bool flag = false;
+        qreal p_x = 0.0;
+        qreal p_y = 0.0;
+        qreal inc_angle = 360.0 / count;
+        qreal angle = 0.0;
+        qreal radius = 10.0;
+        qreal center_x = 150;
+        qreal center_y = 150;
+        for(int n=0; n<count; n++)
+        {
+            flag = !flag;
+            if(flag)
+                radius = 50.0;
+            else
+                radius = 25.0;
+
+            calc_line(0,
+                      0,
+                      angle,
+                      radius,
+                      &p_x,
+                      &p_y);
+            angle += inc_angle;
+            painter.drawLine(center_x,
+                             center_y,
+                             p_x + 150.0,
+                             p_y + 150.0);
+        }
     }
 };
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;

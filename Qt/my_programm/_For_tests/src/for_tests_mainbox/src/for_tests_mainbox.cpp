@@ -231,11 +231,16 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    TestWidget *tw = new TestWidget();
+    tw->show();
+#endif
+
 #if 0
     emit info("Copyright \\251 2020-2025");
 #endif
 
-#if 1
+#if 0
     emit info("Info");
     emit debug("Debug");
     emit error("Error");
@@ -250,6 +255,11 @@ bool MainBox::test2(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test2");
+
+    int x = 3;
+    x = x + ++x;
+    emit info(QString("X %1").arg(x));
+
     return true;
 }
 //--------------------------------------------------------------------------------

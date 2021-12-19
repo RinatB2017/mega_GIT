@@ -830,6 +830,33 @@ bool GrapherBox::add_curve_data(int channel,
     return true;
 }
 //--------------------------------------------------------------------------------
+bool GrapherBox::add_curve_data(int channel,
+                                qreal x,
+                                qreal y)
+{
+    if(curves.count() <= 0)
+    {
+        emit error(tr("curves.count() <= 0"));
+        return false;
+    }
+    if(channel >= curves.count())
+    {
+        emit error(QString(tr("channel > %1"))
+                   .arg(curves.count()));
+        return false;
+    }
+    data_channels[channel].append(QPointF(x, y));    //TODO добавление данных
+
+    curves[channel].real_data.append(QPointF(x, y));
+    curves[channel].view_curve->append(QPointF(x, y));
+    curves[channel].pos_x = x;
+    set_horizontal_alignment(ui->btn_Horizontal->isChecked());
+    set_vertical_alignment(ui->btn_Vertical->isChecked());
+    updateGraphics();
+
+    return true;
+}
+//--------------------------------------------------------------------------------
 bool GrapherBox::set_curve_data(int channel,
                                 int index,
                                 qreal data)
@@ -998,7 +1025,7 @@ bool GrapherBox::add_curve_data(int channel,
                                 qreal value)
 {
     return add_curve_data(channel,
-                          v_dt.toSecsSinceEpoch(),
+                          (int)v_dt.toSecsSinceEpoch(),
                           value);
 }
 //--------------------------------------------------------------------------------
@@ -1141,7 +1168,7 @@ void GrapherBox::set_type_curve_SPLINE_LINES(void)
     for(int n=0; n<get_curves_count(); n++)
     {
         QwtSplineCurveFitter *fitter=new QwtSplineCurveFitter;
-        fitter->setFitMode(QwtSplineCurveFitter::Spline);
+        //fitter->setFitMode(QwtSplineCurveFitter::Spline); //FIXME возможно, что проблема
 
         set_curve_symbol(n, nullptr);
         set_curve_style(n, QwtPlotCurve::Lines);

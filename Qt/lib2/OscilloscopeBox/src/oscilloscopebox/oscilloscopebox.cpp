@@ -420,7 +420,9 @@ bool OscilloscopeBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::load_setting(void)
 {
+#ifdef Q_DEBUG
     qDebug() << "load_setting";
+#endif
 
     int size = beginReadArray(CURVE_COLORS);
     if(size != curves.count())
@@ -452,11 +454,15 @@ void OscilloscopeBox::load_setting(void)
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::save_setting(void)
 {
+#ifdef Q_DEBUG
     qDebug() << "save_setting";
+#endif
 
     beginWriteArray(CURVE_COLORS, curves.count());
     int cnt = curves.count();
+#ifdef Q_DEBUG
     qDebug() << "cnt" << cnt;
+#endif
     for(int n=0; n<cnt; n++)
     {
         setArrayIndex(n);

@@ -219,6 +219,7 @@ void MainBox::createTestBar(void)
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     commands.clear(); int id = 0;
+    commands.append({ id++, "Фрактал Мурата",       &MainBox::m_fractal });
     commands.append({ id++, "test",                 &MainBox::test });
     commands.append({ id++, "test load",            &MainBox::test_load });
     commands.append({ id++, "test save",            &MainBox::test_save });
@@ -326,6 +327,23 @@ void MainBox::test(void)
     ui->grapher_widget->add_curve_data(curve_0, dt4, 10);
     ui->grapher_widget->add_curve_data(curve_0, dt5, 0);
 #endif
+}
+//--------------------------------------------------------------------------------
+void MainBox::m_fractal(void)
+{
+    qreal X = 1;
+    qreal Y = 0;
+
+    for(int N=1; N<21; N++)
+    {
+        ui->grapher_widget->add_curve_data(curve_0, X, Y);
+        emit info(QString("%1|%2")
+                  .arg(X, 0, 'f', 3)
+                  .arg(Y, 0, 'f', 3));
+
+        X = X + 6.0 * (qreal)N;
+        Y = Y + 3.0 * (2.0 * (qreal)N + 1.0);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_load(void)

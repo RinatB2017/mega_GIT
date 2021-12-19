@@ -49,6 +49,7 @@ public:
 
 private slots:
     void choice_test(void);
+    void m_fractal(void);
     void test(void);
     void test_load(void);
     void test_save(void);

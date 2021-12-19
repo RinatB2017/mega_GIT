@@ -52,6 +52,9 @@ public:
 
         d_boundingRect = QRectF( 0.0, 0.0, -1.0, -1.0 );
     }
+
+private:
+    QRectF d_boundingRect;
 };
 //--------------------------------------------------------------------------------
 #endif

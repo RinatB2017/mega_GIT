@@ -172,6 +172,9 @@ public slots:
                         int x,
                         qreal data);
     bool add_curve_data(int channel,
+                        qreal x,
+                        qreal y);
+    bool add_curve_data(int channel,
                         qreal data);
     bool add_curve_data(int channel,
                         QDateTime v_dt,

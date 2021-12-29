@@ -94,12 +94,6 @@ void CreatorMenus::init(void)
 
     app_menu_add_about(m_app_helpmenu);
     app_menu_add_help(m_app_helpmenu);
-
-//#ifndef NO_TOOLBAR
-//#ifndef NO_MENU
-//    add_windowsmenu_action(toolbar, toolbar->toggleViewAction());
-//#endif
-//#endif
 }
 //--------------------------------------------------------------------------------
 bool CreatorMenus::add_menu(int pos_x,

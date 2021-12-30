@@ -71,6 +71,13 @@ protected:
         qreal radius = 10.0;
         qreal center_x = 150;
         qreal center_y = 150;
+
+        // отзеркалим по вертикали
+        painter.translate(0, height());
+        painter.scale(1.0, -1.0);
+
+        painter.drawLine(5, 5, 25, 25); // для теста
+
         for(int n=0; n<count; n++)
         {
             flag = !flag;

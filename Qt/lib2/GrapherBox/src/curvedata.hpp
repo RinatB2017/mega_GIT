@@ -14,8 +14,9 @@ public:
 
     virtual QRectF boundingRect() const
     {
-        if ( d_boundingRect.width() < 0.0 )
-            d_boundingRect = qwtBoundingRect( *this );
+        //TODO этого не было
+//        if ( d_boundingRect.width() < 0.0 )
+//            d_boundingRect = qwtBoundingRect( *this );
 
         return d_boundingRect;
     }
@@ -60,6 +61,10 @@ public:
 
         d_boundingRect = QRectF( 0.0, 0.0, -1.0, -1.0 );
     }
+
+private:
+    QRectF d_boundingRect;        //TODO этого не было
+    QVector<QPointF> d_samples;   //TODO этого не было
 };
 //--------------------------------------------------------------------------------
 #endif

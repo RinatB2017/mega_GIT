@@ -19,15 +19,7 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include "ui_grapherbox.h"
-
-#include "myfiledialog.hpp"
-#include "mainwindow.hpp"
-#include "grapherbox_options.hpp"
 #include "grapherbox.hpp"
-#include "curvedata.hpp"
-#include "csvreader.hpp"
-
-#include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef USE_SCALE_POINT_DATETIME
 class TimeScaleDraw: public QwtDateScaleDraw
@@ -1167,14 +1159,14 @@ void GrapherBox::set_type_curve_SPLINE_LINES(void)
 
     for(int n=0; n<get_curves_count(); n++)
     {
-        QwtSplineCurveFitter *fitter=new QwtSplineCurveFitter;
+        //QwtSplineCurveFitter *fitter=new QwtSplineCurveFitter;
         //fitter->setFitMode(QwtSplineCurveFitter::Spline); //FIXME возможно, что проблема
 
         set_curve_symbol(n, nullptr);
         set_curve_style(n, QwtPlotCurve::Lines);
 
         set_curve_attribute(n, QwtPlotCurve::Fitted);
-        set_curve_fitter(n, fitter);
+        //set_curve_fitter(n, fitter);
     }
     updateGraphics();
 

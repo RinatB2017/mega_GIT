@@ -21,8 +21,13 @@
 #ifndef TRADERPLOT_HPP
 #define TRADERPLOT_HPP
 //--------------------------------------------------------------------------------
+#include <QPainter>
 #include <QPointF>
+#include <QColor>
 
+#include <QDebug>
+
+#include <qwt_scale_map.h>
 #include <qwt_plot.h>
 //--------------------------------------------------------------------------------
 class QwtPlotCurve;

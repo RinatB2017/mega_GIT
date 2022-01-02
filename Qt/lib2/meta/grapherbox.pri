@@ -9,11 +9,11 @@
     include ($$PWD/../csvreader/csvreader.pri)
 }
 
-DEPENDPATH  += $$PWD/../qwt/include # надо исправить
-INCLUDEPATH += $$PWD/../qwt/include # надо исправить
-
 # собираем qwt прямо из кода
 !contains(CONFIG, qwt) {
+#    DEPENDPATH  += $$PWD/../qwt/include # надо исправить
+#    INCLUDEPATH += $$PWD/../qwt/include # надо исправить
+
     include ($$PWD/../qwt/qwt.pri)
 }
 

@@ -21,10 +21,11 @@
 #ifndef GRAPHERBOX_HPP
 #define GRAPHERBOX_HPP
 //--------------------------------------------------------------------------------
-//#include "qwt_spline_curve_fitter.h"
+#include <QtMath>
 
 #include "qwt_date_scale_engine.h"
 #include "qwt_date_scale_draw.h"
+#include "qwt_global.h"
 #include "qwt_date.h"
 
 #include "qwt_plot_renderer.h"
@@ -39,15 +40,20 @@
 #include "qwt_symbol.h"
 #include "qwt_legend.h"
 #include "qwt_legend_label.h"
-#include "qwt_curve_fitter.h"
 #include "qwt_plot.h"
 
-#include "qwt_curve_fitter.h"
+#include "qwt_spline_curve_fitter.h"
+
 #include "qwt_legend_data.h"
-#include "qwt_plot_curve.h"
-#include "qwt_symbol.h"
 //--------------------------------------------------------------------------------
+#include "myfiledialog.hpp"
+#include "mainwindow.hpp"
+#include "grapherbox_options.hpp"
+#include "curvedata.hpp"
+#include "csvreader.hpp"
+
 #include "mywidget.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class GrapherBox;

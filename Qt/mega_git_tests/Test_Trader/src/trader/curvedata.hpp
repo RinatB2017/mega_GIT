@@ -2,8 +2,8 @@
 #ifndef CURVE_DATA_HPP
 #define CURVE_DATA_HPP
 //--------------------------------------------------------------------------------
-#include "qwt_series_data.h"
-#include <QPointF>
+#include <qwt_series_data.h>
+//#include <QPointF>
 //???
 //--------------------------------------------------------------------------------
 class CurveData: public QwtArraySeriesData<QPointF>

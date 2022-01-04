@@ -35,19 +35,10 @@ class MainBox_GUI : public MyWidget
 {
     Q_OBJECT
 
-signals:
-    void btn_plus_push(void);
-    void btn_minus_push(void);
-
 public:
     explicit MainBox_GUI(QWidget *parent,
                          MySplashScreen *splash);
     virtual ~MainBox_GUI();
-
-    void set_sb_value(int value);
-    int  get_sb_value(void);
-
-    void set_sb_value_range(int min, int max);
 
 private:
     QPointer<MySplashScreen> splash;

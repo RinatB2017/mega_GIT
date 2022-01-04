@@ -256,10 +256,6 @@ bool MainBox::test2(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test2");
 
-    int x = 3;
-    x = x + ++x;
-    emit info(QString("X %1").arg(x));
-
     return true;
 }
 //--------------------------------------------------------------------------------

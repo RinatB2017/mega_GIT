@@ -38,11 +38,6 @@ void MainBox::init(void)
 #ifdef QT_DEBUG
     createTestBar();
 #endif
-
-    set_sb_value_range(-1000, 1000);
-
-    connect(this,   &MainBox::btn_plus_push,    this,   &MainBox::plus);
-    connect(this,   &MainBox::btn_minus_push,   this,   &MainBox::minus);
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -78,8 +73,7 @@ void MainBox::createTestBar(void)
     Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "+",    &MainBox::test_plus });
-    commands.append({ id++, "-",    &MainBox::test_minus });
+    commands.append({ id++, "test", &MainBox::test });
 
     testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -112,30 +106,10 @@ void MainBox::createTestBar(void)
     //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_plus(void)
+bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
-    set_sb_value(get_sb_value()+1);
     return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::test_minus(void)
-{
-    emit trace(Q_FUNC_INFO);
-    set_sb_value(get_sb_value()-1);
-    return true;
-}
-//--------------------------------------------------------------------------------
-void MainBox::plus(void)
-{
-    emit trace(Q_FUNC_INFO);
-    set_sb_value(get_sb_value()+1);
-}
-//--------------------------------------------------------------------------------
-void MainBox::minus(void)
-{
-    emit trace(Q_FUNC_INFO);
-    set_sb_value(get_sb_value()-1);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)

@@ -772,7 +772,12 @@ static QR_VERSIONINFO QR_VersonInfo[] = {
     /////////////////////////////////////////////////////////////////////////////
     // CQR_Encode::EncodeData
 
-    bool CQR_Encode::EncodeData(int nLevel, int nVersion, bool bAutoExtent, int nMaskingNo, char* lpsSource, int ncSource)
+    bool CQR_Encode::EncodeData(int nLevel,
+                                int nVersion,
+                                bool bAutoExtent,
+                                int nMaskingNo,
+                                char* lpsSource,
+                                int ncSource)
     {
         int i, j;
 

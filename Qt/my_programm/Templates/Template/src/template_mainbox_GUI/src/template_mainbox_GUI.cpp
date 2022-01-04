@@ -39,25 +39,7 @@ void MainBox_GUI::init(void)
 {
     ui->setupUi(this);
 
-    connect(ui->btn_plus,   &QPushButton::clicked,  this,   &MainBox_GUI::btn_plus_push);
-    connect(ui->btn_minus,  &QPushButton::clicked,  this,   &MainBox_GUI::btn_minus_push);
-
     load_widgets();
-}
-//--------------------------------------------------------------------------------
-void MainBox_GUI::set_sb_value(int value)
-{
-    ui->sb_value->setValue(value);
-}
-//--------------------------------------------------------------------------------
-int  MainBox_GUI::get_sb_value(void)
-{
-    return ui->sb_value->value();
-}
-//--------------------------------------------------------------------------------
-void MainBox_GUI::set_sb_value_range(int min, int max)
-{
-    ui->sb_value->setRange(min, max);
 }
 //--------------------------------------------------------------------------------
 void MainBox_GUI::updateText(void)

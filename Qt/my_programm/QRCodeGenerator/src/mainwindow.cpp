@@ -43,6 +43,7 @@ const QString getIniPath()
     const static QString iniPath( qApp->applicationDirPath() + "/settings.ini" );
     return iniPath;
 }
+
 QString saveFormats()
 {
     static QString suffix;
@@ -89,7 +90,11 @@ void MainWindow::updateQRImage()
     int maskIndex = -1;
     QString encodeString = ui->pTextEditQRText->toPlainText();
 
-    successfulEncoding = qrEncode.EncodeData( levelIndex, versionIndex, bExtent, maskIndex, encodeString.toUtf8().data() );
+    successfulEncoding = qrEncode.EncodeData( levelIndex,
+                                              versionIndex,
+                                              bExtent,
+                                              maskIndex,
+                                              encodeString.toUtf8().data() );
     if ( !successfulEncoding )
     {
         ui->image_label->clear();

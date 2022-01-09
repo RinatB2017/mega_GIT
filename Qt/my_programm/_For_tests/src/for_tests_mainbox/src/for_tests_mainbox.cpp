@@ -232,6 +232,25 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    int r = 150;
+    int g = 150;
+    int b = 150;
+
+    int frame_width  = 1920;
+    int frame_height = 1080;
+
+    QPixmap *pixmap = new QPixmap(frame_width, frame_height);
+    QPainter painter;
+    painter.begin(pixmap);
+    painter.fillRect(0, 0, frame_width, frame_height, QBrush(QColor(r, g, b)));
+    painter.end();
+
+    QLabel *label = new QLabel();
+    label->setPixmap(*pixmap);
+    label->show();
+#endif
+
+#if 0
     TestWidget *tw = new TestWidget();
     tw->show();
 #endif

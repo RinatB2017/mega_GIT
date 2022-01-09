@@ -256,6 +256,13 @@ bool MainBox::test2(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test2");
 
+    QByteArray ba;
+    for(int n=0; n<=255; n++)
+    {
+        ba.append((char)n);
+    }
+    emit info(ba.toHex().toUpper());
+
     return true;
 }
 //--------------------------------------------------------------------------------

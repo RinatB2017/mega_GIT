@@ -210,18 +210,18 @@ void Test_QGLWidget::add_grid(void)
 {
     glColor3f(1, 0, 0);
     glBegin(GL_LINES);
-        glVertex3f (0, 0, 0);
-        glVertex3f (0, 0, 100);
+    glVertex3f (0, 0, 0);
+    glVertex3f (0, 0, 100);
     glEnd();
     glColor3f(0, 1, 0);
     glBegin(GL_LINES);
-        glVertex3f (0, 0, 0);
-        glVertex3f (0, 100, 0);
+    glVertex3f (0, 0, 0);
+    glVertex3f (0, 100, 0);
     glEnd();
     glColor3f(0, 0, 1);
     glBegin(GL_LINES);
-        glVertex3f (0, 0, 0);
-        glVertex3f (100, 0, 0);
+    glVertex3f (0, 0, 0);
+    glVertex3f (100, 0, 0);
     glEnd();
 
     // R z
@@ -392,51 +392,51 @@ void Test_QGLWidget::draw_object2(void)
 void Test_QGLWidget::draw_cube(void)
 {
     glBegin (GL_QUADS);
-        glNormal3f(0.0, 0.0, 1.0);
-        glVertex3f (1.0, 1.0, 1.0);
-        glVertex3f (-1.0, 1.0, 1.0);
-        glVertex3f (-1.0, -1.0, 1.0);
-        glVertex3f (1.0, -1.0, 1.0);
+    glNormal3f(0.0, 0.0, 1.0);
+    glVertex3f (1.0, 1.0, 1.0);
+    glVertex3f (-1.0, 1.0, 1.0);
+    glVertex3f (-1.0, -1.0, 1.0);
+    glVertex3f (1.0, -1.0, 1.0);
     glEnd();
 
     glBegin (GL_QUADS);
-        glNormal3f(0.0, 0.0, -1.0);
-        glVertex3f (1.0, 1.0, -1.0);
-        glVertex3f (1.0, -1.0, -1.0);
-        glVertex3f (-1.0, -1.0, -1.0);
-        glVertex3f (-1.0, 1.0, -1.0);
+    glNormal3f(0.0, 0.0, -1.0);
+    glVertex3f (1.0, 1.0, -1.0);
+    glVertex3f (1.0, -1.0, -1.0);
+    glVertex3f (-1.0, -1.0, -1.0);
+    glVertex3f (-1.0, 1.0, -1.0);
     glEnd();
 
     glBegin (GL_QUADS);
-        glNormal3f(-1.0, 0.0, 0.0);
-        glVertex3f (-1.0, 1.0, 1.0);
-        glVertex3f (-1.0, 1.0, -1.0);
-        glVertex3f (-1.0, -1.0, -1.0);
-        glVertex3f (-1.0, -1.0, 1.0);
+    glNormal3f(-1.0, 0.0, 0.0);
+    glVertex3f (-1.0, 1.0, 1.0);
+    glVertex3f (-1.0, 1.0, -1.0);
+    glVertex3f (-1.0, -1.0, -1.0);
+    glVertex3f (-1.0, -1.0, 1.0);
     glEnd();
 
     glBegin (GL_QUADS);
-        glNormal3f(1.0, 0.0, 0.0);
-        glVertex3f (1.0, 1.0, 1.0);
-        glVertex3f (1.0, -1.0, 1.0);
-        glVertex3f (1.0, -1.0, -1.0);
-        glVertex3f (1.0, 1.0, -1.0);
+    glNormal3f(1.0, 0.0, 0.0);
+    glVertex3f (1.0, 1.0, 1.0);
+    glVertex3f (1.0, -1.0, 1.0);
+    glVertex3f (1.0, -1.0, -1.0);
+    glVertex3f (1.0, 1.0, -1.0);
     glEnd();
 
     glBegin (GL_QUADS);
-        glNormal3f(0.0, 1.0, 0.0);
-        glVertex3f (-1.0, 1.0, -1.0);
-        glVertex3f (-1.0, 1.0, 1.0);
-        glVertex3f (1.0, 1.0, 1.0);
-        glVertex3f (1.0, 1.0, -1.0);
+    glNormal3f(0.0, 1.0, 0.0);
+    glVertex3f (-1.0, 1.0, -1.0);
+    glVertex3f (-1.0, 1.0, 1.0);
+    glVertex3f (1.0, 1.0, 1.0);
+    glVertex3f (1.0, 1.0, -1.0);
     glEnd();
 
     glBegin(GL_QUADS);
-        glNormal3f(0.0, -1.0, 0.0);
-        glVertex3f (-1.0, -1.0, -1.0);
-        glVertex3f (1.0, -1.0, -1.0);
-        glVertex3f (1.0, -1.0, 1.0);
-        glVertex3f (-1.0, -1.0, 1.0);
+    glNormal3f(0.0, -1.0, 0.0);
+    glVertex3f (-1.0, -1.0, -1.0);
+    glVertex3f (1.0, -1.0, -1.0);
+    glVertex3f (1.0, -1.0, 1.0);
+    glVertex3f (-1.0, -1.0, 1.0);
     glEnd();
 }
 //--------------------------------------------------------------------------------

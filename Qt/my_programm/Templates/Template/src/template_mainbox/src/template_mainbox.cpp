@@ -38,6 +38,8 @@ void MainBox::init(void)
 #ifdef QT_DEBUG
     createTestBar();
 #endif
+
+    connect(this,   &MainBox_GUI::s_test,   this,   &MainBox::test);
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -109,6 +111,7 @@ void MainBox::createTestBar(void)
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+    emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -38,7 +38,7 @@ MainBox_GUI::~MainBox_GUI()
 void MainBox_GUI::init(void)
 {
     ui->setupUi(this);
-
+    connect(ui->btn_test,   &QPushButton::clicked,  this,   &MainBox_GUI::s_test);
     load_widgets();
 }
 //--------------------------------------------------------------------------------

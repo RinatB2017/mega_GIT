@@ -23,13 +23,21 @@
 //--------------------------------------------------------------------------------
 #include <QtGlobal>
 //--------------------------------------------------------------------------------
+#ifdef Q_OS_LINUX
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/objdetect.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/core.hpp>
-//--------------------------------------------------------------------------------
 #include <opencv2/opencv.hpp>
+#else
+#include <highgui/highgui.hpp>
+#include <objdetect.hpp>
+#include <highgui.hpp>
+#include <imgproc.hpp>
+#include <core.hpp>
+#include <opencv.hpp>
+#endif
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------

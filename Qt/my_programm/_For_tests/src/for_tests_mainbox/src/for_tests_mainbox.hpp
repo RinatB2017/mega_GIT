@@ -101,6 +101,122 @@ protected:
     }
 };
 //--------------------------------------------------------------------------------
+class FractalWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit FractalWidget(QWidget *parent = nullptr) :
+        QWidget(parent)
+    {
+        qreal w = 600.0;
+        qreal h = 600.0;
+        qreal c_x = w / 2.0;
+        qreal c_y = h / 2.0;
+
+        setFixedSize(w, h);
+
+        lines.append(QLineF(c_x,
+                            c_y,
+                            c_x,
+                            c_y + 100));
+        show_line(c_x,
+                  c_y,
+                  c_x,
+                  c_y + 200,
+                  90.0);
+    }
+
+private:
+    int cnt = 0;
+    int max_cnt = 100;
+    QList<QLineF> lines;
+
+    void calc_line(qreal center_x,
+                   qreal center_y,
+                   qreal angle,
+                   qreal radius,
+                   qreal *end_x,
+                   qreal *end_y)
+    {
+        qreal A = radius;
+        qreal B = qCos(qDegreesToRadians(angle)) * A;
+        qreal C = qSin(qDegreesToRadians(angle)) * A;
+
+        *end_x = center_x + B;
+        *end_y = center_y + C;
+    }
+
+protected:
+    void show_line(qreal x1,
+                   qreal y1,
+                   qreal x2,
+                   qreal y2,
+                   qreal angle)
+    {
+        if(cnt > max_cnt) return;
+        cnt++;
+
+        qreal center_x = x1 + (x2 - x1) / 2.0;
+        qreal center_y = y1 + (y2 - y1) / 2.0;
+
+        qreal end_x;
+        qreal end_y;
+
+        qreal radius = qSqrt(qPow(x2 - x1, 2) + qPow(y2 - y1, 2)) * 0.9;
+        qreal new_angle;
+
+        //---
+#if 1
+        new_angle = angle + 45.0;
+        calc_line(center_x,
+                  center_y,
+                  new_angle,
+                  radius,
+                  &end_x,
+                  &end_y);
+        lines.append(QLineF(center_x,
+                            center_y,
+                            end_x,
+                            end_y));
+#endif
+        //---
+#if 0
+        new_angle = angle - 45.0;
+        calc_line(center_x,
+                  center_y,
+                  new_angle,
+                  radius,
+                  &end_x,
+                  &end_y);
+        lines.append(QLineF(center_x,
+                            center_y,
+                            end_x,
+                            end_y));
+#endif
+        //---
+        show_line(center_x,
+                  center_y,
+                  end_x,
+                  end_y,
+                  new_angle);
+    }
+
+    void paintEvent(QPaintEvent *)
+    {
+        // отзеркалим по вертикали
+        QPainter painter(this);
+        painter.translate(0, height());
+        painter.scale(1.0, -1.0);
+
+        painter.setPen(QColor(Qt::red));
+        foreach (QLineF line, lines)
+        {
+            painter.drawLine(line);
+        }
+    }
+};
+//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }

@@ -232,6 +232,12 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QWidget *w = new QWidget();
+    w->setParent(this);
+    w->show();
+#endif
+
+#if 0
     FractalWidget *fw = new FractalWidget();
     fw->show();
 #endif

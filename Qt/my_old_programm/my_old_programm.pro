@@ -21,7 +21,5 @@ SUBDIRS += \
 
 unix {
 SUBDIRS += \
-#    $$PWD/Creator \
-#    $$PWD/Teacher_reserv \
     $$PWD/Analyzer
 }

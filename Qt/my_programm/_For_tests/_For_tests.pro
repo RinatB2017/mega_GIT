@@ -18,11 +18,11 @@ SOURCES += \
     main.cpp
 
 RESOURCES += \
-    $$PWD/styles/styles.qrc \
-    $$PWD/images/bullets/bullets.qrc \
-    $$PWD/ico/icons.qrc \
     $$PWD/themes/themes_css/themes_css.qrc \
     $$PWD/themes/themes_qss/themes_qss.qrc \
+    $$PWD/images/bullets/bullets.qrc \
+    $$PWD/styles/styles.qrc \
+    $$PWD/ico/icons.qrc
 
 #можно поставить новое logo
 #RESOURCES += about/about.qrc

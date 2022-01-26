@@ -92,7 +92,6 @@ SUBDIRS += \
     $$PWD/Test_PGP \
     $$PWD/Test_syslog \
     $$PWD/Test_Trader \
-#    $$PWD/Test_WebKit \
     $$PWD/Test_wwWidgets \
     $$PWD/Test_QWebEngineView \
     $$PWD/Test_QTermWidget \

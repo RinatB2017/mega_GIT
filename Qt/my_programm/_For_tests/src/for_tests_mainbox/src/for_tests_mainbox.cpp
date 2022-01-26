@@ -231,7 +231,94 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+    QStringList filters;
+    filters << "PNG files (*.png)"
+            << "JPG files (*.jpg)"
+            << "JPEG files (*.jpeg)";
+
 #if 1
+    MyFileDialog *dlg = new MyFileDialog("png", "png");
+    dlg->setNameFilters(filters);
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        emit info(filename);
+
+        QImage image(filename);
+
+        int w = image.width();
+        int h=image.height();
+        for(int y=0; y<h; y++)
+        {
+            for(int x=0; x<w; x++)
+            {
+                int r, g, b;
+                QRgb rgb = image.pixel(x, y);
+                QColor color = QColor::fromRgb(rgb);
+                color.getRgb(&r, &g, &b);
+
+                r ^= 55;
+                g ^= 55;
+                b ^= 55;
+
+                color.setRgb(r, g, b);
+
+                QRgb new_rgb = color.rgb();
+                image.setPixel(x, y, new_rgb);
+            }
+        }
+
+        QLabel *lbl = new QLabel();
+        lbl->setPixmap(QPixmap::fromImage(image));
+        lbl->setFixedSize(image.size());
+        lbl->show();
+    }
+    delete dlg;
+#endif
+
+#if 0
+    MyFileDialog *dlg = new MyFileDialog("png", "png");
+    dlg->setNameFilters(filters);
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        emit info(filename);
+
+        QImage image(filename);
+
+        int w = image.width();
+        int h=image.height();
+        for(int y=0; y<h; y++)
+        {
+            for(int x=0; x<w; x++)
+            {
+                int h, s, v;
+                QRgb rgb = image.pixel(x, y);
+                QColor color = QColor::fromRgb(rgb);
+                color.getHsv(&h, &s, &v);
+
+                int new_v = 100 - v;
+                if(new_v < 0) new_v = 0;
+
+                QColor new_color = color.fromHsv(h, s, new_v);
+                QRgb new_rgb = new_color.rgb();
+                image.setPixel(x, y, new_rgb);
+            }
+        }
+
+        QLabel *lbl = new QLabel();
+        lbl->setPixmap(QPixmap::fromImage(image));
+        lbl->setFixedSize(image.size());
+        lbl->show();
+    }
+    delete dlg;
+#endif
+
+#if 0
     QWidget *w = new QWidget();
     w->setParent(this);
     w->show();
@@ -266,6 +353,48 @@ bool MainBox::test2(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test2");
+
+#if 1
+    MyFileDialog *dlg = new MyFileDialog("png", "png");
+    dlg->setNameFilter("PNG files (*.png)");
+    dlg->setDefaultSuffix("png");
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        emit info(filename);
+
+        QImage image(filename);
+
+        int w = image.width();
+        int h=image.height();
+        for(int y=0; y<h; y++)
+        {
+            for(int x=0; x<w; x++)
+            {
+                int h, s, v;
+                QRgb rgb = image.pixel(x, y);
+                QColor color = QColor::fromRgb(rgb);
+                color.getHsv(&h, &s, &v);
+
+                int new_s = 100 - s;
+                if(new_s < 0) new_s = 0;
+                QColor new_color = color.fromHsv(h, new_s, v);
+
+                //QColor new_color = color.fromHsv(h, v, s);
+                QRgb new_rgb = new_color.rgb();
+                image.setPixel(x, y, new_rgb);
+            }
+        }
+
+        QLabel *lbl = new QLabel();
+        lbl->setPixmap(QPixmap::fromImage(image));
+        lbl->setFixedSize(image.size());
+        lbl->show();
+    }
+    delete dlg;
+#endif
     return true;
 }
 //--------------------------------------------------------------------------------

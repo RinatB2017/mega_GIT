@@ -41,12 +41,24 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void test(void);
-    void test_rtsp(void);
+    void choice_test(void);
+    bool test(void);
+    bool test_rtsp(void);
 
 private:
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        bool (MainBox::*func)(void);
+    } CMD_t;
+    QList<CMD> commands;
+
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
+
+    QPointer<QToolBar> testbar;
+    QPointer<QComboBox> cb_test;
 
     bool is_blocked = false;
 

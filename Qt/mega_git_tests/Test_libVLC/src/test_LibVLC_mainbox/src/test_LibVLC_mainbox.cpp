@@ -60,32 +60,66 @@ void MainBox::init(void)
     createTestBar();
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::choice_test(void)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
-    Q_ASSERT(mw);
+    bool ok = false;
+    int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok) return;
 
-    QToolBar *testbar = new QToolBar(tr("testbar"));
-    testbar->setObjectName("testbar");
-
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    QToolButton *btn_test = add_button(testbar,
-                                       new QToolButton(this),
-                                       qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                       "test",
-                                       "test");
-    QToolButton *btn_test_rtsp = add_button(testbar,
-                                            new QToolButton(this),
-                                            qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                            "rtsp",
-                                            "rtsp");
-
-    connect(btn_test,       SIGNAL(clicked(bool)),  this,   SLOT(test()));
-    connect(btn_test_rtsp,  SIGNAL(clicked(bool)),  this,   SLOT(test_rtsp()));
+    auto cmd_it = std::find_if(
+        commands.begin(),
+        commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+    );
+    if (cmd_it != commands.end())
+    {
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
+        {
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
+        }
+    }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::createTestBar(void)
+{
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_ASSERT(mw);
+
+    commands.clear(); int id = 0;
+    commands.append({ id++, "test",         &MainBox::test });
+    commands.append({ id++, "test_rtsp",    &MainBox::test_rtsp });
+
+    testbar = new QToolBar("testbar");
+    testbar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
+
+    cb_test = new QComboBox(this);
+    cb_test->setObjectName("cb_test");
+    cb_test->setProperty(NO_SAVE, true);
+    foreach (CMD command, commands)
+    {
+        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+    }
+
+    testbar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(testbar,
+                                              new QToolButton(this),
+                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                              "choice_test",
+                                              "choice_test");
+    btn_choice_test->setObjectName("btn_choice_test");
+
+    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test(void)
 {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Image"),
@@ -95,7 +129,7 @@ void MainBox::test(void)
     if(fileName.isEmpty())
     {
         emit error("no file");
-        return;
+        return false;
     }
 
     libvlc_instance_t *inst = nullptr;
@@ -121,9 +155,11 @@ void MainBox::test(void)
 
     /* play the media_player */
     libvlc_media_player_play (mp);
+
+    return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_rtsp(void)
+bool MainBox::test_rtsp(void)
 {
     libvlc_instance_t *inst = nullptr;
     libvlc_media_player_t *mp = nullptr;
@@ -138,6 +174,8 @@ void MainBox::test_rtsp(void)
 
     libvlc_media_player_set_xwindow (mp, static_cast<uint32_t>(ui->vlc_widget->winId()));
     libvlc_media_player_play (mp);
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

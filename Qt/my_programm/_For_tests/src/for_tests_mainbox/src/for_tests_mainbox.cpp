@@ -19,7 +19,6 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include "for_tests_mainbox.hpp"
-#include "defines.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
@@ -254,6 +253,48 @@ bool MainBox::test(void)
         {
             for(int x=0; x<w; x++)
             {
+                int r, g, b , temp;
+                QRgb rgb = image.pixel(x, y);
+                QColor color = QColor::fromRgb(rgb);
+                color.getRgb(&r, &g, &b);
+
+                temp = r;
+                r = g;
+                g = temp;
+
+                color.setRgb(r, g, b);
+
+                QRgb new_rgb = color.rgb();
+                image.setPixel(x, y, new_rgb);
+            }
+        }
+
+        QLabel *lbl = new QLabel();
+        lbl->setPixmap(QPixmap::fromImage(image));
+        lbl->setFixedSize(image.size());
+        lbl->show();
+    }
+    delete dlg;
+#endif
+
+#if 0
+    MyFileDialog *dlg = new MyFileDialog("png", "png");
+    dlg->setNameFilters(filters);
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        emit info(filename);
+
+        QImage image(filename);
+
+        int w = image.width();
+        int h=image.height();
+        for(int y=0; y<h; y++)
+        {
+            for(int x=0; x<w; x++)
+            {
                 int r, g, b;
                 QRgb rgb = image.pixel(x, y);
                 QColor color = QColor::fromRgb(rgb);
@@ -354,10 +395,14 @@ bool MainBox::test2(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test2");
 
+    QStringList filters;
+    filters << "PNG files (*.png)"
+            << "JPG files (*.jpg)"
+            << "JPEG files (*.jpeg)";
+
 #if 1
     MyFileDialog *dlg = new MyFileDialog("png", "png");
-    dlg->setNameFilter("PNG files (*.png)");
-    dlg->setDefaultSuffix("png");
+    dlg->setNameFilters(filters);
     if(dlg->exec())
     {
         QStringList files = dlg->selectedFiles();
@@ -412,15 +457,17 @@ void MainBox::load_setting(void)
     if(sb_test)
     {
         int value = 0;
-        load_int("sb_test", &value);
-        sb_test->setValue(value);
+        if(load_int("sb_test", &value))
+        {
+            sb_test->setValue(value);
+        }
     }
     if(cb_block)
     {
         int value = 0;
         load_int("cb_block", &value);
         bool block_is_checked = value;
-        cb_block->clicked(block_is_checked);
+        //cb_block->clicked(block_is_checked);
         cb_block->setChecked(block_is_checked);
     }
 }

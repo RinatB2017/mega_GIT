@@ -28,6 +28,7 @@
 #include "mymainwindow.hpp"
 #include "myfiledialog.hpp"
 #include "mywidget.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
 class TestWidget : public QWidget
 {
@@ -179,9 +180,7 @@ protected:
                             center_y,
                             end_x,
                             end_y));
-#endif
-        //---
-#if 0
+#else
         new_angle = angle - 45.0;
         calc_line(center_x,
                   center_y,

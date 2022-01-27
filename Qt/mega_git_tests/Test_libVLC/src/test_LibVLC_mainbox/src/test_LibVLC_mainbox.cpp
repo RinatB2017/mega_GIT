@@ -24,7 +24,7 @@
 #   include <vlc/vlc.h>
 #endif
 #ifdef Q_OS_WIN
-#   include "vlc.h"
+#   include "src/vlc/src/vlc.h"
 #endif
 //--------------------------------------------------------------------------------
 #include "ui_test_LibVLC_mainbox.h"
@@ -57,10 +57,7 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     ui->setupUi(this);
-
-//#ifdef QT_DEBUG
     createTestBar();
-//#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)

@@ -336,7 +336,11 @@ void MainBox::m_fractal(void)
 
     for(int N=1; N<21; N++)
     {
+#ifdef ONE_CURVE
         ui->grapher_widget->add_curve_data(curve_0, X, Y);
+#else
+        ui->grapher_widget->add_curve_data(curves[0], X, Y);
+#endif
         emit info(QString("%1|%2")
                   .arg(X, 0, 'f', 3)
                   .arg(Y, 0, 'f', 3));

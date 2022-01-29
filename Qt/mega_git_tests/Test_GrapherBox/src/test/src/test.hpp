@@ -37,9 +37,9 @@ private slots:
     void test_grapherbox(void);
 
 private:
-    MainWindow *mw;
-    MainBox    *mb;
-    GrapherBox *gb;
+    MainWindow *mw = nullptr;
+    MainBox    *mb = nullptr;
+    GrapherBox *gb = nullptr;
 };
 //--------------------------------------------------------------------------------
 #endif

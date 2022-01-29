@@ -118,7 +118,7 @@ unix:!macx {
 # не факт, что это правильно будет в будущем
 #
 greaterThan(QT_MAJOR_VERSION, 5) {
-    QT += core5compat
+    QT += core5compat openglwidgets
 win32 {
     QMAKE_CXXFLAGS += /std:c++17
     QMAKE_CXXFLAGS += /Zc:__cplusplus

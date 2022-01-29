@@ -28,13 +28,13 @@
 Test::Test()
 {
     mw = reinterpret_cast<MainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
+    Q_ASSERT(mw);
 
     mb = mw->findChild<MainBox *>();
-    QVERIFY(mb);
+    Q_ASSERT(mb);
 
-    gb = mb->findChild<GrapherBox *>();
-    QVERIFY(gb);
+    gb = mw->findChild<GrapherBox *>();
+    Q_ASSERT(gb);
 }
 //--------------------------------------------------------------------------------
 void Test::test_grapherbox(void)

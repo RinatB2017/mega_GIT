@@ -21,8 +21,11 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QFileDialog>
-//--------------------------------------------------------------------------------
+#include "mywaitsplashscreen.hpp"
+#include "mysplashscreen.hpp"
+#include "myfiledialog.hpp"
+#include "mainwindow.hpp"
+#include "sleeper.h"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {

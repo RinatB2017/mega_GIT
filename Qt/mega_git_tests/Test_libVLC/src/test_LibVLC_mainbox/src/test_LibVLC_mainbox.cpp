@@ -27,13 +27,8 @@
 #   include "src/vlc/src/vlc.h"
 #endif
 //--------------------------------------------------------------------------------
-#include "ui_test_LibVLC_mainbox.h"
-//--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
-#include "mysplashscreen.hpp"
-#include "mainwindow.hpp"
 #include "test_LibVLC_mainbox.hpp"
-#include "sleeper.h"
+#include "ui_test_LibVLC_mainbox.h"
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
@@ -121,16 +116,19 @@ void MainBox::createTestBar(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
-    QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open Image"),
-                                                    ".",
-                                                    tr("Video Files (*.avi *.mpg *.mov *.mp4 *.mkv)"));
+    QStringList filters;
+    filters << "Video Files (*.avi *.mpg *.mov *.mp4 *.mkv)";
+    QString filename;
 
-    if(fileName.isEmpty())
+    MyFileDialog *dlg = new MyFileDialog("vlc", "vlc", this);
+    dlg->setNameFilters(filters);
+    int btn = dlg->exec();
+    if(btn == MyFileDialog::Accepted)
     {
-        emit error("no file");
-        return false;
+        QStringList files = dlg->selectedFiles();
+        filename = files.at(0);
     }
+    delete dlg;
 
     libvlc_instance_t *inst = nullptr;
     libvlc_media_player_t *mp = nullptr;
@@ -140,10 +138,15 @@ bool MainBox::test(void)
     inst = libvlc_new (0, nullptr);
 
     /* Create a new item */
-    m = libvlc_media_new_path (inst, fileName.toLocal8Bit());
+    m = libvlc_media_new_path (inst, filename.toLocal8Bit());
 
     /* Create a media player playing environement */
     mp = libvlc_media_player_new_from_media (m);
+    if(mp == NULL)
+    {
+        emit error("libvlc_media_player_new_from_media return NULL");
+        return false;
+    }
 
     /* No need to keep the media now */
     libvlc_media_release (m);
@@ -153,9 +156,17 @@ bool MainBox::test(void)
     qDebug() << "title" << libvlc_media_player_get_title(mp);
 #endif
 
-    /* play the media_player */
-    libvlc_media_player_play (mp);
+    libvlc_media_player_set_xwindow (mp, static_cast<uint32_t>(ui->vlc_widget->winId()));
 
+    /* play the media_player */
+    int err = libvlc_media_player_play (mp);
+    if(err == 0)
+    {
+        emit info("OK");
+        return true;
+    }
+
+    emit error("Error");
     return true;
 }
 //--------------------------------------------------------------------------------

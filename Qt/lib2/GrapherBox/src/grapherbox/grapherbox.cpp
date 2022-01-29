@@ -1887,6 +1887,7 @@ void GrapherBox::test_sinus(void)
             qreal height = qreal(axis_Y_max - axis_Y_min) * 0.5;
             qreal shift_x = index * 50;
             add_curve_data(index, height*qSin(qreal(n + shift_x)*qreal(M_PI)/qreal(180.0)));
+            //qDebug() << n;
         }
     }
     push_btn_Horizontal(true);

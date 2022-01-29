@@ -63,7 +63,6 @@ class QwtPlotPicker;
 class QwtScaleDraw;
 class QwtPlotCurve;
 class QwtPlotItem;
-class QToolButton;
 class CurveData;
 class QwtLegend;
 class QwtSymbol;

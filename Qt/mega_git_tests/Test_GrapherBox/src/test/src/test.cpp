@@ -39,7 +39,7 @@ Test::Test()
 //--------------------------------------------------------------------------------
 void Test::test_grapherbox(void)
 {
-    QTimer::singleShot(0, [this]{
+    QTimer::singleShot(0, [this] {
         const int cnt_buf = 1024;
         qreal test_buf[cnt_buf] = { 0 };
         for(int n=0; n<cnt_buf; n++)

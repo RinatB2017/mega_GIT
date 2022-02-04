@@ -22,6 +22,8 @@ RESOURCES += \
     $$PWD/themes/themes_qss/themes_qss.qrc \
     $$PWD/images/bullets/bullets.qrc \
     $$PWD/styles/styles.qrc \
+    $$PWD/images/masks/masks.qrc \
+    $$PWD/images/other/other.qrc \
     $$PWD/ico/icons.qrc
 
 #можно поставить новое logo

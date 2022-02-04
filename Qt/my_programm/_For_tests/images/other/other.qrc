@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/other">
+        <file>буддизм.jpg</file>
+    </qresource>
+</RCC>

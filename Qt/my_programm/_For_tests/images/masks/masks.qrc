@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/masks">
+        <file>bitmap.png</file>
+    </qresource>
+</RCC>

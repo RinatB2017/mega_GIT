@@ -213,8 +213,6 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-#include <QElapsedTimer>
-
 void MainBox::heavy_function(int x)
 {
     QElapsedTimer timer;
@@ -230,12 +228,49 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 0
+    QLabel *lbl = new QLabel();
+
+    int w = 200;
+    int h = 100;
+
+    QPainterPath m_path;
+    m_path.moveTo(0, h / 2);
+    m_path.lineTo(w, h);
+    m_path.lineTo(w, 0);
+    m_path.lineTo(0, h / 2);
+
+#if 1
+    QPixmap *b_mask = new QPixmap(":/masks/bitmap.png");
+#else
+    QPixmap *b_mask = new QPixmap(w, h);
+    QPainter p_mask(b_mask);
+    p_mask.fillRect(0, 0, w, h, QColor(Qt::color1));
+    p_mask.fillPath(m_path, QBrush(Qt::color0));
+#endif
+
+    QPixmap *pix = new QPixmap(w, h);
+    pix->fill(QColor(Qt::blue));
+    //pix->setMask(b_mask->mask());
+
+    lbl->setPixmap(*pix);
+
+    lbl->setFixedSize(200, 100);
+    lbl->setMask(b_mask->scaled(w, h).mask());
+    lbl->show();
+#endif
+
+#if 0
+    LineWidget *le = new LineWidget();
+    le->show();
+#endif
+
     QStringList filters;
     filters << "PNG files (*.png)"
             << "JPG files (*.jpg)"
             << "JPEG files (*.jpeg)";
 
-#if 1
+#if 0
     MyFileDialog *dlg = new MyFileDialog("png", "png");
     dlg->setNameFilters(filters);
     if(dlg->exec())

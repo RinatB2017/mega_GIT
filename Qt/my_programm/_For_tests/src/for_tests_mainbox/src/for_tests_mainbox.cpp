@@ -224,11 +224,54 @@ void MainBox::heavy_function(int x)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
+#include <QScrollArea>
+#include <QImage>
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QImage src_image;
+    bool ok = src_image.load(":/other/буддизм.jpg");
+    if(!ok)
+    {
+        emit error("Not load");
+        return false;
+    }
+
+    int s = 20;
+    QImage dest_image(src_image.width() * s, src_image.height(), QImage::Format_ARGB32);
+    QPainter p(&dest_image);
+    int pos_x = 0;
+    for(int n=0; n<s; n++)
+    {
+        p.drawImage(pos_x, 0, src_image);
+        pos_x += src_image.width();
+    }
+    ok = dest_image.save("/dev/shm/xxx.png");
+    if(!ok)
+    {
+        emit error("Error create image");
+    }
+
+    QLabel *label = new QLabel();
+    label->setPixmap(QPixmap::fromImage(dest_image));
+
+    QWidget *w = new QWidget();
+    QScrollArea *area = new QScrollArea();
+    area->setWidget(label);
+
+    QHBoxLayout *hbox = new QHBoxLayout();
+    hbox->addWidget(area);
+
+    w->setLayout(hbox);
+    w->show();
+
+//    label->show();
+#endif
+
+#if 0
     LineWidget *le = new LineWidget();
     le->show();
 #endif

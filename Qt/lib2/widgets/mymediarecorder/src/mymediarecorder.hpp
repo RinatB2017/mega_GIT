@@ -25,8 +25,14 @@
 #include <QVideoProbe>
 #include <QPointer>
 //--------------------------------------------------------------------------------
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/videoio.hpp>
+#ifdef Q_OS_LINUX
+#   include <opencv2/imgproc/imgproc.hpp>
+#   include <opencv2/videoio.hpp>
+#endif
+#ifdef Q_OS_WIN
+#   include "imgproc/imgproc.hpp"
+#   include "videoio.hpp"
+#endif
 //--------------------------------------------------------------------------------
 #include "myfiledialog.hpp"
 #include "mywidget.hpp"

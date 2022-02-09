@@ -12,6 +12,9 @@
 #define P_GEOMETRY_W    "test_geometry_w"
 #define P_GEOMETRY_H    "test_geometry_h"
 #define P_ANGLE         "test_angle"
+
+#define M_WIDTH     320
+#define M_HEIGHT    200
 //--------------------------------------------------------------------------------
 #define ORGNAME "Home"
 #define APPNAME "_For_tests"

@@ -231,7 +231,21 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 0
+    for(int n=0; n<256*6; n++)
+    {
+        emit info(QString("%1 %2")
+                  .arg(n)
+                  .arg(qSin(qDegreesToRadians((qreal)n))));
+    }
+#endif
+
 #if 1
+    DrawWidget *w = new DrawWidget();
+    w->show();
+#endif
+
+#if 0
     QImage src_image;
     bool ok = src_image.load(":/other/буддизм.jpg");
     if(!ok)
@@ -436,17 +450,23 @@ bool MainBox::test(void)
     return true;
 }
 //--------------------------------------------------------------------------------
+#include "show_hsv_color.hpp"
 bool MainBox::test2(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test2");
 
+#if 1
+    Show_HSV_color* w = new Show_HSV_color();
+    w->show();
+#endif
+
+#if 0
     QStringList filters;
     filters << "PNG files (*.png)"
             << "JPG files (*.jpg)"
             << "JPEG files (*.jpeg)";
 
-#if 1
     MyFileDialog *dlg = new MyFileDialog("png", "png");
     dlg->setNameFilters(filters);
     if(dlg->exec())

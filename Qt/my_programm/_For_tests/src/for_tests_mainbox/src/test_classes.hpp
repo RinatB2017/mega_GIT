@@ -29,6 +29,56 @@
 #include <QWidget>
 #include <QtMath>
 //--------------------------------------------------------------------------------
+class DrawWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit DrawWidget(QWidget *parent = nullptr) :
+        QWidget(parent)
+    {
+        setFixedSize(w_w, w_h);
+
+        color.setRed(255);
+        color.setGreen(209);
+        color.setBlue(0);
+    }
+
+private:
+    QColor color;
+
+    int w_w = 256*6;
+    int w_h = 200;
+
+    int inc_v = 0;
+
+protected:
+
+    void paintEvent(QPaintEvent *) override
+    {
+        int h = 0;
+        int s = 0;
+        int v = 0;
+
+        color.getHsv(&h, &s, &v);
+        //v = 0;
+        QPainter painter(this);
+        for(int n=0; n<w_w; n++)
+        {
+            painter.setPen(QPen(color));
+
+            painter.drawLine(n, 0, n, w_h);
+            qreal k = qSin(qDegreesToRadians((qreal)n));
+#if 1
+            color.setHsv(h, s, ((qreal)v / 2.0) + ((qreal)v / 2.0 * k));
+#else
+            if(k<0) k*=-1;
+            color.setHsv(h, s, v * k);
+#endif
+        }
+    }
+};
+//--------------------------------------------------------------------------------
 class LineWidget : public QWidget
 {
     Q_OBJECT

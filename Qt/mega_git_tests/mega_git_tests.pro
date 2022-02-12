@@ -54,6 +54,7 @@ SUBDIRS += \
     $$PWD/Test_libUSB \
     $$PWD/Test_libVLC \
     $$PWD/Test_model \
+    $$PWD/Test_ffmpeg \
     $$PWD/Test_pixmap \
     $$PWD/Test_Polar \
     $$PWD/Test_SQL \

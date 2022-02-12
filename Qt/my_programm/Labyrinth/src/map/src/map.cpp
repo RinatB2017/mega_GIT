@@ -667,7 +667,7 @@ QPixmap Map::rotate(const QString &filename, int angle)
     QPainter p(&rotatePixmap);
     p.setRenderHint(QPainter::Antialiasing); // сглаживание
     p.setRenderHint(QPainter::SmoothPixmapTransform);
-    p.setRenderHint(QPainter::HighQualityAntialiasing);
+    //p.setRenderHint(QPainter::HighQualityAntialiasing);
     p.translate(rotatePixmap.size().width() / 2, rotatePixmap.size().height() / 2);
     p.rotate(angle); // градус
     p.translate(-rotatePixmap.size().width() / 2, -rotatePixmap.size().height() / 2);

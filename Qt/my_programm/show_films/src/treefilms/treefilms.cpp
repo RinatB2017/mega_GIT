@@ -665,7 +665,8 @@ void TreeFilms::slot_rename_action(void)
 void TreeFilms::slot_scan(void)
 {
     QFileDialog *dlg = new QFileDialog(this);
-    dlg->setFileMode(QFileDialog::DirectoryOnly);
+    dlg->setOption(QFileDialog::ShowDirsOnly, true);
+    //dlg->setFileMode(QFileDialog::DirectoryOnly);
     dlg->setWindowTitle(QObject::tr("Select dir for scan"));
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
     int button = dlg->exec();

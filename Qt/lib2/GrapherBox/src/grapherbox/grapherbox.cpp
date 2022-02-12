@@ -969,16 +969,16 @@ bool GrapherBox::add_curve_data(int channel,
     QDateTime dt;
     dt = QDateTime::currentDateTime();
     qreal x = dt.toTime_t();
-    curves[channel).real_data.append(QPointF(x, data));
-    curves[channel).view_curve->append(QPointF(x, data));
-    curves[channel).pos_x++;
+    curves[channel].real_data.append(QPointF(x, data));
+    curves[channel].view_curve->append(QPointF(x, data));
+    curves[channel].pos_x++;
 #elif defined(USE_SCALE_POINT_TIME)
     QTime time;
     time = QTime::currentTime();
     qreal x = (time.hour() * 3600) + (time.minute() * 60) + time.second();
-    curves[channel).real_data.append(QPointF(x, data));
-    curves[channel).view_curve->append(QPointF(x, data));
-    curves[channel).pos_x++;
+    curves[channel].real_data.append(QPointF(x, data));
+    curves[channel].view_curve->append(QPointF(x, data));
+    curves[channel].pos_x++;
 #else
     curves[channel].real_data.append(QPointF(curves[channel].pos_x, data));
     curves[channel].view_curve->append(QPointF(curves[channel].pos_x, data));
@@ -1389,9 +1389,9 @@ void GrapherBox::f_load_curves(QString filename)
                 dt.setDate(date);
                 dt.setTime(time);
 
-                curves[channel).real_data.append(QPointF(dt.toSecsSinceEpoch(), value));
-                curves[channel).view_curve->append(QPointF(dt.toSecsSinceEpoch(), value));
-                curves[channel).pos_x++;
+                curves[channel].real_data.append(QPointF(dt.toSecsSinceEpoch(), value));
+                curves[channel].view_curve->append(QPointF(dt.toSecsSinceEpoch(), value));
+                curves[channel].pos_x++;
 #elif defined(USE_SCALE_POINT_TIME)
             if(sl.count() == 5)
             {
@@ -1407,9 +1407,9 @@ void GrapherBox::f_load_curves(QString filename)
                 QTime time;
                 time.setHMS(hour, minute, second);
 
-                curves[channel).real_data.append(QPointF(hour * 60 * 60 + minute * 60 + second, value));
-                curves[channel).view_curve->append(QPointF(hour * 60 * 60 + minute * 60 + second, value));
-                curves[channel).pos_x++;
+                curves[channel].real_data.append(QPointF(hour * 60 * 60 + minute * 60 + second, value));
+                curves[channel].view_curve->append(QPointF(hour * 60 * 60 + minute * 60 + second, value));
+                curves[channel].pos_x++;
 #else
             if(sl.count() == 3)
             {
@@ -1454,8 +1454,8 @@ void GrapherBox::f_save_curves(QString filename)
         for(int x=0; x<curves[channel].view_curve->samples().size(); x++)
         {
 #ifdef USE_SCALE_POINT_DATETIME
-            quint32 pos_date = curves[channel).view_curve->sample(static_cast<size_t>(x)).x();
-            qreal   value = curves[channel).view_curve->sample(static_cast<size_t>(x)).y();
+            quint32 pos_date = curves[channel].view_curve->sample(static_cast<size_t>(x)).x();
+            qreal   value = curves[channel].view_curve->sample(static_cast<size_t>(x)).y();
 
             QDateTime dt;
             dt.setTime_t(pos_date);
@@ -1480,8 +1480,8 @@ void GrapherBox::f_save_curves(QString filename)
                     .arg(value);
             file.write(temp.toLocal8Bit());
 #elif defined(USE_SCALE_POINT_TIME)
-            quint32 pos_time = curves[channel).view_curve->sample(static_cast<size_t>(x)).x();
-            qreal   value = curves[channel).view_curve->sample(static_cast<size_t>(x)).y();
+            quint32 pos_time = curves[channel].view_curve->sample(static_cast<size_t>(x)).x();
+            qreal   value = curves[channel].view_curve->sample(static_cast<size_t>(x)).y();
 
             QTime temp_t;
             temp_t.setHMS(0, 0, 0, 0);
@@ -1789,11 +1789,11 @@ void GrapherBox::test2(void)
     int max_x = static_cast<int>(axis_X_max - axis_X_min);
     for(int channel=0; channel<get_curves_count(); channel++)
     {
-        curves[channel).pos_x = 0;
+        curves[channel].pos_x = 0;
         for(int n=0; n<max_x; n++)
         {
-            curves[channel).view_curve->append(QPointF(n, channel));
-            curves[channel).pos_x++;
+            curves[channel].view_curve->append(QPointF(n, channel]);
+            curves[channel].pos_x++;
         }
     }
 

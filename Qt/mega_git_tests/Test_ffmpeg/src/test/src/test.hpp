@@ -21,6 +21,8 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 //--------------------------------------------------------------------------------
+#include <QApplication>
+#include <QWidget>
 #include <QObject>
 #include <QTest>
 //--------------------------------------------------------------------------------

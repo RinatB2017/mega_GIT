@@ -42,7 +42,8 @@ LIBS += -lavformat \
         -lavfilter \
         -lavutil \
         -lavutil \
-        -lavresample
+        -lavresample \
+        -lswscale \
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 

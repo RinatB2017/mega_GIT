@@ -26,14 +26,14 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
+#include <iostream>
 extern "C" {
-#include <libavutil/opt.h>
-#include <libavcodec/avcodec.h>
-#include <libavutil/channel_layout.h>
-#include <libavutil/common.h>
-#include <libavutil/imgutils.h>
-#include <libavutil/mathematics.h>
-#include <libavutil/samplefmt.h>
+    #include <libavcodec/avcodec.h>
+    #include <libavformat/avformat.h>
+    #include <libavutil/avutil.h>
+    #include <libavutil/time.h>
+    #include <libavutil/opt.h>
+    #include <libswscale/swscale.h>
 }
 //--------------------------------------------------------------------------------
 class MainBox : public MainBox_GUI
@@ -61,10 +61,23 @@ private:
     QPointer<QToolBar> testbar;
     QPointer<QComboBox> cb_test;
 
+    AVFrame* videoFrame = nullptr;
+    AVCodecContext* cctx = nullptr;
+    SwsContext* swsCtx = nullptr;
+    int frameCounter = 0;
+    AVFormatContext* ofctx = nullptr;
+    AVOutputFormat* oformat = nullptr;
+    int fps = 30;
+    int width   = 1920;
+    int height  = 1080;
+    int bitrate = 2000;
+
     void init(void);
     void createTestBar(void);
 
-    void encode(AVCodecContext *enc_ctx, AVFrame *frame, AVPacket *pkt, FILE *outfile);
+    void pushFrame(uint8_t* data);
+    void finish();
+    void free();
 
     bool programm_is_exit(void);
     void load_setting(void);

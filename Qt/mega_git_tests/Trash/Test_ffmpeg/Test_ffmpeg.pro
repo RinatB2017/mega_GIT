@@ -43,7 +43,7 @@ LIBS += -lavformat \
         -lavutil \
         -lavutil \
         -lavresample \
-        -lswscale
+        -lswscale \
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 

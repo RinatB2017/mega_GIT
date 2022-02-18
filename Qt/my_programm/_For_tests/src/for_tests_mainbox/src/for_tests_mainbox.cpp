@@ -231,6 +231,68 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    QImage image;
+    bool ok = image.load("/home/boss/HDD/Изображения/цветок.jpg");
+    if(!ok)
+    {
+        emit error("Can't load image");
+        return false;
+    }
+
+    QImage space_image;
+    int w = image.width();
+    int h = image.height();
+    space_image = QImage(w, h, QImage::Format_ARGB32);
+    space_image.fill(QColor(Qt::white));
+
+    QImage result_image;
+    result_image = QImage(w * 3,
+                          h * 3,
+                          QImage::Format_ARGB32);
+    QPainter p(&result_image);
+    p.drawImage(0,   0, space_image);
+    p.drawImage(w,   0, space_image);
+    p.drawImage(w*2, 0, space_image);
+    p.drawImage(0,   h, space_image);
+    p.drawImage(w,   h, image);
+    p.drawImage(w*2, h, space_image);
+    p.drawImage(0,   h*2, space_image);
+    p.drawImage(w,   h*2, space_image);
+    p.drawImage(w*2, h*2, space_image);
+
+    result_image.save("/dev/shm/result.png");
+#endif
+
+#if 0
+    QImage image1;
+    QImage image2;
+    bool ok = image1.load("/home/boss/HDD/Изображения/буддизм.jpg");
+    if(ok)
+    {
+        image2 = image1.convertToFormat(QImage::Format_BGR30);
+        int cnt = 0;
+        for(int y=0; y<image1.height(); y++)
+        {
+            for(int x=0; x<image1.width(); x++)
+            {
+                QColor rgb1 = image1.pixelColor(x, y);
+                QColor rgb2 = image2.pixel(x, y);
+                if(rgb1 != rgb2)
+                {
+                    cnt++;
+                }
+            }
+        }
+        emit info(QString("Cnt: %1").arg(cnt));
+    }
+    else
+    {
+        emit error("Can't load image");
+    }
+
+#endif
+
 #if 0
     for(int n=0; n<256*6; n++)
     {
@@ -240,7 +302,7 @@ bool MainBox::test(void)
     }
 #endif
 
-#if 1
+#if 0
     DrawWidget *w = new DrawWidget();
     w->show();
 #endif
@@ -282,7 +344,7 @@ bool MainBox::test(void)
     w->setLayout(hbox);
     w->show();
 
-//    label->show();
+    //    label->show();
 #endif
 
 #if 0

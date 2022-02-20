@@ -228,6 +228,84 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    int w = 400;
+    int h = 100;
+
+    QPainterPath m_path;
+    m_path.moveTo(0, h / 2);
+    m_path.lineTo(w, h);
+    m_path.lineTo(w, 0);
+    m_path.lineTo(0, h / 2);
+
+
+    QImage full_image = QImage("/home/boss/HDD/Изображения/bitcoin.png");
+    QImage small_image = full_image.copy(0, 0, w, h);
+
+    QImage mask_image = QImage(w, h, QImage::Format_ARGB32);
+    QPainter p(&mask_image);
+    p.fillRect(0, 0, w, h, QColor(Qt::color1));
+    p.fillPath(m_path, QBrush(Qt::color0));
+
+    QImage result_image = QImage(w, h, QImage::Format_ARGB32);
+    result_image.fill(QColor(Qt::red));
+
+    uchar *mask_bits  = mask_image.bits();
+    uchar *small_bits = small_image.bits();
+    uchar *result_bits = result_image.bits();
+
+    int max_n = w*h*4;
+    for(int n=0; n<max_n; n++)
+    {
+        *result_bits++ = *small_bits++ & *mask_bits++;
+    }
+
+    QLabel *label = new QLabel();
+    label->setPixmap(QPixmap::fromImage(result_image));
+    //label->setPixmap(QPixmap::fromImage(mask_image));
+    label->show();
+#endif
+
+#if 0
+    QElapsedTimer timer;
+
+    QImage image = QImage(1000, 1000, QImage::Format_ARGB32);
+    image.fill(QColor(Qt::red));
+
+    QRgb rgb;
+    QRgb *p;
+    int w = image.width();
+    int h = image.height();
+    timer.start();
+    for(int y=0; y<h; y++)
+    {
+        for(int x=0; x<w; x++)
+        {
+            rgb = image.pixel(x, y);
+        }
+    }
+    emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+    timer.start();
+    for(int y=0; y<h; y++)
+    {
+        for(int x=0; x<w; x++)
+        {
+           p = ((QRgb*)image.scanLine (y)) + x;
+        }
+    }
+    emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+
+    timer.start();
+    for(int y=0; y<h; y++)
+    {
+        for(int x=0; x<w; x++)
+        {
+            image.setPixel(x, y, 0);
+        }
+    }
+    emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+#endif
+
 #if 0
     emit info("Copyright \\251 2020-2025");
 #endif

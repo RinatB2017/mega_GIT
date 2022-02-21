@@ -40,6 +40,7 @@ void MainBox::init(void)
 #endif
 
     connect(this,   &MainBox_GUI::s_test,   this,   &MainBox::test);
+    connect(this,   &MainBox_GUI::s_test2,  this,   &MainBox::test2);
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -100,254 +101,28 @@ void MainBox::createTestBar(void)
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::pushFrame(uint8_t* data)
-{
-    int err;
-    if (!videoFrame)
-    {
-        videoFrame = av_frame_alloc();
-        videoFrame->format = AV_PIX_FMT_YUV420P;
-        videoFrame->width = cctx->width;
-        videoFrame->height = cctx->height;
-        if ((err = av_frame_get_buffer(videoFrame, 32)) < 0)
-        {
-            emit error(QString("Failed to allocate picture: %1").arg(err));
-            return;
-        }
-    }
-    if (!swsCtx)
-    {
-        swsCtx = sws_getContext(cctx->width,
-                                cctx->height,
-                                AV_PIX_FMT_RGB24, cctx->width,
-                                cctx->height,
-                                AV_PIX_FMT_YUV420P,
-                                SWS_BICUBIC,
-                                0,
-                                0,
-                                0);
-    }
-    int inLinesize[1] = { 3 * cctx->width };
-    // From RGB to YUV
-    sws_scale(swsCtx,
-              (const uint8_t* const*)&data,
-              inLinesize,
-              0,
-              cctx->height,
-              videoFrame->data,
-              videoFrame->linesize);
-    videoFrame->pts = (1.0 / 30.0) * 90000 * (frameCounter++);
-    emit info(QString("%1 %2 %3 %4")
-              .arg(videoFrame->pts)
-              .arg(cctx->time_base.num)
-              .arg(cctx->time_base.den)
-              .arg(frameCounter));
-    if ((err = avcodec_send_frame(cctx, videoFrame)) < 0)
-    {
-        emit error(QString("Failed to send frame: %1").arg(err));
-        return;
-    }
-    AV_TIME_BASE;
-    AVPacket pkt;
-    av_init_packet(&pkt);
-    pkt.data = NULL;
-    pkt.size = 0;
-    pkt.flags |= AV_PKT_FLAG_KEY;
-    if (avcodec_receive_packet(cctx, &pkt) == 0)
-    {
-        static int counter = 0;
-        if (counter == 0)
-        {
-            FILE* fp = fopen("dump_first_frame1.dat", "wb");
-            fwrite(pkt.data, pkt.size, 1, fp);
-            fclose(fp);
-        }
-        emit info(QString("pkt key: %1 %2 %3")
-                  .arg(pkt.flags & AV_PKT_FLAG_KEY)
-                  .arg(pkt.size)
-                  .arg(counter++));
-        uint8_t* size = ((uint8_t*)pkt.data);
-        emit info(QString("first: %1 %2 %3 %4 %5 %6 %7 %8")
-                  .arg((int)size[0])
-                  .arg((int)size[1])
-                  .arg((int)size[2])
-                  .arg((int)size[3])
-                  .arg((int)size[4])
-                  .arg((int)size[5])
-                  .arg((int)size[6])
-                  .arg((int)size[7]));
-        av_interleaved_write_frame(ofctx, &pkt);
-        av_packet_unref(&pkt);
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::finish()
-{
-    //DELAYED FRAMES
-    AVPacket pkt;
-    av_init_packet(&pkt);
-    pkt.data = NULL;
-    pkt.size = 0;
-
-    for (;;)
-    {
-        avcodec_send_frame(cctx, NULL);
-        if (avcodec_receive_packet(cctx, &pkt) == 0)
-        {
-            av_interleaved_write_frame(ofctx, &pkt);
-            av_packet_unref(&pkt);
-        }
-        else
-        {
-            break;
-        }
-    }
-
-    av_write_trailer(ofctx);
-    if (!(oformat->flags & AVFMT_NOFILE))
-    {
-        int err = avio_close(ofctx->pb);
-        if (err < 0)
-        {
-            emit error(QString("Failed to close file: %1").arg(err));
-        }
-    }
-}
-//--------------------------------------------------------------------------------
-void MainBox::free()
-{
-    if (videoFrame)
-    {
-        av_frame_free(&videoFrame);
-    }
-    if (cctx)
-    {
-        avcodec_free_context(&cctx);
-    }
-    if (ofctx)
-    {
-        avformat_free_context(ofctx);
-    }
-    if (swsCtx)
-    {
-        sws_freeContext(swsCtx);
-    }
-}
-
-//--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    av_register_all();
-    avcodec_register_all();
-
-    oformat = av_guess_format(nullptr, "test.mp4", nullptr);
-    if (!oformat)
-    {
-        emit error("can't create output format");
-        return false;
-    }
-    //oformat->video_codec = AV_CODEC_ID_H265;
-
-    int err = avformat_alloc_output_context2(&ofctx, oformat, nullptr, "test.mp4");
-
-    if (err)
-    {
-        emit error("can't create output context");
-        return false;
-    }
-
-    AVCodec* codec = nullptr;
-
-    codec = avcodec_find_encoder(oformat->video_codec);
-    if (!codec)
-    {
-        emit error("can't create codec");
-        return false;
-    }
-
-    AVStream* stream = avformat_new_stream(ofctx, codec);
-
-    if (!stream)
-    {
-        emit error("can't find format");
-        return false;
-    }
-
-    cctx = avcodec_alloc_context3(codec);
-
-    if (!cctx)
-    {
-        emit error("can't create codec context");
-        return false;
-    }
-
-    stream->codecpar->codec_id = oformat->video_codec;
-    stream->codecpar->codec_type = AVMEDIA_TYPE_VIDEO;
-    stream->codecpar->width = width;
-    stream->codecpar->height = height;
-    stream->codecpar->format = AV_PIX_FMT_YUV420P;
-    stream->codecpar->bit_rate = bitrate * 1000;
-    avcodec_parameters_to_context(cctx, stream->codecpar);
-    cctx->time_base = (AVRational){ 1, 1 };
-    cctx->max_b_frames = 2;
-    cctx->gop_size = 12;
-    cctx->framerate = (AVRational){ fps, 1 };
-    //must remove the following
-    //cctx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
-    if (stream->codecpar->codec_id == AV_CODEC_ID_H264)
-    {
-        av_opt_set(cctx, "preset", "ultrafast", 0);
-    }
-    else if (stream->codecpar->codec_id == AV_CODEC_ID_H265)
-    {
-        av_opt_set(cctx, "preset", "ultrafast", 0);
-    }
-
-    avcodec_parameters_from_context(stream->codecpar, cctx);
-
-    if ((err = avcodec_open2(cctx, codec, NULL)) < 0)
-    {
-        emit error(QString("Failed to open codec: %1").arg(err));
-        return false;
-    }
-
-    if (!(oformat->flags & AVFMT_NOFILE))
-    {
-        if ((err = avio_open(&ofctx->pb, "test.mp4", AVIO_FLAG_WRITE)) < 0)
-        {
-            emit error(QString("Failed to open file: %1").arg(err));
-            return false;
-        }
-    }
-
-    if ((err = avformat_write_header(ofctx, NULL)) < 0)
-    {
-        emit error(QString("Failed to write header: %1").arg(err));
-        return false;
-    }
-
-    av_dump_format(ofctx, 0, "test.mp4", 1);
-
-    uint8_t* frameraw = new uint8_t[1920 * 1080 * 4];
-    memset(frameraw, 222, 1920 * 1080 * 4);
-    for (int i=0; i<60; ++i)
-    {
-        pushFrame(frameraw);
-    }
-
-    delete[] frameraw;
-    finish();
-    free();
-
-    emit info("OK");
+    Tester *tester = new Tester();
+    tester->test();
 
     return true;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test2(void)
 {
+    emit trace(Q_FUNC_INFO);
+
+    int argc = 2;
+    char *argv[] = { "/home/boss/Programming/_GitHub/Private/Qt/_private_tests/test_ffmpeg/test_ffmpeg",
+                    "film.mpg"
+                    };
+
+    Creator *creator = new Creator();
+    creator->test(argc, argv);
+
     return true;
 }
 //--------------------------------------------------------------------------------

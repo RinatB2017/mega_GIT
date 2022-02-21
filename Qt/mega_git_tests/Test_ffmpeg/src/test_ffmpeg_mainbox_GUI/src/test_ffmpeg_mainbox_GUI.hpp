@@ -37,6 +37,7 @@ class MainBox_GUI : public MyWidget
 
 signals:
     void s_test(void);
+    void s_test2(void);
 
 public:
     explicit MainBox_GUI(QWidget *parent,

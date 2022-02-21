@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2021                                                       **
+**     Copyright (C) 2022                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,33 +18,55 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "test_ffmpeg_mainbox_GUI.hpp"
+#ifndef TESTER_HPP
+#define TESTER_HPP
 //--------------------------------------------------------------------------------
-MainBox_GUI::MainBox_GUI(QWidget *parent,
-                 MySplashScreen *splash) :
-    MyWidget(parent),
-    splash(splash),
-    ui(new Ui::MainBox_GUI)
-{
-    init();
+#include <QWidget>
+#include <QString>
+//--------------------------------------------------------------------------------
+#include <iostream>
+
+extern "C" {
+    #include <libavcodec/avcodec.h>
+    #include <libavformat/avformat.h>
+    #include <libavutil/avutil.h>
+    #include <libavutil/time.h>
+    #include <libavutil/opt.h>
+    #include <libswscale/swscale.h>
 }
 //--------------------------------------------------------------------------------
-MainBox_GUI::~MainBox_GUI()
+class Tester : public QWidget
 {
-    save_widgets();
-    delete ui;
-}
+    Q_OBJECT
+
+public:
+    explicit Tester(QWidget *parent = nullptr);
+    virtual ~Tester();
+
+    bool test(void);
+
+signals:
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
+
+private:
+    void pushFrame(uint8_t* data);
+    void finish();
+    void free();
+
+    AVFrame* videoFrame = nullptr;
+    AVCodecContext* cctx = nullptr;
+    SwsContext* swsCtx = nullptr;
+    int frameCounter = 0;
+    AVFormatContext* ofctx = nullptr;
+    AVOutputFormat* oformat = nullptr;
+
+    int fps = 30;
+    int width   = 1920;
+    int height  = 1080;
+    int bitrate = 2000;
+};
 //--------------------------------------------------------------------------------
-void MainBox_GUI::init(void)
-{
-    ui->setupUi(this);
-    connect(ui->btn_test,   &QPushButton::clicked,  this,   &MainBox_GUI::s_test);
-    connect(ui->btn_test2,  &QPushButton::clicked,  this,   &MainBox_GUI::s_test2);
-    load_widgets();
-}
-//--------------------------------------------------------------------------------
-void MainBox_GUI::updateText(void)
-{
-    ui->retranslateUi(this);
-}
-//--------------------------------------------------------------------------------
+#endif // TESTER_HPP

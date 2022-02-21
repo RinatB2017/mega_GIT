@@ -36,18 +36,19 @@ CONFIG(debug, debug|release) {
 LIB_PATH  = "$$PWD/../../lib"
 LIB_PATH2 = "$$PWD/../../lib2"
 
-LIBS += -lavformat \
-        -lavcodec \
-        -lavdevice \
-        -lavfilter \
-        -lavutil \
-        -lavutil \
-        -lavresample \
-        -lswscale
+LIBS += \
+    -lavcodec \
+    -lswresample \
+    -lavutil \
+    -lavformat \
+    -lswscale \
+    -lm
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_ffmpeg_mainbox_GUI/test_ffmpeg_mainbox_GUI.pri)
 include (src/test_ffmpeg_mainbox/test_ffmpeg_mainbox.pri)
+include (src/tester/tester.pri)
+include (src/creator/creator.pri)
 
 VPATH = $$INCLUDEPATH

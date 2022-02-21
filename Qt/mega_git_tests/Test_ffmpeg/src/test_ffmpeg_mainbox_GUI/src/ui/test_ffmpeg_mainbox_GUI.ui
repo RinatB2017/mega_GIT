@@ -10,6 +10,13 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QPushButton" name="btn_test2">
+     <property name="text">
+      <string>test2</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>

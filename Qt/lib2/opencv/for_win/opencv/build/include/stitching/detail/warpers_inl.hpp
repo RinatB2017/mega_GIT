@@ -43,7 +43,8 @@
 #ifndef OPENCV_STITCHING_WARPERS_INL_HPP
 #define OPENCV_STITCHING_WARPERS_INL_HPP
 
-#include "opencv2/core.hpp"
+//#include "opencv2/core.hpp"
+#include <core.hpp>
 #include "warpers.hpp" // Make your IDE see declarations
 #include <limits>
 

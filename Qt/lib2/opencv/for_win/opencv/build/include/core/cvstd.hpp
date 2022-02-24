@@ -48,7 +48,8 @@
 #  error cvstd.hpp header must be compiled as C++
 #endif
 
-#include "opencv2/core/cvdef.h"
+//#include "opencv2/core/cvdef.h"
+#include <core/cvdef.h>
 #include <cstddef>
 #include <cstring>
 #include <cctype>

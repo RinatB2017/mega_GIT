@@ -43,12 +43,15 @@
 #define OPENCV_DNN_DNN_HPP
 
 #include <vector>
-#include <opencv2/core.hpp>
-#include "opencv2/core/async.hpp"
+//#include <opencv2/core.hpp>
+//#include "opencv2/core/async.hpp"
+#include <core.hpp>
+#include <core/async.hpp>
 
 #include "../dnn/version.hpp"
 
-#include <opencv2/dnn/dict.hpp>
+//#include <opencv2/dnn/dict.hpp>
+#include <dnn/dict.hpp>
 
 namespace cv {
 namespace dnn {
@@ -1286,10 +1289,13 @@ CV__DNN_INLINE_NS_END
 }
 }
 
-#include <opencv2/dnn/layer.hpp>
-#include <opencv2/dnn/dnn.inl.hpp>
+//#include <opencv2/dnn/layer.hpp>
+//#include <opencv2/dnn/dnn.inl.hpp>
+#include <dnn/layer.hpp>
+#include <dnn/dnn.inl.hpp>
 
 /// @deprecated Include this header directly from application. Automatic inclusion will be removed
-#include <opencv2/dnn/utils/inference_engine.hpp>
+//#include <opencv2/dnn/utils/inference_engine.hpp>
+#include <dnn/utils/inference_engine.hpp>
 
 #endif  /* OPENCV_DNN_DNN_HPP */

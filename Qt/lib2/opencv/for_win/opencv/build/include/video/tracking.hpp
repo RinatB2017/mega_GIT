@@ -44,8 +44,10 @@
 #ifndef OPENCV_TRACKING_HPP
 #define OPENCV_TRACKING_HPP
 
-#include "opencv2/core.hpp"
-#include "opencv2/imgproc.hpp"
+//#include "opencv2/core.hpp"
+//#include "opencv2/imgproc.hpp"
+#include <core.hpp>
+#include <imgproc.hpp>
 
 namespace cv
 {

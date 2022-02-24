@@ -43,8 +43,11 @@
 #ifndef OPENCV_PHOTO_HPP
 #define OPENCV_PHOTO_HPP
 
-#include "opencv2/core.hpp"
-#include "opencv2/imgproc.hpp"
+//#include "opencv2/core.hpp"
+//#include "opencv2/imgproc.hpp"
+
+#include <core.hpp>
+#include <imgproc.hpp>
 
 /**
 @defgroup photo Computational Photography

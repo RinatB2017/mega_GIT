@@ -48,8 +48,11 @@
 #  error cuda.hpp header must be compiled as C++
 #endif
 
-#include "opencv2/core.hpp"
-#include "opencv2/core/cuda_types.hpp"
+//#include "opencv2/core.hpp"
+//#include "opencv2/core/cuda_types.hpp"
+
+#include <core.hpp>
+#include <core/cuda_types.hpp>
 
 /**
   @defgroup cuda CUDA-accelerated Computer Vision
@@ -1050,6 +1053,7 @@ CV_EXPORTS void convertFp16(InputArray _src, OutputArray _dst, Stream& stream = 
 }} // namespace cv { namespace cuda {
 
 
-#include "opencv2/core/cuda.inl.hpp"
+//#include "opencv2/core/cuda.inl.hpp"
+#include <core/cuda.inl.hpp>
 
 #endif /* OPENCV_CORE_CUDA_HPP */

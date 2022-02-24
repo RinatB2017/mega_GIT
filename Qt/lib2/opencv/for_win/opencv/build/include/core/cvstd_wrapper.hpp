@@ -5,7 +5,8 @@
 #ifndef OPENCV_CORE_CVSTD_WRAPPER_HPP
 #define OPENCV_CORE_CVSTD_WRAPPER_HPP
 
-#include "opencv2/core/cvdef.h"
+//#include "opencv2/core/cvdef.h"
+#include <core/cvdef.h>
 
 #include <string>
 #include <memory>  // std::shared_ptr

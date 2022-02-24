@@ -42,7 +42,8 @@
 #ifndef OPENCV_OPTIM_HPP
 #define OPENCV_OPTIM_HPP
 
-#include "opencv2/core.hpp"
+//#include "opencv2/core.hpp"
+#include <core.hpp>
 
 namespace cv
 {

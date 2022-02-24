@@ -42,7 +42,8 @@
 #ifndef OPENCV_DNN_DNN_INL_HPP
 #define OPENCV_DNN_DNN_INL_HPP
 
-#include <opencv2/dnn.hpp>
+//#include <opencv2/dnn.hpp>
+#include <dnn.hpp>
 
 namespace cv {
 namespace dnn {

@@ -42,7 +42,8 @@
 #ifndef OPENCV_HAL_NEON_UTILS_HPP
 #define OPENCV_HAL_NEON_UTILS_HPP
 
-#include "opencv2/core/cvdef.h"
+//#include "opencv2/core/cvdef.h"
+#include <core/cvdef.h>
 
 //! @addtogroup core_utils_neon
 //! @{

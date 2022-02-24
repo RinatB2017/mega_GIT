@@ -43,7 +43,8 @@
 #ifndef OPENCV_IMGCODECS_HPP
 #define OPENCV_IMGCODECS_HPP
 
-#include "opencv2/core.hpp"
+//#include "opencv2/core.hpp"
+#include <core.hpp>
 
 /**
   @defgroup imgcodecs Image file reading and writing

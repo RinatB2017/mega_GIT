@@ -173,7 +173,8 @@ namespace cv {
 #include <limits.h>
 #endif
 
-#include "opencv2/core/hal/interface.h"
+//#include "opencv2/core/hal/interface.h"
+#include <core/hal/interface.h>
 
 #if defined __ICL
 #  define CV_ICC   __ICL

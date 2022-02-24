@@ -43,7 +43,8 @@
 #ifndef OPENCV_STITCHING_MOTION_ESTIMATORS_HPP
 #define OPENCV_STITCHING_MOTION_ESTIMATORS_HPP
 
-#include "opencv2/core.hpp"
+//#include "opencv2/core.hpp"
+#include <core.hpp>
 #include "matchers.hpp"
 #include "util.hpp"
 #include "camera.hpp"

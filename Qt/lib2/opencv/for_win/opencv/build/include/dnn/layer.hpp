@@ -41,7 +41,8 @@
 
 #ifndef OPENCV_DNN_LAYER_HPP
 #define OPENCV_DNN_LAYER_HPP
-#include <opencv2/dnn.hpp>
+//#include <opencv2/dnn.hpp>
+#include <dnn.hpp>
 
 namespace cv {
 namespace dnn {

@@ -44,7 +44,8 @@
 #ifndef OPENCV_CORE_TRAITS_HPP
 #define OPENCV_CORE_TRAITS_HPP
 
-#include "opencv2/core/cvdef.h"
+//#include "opencv2/core/cvdef.h"
+#include <core/cvdef.h>
 
 namespace cv
 {

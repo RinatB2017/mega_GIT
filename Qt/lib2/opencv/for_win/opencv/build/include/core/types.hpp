@@ -53,9 +53,12 @@
 #include <vector>
 #include <limits>
 
-#include "opencv2/core/cvdef.h"
-#include "opencv2/core/cvstd.hpp"
-#include "opencv2/core/matx.hpp"
+//#include "opencv2/core/cvdef.h"
+//#include "opencv2/core/cvstd.hpp"
+//#include "opencv2/core/matx.hpp"
+#include <core/cvdef.h>
+#include <core/cvstd.hpp>
+#include <core/matx.hpp>
 
 namespace cv
 {

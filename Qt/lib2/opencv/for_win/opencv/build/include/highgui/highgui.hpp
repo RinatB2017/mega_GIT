@@ -45,4 +45,5 @@
 #error this is a compatibility header which should not be used inside the OpenCV library
 #endif
 
-#include "opencv2/highgui.hpp"
+//#include "opencv2/highgui.hpp"
+#include <highgui.hpp>

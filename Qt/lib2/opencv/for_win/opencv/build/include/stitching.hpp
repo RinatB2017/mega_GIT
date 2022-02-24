@@ -43,16 +43,25 @@
 #ifndef OPENCV_STITCHING_STITCHER_HPP
 #define OPENCV_STITCHING_STITCHER_HPP
 
-#include "opencv2/core.hpp"
-#include "opencv2/features2d.hpp"
-#include "opencv2/stitching/warpers.hpp"
-#include "opencv2/stitching/detail/matchers.hpp"
-#include "opencv2/stitching/detail/motion_estimators.hpp"
-#include "opencv2/stitching/detail/exposure_compensate.hpp"
-#include "opencv2/stitching/detail/seam_finders.hpp"
-#include "opencv2/stitching/detail/blenders.hpp"
-#include "opencv2/stitching/detail/camera.hpp"
+//#include "opencv2/core.hpp"
+//#include "opencv2/features2d.hpp"
+//#include "opencv2/stitching/warpers.hpp"
+//#include "opencv2/stitching/detail/matchers.hpp"
+//#include "opencv2/stitching/detail/motion_estimators.hpp"
+//#include "opencv2/stitching/detail/exposure_compensate.hpp"
+//#include "opencv2/stitching/detail/seam_finders.hpp"
+//#include "opencv2/stitching/detail/blenders.hpp"
+//#include "opencv2/stitching/detail/camera.hpp"
 
+#include <core.hpp>
+#include <features2d.hpp>
+#include <stitching/warpers.hpp>
+#include <stitching/detail/matchers.hpp>
+#include <stitching/detail/motion_estimators.hpp>
+#include <stitching/detail/exposure_compensate.hpp>
+#include <stitching/detail/seam_finders.hpp>
+#include <stitching/detail/blenders.hpp>
+#include <stitching/detail/camera.hpp>
 
 #if defined(Status)
 #  warning Detected X11 'Status' macro definition, it can cause build conflicts. Please, include this header before any X11 headers.

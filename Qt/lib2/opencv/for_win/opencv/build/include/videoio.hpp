@@ -43,7 +43,8 @@
 #ifndef OPENCV_VIDEOIO_HPP
 #define OPENCV_VIDEOIO_HPP
 
-#include "opencv2/core.hpp"
+//#include "opencv2/core.hpp"
+#include <core.hpp>
 
 /**
   @defgroup videoio Video I/O

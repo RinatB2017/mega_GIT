@@ -30,6 +30,9 @@ class Simple_process : public MyWidget
 {
     Q_OBJECT
 
+signals:
+    void s_finished(int result, QProcess::ExitStatus exitStatus);
+
 public:
     explicit Simple_process(QWidget *parent = nullptr);
     ~Simple_process();

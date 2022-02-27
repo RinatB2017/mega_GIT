@@ -80,6 +80,8 @@ void Simple_process::finished(int result, QProcess::ExitStatus exitStatus)
         emit error("The process crashed.");
         break;
     }
+
+    emit s_finished(result, exitStatus);
 }
 //--------------------------------------------------------------------------------
 void Simple_process::process_error(QProcess::ProcessError err)

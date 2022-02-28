@@ -21,6 +21,7 @@
 #ifndef SIMPLE_PROCESS_HPP
 #define SIMPLE_PROCESS_HPP
 //--------------------------------------------------------------------------------
+#include <QElapsedTimer>
 #include <QPointer>
 #include <QProcess>
 //--------------------------------------------------------------------------------
@@ -50,6 +51,7 @@ private slots:
 
 private:
     QPointer<QProcess> myProcess;
+    QElapsedTimer timer;
 
     void init(void);
 

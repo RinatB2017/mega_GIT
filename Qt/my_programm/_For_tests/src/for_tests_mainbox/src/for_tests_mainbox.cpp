@@ -229,6 +229,11 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    qreal x = 1.1234567890123456789;
+    emit info(QString("%1").arg(x, 0, 'f', 16));
+#endif
+
+#if 0
     int w = 400;
     int h = 100;
 
@@ -237,7 +242,6 @@ bool MainBox::test(void)
     m_path.lineTo(w, h);
     m_path.lineTo(w, 0);
     m_path.lineTo(0, h / 2);
-
 
     QImage full_image = QImage("/home/boss/HDD/Изображения/bitcoin.png");
     QImage small_image = full_image.copy(0, 0, w, h);

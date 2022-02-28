@@ -65,6 +65,7 @@ void Simple_process::setProcessEnvironment(QProcessEnvironment env)
 void Simple_process::started(void)
 {
     emit info("Процесс начат!");
+    timer.start();
 }
 //--------------------------------------------------------------------------------
 void Simple_process::finished(int result, QProcess::ExitStatus exitStatus)
@@ -75,6 +76,8 @@ void Simple_process::finished(int result, QProcess::ExitStatus exitStatus)
     {
     case QProcess::NormalExit:
         emit info("The process exited normally.");
+        emit info(QString("Elapsed: %1 sec")
+                  .arg(timer.elapsed() / 1000.0));
         break;
     case QProcess::CrashExit:
         emit error("The process crashed.");

@@ -228,9 +228,39 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
-    qreal x = 1.1234567890123456789;
-    emit info(QString("%1").arg(x, 0, 'f', 16));
+#if 0
+    char src[4]  = { 0 };
+    char dst[4] = { 0 };
+    src[0] = 0;
+    src[1] = 1;
+    src[2] = 2;
+    src[3] = 3;
+
+    char *a_src = src;
+    char *a_dst = dst;
+
+    char a = *a_src;
+    char b = *(a_src+1);
+    char c = *(a_src+2);
+    char d = *(a_src+3);
+
+    *a_dst   = d;
+    *(a_dst+1) = c;
+    *(a_dst+2) = b;
+    *(a_dst+3) = a;
+
+    a_src+=4;
+    a_dst+=4;
+
+    QByteArray ba;
+    ba.append(src, 4);
+    emit info(QString("buf = [%1]")
+              .arg(ba.toHex().data()));
+
+    QByteArray ba2;
+    ba2.append(dst, 4);
+    emit info(QString("buf = [%1]")
+              .arg(ba2.toHex().data()));
 #endif
 
 #if 0
@@ -294,7 +324,7 @@ bool MainBox::test(void)
     {
         for(int x=0; x<w; x++)
         {
-           p = ((QRgb*)image.scanLine (y)) + x;
+            p = ((QRgb*)image.scanLine (y)) + x;
         }
     }
     emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));

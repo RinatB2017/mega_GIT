@@ -228,6 +228,121 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    int w = 1920;
+    int h = 700;
+
+    QImage image = QImage(w, h, QImage::Format_ARGB32);
+    image.fill(QColor(Qt::white));
+    QPainter p(&image);
+
+    qreal x1 = 0;
+    qreal y1 = h / 2;
+
+    QPen pen;
+    pen.setColor(QColor(Qt::red));
+    pen.setWidth(10);
+    p.setPen(pen);
+
+    //int offset = 100;
+    for(int offset=40; offset<400; offset+=40)
+    {
+        for(int x=0; x<w; x++)
+        {
+            qreal y = 300.0*qSin(qreal(x + offset)*qreal(M_PI)/qreal(180.0)) + 350.0;
+            p.drawLine(x1, y1, x, y);
+            x1 = x;
+            y1 = y;
+        }
+        x1 = 0;
+        y1 = h / 2;
+    }
+
+    QLabel *label = new QLabel();
+    label->setPixmap(QPixmap::fromImage(image));
+    label->setFixedSize(image.width(),
+                        image.height());
+    label->show();
+#endif
+
+#if 0
+    int w = 300;
+    int h = 300;
+    int s = 120;
+
+    QImage image_0 = QImage(w, h, QImage::Format_ARGB32);
+    QImage image_1 = QImage(w, h, QImage::Format_ARGB32);
+    QImage image_2 = QImage(w, h, QImage::Format_ARGB32);
+    QImage image_res = QImage(w, h, QImage::Format_ARGB32);
+
+    image_0.fill(QColor(Qt::white));
+    image_1.fill(QColor(Qt::white));
+    image_2.fill(QColor(Qt::white));
+    image_res.fill(QColor(Qt::white));
+
+    QPainter p0(&image_0);
+    QPainter p1(&image_1);
+    QPainter p2(&image_2);
+
+    QBrush brush_0(Qt::red);
+    QBrush brush_1(Qt::green);
+    QBrush brush_2(Qt::blue);
+
+    p0.setBrush(brush_0);
+    p1.setBrush(brush_1);
+    p2.setBrush(brush_2);
+
+    p0.drawEllipse(QPointF(150.0, 250.0), s, s);
+    p1.drawEllipse(QPointF(70.0,  100.0), s, s);
+    p2.drawEllipse(QPointF(230.0, 100.0), s, s);
+
+    for(int y=0; y<h; y++)
+    {
+        for(int x=0; x<w; x++)
+        {
+            int r_0, g_0, b_0;
+            int r_1, g_1, b_1;
+            int r_2, g_2, b_2;
+            int r_res, g_res, b_res;
+
+            QColor color_0 = image_0.pixelColor(x, y);
+            QColor color_1 = image_1.pixelColor(x, y);
+            QColor color_2 = image_2.pixelColor(x, y);
+
+            color_0.getRgb(&r_0, &g_0, &b_0);
+            color_1.getRgb(&r_1, &g_1, &b_1);
+            color_2.getRgb(&r_2, &g_2, &b_2);
+
+            r_res = r_0 ^ r_1 ^ r_2;
+            g_res = g_0 ^ g_1 ^ g_2;
+            b_res = b_0 ^ b_1 ^ b_2;
+
+            image_res.setPixelColor(x, y, QColor::fromRgb(r_res, g_res, b_res));
+        }
+    }
+    QLabel *label = new QLabel();
+    label->setPixmap(QPixmap::fromImage(image_res));
+    label->setFixedSize(image_res.width(),
+                        image_res.height());
+    label->show();
+#endif
+
+#if 0
+    QString filename;
+    QStringList filters;
+    filters.append("Movie files (*.avi *.mov *.mpg)");
+
+    MyFileDialog *dlg = new MyFileDialog("get_pict", "get_pict");
+    dlg->setNameFilters(filters);
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        filename = files.at(0);
+        emit info(filename);
+    }
+    delete dlg;
+#endif
+
 #if 0
     char src[4]  = { 0 };
     char dst[4] = { 0 };

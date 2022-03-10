@@ -36,10 +36,12 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
 #ifdef QT_DEBUG
-    createTestBar();
+    create_test_bar();
 #endif
+    create_programm_bar();
 
     connect(this,   &MainBox_GUI::s_test,   this,   &MainBox::test);
+    setVisible(false);
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -49,11 +51,11 @@ void MainBox::choice_test(void)
     if(!ok) return;
 
     auto cmd_it = std::find_if(
-        commands.begin(),
-        commands.end(),
-        [cmd](CMD command){ return command.cmd == cmd; }
-    );
-    if (cmd_it != commands.end())
+                test_commands.begin(),
+                test_commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
+    if (cmd_it != test_commands.end())
     {
         typedef bool (MainBox::*function)(void);
         function x;
@@ -69,49 +71,112 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::choice_programm(void)
+{
+    bool ok = false;
+    int cmd = cb_programm->itemData(cb_programm->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok) return;
+
+    auto cmd_it = std::find_if(
+                programm_commands.begin(),
+                programm_commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
+    if (cmd_it != programm_commands.end())
+    {
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
+        {
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::create_test_bar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    commands.clear(); int id = 0;
-    commands.append({ id++, "test", &MainBox::test });
+    test_commands.clear(); int id = 0;
+    test_commands.append({ id++, "test", &MainBox::test });
 
-    testbar = new QToolBar("testbar");
-    testbar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    cb_block = new QCheckBox("block", this);
-    testbar->addWidget(cb_block);
+    test_bar = new QToolBar("testbar");
+    test_bar->setObjectName("testbar");
+    mw->addToolBar(Qt::TopToolBarArea, test_bar);
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
     cb_test->setProperty(NO_SAVE, true);
-    foreach (CMD command, commands)
+    foreach (CMD command, test_commands)
     {
         cb_test->addItem(command.cmd_text, QVariant(command.cmd));
     }
 
-    testbar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(testbar,
+    test_bar->addWidget(cb_test);
+    QToolButton *btn_choice_test = add_button(test_bar,
                                               new QToolButton(this),
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "choice_test",
                                               "choice_test");
     btn_choice_test->setObjectName("btn_choice_test");
 
-    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+    connect(btn_choice_test,    &QPushButton::clicked,  this,   &MainBox::choice_test);
+}
+//--------------------------------------------------------------------------------
+void MainBox::create_programm_bar(void)
+{
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_ASSERT(mw);
 
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
+    programm_commands.clear(); int id = 0;
+    programm_commands.append({ id++, "start",   &MainBox::start });
+    programm_commands.append({ id++, "stop",    &MainBox::stop });
 
-    //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+    programm_bar = new QToolBar("programm_bar");
+    programm_bar->setObjectName("programm_bar");
+    mw->addToolBar(Qt::TopToolBarArea, programm_bar);
+
+    cb_programm = new QComboBox(this);
+    cb_programm->setObjectName("cb_programm");
+    cb_programm->setProperty(NO_SAVE, true);
+    foreach (CMD command, programm_commands)
+    {
+        cb_programm->addItem(command.cmd_text, QVariant(command.cmd));
+    }
+
+    programm_bar->addWidget(cb_programm);
+    QToolButton *btn_choice_programm = add_button(programm_bar,
+                                                  new QToolButton(this),
+                                                  qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                                  "choice_programm",
+                                                  "choice_programm");
+    btn_choice_programm->setObjectName("btn_choice_programm");
+
+    connect(btn_choice_programm,    &QPushButton::clicked,  this,   &MainBox::choice_programm);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::start(void)
+{
+    fail();
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::stop(void)
+{
+    fail();
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -122,19 +187,11 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-    if(cb_block)
-    {
-        bool is_checked = load_bool("cb_block");
-        cb_block->setChecked(is_checked);
-        cb_block->clicked(is_checked);
-    }
+
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-    if(cb_block)
-    {
-        save_int("cb_block", cb_block->isChecked());
-    }
+
 }
 //--------------------------------------------------------------------------------

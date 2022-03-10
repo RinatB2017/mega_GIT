@@ -52,15 +52,6 @@ void Test::test_func(void)
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox_GUI");
     QVERIFY(mb);
-
-    QCOMPARE(mb->test_plus(), true);
-    QCOMPARE(mb->test_minus(), true);
-
-    mb->set_sb_value(666);
-
-    QCOMPARE(mb->get_sb_value(), 666);
-
-    mb->clear_log();
 }
 //--------------------------------------------------------------------------------
 void Test::test_signals(void)

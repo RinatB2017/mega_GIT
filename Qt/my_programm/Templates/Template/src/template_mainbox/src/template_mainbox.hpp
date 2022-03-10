@@ -37,7 +37,11 @@ public:
 
 private slots:
     void choice_test(void);
+    void choice_programm(void);
     bool test(void);
+
+    bool start(void);
+    bool stop(void);
 
 private:
     typedef struct CMD
@@ -46,14 +50,17 @@ private:
         QString cmd_text;
         bool (MainBox::*func)(void);
     } CMD_t;
-    QList<CMD> commands;
+    QList<CMD> test_commands;
+    QList<CMD> programm_commands;
 
-    QPointer<QToolBar> testbar;
+    QPointer<QToolBar> test_bar;
+    QPointer<QToolBar> programm_bar;
     QPointer<QComboBox> cb_test;
-    QPointer<QCheckBox> cb_block;
+    QPointer<QComboBox> cb_programm;
 
     void init(void);
-    void createTestBar(void);
+    void create_test_bar(void);
+    void create_programm_bar(void);
 
     bool programm_is_exit(void);
     void load_setting(void);

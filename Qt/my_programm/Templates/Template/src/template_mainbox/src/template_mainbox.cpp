@@ -41,7 +41,6 @@ void MainBox::init(void)
     create_programm_bar();
 
     connect(this,   &MainBox_GUI::s_test,   this,   &MainBox::test);
-    setVisible(false);
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)

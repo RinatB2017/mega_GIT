@@ -27,6 +27,7 @@
 #include <QPixmap>
 #include <QBitmap>
 #include <QWidget>
+#include <QImage>
 #include <QtMath>
 //--------------------------------------------------------------------------------
 class DrawWidget : public QWidget

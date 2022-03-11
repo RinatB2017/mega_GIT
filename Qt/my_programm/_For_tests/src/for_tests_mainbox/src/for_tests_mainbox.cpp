@@ -228,7 +228,15 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
+    QLabel *label = new QLabel();
+    label->setPixmap(QPixmap::fromImage(*image));
+    label->setFixedSize(image->width(),
+                        image->height());
+    label->show();
+#endif
+
+#if 0
     int w = 1920;
     int h = 700;
 

@@ -224,243 +224,16 @@ void MainBox::heavy_function(int x)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
+#include "memories.hpp"
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 0
-    QLabel *label = new QLabel();
-    label->setPixmap(QPixmap::fromImage(*image));
-    label->setFixedSize(image->width(),
-                        image->height());
-    label->show();
-#endif
+#if 1
+    Memories *mem = new Memories();
+    connect_log_signals(mem, this);
 
-#if 0
-    int w = 1920;
-    int h = 700;
-
-    QImage image = QImage(w, h, QImage::Format_ARGB32);
-    image.fill(QColor(Qt::white));
-    QPainter p(&image);
-
-    qreal x1 = 0;
-    qreal y1 = h / 2;
-
-    QPen pen;
-    pen.setColor(QColor(Qt::red));
-    pen.setWidth(10);
-    p.setPen(pen);
-
-    //int offset = 100;
-    for(int offset=40; offset<400; offset+=40)
-    {
-        for(int x=0; x<w; x++)
-        {
-            qreal y = 300.0*qSin(qreal(x + offset)*qreal(M_PI)/qreal(180.0)) + 350.0;
-            p.drawLine(x1, y1, x, y);
-            x1 = x;
-            y1 = y;
-        }
-        x1 = 0;
-        y1 = h / 2;
-    }
-
-    QLabel *label = new QLabel();
-    label->setPixmap(QPixmap::fromImage(image));
-    label->setFixedSize(image.width(),
-                        image.height());
-    label->show();
-#endif
-
-#if 0
-    int w = 300;
-    int h = 300;
-    int s = 120;
-
-    QImage image_0 = QImage(w, h, QImage::Format_ARGB32);
-    QImage image_1 = QImage(w, h, QImage::Format_ARGB32);
-    QImage image_2 = QImage(w, h, QImage::Format_ARGB32);
-    QImage image_res = QImage(w, h, QImage::Format_ARGB32);
-
-    image_0.fill(QColor(Qt::white));
-    image_1.fill(QColor(Qt::white));
-    image_2.fill(QColor(Qt::white));
-    image_res.fill(QColor(Qt::white));
-
-    QPainter p0(&image_0);
-    QPainter p1(&image_1);
-    QPainter p2(&image_2);
-
-    QBrush brush_0(Qt::red);
-    QBrush brush_1(Qt::green);
-    QBrush brush_2(Qt::blue);
-
-    p0.setBrush(brush_0);
-    p1.setBrush(brush_1);
-    p2.setBrush(brush_2);
-
-    p0.drawEllipse(QPointF(150.0, 250.0), s, s);
-    p1.drawEllipse(QPointF(70.0,  100.0), s, s);
-    p2.drawEllipse(QPointF(230.0, 100.0), s, s);
-
-    for(int y=0; y<h; y++)
-    {
-        for(int x=0; x<w; x++)
-        {
-            int r_0, g_0, b_0;
-            int r_1, g_1, b_1;
-            int r_2, g_2, b_2;
-            int r_res, g_res, b_res;
-
-            QColor color_0 = image_0.pixelColor(x, y);
-            QColor color_1 = image_1.pixelColor(x, y);
-            QColor color_2 = image_2.pixelColor(x, y);
-
-            color_0.getRgb(&r_0, &g_0, &b_0);
-            color_1.getRgb(&r_1, &g_1, &b_1);
-            color_2.getRgb(&r_2, &g_2, &b_2);
-
-            r_res = r_0 ^ r_1 ^ r_2;
-            g_res = g_0 ^ g_1 ^ g_2;
-            b_res = b_0 ^ b_1 ^ b_2;
-
-            image_res.setPixelColor(x, y, QColor::fromRgb(r_res, g_res, b_res));
-        }
-    }
-    QLabel *label = new QLabel();
-    label->setPixmap(QPixmap::fromImage(image_res));
-    label->setFixedSize(image_res.width(),
-                        image_res.height());
-    label->show();
-#endif
-
-#if 0
-    QString filename;
-    QStringList filters;
-    filters.append("Movie files (*.avi *.mov *.mpg)");
-
-    MyFileDialog *dlg = new MyFileDialog("get_pict", "get_pict");
-    dlg->setNameFilters(filters);
-    if(dlg->exec())
-    {
-        QStringList files = dlg->selectedFiles();
-        filename = files.at(0);
-        emit info(filename);
-    }
-    delete dlg;
-#endif
-
-#if 0
-    char src[4]  = { 0 };
-    char dst[4] = { 0 };
-    src[0] = 0;
-    src[1] = 1;
-    src[2] = 2;
-    src[3] = 3;
-
-    char *a_src = src;
-    char *a_dst = dst;
-
-    char a = *a_src;
-    char b = *(a_src+1);
-    char c = *(a_src+2);
-    char d = *(a_src+3);
-
-    *a_dst   = d;
-    *(a_dst+1) = c;
-    *(a_dst+2) = b;
-    *(a_dst+3) = a;
-
-    a_src+=4;
-    a_dst+=4;
-
-    QByteArray ba;
-    ba.append(src, 4);
-    emit info(QString("buf = [%1]")
-              .arg(ba.toHex().data()));
-
-    QByteArray ba2;
-    ba2.append(dst, 4);
-    emit info(QString("buf = [%1]")
-              .arg(ba2.toHex().data()));
-#endif
-
-#if 0
-    int w = 400;
-    int h = 100;
-
-    QPainterPath m_path;
-    m_path.moveTo(0, h / 2);
-    m_path.lineTo(w, h);
-    m_path.lineTo(w, 0);
-    m_path.lineTo(0, h / 2);
-
-    QImage full_image = QImage("/home/boss/HDD/Изображения/bitcoin.png");
-    QImage small_image = full_image.copy(0, 0, w, h);
-
-    QImage mask_image = QImage(w, h, QImage::Format_ARGB32);
-    QPainter p(&mask_image);
-    p.fillRect(0, 0, w, h, QColor(Qt::color1));
-    p.fillPath(m_path, QBrush(Qt::color0));
-
-    QImage result_image = QImage(w, h, QImage::Format_ARGB32);
-    result_image.fill(QColor(Qt::red));
-
-    uchar *mask_bits  = mask_image.bits();
-    uchar *small_bits = small_image.bits();
-    uchar *result_bits = result_image.bits();
-
-    int max_n = w*h*4;
-    for(int n=0; n<max_n; n++)
-    {
-        *result_bits++ = *small_bits++ & *mask_bits++;
-    }
-
-    QLabel *label = new QLabel();
-    label->setPixmap(QPixmap::fromImage(result_image));
-    //label->setPixmap(QPixmap::fromImage(mask_image));
-    label->show();
-#endif
-
-#if 0
-    QElapsedTimer timer;
-
-    QImage image = QImage(1000, 1000, QImage::Format_ARGB32);
-    image.fill(QColor(Qt::red));
-
-    QRgb rgb;
-    QRgb *p;
-    int w = image.width();
-    int h = image.height();
-    timer.start();
-    for(int y=0; y<h; y++)
-    {
-        for(int x=0; x<w; x++)
-        {
-            rgb = image.pixel(x, y);
-        }
-    }
-    emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
-    timer.start();
-    for(int y=0; y<h; y++)
-    {
-        for(int x=0; x<w; x++)
-        {
-            p = ((QRgb*)image.scanLine (y)) + x;
-        }
-    }
-    emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
-
-    timer.start();
-    for(int y=0; y<h; y++)
-    {
-        for(int x=0; x<w; x++)
-        {
-            image.setPixel(x, y, 0);
-        }
-    }
-    emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+    mem->set_directory();
 #endif
 
 #if 0
@@ -478,17 +251,10 @@ bool MainBox::test(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-#include "show_hsv_color.hpp"
 bool MainBox::test2(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test2");
-
-#if 1
-    Show_HSV_color* w = new Show_HSV_color();
-    w->show();
-#endif
-
     return true;
 }
 //--------------------------------------------------------------------------------

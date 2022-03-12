@@ -155,3 +155,20 @@ void Memories::single_shot(void)
     });
 }
 //--------------------------------------------------------------------------------
+bool Memories::eventFilter(QObject *obj, QEvent *event)
+{
+    // установка
+    // widget->installEventFilter(this);
+
+    if(event->type() == QMouseEvent::MouseButtonPress)
+    {
+        QMouseEvent *mouseEvent = (QMouseEvent *) event;
+        if(mouseEvent->button() == Qt::LeftButton)
+        {
+            emit info(obj->objectName());
+            return true;
+        }
+    }
+    return false;
+}
+//--------------------------------------------------------------------------------

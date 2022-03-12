@@ -91,7 +91,10 @@ void Show_HSV_color::init(void)
         lcd->setStyleSheet("background:black; color:lightgreen;");
     }
 
-    load_widgets();
+//    update_image();
+//    update_color_HSV();
+
+//    load_widgets();
 
     QTimer::singleShot(0, [this]{
         update_image();

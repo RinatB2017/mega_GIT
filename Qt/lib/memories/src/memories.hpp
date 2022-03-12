@@ -22,6 +22,7 @@
 #define MEMORIES_HPP
 //--------------------------------------------------------------------------------
 #include <QTextStream>
+#include <QMouseEvent>
 #include <QPainter>
 #include <QWidget>
 #include <QtMath>
@@ -57,6 +58,9 @@ public:
 
     void set_directory(void);
     void single_shot(void);
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
 };
 //--------------------------------------------------------------------------------
 #endif // MEMORIES_HPP

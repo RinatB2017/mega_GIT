@@ -230,6 +230,15 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QColor color = QColor(Qt::yellow);
+    int h, s, v;
+    color.getHsv(&h, &s, &v);
+    emit info(QString("H: %1").arg(h));
+    emit info(QString("S: %1").arg(s));
+    emit info(QString("V: %1").arg(v));
+#endif
+
+#if 0
     Memories *mem = new Memories();
     connect_log_signals(mem, this);
 

@@ -229,6 +229,12 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 0
+    qreal x = -2.03555499613665e-13;
+    qreal y = 1.0e-2;
+    qDebug() << x << y;
+#endif
+
 #if 1
     QColor color = QColor(Qt::yellow);
     int h, s, v;

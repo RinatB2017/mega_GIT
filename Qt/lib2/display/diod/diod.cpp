@@ -42,20 +42,14 @@ void Diod::set_color(QColor color)
               static_cast<uint8_t>(color.blue()));
 }
 //--------------------------------------------------------------------------------
-void Diod::set_color(uint8_t R_value,
-                     uint8_t G_value,
-                     uint8_t B_value)
+void Diod::set_color(uint8_t R_val,
+                     uint8_t G_val,
+                     uint8_t B_val)
 {
-    R_color = R_value;
-    G_color = G_value;
-    B_color = B_value;
-
-#if 0
-    setStyleSheet(QString("background:rgb(%1,%2,%3);")
-                  .arg(R_color)
-                  .arg(G_color)
-                  .arg(B_color));
-#endif
+    R_color = R_val;
+    G_color = G_val;
+    B_color = B_val;
+    update();
 }
 //--------------------------------------------------------------------------------
 QRgb Diod::get_color(void)
@@ -91,7 +85,11 @@ void Diod::set_cursor(void)
 
     painter.setPen(QPen(QColor(R_color, G_color, B_color), 1, Qt::SolidLine));
     painter.setBrush(QBrush(QColor(R_color, G_color, B_color)));
+#ifdef DRAW_RECT
+    painter.drawRect(1, 1, width()-1, height()-1);
+#else
     painter.drawEllipse(QPoint(width() / 2, height() / 2), width() / 2 - 2, height() / 2 - 2);
+#endif
 
     painter.end();
 
@@ -176,7 +174,12 @@ void Diod::paintEvent(QPaintEvent *)
 
     painter.setPen(QPen(QColor(R_color, G_color, B_color), 1, Qt::SolidLine));
     painter.setBrush(QBrush(QColor(R_color, G_color, B_color)));
+
+#ifdef DRAW_RECT
+    painter.drawRect(1, 1, width()-1, height()-1);
+#else
     painter.drawEllipse(QPoint(width() / 2, height() / 2), width() / 2 - 2, height() / 2 - 2);
+#endif
 
     painter.end();
 }

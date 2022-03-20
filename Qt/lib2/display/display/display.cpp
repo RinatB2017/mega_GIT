@@ -26,58 +26,54 @@
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-Display::Display(unsigned int max_x,
-                 unsigned int max_y,
-                 unsigned int led_width,
-                 unsigned int led_height,
-                 QWidget *parent) :
+Display::Display(QWidget *parent) :
     MyWidget(parent)
 {
-    for(int y=0; y<MAX_DISPLAY_Y; y++)
-    {
-        for(int x=0; x<MAX_DISPLAY_X; x++)
-        {
-            diod[x][y] = nullptr;
-        }
-    }
-
-    create_display(max_x, max_y, led_width, led_height);
+    //create_display(max_x, max_y, led_width, led_height);
 
     emit info(QString("max_x = %1").arg(max_x));
     emit info(QString("max_y = %1").arg(max_y));
 }
 //--------------------------------------------------------------------------------
-bool Display::create_display(unsigned int w,
-                             unsigned int h,
-                             unsigned int led_width,
-                             unsigned int led_height)
+bool Display::create_display(int w,
+                             int h,
+                             int led_width,
+                             int led_height)
 {
     if(w > MAX_DISPLAY_X)   w = MAX_DISPLAY_X;
     if(w <= 0)              w = DEFAULT_X;
     if(h > MAX_DISPLAY_Y)   h = MAX_DISPLAY_Y;
     if(h <= 0)              h = DEFAULT_Y;
 
-    this->max_x = w;
-    this->max_y = h;
+    max_x = w;
+    max_y = h;
 
     emit debug(QString("create_display(%1, %2)").arg(w).arg(h));
+
+    for(int y=0; y<MAX_DISPLAY_Y; y++)
+    {
+        for(int x=0; x<MAX_DISPLAY_X; x++)
+        {
+            if(a_diod[x][y])
+            {
+                delete a_diod[x][y];
+                a_diod[x][y] = nullptr;
+            }
+        }
+    }
 
     QGridLayout *grid = new QGridLayout();
     grid->setMargin(0);
     grid->setSpacing(0);
-    for(unsigned int y=0; y<max_y; y++)
+    for(int y=0; y<max_y; y++)
     {
-        for(unsigned int x=0; x<max_x; x++)
+        for(int x=0; x<max_x; x++)
         {
-            diod[x][y] = new Diod(static_cast<int>(led_width),
-                                  static_cast<int>(led_height),
-                                  this);
-            diod[x][y]->set_left_btn_active(true);
-            diod[x][y]->set_right_btn_active(false);
+            a_diod[x][y] = new Diod(led_width, led_height, this);
+            a_diod[x][y]->set_left_btn_active(true);
+            a_diod[x][y]->set_right_btn_active(false);
 
-            grid->addWidget(diod[x][y],
-                            static_cast<int>(y),
-                            static_cast<int>(x));
+            grid->addWidget(a_diod[x][y], y, x);
         }
     }
 
@@ -94,11 +90,11 @@ bool Display::create_display(unsigned int w,
 void Display::set_left_btn_active(bool value)
 {
     flag_active = value;
-    for(unsigned int y=0; y<max_y; y++)
+    for(int y=0; y<max_y; y++)
     {
-        for(unsigned int x=0; x<max_x; x++)
+        for(int x=0; x<max_x; x++)
         {
-            diod[x][y]->set_left_btn_active(value);
+            a_diod[x][y]->set_left_btn_active(value);
         }
     }
 }
@@ -106,30 +102,30 @@ void Display::set_left_btn_active(bool value)
 void Display::set_right_btn_active(bool value)
 {
     flag_active = value;
-    for(unsigned int y=0; y<max_y; y++)
+    for(int y=0; y<max_y; y++)
     {
-        for(unsigned int x=0; x<max_x; x++)
+        for(int x=0; x<max_x; x++)
         {
-            diod[x][y]->set_right_btn_active(value);
+            a_diod[x][y]->set_right_btn_active(value);
         }
     }
 }
 //--------------------------------------------------------------------------------
 void Display::set_data(QByteArray data)
 {
-    if(static_cast<uint>(data.length()) != (max_x * max_y * 3))
+    if(static_cast<int>(data.length()) != (max_x * max_y * 3))
     {
         emit error("Display::set_data bad data size!");
         return;
     }
 
     int index = 0;
-    for(unsigned int y=0; y<max_y; y++)
+    for(int y=0; y<max_y; y++)
     {
-        for(unsigned int x=0; x<max_x; x++)
+        for(int x=0; x<max_x; x++)
         {
-            diod[x][y]->set_color(static_cast<uint8_t>(data[index]),
-                                  static_cast<uint8_t>(data[index+1]),
+            a_diod[x][y]->set_color(static_cast<uint8_t>(data[index]),
+                                    static_cast<uint8_t>(data[index+1]),
                     static_cast<uint8_t>(data[index+2]));
             index+=3;
         }
@@ -143,13 +139,13 @@ QByteArray Display::get_data(void)
     uint8_t B = 0;
     QByteArray ba;
 
-    for(unsigned int y=0; y<max_y; y++)
+    for(int y=0; y<max_y; y++)
     {
-        for(unsigned int x=0; x<max_x; x++)
+        for(int x=0; x<max_x; x++)
         {
-            R = diod[x][y]->get_R();
-            G = diod[x][y]->get_G();
-            B = diod[x][y]->get_B();
+            R = a_diod[x][y]->get_R();
+            G = a_diod[x][y]->get_G();
+            B = a_diod[x][y]->get_B();
 
             ba.append(static_cast<char>(R));
             ba.append(static_cast<char>(G));
@@ -164,10 +160,21 @@ Display::~Display()
     save_setting();
 }
 //--------------------------------------------------------------------------------
-bool Display::set_color(unsigned int x,
-                        unsigned int y,
+bool Display::set_color(int x,
+                        int y,
                         QColor color)
 {
+    if(x < 0)
+    {
+        emit error("Display::set_color: x < 0");
+        return false;
+    }
+    if(y < 0)
+    {
+        emit error("Display::set_color: y < 0");
+        return false;
+    }
+
     if(x > max_x)
     {
         emit error("Display::set_color: x > MAX_DISPLAY_X");
@@ -179,19 +186,30 @@ bool Display::set_color(unsigned int x,
         return false;
     }
 
-    if(diod[x][y])
+    if(a_diod[x][y])
     {
-        diod[x][y]->set_color(color);
+        a_diod[x][y]->set_color(color);
     }
     return true;
 }
 //--------------------------------------------------------------------------------
-bool Display::set_color(unsigned int x,
-                        unsigned int y,
+bool Display::set_color(int x,
+                        int y,
                         uint8_t R_value,
                         uint8_t G_value,
                         uint8_t B_value)
 {
+    if(x < 0)
+    {
+        emit error("Display::set_color: x < 0");
+        return false;
+    }
+    if(y < 0)
+    {
+        emit error("Display::set_color: y < 0");
+        return false;
+    }
+
     if(x > max_x)
     {
         emit error("Display::set_color: x > MAX_DISPLAY_X");
@@ -203,13 +221,26 @@ bool Display::set_color(unsigned int x,
         return false;
     }
 
-    if(diod[x][y])
+    if(a_diod[x][y])
     {
-        diod[x][y]->set_color(R_value,
-                              G_value,
-                              B_value);
+        a_diod[x][y]->set_color(R_value,
+                                G_value,
+                                B_value);
     }
     return true;
+}
+//--------------------------------------------------------------------------------
+void Display::set_param(int size_x,
+                        int size_y,
+                        int led_w,
+                        int led_h)
+{
+    max_x = size_x;
+    max_y = size_y;
+    led_width = led_w;
+    led_height = led_h;
+
+    create_display(max_x, max_y, led_width, led_height);
 }
 //--------------------------------------------------------------------------------
 uint Display::get_max_x(void)
@@ -222,10 +253,21 @@ uint Display::get_max_y(void)
     return max_y;
 }
 //--------------------------------------------------------------------------------
-bool Display::get_R(unsigned int x,
-                    unsigned int y,
+bool Display::get_R(int x,
+                    int y,
                     uint8_t *value)
 {
+    if(x < 0)
+    {
+        emit error("Display::get_R: x < 0");
+        return false;
+    }
+    if(y < 0)
+    {
+        emit error("Display::get_R: y < 0");
+        return false;
+    }
+
     if(x > max_x)
     {
         emit error(QString("Display::set_color: x = %1").arg(x));
@@ -237,57 +279,79 @@ bool Display::get_R(unsigned int x,
         return false;
     }
 
-    if(diod[x][y] != nullptr)
+    if(a_diod[x][y] != nullptr)
     {
-        *value = diod[x][y]->get_R();
+        *value = a_diod[x][y]->get_R();
         return true;
     }
     return false;
 }
 //--------------------------------------------------------------------------------
-bool Display::get_G(unsigned int x,
-                    unsigned int y,
+bool Display::get_G(int x,
+                    int y,
                     uint8_t *value)
 {
+    if(x < 0)
+    {
+        emit error("Display::get_G: x < 0");
+        return false;
+    }
+    if(y < 0)
+    {
+        emit error("Display::get_G: y < 0");
+        return false;
+    }
+
     if(x > max_x)
     {
-        emit error("Display::set_color: x > MAX_DISPLAY_X");
+        emit error("Display::get_G: x > MAX_DISPLAY_X");
         return false;
     }
     if(y > max_y)
     {
-        emit error("Display::set_color: y > MAX_DISPLAY_Y");
+        emit error("Display::get_G: y > MAX_DISPLAY_Y");
         return false;
     }
 
-    *value = diod[x][y]->get_G();
+    *value = a_diod[x][y]->get_G();
     return true;
 }
 //--------------------------------------------------------------------------------
-bool Display::get_B(unsigned int x,
-                    unsigned int y,
+bool Display::get_B(int x,
+                    int y,
                     uint8_t *value)
 {
+    if(x < 0)
+    {
+        emit error("Display::get_B: x < 0");
+        return false;
+    }
+    if(y < 0)
+    {
+        emit error("Display::get_B: y < 0");
+        return false;
+    }
+
     if(x > max_x)
     {
-        emit error("Display::set_color: x > MAX_DISPLAY_X");
+        emit error("Display::get_B: x > MAX_DISPLAY_X");
         return false;
     }
     if(y > max_y)
     {
-        emit error("Display::set_color: y > MAX_DISPLAY_Y");
+        emit error("Display::get_B: y > MAX_DISPLAY_Y");
         return false;
     }
 
-    *value = diod[x][y]->get_B();
+    *value = a_diod[x][y]->get_B();
     return true;
 }
 //--------------------------------------------------------------------------------
 void Display::clear(void)
 {
-    for(unsigned int y=0; y<max_y; y++)
+    for(int y=0; y<max_y; y++)
     {
-        for(unsigned int x=0; x<max_x; x++)
+        for(int x=0; x<max_x; x++)
         {
             set_color(x, y, QColor(Qt::black));
         }
@@ -326,7 +390,7 @@ void Display::save_setting(void)
     settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
-bool Display::resize(unsigned int w, unsigned int h)
+bool Display::resize(int w, int h)
 {
     if(w > MAX_DISPLAY_X)
     {
@@ -342,8 +406,8 @@ bool Display::resize(unsigned int w, unsigned int h)
     qDeleteAll(children());
 
     bool ok = create_display(w, h,
-                             static_cast<uint>(diod[0][0]->width()),
-            static_cast<uint>(diod[0][0]->height()));
+                             static_cast<uint>(a_diod[0][0]->width()),
+            static_cast<uint>(a_diod[0][0]->height()));
     if(ok)
     {
         adjustSize();
@@ -351,21 +415,21 @@ bool Display::resize(unsigned int w, unsigned int h)
     return ok;
 }
 //--------------------------------------------------------------------------------
-bool Display::resize_led(unsigned int w, unsigned int h)
+bool Display::resize_led(int w, int h)
 {
     if(w == 0)  return false;
     if(h == 0)  return false;
     if(w > MAX_LED_SIZE_W)  return false;
     if(h > MAX_LED_SIZE_H)  return false;
 
-    for(unsigned int y=0; y<max_y; y++)
+    for(int y=0; y<max_y; y++)
     {
-        for(unsigned int x=0; x<max_x; x++)
+        for(int x=0; x<max_x; x++)
         {
-            if(diod[x][y])
+            if(a_diod[x][y])
             {
-                diod[x][y]->resize(static_cast<int>(w),
-                                   static_cast<int>(h));
+                a_diod[x][y]->resize(static_cast<int>(w),
+                                     static_cast<int>(h));
             }
         }
     }

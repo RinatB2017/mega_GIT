@@ -18,47 +18,81 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef PALETTE_HPP
-#define PALETTE_HPP
+#ifndef MAINBOX_HPP
+#define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include <QGridLayout>
-#include <QGroupBox>
+#include <QElapsedTimer>
+#include <QWidget>
 //--------------------------------------------------------------------------------
-class Diod;
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
-class MyPalette : public QGroupBox
+#include "mywidget.hpp"
+//--------------------------------------------------------------------------------
+namespace Ui {
+    class MainBox;
+}
+//--------------------------------------------------------------------------------
+class MySplashScreen;
+class SerialBox5_lite;
+class QSpinBox;
+class QTimer;
+class Display;
+class Palette;
+//--------------------------------------------------------------------------------
+class MainBox : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MyPalette(int max_x,
-                       int max_y,
-                       QWidget *parent = nullptr);
-    virtual ~MyPalette();
-
-    void set_data(QByteArray data);
-    QByteArray get_data(void);
-
-    void set_left_btn_active(bool value);
-    void set_right_btn_active(bool value);
-    void set_flag_is_palette(bool value);
-
-    void load_setting(void);
-    void save_setting(void);
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
+    virtual ~MainBox();
 
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
+    void send(QByteArray);
+
+private slots:
+    void run(bool state);
+    void read_display_data(QByteArray ba);
+    void read_data(QByteArray ba);
+    void update(void);
+
+    void test(void);
 
 private:
-    QGridLayout *grid;
-    QList<Diod *> buttons;
+    QPointer<MySplashScreen> splash;
+    Ui::MainBox *ui;
 
-    int max_x = 0;
-    int max_y = 0;
-    bool flag_active = false;
+    SerialBox5_lite *main_serialBox;
+    SerialBox5_lite *control_serialBox;
+
+    QByteArray display_data_rs232;
+    QByteArray data_rs232;
+
+    QSpinBox *sb_interval;
+    QTimer *timer;
+
+    Display *display;
+    Display *control_display;
+    Palette *palette;
+    int pos_x;
+
+    bool is_busy = false;
+    bool is_ready = false;
+
+    void init(void);
+    void wait(int max_time_ms);
+
+    void createTestBar(void);
+    void createSerialBox(void);
+    void createDisplayBox(void);
+    void createDockWidgets(void);
+    void createTimer(void);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif
+#endif // MAINBOX_HPP

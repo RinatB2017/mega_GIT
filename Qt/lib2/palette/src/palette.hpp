@@ -18,81 +18,49 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef PALETTE_HPP
+#define PALETTE_HPP
 //--------------------------------------------------------------------------------
-#include <QElapsedTimer>
-#include <QWidget>
+#include <QGridLayout>
+#include <QGroupBox>
 //--------------------------------------------------------------------------------
-#include "defines.hpp"
+#define MAX_BUTTONS_X    256
+#define MAX_BUTTONS_Y    256
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+class Diod;
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-class SerialBox5_lite;
-class QSpinBox;
-class QTimer;
-class Display;
-class MyPalette;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class Palette : public QGroupBox
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox();
+    explicit Palette(QWidget *parent = nullptr);
+    virtual ~Palette();
 
-signals:
-    void send(QByteArray);
+    void set_data(QByteArray data);
+    void set_param(int size_x, int size_y);
+    QByteArray get_data(void);
 
-private slots:
-    void run(bool state);
-    void read_display_data(QByteArray ba);
-    void read_data(QByteArray ba);
-    void update(void);
+    void set_left_btn_active(bool value);
+    void set_right_btn_active(bool value);
+    void set_flag_is_palette(bool value);
 
-    void test(void);
-
-private:
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    SerialBox5_lite *main_serialBox;
-    SerialBox5_lite *control_serialBox;
-
-    QByteArray display_data_rs232;
-    QByteArray data_rs232;
-
-    QSpinBox *sb_interval;
-    QTimer *timer;
-
-    Display *display;
-    Display *control_display;
-    MyPalette *palette;
-    int pos_x;
-
-    bool is_busy = false;
-    bool is_ready = false;
-
-    void init(void);
-    void wait(int max_time_ms);
-
-    void createTestBar(void);
-    void createSerialBox(void);
-    void createDisplayBox(void);
-    void createDockWidgets(void);
-    void createTimer(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
+
+signals:
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
+
+private:
+    Diod *a_diod[MAX_BUTTONS_X][MAX_BUTTONS_Y];
+    QGridLayout *grid;
+
+    int max_x = 4;
+    int max_y = 4;
+    bool flag_active = false;
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif

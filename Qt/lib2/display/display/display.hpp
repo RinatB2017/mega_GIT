@@ -36,33 +36,33 @@ class Display : public MyWidget
     Q_OBJECT
 
 public:
-    explicit Display(unsigned int max_x,
-                     unsigned int max_y,
-                     unsigned int led_width = 32,
-                     unsigned int led_height = 32,
-                     QWidget *parent = nullptr);
+    explicit Display(QWidget *parent = nullptr);
     virtual ~Display();
 
-    bool set_color(unsigned int x,
-                   unsigned int y,
+    bool set_color(int x,
+                   int y,
                    QColor color);
-    bool set_color(unsigned int x,
-                   unsigned int y,
+    bool set_color(int x,
+                   int y,
                    uint8_t R_value,
                    uint8_t G_value,
                    uint8_t B_value);
+    void set_param(int size_x,
+                   int size_y,
+                   int led_w,
+                   int led_h);
 
     uint get_max_x(void);
     uint get_max_y(void);
 
-    bool get_R(unsigned int x,
-               unsigned int y,
+    bool get_R(int x,
+               int y,
                uint8_t *value);
-    bool get_G(unsigned int x,
-               unsigned int y,
+    bool get_G(int x,
+               int y,
                uint8_t *value);
-    bool get_B(unsigned int x,
-               unsigned int y,
+    bool get_B(int x,
+               int y,
                uint8_t *value);
 
     void set_data(QByteArray data);
@@ -73,26 +73,29 @@ public:
 
     void clear(void);
 
-    bool resize(unsigned int w,
-                unsigned int h);
-    bool resize_led(unsigned int w,
-                    unsigned int h);
+    bool resize(int w,
+                int h);
+    bool resize_led(int w,
+                    int h);
+
+    void load_setting(void);
+    void save_setting(void);
 
 private:
-    Diod *diod[MAX_DISPLAY_X][MAX_DISPLAY_Y];
-    unsigned int max_x = 0;
-    unsigned int max_y = 0;
+    Diod *a_diod[MAX_DISPLAY_X][MAX_DISPLAY_Y];
+    int max_x = 10;
+    int max_y = 10;
+    int led_width = 32;
+    int led_height = 32;
 
     bool flag_active = false;
 
-    bool create_display(unsigned int w,
-                        unsigned int h,
-                        unsigned int led_width,
-                        unsigned int led_height);
+    bool create_display(int w,
+                        int h,
+                        int led_width,
+                        int led_height);
     void updateText(void);
     bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif

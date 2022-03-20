@@ -137,12 +137,14 @@ void MainBox::createSerialBox(void)
 //--------------------------------------------------------------------------------
 void MainBox::createDisplayBox(void)
 {
-    display = new Display(MAX_SCREEN_X, MAX_SCREEN_Y, LED_SIZE, LED_SIZE, this);
+    display = new Display(this);
+    display->set_param(MAX_SCREEN_X, MAX_SCREEN_Y, LED_SIZE, LED_SIZE);
     display->setObjectName("display");
     display->set_left_btn_active(true);
     display->set_right_btn_active(false);
 
-    control_display = new Display(NUM_LEDS_PER_STRIP, NUM_STRIPS, LED_SIZE, LED_SIZE, this);
+    control_display = new Display(this);
+    control_display->set_param(NUM_LEDS_PER_STRIP, NUM_STRIPS, LED_SIZE, LED_SIZE);
     control_display->setObjectName("control_display");
     control_display->set_left_btn_active(false);
     control_display->set_right_btn_active(false);
@@ -151,7 +153,8 @@ void MainBox::createDisplayBox(void)
     control_display->clear();
     //---
 
-    palette = new MyPalette(4, 4, this);
+    palette = new Palette(this);
+    palette->set_param(4, 4);
     palette->setObjectName("MyPalette");
     palette->load_setting();
     palette->set_left_btn_active(true);

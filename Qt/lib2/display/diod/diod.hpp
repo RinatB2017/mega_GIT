@@ -37,9 +37,9 @@ public:
     explicit Diod(int led_width, int led_height, QWidget *parent);
 
     void set_color(QColor color);
-    void set_color(uint8_t R_value,
-                   uint8_t G_value,
-                   uint8_t B_value);
+    void set_color(uint8_t R_val,
+                   uint8_t G_val,
+                   uint8_t B_val);
 
     QRgb get_color(void);
 

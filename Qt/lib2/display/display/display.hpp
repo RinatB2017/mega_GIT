@@ -51,6 +51,10 @@ public:
                    int size_y,
                    int led_w,
                    int led_h);
+    void get_param(int *size_x,
+                   int *size_y,
+                   int *led_w,
+                   int *led_h);
 
     uint get_max_x(void);
     uint get_max_y(void);

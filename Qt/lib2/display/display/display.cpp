@@ -29,10 +29,12 @@
 Display::Display(QWidget *parent) :
     MyWidget(parent)
 {
-    //create_display(max_x, max_y, led_width, led_height);
 
-    emit info(QString("max_x = %1").arg(max_x));
-    emit info(QString("max_y = %1").arg(max_y));
+}
+//--------------------------------------------------------------------------------
+Display::~Display()
+{
+
 }
 //--------------------------------------------------------------------------------
 bool Display::create_display(int w,
@@ -155,11 +157,6 @@ QByteArray Display::get_data(void)
     return ba;
 }
 //--------------------------------------------------------------------------------
-Display::~Display()
-{
-    save_setting();
-}
-//--------------------------------------------------------------------------------
 bool Display::set_color(int x,
                         int y,
                         QColor color)
@@ -241,6 +238,17 @@ void Display::set_param(int size_x,
     led_height = led_h;
 
     create_display(max_x, max_y, led_width, led_height);
+}
+//--------------------------------------------------------------------------------
+void Display::get_param(int *size_x,
+                        int *size_y,
+                        int *led_w,
+                        int *led_h)
+{
+    *size_x = max_x;
+    *size_y = max_y;
+    *led_w = led_width;
+    *led_h = led_height;
 }
 //--------------------------------------------------------------------------------
 uint Display::get_max_x(void)

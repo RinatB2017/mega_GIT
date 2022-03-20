@@ -154,7 +154,7 @@ void MainBox::createDisplayBox(void)
     //---
 
     palette = new Palette(this);
-    palette->set_param(4, 4);
+    palette->set_param(4, 4, LED_SIZE, LED_SIZE);
     palette->setObjectName("MyPalette");
     palette->load_setting();
     palette->set_left_btn_active(true);

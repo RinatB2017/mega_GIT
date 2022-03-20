@@ -100,11 +100,15 @@ void Palette::set_data(QByteArray data)
     }
 }
 //--------------------------------------------------------------------------------
-void Palette::set_param(int size_x, int size_y)
+void Palette::set_param(int size_x,
+                        int size_y,
+                        int led_w,
+                        int led_h)
 {
     max_x = size_x;
     max_y = size_y;
-
+    led_width = led_w;
+    led_height = led_h;
     if(grid)    delete grid;
 
     grid = new QGridLayout();
@@ -114,7 +118,7 @@ void Palette::set_param(int size_x, int size_y)
     {
         for(int x=0; x<max_x; x++)
         {
-            a_diod[x][y] = new Diod(32, 32, this);
+            a_diod[x][y] = new Diod(led_width, led_height, this);
             a_diod[x][y]->set_left_btn_active(true);
             a_diod[x][y]->set_right_btn_active(true);
             a_diod[x][y]->set_flag_is_palette(true);

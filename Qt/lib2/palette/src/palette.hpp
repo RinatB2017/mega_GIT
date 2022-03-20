@@ -38,7 +38,7 @@ public:
     virtual ~Palette();
 
     void set_data(QByteArray data);
-    void set_param(int size_x, int size_y);
+    void set_param(int size_x, int size_y, int led_w, int led_h);
     QByteArray get_data(void);
 
     void set_left_btn_active(bool value);
@@ -60,6 +60,9 @@ private:
 
     int max_x = 4;
     int max_y = 4;
+    int led_width = 32;
+    int led_height = 32;
+
     bool flag_active = false;
 };
 //--------------------------------------------------------------------------------

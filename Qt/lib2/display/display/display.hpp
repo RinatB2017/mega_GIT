@@ -87,6 +87,7 @@ public:
 
 private:
     Diod *a_diod[MAX_DISPLAY_X][MAX_DISPLAY_Y];
+    QGridLayout *grid = nullptr;
     int max_x = 10;
     int max_y = 10;
     int led_width = 32;

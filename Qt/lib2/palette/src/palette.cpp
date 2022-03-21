@@ -34,13 +34,25 @@
 Palette::Palette(QWidget *parent) :
     QGroupBox(parent)
 {
-    //set_param(4, 4);
-    //load_setting();
+    grid = new QGridLayout();
+    grid->setMargin(0);
+    grid->setSpacing(0);
+
+    QVBoxLayout *box = new QVBoxLayout();
+    box->addLayout(grid);
+    box->addStretch(1);
+
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+    setLayout(box);
 }
 //--------------------------------------------------------------------------------
 Palette::~Palette()
 {
     save_setting();
+    if(grid)
+    {
+        delete grid;
+    }
 }
 //--------------------------------------------------------------------------------
 void Palette::set_left_btn_active(bool value)
@@ -109,11 +121,7 @@ void Palette::set_param(int size_x,
     max_y = size_y;
     led_width = led_w;
     led_height = led_h;
-    if(grid)    delete grid;
 
-    grid = new QGridLayout();
-    grid->setMargin(0);
-    grid->setSpacing(0);
     for(int y=0; y<max_y; y++)
     {
         for(int x=0; x<max_x; x++)
@@ -126,13 +134,6 @@ void Palette::set_param(int size_x,
             grid->addWidget(a_diod[x][y], y, x);
         }
     }
-    QVBoxLayout *box = new QVBoxLayout();
-    box->addLayout(grid);
-    box->addStretch(1);
-
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
-    setLayout(box);
-
     load_setting();
 }
 //--------------------------------------------------------------------------------

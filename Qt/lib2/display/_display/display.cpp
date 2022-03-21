@@ -27,27 +27,18 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 Display::Display(QWidget *parent) :
-    MyWidget(parent)
+    MyWidget(parent),
+    ui(new Ui::Display)
 {
-    grid = new QGridLayout();
-    grid->setMargin(0);
-    grid->setSpacing(0);
 
-    setLayout(grid);
-    adjustSize();
-    //setFixedSize(sizeHint());
-
-    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 //--------------------------------------------------------------------------------
 Display::~Display()
 {
-    if(grid)
-    {
-        delete grid;
-    }
+
 }
 //--------------------------------------------------------------------------------
+#include <QDebug>
 bool Display::create_display(int w,
                              int h,
                              int led_width,
@@ -75,6 +66,9 @@ bool Display::create_display(int w,
         }
     }
 
+    //QGridLayout *grid = new QGridLayout();
+    //grid->setMargin(0);
+    //grid->setSpacing(0);
     for(int y=0; y<max_y; y++)
     {
         for(int x=0; x<max_x; x++)
@@ -84,11 +78,22 @@ bool Display::create_display(int w,
             a_diod[x][y]->set_right_btn_active(false);
 
             Q_ASSERT(a_diod[x][y]);
-            grid->addWidget(a_diod[x][y], y, x);
+
+            if(ui->grid != nullptr)
+            {
+                qDebug() << "error";
+            }
+
+            ui->grid->addWidget(a_diod[x][y], y, x);
         }
     }
 
-    load_setting();
+    //setLayout(grid);
+    adjustSize();
+    //setFixedSize(sizeHint());
+
+    setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
     update();
     return true;
 }

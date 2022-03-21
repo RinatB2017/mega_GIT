@@ -14,3 +14,4 @@ HEADERS += \
 SOURCES += \
     diod.cpp \
     display.cpp
+

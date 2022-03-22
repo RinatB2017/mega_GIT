@@ -224,10 +224,17 @@ void MainBox::heavy_function(int x)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
+#include "cubewidget.h"
 #include "memories.hpp"
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 1
+    CubeWidget *cw = new CubeWidget();
+    cw->show();
+#endif
 
 #if 0
     qreal x = -2.03555499613665e-13;
@@ -235,7 +242,7 @@ bool MainBox::test(void)
     qDebug() << x << y;
 #endif
 
-#if 1
+#if 0
     QColor color = QColor(Qt::yellow);
     int h, s, v;
     color.getHsv(&h, &s, &v);

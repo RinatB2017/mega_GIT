@@ -63,11 +63,11 @@ void MainBox::init(void)
     createTestBar();
 
 #ifdef USE_SCALE_POINT_DATETIME
-//    uint x = QDateTime::currentDateTime().toTime_t();
+    //    uint x = QDateTime::currentDateTime().toTime_t();
     ui->grapher_widget->set_title("тест");
     ui->grapher_widget->set_title_axis_X("X");
     ui->grapher_widget->set_title_axis_Y("Y");
-//    ui->grapher_widget->set_axis_label_rotation(45);
+    //    ui->grapher_widget->set_axis_label_rotation(45);
 
 #if 1
     QDateTime dt = QDateTime(QDateTime(QDate(2000, 1, 1), QTime(0, 0, 0)));
@@ -255,10 +255,10 @@ void MainBox::choice_test(void)
         return;
     }
     auto cmd_it = std::find_if(
-        commands.begin(),
-        commands.end(),
-        [cmd](CMD command){ return command.cmd == cmd; }
-    );
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
     if (cmd_it != commands.end())
     {
         typedef void (MainBox::*function)(void);
@@ -304,7 +304,7 @@ void MainBox::test(void)
 #ifdef USE_SCALE_POINT_DATETIME
     //TODO тест QDateTime
     QDateTime dt1 = QDateTime(QDate(2020, 12, 1), QTime(0, 0, 0));
-     //QDateTime(QDate(2020, 12, 3), QTime(0, 0, 0));
+    //QDateTime(QDate(2020, 12, 3), QTime(0, 0, 0));
     QDateTime dt2 = dt1.addDays(1);
     QDateTime dt3 = dt2.addDays(1);
     QDateTime dt4 = dt3.addDays(1);
@@ -339,11 +339,16 @@ void MainBox::m_fractal(void)
 #ifdef ONE_CURVE
         ui->grapher_widget->add_curve_data(curve_0, X, Y);
 #else
+        //график всего один
         ui->grapher_widget->add_curve_data(curves[0], X, Y);
 #endif
         emit info(QString("%1|%2")
                   .arg(X, 0, 'f', 3)
                   .arg(Y, 0, 'f', 3));
+#if 1
+        emit info(QString("curves: %1")
+                  .arg(ui->grapher_widget->get_curves_count()));
+#endif
 
         X = X + 6.0 * (qreal)N;
         Y = Y + 3.0 * (2.0 * (qreal)N + 1.0);
@@ -365,13 +370,13 @@ void MainBox::test_load(void)
     QDataStream in(ba);
     qreal data;
     int size = static_cast<int>(ba.size()) / static_cast<int>(sizeof(qreal));
-//    int offset = 0;
-//    ui->grapher_widget->get_curve_data_count(0, &offset);
+    //    int offset = 0;
+    //    ui->grapher_widget->get_curve_data_count(0, &offset);
     for(int n=0; n<size; n++)
     {
         in >> data;
         ui->grapher_widget->add_curve_data(0, data);
-//        ui->grapher_widget->add_curve_data(0, offset + n, data);
+        //        ui->grapher_widget->add_curve_data(0, offset + n, data);
     }
 }
 //--------------------------------------------------------------------------------
@@ -430,7 +435,7 @@ void MainBox::test1(void)
 
     block_interface(true);
     ui->grapher_widget->test_single_sinus(dlg->get_index(),
-                                      dlg->get_offset());
+                                          dlg->get_offset());
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
@@ -446,7 +451,7 @@ void MainBox::test2(void)
 
     block_interface(true);
     ui->grapher_widget->test_random_data(dlg->get_index(),
-                                      dlg->get_offset());
+                                         dlg->get_offset());
     block_interface(false);
 }
 //--------------------------------------------------------------------------------

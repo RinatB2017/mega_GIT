@@ -101,6 +101,7 @@ void MainBox::createTestBar(void)
     Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
+    commands.append({ id++, "run_cube",             &MainBox::run_cube });
     commands.append({ id++, "test",                 &MainBox::test });
     commands.append({ id++, "test2",                &MainBox::test2 });
     commands.append({ id++, "Theme (Windows).css",  &MainBox::set_theme_windows });
@@ -224,17 +225,11 @@ void MainBox::heavy_function(int x)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-#include "cubewidget.h"
 #include "memories.hpp"
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
-
-#if 1
-    CubeWidget *cw = new CubeWidget();
-    cw->show();
-#endif
 
 #if 0
     qreal x = -2.03555499613665e-13;
@@ -277,6 +272,17 @@ bool MainBox::test2(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test2");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::run_cube(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    emit info("Test2");
+    CubeWidget *cw = new CubeWidget();
+    cw->show();
+
     return true;
 }
 //--------------------------------------------------------------------------------

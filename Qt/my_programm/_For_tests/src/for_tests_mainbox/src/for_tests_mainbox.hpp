@@ -29,6 +29,7 @@
 #include "myfiledialog.hpp"
 #include "test_classes.hpp"
 #include "mywidget.hpp"
+#include "cubewidget.h"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -50,6 +51,7 @@ public slots:
 
     bool test(void);
     bool test2(void);
+    bool run_cube(void);
 
 private:
     typedef struct CMD

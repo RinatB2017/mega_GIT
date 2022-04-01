@@ -226,10 +226,21 @@ void MainBox::heavy_function(int x)
 }
 //--------------------------------------------------------------------------------
 #include "memories.hpp"
-
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 1
+    QTime time_0(23, 38, 50);
+    QTime time_1(5, 30, 35);
+
+    int sec_0 = time_0.secsTo(time_1);
+
+    QTime time_temp(0, 0, 0);
+    QTime time_res = time_temp.addSecs(sec_0);
+
+    emit info(time_res.toString("hh:mm:ss"));
+#endif
 
 #if 0
     qreal x = -2.03555499613665e-13;

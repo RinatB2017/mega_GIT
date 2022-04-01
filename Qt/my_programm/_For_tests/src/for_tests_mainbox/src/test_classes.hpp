@@ -21,12 +21,15 @@
 #ifndef TEST_CLASSES_HPP
 #define TEST_CLASSES_HPP
 //--------------------------------------------------------------------------------
+#include <QVBoxLayout>
 #include <QPainterPath>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPixmap>
 #include <QBitmap>
 #include <QWidget>
+#include <QTimer>
+#include <QLabel>
 #include <QImage>
 #include <QtMath>
 //--------------------------------------------------------------------------------

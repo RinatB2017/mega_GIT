@@ -32,6 +32,7 @@
 #include <QTimer>
 #include <QFile>
 #include <QList>
+#include <QTime>
 #include <QPen>
 //--------------------------------------------------------------------------------
 #include "myfiledialog.hpp"
@@ -58,6 +59,8 @@ public:
 
     void set_directory(void);
     void single_shot(void);
+
+    QTime diff_time(QTime time_0, QTime time_1);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;

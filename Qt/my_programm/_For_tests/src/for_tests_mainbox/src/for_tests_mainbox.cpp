@@ -234,12 +234,9 @@ bool MainBox::test(void)
     QTime time_0(23, 38, 50);
     QTime time_1(5, 30, 35);
 
-    int sec_0 = time_0.secsTo(time_1);
-
-    QTime time_temp(0, 0, 0);
-    QTime time_res = time_temp.addSecs(sec_0);
-
-    emit info(time_res.toString("hh:mm:ss"));
+    Memories *mem = new Memories();
+    QTime d_time = mem->diff_time(time_0, time_1);
+    emit info(d_time.toString("hh:mm:ss"));
 #endif
 
 #if 0

@@ -155,6 +155,16 @@ void Memories::single_shot(void)
     });
 }
 //--------------------------------------------------------------------------------
+QTime Memories::diff_time(QTime time_0, QTime time_1)
+{
+    int sec_0 = time_0.secsTo(time_1);
+
+    QTime time_temp(0, 0, 0);
+    QTime d_time = time_temp.addSecs(sec_0);
+
+    return d_time;
+}
+//--------------------------------------------------------------------------------
 bool Memories::eventFilter(QObject *obj, QEvent *event)
 {
     // установка

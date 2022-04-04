@@ -61,6 +61,7 @@ public:
     void single_shot(void);
 
     QTime diff_time(QTime time_0, QTime time_1);
+    QTime elapsed_time(int msec);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;

@@ -231,18 +231,8 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
-    QTime time_0(23, 38, 50);
-    QTime time_1(5, 30, 35);
-
-    Memories *mem = new Memories();
-    QTime d_time = mem->diff_time(time_0, time_1);
-    emit info(d_time.toString("hh:mm:ss"));
-#endif
-
-#if 0
-    qreal x = -2.03555499613665e-13;
-    qreal y = 1.0e-2;
-    qDebug() << x << y;
+    RotateWidget *rw = new RotateWidget();
+    rw->show();
 #endif
 
 #if 0

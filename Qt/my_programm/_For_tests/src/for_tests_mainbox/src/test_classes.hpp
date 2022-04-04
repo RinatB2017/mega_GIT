@@ -33,6 +33,71 @@
 #include <QImage>
 #include <QtMath>
 //--------------------------------------------------------------------------------
+class RotateWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit RotateWidget(QWidget *parent = nullptr) :
+        QWidget(parent)
+    {
+        b_image = QImage(":/other/background.png");
+        w = b_image.width();
+        h = b_image.height();
+        center_x = w / 2;
+        center_y = h / 2;
+
+        image = QImage(100, 100, QImage::Format_ARGB32);
+        image.fill(QColor(Qt::transparent));
+
+        QPen pen;
+        pen.setColor(QColor(Qt::white));
+        pen.setWidth(3);
+
+        QPainter p(&image);
+        p.setPen(pen);
+        p.drawLine(0, 0, 100, 100);
+
+        timer = new QTimer(this);
+        connect(timer, &QTimer::timeout,    this,   &RotateWidget::update_widget);
+        timer->start();
+
+        setFixedSize(w, h);
+    }
+
+private:
+    QImage b_image;
+    QImage image;
+    QTimer *timer = nullptr;
+    int w = 0;
+    int h = 0;
+    int center_x = 0;
+    int center_y = 0;
+    qreal angle = 0.0;
+
+    void update_widget(void)
+    {
+        if(angle < 360.0)
+            angle++;
+        else
+            angle=0.0;
+        update();
+    }
+
+protected:
+    void paintEvent(QPaintEvent *) override
+    {
+        QPainter p(this);
+        p.drawImage(0, 0, b_image);
+
+        p.save();
+        p.translate(center_x, center_y);
+        p.rotate(angle);
+        p.drawImage(-50, -50, image);
+        p.restore();
+    }
+};
+//--------------------------------------------------------------------------------
 class DrawWidget : public QWidget
 {
     Q_OBJECT

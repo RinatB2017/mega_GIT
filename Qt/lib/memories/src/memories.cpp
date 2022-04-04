@@ -165,6 +165,14 @@ QTime Memories::diff_time(QTime time_0, QTime time_1)
     return d_time;
 }
 //--------------------------------------------------------------------------------
+QTime Memories::elapsed_time(int msec)
+{
+    QTime time(0, 0, 0);
+    QTime d_time = time.addMSecs(msec);
+    emit debug(d_time.toString("elapsed hh:mm:ss"));
+    return d_time;
+}
+//--------------------------------------------------------------------------------
 bool Memories::eventFilter(QObject *obj, QEvent *event)
 {
     // установка

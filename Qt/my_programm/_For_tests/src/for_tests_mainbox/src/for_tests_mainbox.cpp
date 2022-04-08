@@ -225,12 +225,30 @@ void MainBox::heavy_function(int x)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
+#include <QDateTime>
+#include <QDate>
+
 #include "memories.hpp"
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    uint16_t a = 9;
+    uint16_t b = ~a;
+
+    emit info(QString("%1").arg(b, 2, 16, QChar('0')));
+#endif
+
+#if 0
+    int unixtime = 1649192457;
+    QDateTime dtime = QDateTime(QDate(1970, 1, 1), QTime(0, 0));
+    QDateTime current_dtime = dtime.addSecs(unixtime);
+
+    emit info(current_dtime.toString("dd.MM.yyyy hh:mm:ss"));
+#endif
+
+#if 0
     RotateWidget *rw = new RotateWidget();
     rw->show();
 #endif

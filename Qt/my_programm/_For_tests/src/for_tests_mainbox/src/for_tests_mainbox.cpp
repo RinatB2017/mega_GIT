@@ -101,7 +101,8 @@ void MainBox::createTestBar(void)
     Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "run_cube",             &MainBox::run_cube });
+    commands.append({ id++, "run_cube_widget",      &MainBox::run_cube_widget });
+    commands.append({ id++, "run_ogl_widget",       &MainBox::run_ogl_widget });
     commands.append({ id++, "test",                 &MainBox::test });
     commands.append({ id++, "test2",                &MainBox::test2 });
     commands.append({ id++, "Theme (Windows).css",  &MainBox::set_theme_windows });
@@ -225,6 +226,22 @@ void MainBox::heavy_function(int x)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
+bool MainBox::calc_norm(qreal x,
+                        qreal y,
+                        qreal w,
+                        qreal h,
+                        qreal *norm_x,
+                        qreal *norm_y)
+{
+    if(x<0 || y<0) return false;
+    if(w<0 || h<0) return false;
+    if(x>w || y>h) return false;
+
+    *norm_x = (x * 2.0) / w - 1.0;
+    *norm_y = (y * 2.0) / h - 1.0;
+    return true;
+}
+//--------------------------------------------------------------------------------
 #include <QDateTime>
 #include <QDate>
 
@@ -234,18 +251,15 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
-    uint16_t a = 9;
-    uint16_t b = ~a;
+    qreal pos_x;
+    qreal pos_y;
 
-    emit info(QString("%1").arg(b, 2, 16, QChar('0')));
-#endif
-
-#if 0
-    int unixtime = 1649192457;
-    QDateTime dtime = QDateTime(QDate(1970, 1, 1), QTime(0, 0));
-    QDateTime current_dtime = dtime.addSecs(unixtime);
-
-    emit info(current_dtime.toString("dd.MM.yyyy hh:mm:ss"));
+    if(calc_norm(400, 400, 600, 600, &pos_x, &pos_y))
+    {
+        emit info(QString("%1 %2")
+                  .arg(pos_x)
+                  .arg(pos_y));
+    }
 #endif
 
 #if 0
@@ -291,13 +305,22 @@ bool MainBox::test2(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::run_cube(void)
+bool MainBox::run_cube_widget(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    emit info("Test2");
     CubeWidget *cw = new CubeWidget();
     cw->show();
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::run_ogl_widget(void)
+{
+    emit trace(Q_FUNC_INFO);
+
+    ORL_widget *ow = new ORL_widget();
+    ow->show();
 
     return true;
 }

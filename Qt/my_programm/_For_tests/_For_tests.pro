@@ -64,5 +64,6 @@ include (src/mymainwindow/mymainwindow.pri)
 include (src/widgets/widgets.pri)
 
 include (src/cube/cube.pri)
+include (src/ogl/ogl.pri)
 
 VPATH = $$INCLUDEPATH

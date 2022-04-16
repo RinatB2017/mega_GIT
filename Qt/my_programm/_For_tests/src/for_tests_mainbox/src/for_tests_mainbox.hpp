@@ -29,6 +29,7 @@
 #include "myfiledialog.hpp"
 #include "test_classes.hpp"
 #include "mywidget.hpp"
+#include "ogl_widget.hpp"
 #include "cubewidget.h"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
@@ -51,7 +52,8 @@ public slots:
 
     bool test(void);
     bool test2(void);
-    bool run_cube(void);
+    bool run_cube_widget(void);
+    bool run_ogl_widget(void);
 
 private:
     typedef struct CMD
@@ -74,6 +76,13 @@ private:
 
     void init(void);
     void createTestBar(void);
+
+    bool calc_norm(qreal x,
+                   qreal y,
+                   qreal w,
+                   qreal h,
+                   qreal *norm_x,
+                   qreal *norm_y);
 
     template<typename T1, typename T2>
     void test_template(void);

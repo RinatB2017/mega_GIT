@@ -137,6 +137,7 @@ void ORL_object::quad(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat x3
 {
     QVector3D n = QVector3D::normal(QVector3D(x4 - x1, y4 - y1, 0.0f), QVector3D(x2 - x1, y2 - y1, 0.0f));
 
+    // 0.05 толщина
     add(QVector3D(x1, y1, -0.05f), n);
     add(QVector3D(x4, y4, -0.05f), n);
     add(QVector3D(x2, y2, -0.05f), n);

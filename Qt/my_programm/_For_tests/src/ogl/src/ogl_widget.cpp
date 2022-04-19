@@ -224,9 +224,9 @@ void ORL_widget::initializeGL()
     QOpenGLVertexArrayObject::Binder vaoBinder(&m_vao);
 
     // Setup our vertex buffer object.
-    m_logoVbo.create();
-    m_logoVbo.bind();
-    m_logoVbo.allocate(m_logo.constData(), m_logo.count() * sizeof(GLfloat));
+    m_objVbo.create();
+    m_objVbo.bind();
+    m_objVbo.allocate(m_obj.constData(), m_obj.count() * sizeof(GLfloat));
 
     // Store the vertex attribute bindings for the program.
     setupVertexAttribs();
@@ -243,13 +243,13 @@ void ORL_widget::initializeGL()
 
 void ORL_widget::setupVertexAttribs()
 {
-    m_logoVbo.bind();
+    m_objVbo.bind();
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
     f->glEnableVertexAttribArray(0);
     f->glEnableVertexAttribArray(1);
     f->glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), nullptr);
     f->glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), reinterpret_cast<void *>(3 * sizeof(GLfloat)));
-    m_logoVbo.release();
+    m_objVbo.release();
 }
 
 void ORL_widget::paintGL()
@@ -270,7 +270,7 @@ void ORL_widget::paintGL()
     QMatrix3x3 normalMatrix = m_world.normalMatrix();
     m_program->setUniformValue(m_normalMatrixLoc, normalMatrix);
 
-    glDrawArrays(GL_TRIANGLES, 0, m_logo.vertexCount());
+    glDrawArrays(GL_TRIANGLES, 0, m_obj.vertexCount());
 
     m_program->release();
 }

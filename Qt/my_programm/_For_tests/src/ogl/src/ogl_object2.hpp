@@ -48,72 +48,28 @@
 **
 ****************************************************************************/
 
-#ifndef OGL_WIDGET_HPP
-#define OGL_WIDGET_HPP
+#ifndef OGL_OBJECT2_HPP
+#define OGL_OBJECT2_HPP
 
-#include <QOpenGLWidget>
-#include <QOpenGLFunctions>
-#include <QOpenGLVertexArrayObject>
-#include <QOpenGLBuffer>
-#include <QMatrix4x4>
+#include <qopengl.h>
+#include <QVector>
+#include <QVector3D>
 
-#include "ogl_object2.hpp"
-#include "ogl_object.hpp"
-
-QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
-
-class ORL_widget : public QOpenGLWidget, protected QOpenGLFunctions
+class ORL_object2
 {
-    Q_OBJECT
-
 public:
-    ORL_widget(QWidget *parent = nullptr);
-    ~ORL_widget();
-
-    QSize minimumSizeHint() const override;
-    QSize sizeHint() const override;
-
-public slots:
-    void setXRotation(int angle);
-    void setYRotation(int angle);
-    void setZRotation(int angle);
-    void cleanup();
-
-signals:
-    void xRotationChanged(int angle);
-    void yRotationChanged(int angle);
-    void zRotationChanged(int angle);
-
-protected:
-    void initializeGL() override;
-    void paintGL() override;
-    void resizeGL(int width, int height) override;
-    void mousePressEvent(QMouseEvent *event) override;
-    void mouseMoveEvent(QMouseEvent *event) override;
+    ORL_object2();
+    const GLfloat *constData() const { return m_data.constData(); }
+    int count() const { return m_count; }
+    int vertexCount() const { return m_count / 6; }
 
 private:
-    void setupVertexAttribs();
+    void quad(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat x3, GLfloat y3, GLfloat x4, GLfloat y4);
+    void extrude(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2);
+    void add(const QVector3D &v, const QVector3D &n);
 
-    bool m_core;
-    int m_xRot = 0;
-    int m_yRot = 0;
-    int m_zRot = 0;
-    QPoint m_lastPos;
-
-    //ORL_object m_obj;
-    ORL_object2 m_obj;
-
-    QOpenGLVertexArrayObject m_vao;
-    QOpenGLBuffer m_objVbo;
-    QOpenGLShaderProgram *m_program;
-    int m_projMatrixLoc;
-    int m_mvMatrixLoc;
-    int m_normalMatrixLoc;
-    int m_lightPosLoc;
-    QMatrix4x4 m_proj;
-    QMatrix4x4 m_camera;
-    QMatrix4x4 m_world;
-    bool m_transparent;
+    QVector<GLfloat> m_data;
+    int m_count;
 };
 
 #endif

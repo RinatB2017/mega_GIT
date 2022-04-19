@@ -48,72 +48,76 @@
 **
 ****************************************************************************/
 
-#ifndef OGL_WIDGET_HPP
-#define OGL_WIDGET_HPP
-
-#include <QOpenGLWidget>
-#include <QOpenGLFunctions>
-#include <QOpenGLVertexArrayObject>
-#include <QOpenGLBuffer>
-#include <QMatrix4x4>
-
+#include <qmath.h>
 #include "ogl_object2.hpp"
-#include "ogl_object.hpp"
 
-QT_FORWARD_DECLARE_CLASS(QOpenGLShaderProgram)
-
-class ORL_widget : public QOpenGLWidget, protected QOpenGLFunctions
+ORL_object2::ORL_object2()
+    : m_count(0)
 {
-    Q_OBJECT
+    // m_data хранилище данных
+    m_data.resize(2500 * 6);
 
-public:
-    ORL_widget(QWidget *parent = nullptr);
-    ~ORL_widget();
+    const GLfloat x1 = -0.1f;
+    const GLfloat y1 =  0.1f;
+    const GLfloat x2 =  0.1f;
+    const GLfloat y2 =  0.05f;
+    const GLfloat x3 =  0.1f;
+    const GLfloat y3 = -0.05f;
+    const GLfloat x4 = -0.1f;
+    const GLfloat y4 = -0.1f;
 
-    QSize minimumSizeHint() const override;
-    QSize sizeHint() const override;
+    quad(x1, y1, x2, y2, x3, y3, x4, y4);
+    extrude(x1, y1, x2, y2);
+    extrude(x2, y2, x3, y3);
+    extrude(x3, y3, x4, y4);
+    extrude(x4, y4, x1, y1);
+}
 
-public slots:
-    void setXRotation(int angle);
-    void setYRotation(int angle);
-    void setZRotation(int angle);
-    void cleanup();
+void ORL_object2::add(const QVector3D &v, const QVector3D &n)
+{
+    GLfloat *p = m_data.data() + m_count;
+    *p++ = v.x();
+    *p++ = v.y();
+    *p++ = v.z();
+    *p++ = n.x();
+    *p++ = n.y();
+    *p++ = n.z();
+    m_count += 6;
+}
 
-signals:
-    void xRotationChanged(int angle);
-    void yRotationChanged(int angle);
-    void zRotationChanged(int angle);
+void ORL_object2::quad(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat x3, GLfloat y3, GLfloat x4, GLfloat y4)
+{
+    QVector3D n = QVector3D::normal(QVector3D(x4 - x1, y4 - y1, 0.0f), QVector3D(x2 - x1, y2 - y1, 0.0f));
 
-protected:
-    void initializeGL() override;
-    void paintGL() override;
-    void resizeGL(int width, int height) override;
-    void mousePressEvent(QMouseEvent *event) override;
-    void mouseMoveEvent(QMouseEvent *event) override;
+    // 0.05 толщина
+    add(QVector3D(x1, y1, -0.05f), n);
+    add(QVector3D(x4, y4, -0.05f), n);
+    add(QVector3D(x2, y2, -0.05f), n);
 
-private:
-    void setupVertexAttribs();
+    add(QVector3D(x3, y3, -0.05f), n);
+    add(QVector3D(x2, y2, -0.05f), n);
+    add(QVector3D(x4, y4, -0.05f), n);
 
-    bool m_core;
-    int m_xRot = 0;
-    int m_yRot = 0;
-    int m_zRot = 0;
-    QPoint m_lastPos;
+    n = QVector3D::normal(QVector3D(x1 - x4, y1 - y4, 0.0f), QVector3D(x2 - x4, y2 - y4, 0.0f));
 
-    //ORL_object m_obj;
-    ORL_object2 m_obj;
+    add(QVector3D(x4, y4, 0.05f), n);
+    add(QVector3D(x1, y1, 0.05f), n);
+    add(QVector3D(x2, y2, 0.05f), n);
 
-    QOpenGLVertexArrayObject m_vao;
-    QOpenGLBuffer m_objVbo;
-    QOpenGLShaderProgram *m_program;
-    int m_projMatrixLoc;
-    int m_mvMatrixLoc;
-    int m_normalMatrixLoc;
-    int m_lightPosLoc;
-    QMatrix4x4 m_proj;
-    QMatrix4x4 m_camera;
-    QMatrix4x4 m_world;
-    bool m_transparent;
-};
+    add(QVector3D(x2, y2, 0.05f), n);
+    add(QVector3D(x3, y3, 0.05f), n);
+    add(QVector3D(x4, y4, 0.05f), n);
+}
 
-#endif
+void ORL_object2::extrude(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2)
+{
+    QVector3D n = QVector3D::normal(QVector3D(0.0f, 0.0f, -0.1f), QVector3D(x2 - x1, y2 - y1, 0.0f));
+
+    add(QVector3D(x1, y1, +0.05f), n);
+    add(QVector3D(x1, y1, -0.05f), n);
+    add(QVector3D(x2, y2, +0.05f), n);
+
+    add(QVector3D(x2, y2, -0.05f), n);
+    add(QVector3D(x2, y2, +0.05f), n);
+    add(QVector3D(x1, y1, -0.05f), n);
+}

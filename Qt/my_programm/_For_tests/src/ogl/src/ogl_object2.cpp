@@ -71,6 +71,18 @@ ORL_object2::ORL_object2()
     extrude(x2, y2, x3, y3);
     extrude(x3, y3, x4, y4);
     extrude(x4, y4, x1, y1);
+
+    const GLfloat t_x1 = 0.1f;
+    const GLfloat t_y1 = 0.1f;
+    const GLfloat t_x2 = 0.12f;
+    const GLfloat t_y2 = 0.1f;
+    const GLfloat t_x3 = 0.12f;
+    const GLfloat t_y3 = 0.12f;
+
+    triangle(t_x1, t_y1, t_x2, t_y2, t_x3, t_y3);
+    //extrude(t_x1, t_y1, t_x2, t_y2);
+    //extrude(t_x2, t_y2, t_x3, t_y3);
+    //extrude(t_x3, t_y3, t_x1, t_y1);
 }
 
 void ORL_object2::add(const QVector3D &v, const QVector3D &n)
@@ -87,7 +99,8 @@ void ORL_object2::add(const QVector3D &v, const QVector3D &n)
 
 void ORL_object2::quad(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat x3, GLfloat y3, GLfloat x4, GLfloat y4)
 {
-    QVector3D n = QVector3D::normal(QVector3D(x4 - x1, y4 - y1, 0.0f), QVector3D(x2 - x1, y2 - y1, 0.0f));
+    QVector3D n;
+    n = QVector3D::normal(QVector3D(x4 - x1, y4 - y1, 0.0f), QVector3D(x2 - x1, y2 - y1, 0.0f));
 
     // 0.05 толщина
     add(QVector3D(x1, y1, -0.05f), n);
@@ -107,6 +120,25 @@ void ORL_object2::quad(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat x
     add(QVector3D(x2, y2, 0.05f), n);
     add(QVector3D(x3, y3, 0.05f), n);
     add(QVector3D(x4, y4, 0.05f), n);
+}
+
+void ORL_object2::triangle(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2, GLfloat x3, GLfloat y3)
+{
+    QVector3D n;
+    n = QVector3D::normal(QVector3D(x3 - x1, y3 - y1, 0.0f), QVector3D(x2 - x1, y2 - y1, 0.0f));
+
+    // 0.05 толщина
+    add(QVector3D(x1, y1, -0.05f), n);
+    add(QVector3D(x3, y3, -0.05f), n);
+    add(QVector3D(x2, y2, -0.05f), n);
+
+    n = QVector3D::normal(QVector3D(x1 - x3, y1 - y3, 0.0f), QVector3D(x2 - x3, y2 - y3, 0.0f));
+
+    add(QVector3D(x3, y3, 0.05f), n);
+    add(QVector3D(x1, y1, 0.05f), n);
+
+    add(QVector3D(x2, y2, 0.05f), n);
+    add(QVector3D(x3, y3, 0.05f), n);
 }
 
 void ORL_object2::extrude(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2)

@@ -84,6 +84,8 @@ private:
                    qreal *norm_x,
                    qreal *norm_y);
 
+    QImage create_bone(int num);
+
     template<typename T1, typename T2>
     void test_template(void);
 

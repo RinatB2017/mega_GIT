@@ -242,6 +242,26 @@ bool MainBox::calc_norm(qreal x,
     return true;
 }
 //--------------------------------------------------------------------------------
+QImage MainBox::create_bone(int num)
+{
+    QImage image = QImage(512, 512, QImage::Format_ARGB32);
+    image.fill(QColor(Qt::white));
+
+    QPen pen;
+    pen.setColor(QColor(Qt::black));
+    pen.setWidth(5);
+
+    QPainter painter;
+    painter.begin(&image);
+    painter.setPen(pen);
+    painter.drawRect(0, 0, 511, 511);
+    painter.setFont(QFont("Libaration Mono", 70));
+    painter.drawText(250, 280, QString::number(num));
+    painter.end();
+
+    return image;
+}
+//--------------------------------------------------------------------------------
 #include <QDateTime>
 #include <QDate>
 
@@ -250,7 +270,71 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 0
+    QImage image_1 = create_bone(1);
+    QImage image_2 = create_bone(2);
+    QImage image_3 = create_bone(3);
+    QImage image_4 = create_bone(4);
+    QImage image_5 = create_bone(5);
+    QImage image_6 = create_bone(6);
+
+    QImage bone = QImage(512*4, 512*3, QImage::Format_ARGB32);
+    QPainter p;
+    int x=0;
+    int y=0;
+    p.begin(&bone);
+    x=512; y=0;
+    p.drawImage(x, y, image_6);
+    x=0; y=512;
+    p.drawImage(x, y, image_1);
+    x=512; y=512;
+    p.drawImage(x, y, image_2);
+    x=1024; y=512;
+    p.drawImage(x, y, image_5);
+    x=1536; y=512;
+    p.drawImage(x, y, image_4);
+    x=512; y=1024;
+    p.drawImage(x, y, image_3);
+    p.end();
+
+    bone.save("/dev/shm/bone2.png");
+
+//    QLabel *label = new QLabel();
+//    label->setPixmap(QPixmap::fromImage(bone));
+//    label->setFixedSize(512*4, 512*3);
+//    label->show();
+#endif
+
+
 #if 1
+    QImage image_1 = create_bone(1);
+    QImage image_2 = create_bone(2);
+    QImage image_3 = create_bone(3);
+    QImage image_4 = create_bone(4);
+    QImage image_5 = create_bone(5);
+    QImage image_6 = create_bone(6);
+
+    QImage bone = QImage(512*6, 512, QImage::Format_ARGB32);
+    QPainter p;
+    int x=0;
+    p.begin(&bone);
+    p.drawImage(x, 0, image_6); x+=512;
+    p.drawImage(x, 0, image_1); x+=512;
+    p.drawImage(x, 0, image_2); x+=512;
+    p.drawImage(x, 0, image_5); x+=512;
+    p.drawImage(x, 0, image_4); x+=512;
+    p.drawImage(x, 0, image_3);
+    p.end();
+
+    bone.save("/dev/shm/bone.png");
+
+//    QLabel *label = new QLabel();
+//    label->setPixmap(QPixmap::fromImage(bone));
+//    label->setFixedSize(512*6, 512);
+//    label->show();
+#endif
+
+#if 0
     qreal pos_x;
     qreal pos_y;
 

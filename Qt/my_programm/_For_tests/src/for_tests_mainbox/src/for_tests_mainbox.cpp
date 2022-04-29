@@ -270,6 +270,11 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    emit info(QString("size:  %1").arg(sizeof(packet)));
+    emit info(QString("size2: %1").arg(sizeof(packet2)));
+#endif
+
 #if 0
     QImage image_1 = create_bone(1);
     QImage image_2 = create_bone(2);
@@ -306,7 +311,7 @@ bool MainBox::test(void)
 #endif
 
 
-#if 1
+#if 0
     QImage image_1 = create_bone(1);
     QImage image_2 = create_bone(2);
     QImage image_3 = create_bone(3);

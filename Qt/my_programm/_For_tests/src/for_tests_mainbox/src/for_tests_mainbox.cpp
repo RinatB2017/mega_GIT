@@ -271,6 +271,13 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    Memories *mem = new Memories();
+    connect_log_signals(mem, this);
+    mem->elapsed_time(5887 * 1000);
+    delete  mem;
+#endif
+
+#if 0
     emit info(QString("size:  %1").arg(sizeof(packet)));
     emit info(QString("size2: %1").arg(sizeof(packet2)));
 #endif

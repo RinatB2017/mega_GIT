@@ -33,7 +33,7 @@ unix {
     LIBS    += -lftdi1
 }
 
-LIBS    += -lusb
+LIBS    += -lusb-1.0
 LIBS    += /opt/lib64/libftd2xx.so
 
 LIB_PATH  = "$$PWD/../../lib"

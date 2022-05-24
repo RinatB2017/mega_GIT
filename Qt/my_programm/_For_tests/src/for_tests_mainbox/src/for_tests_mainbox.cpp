@@ -271,6 +271,28 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QString filename = "colors.csv";
+
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qWarning() << QString("File %1 not open").arg(filename);
+        return false;
+    }
+    QTextStream in(&file);
+
+    QString temp = in.readLine();
+    if(temp.isEmpty())
+    {
+        qWarning() << "temp.isEmpty";
+        file.close();
+        return false;
+    }
+
+    emit info(temp);
+#endif
+
+#if 0
     Memories *mem = new Memories();
     connect_log_signals(mem, this);
     mem->elapsed_time(5887 * 1000);

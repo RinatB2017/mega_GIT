@@ -48,40 +48,14 @@ static inline std::string strlower(const std::string &cs) {
 // trim from start
 static inline std::string ltrim(const std::string &cs) {
     std::string s = cs;
-
-    //TODO надо проверить замену
-    // https://stackoverflow.com/questions/44973435/stdptr-fun-replacement-for-c17
-    // https://ask-dev.ru/info/13318/whats-the-best-way-to-trim-stdstring
-    //s.erase(s.begin(),
-    //        std::find_if(s.begin(),
-    //                     s.end(),
-    //                     std::not1(std::ptr_fun<int, int>(isspace))));
-
-    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) {
-        return !std::isspace(ch);
-    }));
-    //---
-
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), std::not1(std::ptr_fun<int, int>(isspace))));
     return s;
 }
 
 // trim from end
 static inline std::string rtrim(const std::string &cs) {
     std::string s = cs;
-
-    //TODO надо проверить замену
-    // https://stackoverflow.com/questions/44973435/stdptr-fun-replacement-for-c17
-    // https://ask-dev.ru/info/13318/whats-the-best-way-to-trim-stdstring
-    //s.erase(std::find_if(s.rbegin(),
-    //                     s.rend(),
-    //                     std::not1(std::ptr_fun<int, int>(isspace))).base(),
-    //                     s.end());
-
-    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) {
-        return !std::isspace(ch);
-    }).base(), s.end());
-    //---
-
+    s.erase(std::find_if(s.rbegin(), s.rend(), std::not1(std::ptr_fun<int, int>(isspace))).base(), s.end());
     return s;
 }
 

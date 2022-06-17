@@ -85,7 +85,7 @@ class MetaSQLInfoDefault : public MetaSQLInfo {
             std::list<std::string>::iterator strlit = find(list.begin(), list.end(), name);
             int lc = 0;
             if(strlit != list.end()) {
-                lc = (int)_values[name].size();
+                lc = _values[name].size();
             }
             return lc;
         }

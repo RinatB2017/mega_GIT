@@ -7,6 +7,8 @@ TARGET   = _For_tests
 
 include (conf/conf.pri)
 
+#DEFINES += FILENAME_LOG
+
 PROGRAMM_PATH  += \
     $$PWD/src
 INCLUDEPATH += $$PROGRAMM_PATH

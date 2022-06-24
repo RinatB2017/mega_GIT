@@ -114,6 +114,22 @@ unix:!macx {
 #    }
 #}
 ###############################################################################
+# решение проблемы для кодировке в консоли windows
+win32 {
+    QMAKE_EXTRA_TARGETS += before_build makefilehook
+
+    makefilehook.target = $(MAKEFILE)
+    makefilehook.depends = .beforebuild
+
+    PRE_TARGETDEPS += .beforebuild
+
+    before_build.target = .beforebuild
+    before_build.depends = FORCE
+    before_build.commands = chcp 1251
+#    before_build.commands = chcp 866
+#    before_build.commands = chcp 850
+}
+###############################################################################
 #
 # не факт, что это правильно будет в будущем
 #

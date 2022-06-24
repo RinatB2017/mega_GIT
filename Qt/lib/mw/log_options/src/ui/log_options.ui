@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>Log_options</class>
  <widget class="QDialog" name="Log_options">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>186</width>
-    <height>417</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -66,29 +58,6 @@
        <widget class="QCheckBox" name="cb_Text_Is_Windows">
         <property name="text">
          <string>is windows</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QGroupBox" name="gb_autosave">
-     <property name="title">
-      <string>Save log to file</string>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QCheckBox" name="cb_AutoSave">
-        <property name="text">
-         <string>auto</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="btn_choice_filename">
-        <property name="text">
-         <string>...</string>
         </property>
        </widget>
       </item>

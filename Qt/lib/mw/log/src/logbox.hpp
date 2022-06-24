@@ -22,6 +22,7 @@
 #define LOGBOX_HPP
 //--------------------------------------------------------------------------------
 #include <QProgressBar>
+#include <QDateTime>
 #include <QTextEdit>
 #include <QColor>
 #include <QFont>
@@ -164,6 +165,9 @@ private:
     void slot_is_shows_error(bool state);
     void slot_is_shows_trace(bool state);
 
+    void save_logfile(const QDateTime &dt,
+                      int level,
+                      const QString log);
     void save_log(const QString &filename);
     void save_full_log(const QString &filename);
 

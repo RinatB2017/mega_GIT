@@ -80,7 +80,7 @@ void LogBox::init(void)
     logBox->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(logBox, &LogBox::customContextMenuRequested,    this,   &LogBox::popup);
 
-//    logBox->document()->setMaximumBlockCount(MAX_BLOCK_CNT);
+    //    logBox->document()->setMaximumBlockCount(MAX_BLOCK_CNT);
 }
 //--------------------------------------------------------------------------------
 void LogBox::popup(QPoint)
@@ -206,7 +206,7 @@ void LogBox::create_widgets(void)
     QFont font("Liberation Mono", 10);
     logBox = new QTextEdit(this);
     logBox->setObjectName("te_LogBox");
-//    logBox->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
+    //    logBox->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     logBox->setFont(font);
     logBox->setProperty(NO_SAVE, true);
 #ifdef Q_OS_LINUX
@@ -317,10 +317,10 @@ void LogBox::append_string(LOG_DATA log_data)
 
     QString level_str;
     switch (log_data.level) {
-        case L_INFO:  level_str = "INFO";   break;
-        case L_DEBUG: level_str = "DEBUG";  break;
-        case L_ERROR: level_str = "ERROR";  break;
-        case L_TRACE: level_str = "TRACE";  break;
+    case L_INFO:  level_str = "INFO";   break;
+    case L_DEBUG: level_str = "DEBUG";  break;
+    case L_ERROR: level_str = "ERROR";  break;
+    case L_TRACE: level_str = "TRACE";  break;
     }
     if(flagAddDateTime)
     {
@@ -417,6 +417,12 @@ void LogBox::infoLog(const QString &text)
         l_log_data.append(log_data);
         append_string(log_data);
     }
+
+#ifdef FILENAME_LOG
+    save_logfile(QDateTime::currentDateTime(),
+                 L_INFO,
+                 text);
+#endif
 }
 //--------------------------------------------------------------------------------
 void LogBox::debugLog(const QString &text)
@@ -435,6 +441,12 @@ void LogBox::debugLog(const QString &text)
         l_log_data.append(log_data);
         append_string(log_data);
     }
+
+#ifdef FILENAME_LOG
+    save_logfile(QDateTime::currentDateTime(),
+                 L_DEBUG,
+                 text);
+#endif
 }
 //--------------------------------------------------------------------------------
 void LogBox::errorLog(const QString &text)
@@ -453,6 +465,12 @@ void LogBox::errorLog(const QString &text)
         l_log_data.append(log_data);
         append_string(log_data);
     }
+
+#ifdef FILENAME_LOG
+    save_logfile(QDateTime::currentDateTime(),
+                 L_ERROR,
+                 text);
+#endif
 }
 //--------------------------------------------------------------------------------
 void LogBox::traceLog(const QString &text)
@@ -471,6 +489,12 @@ void LogBox::traceLog(const QString &text)
         l_log_data.append(log_data);
         append_string(log_data);
     }
+
+#ifdef FILENAME_LOG
+    save_logfile(QDateTime::currentDateTime(),
+                 L_TRACE,
+                 text);
+#endif
 }
 //--------------------------------------------------------------------------------
 void LogBox::colorLog(const QString &text,
@@ -491,6 +515,12 @@ void LogBox::colorLog(const QString &text,
         l_log_data.append(log_data);
         append_string(log_data);
     }
+
+#ifdef FILENAME_LOG
+    save_logfile(QDateTime::currentDateTime(),
+                 L_INFO,
+                 text);
+#endif
 }
 //--------------------------------------------------------------------------------
 QString LogBox::syslog_to_str(int level)
@@ -602,6 +632,41 @@ void LogBox::save_full_log_to(void)
         save_full_log(files.at(0));
     }
     delete dlg;
+}
+//--------------------------------------------------------------------------------
+void LogBox::save_logfile(const QDateTime &dt,
+                          int level,
+                          const QString log)
+{
+    QString filename = "log.txt";
+
+    QFile file(filename);
+    if (!file.open(QIODevice::Append | QIODevice::Text))
+    {
+#ifdef QT_DEBUG
+        qDebug() << filename << tr("not open");
+#endif
+        return;
+    }
+
+    QString temp;
+
+    temp.append(QString("%1\t")
+                .arg(dt.toString("dd-MM-yyyy hh:mm:ss")));
+
+    switch (level)
+    {
+    case L_INFO:    temp.append("INFO\t");  break;
+    case L_DEBUG:   temp.append("DEBUG\t");  break;
+    case L_ERROR:   temp.append("ERROR\t");  break;
+    case L_TRACE:   temp.append("TRACE\t");  break;
+        break;
+    }
+    temp.append(QString("%1\n")
+                .arg(log));
+
+    file.write(temp.toLocal8Bit());
+    file.close();
 }
 //--------------------------------------------------------------------------------
 void LogBox::save_log(const QString &filename)
@@ -806,8 +871,8 @@ void LogBox::load_setting(void)
     qDebug() << "LogBox::load_setting(void)";
 #endif
 
-//    QString text = o_name;
-//    if(text.isEmpty())  text = "LogBox";
+    //    QString text = o_name;
+    //    if(text.isEmpty())  text = "LogBox";
 
     beginGroup(get_full_objectName(this));
 
@@ -880,9 +945,9 @@ void LogBox::save_setting(void)
     qDebug() << "LogBox::save_setting(void)";
 #endif
 
-//    QString text = o_name;
-//    if(text.isEmpty())  text = objectName();
-//    if(text.isEmpty())  text = "LogBox";
+    //    QString text = o_name;
+    //    if(text.isEmpty())  text = objectName();
+    //    if(text.isEmpty())  text = "LogBox";
 
 #ifdef QT_DEBUG
     qDebug() << "logbox: save settings";

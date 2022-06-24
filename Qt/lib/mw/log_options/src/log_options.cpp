@@ -30,28 +30,6 @@ Log_options::Log_options(QWidget *parent):
     init();
 }
 //--------------------------------------------------------------------------------
-void Log_options::choice_file(void)
-{
-    MyFileDialog *dlg = new MyFileDialog("log_options", "log_options", this);
-    dlg->setNameFilter("LOG files (*.log)");
-    dlg->selectFile("noname");
-    dlg->setDefaultSuffix("log");
-    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
-    int btn = dlg->exec();
-    if(btn == MyFileDialog::Accepted)
-    {
-        QStringList files = dlg->selectedFiles();
-        QString filename = files.at(0);
-
-        MyWidget::messagebox_info("Info",   filename);
-        if(!filename.isEmpty())
-        {
-            autosave_filename = filename;
-        }
-    }
-    delete dlg;
-}
-//--------------------------------------------------------------------------------
 Log_options::~Log_options()
 {
     delete ui;
@@ -83,8 +61,6 @@ void Log_options::init(void)
 
     connect(ui->buttonBox,  &QDialogButtonBox::accepted,    this,   &Log_options::accept);
     connect(ui->buttonBox,  &QDialogButtonBox::rejected,    this,   &Log_options::reject);
-
-    connect(ui->btn_choice_filename,    &QToolButton::clicked,  this,   &Log_options::choice_file);
 
     setFixedSize(sizeHint());
 }
@@ -148,11 +124,6 @@ bool Log_options::get_flag_TextIsWindows(void)
     return ui->cb_Text_Is_Windows->isChecked();
 }
 //--------------------------------------------------------------------------------
-bool Log_options::get_flag_AutoSave(void)
-{
-    return ui->cb_AutoSave->isChecked();
-}
-//--------------------------------------------------------------------------------
 QString Log_options::get_file_AutoSave(void)
 {
     return autosave_filename;
@@ -191,15 +162,5 @@ void Log_options::set_flag_ErrorAsMessage(bool value)
 void Log_options::set_flag_TextIsWindows(bool value)
 {
     ui->cb_Text_Is_Windows->setChecked(value);
-}
-//--------------------------------------------------------------------------------
-void Log_options::set_flag_AutoSave(bool value)
-{
-    ui->cb_AutoSave->setChecked(value);
-}
-//--------------------------------------------------------------------------------
-void Log_options::set_file_AutoSave(const QString &new_filename)
-{
-    autosave_filename = new_filename;
 }
 //--------------------------------------------------------------------------------

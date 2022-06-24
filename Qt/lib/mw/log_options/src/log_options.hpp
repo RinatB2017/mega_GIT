@@ -47,8 +47,6 @@ class Log_options : public QDialog
     Q_PROPERTY(bool flag_Color              READ get_flag_Color             WRITE set_flag_Color)
     Q_PROPERTY(bool flag_ErrorAsMessage     READ get_flag_ErrorAsMessage    WRITE set_flag_ErrorAsMessage)
     Q_PROPERTY(bool flag_TextIsWindows      READ get_flag_TextIsWindows     WRITE set_flag_TextIsWindows)
-    Q_PROPERTY(bool flag_AutoSave           READ get_flag_AutoSave          WRITE set_flag_AutoSave)
-    Q_PROPERTY(QString file_AutoSave        READ get_file_AutoSave          WRITE set_file_AutoSave)
 
 public:
     explicit Log_options(QWidget *parent = nullptr);
@@ -75,7 +73,6 @@ private:
     bool get_flag_Color(void);
     bool get_flag_ErrorAsMessage(void);
     bool get_flag_TextIsWindows(void);
-    bool get_flag_AutoSave(void);
     QString get_file_AutoSave(void);
 
     void set_flag_ReadOnly(bool value);
@@ -86,10 +83,6 @@ private:
     void set_flag_Color(bool value);
     void set_flag_ErrorAsMessage(bool value);
     void set_flag_TextIsWindows(bool value);
-    void set_flag_AutoSave(bool value);
-    void set_file_AutoSave(const QString &new_filename);
-
-    void choice_file(void);
 };
 //--------------------------------------------------------------------------------
 #endif // OPTIONS_BOX_HPP

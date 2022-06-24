@@ -774,8 +774,8 @@ bool MyWidget::eventFilter(QObject*, QEvent* event)
 //--------------------------------------------------------------------------------
 void MyWidget::load_widgets(void)
 {
-    QTimer::singleShot(0, [this]{
-        emit trace(Q_FUNC_INFO);
+    QTimer::singleShot(0, [this] {
+        //emit trace(Q_FUNC_INFO);
 
         QWidgetList widgets = qApp->allWidgets();
         Q_ASSERT(widgets.count() > 0);
@@ -810,7 +810,7 @@ void MyWidget::load_widgets(void)
 //--------------------------------------------------------------------------------
 void MyWidget::save_widgets(void)
 {
-    emit trace(Q_FUNC_INFO);
+    //emit trace(Q_FUNC_INFO);
 
     QWidgetList widgets = qApp->allWidgets();
     Q_ASSERT(widgets.count() > 0);

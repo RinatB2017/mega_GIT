@@ -811,8 +811,8 @@ void CreatorWindow::help(void)
 void CreatorWindow::setWindowTitle(const QString &title)
 {
     QString temp = title;
-#ifdef FAKE
-    temp += " FAKE ";
+#ifdef TEST
+    temp += " TEST ";
 #endif
 #ifdef QT_DEBUG
     temp += " (DEBUG)";

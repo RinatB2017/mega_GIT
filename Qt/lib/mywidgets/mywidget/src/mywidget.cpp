@@ -604,7 +604,7 @@ QToolButton *MyWidget::add_button(QToolBar *tool_bar,
                                   const QString &text,
                                   const QString &tool_tip)
 {
-    emit trace(Q_FUNC_INFO);
+    //emit trace(Q_FUNC_INFO);
 
     Q_ASSERT(tool_bar);
     Q_ASSERT(tool_button);

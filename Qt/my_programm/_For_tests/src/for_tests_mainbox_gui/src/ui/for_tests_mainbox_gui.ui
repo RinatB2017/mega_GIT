@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>528</width>
-    <height>371</height>
+    <width>583</width>
+    <height>420</height>
    </rect>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
@@ -23,7 +23,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>5</number>
+         <number>6</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="icon">
@@ -112,8 +112,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>468</width>
-               <height>115</height>
+               <width>535</width>
+               <height>161</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -218,6 +218,44 @@
              </size>
             </property>
            </spacer>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_7">
+         <attribute name="icon">
+          <iconset resource="../../../../../../lib2/icons/digits/digits.qrc">
+           <normaloff>:/red/7.png</normaloff>:/red/7.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Tab 7</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QTreeWidget" name="treeWidget">
+            <column>
+             <property name="text">
+              <string notr="true">1</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QPushButton" name="btn_1">
+              <property name="text">
+               <string>1</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_2">
+              <property name="text">
+               <string>2</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>

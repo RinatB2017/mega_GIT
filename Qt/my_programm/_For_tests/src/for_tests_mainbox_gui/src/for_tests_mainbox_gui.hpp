@@ -41,8 +41,30 @@ public:
 private:
     Ui::MainBox_GUI *ui;
 
+    typedef struct ITEM
+    {
+        QTreeWidgetItem *parent_item;
+        QTreeWidgetItem *item;
+        QString caption;
+        Qt::CheckState state;
+        void (MainBox_GUI::*func)(void);
+    } *item_t;
+    QList<ITEM> items;
+
     void init(void);
     void updateText(void);
+
+    QTreeWidgetItem *root_item = nullptr;
+    void set_item_param(QTreeWidgetItem *item,
+                        Qt::ItemFlags flags,
+                        const QString &caption,
+                        Qt::CheckState state);
+    void set_children_state(QTreeWidgetItem *parent_item,
+                            Qt::CheckState state);
+    void f_not_created(void);
+
+    void btn_1_clicked(void);
+    void btn_2_clicked(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_GUI_HPP

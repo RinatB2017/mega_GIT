@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>583</width>
+    <width>640</width>
     <height>420</height>
    </rect>
   </property>
@@ -61,8 +61,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>96</width>
+               <height>26</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -78,8 +78,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>96</width>
+               <height>26</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -95,8 +95,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>100</width>
-               <height>30</height>
+               <width>96</width>
+               <height>26</height>
               </rect>
              </property>
              <attribute name="icon">
@@ -112,7 +112,7 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>535</width>
+               <width>592</width>
                <height>161</height>
               </rect>
              </property>
@@ -234,9 +234,38 @@
            <widget class="QTreeWidget" name="treeWidget">
             <column>
              <property name="text">
-              <string notr="true">1</string>
+              <string>Root</string>
              </property>
             </column>
+            <item>
+             <property name="text">
+              <string>Element root</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>Element 1</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Element 2</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Element 3</string>
+              </property>
+              <property name="checkState">
+               <enum>Unchecked</enum>
+              </property>
+             </item>
+            </item>
            </widget>
           </item>
           <item>

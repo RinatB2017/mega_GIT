@@ -124,6 +124,14 @@ void MainBox_GUI::btn_1_clicked(void)
 //--------------------------------------------------------------------------------
 void MainBox_GUI::btn_2_clicked(void)
 {
+#if 1
+    int cnt = ui->treeWidget->children().count();
+    int cnt2 = ui->treeWidget->columnCount();
+    emit info(QString("Cnt: %1").arg(cnt));
+    emit info(QString("Cnt2: %1").arg(cnt2));
+#endif
+
+#if 0
     int cnt = root_item->childCount();
     emit info(QString("Cnt: %1").arg(cnt));
     for(int n=0; n<cnt; n++)
@@ -133,6 +141,7 @@ void MainBox_GUI::btn_2_clicked(void)
         else
             emit info(root_item->child(n)->text(0));
     }
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox_GUI::set_children_state(QTreeWidgetItem *parent_item,

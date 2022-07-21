@@ -38,12 +38,21 @@ void Bin_widget::init(void)
 {
     ui->setupUi(this);
 
+    ui->sb_auto->setRange(9, 0xFFFF);
+
     ui->btn_add->setIcon(QIcon(":/plus_minus/plus.png"));
     ui->btn_rem->setIcon(QIcon(":/plus_minus/minus.png"));
     ui->btn_edt->setIcon(qApp->style()->standardIcon(QStyle::SP_FileIcon));
     ui->btn_run->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
     ui->btn_up->setIcon(QIcon(":/arrows/up.png"));
     ui->btn_down->setIcon(QIcon(":/arrows/down.png"));
+
+    ui->sb_auto->setRange(9, 0xFFFF);
+
+    ui->btn_start->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->btn_stop->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaStop));
+
+    ui->btn_stop->setEnabled(false);
 
     connect(ui->btn_add,    &QToolButton::clicked,  this,   &Bin_widget::append);
     connect(ui->btn_rem,    &QToolButton::clicked,  this,   &Bin_widget::remove);
@@ -52,11 +61,21 @@ void Bin_widget::init(void)
     connect(ui->btn_up,     &QToolButton::clicked,  this,   &Bin_widget::up);
     connect(ui->btn_down,   &QToolButton::clicked,  this,   &Bin_widget::down);
 
+    connect(ui->btn_start,  &QToolButton::clicked,  this,   &Bin_widget::f_start);
+    connect(ui->btn_stop,   &QToolButton::clicked,  this,   &Bin_widget::f_stop);
+
     connect(ui->listWidget, &QListWidget::doubleClicked,    this,   &Bin_widget::edit);
 
     setAttribute(Qt::WA_DeleteOnClose);
 
+    init_timer();
     load_setting();
+}
+//--------------------------------------------------------------------------------
+void Bin_widget::init_timer(void)
+{
+    timer = new QTimer();
+    connect(timer,  &QTimer::timeout,   this,   &Bin_widget::f_update);
 }
 //--------------------------------------------------------------------------------
 void Bin_widget::append(void)
@@ -147,6 +166,49 @@ void Bin_widget::down(void)
     }
 }
 //--------------------------------------------------------------------------------
+void Bin_widget::f_start(void)
+{
+    ui->btn_start->setEnabled(false);
+    ui->btn_stop->setEnabled(true);
+
+    ui->sb_auto->setEnabled(false);
+    ui->btn_add->setEnabled(false);
+    ui->btn_down->setEnabled(false);
+    ui->btn_edt->setEnabled(false);
+    ui->btn_rem->setEnabled(false);
+    ui->btn_run->setEnabled(false);
+    ui->btn_up->setEnabled(false);
+
+    if(timer)
+    {
+       timer->start(ui->sb_auto->value());
+    }
+}
+//--------------------------------------------------------------------------------
+void Bin_widget::f_stop(void)
+{
+    ui->btn_start->setEnabled(true);
+    ui->btn_stop->setEnabled(false);
+
+    ui->sb_auto->setEnabled(true);
+    ui->btn_add->setEnabled(true);
+    ui->btn_down->setEnabled(true);
+    ui->btn_edt->setEnabled(true);
+    ui->btn_rem->setEnabled(true);
+    ui->btn_run->setEnabled(true);
+    ui->btn_up->setEnabled(true);
+
+    if(timer)
+    {
+       timer->stop();
+    }
+}
+//--------------------------------------------------------------------------------
+void Bin_widget::f_update(void)
+{
+    run();
+}
+//--------------------------------------------------------------------------------
 void Bin_widget::load_setting(void)
 {
     QStringList sl = load_stringlist(P_BIN_WIDGET);
@@ -154,6 +216,13 @@ void Bin_widget::load_setting(void)
     {
         ui->listWidget->addItem(text);
     }
+    int interval = 0;
+    bool ok = load_int(P_INTERVAL_BIN, &interval);
+    if(ok)
+    {
+        ui->sb_auto->setValue(interval);
+    }
+
     restoreGeometry(load_value(P_BIN_WIDGET_GEOMETRY).toByteArray());
 }
 //--------------------------------------------------------------------------------
@@ -164,6 +233,7 @@ void Bin_widget::save_setting(void)
     {
         sl.append(ui->listWidget->item(i)->text());
     }
+    save_int(P_INTERVAL_BIN, ui->sb_auto->value());
     save_stringlist(P_BIN_WIDGET, sl);
     save_value(P_BIN_WIDGET_GEOMETRY, saveGeometry());
 }

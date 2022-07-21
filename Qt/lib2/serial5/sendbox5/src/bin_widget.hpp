@@ -30,6 +30,7 @@
 //--------------------------------------------------------------------------------
 #define P_BIN_WIDGET           "bin_widget"
 #define P_BIN_WIDGET_GEOMETRY  "bin_widget_geometry"
+#define P_INTERVAL_BIN         "interval_bin"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class Bin_widget;
@@ -54,7 +55,10 @@ public:
 private:
     Ui::Bin_widget *ui;
 
+    QTimer *timer = nullptr;
+
     void init(void);
+    void init_timer(void);
 
     void append(void);
     void remove(void);
@@ -62,6 +66,10 @@ private:
     void run(void);
     void up(void);
     void down(void);
+
+    void f_start(void);
+    void f_stop(void);
+    void f_update(void);
 
     void load_setting(void);
     void save_setting(void);

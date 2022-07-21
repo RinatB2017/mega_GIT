@@ -30,6 +30,12 @@ Text_widget::Text_widget(QWidget *parent) :
 //--------------------------------------------------------------------------------
 Text_widget::~Text_widget()
 {
+    if(timer)
+    {
+        timer->stop();
+        delete timer;
+    }
+
     save_setting();
     delete ui;
 }
@@ -47,12 +53,19 @@ void Text_widget::init(void)
                             << "0x0A"
                             << "0x0D 0x0A" );
 
+    ui->sb_auto->setRange(9, 0xFFFF);
+
     ui->btn_add->setIcon(QIcon(":/plus_minus/plus.png"));
     ui->btn_rem->setIcon(QIcon(":/plus_minus/minus.png"));
     ui->btn_edt->setIcon(qApp->style()->standardIcon(QStyle::SP_FileIcon));
     ui->btn_run->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
     ui->btn_up->setIcon(QIcon(":/arrows/up.png"));
     ui->btn_down->setIcon(QIcon(":/arrows/down.png"));
+
+    ui->btn_start->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->btn_stop->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaStop));
+
+    ui->btn_stop->setEnabled(false);
 
     connect(ui->btn_add,    &QToolButton::clicked,  this,   &Text_widget::append);
     connect(ui->btn_rem,    &QToolButton::clicked,  this,   &Text_widget::remove);
@@ -61,11 +74,21 @@ void Text_widget::init(void)
     connect(ui->btn_up,     &QToolButton::clicked,  this,   &Text_widget::up);
     connect(ui->btn_down,   &QToolButton::clicked,  this,   &Text_widget::down);
 
+    connect(ui->btn_start,  &QToolButton::clicked,  this,   &Text_widget::f_start);
+    connect(ui->btn_stop,   &QToolButton::clicked,  this,   &Text_widget::f_stop);
+
     connect(ui->listWidget, &QListWidget::doubleClicked,    this,   &Text_widget::edit);
 
     setAttribute(Qt::WA_DeleteOnClose);
 
+    init_timer();
     load_setting();
+}
+//--------------------------------------------------------------------------------
+void Text_widget::init_timer(void)
+{
+    timer = new QTimer();
+    connect(timer,  &QTimer::timeout,   this,   &Text_widget::f_update);
 }
 //--------------------------------------------------------------------------------
 void Text_widget::append(void)
@@ -109,9 +132,15 @@ void Text_widget::edit(void)
 //--------------------------------------------------------------------------------
 void Text_widget::run(void)
 {
+    QListWidgetItem *item = ui->listWidget->currentItem();
+    if(item == nullptr)
+    {
+        return;
+    }
+
     QByteArray ba;
     ba.clear();
-    ba.append(ui->listWidget->currentItem()->text().toLatin1());
+    ba.append(item->text().toLatin1());
     switch(ui->cb_append->currentIndex())
     {
     case 0: // "no add"
@@ -160,6 +189,51 @@ void Text_widget::down(void)
     }
 }
 //--------------------------------------------------------------------------------
+void Text_widget::f_start(void)
+{
+    ui->btn_start->setEnabled(false);
+    ui->btn_stop->setEnabled(true);
+
+    ui->sb_auto->setEnabled(false);
+    ui->cb_append->setEnabled(false);
+    ui->btn_add->setEnabled(false);
+    ui->btn_down->setEnabled(false);
+    ui->btn_edt->setEnabled(false);
+    ui->btn_rem->setEnabled(false);
+    ui->btn_run->setEnabled(false);
+    ui->btn_up->setEnabled(false);
+
+    if(timer)
+    {
+       timer->start(ui->sb_auto->value());
+    }
+}
+//--------------------------------------------------------------------------------
+void Text_widget::f_stop(void)
+{
+    ui->btn_start->setEnabled(true);
+    ui->btn_stop->setEnabled(false);
+
+    ui->sb_auto->setEnabled(true);
+    ui->cb_append->setEnabled(true);
+    ui->btn_add->setEnabled(true);
+    ui->btn_down->setEnabled(true);
+    ui->btn_edt->setEnabled(true);
+    ui->btn_rem->setEnabled(true);
+    ui->btn_run->setEnabled(true);
+    ui->btn_up->setEnabled(true);
+
+    if(timer)
+    {
+       timer->stop();
+    }
+}
+//--------------------------------------------------------------------------------
+void Text_widget::f_update(void)
+{
+    run();
+}
+//--------------------------------------------------------------------------------
 void Text_widget::load_setting(void)
 {
     QStringList sl = load_stringlist(P_TEXT_WIDGET);
@@ -167,6 +241,13 @@ void Text_widget::load_setting(void)
     {
         ui->listWidget->addItem(text);
     }
+    int interval = 0;
+    bool ok = load_int(P_INTERVAL_TEXT, &interval);
+    if(ok)
+    {
+        ui->sb_auto->setValue(interval);
+    }
+
     restoreGeometry(load_value(P_TEXT_WIDGET_GEOMETRY).toByteArray());
 }
 //--------------------------------------------------------------------------------
@@ -177,6 +258,7 @@ void Text_widget::save_setting(void)
     {
         sl.append(ui->listWidget->item(i)->text());
     }
+    save_int(P_INTERVAL_TEXT, ui->sb_auto->value());
     save_stringlist(P_TEXT_WIDGET, sl);
     save_value(P_TEXT_WIDGET_GEOMETRY, saveGeometry());
 }

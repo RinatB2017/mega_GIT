@@ -30,6 +30,7 @@
 //--------------------------------------------------------------------------------
 #define P_TEXT_WIDGET           "text_widget"
 #define P_TEXT_WIDGET_GEOMETRY  "text_widget_geometry"
+#define P_INTERVAL_TEXT         "interval_text"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class Text_widget;
@@ -55,7 +56,10 @@ private:
     Ui::Text_widget *ui;
     QList<QString> lst;
 
+    QTimer *timer = nullptr;
+
     void init(void);
+    void init_timer(void);
 
     void append(void);
     void remove(void);
@@ -63,6 +67,10 @@ private:
     void run(void);
     void up(void);
     void down(void);
+
+    void f_start(void);
+    void f_stop(void);
+    void f_update(void);
 
     void load_setting(void);
     void save_setting(void);

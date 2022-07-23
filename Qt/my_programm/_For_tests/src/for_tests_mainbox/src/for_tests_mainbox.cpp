@@ -271,6 +271,72 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+#define ANALOG_SENSORS 2
+
+    struct bp_message_station {
+        char serial[12];
+        char imei[16];
+    } __attribute__((packed));
+
+    struct bp_message_data_version {
+        uint8_t minor;
+        uint8_t major;
+    } __attribute__((packed));
+
+    struct bp_message_data_error {
+        union {
+            struct {
+                uint16_t power            : 1;
+                uint16_t air_pressure     : 1;
+                uint16_t wind             : 1;
+                uint16_t gsm              : 1;
+                uint16_t display          : 1;
+                uint16_t external_memory  : 1;
+                uint16_t default_settings : 1;
+                uint16_t rezerved         : 8;
+                uint16_t more_data        : 1;
+            } flags;
+
+            uint16_t value;
+        };
+    } __attribute__((packed));
+
+
+    struct bp_analog_message {
+        struct {
+            uint16_t magic;
+
+            uint16_t type;
+            uint16_t itype;
+
+            uint16_t packet_id;
+
+            uint16_t data_length;
+            uint16_t data_crc;
+
+            uint32_t hash;
+        } __attribute__((packed)) m_header;
+        struct {
+            struct bp_message_data_version version;
+
+            uint32_t unixtime;
+            struct bp_message_station station;
+            struct bp_message_data_error error;
+
+            uint16_t values_count;  //ANALOG_SENSORS
+            struct {
+                uint32_t max;
+                uint32_t min;
+                uint32_t avg;
+            } values[ANALOG_SENSORS];
+        } __attribute__((packed)) m_data;
+    } __attribute__((packed));
+
+    emit info(QString("size %1")
+              .arg(sizeof(bp_analog_message)));
+#endif
+
+#if 0
     QString filename = "colors.csv";
 
     QFile file(filename);

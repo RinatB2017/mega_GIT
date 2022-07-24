@@ -265,10 +265,23 @@ QImage MainBox::create_bone(int num)
 #include <QDateTime>
 #include <QDate>
 
+#include "structs.h"
+
 #include "memories.hpp"
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 1
+    emit info(QString("size bp_measurement %1").arg(sizeof(bp_measurement)));
+    emit info(QString("size bp_data %1").arg(sizeof(bp_data)));
+    emit info(QString("size bp_options %1").arg(sizeof(bp_options)));
+    emit info(QString("size bp_message_data_version %1").arg(sizeof(bp_message_data_version)));
+    emit info(QString("size bp_message_station %1").arg(sizeof(bp_message_station)));
+    emit info(QString("size bp_analog_value %1").arg(sizeof(bp_analog_value)));
+    emit info(QString("size bp_message_data_error %1").arg(sizeof(bp_message_data_error)));
+    emit info(QString("size bp_analog_message %1").arg(sizeof(bp_analog_message)));
+#endif
 
 #if 1
 #define ANALOG_SENSORS 2

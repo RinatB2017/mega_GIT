@@ -15,6 +15,7 @@ INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
 HEADERS += \
+    structs.h \
     defines.hpp
 SOURCES += \
     main.cpp

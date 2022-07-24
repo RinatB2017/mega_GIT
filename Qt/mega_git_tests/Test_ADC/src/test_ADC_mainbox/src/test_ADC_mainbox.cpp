@@ -217,9 +217,23 @@ QVariant MainBox::convert_string(QString str_value)
 void MainBox::show_data_ADC(QStringList sl)
 {
     int max_index = sl.count();
+    if(max_index <= 0)
+    {
+        return;
+    }
+
     if(ui->data_widget->get_max_index() != max_index)
     {
-        emit error("curves.length() != max_index");
+        emit error("Количество пришедших точек не соответствует количеству линий на графике");
+#ifdef ADD_CURVES
+        emit info("Создаю новые линии");
+        clr_curves();
+        for(int n=0; n<max_index; n++)
+        {
+            QString curve_name = QString("A%1").arg(n);
+            ui->data_widget->add_curve(curve_name);
+        }
+#endif
         return;
     }
     for(int index=0; index<max_index; index++)

@@ -2,6 +2,10 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
+CONFIG += qwt
+DEFINES += QT_DLL QWT_DLL
+QT   += svg opengl printsupport concurrent
+
 unix {
     DEPENDPATH  += /usr/include/qwt6/
     INCLUDEPATH = $$DEPENDPATH
@@ -11,26 +15,21 @@ unix {
     else {
         LIBS += -lqwt6-qt4
     }
-    QT   *= svg opengl printsupport concurrent
-
-    CONFIG += qwt
 }
 
 win32 {
-    QWT_CONFIG  += QwtSvg
-    QWT_CONFIG  += QwtPlot
-    QWT_CONFIG  += QwtOpenGL
-    QWT_CONFIG  += QwtWidgets
-
 #    QWT_PATH = "qwt-614"
 #    QWT_PRI  = "qwt-614.pri"
 
-    QWT_PATH = "qwt-615"
-    QWT_PRI  = "qwt-615.pri"
+#    QWT_PATH = "qwt-615"
+#    QWT_PRI  = "qwt-615.pri"
+
+    QWT_PATH = "qwt-620"
+    QWT_PRI  = "qwt-620.pri"
 
     DEPENDPATH  += $$PWD/$$QWT_PATH/src/
-    INCLUDEPATH = $$DEPENDPATH
-    include ($$PWD/$$QWT_PATH/$$QWT_PRI)
+    INCLUDEPATH += $$PWD/$$QWT_PATH/src/
 
-    CONFIG += qwt
+    LIBS    += -L$$PWD/lib
+    LIBS    += -lqwt
 }

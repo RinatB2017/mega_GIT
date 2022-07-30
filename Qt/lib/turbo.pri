@@ -41,7 +41,7 @@ android {
 }
 
 win32 {
-    TEMP_PATH = "D:"
+    TEMP_PATH = "C:"
     OBJECTS_DIR = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\obj
     MOC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\moc
     UI_DIR      = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\ui
@@ -141,6 +141,7 @@ greaterThan(QT_MAJOR_VERSION, 5) {
 win32 {
     QMAKE_CXXFLAGS += /std:c++17
     QMAKE_CXXFLAGS += /Zc:__cplusplus
+    QMAKE_CXXFLAGS += /permissive-
 }
     message(Qt6 = $$QT)
 }

@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/other">
-        <file>буддизм.jpg</file>
+        <file>buddhism.jpg</file>
         <file>background.png</file>
     </qresource>
 </RCC>

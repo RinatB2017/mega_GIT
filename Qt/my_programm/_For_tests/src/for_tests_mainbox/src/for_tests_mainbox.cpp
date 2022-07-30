@@ -262,223 +262,36 @@ QImage MainBox::create_bone(int num)
     return image;
 }
 //--------------------------------------------------------------------------------
-#include <QDateTime>
-#include <QDate>
-
-#include "structs.h"
-
 #include "memories.hpp"
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
-    emit info(QString("size bp_measurement %1").arg(sizeof(bp_measurement)));
-    emit info(QString("size bp_data %1").arg(sizeof(bp_data)));
-    emit info(QString("size bp_options %1").arg(sizeof(bp_options)));
-    emit info(QString("size bp_message_data_version %1").arg(sizeof(bp_message_data_version)));
-    emit info(QString("size bp_message_station %1").arg(sizeof(bp_message_station)));
-    emit info(QString("size bp_analog_value %1").arg(sizeof(bp_analog_value)));
-    emit info(QString("size bp_message_data_error %1").arg(sizeof(bp_message_data_error)));
-    emit info(QString("size bp_analog_message %1").arg(sizeof(bp_analog_message)));
-#endif
+   QByteArray *w = new QByteArray();
+   w->append(0x12);
+   w->append(0x34);
+   w->append(0x56);
+   w->append(0x78);
+   qDebug() << "new" << w;
 
-#if 1
-#define ANALOG_SENSORS 2
-
-    struct bp_message_station {
-        char serial[12];
-        char imei[16];
-    } __attribute__((packed));
-
-    struct bp_message_data_version {
-        uint8_t minor;
-        uint8_t major;
-    } __attribute__((packed));
-
-    struct bp_message_data_error {
-        union {
-            struct {
-                uint16_t power            : 1;
-                uint16_t air_pressure     : 1;
-                uint16_t wind             : 1;
-                uint16_t gsm              : 1;
-                uint16_t display          : 1;
-                uint16_t external_memory  : 1;
-                uint16_t default_settings : 1;
-                uint16_t rezerved         : 8;
-                uint16_t more_data        : 1;
-            } flags;
-
-            uint16_t value;
-        };
-    } __attribute__((packed));
-
-
-    struct bp_analog_message {
-        struct {
-            uint16_t magic;
-
-            uint16_t type;
-            uint16_t itype;
-
-            uint16_t packet_id;
-
-            uint16_t data_length;
-            uint16_t data_crc;
-
-            uint32_t hash;
-        } __attribute__((packed)) m_header;
-        struct {
-            struct bp_message_data_version version;
-
-            uint32_t unixtime;
-            struct bp_message_station station;
-            struct bp_message_data_error error;
-
-            uint16_t values_count;  //ANALOG_SENSORS
-            struct {
-                uint32_t max;
-                uint32_t min;
-                uint32_t avg;
-            } values[ANALOG_SENSORS];
-        } __attribute__((packed)) m_data;
-    } __attribute__((packed));
-
-    emit info(QString("size %1")
-              .arg(sizeof(bp_analog_message)));
+    //uint32_t x = (*((uint32_t*)(0x08000000)));
+    uint64_t x = (*((uint64_t*)(w)));
+    emit info(QString("x: 0x%1").arg(x, 8, 16, QChar('0')));
+    delete w;
 #endif
 
 #if 0
-    QString filename = "colors.csv";
-
-    QFile file(filename);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        qWarning() << QString("File %1 not open").arg(filename);
-        return false;
-    }
-    QTextStream in(&file);
-
-    QString temp = in.readLine();
-    if(temp.isEmpty())
-    {
-        qWarning() << "temp.isEmpty";
-        file.close();
-        return false;
-    }
-
-    emit info(temp);
+    int address = 0x1bf6ab40;
+    uint16_t y = (*((uint16_t*)(address)));
+    emit info(QString("y: %1").arg(y));
 #endif
 
 #if 0
-    Memories *mem = new Memories();
-    connect_log_signals(mem, this);
-    mem->elapsed_time(5887 * 1000);
-    delete  mem;
+    uint16_t y = (*((uint16_t*)(address)));
+    emit info(QString("y: %1").arg(y));
 #endif
 
-#if 0
-    emit info(QString("size:  %1").arg(sizeof(packet)));
-    emit info(QString("size2: %1").arg(sizeof(packet2)));
-#endif
-
-#if 0
-    QImage image_1 = create_bone(1);
-    QImage image_2 = create_bone(2);
-    QImage image_3 = create_bone(3);
-    QImage image_4 = create_bone(4);
-    QImage image_5 = create_bone(5);
-    QImage image_6 = create_bone(6);
-
-    QImage bone = QImage(512*4, 512*3, QImage::Format_ARGB32);
-    QPainter p;
-    int x=0;
-    int y=0;
-    p.begin(&bone);
-    x=512; y=0;
-    p.drawImage(x, y, image_6);
-    x=0; y=512;
-    p.drawImage(x, y, image_1);
-    x=512; y=512;
-    p.drawImage(x, y, image_2);
-    x=1024; y=512;
-    p.drawImage(x, y, image_5);
-    x=1536; y=512;
-    p.drawImage(x, y, image_4);
-    x=512; y=1024;
-    p.drawImage(x, y, image_3);
-    p.end();
-
-    bone.save("/dev/shm/bone2.png");
-
-//    QLabel *label = new QLabel();
-//    label->setPixmap(QPixmap::fromImage(bone));
-//    label->setFixedSize(512*4, 512*3);
-//    label->show();
-#endif
-
-
-#if 0
-    QImage image_1 = create_bone(1);
-    QImage image_2 = create_bone(2);
-    QImage image_3 = create_bone(3);
-    QImage image_4 = create_bone(4);
-    QImage image_5 = create_bone(5);
-    QImage image_6 = create_bone(6);
-
-    QImage bone = QImage(512*6, 512, QImage::Format_ARGB32);
-    QPainter p;
-    int x=0;
-    p.begin(&bone);
-    p.drawImage(x, 0, image_6); x+=512;
-    p.drawImage(x, 0, image_1); x+=512;
-    p.drawImage(x, 0, image_2); x+=512;
-    p.drawImage(x, 0, image_5); x+=512;
-    p.drawImage(x, 0, image_4); x+=512;
-    p.drawImage(x, 0, image_3);
-    p.end();
-
-    bone.save("/dev/shm/bone.png");
-
-//    QLabel *label = new QLabel();
-//    label->setPixmap(QPixmap::fromImage(bone));
-//    label->setFixedSize(512*6, 512);
-//    label->show();
-#endif
-
-#if 0
-    qreal pos_x;
-    qreal pos_y;
-
-    if(calc_norm(400, 400, 600, 600, &pos_x, &pos_y))
-    {
-        emit info(QString("%1 %2")
-                  .arg(pos_x)
-                  .arg(pos_y));
-    }
-#endif
-
-#if 0
-    RotateWidget *rw = new RotateWidget();
-    rw->show();
-#endif
-
-#if 0
-    QColor color = QColor(Qt::yellow);
-    int h, s, v;
-    color.getHsv(&h, &s, &v);
-    emit info(QString("H: %1").arg(h));
-    emit info(QString("S: %1").arg(s));
-    emit info(QString("V: %1").arg(v));
-#endif
-
-#if 0
-    Memories *mem = new Memories();
-    connect_log_signals(mem, this);
-
-    mem->set_directory();
-#endif
 
 #if 0
     emit info("Copyright \\251 2020-2025");

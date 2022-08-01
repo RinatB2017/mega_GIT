@@ -268,6 +268,12 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    unsigned char x = 0xc8;
+    unsigned char y = x & ~0x80;
+    emit info(QString("y = %1").arg(y, 2, 16, QChar('0')));
+#endif
+
+#if 0
    QByteArray *w = new QByteArray();
    w->append(0x12);
    w->append(0x34);

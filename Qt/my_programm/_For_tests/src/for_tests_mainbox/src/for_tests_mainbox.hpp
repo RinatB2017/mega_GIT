@@ -33,48 +33,6 @@
 #include "cubewidget.h"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-#if 0
-//#pragma pack (push, 1)
-struct packet {
-    uint8_t  a;
-    uint16_t b;
-    uint32_t c;
-};
-//#pragma pack(pop)
-
-struct packet2 {
-    uint8_t  a;
-    uint16_t b;
-    uint32_t c;
-} __attribute__((packed));
-#else
-struct packet {
-    struct {
-        uint8_t  a;
-        uint16_t b;
-        uint32_t c;
-    } a;
-    struct {
-        uint8_t  a;
-        uint16_t b;
-        uint32_t c;
-    } b;
-};
-
-struct packet2 {
-    struct {
-        uint8_t  a;
-        uint16_t b;
-        uint32_t c;
-    } a;
-    struct {
-        uint8_t  a;
-        uint16_t b;
-        uint32_t c;
-    } b;
-} __attribute__((packed));
-#endif
-//--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
 }

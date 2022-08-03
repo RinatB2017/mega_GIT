@@ -267,38 +267,6 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
-    unsigned char x = 0xc8;
-    unsigned char y = x & ~0x80;
-    emit info(QString("y = %1").arg(y, 2, 16, QChar('0')));
-#endif
-
-#if 0
-   QByteArray *w = new QByteArray();
-   w->append(0x12);
-   w->append(0x34);
-   w->append(0x56);
-   w->append(0x78);
-   qDebug() << "new" << w;
-
-    //uint32_t x = (*((uint32_t*)(0x08000000)));
-    uint64_t x = (*((uint64_t*)(w)));
-    emit info(QString("x: 0x%1").arg(x, 8, 16, QChar('0')));
-    delete w;
-#endif
-
-#if 0
-    int address = 0x1bf6ab40;
-    uint16_t y = (*((uint16_t*)(address)));
-    emit info(QString("y: %1").arg(y));
-#endif
-
-#if 0
-    uint16_t y = (*((uint16_t*)(address)));
-    emit info(QString("y: %1").arg(y));
-#endif
-
-
 #if 0
     emit info("Copyright \\251 2020-2025");
 #endif

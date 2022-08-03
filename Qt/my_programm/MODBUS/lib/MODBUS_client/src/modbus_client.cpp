@@ -41,13 +41,13 @@ MODBUS_client::~MODBUS_client()
 {
     if(lastRequest)
     {
-        lastRequest->deleteLater();
+        delete lastRequest;
     }
 
     if(modbusDevice)
     {
         modbusDevice->disconnectDevice();
-        modbusDevice->deleteLater();
+        delete modbusDevice;
     }
 
     delete ui;
@@ -380,7 +380,7 @@ void MODBUS_client::readReady(void)
         emit error(reply->errorString());
     }
 
-    reply->deleteLater();
+    delete reply;
 }
 //--------------------------------------------------------------------------------
 QModbusDataUnit MODBUS_client::readRequest() const

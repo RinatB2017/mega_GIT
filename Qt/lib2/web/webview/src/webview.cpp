@@ -321,7 +321,7 @@ void WebView::run_websettingbox(void)
     int res = vBox->exec();
     if(res != QDialog::Accepted)
     {
-        vBox->deleteLater();
+        delete vBox;
         return;
     }
 
@@ -332,7 +332,7 @@ void WebView::run_websettingbox(void)
     }
 
     save_setting();
-    vBox->deleteLater();
+    delete vBox;
 }
 //--------------------------------------------------------------------------------
 void WebView::load_setting(void)

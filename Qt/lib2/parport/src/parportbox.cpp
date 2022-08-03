@@ -54,7 +54,7 @@ ParportBox::~ParportBox()
     if(parport)
     {
         parport->close_parport();
-        parport->deleteLater();
+        delete parport;
     }
     delete ui;
 }

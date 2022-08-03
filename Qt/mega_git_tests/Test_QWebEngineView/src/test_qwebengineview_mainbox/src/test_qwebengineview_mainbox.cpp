@@ -142,7 +142,7 @@ void MainBox::js_load(void)
         QStringList files = dlg->selectedFiles();
         load_js(files.at(0));
     }
-    dlg->deleteLater();
+    delete dlg;
 }
 //--------------------------------------------------------------------------------
 void MainBox::js_save(void)
@@ -171,7 +171,7 @@ void MainBox::js_save(void)
         QStringList files = dlg->selectedFiles();
         save_js(files.at(0));
     }
-    dlg->deleteLater();
+    delete dlg;
 }
 //--------------------------------------------------------------------------------
 void MainBox::load_js(const QString &filename)

@@ -32,7 +32,7 @@ ShowJSON::~ShowJSON()
 {
     if(model)
     {
-        model->deleteLater();
+        delete model;
     }
 
     delete ui;

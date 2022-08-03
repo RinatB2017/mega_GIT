@@ -33,7 +33,7 @@ CollapsibleWidget::~CollapsibleWidget()
     if(timer)
     {
         timer->disconnect();
-        timer->deleteLater();
+        delete timer;
     }
     delete ui;
 }

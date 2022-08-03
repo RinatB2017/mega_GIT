@@ -287,7 +287,7 @@ void CreatorButton::set_background_color(void)
             set_color(btn, background_color);
         }
     }
-    dlg_color->deleteLater();
+    delete dlg_color;
 }
 //--------------------------------------------------------------------------------
 void CreatorButton::save_picture_to(void){

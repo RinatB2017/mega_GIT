@@ -38,14 +38,14 @@ LogDock::~LogDock()
     if(le)
     {
         le->disconnect();
-        le->deleteLater();
+        delete le;
     }
 
     if(timer)
     {
         timer->stop();
         timer->disconnect();
-        timer->deleteLater();
+        delete timer;
     }
 }
 //--------------------------------------------------------------------------------

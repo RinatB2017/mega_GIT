@@ -44,7 +44,7 @@ bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
     if(tcpServer)
     {
         tcpServer->close();
-        tcpServer->deleteLater();
+        delete tcpServer;
     }
 
     tcpServer = new QTcpServer(this);
@@ -72,7 +72,7 @@ void TCP_Server::closeServer(void)
     }
     if(clientConnection)
     {
-        clientConnection->deleteLater();
+        delete clientConnection;
         clientConnection = nullptr;
     }
 
@@ -115,7 +115,7 @@ void TCP_Server::input(const QByteArray &data)
 void TCP_Server::clientDisconnected(void)
 {
     emit info("Клиент отключился");
-    clientConnection->deleteLater();
+    delete clientConnection;
 }
 //--------------------------------------------------------------------------------
 bool TCP_Server::is_opened(void)

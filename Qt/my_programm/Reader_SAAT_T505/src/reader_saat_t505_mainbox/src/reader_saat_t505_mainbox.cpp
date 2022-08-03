@@ -43,7 +43,7 @@ MainBox::~MainBox()
 {
     if(ascii_data)
     {
-        ascii_data->deleteLater();
+        delete ascii_data;
     }
     delete ui;
 }

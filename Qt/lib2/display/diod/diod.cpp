@@ -158,7 +158,7 @@ void Diod::mousePressEvent(QMouseEvent *event)
                 set_color(dlg->selectedColor());
                 set_cursor();
             }
-            dlg->deleteLater();
+            delete dlg;
         }
         break;
 

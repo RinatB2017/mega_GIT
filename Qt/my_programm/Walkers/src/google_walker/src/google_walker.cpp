@@ -32,7 +32,7 @@ Google_walker::~Google_walker()
 {
     if(viewer)
     {
-        viewer->deleteLater();
+        delete viewer;
     }
 }
 //--------------------------------------------------------------------------------

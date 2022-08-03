@@ -38,7 +38,7 @@ AutoClicker::~AutoClicker()
         timer_autoclick->stop();
         disconnect(timer_autoclick,    &QTimer::timeout,   this,   &AutoClicker::update);
 
-        timer_autoclick->deleteLater();
+        delete timer_autoclick;
     }
 
     delete ui;

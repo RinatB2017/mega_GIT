@@ -261,7 +261,7 @@ void MainBox::generate(void)
     }
 
     dlg->close();
-    dlg->deleteLater();
+    delete dlg;
 
     block_interface(false);
 }
@@ -366,7 +366,7 @@ void MainBox::calc(void)
     }
 
     dlg->close();
-    dlg->deleteLater();
+    delete dlg;
 
     emit info(QString("End price %1").arg(end_price));
     emit info(QString("Profit <font style=\"color:red\">%1</font>").arg(end_price - begin_price));
@@ -410,7 +410,7 @@ void MainBox::redraw_generate_data(void)
         grapher_data->add_curve_data(curve_data, price);
     }
     dlg->close();
-    dlg->deleteLater();
+    delete dlg;
 
     grapher_data->push_btn_Horizontal(true);
     grapher_data->push_btn_Vertical(true);
@@ -456,7 +456,7 @@ void MainBox::redraw_calc_data(void)
         grapher_profit->add_curve_data(curve_profit, price);
     }
     dlg->close();
-    dlg->deleteLater();
+    delete dlg;
 
     grapher_profit->push_btn_Horizontal(true);
     grapher_profit->push_btn_Vertical(true);

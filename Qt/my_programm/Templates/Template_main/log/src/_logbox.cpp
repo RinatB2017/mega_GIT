@@ -454,7 +454,7 @@ void LogBox::changeOptions(void)
         flagTextIsWindows   = optionsBox->get_flag_TextIsWindows();
         save_settings();
     }
-    optionsBox->deleteLater();
+    delete optionsBox;
 }
 //--------------------------------------------------------------------------------
 void LogBox::clearProgress()
@@ -588,7 +588,7 @@ void LogBox::load_settings(void)
     logBox->setFont(font);
 
     settings->endGroup();
-    settings->deleteLater();
+    delete settings;
 }
 //--------------------------------------------------------------------------------
 void LogBox::save_settings(void)
@@ -620,6 +620,6 @@ void LogBox::save_settings(void)
 #endif
 
     settings->endGroup();
-    settings->deleteLater();
+    delete settings;
 }
 //--------------------------------------------------------------------------------

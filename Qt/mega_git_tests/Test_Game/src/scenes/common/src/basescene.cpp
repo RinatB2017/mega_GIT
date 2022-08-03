@@ -34,7 +34,7 @@ BaseScene::~BaseScene()
     if(timer)
     {
         timer->stop();
-        timer->deleteLater();
+        delete timer;
     }
     if(background)
     {

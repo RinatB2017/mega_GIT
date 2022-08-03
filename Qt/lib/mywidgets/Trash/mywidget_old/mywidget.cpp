@@ -70,7 +70,7 @@ MyWidget::~MyWidget()
 #endif
     if(settings)
     {
-        settings->deleteLater();
+        delete settings;
     }
 }
 //--------------------------------------------------------------------------------
@@ -367,7 +367,7 @@ bool MyWidget::set_param(QString group_name, QString name, QVariant value)
     settings->setValue(name, value);
     settings->endGroup();
 
-    settings->deleteLater();
+    delete settings;
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -399,7 +399,7 @@ bool MyWidget::get_param(QString group_name,
     QVariant temp = settings->value(name, default_value);
     settings->endGroup();
 
-    settings->deleteLater();
+    delete settings;
     *value = temp;
     return true;
 }
@@ -424,7 +424,7 @@ QStringList MyWidget::get_all_param_name(void)
     QStringList temp = settings->allKeys();
     settings->endGroup();
 
-    settings->deleteLater();
+    delete settings;
     return temp;
 }
 //--------------------------------------------------------------------------------
@@ -1012,7 +1012,7 @@ bool MyWidget::create_pixmap(QWidget *w_left, QWidget *w_central)
         label->setPixmap(*main_pixmap);
         label->show();
 
-        frame->deleteLater();
+        delete frame;
 #endif
     }
 

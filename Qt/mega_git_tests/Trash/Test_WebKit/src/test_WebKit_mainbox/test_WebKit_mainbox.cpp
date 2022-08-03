@@ -56,7 +56,7 @@ MainBox::~MainBox()
     if(table_view)
     {
         table_view->close();
-        table_view->deleteLater();
+        delete table_view;
     }
     delete ui;
 }

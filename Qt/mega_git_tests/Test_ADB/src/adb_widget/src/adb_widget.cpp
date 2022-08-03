@@ -35,7 +35,7 @@ ADB_widget::~ADB_widget()
         timer_autoshot->stop();
         disconnect(timer_autoshot,  &QTimer::timeout,   this,   &ADB_widget::f_create_screenshot);
 
-        timer_autoshot->deleteLater();
+        delete timer_autoshot;
     }
     if(myProcess)
     {
@@ -46,7 +46,7 @@ ADB_widget::~ADB_widget()
         disconnect(myProcess,   &QProcess::readyReadStandardOutput,  this,   &ADB_widget::readData);
         disconnect(myProcess,   &QProcess::readyReadStandardError,   this,   &ADB_widget::readData);
 
-        myProcess->deleteLater();
+        delete myProcess;
     }
 
     delete ui;

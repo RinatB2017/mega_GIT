@@ -191,7 +191,7 @@ void MainBox::load_picture(void)
         QStringList files = dlg->selectedFiles();
         filename = files.at(0);
     }
-    dlg->deleteLater();
+    delete dlg;
 
     if(filename.isEmpty())
     {
@@ -241,7 +241,7 @@ void MainBox::find_max_color(void)
         }
     }
     pd->close();
-    pd->deleteLater();
+    delete pd;
 
     for(int n=0; n<0xFF; n++)
     {
@@ -292,7 +292,7 @@ void MainBox::redraw_picture(void)
         }
     }
     pd->close();
-    pd->deleteLater();
+    delete pd;
 
     ui->new_picture->setPixmap(QPixmap::fromImage(tmp));
 }
@@ -353,7 +353,7 @@ void MainBox::show_only_color(QSpinBox *min_value, QSpinBox *max_value)
         }
     }
     pd->close();
-    pd->deleteLater();
+    delete pd;
 
     ui->new_picture->setPixmap(QPixmap::fromImage(tmp));
 }
@@ -416,7 +416,7 @@ void MainBox::show_only_R(void)
         }
     }
     pd->close();
-    pd->deleteLater();
+    delete pd;
 
     ui->new_picture->setPixmap(QPixmap::fromImage(tmp));
 }
@@ -477,7 +477,7 @@ void MainBox::show_only_G(void)
         }
     }
     pd->close();
-    pd->deleteLater();
+    delete pd;
 
     ui->new_picture->setPixmap(QPixmap::fromImage(tmp));
 }
@@ -538,7 +538,7 @@ void MainBox::show_only_B(void)
         }
     }
     pd->close();
-    pd->deleteLater();
+    delete pd;
 
     ui->new_picture->setPixmap(QPixmap::fromImage(tmp));
 }

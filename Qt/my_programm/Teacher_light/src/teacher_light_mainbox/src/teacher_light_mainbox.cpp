@@ -41,7 +41,7 @@ MainBox::~MainBox()
     if(note)
     {
         note->check_modified();
-        note->deleteLater();
+        delete note;
     }
     delete ui;
 }

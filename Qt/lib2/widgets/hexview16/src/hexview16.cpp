@@ -28,8 +28,8 @@ HexView16::HexView16(QWidget *parent) :
 //--------------------------------------------------------------------------------
 HexView16::~HexView16()
 {
-    if(tv)      tv->deleteLater();
-    if(model)   model->deleteLater();
+    if(tv)      delete tv;
+    if(model)   delete model;
 }
 //--------------------------------------------------------------------------------
 void HexView16::init(void)

@@ -86,16 +86,16 @@ SendBox5::SendBox5(QWidget *parent) :
 //--------------------------------------------------------------------------------
 SendBox5::~SendBox5()
 {
-    if(cb_send_text)        cb_send_text->deleteLater();
-    if(cb_send_bin)         cb_send_bin->deleteLater();
-    if(append_comboBox)     append_comboBox->deleteLater();
+    if(cb_send_text)        delete cb_send_text;
+    if(cb_send_bin)         delete cb_send_bin;
+    if(append_comboBox)     delete append_comboBox;
 
-    if(btn_send_text)       btn_send_text->deleteLater();
-    if(btn_send_bin)        btn_send_bin->deleteLater();
+    if(btn_send_text)       delete btn_send_text;
+    if(btn_send_bin)        delete btn_send_bin;
 
-    if(cb_SendStenToStep)   cb_SendStenToStep->deleteLater();
+    if(cb_SendStenToStep)   delete cb_SendStenToStep;
 
-    if(grid)                grid->deleteLater();
+    if(grid)                delete grid;
 }
 //--------------------------------------------------------------------------------
 void SendBox5::send_text(void)

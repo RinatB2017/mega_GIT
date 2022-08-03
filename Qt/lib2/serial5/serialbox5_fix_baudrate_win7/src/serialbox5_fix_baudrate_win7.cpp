@@ -72,7 +72,7 @@ SerialBox5_fix_baudrate_win7::~SerialBox5_fix_baudrate_win7()
     {
         sendBox5->disconnect();
         sendBox5->close();
-        sendBox5->deleteLater();
+        delete sendBox5;
     }
 #endif
     delete ui;

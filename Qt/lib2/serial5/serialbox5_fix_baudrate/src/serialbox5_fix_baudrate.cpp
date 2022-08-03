@@ -68,7 +68,7 @@ SerialBox5_fix_baudrate::~SerialBox5_fix_baudrate()
         disconnect(sendBox5, &SendBox5::sendData, this, &SerialBox5_fix_baudrate::sendData);
 
         sendBox5->close();
-        sendBox5->deleteLater();
+        delete sendBox5;
     }
 #endif
     delete ui;

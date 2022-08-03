@@ -131,7 +131,7 @@ void PictureParam::set_border_color(void)
             emit picture_update();
         }
     }
-    dlg_color->deleteLater();
+    delete dlg_color;
 }
 //--------------------------------------------------------------------------------
 void PictureParam::set_border_color(QColor color)

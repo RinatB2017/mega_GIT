@@ -48,12 +48,12 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
-    if(main_serialBox) main_serialBox->deleteLater();
-    if(control_serialBox) control_serialBox->deleteLater();
+    if(main_serialBox)    delete main_serialBox;
+    if(control_serialBox) delete control_serialBox;
 
-    if(display) display->deleteLater();
-    if(control_display) control_display->deleteLater();
-    if(palette) palette->deleteLater();
+    if(display)           delete display;
+    if(control_display)   delete control_display;
+    if(palette)           delete palette;
 
     delete ui;
 }

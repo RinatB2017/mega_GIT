@@ -123,7 +123,7 @@ void MainBox::onLoad(void)
 
         refreshHSV();
     }
-    dlg->deleteLater();
+    delete dlg;
 }
 //--------------------------------------------------------------------------------
 void MainBox::refreshHSV(void)

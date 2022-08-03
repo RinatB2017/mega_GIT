@@ -388,7 +388,7 @@ void Display::load_setting(void)
     set_data(settings->value("value").toByteArray());
     settings->endGroup();
 
-    settings->deleteLater();
+    delete settings;
 }
 //--------------------------------------------------------------------------------
 void Display::save_setting(void)
@@ -404,7 +404,7 @@ void Display::save_setting(void)
     settings->setValue("value", get_data());
     settings->endGroup();
 
-    settings->deleteLater();
+    delete settings;
 }
 //--------------------------------------------------------------------------------
 bool Display::resize(int w, int h)

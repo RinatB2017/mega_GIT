@@ -53,7 +53,7 @@ SerialWidget_fake::~SerialWidget_fake()
     if(worker_fake)
     {
         worker_fake->disconnect();
-        worker_fake->deleteLater();
+        delete worker_fake;
     }
 }
 //--------------------------------------------------------------------------------

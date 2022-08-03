@@ -614,7 +614,7 @@ void HistogramBox::save_histograms(void)
         file.close();
         emit info(QString(tr("файл %1 записан успешно"))
                   .arg(files.at(0)));
-        dlg->deleteLater();
+        delete dlg;
     }
 }
 //--------------------------------------------------------------------------------

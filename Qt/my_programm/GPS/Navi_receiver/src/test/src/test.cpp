@@ -44,6 +44,6 @@ void Test::test_func(void)
     QCOMPARE(proto->test_PIRGK(), (int)Proto_NMEA_0183::E_NO_ERROR);
     QCOMPARE(proto->test_PIRRA(), (int)Proto_NMEA_0183::E_NO_ERROR);
 
-    proto->deleteLater();
+    delete proto;
 }
 //--------------------------------------------------------------------------------

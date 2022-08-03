@@ -166,7 +166,7 @@ void MainBox::load_file(void)
             file.close();
         }
     }
-    dlg->deleteLater();
+    delete dlg;
 }
 //--------------------------------------------------------------------------------
 void MainBox::show_crc(QByteArray ba)

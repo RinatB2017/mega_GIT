@@ -215,7 +215,7 @@ void MainBox::load(void)
         QStringList files = dlg->selectedFiles();
         filename = files.at(0);
     }
-    dlg->deleteLater();
+    delete dlg;
 
     if(filename.isEmpty())
     {

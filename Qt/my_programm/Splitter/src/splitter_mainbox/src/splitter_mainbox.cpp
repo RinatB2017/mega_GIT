@@ -138,7 +138,7 @@ bool MainBox::test(void)
     if(fake_label)
     {
         emit info("delete fake_label");
-        fake_label->deleteLater();
+        delete fake_label;
     }
 #endif
     return true;

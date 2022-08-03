@@ -173,7 +173,7 @@ void Palette::load_setting(void)
     set_data(settings->value("value").toByteArray());
     settings->endGroup();
 
-    settings->deleteLater();
+    delete settings;
 }
 //--------------------------------------------------------------------------------
 void Palette::save_setting(void)
@@ -189,6 +189,6 @@ void Palette::save_setting(void)
     settings->setValue("value", get_data());
     settings->endGroup();
 
-    settings->deleteLater();
+    delete settings;
 }
 //--------------------------------------------------------------------------------

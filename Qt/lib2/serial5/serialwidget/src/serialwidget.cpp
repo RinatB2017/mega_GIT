@@ -33,14 +33,14 @@ SerialWidget::~SerialWidget()
         timer->stop();
         disconnect(timer,  &QTimer::timeout,  this,   &SerialWidget::timer_stop);
 
-        timer->deleteLater();
+        delete timer;
     }
     if(serial5)
     {
         disconnect(serial5, &QSerialPort::errorOccurred,               this,   &SerialWidget::serial5_error);
 
         serial5->close();
-        serial5->deleteLater();
+        delete serial5;
     }
 }
 //--------------------------------------------------------------------------------

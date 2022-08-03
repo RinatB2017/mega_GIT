@@ -41,12 +41,12 @@ MainBox::~MainBox()
     if(youtube_walker)
     {
         youtube_walker->close();
-        youtube_walker->deleteLater(); 
+        delete youtube_walker;
     }
     if(google_walker)
     {
         google_walker->close();
-        google_walker->deleteLater();
+        delete google_walker;
     }
     delete ui;
 }

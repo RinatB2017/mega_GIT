@@ -43,15 +43,15 @@ MODBUS_server::MODBUS_server(QWidget *parent) :
 //--------------------------------------------------------------------------------
 MODBUS_server::~MODBUS_server()
 {
-    if(he_discrete_inputs)  he_discrete_inputs->deleteLater();
-    if(he_coils) he_coils->deleteLater();
-    if(he_input_registers) he_input_registers->deleteLater();
-    if(he_holding_registers) he_holding_registers->deleteLater();
+    if(he_discrete_inputs)   delete he_discrete_inputs;
+    if(he_coils)             delete he_coils;
+    if(he_input_registers)   delete he_input_registers;
+    if(he_holding_registers) delete he_holding_registers;
 
     if(modbusDevice)
     {
         modbusDevice->disconnectDevice();
-        modbusDevice->deleteLater();
+        delete modbusDevice;
     }
 
     delete ui;

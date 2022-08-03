@@ -101,7 +101,7 @@ MainWindow::~MainWindow()
         disconnect(serial, &QSerialPort::readyRead,        this,   &MainWindow::read_data);
         disconnect(serial, &QSerialPort::errorOccurred,    this,   &MainWindow::serial5_error);
 
-        serial->deleteLater();
+        delete serial;
     }
 
     delete ui;

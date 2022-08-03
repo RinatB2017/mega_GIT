@@ -55,7 +55,7 @@ AD9106_Box::AD9106_Box(QWidget *parent) :
 AD9106_Box::~AD9106_Box()
 {
 #ifdef GRAPHER
-    if(curve) curve->deleteLater();
+    if(curve) delete curve;
 #endif
     delete ui;
 }
@@ -132,7 +132,7 @@ void AD9106_Box::init(void)
 #if 0
     AD9106 *ad9106 = new AD9106();
     emit info(QString("len %1").arg(ad9106->get_cnt_registers()));
-    ad9106->deleteLater();
+    delete ad9106;
 
     reg_t r;
     bool ok = false;
@@ -685,7 +685,7 @@ void AD9106_Box::dev_read_all_registers(void)
     ui->tw_registers->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->tw_registers->setMinimumWidth(ui->tw_registers->sizeHint().width());
 
-    ad9106->deleteLater();
+    delete ad9106;
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -742,7 +742,7 @@ bool AD9106_Box::AD9106_read(QString name_reg, uint16_t *data)
     reg_t r;
     AD9106 *ad9106 = new AD9106();
     ok = ad9106->get_reg(name_reg, &r);
-    ad9106->deleteLater();
+    delete ad9106;
     if(!ok)
     {
         emit error("Register not found!");
@@ -792,7 +792,7 @@ bool AD9106_Box::AD9106_write(QString name_reg, uint16_t data)
     reg_t r;
     AD9106 *ad9106 = new AD9106();
     ok = ad9106->get_reg(name_reg, &r);
-    ad9106->deleteLater();
+    delete ad9106;
     if(!ok)
     {
         emit error("Register not found!");

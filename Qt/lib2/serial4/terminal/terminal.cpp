@@ -46,7 +46,7 @@ void Terminal::read_ini(const QString &filename)
     flow      = settings->value("Flow",       "Disable").toString();
 
     settings->endGroup();
-    settings->deleteLater();
+    delete settings;
 }
 //--------------------------------------------------------------------------------
 void Terminal::init_serial(void)

@@ -31,8 +31,8 @@ MyThread::MyThread(QObject *parent) :
 //--------------------------------------------------------------------------------
 MyThread::~MyThread()
 {
-    if(udp_socket1) udp_socket1->deleteLater();
-    if(udp_socket2) udp_socket2->deleteLater();
+    if(udp_socket1) delete udp_socket1;
+    if(udp_socket2) delete udp_socket2;
 }
 //--------------------------------------------------------------------------------
 void MyThread::process(void)

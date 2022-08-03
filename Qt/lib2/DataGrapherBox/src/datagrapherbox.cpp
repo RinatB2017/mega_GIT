@@ -47,7 +47,7 @@ void DataGrapherBox::clr_curves(void)
     ui->grapher_widget->remove_all_curve();
     foreach(CURVES cur, curves)
     {
-        cur.obj->deleteLater();
+        delete cur.obj;
     }
     curves.clear();
 }

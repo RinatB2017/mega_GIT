@@ -64,7 +64,7 @@ SerialBox5::~SerialBox5()
         disconnect(this,   &SerialBox5::trace, logBox, &LogBox::traceLog);
 
         logBox->close();
-        logBox->deleteLater();
+        delete logBox;
     }
 #endif
 
@@ -74,7 +74,7 @@ SerialBox5::~SerialBox5()
         disconnect(sendBox5,   &SendBox5::sendData, this, &SerialBox5::sendData);
 
         sendBox5->close();
-        sendBox5->deleteLater();
+        delete sendBox5;
     }
 #endif
     delete ui;

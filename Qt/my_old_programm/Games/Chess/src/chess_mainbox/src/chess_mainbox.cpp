@@ -48,11 +48,11 @@ MainBox::~MainBox()
         m_engine->kill();
         m_engine->waitForFinished();
     }
-    if(le_chess)    le_chess->deleteLater();
-    if(cb_test)     cb_test->deleteLater();
-    if(btn_clear)   btn_clear->deleteLater();
-    if(btn_test)    btn_test->deleteLater();
-    if(btn_run)     btn_run->deleteLater();
+    if(le_chess)    delete le_chess;
+    if(cb_test)     delete cb_test;
+    if(btn_clear)   delete btn_clear;
+    if(btn_test)    delete btn_test;
+    if(btn_run)     delete btn_run;
     delete ui;
 }
 //--------------------------------------------------------------------------------

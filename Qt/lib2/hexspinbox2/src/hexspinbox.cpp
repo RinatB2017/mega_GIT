@@ -9,11 +9,12 @@ HexSpinBox::HexSpinBox(QWidget *parent) : QSpinBox(parent), m_maxRange(maximum()
     setDisplayIntegerBase(16);
 }
 
-void HexSpinBox::setRange(unsigned int max)
+void HexSpinBox::setRange(unsigned int min,
+                          unsigned int max)
 {
     m_maxRange = max;
     if (m_maxRange <= INT_MAX) {
-        QSpinBox::setRange(0, int(m_maxRange));
+        QSpinBox::setRange(min, int(m_maxRange));
     } else {
         QSpinBox::setRange(INT_MIN, INT_MAX);
     }

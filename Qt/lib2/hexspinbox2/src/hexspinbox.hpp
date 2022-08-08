@@ -14,7 +14,7 @@ public:
     HexSpinBox(QWidget *parent = nullptr);
     unsigned int hexValue() const { return u(value()); }
     void setHexValue(unsigned int value) { setValue(i(value)); }
-    void setRange(unsigned int max);
+    void setRange(unsigned int min, unsigned int max);
     bool fillField() const { return m_fillField; }
     void setFillField(bool fillFieldWidth) { m_fillField = fillFieldWidth; }
 

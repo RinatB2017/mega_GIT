@@ -220,7 +220,11 @@ bool Show_HSV_color::eventFilter(QObject *obj, QEvent *event)
         {
             int x = ((QMouseEvent *)event)->x();
             int y = ((QMouseEvent *)event)->y();
+#ifdef Q_OS_LINUX
             QImage image = ui->color_label->pixmap(Qt::ReturnByValue).toImage();
+#else
+            QImage image = ui->color_label->pixmap()->toImage();
+#endif
             if((x <= image.width() && (y <= image.height())))
             {
                 QColor color = image.pixelColor(x, y);

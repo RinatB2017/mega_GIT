@@ -1,6 +1,6 @@
 #include <windows.h>
 
-IDI_ICON1	ICON	"F:\\Public\\mega_GIT\\Qt\\my_programm\\_For_tests\\ico\\computer.ico"
+IDI_ICON1	ICON	DISCARDABLE	"D:\\_Work\\Github\\public\\mega_GIT\\Qt\\my_programm\\_For_tests\\ico\\computer.ico"
 
 VS_VERSION_INFO VERSIONINFO
 	FILEVERSION 1,0,0,0
@@ -11,9 +11,9 @@ VS_VERSION_INFO VERSIONINFO
 #else
 	FILEFLAGS 0x0L
 #endif
-	FILEOS VOS_NT_WINDOWS32
+	FILEOS VOS__WINDOWS32
 	FILETYPE VFT_DLL
-	FILESUBTYPE VFT2_UNKNOWN
+	FILESUBTYPE 0x0L
 	BEGIN
 		BLOCK "StringFileInfo"
 		BEGIN
@@ -26,9 +26,6 @@ VS_VERSION_INFO VERSIONINFO
 				VALUE "OriginalFilename", "_For_tests.exe\0"
 				VALUE "ProductName", "_For_tests\0"
 				VALUE "ProductVersion", "1.0.0.0\0"
-				VALUE "InternalName", "\0"
-				VALUE "Comments", "\0"
-				VALUE "LegalTrademarks", "\0"
 			END
 		END
 		BLOCK "VarFileInfo"

@@ -242,15 +242,22 @@ bool MySettings::save_mdi_subwindows(QWidget *widget)
     return false;
 }
 //--------------------------------------------------------------------------------
+#include <QSpinBox>
 bool MySettings::load_property(QWidget *widget, const QString &property_name)
 {
     Q_ASSERT(widget);
 
-    //TODO временный костыль
+    //TODO костыль, надо сделать нормально
     QLabel *label = dynamic_cast<QLabel *>(widget);
     if(label)
     {
         return false;
+    }
+    QSpinBox *sb = dynamic_cast<QSpinBox *>(widget);
+    if(sb)
+    {
+        if(property_name == "text")
+            return false;
     }
     //---
 
@@ -271,11 +278,17 @@ bool MySettings::save_property(QWidget *widget, const QString &property_name)
 {
     Q_ASSERT(widget);
 
-    //TODO временный костыль
+    //TODO костыль, надо сделать нормально
     QLabel *label = dynamic_cast<QLabel *>(widget);
     if(label)
     {
         return false;
+    }
+    QSpinBox *sb = dynamic_cast<QSpinBox *>(widget);
+    if(sb)
+    {
+        if(property_name == "text")
+            return false;
     }
     //---
 

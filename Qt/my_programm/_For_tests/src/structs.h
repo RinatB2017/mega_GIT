@@ -4,7 +4,9 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 //--------------------------------------------------------------------------------
-#include <stdint.h>
+#ifdef Q_OS_LINUX
+#   include <stdint.h>
+#endif
 #include "defines.h"
 //--------------------------------------------------------------------------------
 ;

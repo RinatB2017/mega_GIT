@@ -19,7 +19,9 @@
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
 #include "ui_HID_device.h"
-#include <stdint.h>
+#ifdef Q_OS_LINUX
+#   include <stdint.h>
+#endif
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include <hidapi/hidapi.h>

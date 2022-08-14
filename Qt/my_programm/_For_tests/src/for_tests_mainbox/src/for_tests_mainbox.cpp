@@ -267,25 +267,6 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
-    int a = 0;
-    for(int n=0; n<10; n++)
-    {
-        a++;
-    }
-    emit info(QString("a: %1").arg(a));
-#endif
-
-#if 0
-    typedef struct {
-        uint16_t magic;
-        uint16_t channel;
-        uint16_t address;
-    } RF_set_param;
-
-    emit info(QString("sizeof: %1").arg(sizeof(RF_set_param)));
-#endif
-
 #if 0
     emit info("Copyright \\251 2020-2025");
 #endif

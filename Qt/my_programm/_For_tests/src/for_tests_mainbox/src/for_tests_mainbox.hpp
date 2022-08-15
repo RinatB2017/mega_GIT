@@ -34,7 +34,7 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+class MainBox;
 }
 //--------------------------------------------------------------------------------
 class MySplashScreen;
@@ -76,6 +76,13 @@ private:
 
     void init(void);
     void createTestBar(void);
+
+    void calc_line(qreal center_x,
+                   qreal center_y,
+                   qreal angle,
+                   qreal radius,
+                   qreal *end_x,
+                   qreal *end_y);
 
     bool calc_norm(qreal x,
                    qreal y,

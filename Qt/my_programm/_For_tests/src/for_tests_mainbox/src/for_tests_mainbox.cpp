@@ -226,6 +226,25 @@ void MainBox::heavy_function(int x)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
+void MainBox::calc_line(qreal center_x,
+                        qreal center_y,
+                        qreal angle,
+                        qreal radius,
+                        qreal *end_x,
+                        qreal *end_y)
+{
+    //qDebug() << "calc_line" << center_x << center_y << angle << radius;
+
+    qreal A = radius;
+    qreal B = qCos(qDegreesToRadians(angle)) * A;
+    qreal C = qSin(qDegreesToRadians(angle)) * A;
+
+    //qDebug() << center_x + B << center_y + C;
+
+    *end_x = center_x + B;
+    *end_y = center_y + C;
+}
+//--------------------------------------------------------------------------------
 bool MainBox::calc_norm(qreal x,
                         qreal y,
                         qreal w,
@@ -268,7 +287,34 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QImage image(300, 300, QImage::Format_ARGB32);
+    image.fill(QColor(Qt::black));
 
+    QPointF points[360];
+    qreal radius = 50;
+    for(int n=0; n<360; n++)
+    {
+        qreal end_x;
+        qreal end_y;
+        calc_line(150, 150, n, radius, &end_x, &end_y);
+        points[n] = QPointF(end_x, end_y);
+        if((rand() % 10) > 5)
+            radius += rand() % 25;
+        else
+            radius -= rand() % 25;
+        if(radius < 15)
+            radius = 15;
+    }
+    QPainter painter;
+    painter.begin(&image);
+    painter.setPen(QColor(Qt::white));
+    painter.setBrush(QBrush(Qt::red));
+    painter.drawPolygon(points, 360);
+    painter.end();
+
+    QLabel *label = new QLabel();
+    label->setPixmap(QPixmap::fromImage(image));
+    label->show();
 #endif
 
 #if 0

@@ -267,6 +267,10 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+
+#endif
+
 #if 0
     emit info("Copyright \\251 2020-2025");
 #endif

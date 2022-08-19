@@ -286,7 +286,7 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
     QImage image(300, 300, QImage::Format_ARGB32);
     image.fill(QColor(Qt::black));
 

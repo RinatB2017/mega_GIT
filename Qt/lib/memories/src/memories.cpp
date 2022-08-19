@@ -26,6 +26,12 @@ Memories::Memories(QWidget *parent)
 
 }
 //--------------------------------------------------------------------------------
+//  QString("%1").arg(question.buf[n], 2, 16, QChar('0'))
+//  строка в HEX с лидирующими нулями
+//
+//  float c = 1.123456789f;
+//  emit info(QString("%1").arg(c, 0, 'f', 3));
+//--------------------------------------------------------------------------------
 void Memories::read_file(const QString &filename)
 {
     QFile file(filename);

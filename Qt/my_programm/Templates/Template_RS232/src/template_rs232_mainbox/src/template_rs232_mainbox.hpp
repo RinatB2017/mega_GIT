@@ -67,8 +67,12 @@ private:
     QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
+    bool port_active = false;
+
     void init(void);
     void createTestBar(void);
+
+    void port_state(bool state);
 
     void updateText(void);
     bool programm_is_exit(void);

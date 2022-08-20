@@ -59,7 +59,15 @@ void MainBox::init_serial(void)
     });
     connect(this,               static_cast<void (MainBox::*)(const QByteArray&)>(&MainBox::send),
             ui->serial_widget,  static_cast<int (SerialBox5::*)(const QByteArray&)>(&SerialBox5::input));
-    connect(ui->serial_widget,  &SerialBox5::output,    this,               &MainBox::read_data);
+    connect(ui->serial_widget,  &SerialBox5::output,
+            this,               &MainBox::read_data);
+    connect(ui->serial_widget,  &SerialBox5::port_is_active,
+            this,               &MainBox::port_state);
+}
+//--------------------------------------------------------------------------------
+void MainBox::port_state(bool state)
+{
+    port_active = state;
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
@@ -129,8 +137,10 @@ bool MainBox::test(void)
 #ifdef QT_DEBUG
     qDebug() << "Test";
 #endif
+    emit info(QString("Serial is %1").arg(port_active ? "open" : "close"));
     return true;
 }
+//--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)
 {
@@ -139,7 +149,11 @@ void MainBox::updateText(void)
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)
 {
-    return true;
+    if(port_active)
+    {
+        messagebox_warning("Предупреждение!", "Выключите порт перед выходом.");
+    }
+    return !port_active;
 }
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)

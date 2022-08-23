@@ -15,5 +15,5 @@ HEADERS     += \
     geometryengine.h
 
 RESOURCES   += \
-    shaders.qrc \
-    textures.qrc
+    $$PWD/shaders/shaders.qrc \
+    $$PWD/images/textures.qrc

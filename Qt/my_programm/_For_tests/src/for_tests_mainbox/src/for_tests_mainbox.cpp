@@ -287,29 +287,6 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
-    QByteArray ba_input;
-    ba_input.append("X9Y6Z7");
-
-    //FIXME проверяем ручной ввод. Пока говнокод, но позже надо исправить
-    QStringList sl;
-    for(int n=0; n<=8; n++)
-    {
-        sl << QString("X%1").arg(n);
-        sl << QString("Y%1").arg(n);
-        if(n<8)
-            sl << QString("Z%1").arg(n);
-    }
-    foreach (QString str, sl) {
-        if(ba_input.contains(str.toLocal8Bit()))
-        {
-            emit info(QString("Found"));
-        }
-    }
-    emit info("OK");
-    //---
-#endif
-
-#if 0
     QImage image(300, 300, QImage::Format_ARGB32);
     image.fill(QColor(Qt::black));
 

@@ -287,6 +287,7 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+<<<<<<< HEAD
     QByteArray ba;
     for(int n=0; n<16; n++)
     {
@@ -318,6 +319,8 @@ bool MainBox::test(void)
 #endif
 
 #if 0
+=======
+>>>>>>> 462686cd1f74a5bf2591c36322800cd087eae176
     QImage image(300, 300, QImage::Format_ARGB32);
     image.fill(QColor(Qt::black));
 

@@ -286,6 +286,37 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    QByteArray ba;
+    for(int n=0; n<16; n++)
+    {
+        ba.append((char)0xFF);
+    }
+    emit info(QString("ba: 0x%1").arg(ba.toHex().toUpper().data()));
+
+    typedef struct
+    {
+        float value[4];
+    } POINTS;
+    emit info(QString("size: %1").arg(sizeof(POINTS)));
+
+    POINTS *points = reinterpret_cast<POINTS *>(ba.data());
+    Q_ASSERT(points);
+    for(int n=0; n<4; n++)
+    {
+        emit info(QString("value[%1] = %2")
+                  .arg(n)
+                  .arg(points->value[n]));
+    }
+    points->value[0] = 1.0;
+    points->value[1] = 2.0;
+    points->value[2] = 3.0;
+    points->value[3] = 4.0;
+    emit info(QString("result ba: 0x%1").arg(ba.toHex().toUpper().data()));
+
+    emit info("OK");
+#endif
+
 #if 0
     QImage image(300, 300, QImage::Format_ARGB32);
     image.fill(QColor(Qt::black));

@@ -287,40 +287,34 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
-<<<<<<< HEAD
-    QByteArray ba;
-    for(int n=0; n<16; n++)
+    MyFileDialog *dlg = new MyFileDialog("main_box", "main_box");
+    dlg->setNameFilter("TXT files (*.txt)");
+    dlg->setDefaultSuffix("txt");
+    //dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
+    if(dlg->exec())
     {
-        ba.append((char)0xFF);
-    }
-    emit info(QString("ba: 0x%1").arg(ba.toHex().toUpper().data()));
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+        emit info(filename);
 
-    typedef struct
-    {
-        float value[4];
-    } POINTS;
-    emit info(QString("size: %1").arg(sizeof(POINTS)));
-
-    POINTS *points = reinterpret_cast<POINTS *>(ba.data());
-    Q_ASSERT(points);
-    for(int n=0; n<4; n++)
-    {
-        emit info(QString("value[%1] = %2")
-                  .arg(n)
-                  .arg(points->value[n]));
+        QFile data(filename);
+        if (data.open(QFile::ReadOnly))
+        {
+            QTextStream in(&data);
+            QString line;
+            while(!in.atEnd())
+            {
+                line = in.readLine();
+                emit info(line);
+            }
+        }
     }
-    points->value[0] = 1.0;
-    points->value[1] = 2.0;
-    points->value[2] = 3.0;
-    points->value[3] = 4.0;
-    emit info(QString("result ba: 0x%1").arg(ba.toHex().toUpper().data()));
+    delete dlg;
 
     emit info("OK");
 #endif
 
 #if 0
-=======
->>>>>>> 462686cd1f74a5bf2591c36322800cd087eae176
     QImage image(300, 300, QImage::Format_ARGB32);
     image.fill(QColor(Qt::black));
 

@@ -281,37 +281,14 @@ QImage MainBox::create_bone(int num)
     return image;
 }
 //--------------------------------------------------------------------------------
+#include "connection.hpp"
 #include "memories.hpp"
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
-    MyFileDialog *dlg = new MyFileDialog("main_box", "main_box");
-    dlg->setNameFilter("TXT files (*.txt)");
-    dlg->setDefaultSuffix("txt");
-    //dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
-    if(dlg->exec())
-    {
-        QStringList files = dlg->selectedFiles();
-        QString filename = files.at(0);
-        emit info(filename);
-
-        QFile data(filename);
-        if (data.open(QFile::ReadOnly))
-        {
-            QTextStream in(&data);
-            QString line;
-            while(!in.atEnd())
-            {
-                line = in.readLine();
-                emit info(line);
-            }
-        }
-    }
-    delete dlg;
-
-    emit info("OK");
+    Connection::set_value(1.666);
 #endif
 
 #if 0
@@ -364,6 +341,10 @@ bool MainBox::test2(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test2");
+
+    emit info(QString("value: %1")
+              .arg(Connection::get_double_value()));
+
     return true;
 }
 //--------------------------------------------------------------------------------

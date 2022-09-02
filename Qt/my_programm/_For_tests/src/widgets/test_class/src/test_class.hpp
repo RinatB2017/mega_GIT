@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2022                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,93 +18,52 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef TEST_CLASS_HPP
+#define TEST_CLASS_HPP
 //--------------------------------------------------------------------------------
-#include <QElapsedTimer>
-//--------------------------------------------------------------------------------
-#include "for_tests_mainbox_gui.hpp"
-#include "mysplashscreen.hpp"
-#include "mymainwindow.hpp"
-#include "myfiledialog.hpp"
-#include "test_classes.hpp"
 #include "mywidget.hpp"
-#include "ogl_widget.hpp"
-#include "cubewidget.h"
-#include "defines.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
-    class MainBox;
+    class Test_class;
 }
 //--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
-class MainBox : public MainBox_GUI
+class Test_class : public MyWidget
 {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent, MySplashScreen *splash);
-    virtual ~MainBox();
-
-public slots:
-    void choice_test(void);
-
-    bool test(void);
-    bool test2(void);
-    bool run_cube_widget(void);
-    bool run_ogl_widget(void);
+    explicit Test_class(QWidget *parent = nullptr);
+    ~Test_class();
 
 private:
     typedef struct
     {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (Test_class::*check_box)(void);
+        void (Test_class::*func)(void);
     } CMD;
     QList<CMD> commands;
 
-    QPointer<MySplashScreen> splash;
-
-    QPointer<QComboBox> cb_test;
-    QPointer<QSpinBox>  sb_test;
-    QPointer<QCheckBox> cb_block;
-
-    bool set_theme_windows(void);
-    bool set_norton_commander(void);
-    bool set_styles(void);
+    Ui::Test_class *ui;
 
     void init(void);
-    void createTestBar(void);
+    void test(void);
 
-    void calc_line(qreal center_x,
-                   qreal center_y,
-                   qreal angle,
-                   qreal radius,
-                   qreal *end_x,
-                   qreal *end_y);
+    bool get_0(void);
+    bool get_1(void);
+    bool get_2(void);
+    bool get_3(void);
+    bool get_4(void);
 
-    bool calc_norm(qreal x,
-                   qreal y,
-                   qreal w,
-                   qreal h,
-                   qreal *norm_x,
-                   qreal *norm_y);
+    void f_0(void);
+    void f_1(void);
+    void f_2(void);
+    void f_3(void);
+    void f_4(void);
 
-    QImage create_bone(int num);
-
-    template<typename T1, typename T2>
-    void test_template(void);
-
-    void heavy_function(int x);
-
-    template<class T>
-    void test_function(int delay);
-    void test_function2(bool (MainBox::*func)(void));
-
+    void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // TEST_CLASS_HPP

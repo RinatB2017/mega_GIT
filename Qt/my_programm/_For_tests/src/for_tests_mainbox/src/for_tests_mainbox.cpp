@@ -283,11 +283,19 @@ QImage MainBox::create_bone(int num)
 //--------------------------------------------------------------------------------
 #include "connection.hpp"
 #include "memories.hpp"
+
+#include "test_class.hpp"
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    Test_class *tc = new Test_class();
+    connect_log_signals(tc, this);
+    tc->show();
+#endif
+
+#if 0
     Connection::set_value(1.666);
 #endif
 
@@ -342,8 +350,10 @@ bool MainBox::test2(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test2");
 
+#if 0
     emit info(QString("value: %1")
               .arg(Connection::get_double_value()));
+#endif
 
     return true;
 }

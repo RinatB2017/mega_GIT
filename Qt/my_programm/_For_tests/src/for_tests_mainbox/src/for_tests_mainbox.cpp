@@ -289,7 +289,19 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
+    QString temp;
+    temp = "QLineEdit{ " /
+                 "border-width: 1px; "/
+                 "border-style: solid; "/
+                 "border-color: red white black black ;"/
+                 "border-top-style:none; "/
+                 "}";
+    //qApp->setStyleSheet( "QTextEdit{ border-width: 1px; border-style: solid; border-color:  red white black black;border-top-style:none; }" );
+    qApp->setStyleSheet( temp );
+#endif
+
+#if 0
     Test_class *tc = new Test_class();
     connect_log_signals(tc, this);
     tc->show();

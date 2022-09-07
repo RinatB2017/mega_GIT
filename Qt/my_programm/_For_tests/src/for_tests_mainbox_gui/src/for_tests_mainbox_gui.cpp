@@ -50,6 +50,8 @@ void MainBox_GUI::init(void)
 
 #ifdef USE_DOCK_WIDGETS
     QTimer::singleShot(0, [this]{
+        ui->gridLayout->setContentsMargins(20, 20, 20, 20);
+
         MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
         if(mw)
         {

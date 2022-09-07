@@ -20,3 +20,8 @@ QTextEdit
 {
     background-color: blue;
 }
+
+QGridLayout
+{
+    padding: 50px
+}

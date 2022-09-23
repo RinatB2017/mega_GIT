@@ -401,6 +401,14 @@ void MainBox::load_setting(void)
     qDebug() << "MainBox::load_setting";
 #endif
 
+    //---
+    int value;
+    if(load_int("index", &value))
+    {
+        cb_test->setCurrentIndex(value);
+    }
+    //---
+
     if(sb_test)
     {
         int value = 0;
@@ -424,6 +432,8 @@ void MainBox::save_setting(void)
 #ifdef QT_DEBUG
     qDebug() << "MainBox::save_setting";
 #endif
+
+    save_int("index", cb_test->currentIndex());
 
     if(sb_test)
     {

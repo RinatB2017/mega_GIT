@@ -293,24 +293,25 @@ bool MainBox::test(void)
     double value = 0.000001;
     double freq = 5.0;
 
-    emit info(QString("UA%1F%2")
-              .arg(value, 0, 'f')
-              .arg(freq));
-
-    value = 1.2345;
-    emit info(QString("UA%1F%2")
-              .arg(value, 'f')
-              .arg(freq));
+    //value = 1.23;
+    if(value < 0.01)
+        emit info(QString("UA%1F%2")
+                  .arg(value, 0, 'f')
+                  .arg(freq));
+    else
+        emit info(QString("UA%1F%2")
+                  .arg(value)
+                  .arg(freq));
 #endif
 
 #if 0
     QString temp;
     temp = "QLineEdit{ " /
-                 "border-width: 1px; "/
-                 "border-style: solid; "/
-                 "border-color: red white black black ;"/
-                 "border-top-style:none; "/
-                 "}";
+            "border-width: 1px; "/
+            "border-style: solid; "/
+            "border-color: red white black black ;"/
+            "border-top-style:none; "/
+            "}";
     //qApp->setStyleSheet( "QTextEdit{ border-width: 1px; border-style: solid; border-color:  red white black black;border-top-style:none; }" );
     qApp->setStyleSheet( temp );
 #endif

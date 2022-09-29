@@ -289,6 +289,20 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    double value = 0.000001;
+    double freq = 5.0;
+
+    emit info(QString("UA%1F%2")
+              .arg(value, 0, 'f')
+              .arg(freq));
+
+    value = 1.2345;
+    emit info(QString("UA%1F%2")
+              .arg(value, 'f')
+              .arg(freq));
+#endif
+
 #if 0
     QString temp;
     temp = "QLineEdit{ " /

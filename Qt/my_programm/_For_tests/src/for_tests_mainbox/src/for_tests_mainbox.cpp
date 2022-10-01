@@ -215,15 +215,25 @@ void MainBox::test_function2(bool (MainBox::*func)(void))
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-void MainBox::heavy_function(int x)
+void MainBox::heavy_function(bool *result)
 {
     QElapsedTimer timer;
-    timer.start();
-    while(timer.elapsed() < x)
-    {
+    double res = 0;
 
+    emit info("heavy_function started");
+    timer.start();
+    for(int y=0; y<100000; y++)
+    {
+        for(int x=0; x<10000; x++)
+        {
+            res += (qSin(x) * qCos(y));
+        }
     }
-    emit info("OK");
+    emit info(QString("res: %1").arg(res));
+    emit info(QString("Elapsed %1 msec").arg(timer.elapsed()));
+    emit info("heavy_function function");
+
+    *result = true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::calc_line(qreal center_x,
@@ -281,6 +291,7 @@ QImage MainBox::create_bone(int num)
     return image;
 }
 //--------------------------------------------------------------------------------
+#include <QtConcurrent>
 #include "connection.hpp"
 #include "memories.hpp"
 
@@ -290,6 +301,33 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    emit info("thread started");
+    bool r0 = false;
+    bool r1 = false;
+    bool r2 = false;
+    bool r3 = false;
+    bool r4 = false;
+    QtConcurrent::run(this, &MainBox::heavy_function, &r0);
+    QtConcurrent::run(this, &MainBox::heavy_function, &r1);
+    QtConcurrent::run(this, &MainBox::heavy_function, &r2);
+    QtConcurrent::run(this, &MainBox::heavy_function, &r3);
+    QtConcurrent::run(this, &MainBox::heavy_function, &r4);
+    emit info("thread finished");
+
+    QElapsedTimer timer;
+    timer.start();
+    while(!r0 ||
+          !r1 ||
+          !r2 ||
+          !r3 ||
+          !r4)
+    {
+        QCoreApplication::processEvents();
+    }
+    emit error(QString("Time threads elapsed %1 msec").arg(timer.elapsed()));
+#endif
+
+#if 0
     double value = 0.000001;
     double freq = 5.0;
 

@@ -7,7 +7,7 @@ TARGET   = _For_tests
 
 include (conf/conf.pri)
 
-#DEFINES += FILENAME_LOG
+QT  += concurrent
 
 PROGRAMM_PATH  += \
     $$PWD/src
@@ -70,6 +70,6 @@ include (src/widgets/widgets.pri)
 include (src/cube/cube.pri)
 include (src/ogl/ogl.pri)
 
-message ($$QMAKESPEC)
+#message ($$QMAKESPEC)
 
 VPATH = $$INCLUDEPATH

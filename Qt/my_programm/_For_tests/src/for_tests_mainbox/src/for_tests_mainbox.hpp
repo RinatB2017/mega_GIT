@@ -96,7 +96,7 @@ private:
     template<typename T1, typename T2>
     void test_template(void);
 
-    void heavy_function(int x);
+    void heavy_function(bool *result);
 
     template<class T>
     void test_function(int delay);

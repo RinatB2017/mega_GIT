@@ -301,6 +301,15 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    QByteArray ba;
+    ba.append(":000102030405\n");
+
+    QByteArray ba_res = ba.fromHex(ba);
+    emit info(QString("len: %1").arg(ba_res.length()));
+    emit info(QString("3: %1").arg(ba_res.at(3), 2, 16, QChar('0')));
+#endif
+
+#if 0
     emit info("thread started");
     bool r0 = false;
     bool r1 = false;

@@ -186,11 +186,29 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
+    int index;
+    bool ok;
+#ifdef QT_DEBUG
+    ok = load_int("test_bar", &index);
+    if(ok)
+    {
+        cb_test->setCurrentIndex(index);
+    }
+#endif
 
+    ok = load_int("programm_bar", &index);
+    if(ok)
+    {
+        cb_programm->setCurrentIndex(index);
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
+#ifdef QT_DEBUG
+    save_int("test_bar", cb_test->currentIndex());
+#endif
 
+    save_int("programm_bar", cb_programm->currentIndex());
 }
 //--------------------------------------------------------------------------------

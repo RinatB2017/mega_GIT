@@ -37,6 +37,11 @@
 //--------------------------------------------------------------------------------
 #include "myfiledialog.hpp"
 //--------------------------------------------------------------------------------
+#if 0
+    connect(ui->sb_1,   static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+    this,               &Check_in_widget::check_in);
+#endif
+//--------------------------------------------------------------------------------
 class Memories : public QWidget
 {
     Q_OBJECT

@@ -41,6 +41,7 @@ android {
 }
 
 win32 {
+#    TEMP_PATH = "C:"
     TEMP_PATH = "F:"
     OBJECTS_DIR = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\obj
     MOC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\moc
@@ -61,13 +62,35 @@ macx {
 }
 
 win32 {
-    CONFIG(debug, debug|release) {
-        #DESTDIR = bin/debug
-        DESTDIR = c:/Programming/my_programm_bin/$$FOLDER/$$TARGET
-    }
-    else {
-        #DESTDIR = bin/release
-        DESTDIR = c:/Programming/my_programm_bin/$$FOLDER/$$TARGET
+    BIN_PATH="X:"
+    contains(QT_ARCH, i386) {
+        message("32-bit")
+        CONFIG(debug, debug|release) {
+            DESTDIR = $$BIN_PATH/Win32/debug
+        }
+        else {
+            DESTDIR = $$BIN_PATH/Win32/release
+        }
+    } else {
+        message("64-bit")
+        win32-g++ {
+            message("mingw")
+            CONFIG(debug, debug|release) {
+                DESTDIR = $$BIN_PATH/Win64/mingw/debug
+            }
+            else {
+                DESTDIR = $$BIN_PATH/Win64/mingw/release
+            }
+        }
+        win32-msvc*{
+            message("msvc")
+            CONFIG(debug, debug|release) {
+                DESTDIR = $$BIN_PATH/Win64/msvc/debug
+            }
+            else {
+                DESTDIR = $$BIN_PATH/Win64/msvc/release
+            }
+        }
     }
 }
 ###############################################################################

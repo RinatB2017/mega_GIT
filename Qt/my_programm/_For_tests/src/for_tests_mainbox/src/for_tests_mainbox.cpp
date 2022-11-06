@@ -301,6 +301,12 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    int x = 6;
+    Q_ASSERT(x==5 || x==7);
+    emit info(QString("X: %1").arg(x));
+#endif
+
+#if 0
     QByteArray ba;
     ba.append(":000102030405\n");
 

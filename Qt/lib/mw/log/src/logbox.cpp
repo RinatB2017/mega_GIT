@@ -638,7 +638,8 @@ void LogBox::save_logfile(const QDateTime &dt,
                           int level,
                           const QString log)
 {
-    QString filename = "log.txt";
+    QString filename = QString("%1.log")
+            .arg(APPNAME);
 
     QFile file(filename);
     if (!file.open(QIODevice::Append | QIODevice::Text))

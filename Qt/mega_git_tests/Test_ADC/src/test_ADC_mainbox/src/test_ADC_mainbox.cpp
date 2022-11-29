@@ -134,7 +134,7 @@ void MainBox::data_ADC(const QByteArray &ba)
         switch(s)
         {
         case ':':
-            data_str.clear();
+            ba_data.clear();
             flag_good_data = true;
             break;
 
@@ -142,25 +142,8 @@ void MainBox::data_ADC(const QByteArray &ba)
         case '\n':
             if(flag_good_data)
             {
-#if 1
-                //FIXME надо как то проще
-                // проблема явно в накапливании данных в data_str
-                QByteArray t_ba = ba;
-                QList<QByteArray> sl_ba = t_ba.replace(":", "").replace("\r", "").replace("\n", "").split('|');
-                QStringList sl;
-                foreach (QByteArray ba, sl_ba)
-                {
-                    sl.append(QString(ba));
-                }
-                analize_packet(sl);
-
-                //emit error(QString("1 %1").arg(ba.toHex().data()));
-                //emit error(QString("2 %1").arg(data_str.toLocal8Bit().toHex().data()));
-#else
-                //TODO так будут проблемы с русскими названиями кривых
-                analize_packet(data_str.split('|'));
-#endif
-                data_str.clear();
+                analize_packet(ba_data.split('|'));
+                ba_data.clear();
                 flag_good_data = false;
             }
             break;
@@ -168,15 +151,14 @@ void MainBox::data_ADC(const QByteArray &ba)
         default:
             if(flag_good_data)
             {
-                data_str.append(s);
+                ba_data.append(s);
             }
             break;
         }
     }
-
 }
 //--------------------------------------------------------------------------------
-void MainBox::analize_packet(QStringList sl)
+void MainBox::analize_packet(QList<QByteArray> sl)
 {
     int cnt = sl.count();
     if(cnt < 1)
@@ -198,7 +180,7 @@ void MainBox::analize_packet(QStringList sl)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::add_curves(QStringList sl)
+void MainBox::add_curves(QList<QByteArray> sl)
 {
     // emit trace(Q_FUNC_INFO);
     ui->data_widget->add_curves(sl);
@@ -231,7 +213,7 @@ QVariant MainBox::convert_string(QString str_value)
     return value;
 }
 //--------------------------------------------------------------------------------
-void MainBox::show_data_ADC(QStringList sl)
+void MainBox::show_data_ADC(QList<QByteArray> sl)
 {
     int max_index = sl.count();
     if(max_index <= 0)

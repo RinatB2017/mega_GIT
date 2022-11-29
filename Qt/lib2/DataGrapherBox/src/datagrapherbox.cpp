@@ -33,18 +33,11 @@ DataGrapherBox::~DataGrapherBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-//#include <QTextCodec>
-void DataGrapherBox::add_curves(QStringList sl)
+void DataGrapherBox::add_curves(QList<QByteArray> sl)
 {
-    //QTextCodec *codec = QTextCodec::codecForName("UTF-8");
-
-    // emit trace(Q_FUNC_INFO);
-    foreach(QString curve_name, sl)
+    foreach(QByteArray ba_curve_name, sl)
     {
-        //QString arr = codec->fromUnicode(curve_name);
-        //emit info(arr);
-
-        add_curve(curve_name);
+        add_curve(QString(ba_curve_name));
     }
 }
 //--------------------------------------------------------------------------------

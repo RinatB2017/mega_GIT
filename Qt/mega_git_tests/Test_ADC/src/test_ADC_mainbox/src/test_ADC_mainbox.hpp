@@ -59,20 +59,19 @@ private:
     QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
-    QString data_str;
-    //QByteArray data_str;
+    QByteArray ba_data;
 
     bool flag_good_data = false;
 
     QVariant convert_string(QString str_value);
 
-    void analize_packet(QStringList sl);
+    void analize_packet(QList<QByteArray> sl);
 
     void init(void);
     void createTestBar(void);
 
-    void add_curves(QStringList sl);
-    void show_data_ADC(QStringList sl);
+    void add_curves(QList<QByteArray> sl);
+    void show_data_ADC(QList<QByteArray> sl);
 
     void clr_curves(void);
 

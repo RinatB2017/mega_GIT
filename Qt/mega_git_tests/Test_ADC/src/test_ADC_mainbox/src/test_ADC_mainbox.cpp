@@ -142,7 +142,24 @@ void MainBox::data_ADC(const QByteArray &ba)
         case '\n':
             if(flag_good_data)
             {
-                analize_packet(data_str.split("|"));
+#if 1
+                //FIXME надо как то проще
+                // проблема явно в накапливании данных в data_str
+                QByteArray t_ba = ba;
+                QList<QByteArray> sl_ba = t_ba.replace(":", "").replace("\r", "").replace("\n", "").split('|');
+                QStringList sl;
+                foreach (QByteArray ba, sl_ba)
+                {
+                    sl.append(QString(ba));
+                }
+                analize_packet(sl);
+
+                //emit error(QString("1 %1").arg(ba.toHex().data()));
+                //emit error(QString("2 %1").arg(data_str.toLocal8Bit().toHex().data()));
+#else
+                //TODO так будут проблемы с русскими названиями кривых
+                analize_packet(data_str.split('|'));
+#endif
                 data_str.clear();
                 flag_good_data = false;
             }

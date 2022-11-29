@@ -60,6 +60,8 @@ private:
     QList<CMD> commands;
 
     QString data_str;
+    //QByteArray data_str;
+
     bool flag_good_data = false;
 
     QVariant convert_string(QString str_value);

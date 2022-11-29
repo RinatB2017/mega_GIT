@@ -284,6 +284,11 @@ void MainBox::updateText(void)
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)
 {
+    if(ui->serial_widget->isOpen())
+    {
+        messagebox_critical("Ошибка", "Сначала закройте порт");
+        return false;
+    }
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -244,6 +244,8 @@ int DataGrapherBox::add_curve(QString curve_name)
     // emit trace(Q_FUNC_INFO);
 
     ADC_label *adc_label = new ADC_label(curve_name, this);
+    Q_ASSERT(adc_label);
+
     CURVES cur;
 
     cur.name = curve_name;

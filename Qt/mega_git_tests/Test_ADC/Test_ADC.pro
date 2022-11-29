@@ -50,7 +50,7 @@ use_worker {
 } else {
     include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 }
-include ($$LIB_PATH2/serial5/serial5.pri)
+include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
 #----------------------------------------------
 include (src/test_ADC_mainbox/test_ADC_mainbox.pri)
 ----------------------------------------------

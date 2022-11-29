@@ -44,6 +44,8 @@ void ADC_label::init(void)
     ui->lcd_value->setFixedSize(300, 48);
     //ui->lcd_value->setFixedSize(300, 36);
     ui->lcd_value->setDigitCount(14);
+
+    ui->lcd_value->setProperty(NO_SAVE, true);
 }
 //--------------------------------------------------------------------------------
 void ADC_label::set_label_text(QString text)

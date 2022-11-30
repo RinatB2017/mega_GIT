@@ -31,6 +31,7 @@
 #include <QMainWindow>
 #include <QTranslator>
 #include <QStatusBar>
+#include <QShortcut>
 #include <QMdiArea>
 #include <QtGlobal>
 #include <QMenuBar>
@@ -270,6 +271,7 @@ private:
 
     QString orgName;
     QString appName;
+    QString appTitle;
     QString appVersion;
     QString style_name;
 

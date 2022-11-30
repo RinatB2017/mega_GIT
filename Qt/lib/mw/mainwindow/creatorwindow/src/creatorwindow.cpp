@@ -215,9 +215,20 @@ void CreatorWindow::init(void)
     app_mainBar = menuBar();
     //    m_app_windowsmenu = new QMenu(app_mainBar);
 
+#ifdef APPTITLE
+    appTitle = APPTITLE;
+#else
+    appTitle = APPNAME;
+#endif
+
+    QShortcut *keyF1 = new QShortcut(this);
+    keyF1->setKey(Qt::Key_F1);
+    connect(keyF1,  &QShortcut::activated,
+            this,   &CreatorWindow::help);
+
     load_translations();
     setWindowTitle(QString("%1 (ver. %2)")
-                   .arg(appName)
+                   .arg(appTitle)
                    .arg(appVersion));
     setObjectName("CreatorWindow");
 
@@ -802,8 +813,9 @@ void CreatorWindow::createCustomStyleToolBar(void)
 //--------------------------------------------------------------------------------
 void CreatorWindow::help(void)
 {
-    if(QFile::exists("index.html"))
-        HelpBrowser::showPage("index.html", false);
+    QString help_filename = QString("%1.html").arg(APPNAME);
+    if(QFile::exists(help_filename))
+        HelpBrowser::showPage(help_filename, false);
     else
         HelpBrowser::showPage("qrc:/index.html", false);
 }

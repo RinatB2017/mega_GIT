@@ -59,7 +59,7 @@
              </widget>
             </item>
             <item row="0" column="0">
-             <widget class="QComboBox" name="PortBox"/>
+             <widget class="QComboBox" name="cb_port"/>
             </item>
            </layout>
           </item>
@@ -82,7 +82,7 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>PortBox</tabstop>
+  <tabstop>cb_port</tabstop>
   <tabstop>btn_refresh</tabstop>
  </tabstops>
  <resources/>

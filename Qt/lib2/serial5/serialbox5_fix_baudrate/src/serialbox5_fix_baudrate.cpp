@@ -123,7 +123,7 @@ void SerialBox5_fix_baudrate::init(void)
     createWidgets();
     initSerial();
 
-    ui->PortBox->setMinimumWidth(150);
+    ui->cb_port->setMinimumWidth(150);
 
     ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
     ui->btn_refresh->setToolTip("Обновить список портов");
@@ -144,7 +144,7 @@ void SerialBox5_fix_baudrate::createWidgets(void)
     ui->gridLayout->setSpacing(0);
 
     ui->btn_refresh->setProperty(NO_BLOCK, true);
-    ui->PortBox->setProperty(NO_BLOCK, true);
+    ui->cb_port->setProperty(NO_BLOCK, true);
 
     connect(ui->btn_power,      &QPushButton::clicked,  this,   &SerialBox5_fix_baudrate::btnOpenPortClicked);
     connect(ui->btn_refresh,    &QToolButton::clicked,  this,   &SerialBox5_fix_baudrate::refresh);
@@ -177,13 +177,13 @@ void SerialBox5_fix_baudrate::add_frame_text(QFrame *parent,
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::refresh(void)
 {
-    ui->PortBox->clear();
-    ui->PortBox->addItems(get_port_names());
+    ui->cb_port->clear();
+    ui->cb_port->addItems(get_port_names());
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::initSerial(void)
 {
-    ui->PortBox->setProperty(NO_SAVE, true);
+    ui->cb_port->setProperty(NO_SAVE, true);
     ui->btn_power->setProperty(NO_SAVE, true);
     ui->btn_refresh->setProperty(NO_BLOCK, true);
     ui->btn_refresh->setToolTip("Обновить список портов");
@@ -219,7 +219,7 @@ void SerialBox5_fix_baudrate::getStatus(const QString &status, QDateTime current
 void SerialBox5_fix_baudrate::setCloseState(void)
 {
     ui->btn_refresh->setEnabled(true);
-    ui->PortBox->setEnabled(true);
+    ui->cb_port->setEnabled(true);
     ui->btn_power->setChecked(false);
 #ifdef RS232_SEND
     sendBox5->block_interface(true);
@@ -231,7 +231,7 @@ void SerialBox5_fix_baudrate::setCloseState(void)
 void SerialBox5_fix_baudrate::setOpenState()
 {
     ui->btn_refresh->setEnabled(false);
-    ui->PortBox->setEnabled(false);
+    ui->cb_port->setEnabled(false);
     ui->btn_power->setChecked(true);
 #ifdef RS232_SEND
     sendBox5->block_interface(false);
@@ -250,7 +250,7 @@ void SerialBox5_fix_baudrate::btnOpenPortClicked()
     }
     else
     {
-        QString text = ui->PortBox->currentText();
+        QString text = ui->cb_port->currentText();
         if(text.isEmpty())
         {
             if(isOpen())
@@ -489,11 +489,16 @@ bool SerialBox5_fix_baudrate::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::load_setting(void)
 {
-
+    int index;
+    bool ok = load_int(P_PORT, &index);
+    if(ok)
+    {
+        ui->cb_port->setCurrentIndex(index);
+    }
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::save_setting(void)
 {
-
+    save_int(P_PORT, ui->cb_port->currentIndex());
 }
 //--------------------------------------------------------------------------------

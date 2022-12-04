@@ -30,6 +30,8 @@
 #   include "sendbox5.hpp"
 #endif
 //--------------------------------------------------------------------------------
+#define P_PORT  "port_name"
+//--------------------------------------------------------------------------------
 #include "logbox.hpp"
 //--------------------------------------------------------------------------------
 #define MAX_TIME_MSEC   100
@@ -516,11 +518,16 @@ bool SerialBox5_lite::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::load_setting(void)
 {
-
+    int index;
+    bool ok = load_int(P_PORT, &index);
+    if(ok)
+    {
+        ui->PortBox->setCurrentIndex(index);
+    }
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::save_setting(void)
 {
-
+    save_int(P_PORT, ui->PortBox->currentIndex());
 }
 //--------------------------------------------------------------------------------

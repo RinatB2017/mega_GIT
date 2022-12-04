@@ -23,7 +23,7 @@
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "MCP4725"
-//--------------------MCP4725------------------------------------------------------------
+//--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME
 #define QMAKE_TARGET_PRODUCT    APPNAME

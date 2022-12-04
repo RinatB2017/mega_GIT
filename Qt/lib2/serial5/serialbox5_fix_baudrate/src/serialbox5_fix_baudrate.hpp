@@ -25,9 +25,10 @@
 #   include "sendbox5.hpp"
 #endif
 //--------------------------------------------------------------------------------
+#define P_PORT  "port_name"
+//--------------------------------------------------------------------------------
 #include "serialwidget.hpp"
 #include "mywidget.hpp"
-#include "defines.hpp"
 //--------------------------------------------------------------------------------
 class LogBox;
 //--------------------------------------------------------------------------------
@@ -79,7 +80,7 @@ private:
 #endif
 
 #ifdef RS232_SEND
-    SendBox5 *sendBox5;
+    SendBox5 *sendBox5 = nullptr;
 #endif
 
     void init(void);

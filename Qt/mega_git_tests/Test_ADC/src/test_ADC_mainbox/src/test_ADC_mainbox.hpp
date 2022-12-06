@@ -71,6 +71,7 @@ private:
     void createTestBar(void);
 
     void add_curves(QList<QByteArray> sl);
+    void update_curves(QList<QByteArray> sl);
     void show_data_ADC(QList<QByteArray> sl);
 
     void clr_curves(void);

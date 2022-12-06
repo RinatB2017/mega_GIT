@@ -41,6 +41,24 @@ void DataGrapherBox::add_curves(QList<QByteArray> sl)
     }
 }
 //--------------------------------------------------------------------------------
+void DataGrapherBox::update_curves(QList<QByteArray> sl)
+{
+    if(sl.count() <= 2)
+    {
+        emit error("Bad sl count");
+        return;
+    }
+
+    sl.removeFirst();
+
+    int index = 0;
+    foreach(QByteArray ba_curve_name, sl)
+    {
+        update_curve(index, QString(ba_curve_name));
+        index++;
+    }
+}
+//--------------------------------------------------------------------------------
 void DataGrapherBox::clr_curves(void)
 {
     ui->grapher_widget->remove_all_curve();
@@ -258,6 +276,22 @@ int DataGrapherBox::add_curve(QString curve_name)
     curves.append(cur);
     ui->lcd_layout->addWidget(adc_label);
     return cur.curve_index;
+}
+//--------------------------------------------------------------------------------
+void DataGrapherBox::update_curve(int curve_index,
+                                  const QString &curve_name)
+{
+    if(curve_index < 0)
+    {
+        emit error("curve_index < 0");
+        return;
+    }
+    if(curve_index >= curves.count())
+    {
+        emit error("curve_index > curves.count()");
+        return;
+    }
+    curves[curve_index].obj->set_label_text(curve_name);
 }
 //--------------------------------------------------------------------------------
 void DataGrapherBox::updateText(void)

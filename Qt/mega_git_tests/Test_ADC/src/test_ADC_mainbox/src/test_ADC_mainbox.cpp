@@ -169,9 +169,17 @@ void MainBox::analize_packet(QList<QByteArray> sl)
     // emit trace(sl.at(0));
     if(sl.at(0) == "curves")
     {
-        sl.removeFirst();
-        clr_curves();
-        add_curves(sl);
+        int num_curves = cnt - 1;
+        if(num_curves != ui->data_widget->get_max_index())
+        {
+            sl.removeFirst();
+            clr_curves();
+            add_curves(sl);
+        }
+        else
+        {
+            update_curves(sl);
+        }
     }
     if(sl.at(0) == "data")
     {
@@ -184,6 +192,12 @@ void MainBox::add_curves(QList<QByteArray> sl)
 {
     // emit trace(Q_FUNC_INFO);
     ui->data_widget->add_curves(sl);
+}
+//--------------------------------------------------------------------------------
+void MainBox::update_curves(QList<QByteArray> sl)
+{
+    // emit trace(Q_FUNC_INFO);
+    ui->data_widget->update_curves(sl);
 }
 //--------------------------------------------------------------------------------
 QVariant MainBox::convert_string(QString str_value)

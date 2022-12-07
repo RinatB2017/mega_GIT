@@ -292,6 +292,7 @@ void DataGrapherBox::update_curve(int curve_index,
         return;
     }
     curves[curve_index].obj->set_label_text(curve_name);
+    ui->grapher_widget->set_curve_title(curve_index, curve_name);
 }
 //--------------------------------------------------------------------------------
 void DataGrapherBox::updateText(void)

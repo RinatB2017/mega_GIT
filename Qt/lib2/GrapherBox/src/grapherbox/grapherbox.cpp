@@ -164,6 +164,26 @@ bool GrapherBox::set_curve_color(int channel, QColor color)
     return true;
 }
 //--------------------------------------------------------------------------------
+bool GrapherBox::set_curve_title(int channel,
+                                 const QString &title)
+{
+    if(channel < 0)
+    {
+        emit error("channel < 0");
+        return false;
+    }
+    if(channel >= curves.count())
+    {
+        emit error(QString(tr("channel > %1"))
+                   .arg(curves.count()));
+        return false;
+    }
+    curves[channel].title = title;
+    curves[channel].plot_curve->setTitle(title);
+    updateGraphics();
+    return true;
+}
+//--------------------------------------------------------------------------------
 void GrapherBox::set_curve_symbol(int channel,
                                   QwtSymbol *symbol)
 {
@@ -1793,7 +1813,7 @@ void GrapherBox::test2(void)
         for(int n=0; n<max_x; n++)
         {
             curves[channel].view_curve->append(QPointF(n, channel]);
-            curves[channel].pos_x++;
+                    curves[channel].pos_x++;
         }
     }
 

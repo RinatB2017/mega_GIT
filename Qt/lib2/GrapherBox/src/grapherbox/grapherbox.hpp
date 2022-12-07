@@ -160,7 +160,10 @@ public slots:
     void remove_all_curve(void);
 
     QColor get_curve_color(int channel);
-    bool set_curve_color(int channel, QColor color);
+    bool set_curve_color(int channel,
+                         QColor color);
+    bool set_curve_title(int channel,
+                         const QString &title);
 
     void set_curve_symbol(int channel,
                           QwtSymbol *symbol);

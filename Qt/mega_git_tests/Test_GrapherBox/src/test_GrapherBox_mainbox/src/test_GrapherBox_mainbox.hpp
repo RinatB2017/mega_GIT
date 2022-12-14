@@ -21,6 +21,8 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QtEndian>
+//--------------------------------------------------------------------------------
 #include "grapherbox.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -28,6 +30,22 @@ enum CURVE {
     DOTS = 0,
     LINES,
     SPLINE_LINES
+};
+
+// Wav Header
+struct wav_header_t
+{
+    char chunkId[4];        // "RIFF" = 0x46464952
+    quint32 chunkSize;      // 28 [+ sizeof(wExtraFormatBytes) + wExtraFormatBytes] + sum(sizeof(chunk.id) + sizeof(chunk.size) + chunk.size)
+    char format[4];         // "WAVE" = 0x45564157
+    char subchunk1ID[4];    // "fmt " = 0x20746D66
+    quint32 subchunk1Size;  // 16 [+ sizeof(wExtraFormatBytes) + wExtraFormatBytes]
+    quint16 audioFormat;
+    quint16 numChannels;
+    quint32 sampleRate;
+    quint32 byteRate;
+    quint16 blockAlign;
+    quint16 bitsPerSample;
 };
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -49,8 +67,8 @@ public:
 
 private slots:
     void choice_test(void);
-    void m_fractal(void);
     void test(void);
+    void read_wav(void);
     void test_load(void);
     void test_save(void);
     void test0(void);
@@ -78,8 +96,13 @@ private:
     int curves[MAX_CHANNELS];
 #endif
 
+    wav_header_t wavHeader;
+
     void init(void);
     void createTestBar(void);
+
+    void readWAV(const QString &wavFile);
+    void ReadWav(const QString &fileName);
 
     void updateText(void);
     bool programm_is_exit(void);

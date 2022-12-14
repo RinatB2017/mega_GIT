@@ -219,7 +219,7 @@ void MainBox::createTestBar(void)
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "Фрактал Мурата",       &MainBox::m_fractal });
+    commands.append({ id++, "Read WAV",             &MainBox::read_wav });
     commands.append({ id++, "test",                 &MainBox::test });
     commands.append({ id++, "test load",            &MainBox::test_load });
     commands.append({ id++, "test save",            &MainBox::test_save });
@@ -329,30 +329,206 @@ void MainBox::test(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::m_fractal(void)
+void MainBox::readWAV(const QString &wavFile)
 {
-    qreal X = 1;
-    qreal Y = 0;
+    // https://www.qtcentre.org/threads/38529-reading-data-from-wav-files
+    QFile m_WAVFile;
+    m_WAVFile.setFileName(wavFile);
+    m_WAVFile.open(QIODevice::ReadOnly);
 
-    for(int N=1; N<21; N++)
+    char *strm = nullptr;
+    QVector<double> m_DATA;
+
+    qDebug()<<m_WAVFile.read(4);//RIFF
+    // m_WAVHeader.RIFF = m_WAVFile.read(4).data();
+
+    m_WAVFile.read(strm,4);//chunk size
+    qDebug()<<qFromLittleEndian<quint32>((uchar*)strm) ;
+    emit info(QString("chunk size: %1").arg(strm));
+
+    m_WAVFile.read(strm,4);//format
+    qDebug()<<strm;
+    emit info(QString("format: %1").arg(strm));
+
+    m_WAVFile.read(strm,4);//subchunk1 id
+    qDebug()<<strm;
+    emit info(QString("subchunk1 id: %1").arg(strm));
+
+    m_WAVFile.read(strm,4);//subchunk1 size
+    qDebug()<<qFromLittleEndian<quint32>((uchar*)strm) ;
+    emit info(QString("subchunk1 size: %1").arg(strm));
+
+    m_WAVFile.read(strm,2);//audio format
+    qDebug()<<qFromLittleEndian<quint32>((uchar*)strm) ;
+    emit info(QString("audio format: %1").arg(strm));
+
+    m_WAVFile.read(strm,2);//NumChannels
+    qDebug()<<qFromLittleEndian<quint32>((uchar*)strm) ;
+    emit info(QString("NumChannels: %1").arg(strm));
+
+    m_WAVFile.read(strm,4);//Sample rate
+    qDebug()<<qFromLittleEndian<quint32>((uchar*)strm) ;
+    emit info(QString("Sample rate: %1").arg(strm));
+
+    m_WAVFile.read(strm,4);//Byte rate
+    qDebug()<<qFromLittleEndian<quint32>((uchar*)strm) ;
+    emit info(QString("Byte rate: %1").arg(strm));
+
+    m_WAVFile.read(strm,2);//Block Allign
+    qDebug()<<qFromLittleEndian<quint32>((uchar*)strm) ;
+    emit info(QString("Block Allign: %1").arg(strm));
+
+    m_WAVFile.read(strm,2);//BPS
+    qDebug()<<qFromLittleEndian<quint32>((uchar*)strm) ;
+    emit info(QString("BPS: %1").arg(strm));
+
+    m_WAVFile.read(strm,4);//subchunk2 id
+    qDebug()<<strm;
+    emit info(QString("subchunk2 id: %1").arg(strm));
+
+    m_WAVFile.read(strm,4);//subchunk2 size
+    qDebug()<<qFromLittleEndian<quint32>((uchar*)strm) ;
+    emit info(QString("subchunk2 size: %1").arg(strm));
+
+    while(!m_WAVFile.atEnd())
     {
-#ifdef ONE_CURVE
-        ui->grapher_widget->add_curve_data(curve_0, X, Y);
-#else
-        //график всего один
-        ui->grapher_widget->add_curve_data(curves[0], X, Y);
-#endif
-        emit info(QString("%1|%2")
-                  .arg(X, 0, 'f', 3)
-                  .arg(Y, 0, 'f', 3));
-#if 1
-        emit info(QString("curves: %1")
-                  .arg(ui->grapher_widget->get_curves_count()));
+        m_WAVFile.read(strm,2);
+        emit info(QString("%1").arg(strm));
+        if(qFromLittleEndian<short>((uchar*)strm))
+        {
+            m_DATA << (qFromLittleEndian<short>((uchar*)strm));
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::ReadWav(const QString &fileName)
+{
+    if (fileName.isEmpty() == false)
+    {
+        QFile wavFile(fileName);
+        if (!wavFile.open(QIODevice::ReadOnly))
+        {
+            emit error("Error: Could not open file!");
+            return;
+        }
+
+        // Read WAV file header
+        QDataStream analyzeHeader (&wavFile);
+        analyzeHeader.setByteOrder(QDataStream::LittleEndian);
+        analyzeHeader.readRawData(wavHeader.chunkId, 4);    // "RIFF"
+        analyzeHeader >> wavHeader.chunkSize;               // File Size
+        analyzeHeader.readRawData(wavHeader.format, 4);     // "WAVE"
+        analyzeHeader.readRawData(wavHeader.subchunk1ID, 4);// "fmt"
+        analyzeHeader >> wavHeader.subchunk1Size;           // Format length
+        analyzeHeader >> wavHeader.audioFormat;             // Format type
+        analyzeHeader >> wavHeader.numChannels;             // Number of channels
+        analyzeHeader >> wavHeader.sampleRate;              // Sample rate
+        analyzeHeader >> wavHeader.byteRate;                // (Sample Rate * BitsPerSample * Channels) / 8
+        analyzeHeader >> wavHeader.blockAlign;              // (BitsPerSample * Channels) / 8.1
+        analyzeHeader >> wavHeader.bitsPerSample;           // Bits per sample
+
+        // Print WAV header
+        emit info("WAV File Header read:");
+        emit info(QString("File Type: %1").arg(wavHeader.chunkId));
+        emit info(QString("File Size: %1").arg(wavHeader.chunkSize));
+        emit info(QString("WAV Marker: %1").arg(wavHeader.format));
+        emit info(QString("Format Name: %1").arg(wavHeader.subchunk1ID));
+        emit info(QString("Format Length: %1").arg(wavHeader.subchunk1Size));
+        emit info(QString("Format Type: %1").arg(wavHeader.audioFormat));
+        emit info(QString("Number of Channels: %1").arg(wavHeader.numChannels));
+        emit info(QString("Sample Rate: %1").arg(wavHeader.sampleRate));
+        emit info(QString("Sample Rate * Bits/Sample * Channels / 8: %1").arg(wavHeader.byteRate));
+        emit info(QString("Bits per Sample * Channels / 8.1: %1").arg(wavHeader.blockAlign));
+        emit info(QString("Bits per Sample: %1").arg(wavHeader.bitsPerSample));
+
+        // Search data chunk
+        quint32 chunkDataSize = 0;
+        QByteArray temp_buff;
+        char buff[0x04];
+        while (true)
+        {
+            QByteArray tmp = wavFile.read(0x04);
+            temp_buff.append(tmp);
+            int idx = temp_buff.indexOf("data");
+            if (idx >= 0)
+            {
+                int lenOfData = temp_buff.length() - (idx + 4);
+                memcpy(buff, temp_buff.constData() + idx + 4, lenOfData);
+                int bytesToRead = 4 - lenOfData;
+                // finish readind size of chunk
+                if (bytesToRead > 0)
+                {
+                    int read = wavFile.read(buff + lenOfData, bytesToRead);
+                    if (bytesToRead != read)
+                    {
+                        emit error("Error: Something awful happens!");
+                        return;
+                    }
+                }
+                chunkDataSize = qFromLittleEndian<quint32>((const uchar*)buff);
+                break;
+            }
+            if (temp_buff.length() >= 8)
+            {
+                temp_buff.remove(0, 0x04);
+            }
+        }
+        if (!chunkDataSize)
+        {
+            emit error("Error: Chunk data not found!");
+            return;
+        }
+
+        // Reading data from the file
+        int samples = 0;
+        int max_sample = 0;
+        while (wavFile.read(buff, 0x04) > 0)
+        {
+            chunkDataSize -= 4;
+            ++samples;
+            qint16 sampleChannel1 = qFromLittleEndian<qint16>((const uchar*)buff);
+            qint16 sampleChannel2 = qFromLittleEndian<qint16>((const uchar*)(buff + 2));
+
+            ui->grapher_widget->add_curve_data(0, sampleChannel1);
+            ui->grapher_widget->add_curve_data(1, sampleChannel2);
+
+            QCoreApplication::processEvents();
+
+#if 0
+            //TODO проверка, потом надо убрать
+            max_sample++;
+            if(max_sample > 10000)
+            {
+                break;
+            }
 #endif
 
-        X = X + 6.0 * (qreal)N;
-        Y = Y + 3.0 * (2.0 * (qreal)N + 1.0);
+            // check the end of the file
+            if (chunkDataSize == 0 || chunkDataSize & 0x80000000)
+            {
+                break;
+            }
+        }
+        emit info(QString("Readed %1 samples...")
+                  .arg(samples));
     }
+}
+//--------------------------------------------------------------------------------
+void MainBox::read_wav(void)
+{
+    MyFileDialog *dlg = new MyFileDialog("read_wav", "read_wav");
+    dlg->setNameFilter("WAV files (*.wav)");
+    dlg->setDefaultSuffix("wav");
+    dlg->setDirectory(".");
+    dlg->selectFile("без имени");
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+
+        ReadWav(filename);
+    }
+    delete dlg;
 }
 //--------------------------------------------------------------------------------
 void MainBox::test_load(void)
@@ -370,13 +546,13 @@ void MainBox::test_load(void)
     QDataStream in(ba);
     qreal data;
     int size = static_cast<int>(ba.size()) / static_cast<int>(sizeof(qreal));
-    //    int offset = 0;
-    //    ui->grapher_widget->get_curve_data_count(0, &offset);
+    // int offset = 0;
+    // ui->grapher_widget->get_curve_data_count(0, &offset);
     for(int n=0; n<size; n++)
     {
         in >> data;
         ui->grapher_widget->add_curve_data(0, data);
-        //        ui->grapher_widget->add_curve_data(0, offset + n, data);
+        // ui->grapher_widget->add_curve_data(0, offset + n, data);
     }
 }
 //--------------------------------------------------------------------------------

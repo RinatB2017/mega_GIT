@@ -301,6 +301,15 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    enum XXX {
+        CMD_0,
+        CMD_1
+    };
+
+    int x = XXX::CMD_0;
+#endif
+
+#if 0
     int x = 6;
     Q_ASSERT(x==5 || x==7);
     emit info(QString("X: %1").arg(x));

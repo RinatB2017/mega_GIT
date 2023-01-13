@@ -471,7 +471,7 @@ void SerialBox5_fix_baudrate::get_parameter(void)
             .arg(parity())
             .arg(stopBits())
             .arg(flowControl());
-    emit info(temp);
+    emit debug(temp);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::updateText(void)

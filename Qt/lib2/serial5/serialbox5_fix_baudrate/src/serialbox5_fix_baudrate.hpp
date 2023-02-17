@@ -57,6 +57,9 @@ public:
 //    bool set_settings_restored_on_close(bool state);
 //    bool setSettingsRestoredOnClose(bool state);
 
+    void set_portname(const QString &portname);
+    QString get_portname(void);
+
     qint32 get_baudRate(void);
     QSerialPort::DataBits       get_dataBits(void);
     QSerialPort::Parity         get_parity(void);

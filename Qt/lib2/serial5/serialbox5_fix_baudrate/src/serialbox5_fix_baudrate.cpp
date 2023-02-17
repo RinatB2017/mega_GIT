@@ -474,6 +474,27 @@ void SerialBox5_fix_baudrate::get_parameter(void)
     emit debug(temp);
 }
 //--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate::set_portname(const QString &portname)
+{
+    if(portname.isEmpty())
+    {
+        return;
+    }
+    for(int n=0; n<ui->cb_port->count(); n++)
+    {
+        ui->cb_port->setCurrentIndex(n);
+        if(ui->cb_port->currentText() == portname)
+        {
+            return;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+QString SerialBox5_fix_baudrate::get_portname(void)
+{
+    return ui->cb_port->currentText();
+}
+//--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::updateText(void)
 {
 #ifdef RS232_SEND

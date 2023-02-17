@@ -307,11 +307,11 @@ bool MainBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)
 {
-
+    ui->serial_widget->set_portname(load_string(P_NAME));
 }
 //--------------------------------------------------------------------------------
 void MainBox::save_setting(void)
 {
-
+    save_string(P_NAME, ui->serial_widget->get_portname());
 }
 //--------------------------------------------------------------------------------

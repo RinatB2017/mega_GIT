@@ -42,7 +42,7 @@ void ADC_label::init(void)
 
     ui->lbl_name->setText(label);
     ui->lcd_value->setFixedSize(300, 48);
-    //ui->lcd_value->setFixedSize(300, 36);
+    //ui->lcd_value->setMinimumHeight(48);
     ui->lcd_value->setDigitCount(14);
 
     ui->lcd_value->setProperty(NO_SAVE, true);

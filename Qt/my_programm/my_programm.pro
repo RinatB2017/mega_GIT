@@ -27,6 +27,7 @@ SUBDIRS += \
     $$PWD/MCP4725 \
     $$PWD/MODBUS \
     $$PWD/show_films \
+    $$PWD/SD_prompt \
     $$PWD/test_serialport_win7 \
     $$PWD/Templates \
     $$PWD/WiFi \

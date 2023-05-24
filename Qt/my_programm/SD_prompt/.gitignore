@@ -1,0 +1,5 @@
+/.qtc_clangd
+/bin
+/Makefile
+/*.user
+/object_script.*

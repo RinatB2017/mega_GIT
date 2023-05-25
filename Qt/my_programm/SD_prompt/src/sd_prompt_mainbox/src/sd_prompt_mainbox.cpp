@@ -38,9 +38,12 @@ void MainBox::init(void)
 #ifdef QT_DEBUG
     create_test_bar();
 #endif
-    create_programm_bar();
+    //create_programm_bar();
 
-    connect(this,   &MainBox_GUI::s_create_prompt,   this,   &MainBox::create_prompt);
+    connect(this,   &MainBox_GUI::s_create_positive_prompt,
+            this,   &MainBox::create_positive_prompt);
+    connect(this,   &MainBox_GUI::s_create_negative_prompt,
+            this,   &MainBox::create_negative_prompt);
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -134,7 +137,8 @@ void MainBox::create_programm_bar(void)
     Q_ASSERT(mw);
 
     programm_commands.clear(); int id = 0;
-    programm_commands.append({ id++, "create prompt",   &MainBox::create_prompt });
+    programm_commands.append({ id++, "create positive prompt",   &MainBox::create_positive_prompt });
+    programm_commands.append({ id++, "create negative prompt",   &MainBox::create_negative_prompt });
 
     programm_bar = new QToolBar("programm_bar");
     programm_bar->setObjectName("programm_bar");
@@ -166,16 +170,30 @@ bool MainBox::test(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::create_prompt(void)
+bool MainBox::create_positive_prompt(void)
 {
     QString prompt;
 
-    prompt = get_prompt();
+    prompt = get_positive_prompt();
 
     QClipboard *clipboard = QGuiApplication::clipboard();
     clipboard->setText(prompt);
 
-    messagebox_info("Prompt", prompt);
+    messagebox_info("Positive prompt", prompt);
+
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::create_negative_prompt(void)
+{
+    QString prompt;
+
+    prompt = get_negative_prompt();
+
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    clipboard->setText(prompt);
+
+    messagebox_info("Negative prompt", prompt);
 
     return true;
 }
@@ -197,10 +215,13 @@ void MainBox::load_setting(void)
     }
 #endif
 
-    ok = load_int("programm_bar", &index);
-    if(ok)
+    if(cb_programm.isNull() == false)
     {
-        cb_programm->setCurrentIndex(index);
+        ok = load_int("programm_bar", &index);
+        if(ok)
+        {
+            cb_programm->setCurrentIndex(index);
+        }
     }
 }
 //--------------------------------------------------------------------------------
@@ -210,6 +231,9 @@ void MainBox::save_setting(void)
     save_int("test_bar", cb_test->currentIndex());
 #endif
 
-    save_int("programm_bar", cb_programm->currentIndex());
+    if(cb_programm.isNull() == false)
+    {
+        save_int("programm_bar", cb_programm->currentIndex());
+    }
 }
 //--------------------------------------------------------------------------------

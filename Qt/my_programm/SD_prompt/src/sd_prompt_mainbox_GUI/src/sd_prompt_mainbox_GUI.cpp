@@ -38,32 +38,81 @@ MainBox_GUI::~MainBox_GUI()
 void MainBox_GUI::init(void)
 {
     ui->setupUi(this);
-    connect(ui->btn_create_prompt,   &QPushButton::clicked,  this,   &MainBox_GUI::s_create_prompt);
+    connect(ui->btn_create_positive_prompt, &QPushButton::clicked,
+            this,                           &MainBox_GUI::s_create_positive_prompt);
+    connect(ui->btn_create_negative_prompt, &QPushButton::clicked,
+            this,                           &MainBox_GUI::s_create_negative_prompt);
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-QString MainBox_GUI::get_prompt(void)
+QString MainBox_GUI::get_positive_prompt(void)
 {
     QString prompt;
 
-    prompt.append(ui->le_0->text());
-    prompt.append(",");
-    prompt.append(ui->le_1->text());
-    prompt.append(",");
-    prompt.append(ui->le_2->text());
-    prompt.append(",");
-    prompt.append(ui->le_3->text());
-    prompt.append(",");
-    prompt.append(ui->le_4->text());
-    prompt.append(",");
-    prompt.append(ui->le_5->text());
-    prompt.append(",");
-    prompt.append(ui->le_6->text());
-    prompt.append(",");
-    prompt.append(ui->le_7->text());
-    prompt.append(",");
-    prompt.append(ui->le_8->text());
+    QString p0 = ui->le_0->text();
+    QString p1 = ui->le_1->text();
+    QString p2 = ui->le_2->text();
+    QString p3 = ui->le_3->text();
+    QString p4 = ui->le_4->text();
+    QString p5 = ui->le_5->text();
+    QString p6 = ui->le_6->text();
+    QString p7 = ui->le_7->text();
+    QString p8 = ui->le_8->text();
 
+    if(p0.isEmpty() == false)
+    {
+        prompt.append(p0);
+        prompt.append(",");
+    }
+    if(p1.isEmpty() == false)
+    {
+        prompt.append(p1);
+        prompt.append(",");
+    }
+    if(p2.isEmpty() == false)
+    {
+        prompt.append(p2);
+        prompt.append(",");
+    }
+    if(p3.isEmpty() == false)
+    {
+        prompt.append(p3);
+        prompt.append(",");
+    }
+    if(p4.isEmpty() == false)
+    {
+        prompt.append(p4);
+        prompt.append(",");
+    }
+    if(p5.isEmpty() == false)
+    {
+        prompt.append(p5);
+        prompt.append(",");
+    }
+    if(p6.isEmpty() == false)
+    {
+        prompt.append(p6);
+        prompt.append(",");
+    }
+    if(p7.isEmpty() == false)
+    {
+        prompt.append(p7);
+        prompt.append(",");
+    }
+    if(p8.isEmpty() == false)
+    {
+        prompt.append(p8);
+        prompt.append(",");
+    }
+
+    return prompt;
+}
+//--------------------------------------------------------------------------------
+QString MainBox_GUI::get_negative_prompt(void)
+{
+    QString prompt;
+
+    prompt.append(ui->te_negative_prompt->toPlainText());
     return prompt;
 }
 //--------------------------------------------------------------------------------

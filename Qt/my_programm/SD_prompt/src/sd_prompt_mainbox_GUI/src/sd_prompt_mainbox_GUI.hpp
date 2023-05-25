@@ -36,14 +36,16 @@ class MainBox_GUI : public MyWidget
     Q_OBJECT
 
 signals:
-    void s_create_prompt(void);
+    void s_create_positive_prompt(void);
+    void s_create_negative_prompt(void);
 
 public:
     explicit MainBox_GUI(QWidget *parent,
                          MySplashScreen *splash);
     virtual ~MainBox_GUI();
 
-    QString get_prompt(void);
+    QString get_positive_prompt(void);
+    QString get_negative_prompt(void);
 
 private:
     QPointer<MySplashScreen> splash;

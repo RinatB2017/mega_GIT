@@ -42,7 +42,8 @@ private slots:
     void choice_programm(void);
     bool test(void);
 
-    bool create_prompt(void);
+    bool create_positive_prompt(void);
+    bool create_negative_prompt(void);
 
 private:
     typedef struct CMD

@@ -25,11 +25,11 @@
 #include "ui_test_ADC_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
+#include "test_ADC_mainbox.hpp"
+#include "datagrapherbox.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "defines.hpp"
-#include "test_ADC_mainbox.hpp"
-#include "datagrapherbox.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
@@ -56,7 +56,7 @@ void MainBox::init(void)
 #endif
 
     clr_curves();
-    for(int n=0; n<6; n++)
+    for(int n=0; n<NUM_CURVES; n++)
     {
         QString curve_name = QString("A%1").arg(n);
         ui->data_widget->add_curve(curve_name);
@@ -75,12 +75,13 @@ void MainBox::init(void)
                             reinterpret_cast<QWidget *>(ui->main_frame));
 
 #if 0
+        //FIXME тестирование нового вида
+
         mw->add_dock_widget("Serial",
                             "serial_widget",
                             Qt::LeftDockWidgetArea,
                             reinterpret_cast<QWidget *>(ui->serial_widget));
 
-        //FIXME тестирование
         QTimer::singleShot(1000, [this, mw] {
             QList<GrapherBox *> l_gb = findChildren<GrapherBox *>();
             if(l_gb.count() > 0)

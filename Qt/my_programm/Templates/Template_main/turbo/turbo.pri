@@ -46,18 +46,28 @@ win32 {
 #OPTIMIZE = -pipe -Os #only size code optimization
 #OPTIMIZE = -pipe -Ofast #only for gcc-4.6
 
-CONFIG(debug, debug|release) {
-    OPTIMIZE = -pipe -O0
-}
-else {
-    OPTIMIZE = -pipe -O2
-}
-###############################################################################
-#CONFIG	 += precompile_header
-#PRECOMPILED_HEADER  = stable.h
-###############################################################################
 unix:!macx {
-    QMAKE_CXX      = ccache g++
+    CONFIG(debug, debug|release) {
+        OPTIMIZE = -O0
+    }
+    else {
+        OPTIMIZE = -O2
+    }
+    linux {
+        OPTIMIZE += -pipe
+    }
+    QMAKE_CFLAGS   += $${OPTIMIZE}
+    QMAKE_CXXFLAGS += $${OPTIMIZE}
+    QMAKE_LFLAGS   += $${OPTIMIZE}
+    QMAKE_OBJECTIVE_CFLAGS += $${OPTIMIZE}
+
+    #OPTIMIZE    += -Wno-missing-braces -Wno-missing-field-initializers
+    QMAKE_CXX   = ccache g++
+
+    #CONFIG += warn_off
+    #QMAKE_CXXFLAGS += -Wall
+    #QMAKE_CFLAGS_WARN_ON   -= -Wno-missing-braces -Wno-missing-field-initializers
+    #QMAKE_CXXFLAGS_WARN_ON -= -Wno-missing-braces -Wno-missing-field-initializers
 }
 ###############################################################################
 QMAKE_CFLAGS   += $${OPTIMIZE}

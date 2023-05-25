@@ -33,7 +33,9 @@ CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
 
-LIB_PATH = "$$PWD/../../../lib"
+LIB_PATH  = "$$PWD/../../../lib"
+LIB_PATH2 = "$$PWD/../../../lib2"
+
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/template_mainbox_GUI/template_mainbox_GUI.pri)

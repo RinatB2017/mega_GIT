@@ -1,5 +1,6 @@
 .qtc_clangd
 **/bin
+**/.metadata
 Makefile
 *.user
 object_script.*

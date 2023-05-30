@@ -1,4 +1,8 @@
-*.user
+.qtc_clangd
+**/bin
 Makefile
+*.user
 object_script.*
-.qmake.stash
+*.user.*
+**/Release
+**/Debug

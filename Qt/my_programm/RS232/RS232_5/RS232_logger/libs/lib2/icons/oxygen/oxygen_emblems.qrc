@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/oxygen/emblems">
+        <file>emblems/vcs-update-required.png</file>
+        <file>emblems/image-stack-open.png</file>
+        <file>emblems/emblem-encrypted-locked.png</file>
+        <file>emblems/vcs-locally-modified-unstaged.png</file>
+        <file>emblems/emblem-symbolic-link.png</file>
+        <file>emblems/vcs-added.png</file>
+        <file>emblems/vcs-removed.png</file>
+        <file>emblems/emblem-important.png</file>
+        <file>emblems/emblem-encrypted-unlocked.png</file>
+        <file>emblems/emblem-new.png</file>
+        <file>emblems/image-stack.png</file>
+        <file>emblems/emblem-unlocked.png</file>
+        <file>emblems/vcs-locally-modified.png</file>
+        <file>emblems/vcs-conflicting.png</file>
+        <file>emblems/vcs-normal.png</file>
+        <file>emblems/emblem-locked.png</file>
+        <file>emblems/emblem-favorite.png</file>
+        <file>emblems/emblem-mounted.png</file>
+        <file>emblems/emblem-unmounted.png</file>
+        <file>emblems/image-has-versions.png</file>
+        <file>emblems/image-has-versions-open.png</file>
+    </qresource>
+</RCC>

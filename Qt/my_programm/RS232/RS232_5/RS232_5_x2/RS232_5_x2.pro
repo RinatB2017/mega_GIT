@@ -36,11 +36,6 @@ include ($$LIB_PATH2/serial5/serial5.pri)
 
 include (src/test_widget/test_widget.pri)
 
-
-
-
-
-
 RESOURCES += \
     ico/icons.qrc
 

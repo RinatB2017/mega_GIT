@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/hicolor/mimetypes">
+        <file>mimetypes/application-x-tellico.png</file>
+        <file>mimetypes/image-vnd.djvu.png</file>
+        <file>mimetypes/libreoffice-database.png</file>
+        <file>mimetypes/libreoffice-drawing-template.png</file>
+        <file>mimetypes/libreoffice-drawing.png</file>
+        <file>mimetypes/libreoffice-extension.png</file>
+        <file>mimetypes/libreoffice-formula.png</file>
+        <file>mimetypes/libreoffice-master-document.png</file>
+        <file>mimetypes/libreoffice-oasis-database.png</file>
+        <file>mimetypes/libreoffice-oasis-drawing-template.png</file>
+        <file>mimetypes/libreoffice-oasis-drawing.png</file>
+        <file>mimetypes/libreoffice-oasis-formula.png</file>
+        <file>mimetypes/libreoffice-oasis-master-document.png</file>
+        <file>mimetypes/libreoffice-oasis-presentation-template.png</file>
+        <file>mimetypes/libreoffice-oasis-presentation.png</file>
+        <file>mimetypes/libreoffice-oasis-spreadsheet-template.png</file>
+        <file>mimetypes/libreoffice-oasis-spreadsheet.png</file>
+        <file>mimetypes/libreoffice-oasis-text-template.png</file>
+        <file>mimetypes/libreoffice-oasis-text.png</file>
+        <file>mimetypes/libreoffice-oasis-web-template.png</file>
+        <file>mimetypes/libreoffice-presentation-template.png</file>
+        <file>mimetypes/libreoffice-presentation.png</file>
+        <file>mimetypes/libreoffice-spreadsheet-template.png</file>
+        <file>mimetypes/libreoffice-spreadsheet.png</file>
+        <file>mimetypes/libreoffice-text-template.png</file>
+        <file>mimetypes/libreoffice-text.png</file>
+        <file>mimetypes/opera-extension.png</file>
+    </qresource>
+</RCC>

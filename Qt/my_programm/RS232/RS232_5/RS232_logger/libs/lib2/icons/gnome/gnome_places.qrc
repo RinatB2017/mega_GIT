@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/gnome/places">
+        <file>places/folder-documents.png</file>
+        <file>places/folder-download.png</file>
+        <file>places/folder-music.png</file>
+        <file>places/folder-pictures.png</file>
+        <file>places/folder-publicshare.png</file>
+        <file>places/folder-remote.png</file>
+        <file>places/folder-saved-search.png</file>
+        <file>places/folder-templates.png</file>
+        <file>places/folder-videos.png</file>
+        <file>places/folder.png</file>
+        <file>places/network-server.png</file>
+        <file>places/network-workgroup.png</file>
+        <file>places/start-here.png</file>
+        <file>places/user-bookmarks.png</file>
+        <file>places/user-desktop.png</file>
+        <file>places/user-home.png</file>
+        <file>places/user-trash.png</file>
+    </qresource>
+</RCC>

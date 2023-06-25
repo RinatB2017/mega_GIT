@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/oxygen/emotes">
+        <file>emotes/face-kiss.png</file>
+        <file>emotes/face-sad.png</file>
+        <file>emotes/face-smile-big.png</file>
+        <file>emotes/face-plain.png</file>
+        <file>emotes/face-surprise.png</file>
+        <file>emotes/face-raspberry.png</file>
+        <file>emotes/face-wink.png</file>
+        <file>emotes/face-uncertain.png</file>
+        <file>emotes/face-smile.png</file>
+        <file>emotes/face-laugh.png</file>
+        <file>emotes/face-angel.png</file>
+        <file>emotes/face-embarrassed.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/qmessagebox">
+        <file>qmessagebox-crit.png</file>
+        <file>qmessagebox-info.png</file>
+        <file>qmessagebox-quest.png</file>
+        <file>qmessagebox-warn.png</file>
+    </qresource>
+</RCC>

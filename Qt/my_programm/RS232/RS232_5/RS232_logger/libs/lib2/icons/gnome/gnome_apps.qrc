@@ -1,0 +1,39 @@
+<RCC>
+    <qresource prefix="/gnome/apps">
+        <file>apps/accessories-calculator.png</file>
+        <file>apps/accessories-character-map.png</file>
+        <file>apps/accessories-dictionary.png</file>
+        <file>apps/accessories-text-editor.png</file>
+        <file>apps/applets-screenshooter.png</file>
+        <file>apps/help-browser.png</file>
+        <file>apps/libreoffice-base.png</file>
+        <file>apps/libreoffice-calc.png</file>
+        <file>apps/libreoffice-draw.png</file>
+        <file>apps/libreoffice-impress.png</file>
+        <file>apps/libreoffice-main.png</file>
+        <file>apps/libreoffice-math.png</file>
+        <file>apps/libreoffice-printeradmin.png</file>
+        <file>apps/libreoffice-startcenter.png</file>
+        <file>apps/libreoffice-writer.png</file>
+        <file>apps/multimedia-volume-control.png</file>
+        <file>apps/preferences-desktop-accessibility.png</file>
+        <file>apps/preferences-desktop-display.png</file>
+        <file>apps/preferences-desktop-font.png</file>
+        <file>apps/preferences-desktop-keyboard-shortcuts.png</file>
+        <file>apps/preferences-desktop-keyboard.png</file>
+        <file>apps/preferences-desktop-locale.png</file>
+        <file>apps/preferences-desktop-remote-desktop.png</file>
+        <file>apps/preferences-desktop-screensaver.png</file>
+        <file>apps/preferences-desktop-theme.png</file>
+        <file>apps/preferences-desktop-wallpaper.png</file>
+        <file>apps/preferences-system-windows.png</file>
+        <file>apps/system-file-manager.png</file>
+        <file>apps/system-software-install.png</file>
+        <file>apps/system-software-update.png</file>
+        <file>apps/system-users.png</file>
+        <file>apps/user-info.png</file>
+        <file>apps/utilities-system-monitor.png</file>
+        <file>apps/utilities-terminal.png</file>
+        <file>apps/web-browser.png</file>
+    </qresource>
+</RCC>

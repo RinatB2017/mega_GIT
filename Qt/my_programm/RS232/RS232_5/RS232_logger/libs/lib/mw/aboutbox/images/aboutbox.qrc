@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/logo">
+        <file alias="avatar.png">avatar.png</file>
+        <file alias="logo.png">tux.png</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/nuvola/emblems">
+        <file>emblems/emblem-favorite.png</file>
+    </qresource>
+</RCC>

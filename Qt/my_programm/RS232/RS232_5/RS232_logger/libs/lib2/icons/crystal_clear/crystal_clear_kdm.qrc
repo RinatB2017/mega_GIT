@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/crystal_clear/kdm">
-        <file>kdm/user_female.png</file>
-        <file>kdm/user_male.png</file>
-    </qresource>
-</RCC>

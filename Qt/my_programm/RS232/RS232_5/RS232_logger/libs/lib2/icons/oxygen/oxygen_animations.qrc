@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/oxygen/animations">
-        <file>animations/process-idle-kde.png</file>
-        <file>animations/process-working-kde.png</file>
-    </qresource>
-</RCC>

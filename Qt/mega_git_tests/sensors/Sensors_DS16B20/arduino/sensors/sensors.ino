@@ -30,6 +30,15 @@ DallasTemperature dallasSensors_7(&oneWire_7);
 
 int cnt = 0; // счётчик для обновления названий графиков
 
+DeviceAddress deviceAddress_0;
+DeviceAddress deviceAddress_1;
+DeviceAddress deviceAddress_2;
+DeviceAddress deviceAddress_3;
+DeviceAddress deviceAddress_4;
+DeviceAddress deviceAddress_5;
+DeviceAddress deviceAddress_6;
+DeviceAddress deviceAddress_7;
+
 void init_curves()
 {
   Serial.println(":curves|Температура 0|Температура 1|Температура 2|Температура 3|Температура 4|Температура 5|Температура 6|Температура 7"); 
@@ -39,20 +48,52 @@ void setup()
 {
   Serial.begin(57600);
   init_curves();
+
+  dallasSensors_0.begin();
+  dallasSensors_0.setResolution(12);
+
+  dallasSensors_1.begin();
+  dallasSensors_1.setResolution(12);
+  
+  dallasSensors_2.begin();
+  dallasSensors_2.setResolution(12);
+  
+  dallasSensors_3.begin();
+  dallasSensors_3.setResolution(12);
+  
+  dallasSensors_4.begin();
+  dallasSensors_4.setResolution(12);
+  
+  dallasSensors_5.begin();
+  dallasSensors_5.setResolution(12);
+  
+  dallasSensors_6.begin();
+  dallasSensors_6.setResolution(12);
+  
+  dallasSensors_7.begin();
+  dallasSensors_7.setResolution(12);
+  
 }
 
 void loop(void)
 {
-  //allasSensors_0.requestTemperatures();
+  dallasSensors_0.requestTemperatures();
+  dallasSensors_1.requestTemperatures();
+  dallasSensors_2.requestTemperatures();
+  dallasSensors_3.requestTemperatures();
+  dallasSensors_4.requestTemperatures();
+  dallasSensors_5.requestTemperatures();
+  dallasSensors_6.requestTemperatures();
+  dallasSensors_7.requestTemperatures();
 
-  float temp_0 = dallasSensors_0.getTempC(0);
-  float temp_1 = dallasSensors_1.getTempC(0);
-  float temp_2 = dallasSensors_2.getTempC(0);
-  float temp_3 = dallasSensors_3.getTempC(0);
-  float temp_4 = dallasSensors_4.getTempC(0);
-  float temp_5 = dallasSensors_5.getTempC(0);
-  float temp_6 = dallasSensors_6.getTempC(0);
-  float temp_7 = dallasSensors_7.getTempC(0);
+  float temp_0 = dallasSensors_0.getTempCByIndex(0);
+  float temp_1 = dallasSensors_1.getTempCByIndex(0);
+  float temp_2 = dallasSensors_2.getTempCByIndex(0);
+  float temp_3 = dallasSensors_3.getTempCByIndex(0);
+  float temp_4 = dallasSensors_4.getTempCByIndex(0);
+  float temp_5 = dallasSensors_5.getTempCByIndex(0);
+  float temp_6 = dallasSensors_6.getTempCByIndex(0);
+  float temp_7 = dallasSensors_7.getTempCByIndex(0);
 
   Serial.println(":data|" + 
                   String(temp_0) + "|" + 
@@ -63,7 +104,7 @@ void loop(void)
                   String(temp_5) + "|"+ 
                   String(temp_6) + "|" + 
                   String(temp_7));
-  delay(1000);
+  //delay(1000);
 
   cnt++;
   if(cnt > 10)

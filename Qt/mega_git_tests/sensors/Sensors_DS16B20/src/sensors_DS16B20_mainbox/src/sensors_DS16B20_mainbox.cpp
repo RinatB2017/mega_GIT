@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2019                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -22,10 +22,10 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-#include "ui_test_ADC_mainbox.h"
+#include "ui_sensors_DS16B20_mainbox.h"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
-#include "test_ADC_mainbox.hpp"
+#include "sensors_DS16B20_mainbox.hpp"
 #include "datagrapherbox.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
@@ -74,44 +74,6 @@ void MainBox::init(void)
                             "data_widget",
                             Qt::LeftDockWidgetArea,
                             reinterpret_cast<QWidget *>(ui->main_frame));
-
-#if 0
-        //FIXME тестирование нового вида
-
-        mw->add_dock_widget("Serial",
-                            "serial_widget",
-                            Qt::LeftDockWidgetArea,
-                            reinterpret_cast<QWidget *>(ui->serial_widget));
-
-        QTimer::singleShot(1000, [this, mw] {
-            QList<GrapherBox *> l_gb = findChildren<GrapherBox *>();
-            if(l_gb.count() > 0)
-            {
-                mw->add_dock_widget("Grapher",
-                                    "grapher_widget",
-                                    Qt::LeftDockWidgetArea,
-                                    reinterpret_cast<QWidget *>(l_gb.at(0)));
-            }
-            else
-            {
-                emit error("Grapher not found!");
-            }
-        });
-
-        QWidgetList wl = qApp->allWidgets();
-        foreach (QWidget *widget, wl)
-        {
-            if(widget->objectName() == "GrapherBox")
-            {
-                emit info("FOUND!!!");
-                mw->add_dock_widget("Grapher",
-                                    "grapher_widget",
-                                    Qt::LeftDockWidgetArea,
-                                    reinterpret_cast<QWidget *>(widget));
-            }
-        }
-
-#endif
 
         setVisible(false);
     }

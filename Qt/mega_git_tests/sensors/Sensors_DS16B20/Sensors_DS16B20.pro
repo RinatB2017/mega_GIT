@@ -49,7 +49,7 @@ use_worker {
 }
 include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
 #----------------------------------------------
-include (src/test_ADC_mainbox/test_ADC_mainbox.pri)
+include (src/sensors_DS16B20_mainbox/sensors_DS16B20_mainbox.pri)
 ----------------------------------------------
 
 VPATH = $$INCLUDEPATH

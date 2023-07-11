@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -23,7 +23,7 @@
 #define private public
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "test_ADC_mainbox.hpp"
+#include "sensors_DS16B20_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 #ifndef NO_GRAPHER

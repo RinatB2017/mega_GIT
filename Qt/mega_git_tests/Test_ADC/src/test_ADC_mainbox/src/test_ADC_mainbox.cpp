@@ -74,44 +74,6 @@ void MainBox::init(void)
                             Qt::LeftDockWidgetArea,
                             reinterpret_cast<QWidget *>(ui->main_frame));
 
-#if 0
-        //FIXME тестирование нового вида
-
-        mw->add_dock_widget("Serial",
-                            "serial_widget",
-                            Qt::LeftDockWidgetArea,
-                            reinterpret_cast<QWidget *>(ui->serial_widget));
-
-        QTimer::singleShot(1000, [this, mw] {
-            QList<GrapherBox *> l_gb = findChildren<GrapherBox *>();
-            if(l_gb.count() > 0)
-            {
-                mw->add_dock_widget("Grapher",
-                                    "grapher_widget",
-                                    Qt::LeftDockWidgetArea,
-                                    reinterpret_cast<QWidget *>(l_gb.at(0)));
-            }
-            else
-            {
-                emit error("Grapher not found!");
-            }
-        });
-
-        QWidgetList wl = qApp->allWidgets();
-        foreach (QWidget *widget, wl)
-        {
-            if(widget->objectName() == "GrapherBox")
-            {
-                emit info("FOUND!!!");
-                mw->add_dock_widget("Grapher",
-                                    "grapher_widget",
-                                    Qt::LeftDockWidgetArea,
-                                    reinterpret_cast<QWidget *>(widget));
-            }
-        }
-
-#endif
-
         setVisible(false);
     }
 #endif

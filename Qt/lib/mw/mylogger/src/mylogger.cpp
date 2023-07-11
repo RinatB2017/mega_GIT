@@ -26,16 +26,6 @@ void myMessageOutput(QtMsgType type,
                      const QMessageLogContext &context,
                      const QString &msg)
 {
-#if 0
-    switch (type)
-    {
-    case QtDebugMsg:    if(logger) logger->sender_debug(QString("QtDebugMsg: %1").arg(msg));       break;
-    case QtInfoMsg:     if(logger) logger->sender_info(QString("QtInfoMsg: %1").arg(msg));         break;
-    case QtWarningMsg:  if(logger) logger->sender_warning(QString("QtWarningMsg: %1").arg(msg));   break;
-    case QtCriticalMsg: if(logger) logger->sender_critical(QString("QtCriticalMsg: %1").arg(msg)); break;
-    case QtFatalMsg:    if(logger) logger->sender_fatal(QString("QtFatalMsg: %1").arg(msg));       break;
-    }
-#else
     switch (type)
     {
     case QtDebugMsg:
@@ -68,7 +58,6 @@ void myMessageOutput(QtMsgType type,
 #endif
         break;
     }
-#endif
     Q_UNUSED(context);
 }
 //--------------------------------------------------------------------------------

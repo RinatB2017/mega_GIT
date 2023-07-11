@@ -1759,37 +1759,11 @@ void GrapherBox::test(void)
 {
     emit info("begin test");
 
-#if 1
     axis_X_min--;
     axis_X_max--;
     ui->qwtPlot->setAxisScale(QwtPlot::xBottom, axis_X_min, axis_X_max);
     updateGraphics();
-#endif
 
-#if 0
-    QwtScaleDiv div;
-    div.setInterval(0, 10);
-    for(int index=0; index<get_curves_count(); index++)
-    {
-        ui->qwtPlot->setAxisScaleDiv(index, div);
-    }
-
-    push_btn_Horizontal(false);
-    push_btn_Vertical(false);
-    for(int n=0; n<360; n++)
-    {
-        for(int index=0; index<get_curves_count(); index++)
-        {
-            int size_y = index*100;
-            add_curve_data(index, qreal(308.0 + size_y)*qSin(qreal(n+(index * 10))*qreal(M_PI)/qreal(180.0)));
-        }
-    }
-    push_btn_Horizontal(true);
-    push_btn_Vertical(true);
-
-    emit info(QString("curves_count %1").arg(get_curves_count()));
-    emit info(QString("append %1 points").arg(360 * get_curves_count()));
-#endif
     emit info("end test");
 }
 //--------------------------------------------------------------------------------
@@ -1797,31 +1771,10 @@ void GrapherBox::test2(void)
 {
     emit info("begin test2");
 
-#if 1
     axis_X_min++;
     axis_X_max++;
     ui->qwtPlot->setAxisScale(QwtPlot::xBottom, axis_X_min, axis_X_max);
     updateGraphics();
-#endif
-
-
-#if 0
-    int max_x = static_cast<int>(axis_X_max - axis_X_min);
-    for(int channel=0; channel<get_curves_count(); channel++)
-    {
-        curves[channel].pos_x = 0;
-        for(int n=0; n<max_x; n++)
-        {
-            curves[channel].view_curve->append(QPointF(n, channel]);
-                    curves[channel].pos_x++;
-        }
-    }
-
-    ui->btn_Horizontal->setChecked(true);
-    ui->btn_Vertical->setChecked(true);
-    set_horizontal_alignment(true);
-    set_vertical_alignment(true);
-#endif
 
     emit info("end test2");
 }

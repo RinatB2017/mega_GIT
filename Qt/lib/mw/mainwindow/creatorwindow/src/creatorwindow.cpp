@@ -276,12 +276,7 @@ void CreatorWindow::init(void)
     //---
 
 #ifdef LOGGER_ON
-#if 0
-    MyLogger *logg = new MyLogger();
-    logger = logg;
-#else
     logger = new MyLogger();
-#endif
     qInstallMessageHandler(myMessageOutput);
     if(logger)
     {
@@ -860,13 +855,6 @@ void CreatorWindow::createTrayIcon(void)
             this,
             &CreatorWindow::showHide);
 
-#if 0
-    connect(trayIcon,
-            &QSystemTrayIcon::activated,
-            this,
-            &CreatorWindow::iconActivated);
-#endif
-
     trayIcon->show();
 }
 //--------------------------------------------------------------------------------
@@ -885,17 +873,6 @@ void CreatorWindow::showHide(QSystemTrayIcon::ActivationReason r)
         }
     }
 }
-//--------------------------------------------------------------------------------
-#if 0
-void CreatorWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
-{
-    if(reason == QSystemTrayIcon::DoubleClick)
-    {
-        if(isHidden()) show();
-        else hide();
-    }
-}
-#endif
 //--------------------------------------------------------------------------------
 void CreatorWindow::change_value(void)
 {

@@ -2,12 +2,10 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-TEMPLATE  = subdirs
-CONFIG   *= ordered
+DEPENDPATH  += $$PWD/src
+INCLUDEPATH = $$DEPENDPATH
 
-SUBDIRS += \
-    $$PWD/Sensors_DS16B20 \
-    $$PWD/Test_ADXL345 \
-    $$PWD/Test_GY-652 \
-    $$PWD/Test_HTU21D \
-    $$PWD/Test_MPU-6050
+QT      += testlib
+
+HEADERS += test.hpp
+SOURCES += test.cpp

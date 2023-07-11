@@ -123,15 +123,16 @@ void DataGrapherBox::init(void)
 #ifndef NO_GRAPHER
     ui->grapher_widget->setObjectName("GrapherBox");
 
-    ui->grapher_widget->set_title("Param");
-    ui->grapher_widget->set_title_axis_X("time");
-    ui->grapher_widget->set_title_axis_Y("value");
     ui->grapher_widget->set_axis_scale_x(0, 100);
     ui->grapher_widget->set_axis_scale_y(0, 5);
 
     connect(ui->grapher_widget, &GrapherBox::change_text,   this,   &DataGrapherBox::change_text);
 
-    QTimer::singleShot(0, [this]{
+    QTimer::singleShot(100, [this]{
+        ui->grapher_widget->set_title("Датчики");
+        ui->grapher_widget->set_title_axis_X("время");
+        ui->grapher_widget->set_title_axis_Y("температура");
+
         ui->grapher_widget->set_visible_btn_Options(false);
         ui->grapher_widget->set_visible_btn_all_ON(false);
         ui->grapher_widget->set_visible_btn_all_OFF(false);

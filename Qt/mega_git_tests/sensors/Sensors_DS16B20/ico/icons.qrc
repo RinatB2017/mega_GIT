@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/ico">
+        <file>I2c_logo.ico</file>
+        <file>I2c_logo.png</file>
+    </qresource>
+</RCC>

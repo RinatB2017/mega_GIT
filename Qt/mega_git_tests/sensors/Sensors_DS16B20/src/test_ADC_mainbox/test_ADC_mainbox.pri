@@ -2,12 +2,11 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-TEMPLATE  = subdirs
-CONFIG   *= ordered
+DEPENDPATH  += \
+    $$PWD/src \
+    $$PWD/src/ui
+INCLUDEPATH = $$DEPENDPATH
 
-SUBDIRS += \
-    $$PWD/Sensors_DS16B20 \
-    $$PWD/Test_ADXL345 \
-    $$PWD/Test_GY-652 \
-    $$PWD/Test_HTU21D \
-    $$PWD/Test_MPU-6050
+HEADERS += test_ADC_mainbox.hpp
+SOURCES += test_ADC_mainbox.cpp
+FORMS   += test_ADC_mainbox.ui

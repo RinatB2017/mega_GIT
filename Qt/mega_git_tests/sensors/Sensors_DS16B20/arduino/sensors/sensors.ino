@@ -40,6 +40,7 @@ void setup()
   for(int n=0; n<MAX_SENSORS; n++)
   {
     dallasSensors[n].begin(n);
+    dallasSensors[n].setOneWire(&oneWire[n]);
     dallasSensors[n].setResolution(12);
   }
 }

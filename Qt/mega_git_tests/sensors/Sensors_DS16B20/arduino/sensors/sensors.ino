@@ -14,8 +14,6 @@ OneWire oneWire[MAX_SENSORS];
 DallasTemperature dallasSensors[MAX_SENSORS];   //setOneWire
 
 int cnt = 0; // счётчик для обновления названий графиков
-
-DeviceAddress deviceAddress[MAX_SENSORS];
 String text;
 
 void init_curves()
@@ -39,8 +37,10 @@ void setup()
 
   for(int n=0; n<MAX_SENSORS; n++)
   {
-    dallasSensors[n].begin(n);
+    oneWire[n].begin(n + 2);  // считаем от 2 пина
     dallasSensors[n].setOneWire(&oneWire[n]);
+
+    dallasSensors[n].begin();
     dallasSensors[n].setResolution(12);
   }
 }
@@ -52,14 +52,14 @@ void loop(void)
     {
       dallasSensors[n].requestTemperatures();
       float temp = dallasSensors[n].getTempCByIndex(0);
-      text += String(text);
+      text += String(temp);
       if(n<MAX_SENSORS-1)
       {
           text += "|";
       }
-      Serial.println(text);
     }
-    //delay(1000);
+    Serial.println(text);
+    delay(1000);
 
     cnt++;
     if(cnt > 10)

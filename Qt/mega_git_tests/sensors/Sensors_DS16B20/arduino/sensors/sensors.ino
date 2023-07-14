@@ -8,7 +8,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-#define MAX_SENSORS 4
+#define MAX_SENSORS 5
 
 OneWire oneWire[MAX_SENSORS];
 DallasTemperature dallasSensors[MAX_SENSORS];   //setOneWire

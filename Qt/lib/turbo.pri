@@ -62,7 +62,7 @@ macx {
 }
 
 win32 {
-    BIN_PATH="X:"
+    BIN_PATH="C:\\temp"
     contains(QT_ARCH, i386) {
         message("32-bit")
         CONFIG(debug, debug|release) {

@@ -149,8 +149,13 @@ void MainBox::f_split(void)
     int max_x = ui->sb_x->value();
     int max_y = ui->sb_y->value();
 
+#ifdef Q_OS_LINUX
     int w = ui->picture_label->pixmap(Qt::ReturnByValue).width();
     int h = ui->picture_label->pixmap(Qt::ReturnByValue).height();
+#else
+    int w = ui->picture_label->pixmap()->width();
+    int h = ui->picture_label->pixmap()->height();
+#endif
     int inc_x = w / max_x;
     int inc_y = h / max_y;
     int x1 = 0;
@@ -214,8 +219,13 @@ void MainBox::f_save_files(void)
             int max_x = ui->sb_x->value();
             int max_y = ui->sb_y->value();
 
+#ifdef Q_OS_LINUX
             int w = ui->picture_label->pixmap(Qt::ReturnByValue).width();
             int h = ui->picture_label->pixmap(Qt::ReturnByValue).height();
+#else
+            int w = ui->picture_label->pixmap()->width();
+            int h = ui->picture_label->pixmap()->height();
+#endif
             int inc_x = w / max_x;
             int inc_y = h / max_y;
             int x1 = 0;

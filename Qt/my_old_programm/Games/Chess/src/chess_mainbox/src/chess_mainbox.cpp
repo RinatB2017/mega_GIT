@@ -156,7 +156,11 @@ void MainBox::create_engine(void)
 
     m_engine->setProgram("gnuchess");
     m_engine->start();
-    m_pid = m_engine->processId();  //pid();
+#ifdef Q_OS_LINUX
+    m_pid = m_engine->processId();
+#else
+    m_pid = m_engine->pid();
+#endif
 
 #if 1
     //TODO

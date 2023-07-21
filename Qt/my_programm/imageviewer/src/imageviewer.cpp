@@ -185,11 +185,19 @@ void ImageViewer::print()
     {
         QPainter painter(&printer);
         QRect rect = painter.viewport();
+#ifdef Q_OS_LINUX
         QSize size = imageLabel->pixmap(Qt::ReturnByValue).size();
         size.scale(rect.size(), Qt::KeepAspectRatio);
         painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
         painter.setWindow(imageLabel->pixmap(Qt::ReturnByValue).rect());
         painter.drawPixmap(0, 0, imageLabel->pixmap(Qt::ReturnByValue));
+#else
+        QSize size = imageLabel->pixmap()->size();
+        size.scale(rect.size(), Qt::KeepAspectRatio);
+        painter.setViewport(rect.x(), rect.y(), size.width(), size.height());
+        painter.setWindow(imageLabel->pixmap()->rect());
+        painter.drawPixmap(0, 0, *imageLabel->pixmap());
+#endif
     }
 #endif
 }
@@ -236,7 +244,11 @@ void ImageViewer::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
 
+#ifdef Q_OS_LINUX
     QPixmap p = imageLabel->pixmap(Qt::ReturnByValue);
+#else
+    QPixmap p = *imageLabel->pixmap();
+#endif
     QSize pixSize = p.size();
     pixSize.scale(size(), Qt::KeepAspectRatio);
     imageLabel->setMaximumSize(pixSize);
@@ -352,8 +364,13 @@ void ImageViewer::scaleImage(double factor)
 {
     scaleFactor *= factor;
 
+#ifdef Q_OS_LINUX
     imageLabel->resize(scaleFactor * imageLabel->pixmap(Qt::ReturnByValue).size().width(),
                        scaleFactor * imageLabel->pixmap(Qt::ReturnByValue).size().height());
+#else
+    imageLabel->resize(scaleFactor * imageLabel->pixmap()->size().width(),
+                       scaleFactor * imageLabel->pixmap()->size().height());
+#endif
 
     adjustScrollBar(scrollArea->horizontalScrollBar(), factor);
     adjustScrollBar(scrollArea->verticalScrollBar(), factor);

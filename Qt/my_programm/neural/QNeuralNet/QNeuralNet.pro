@@ -32,7 +32,7 @@ unix:!macx {
 }
 
 win32 {
-    TEMP_PATH = "E:\\temp"
+    TEMP_PATH = "C:\\temp"
     OBJECTS_DIR = $$TEMP_PATH\\my_programm\\$$TARGET\\obj
     MOC_DIR     = $$TEMP_PATH\\my_programm\\$$TARGET\\moc
     UI_DIR      = $$TEMP_PATH\\my_programm\\$$TARGET\\ui

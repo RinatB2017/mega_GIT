@@ -15,6 +15,7 @@ QT *= opengl
 #}
 
 win32 {
-    LIBS += h:\Qt\5.15.2\mingw81_64\lib\libQt5OpenGL.a 
+    //LIBS += h:\Qt\5.15.2\mingw81_64\lib\libQt5OpenGL.a
+    LIBS += c:\Qt\Qt5.14.2\5.14.2\mingw73_64\lib\libQt5OpenGL.a
     LIBS += -lopengl32 -glu32
 }

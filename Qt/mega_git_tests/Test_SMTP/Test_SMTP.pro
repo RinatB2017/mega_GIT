@@ -29,9 +29,4 @@ include ($$LIB_PATH/turbo.pri)
 include (src/sendemail/sendemail.pri)
 include (src/smtp/smtp.pri)
 
-
-
-
-
-
 VPATH = $$INCLUDEPATH

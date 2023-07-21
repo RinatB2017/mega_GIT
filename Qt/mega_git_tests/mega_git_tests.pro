@@ -29,7 +29,6 @@ SUBDIRS += \
     $$PWD/Test_HID_device \
     $$PWD/Test_HTML \
     $$PWD/Test_QHexEdit \
-    $$PWD/Test_QHexEdit2 \
     $$PWD/Test_mesh \
     $$PWD/Test_md5 \
     $$PWD/Test_lcd_knob \
@@ -50,15 +49,12 @@ SUBDIRS += \
     $$PWD/Test_RGB_display \
     $$PWD/Test_RGB_Matrix \
     $$PWD/Test_SerialBox5 \
-    $$PWD/Test_SerialTerm \
     $$PWD/Test_libUSB \
     $$PWD/Test_libVLC \
     $$PWD/Test_model \
-    $$PWD/Test_ffmpeg \
     $$PWD/Test_pixmap \
     $$PWD/Test_Polar \
     $$PWD/Test_SQL \
-    $$PWD/Test_SMTP \
     $$PWD/Test_thread \
     $$PWD/Test_triangle \
     $$PWD/Test_Widgets \
@@ -87,14 +83,18 @@ SUBDIRS += \
     
 unix {
 SUBDIRS += \
-    $$PWD/Test_Qt3D \
+    $$PWD/Test_ffmpeg \
     $$PWD/Tests_QtPlot3D \
     $$PWD/Test_QScintilla \
     $$PWD/Test_PGP \
     $$PWD/Test_syslog \
+    $$PWD/Test_SMTP \
     $$PWD/Test_Trader \
     $$PWD/Test_wwWidgets \
+    $$PWD/Test_Qt3D \
     $$PWD/Test_QWebEngineView \
     $$PWD/Test_QTermWidget \
-    $$PWD/Test_mouse 
+    $$PWD/Test_QHexEdit2 \
+    $$PWD/Test_SerialTerm \
+    $$PWD/Test_mouse
 }

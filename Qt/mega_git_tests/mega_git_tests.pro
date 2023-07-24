@@ -59,8 +59,6 @@ SUBDIRS += \
     $$PWD/Test_triangle \
     $$PWD/Test_Widgets \
     $$PWD/Test_QtCharts \
-    $$PWD/Test_OpenCL \
-    $$PWD/Test_OpenMP \
     $$PWD/Test_QDBus \
     $$PWD/Test_QGraphicsView \
     $$PWD/Test_QML \
@@ -68,33 +66,32 @@ SUBDIRS += \
     $$PWD/Test_QTreeWidget \
     $$PWD/Test_Game \
     $$PWD/Test_Games \
-    $$PWD/Test_OpenGL \
     $$PWD/Test_Mask \
-    $$PWD/Test_RSA \
-    $$PWD/Test_SDL \
-    $$PWD/Test_SDLWidget \
     $$PWD/Test_TCP_UDP_bridge \
     $$PWD/Test_YouTube \
     $$PWD/Tester
-    
-SUBDIRS += \
-    $$PWD/Test_ADB \
-    $$PWD/Test_OpenCV
-    
+
 unix {
 SUBDIRS += \
+    $$PWD/Test_ADB \
     $$PWD/Test_ffmpeg \
-    $$PWD/Tests_QtPlot3D \
-    $$PWD/Test_QScintilla \
+    $$PWD/Test_mouse \
+    $$PWD/Test_OpenCL \
+    $$PWD/Test_OpenCV \
+    $$PWD/Test_OpenMP \
     $$PWD/Test_PGP \
+    $$PWD/Test_RSA \
     $$PWD/Test_syslog \
+    $$PWD/Test_SerialTerm \
+    $$PWD/Test_SDL \
+    $$PWD/Test_SDLWidget \
     $$PWD/Test_SMTP \
     $$PWD/Test_Trader \
-    $$PWD/Test_wwWidgets \
     $$PWD/Test_Qt3D \
     $$PWD/Test_QWebEngineView \
     $$PWD/Test_QTermWidget \
     $$PWD/Test_QHexEdit2 \
-    $$PWD/Test_SerialTerm \
-    $$PWD/Test_mouse
+    $$PWD/Test_QScintilla \
+    $$PWD/Tests_QtPlot3D \
+    $$PWD/Test_wwWidgets
 }

@@ -24,7 +24,7 @@ SOURCES += \
 RESOURCES += doc/test_data.qrc
 
 win32 {
-    RC_FILE = ico/computer.ico
+    RC_ICONS = ico/computer.ico
 }
 
 LIB_PATH  = "$$PWD/../../../lib"

@@ -24,7 +24,7 @@ SOURCES += \
     main.cpp
 
 win32 {
-    RC_FILE = ico/computer.ico
+    RC_FILE = ico/bluetooth.ico
 }
 
 # не забыть при смене Qt изменить файлы в каталоге win

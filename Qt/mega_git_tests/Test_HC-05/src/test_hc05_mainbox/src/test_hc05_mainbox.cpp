@@ -329,8 +329,6 @@ void MainBox::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    //testbar->setFixedWidth(toolBar->sizeHint().width());
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -365,7 +363,6 @@ void MainBox::choice_test(void)
 bool MainBox::f_test(void)
 {
     emit info("Test");
-
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -376,6 +373,11 @@ void MainBox::updateText(void)
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)
 {
+    if(serial.isOpen())
+    {
+        messagebox_critical("Ошибка", "Сначала закройте порт");
+        return false;
+    }
     return true;
 }
 //--------------------------------------------------------------------------------

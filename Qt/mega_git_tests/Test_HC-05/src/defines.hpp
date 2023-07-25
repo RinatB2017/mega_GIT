@@ -28,7 +28,7 @@
 #define QMAKE_TARGET_COMPANY    ORGNAME
 #define QMAKE_TARGET_PRODUCT    APPNAME
 #define QMAKE_TARGET_COPYRIGHT  "Copyright 2015-2020"
-#define RC_ICONS                ":/images/computer.ico"
+#define RC_ICONS                ":/ico/bluetooth.ico"
 //--------------------------------------------------------------------------------
 #define DEVICE_NAME "HC-05"
 //--------------------------------------------------------------------------------
@@ -42,6 +42,6 @@
 #define VER_ORIGINALFILENAME_STR    APPNAME
 #define VER_PRODUCTNAME_STR         APPNAME
 //--------------------------------------------------------------------------------
-#define ICON_PROGRAMM   ":/mainwindow/computer.png"
+#define ICON_PROGRAMM   ":/images/bluetooth.png"
 //--------------------------------------------------------------------------------
 #endif

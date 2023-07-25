@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/ico">
-        <file>computer.ico</file>
+        <file>bluetooth.ico</file>
     </qresource>
 </RCC>

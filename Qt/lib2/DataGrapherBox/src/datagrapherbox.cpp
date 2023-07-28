@@ -131,7 +131,7 @@ void DataGrapherBox::init(void)
     QTimer::singleShot(100, [this]{
         ui->grapher_widget->set_title("Датчики");
         ui->grapher_widget->set_title_axis_X("время");
-        ui->grapher_widget->set_title_axis_Y("температура");
+        ui->grapher_widget->set_title_axis_Y("параметр");
 
         ui->grapher_widget->set_visible_btn_Options(false);
         ui->grapher_widget->set_visible_btn_all_ON(false);

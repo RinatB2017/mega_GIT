@@ -31,5 +31,6 @@ LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_QGraphicsScene_mainbox/test_QGraphicsScene_mainbox.pri)
+include (src/item/item.pri)
 
 VPATH = $$INCLUDEPATH

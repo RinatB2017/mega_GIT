@@ -18,57 +18,33 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef ITEM_HPP
+#define ITEM_HPP
 //--------------------------------------------------------------------------------
 #include <QGraphicsRectItem>
-#include <QGraphicsScale>
-#include <QBrush>
+#include <QGraphicsScene>
+#include <QGraphicsItem>
+#include <QEvent>
+#include <QDebug>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-#include "item.hpp"
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class Item : public QGraphicsRectItem
 {
-    Q_OBJECT
-
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox();
+    Item(qreal x, qreal y, qreal w, qreal h,
+         const QPen &pen, const QBrush &brush,
+         QGraphicsItem *parent = nullptr);
+    ~Item();
 
-private slots:
-    void test(void);
+    void set_name(const QString &name);
 
-private:
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
+private:    
+    QString obj_name = "no name";
 
-    bool is_blocked = false;
-
-    //TODO не надо делать QPointer
-    QGraphicsScene *scene = nullptr;
-    QGraphicsItem *text = nullptr;
-
-    Item *rectangle_R = nullptr;
-    Item *rectangle_G = nullptr;
-    Item *rectangle_B = nullptr;
-
-    void init(void);
-
-    void createTestBar(void);
-    void block_interface(bool state);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+protected:
+    //bool sceneEvent(QEvent *event);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif // ITEM_HPP

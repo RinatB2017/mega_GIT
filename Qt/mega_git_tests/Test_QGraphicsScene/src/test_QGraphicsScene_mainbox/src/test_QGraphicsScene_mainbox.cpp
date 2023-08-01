@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -41,6 +41,11 @@ MainBox::MainBox(QWidget *parent,
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    if(rectangle_R) delete rectangle_R;
+    if(rectangle_G) delete rectangle_G;
+    if(rectangle_B) delete rectangle_B;
+    if(text)        delete text;
+    if(scene)       delete scene;
     delete ui;
 }
 //--------------------------------------------------------------------------------
@@ -53,6 +58,7 @@ void MainBox::init(void)
 #endif
 
     scene = new QGraphicsScene();
+    scene->setSceneRect(0, 0, 320, 320);
 
     QBrush redBrush(Qt::red);
     QBrush greenBrush(Qt::green);
@@ -60,19 +66,27 @@ void MainBox::init(void)
     QPen outlinePen(Qt::black);
     outlinePen.setWidth(2);
 
-    rectangle_R = scene->addRect(0, 0, 100, 100, outlinePen,     redBrush);
-    rectangle_G = scene->addRect(50, 50, 100, 100, outlinePen,   greenBrush);
-    rectangle_B = scene->addRect(100, 100, 100, 100, outlinePen, blueBrush);
+    rectangle_R = new Item(0,   0,   100, 100, outlinePen, redBrush);
+    rectangle_G = new Item(110, 110, 100, 100, outlinePen, greenBrush);
+    rectangle_B = new Item(220, 220, 100, 100, outlinePen, blueBrush);
+
+    rectangle_R->set_name("R");
+    rectangle_G->set_name("G");
+    rectangle_B->set_name("B");
 
     rectangle_R->setFlag(QGraphicsItem::ItemIsMovable);
     rectangle_G->setFlag(QGraphicsItem::ItemIsMovable);
     rectangle_B->setFlag(QGraphicsItem::ItemIsMovable);
 
-    //QGraphicsTextItem *text;
-    //text = scene->addText("text", QFont("Arial", 20) );
-    //text->setFlag(QGraphicsItem::ItemIsMovable);
+    scene->addItem(rectangle_R);
+    scene->addItem(rectangle_G);
+    scene->addItem(rectangle_B);
 
-    ui->graphicsView->setMinimumSize(320, 320);
+    text = scene->addText("text", QFont("Arial", 20) );
+    text->setPos(250, 50);
+    text->setFlag(QGraphicsItem::ItemIsMovable);
+
+    ui->graphicsView->setFixedSize(322, 322);
     ui->graphicsView->setScene(scene);
 }
 //--------------------------------------------------------------------------------
@@ -98,7 +112,7 @@ void MainBox::createTestBar(void)
 void MainBox::test(void)
 {
     emit info("Test");
-    rectangle_R->moveBy(rectangle_R->x()-10, rectangle_B->y()-10);
+    //rectangle_R->moveBy(rectangle_R->x()-10, rectangle_B->y()-10);
 }
 //--------------------------------------------------------------------------------
 void MainBox::block_interface(bool state)

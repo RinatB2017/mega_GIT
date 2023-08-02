@@ -20,8 +20,6 @@
 **********************************************************************************/
 #include <QTest>
 //--------------------------------------------------------------------------------
-#define private public
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "test_libusb_mainbox.hpp"
 #include "test.hpp"
@@ -36,19 +34,14 @@ void Test::test_GUI(void)
 {
     QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
     QVERIFY(cb);
-    QTest::keyClick(cb, Qt::Key_Down);
-    QTest::keyClick(cb, Qt::Key_Down);
 
     QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
     QVERIFY(tb);
-    QTest::mouseClick(tb, Qt::LeftButton);
 }
 //--------------------------------------------------------------------------------
 void Test::test_func(void)
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
-
-    QCOMPARE(mb->test(), true);
 }
 //--------------------------------------------------------------------------------

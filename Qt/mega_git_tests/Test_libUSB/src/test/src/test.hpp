@@ -35,7 +35,7 @@ public:
 private slots:
     
 private:
-    MainWindow *mw;
+    MainWindow *mw = nullptr;
 
     void test_GUI(void);
     void test_func(void);

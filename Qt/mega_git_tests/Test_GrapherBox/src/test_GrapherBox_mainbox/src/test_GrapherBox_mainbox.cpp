@@ -63,11 +63,11 @@ void MainBox::init(void)
     createTestBar();
 
 #ifdef USE_SCALE_POINT_DATETIME
-    //    uint x = QDateTime::currentDateTime().toTime_t();
+    //uint x = QDateTime::currentDateTime().toTime_t();
     ui->grapher_widget->set_title("тест");
     ui->grapher_widget->set_title_axis_X("X");
     ui->grapher_widget->set_title_axis_Y("Y");
-    //    ui->grapher_widget->set_axis_label_rotation(45);
+    //ui->grapher_widget->set_axis_label_rotation(45);
 
 #if 1
     QDateTime dt = QDateTime(QDateTime(QDate(2000, 1, 1), QTime(0, 0, 0)));
@@ -294,11 +294,13 @@ void MainBox::test(void)
     qDebug() << t4.toString();
     qDebug() << t5.toString();
 
+#ifdef ONE_CURVE
     ui->grapher_widget->add_curve_data(curve_0, t1, 0);
     ui->grapher_widget->add_curve_data(curve_0, t2, 10);
     ui->grapher_widget->add_curve_data(curve_0, t3, 0);
     ui->grapher_widget->add_curve_data(curve_0, t4, 10);
     ui->grapher_widget->add_curve_data(curve_0, t5, 0);
+#endif
 #endif
 
 #ifdef USE_SCALE_POINT_DATETIME
@@ -321,11 +323,13 @@ void MainBox::test(void)
     qDebug() << dt5.toString();
     qDebug() << dt5.toSecsSinceEpoch();
 
+#ifdef ONE_CURVE
     ui->grapher_widget->add_curve_data(curve_0, dt1, 0);
     ui->grapher_widget->add_curve_data(curve_0, dt2, 10);
     ui->grapher_widget->add_curve_data(curve_0, dt3, 0);
     ui->grapher_widget->add_curve_data(curve_0, dt4, 10);
     ui->grapher_widget->add_curve_data(curve_0, dt5, 0);
+#endif
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -481,7 +485,6 @@ void MainBox::ReadWav(const QString &fileName)
 
         // Reading data from the file
         int samples = 0;
-        int max_sample = 0;
         while (wavFile.read(buff, 0x04) > 0)
         {
             chunkDataSize -= 4;
@@ -493,15 +496,6 @@ void MainBox::ReadWav(const QString &fileName)
             ui->grapher_widget->add_curve_data(1, sampleChannel2);
 
             QCoreApplication::processEvents();
-
-#if 0
-            //TODO проверка, потом надо убрать
-            max_sample++;
-            if(max_sample > 10000)
-            {
-                break;
-            }
-#endif
 
             // check the end of the file
             if (chunkDataSize == 0 || chunkDataSize & 0x80000000)

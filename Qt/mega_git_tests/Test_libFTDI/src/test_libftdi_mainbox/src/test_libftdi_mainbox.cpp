@@ -179,6 +179,7 @@ void MainBox::f_read(void)
         return;
     }
 
+#if 1
     ret = ftdi_read_eeprom(ftdi);
     if(ret != 0)
     {
@@ -196,7 +197,9 @@ void MainBox::f_read(void)
         }
         return;
     }
+#endif
 
+#if 0
     ret = ftdi_eeprom_decode(ftdi, 1);
     if(ret != 0)
     {
@@ -210,6 +213,7 @@ void MainBox::f_read(void)
             break;
         }
     }
+#endif
 
     ret = ftdi_get_eeprom_buf(ftdi, buf, FTDI_MAX_EEPROM_SIZE);
     if(ret != 0)

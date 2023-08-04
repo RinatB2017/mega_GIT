@@ -69,6 +69,10 @@ private:
     void f_write(void);
     void f_close(void);
 
+    void f_read_eeprom(void);
+    void f_write_eeprom(void);
+    void f_eeprom_decode(void);
+
     void f_test(void);
 
     uint16_t get_VID(void);

@@ -61,6 +61,10 @@ void MainBox::init(void)
     connect(ui->btn_close,  &QToolButton::clicked,  this,   &MainBox::f_close);
     connect(ui->btn_test,   &QToolButton::clicked,  this,   &MainBox::f_test);
 
+    connect(ui->btn_read_eeprom,    &QToolButton::clicked,  this,   &MainBox::f_read_eeprom);
+    connect(ui->btn_write_eeprom,   &QToolButton::clicked,  this,   &MainBox::f_write_eeprom);
+    connect(ui->btn_eeprom_decode,  &QToolButton::clicked,  this,   &MainBox::f_eeprom_decode);
+
     load_widgets();
 }
 //--------------------------------------------------------------------------------
@@ -178,42 +182,6 @@ void MainBox::f_read(void)
         emit error("ftdi not init");
         return;
     }
-
-#if 1
-    ret = ftdi_read_eeprom(ftdi);
-    if(ret != 0)
-    {
-        switch(ret)
-        {
-        case 0:
-            emit info("all fine");
-            break;
-        case -1:
-            emit error("read failed");
-            break;
-        case -2:
-            emit error("USB device unavailable");
-            break;
-        }
-        return;
-    }
-#endif
-
-#if 0
-    ret = ftdi_eeprom_decode(ftdi, 1);
-    if(ret != 0)
-    {
-        switch(ret)
-        {
-        case 0:
-            emit error("all fine");
-            break;
-        case -1:
-            emit error("something went wrong");
-            break;
-        }
-    }
-#endif
 
     ret = ftdi_get_eeprom_buf(ftdi, buf, FTDI_MAX_EEPROM_SIZE);
     if(ret != 0)
@@ -353,6 +321,87 @@ void MainBox::f_test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_read_eeprom(void)
+{
+    if(ftdi == nullptr)
+    {
+        emit error("ftdi not init");
+        return;
+    }
+
+    int ret;
+    ret = ftdi_read_eeprom(ftdi);
+    if(ret != 0)
+    {
+        switch(ret)
+        {
+        case 0:
+            emit info("all fine");
+            break;
+        case -1:
+            emit error("read failed");
+            break;
+        case -2:
+            emit error("USB device unavailable");
+            break;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_write_eeprom(void)
+{
+    if(ftdi == nullptr)
+    {
+        emit error("ftdi not init");
+        return;
+    }
+
+    int ret;
+    ret = ftdi_write_eeprom(ftdi);
+    if(ret != 0)
+    {
+        switch(ret)
+        {
+        case 0:
+            emit error("all fine");
+            break;
+        case -1:
+            emit error("read failed");
+            break;
+        case -2:
+            emit error("USB device unavailable");
+            break;
+        case -3:
+            emit error("EEPROM not initialized for the connected device");
+            break;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::f_eeprom_decode(void)
+{
+    if(ftdi == nullptr)
+    {
+        emit error("ftdi not init");
+        return;
+    }
+
+    int ret;
+    ret = ftdi_eeprom_decode(ftdi, 1);
+    if(ret != 0)
+    {
+        switch(ret)
+        {
+        case 0:
+            emit error("all fine");
+            break;
+        case -1:
+            emit error("something went wrong");
+            break;
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 uint16_t MainBox::get_VID(void)

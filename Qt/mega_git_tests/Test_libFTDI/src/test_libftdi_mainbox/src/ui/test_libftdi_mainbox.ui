@@ -81,6 +81,27 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="btn_read_eeprom">
+        <property name="text">
+         <string>read_eeprom</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_write_eeprom">
+        <property name="text">
+         <string>write_eeprom</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_eeprom_decode">
+        <property name="text">
+         <string>eeprom_decode</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btn_write">
         <property name="text">
          <string>Write</string>
@@ -131,6 +152,9 @@
   <tabstop>sb_PID</tabstop>
   <tabstop>btn_open</tabstop>
   <tabstop>btn_read</tabstop>
+  <tabstop>btn_read_eeprom</tabstop>
+  <tabstop>btn_write_eeprom</tabstop>
+  <tabstop>btn_eeprom_decode</tabstop>
   <tabstop>btn_write</tabstop>
   <tabstop>btn_close</tabstop>
   <tabstop>btn_test</tabstop>

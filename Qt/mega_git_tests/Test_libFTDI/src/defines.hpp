@@ -23,6 +23,8 @@
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "Test_libFTDI"
+
+#define MAX_ADDRESS 0x7f
 //--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME

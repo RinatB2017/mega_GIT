@@ -20,11 +20,9 @@
 **********************************************************************************/
 #include "ui_test_libftdi_mainbox.h"
 //--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "test_libftdi_mainbox.hpp"
-#include "defines.hpp"
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include <sys/time.h>
@@ -36,7 +34,7 @@
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
-    Usb(parent),
+    MyWidget(parent),
     splash(splash),
     ui(new Ui::MainBox)
 {
@@ -57,20 +55,11 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
-    connect(ui->btn_list,   &QToolButton::clicked,  this,   &MainBox::s_list);
-    connect(ui->btn_open,   &QToolButton::clicked,  this,   &MainBox::s_open);
-    connect(ui->btn_info,   &QToolButton::clicked,  this,   &MainBox::s_info);
-    connect(ui->btn_read,   &QToolButton::clicked,  this,   &MainBox::s_read);
-    connect(ui->btn_write,  &QToolButton::clicked,  this,   &MainBox::s_write);
-    connect(ui->btn_close,  &QToolButton::clicked,  this,   &MainBox::s_close);
-
-    connect(this,   &Usb::is_opened,    ui->btn_info,   &QPushButton::setEnabled);
-    connect(this,   &Usb::is_opened,    ui->btn_read,   &QPushButton::setEnabled);
-    connect(this,   &Usb::is_opened,    ui->btn_write,  &QPushButton::setEnabled);
-
-    ui->btn_info->setEnabled(false);
-    ui->btn_read->setEnabled(false);
-    ui->btn_write->setEnabled(false);
+    connect(ui->btn_open,   &QToolButton::clicked,  this,   &MainBox::f_open);
+    connect(ui->btn_read,   &QToolButton::clicked,  this,   &MainBox::f_read);
+    connect(ui->btn_write,  &QToolButton::clicked,  this,   &MainBox::f_write);
+    connect(ui->btn_close,  &QToolButton::clicked,  this,   &MainBox::f_close);
+    connect(ui->btn_test,   &QToolButton::clicked,  this,   &MainBox::f_test);
 
     load_widgets();
 }
@@ -89,6 +78,7 @@ void MainBox::createTestBar(void)
 
     cb_test = new QComboBox(this);
     cb_test->setObjectName("cb_test");
+    cb_test->setProperty(NO_SAVE, true);
     foreach (CMD command, commands)
     {
         cb_test->addItem(command.cmd_text, QVariant(command.cmd));
@@ -144,58 +134,207 @@ bool MainBox::test(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_list(void)
-{
-    lock_this_button();
-    f_list();
-    unlock_this_button();
-}
-//--------------------------------------------------------------------------------
-void MainBox::s_open(void)
+void MainBox::f_open(void)
 {
     emit trace(Q_FUNC_INFO);
-    lock_this_button();
 
     uint16_t vid = get_VID();
     uint16_t pid = get_PID();
     emit info(QString("%1:%2")
               .arg(vid, 4, 16, QChar('0'))
               .arg(pid, 4, 16, QChar('0')));
-    f_open(vid, pid);
 
-    unlock_this_button();
+    ftdi = (struct ftdi_context *)malloc(sizeof(struct ftdi_context));
+    if (ftdi == NULL)
+    {
+        emit error("Malloc return NULL");
+        return;
+    }
+
+    if (ftdi_init(ftdi) != 0)
+    {
+        emit error("ftdi_init() != 0");
+        free(ftdi);
+        return;
+    }
+
+    int ret;
+    if ((ret = ftdi_usb_open(ftdi, vid, pid)) < 0)
+    {
+        emit error(QString("%1").arg(ftdi_get_error_string(ftdi)));
+        return;
+    }
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_info(void)
+void MainBox::f_read(void)
 {
     emit trace(Q_FUNC_INFO);
-    lock_this_button();
-    print_info();
-    unlock_this_button();
+
+    int ret;
+    unsigned char buf[FTDI_MAX_EEPROM_SIZE] = { 0 };
+
+    if(ftdi == nullptr)
+    {
+        emit error("ftdi not init");
+        return;
+    }
+
+    ret = ftdi_read_eeprom(ftdi);
+    if(ret != 0)
+    {
+        switch(ret)
+        {
+        case 0:
+            emit info("all fine");
+            break;
+        case -1:
+            emit error("read failed");
+            break;
+        case -2:
+            emit error("USB device unavailable");
+            break;
+        }
+        return;
+    }
+
+    ret = ftdi_get_eeprom_buf(ftdi, buf, FTDI_MAX_EEPROM_SIZE);
+    if(ret != 0)
+    {
+        switch(ret)
+        {
+        case 0:
+            emit info("all fine");
+            break;
+        case -1:
+            emit error("struct ftdi_contxt or ftdi_eeprom missing");
+            break;
+        case -2:
+            emit error("Not enough room to store eeprom");
+            break;
+        }
+        return;
+    }
+
+    QByteArray ba;
+    ba.clear();
+    for(int n=0; n<FTDI_MAX_EEPROM_SIZE; n++)
+    {
+        ba.append(buf[n]);
+    }
+    emit info(ba.toHex());
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_read(void)
+void MainBox::f_write(void)
 {
     emit trace(Q_FUNC_INFO);
-    lock_this_button();
-    f_read();
-    unlock_this_button();
+
+    if(ftdi == nullptr)
+    {
+        emit error("ftdi not init");
+        return;
+    }
+
+    int ret;
+    unsigned char buf[FTDI_MAX_EEPROM_SIZE] = { 0 };
+
+    char manufacturer[1024] = { 0 };
+    char product[1024] = { 0 };
+    char serial[1024] = { 0 };
+    ret = ftdi_eeprom_initdefaults(ftdi, manufacturer, product, serial);
+    if(ret != 0)
+    {
+        switch(ret)
+        {
+        case 0:
+            emit info("all fine");
+            break;
+        case -1:
+            emit error("No struct ftdi_context");
+            break;
+        case -2:
+            emit error("No struct ftdi_eeprom");
+            break;
+        case -3:
+            emit error("No connected device or device not yet opened");
+            break;
+        }
+        return;
+    }
+
+    emit info(QString("manufacturer [%1]").arg(manufacturer));
+    emit info(QString("product [%1]").arg(product));
+    emit info(QString("serial [%1]").arg(serial));
+
+    buf[0] = 6;
+
+    ret = ftdi_set_eeprom_buf(ftdi, buf, 10);
+    if(ret != 0)
+    {
+        switch(ret)
+        {
+        case 0:
+            emit info("All fine");
+            break;
+        case -1:
+            emit error("struct ftdi_contxt or ftdi_eeprom of buf missing");
+            break;
+        }
+        return;
+    }
+
+    ret = ftdi_write_eeprom(ftdi);
+    if(ret != 0)
+    {
+        switch(ret)
+        {
+        case -1:
+            emit error("read failed");
+            break;
+        case -2:
+            emit error("USB device unavailable");
+            break;
+        case -3:
+            emit error("EEPROM not initialized for the connected device");
+            break;
+        default:
+            emit error(QString("ftdi_write_eeprom return %1").arg(ret));
+            break;
+        }
+
+        return;
+    }
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_write(void)
+void MainBox::f_close(void)
 {
     emit trace(Q_FUNC_INFO);
-    lock_this_button();
-    f_write();
-    unlock_this_button();
+
+    if(ftdi == nullptr)
+    {
+        emit error("ftdi not init");
+        return;
+    }
+
+    int ret;
+    ret = ftdi_usb_close(ftdi);
+    switch(ret)
+    {
+    case 0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("usb_release failed");
+        break;
+    case -3:
+        emit error("ftdi context invalid");
+        break;
+    }
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_close(void)
+void MainBox::f_test(void)
 {
     emit trace(Q_FUNC_INFO);
-    lock_this_button();
-    f_close();
-    unlock_this_button();
+    emit info("Test");
 }
 //--------------------------------------------------------------------------------
 uint16_t MainBox::get_VID(void)
@@ -216,5 +355,25 @@ void MainBox::set_VID(uint16_t value)
 void MainBox::set_PID(uint16_t value)
 {
     ui->sb_PID->setValue(value);
+}
+//--------------------------------------------------------------------------------
+void MainBox::updateText(void)
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::programm_is_exit(void)
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::load_setting(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MainBox::save_setting(void)
+{
+
 }
 //--------------------------------------------------------------------------------

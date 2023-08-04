@@ -28,7 +28,7 @@
 /** \addtogroup libftdi */
 /* @{ */
 
-#include <libusb.h>
+#include <libusb-1.0/libusb.h>
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>

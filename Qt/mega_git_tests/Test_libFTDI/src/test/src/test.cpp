@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -21,7 +21,7 @@
 #include <QTest>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
-#include "test_libusb_mainbox.hpp"
+#include "test_libftdi_mainbox.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()

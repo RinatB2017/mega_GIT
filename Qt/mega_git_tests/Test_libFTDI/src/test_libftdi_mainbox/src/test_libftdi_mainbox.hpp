@@ -32,7 +32,7 @@ namespace Ui {
 //--------------------------------------------------------------------------------
 class MySplashScreen;
 //--------------------------------------------------------------------------------
-class MainBox : public Usb
+class MainBox : public MyWidget
 {
     Q_OBJECT
 
@@ -44,13 +44,6 @@ public:
 private slots:
     void choice_test(void);
     bool test(void);
-
-    void s_list(void);
-    void s_open(void);
-    void s_info(void);
-    void s_read(void);
-    void s_write(void);
-    void s_close(void);
 
 private:
     typedef struct CMD
@@ -69,10 +62,24 @@ private:
     void init(void);
     void createTestBar(void);
 
+    struct ftdi_context *ftdi = nullptr;
+
+    void f_open(void);
+    void f_read(void);
+    void f_write(void);
+    void f_close(void);
+
+    void f_test(void);
+
     uint16_t get_VID(void);
     uint16_t get_PID(void);
     void set_VID(uint16_t value);
     void set_PID(uint16_t value);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

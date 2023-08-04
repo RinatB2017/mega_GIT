@@ -197,6 +197,20 @@ void MainBox::f_read(void)
         return;
     }
 
+    ret = ftdi_eeprom_decode(ftdi, 1);
+    if(ret != 0)
+    {
+        switch(ret)
+        {
+        case 0:
+            emit error("all fine");
+            break;
+        case -1:
+            emit error("something went wrong");
+            break;
+        }
+    }
+
     ret = ftdi_get_eeprom_buf(ftdi, buf, FTDI_MAX_EEPROM_SIZE);
     if(ret != 0)
     {

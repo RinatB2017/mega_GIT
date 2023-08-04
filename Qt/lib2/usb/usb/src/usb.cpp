@@ -79,6 +79,12 @@ bool Usb::f_open(uint16_t vid, uint16_t pid)
     return true;
 }
 //--------------------------------------------------------------------------------
+bool Usb::f_test(void)
+{
+    fail();
+    return false;
+}
+//--------------------------------------------------------------------------------
 bool Usb::f_read(void)
 {
     if(handle == nullptr)

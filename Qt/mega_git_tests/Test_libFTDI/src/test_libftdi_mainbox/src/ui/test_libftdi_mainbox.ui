@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainBox</class>
+ <widget class="QWidget" name="MainBox">
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>Device</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <property name="leftMargin">
+         <number>8</number>
+        </property>
+        <property name="topMargin">
+         <number>8</number>
+        </property>
+        <property name="rightMargin">
+         <number>8</number>
+        </property>
+        <property name="bottomMargin">
+         <number>8</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>VID</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>PID</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="HexSpinBox" name="sb_VID"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="HexSpinBox" name="sb_PID"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_open">
+        <property name="text">
+         <string>Open</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../images/images.qrc">
+          <normaloff>:/images/usb.png</normaloff>:/images/usb.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_info">
+        <property name="text">
+         <string>Info</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../images/images.qrc">
+          <normaloff>:/images/usb.png</normaloff>:/images/usb.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_read">
+        <property name="text">
+         <string>Read</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../images/images.qrc">
+          <normaloff>:/images/usb.png</normaloff>:/images/usb.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_write">
+        <property name="text">
+         <string>Write</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../images/images.qrc">
+          <normaloff>:/images/usb.png</normaloff>:/images/usb.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_close">
+        <property name="text">
+         <string>Close</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../images/images.qrc">
+          <normaloff>:/images/usb.png</normaloff>:/images/usb.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>50</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btn_list">
+        <property name="text">
+         <string>List</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../../images/images.qrc">
+          <normaloff>:/images/usb.png</normaloff>:/images/usb.png</iconset>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>HexSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>hexspinbox.hpp</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>sb_VID</tabstop>
+  <tabstop>sb_PID</tabstop>
+  <tabstop>btn_open</tabstop>
+  <tabstop>btn_info</tabstop>
+  <tabstop>btn_read</tabstop>
+  <tabstop>btn_write</tabstop>
+  <tabstop>btn_close</tabstop>
+  <tabstop>btn_list</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../../../images/images.qrc"/>
+ </resources>
+ <connections/>
+</ui>

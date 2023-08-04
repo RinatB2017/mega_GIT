@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,78 +18,75 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef USB_HPP
-#define USB_HPP
+#include "qtsingleapplication.h"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "test_libftdi_mainbox.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+#include "codecs.h"
 //--------------------------------------------------------------------------------
-#ifdef Q_OS_LINUX
-#   include </usr/include/hidapi/hidapi.h>
-#   include </usr/include/libusb-1.0/libusb.h>
+#ifdef QT_DEBUG
+#   include "test.hpp"
+#   include <QDebug>
 #endif
-#ifdef Q_OS_WIN
-#   include "hidapi.h"
-#   include "libusb.h"
-#endif
 //--------------------------------------------------------------------------------
-//#define VID 0x1366
-//#define PID 0x0101
-//--------------------------------------------------------------------------------
-#define DEV_INTF    0    // номер интерфейса
-
-#define USB_DEBUG_LEVEL 3
-
-#define DATA_SIZE   4
-
-#define EP_CTRL     0x00
-#define EP_OUT      0x02
-#define EP_HID      0x05
-
-#define TIMEOUT     1000
-//--------------------------------------------------------------------------------
-class Usb : public MyWidget
+int main(int argc, char *argv[])
 {
-    Q_OBJECT
+    set_codecs();
+#ifdef SINGLE_APP
+    QtSingleApplication app(argc, argv);
+    if(app.isRunning())
+    {
+        QMessageBox::critical(nullptr,  QObject::tr("Error"),   QObject::tr("Application already running!"));
+        if(app.sendMessage("Wake up!")) return 0;
+    }
+#else
+    QApplication app(argc, argv);
+#endif
 
-signals:
-    void is_opened(bool);
+    app.setOrganizationName(ORGNAME);
+    app.setApplicationName(APPNAME);
+#ifdef Q_OS_LINUX
+    app.setApplicationVersion(QString("%1.%2.%3.%4")
+                              .arg(VER_MAJOR)
+                              .arg(VER_MINOR)
+                              .arg(VER_PATCH)
+                              .arg(VER_BUILD));
+#endif
+    app.setWindowIcon(QIcon(ICON_PROGRAMM));
 
-public:
-    explicit Usb(QWidget *parent = nullptr);
-    virtual ~Usb();
+    QPixmap pixmap(":/logo/logo.png");
 
-    bool f_list(void);
-    bool f_open(uint16_t vid, uint16_t pid);
-    bool f_read(void);
-    bool f_write(void);
-    bool f_close(void);
+    MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    Q_ASSERT(splash);
+    splash->show();
 
-    bool f_test(void);
+    MainWindow *main_window = new MainWindow();
+    Q_ASSERT(main_window);
 
-    bool f_send_cmd(uint8_t cmd, QByteArray param, QByteArray *res_ba);
-    void print_info(void);
+    MainBox *mainBox = new MainBox(main_window, splash);
+    Q_ASSERT(mainBox);
 
-private:
-    void dev_open(uint16_t vid, uint16_t pid);
-    void dev_close(void);
+    main_window->setCentralWidget(mainBox);
+    main_window->show();
 
-    void print_devs(libusb_device **devs);
-    QString get_error_string(int err);
+    splash->finish(main_window);
 
-    void interrupt_transfer_loop(libusb_device_handle *handle);
-    void bulk_transfer_loop(libusb_device_handle *handle);
+#ifdef SINGLE_APP
+    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
+#endif
 
-    hid_device *dev = nullptr;
-    libusb_device_handle *handle = nullptr;
-    libusb_context *ctx = nullptr;
-    unsigned char buf[1024] = { 0 };
-    int length = -1;
-    int actual_length = -1;
+#ifdef QT_DEBUG
+    qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
+    int test_result = QTest::qExec(new Test(), argc, argv);
+    if (test_result != EXIT_SUCCESS)
+    {
+        return test_result;
+    }
+#endif
+
+    return app.exec();
+}
 //--------------------------------------------------------------------------------
-#endif // USB_HPP

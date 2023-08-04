@@ -28,7 +28,14 @@
 /** \addtogroup libftdi */
 /* @{ */
 
+#ifdef __linux__
+#include <sys/time.h>
 #include <libusb-1.0/libusb.h>
+#else
+#include <libusb.h>
+#include <time.h>
+#endif
+
 #include <string.h>
 #include <errno.h>
 #include <stdio.h>

@@ -18,7 +18,12 @@
 #define __libftdi_h__
 
 #include <stdint.h>
+
+#ifdef __linux__
 #include <sys/time.h>
+#else
+#include <winsock.h>
+#endif
 
 #include "ftdi_i.h"
 

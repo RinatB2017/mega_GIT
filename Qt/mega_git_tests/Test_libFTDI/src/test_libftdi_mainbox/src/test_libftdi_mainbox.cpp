@@ -56,14 +56,17 @@ void MainBox::init(void)
 #endif
 
     connect(ui->btn_open,   &QToolButton::clicked,  this,   &MainBox::f_open);
-    connect(ui->btn_read,   &QToolButton::clicked,  this,   &MainBox::f_read);
-    connect(ui->btn_write,  &QToolButton::clicked,  this,   &MainBox::f_write);
     connect(ui->btn_close,  &QToolButton::clicked,  this,   &MainBox::f_close);
-    connect(ui->btn_test,   &QToolButton::clicked,  this,   &MainBox::f_test);
 
     connect(ui->btn_read_eeprom,    &QToolButton::clicked,  this,   &MainBox::f_read_eeprom);
+    connect(ui->btn_get_eeprom_buf, &QToolButton::clicked,  this,   &MainBox::f_get_eeprom_buf);
+
     connect(ui->btn_write_eeprom,   &QToolButton::clicked,  this,   &MainBox::f_write_eeprom);
+    connect(ui->btn_set_eeprom_buf, &QToolButton::clicked,  this,   &MainBox::f_set_eeprom_buf);
+
     connect(ui->btn_eeprom_decode,  &QToolButton::clicked,  this,   &MainBox::f_eeprom_decode);
+
+    connect(ui->btn_test,   &QToolButton::clicked,  this,   &MainBox::f_test);
 
     load_widgets();
 }
@@ -170,7 +173,7 @@ void MainBox::f_open(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_read(void)
+void MainBox::f_get_eeprom_buf(void)
 {
     emit trace(Q_FUNC_INFO);
 
@@ -210,7 +213,7 @@ void MainBox::f_read(void)
     emit info(ba.toHex());
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_write(void)
+void MainBox::f_set_eeprom_buf(void)
 {
     emit trace(Q_FUNC_INFO);
 

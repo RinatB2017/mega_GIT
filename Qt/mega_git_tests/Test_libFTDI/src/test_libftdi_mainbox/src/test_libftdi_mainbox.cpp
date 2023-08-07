@@ -149,50 +149,62 @@ void MainBox::f_open(void)
 
     uint16_t vid = get_VID();
     uint16_t pid = get_PID();
-    emit info(QString("%1:%2")
+    emit info(QString("VID:PID %1:%2")
               .arg(vid, 4, 16, QChar('0'))
               .arg(pid, 4, 16, QChar('0')));
 
-    if (ftdi_init(&ftdi) != 0)
+    int ret;
+
+    ret = ftdi_init(&ftdi);
+    switch(ret)
     {
-        emit error("ftdi_init() != 0");
-        //free(ftdi);
+    case 0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("couldn't allocate read buffer");
+        return;
+    case -2:
+        emit error("couldn't allocate struct  buffer");
+        return;
+    case -3:
+        emit error("libusb_init() failed");
         return;
     }
 
-    int ret = ftdi_usb_open(&ftdi, vid, pid);
+    ret = ftdi_usb_open(&ftdi, vid, pid);
     switch(ret)
     {
-    case  0:
+    case 0:
         emit info("all fine");
         break;
     case -3:
         emit error("usb device not found");
-        break;
+        return;
     case -4:
         emit error("unable to open device");
-        break;
+        return;
     case -5:
         emit error("unable to claim device");
-        break;
+        return;
     case -6:
         emit error("reset failed");
-        break;
+        return;
     case -7:
         emit error("set baudrate failed");
-        break;
+        return;
     case -8:
         emit error("get product description failed");
-        break;
+        return;
     case -9:
         emit error("get serial number failed");
-        break;
+        return;
     case -12:
         emit error("libusb_get_device_list() failed");
-        break;
+        return;
     case -13:
         emit error("libusb_get_device_descriptor() failedc");
-        break;
+        return;
     }
 }
 //--------------------------------------------------------------------------------
@@ -204,20 +216,16 @@ void MainBox::f_get_eeprom_buf(void)
     unsigned char buf[FTDI_MAX_EEPROM_SIZE] = { 0 };
 
     ret = ftdi_get_eeprom_buf(&ftdi, buf, FTDI_MAX_EEPROM_SIZE);
-    if(ret != 0)
+    switch(ret)
     {
-        switch(ret)
-        {
-        case 0:
-            emit info("all fine");
-            break;
-        case -1:
-            emit error("struct ftdi_contxt or ftdi_eeprom missing");
-            break;
-        case -2:
-            emit error("Not enough room to store eeprom");
-            break;
-        }
+    case 0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("struct ftdi_contxt or ftdi_eeprom missing");
+        return;
+    case -2:
+        emit error("Not enough room to store eeprom");
         return;
     }
 
@@ -243,13 +251,13 @@ void MainBox::f_eeprom_initdefaults(void)
         break;
     case -1:
         emit error("No struct ftdi_context");
-        break;
+        return;
     case -2:
         emit error("No struct ftdi_eeprom");
-        break;
+        return;
     case -3:
         emit error("No connected device or device not yet opened");
-        break;
+        return;
     }
     return;
 
@@ -271,17 +279,13 @@ void MainBox::f_set_eeprom_buf(void)
     }
 
     ret = ftdi_set_eeprom_buf(&ftdi, buf, FTDI_MAX_EEPROM_SIZE);
-    if(ret != 0)
+    switch(ret)
     {
-        switch(ret)
-        {
-        case 0:
-            emit info("All fine");
-            break;
-        case -1:
-            emit error("struct ftdi_contxt or ftdi_eeprom of buf missing");
-            break;
-        }
+    case 0:
+        emit info("All fine");
+        break;
+    case -1:
+        emit error("struct ftdi_contxt or ftdi_eeprom of buf missing");
         return;
     }
 
@@ -293,13 +297,13 @@ void MainBox::f_set_eeprom_buf(void)
         break;
     case -1:
         emit error("read failed");
-        break;
+        return;
     case -2:
         emit error("USB device unavailable");
-        break;
+        return;
     case -3:
         emit error("EEPROM not initialized for the connected device");
-        break;
+        return;
     default:
         emit error(QString("ftdi_write_eeprom return %1").arg(ret));
         break;
@@ -319,10 +323,10 @@ void MainBox::f_close(void)
         break;
     case -1:
         emit error("usb_release failed");
-        break;
+        return;
     case -3:
         emit error("ftdi context invalid");
-        break;
+        return;
     }
     ftdi_deinit(&ftdi);
 }
@@ -337,30 +341,49 @@ void MainBox::f_test(void)
 
     int i, ret;
     ret = ftdi_usb_find_all(&ftdi, &devlist, get_PID(), get_VID());
-    if (ret < 0)
+    switch(ret)
     {
-        emit error(QString("ftdi_usb_find_all failed: %1 (%2)")
-                   .arg(ret)
-                   .arg(ftdi_get_error_string(&ftdi)));
-        return;
+    case -3:
+        emit info("out of memory");
+    case -5:
+        emit error("libusb_get_device_list() failed");
+    case -6:
+        emit error("libusb_get_device_descriptor() failed");
+    default:
+        emit info(QString("Number of FTDI devices found: %1").arg(ret));
+        break;
     }
 
-    emit info(QString("Number of FTDI devices found: %1").arg(ret));
-    for (curdev = devlist; curdev != NULL; i++)
+    for (i=0, curdev = devlist; curdev != NULL; i++, curdev = curdev->next)
     {
-        if ((ret = ftdi_usb_get_strings(&ftdi, curdev->dev, manufacturer, 128, description, 128, serial, 128)) < 0)
+        ret = ftdi_usb_get_strings(&ftdi, curdev->dev, manufacturer, 128, description, 128, serial, 128);
+        switch(ret)
         {
-            emit info(QString("ftdi_usb_get_strings failed: %1 (%2)")
-                      .arg(ret)
-                      .arg(ftdi_get_error_string(&ftdi)));
-            return;
-        }
-        if (strncmp(description, "TCTEC USB RELAY", 15) == 0)
-        {
-            emit info(QString("Manufacturer: %1, Description: %2, Serial: %3")
+        case   0:
+            emit info("all fine");
+            emit info(QString("Manufacturer: [%1], Description: [%2], Serial: [%3]")
                       .arg(manufacturer)
                       .arg(description)
                       .arg(serial));
+            break;
+        case  -1:
+            emit error("wrong arguments");
+            break;
+        case  -4:
+            emit error("unable to open device");
+            break;
+        case  -7:
+            emit error("get product manufacturer failed");
+            break;
+        case  -8:
+            emit error("get product description failed");
+            break;
+        case  -9:
+            emit error("get serial number failed");
+            break;
+        case -11:
+            emit error("libusb_get_device_descriptor() failed");
+            break;
         }
         curdev = curdev->next;
     }

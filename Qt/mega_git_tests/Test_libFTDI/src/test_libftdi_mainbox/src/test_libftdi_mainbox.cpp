@@ -355,12 +355,6 @@ void MainBox::f_close(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    if(ftdi.usb_dev != NULL)
-    {
-        emit error("ftdi.usb_dev != NULL");
-        return;
-    }
-
     int ret;
     ret = ftdi_usb_close(&ftdi);
     switch(ret)
@@ -387,9 +381,14 @@ void MainBox::f_test(void)
     char manufacturer[128], description[128], serial[128];
 
     int i, ret;
+
+    ftdi_init(&ftdi);
     ret = ftdi_usb_find_all(&ftdi, &devlist, get_PID(), get_VID());
     switch(ret)
     {
+    case 0:
+        emit info("device not found");
+        return;
     case -3:
         emit info("out of memory");
         return;
@@ -437,6 +436,7 @@ void MainBox::f_test(void)
         }
         curdev = curdev->next;
     }
+    ftdi_deinit(&ftdi);
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_read_eeprom(void)

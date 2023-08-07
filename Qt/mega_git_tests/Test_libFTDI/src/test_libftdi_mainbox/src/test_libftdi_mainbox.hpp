@@ -62,7 +62,7 @@ private:
     void init(void);
     void createTestBar(void);
 
-    struct ftdi_context *ftdi = nullptr;
+    struct ftdi_context ftdi;
 
     void f_open(void);
     void f_close(void);

@@ -151,24 +151,17 @@ void MainBox::f_open(void)
               .arg(vid, 4, 16, QChar('0'))
               .arg(pid, 4, 16, QChar('0')));
 
-    ftdi = (struct ftdi_context *)malloc(sizeof(struct ftdi_context));
-    if (ftdi == NULL)
-    {
-        emit error("Malloc return NULL");
-        return;
-    }
-
-    if (ftdi_init(ftdi) != 0)
+    if (ftdi_init(&ftdi) != 0)
     {
         emit error("ftdi_init() != 0");
-        free(ftdi);
+        //free(ftdi);
         return;
     }
 
     int ret;
-    if ((ret = ftdi_usb_open(ftdi, vid, pid)) < 0)
+    if ((ret = ftdi_usb_open(&ftdi, vid, pid)) < 0)
     {
-        emit error(QString("%1").arg(ftdi_get_error_string(ftdi)));
+        emit error(QString("%1").arg(ftdi_get_error_string(&ftdi)));
         return;
     }
 }
@@ -180,13 +173,7 @@ void MainBox::f_get_eeprom_buf(void)
     int ret;
     unsigned char buf[FTDI_MAX_EEPROM_SIZE] = { 0 };
 
-    if(ftdi == nullptr)
-    {
-        emit error("ftdi not init");
-        return;
-    }
-
-    ret = ftdi_get_eeprom_buf(ftdi, buf, FTDI_MAX_EEPROM_SIZE);
+    ret = ftdi_get_eeprom_buf(&ftdi, buf, FTDI_MAX_EEPROM_SIZE);
     if(ret != 0)
     {
         switch(ret)
@@ -217,19 +204,13 @@ void MainBox::f_set_eeprom_buf(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    if(ftdi == nullptr)
-    {
-        emit error("ftdi not init");
-        return;
-    }
-
     int ret;
     unsigned char buf[FTDI_MAX_EEPROM_SIZE] = { 0 };
 
     char manufacturer[1024] = { 0 };
     char product[1024] = { 0 };
     char serial[1024] = { 0 };
-    ret = ftdi_eeprom_initdefaults(ftdi, manufacturer, product, serial);
+    ret = ftdi_eeprom_initdefaults(&ftdi, manufacturer, product, serial);
     if(ret != 0)
     {
         switch(ret)
@@ -256,7 +237,7 @@ void MainBox::f_set_eeprom_buf(void)
 
     buf[0] = 6;
 
-    ret = ftdi_set_eeprom_buf(ftdi, buf, 10);
+    ret = ftdi_set_eeprom_buf(&ftdi, buf, 10);
     if(ret != 0)
     {
         switch(ret)
@@ -271,7 +252,7 @@ void MainBox::f_set_eeprom_buf(void)
         return;
     }
 
-    ret = ftdi_write_eeprom(ftdi);
+    ret = ftdi_write_eeprom(&ftdi);
     if(ret != 0)
     {
         switch(ret)
@@ -298,14 +279,8 @@ void MainBox::f_close(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    if(ftdi == nullptr)
-    {
-        emit error("ftdi not init");
-        return;
-    }
-
     int ret;
-    ret = ftdi_usb_close(ftdi);
+    ret = ftdi_usb_close(&ftdi);
     switch(ret)
     {
     case 0:
@@ -328,14 +303,8 @@ void MainBox::f_test(void)
 //--------------------------------------------------------------------------------
 void MainBox::f_read_eeprom(void)
 {
-    if(ftdi == nullptr)
-    {
-        emit error("ftdi not init");
-        return;
-    }
-
     int ret;
-    ret = ftdi_read_eeprom(ftdi);
+    ret = ftdi_read_eeprom(&ftdi);
     if(ret != 0)
     {
         switch(ret)
@@ -355,14 +324,8 @@ void MainBox::f_read_eeprom(void)
 //--------------------------------------------------------------------------------
 void MainBox::f_write_eeprom(void)
 {
-    if(ftdi == nullptr)
-    {
-        emit error("ftdi not init");
-        return;
-    }
-
     int ret;
-    ret = ftdi_write_eeprom(ftdi);
+    ret = ftdi_write_eeprom(&ftdi);
     if(ret != 0)
     {
         switch(ret)
@@ -385,14 +348,8 @@ void MainBox::f_write_eeprom(void)
 //--------------------------------------------------------------------------------
 void MainBox::f_eeprom_decode(void)
 {
-    if(ftdi == nullptr)
-    {
-        emit error("ftdi not init");
-        return;
-    }
-
     int ret;
-    ret = ftdi_eeprom_decode(ftdi, 1);
+    ret = ftdi_eeprom_decode(&ftdi, 1);
     if(ret != 0)
     {
         switch(ret)

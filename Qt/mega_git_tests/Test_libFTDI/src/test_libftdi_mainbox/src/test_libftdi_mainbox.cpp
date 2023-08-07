@@ -206,6 +206,21 @@ void MainBox::f_open(void)
         emit error("libusb_get_device_descriptor() failedc");
         return;
     }
+
+    // Set BitBang mode
+    ret = ftdi_set_bitmode(&ftdi, 0xFF, BITMODE_BITBANG);
+    switch(ret)
+    {
+    case  0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("can't enable bitbang mode");
+        break;
+    case -2:
+        emit error("USB device unavailable");
+        break;
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_get_eeprom_buf(void)

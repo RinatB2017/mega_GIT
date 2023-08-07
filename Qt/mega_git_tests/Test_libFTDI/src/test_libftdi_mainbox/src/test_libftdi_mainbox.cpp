@@ -207,7 +207,7 @@ void MainBox::f_open(void)
         return;
     }
 
-    // Set BitBang mode
+    emit info("set bitbang mode");
     ret = ftdi_set_bitmode(&ftdi, 0xFF, BITMODE_BITBANG);
     switch(ret)
     {
@@ -221,6 +221,13 @@ void MainBox::f_open(void)
         emit error("USB device unavailable");
         break;
     }
+
+    unsigned char buf[100] = { 0 };
+    ret = ftdi_read_data(&ftdi, buf, 10);
+    emit info(QString("ret: %1").arg(ret));
+
+    emit info("disabling bitbang mode");
+    ftdi_disable_bitbang(&ftdi);
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_get_eeprom_buf(void)

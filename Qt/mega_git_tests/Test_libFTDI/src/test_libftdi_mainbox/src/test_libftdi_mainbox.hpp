@@ -72,6 +72,7 @@ private:
     void f_read_eeprom(void);
     void f_write_eeprom(void);
     void f_eeprom_decode(void);
+    void f_eeprom_initdefaults(void);
 
     void f_test(void);
 

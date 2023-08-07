@@ -66,6 +66,8 @@ void MainBox::init(void)
 
     connect(ui->btn_eeprom_decode,  &QToolButton::clicked,  this,   &MainBox::f_eeprom_decode);
 
+    connect(ui->btn_eeprom_initdefaults,    &QToolButton::clicked,  this,   &MainBox::f_eeprom_initdefaults);
+
     connect(ui->btn_test,   &QToolButton::clicked,  this,   &MainBox::f_test);
 
     load_widgets();
@@ -158,11 +160,39 @@ void MainBox::f_open(void)
         return;
     }
 
-    int ret;
-    if ((ret = ftdi_usb_open(&ftdi, vid, pid)) < 0)
+    int ret = ftdi_usb_open(&ftdi, vid, pid);
+    switch(ret)
     {
-        emit error(QString("%1").arg(ftdi_get_error_string(&ftdi)));
-        return;
+    case  0:
+        emit info("all fine");
+        break;
+    case -3:
+        emit error("usb device not found");
+        break;
+    case -4:
+        emit error("unable to open device");
+        break;
+    case -5:
+        emit error("unable to claim device");
+        break;
+    case -6:
+        emit error("reset failed");
+        break;
+    case -7:
+        emit error("set baudrate failed");
+        break;
+    case -8:
+        emit error("get product description failed");
+        break;
+    case -9:
+        emit error("get serial number failed");
+        break;
+    case -12:
+        emit error("libusb_get_device_list() failed");
+        break;
+    case -13:
+        emit error("libusb_get_device_descriptor() failedc");
+        break;
     }
 }
 //--------------------------------------------------------------------------------
@@ -200,6 +230,34 @@ void MainBox::f_get_eeprom_buf(void)
     emit info(ba.toHex());
 }
 //--------------------------------------------------------------------------------
+void MainBox::f_eeprom_initdefaults(void)
+{
+    char manufacturer[1024] = { 0 };
+    char product[1024] = { 0 };
+    char serial[1024] = { 0 };
+    int ret = ftdi_eeprom_initdefaults(&ftdi, manufacturer, product, serial);
+    switch(ret)
+    {
+    case 0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("No struct ftdi_context");
+        break;
+    case -2:
+        emit error("No struct ftdi_eeprom");
+        break;
+    case -3:
+        emit error("No connected device or device not yet opened");
+        break;
+    }
+    return;
+
+    emit info(QString("manufacturer [%1]").arg(manufacturer));
+    emit info(QString("product [%1]").arg(product));
+    emit info(QString("serial [%1]").arg(serial));
+}
+//--------------------------------------------------------------------------------
 void MainBox::f_set_eeprom_buf(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -207,37 +265,12 @@ void MainBox::f_set_eeprom_buf(void)
     int ret;
     unsigned char buf[FTDI_MAX_EEPROM_SIZE] = { 0 };
 
-    char manufacturer[1024] = { 0 };
-    char product[1024] = { 0 };
-    char serial[1024] = { 0 };
-    ret = ftdi_eeprom_initdefaults(&ftdi, manufacturer, product, serial);
-    if(ret != 0)
+    for(int n=0; n<10; n++)
     {
-        switch(ret)
-        {
-        case 0:
-            emit info("all fine");
-            break;
-        case -1:
-            emit error("No struct ftdi_context");
-            break;
-        case -2:
-            emit error("No struct ftdi_eeprom");
-            break;
-        case -3:
-            emit error("No connected device or device not yet opened");
-            break;
-        }
-        return;
+        buf[n] = n;
     }
 
-    emit info(QString("manufacturer [%1]").arg(manufacturer));
-    emit info(QString("product [%1]").arg(product));
-    emit info(QString("serial [%1]").arg(serial));
-
-    buf[0] = 6;
-
-    ret = ftdi_set_eeprom_buf(&ftdi, buf, 10);
+    ret = ftdi_set_eeprom_buf(&ftdi, buf, FTDI_MAX_EEPROM_SIZE);
     if(ret != 0)
     {
         switch(ret)
@@ -253,25 +286,23 @@ void MainBox::f_set_eeprom_buf(void)
     }
 
     ret = ftdi_write_eeprom(&ftdi);
-    if(ret != 0)
+    switch(ret)
     {
-        switch(ret)
-        {
-        case -1:
-            emit error("read failed");
-            break;
-        case -2:
-            emit error("USB device unavailable");
-            break;
-        case -3:
-            emit error("EEPROM not initialized for the connected device");
-            break;
-        default:
-            emit error(QString("ftdi_write_eeprom return %1").arg(ret));
-            break;
-        }
-
-        return;
+    case 0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("read failed");
+        break;
+    case -2:
+        emit error("USB device unavailable");
+        break;
+    case -3:
+        emit error("EEPROM not initialized for the connected device");
+        break;
+    default:
+        emit error(QString("ftdi_write_eeprom return %1").arg(ret));
+        break;
     }
 }
 //--------------------------------------------------------------------------------
@@ -293,32 +324,63 @@ void MainBox::f_close(void)
         emit error("ftdi context invalid");
         break;
     }
+    ftdi_deinit(&ftdi);
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_test(void)
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
+
+    struct ftdi_device_list *devlist, *curdev;
+    char manufacturer[128], description[128], serial[128];
+
+    int i, ret;
+    ret = ftdi_usb_find_all(&ftdi, &devlist, get_PID(), get_VID());
+    if (ret < 0)
+    {
+        emit error(QString("ftdi_usb_find_all failed: %1 (%2)")
+                   .arg(ret)
+                   .arg(ftdi_get_error_string(&ftdi)));
+        return;
+    }
+
+    emit info(QString("Number of FTDI devices found: %1").arg(ret));
+    for (curdev = devlist; curdev != NULL; i++)
+    {
+        if ((ret = ftdi_usb_get_strings(&ftdi, curdev->dev, manufacturer, 128, description, 128, serial, 128)) < 0)
+        {
+            emit info(QString("ftdi_usb_get_strings failed: %1 (%2)")
+                      .arg(ret)
+                      .arg(ftdi_get_error_string(&ftdi)));
+            return;
+        }
+        if (strncmp(description, "TCTEC USB RELAY", 15) == 0)
+        {
+            emit info(QString("Manufacturer: %1, Description: %2, Serial: %3")
+                      .arg(manufacturer)
+                      .arg(description)
+                      .arg(serial));
+        }
+        curdev = curdev->next;
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_read_eeprom(void)
 {
     int ret;
     ret = ftdi_read_eeprom(&ftdi);
-    if(ret != 0)
+    switch(ret)
     {
-        switch(ret)
-        {
-        case 0:
-            emit info("all fine");
-            break;
-        case -1:
-            emit error("read failed");
-            break;
-        case -2:
-            emit error("USB device unavailable");
-            break;
-        }
+    case 0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("read failed");
+        break;
+    case -2:
+        emit error("USB device unavailable");
+        break;
     }
 }
 //--------------------------------------------------------------------------------
@@ -326,23 +388,20 @@ void MainBox::f_write_eeprom(void)
 {
     int ret;
     ret = ftdi_write_eeprom(&ftdi);
-    if(ret != 0)
+    switch(ret)
     {
-        switch(ret)
-        {
-        case 0:
-            emit error("all fine");
-            break;
-        case -1:
-            emit error("read failed");
-            break;
-        case -2:
-            emit error("USB device unavailable");
-            break;
-        case -3:
-            emit error("EEPROM not initialized for the connected device");
-            break;
-        }
+    case 0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("read failed");
+        break;
+    case -2:
+        emit error("USB device unavailable");
+        break;
+    case -3:
+        emit error("EEPROM not initialized for the connected device");
+        break;
     }
 }
 //--------------------------------------------------------------------------------
@@ -350,17 +409,14 @@ void MainBox::f_eeprom_decode(void)
 {
     int ret;
     ret = ftdi_eeprom_decode(&ftdi, 1);
-    if(ret != 0)
+    switch(ret)
     {
-        switch(ret)
-        {
-        case 0:
-            emit error("all fine");
-            break;
-        case -1:
-            emit error("something went wrong");
-            break;
-        }
+    case 0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("something went wrong");
+        break;
     }
 }
 //--------------------------------------------------------------------------------

@@ -31,23 +31,32 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <layout class="QGridLayout" name="gridLayout">
-        <property name="leftMargin">
-         <number>8</number>
-        </property>
-        <property name="topMargin">
-         <number>8</number>
-        </property>
-        <property name="rightMargin">
-         <number>8</number>
-        </property>
-        <property name="bottomMargin">
-         <number>8</number>
-        </property>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="2" column="2">
+         <widget class="QPushButton" name="btn_eeprom_initdefaults">
           <property name="text">
-           <string>VID</string>
+           <string>eeprom_initdefaults</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QPushButton" name="btn_set_eeprom_buf">
+          <property name="text">
+           <string>set_eeprom_buf</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="btn_open">
+          <property name="text">
+           <string>Open</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <widget class="QPushButton" name="btn_write_eeprom">
+          <property name="text">
+           <string>write_eeprom</string>
           </property>
          </widget>
         </item>
@@ -58,6 +67,41 @@
           </property>
          </widget>
         </item>
+        <item row="2" column="3">
+         <widget class="QPushButton" name="btn_eeprom_decode">
+          <property name="text">
+           <string>eeprom_decode</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QPushButton" name="btn_read_eeprom">
+          <property name="text">
+           <string>read_eeprom</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QPushButton" name="btn_close">
+          <property name="text">
+           <string>Close</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QPushButton" name="btn_get_eeprom_buf">
+          <property name="text">
+           <string>get_eeprom_buf</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>VID</string>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="1">
          <widget class="HexSpinBox" name="sb_VID"/>
         </item>
@@ -65,55 +109,6 @@
          <widget class="HexSpinBox" name="sb_PID"/>
         </item>
        </layout>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_open">
-        <property name="text">
-         <string>Open</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_read_eeprom">
-        <property name="text">
-         <string>read_eeprom</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_get_eeprom_buf">
-        <property name="text">
-         <string>get_eeprom_buf</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_write_eeprom">
-        <property name="text">
-         <string>write_eeprom</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_set_eeprom_buf">
-        <property name="text">
-         <string>set_eeprom_buf</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_eeprom_decode">
-        <property name="text">
-         <string>eeprom_decode</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_close">
-        <property name="text">
-         <string>Close</string>
-        </property>
-       </widget>
       </item>
       <item>
        <spacer name="verticalSpacer_3">
@@ -148,15 +143,14 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>sb_VID</tabstop>
-  <tabstop>sb_PID</tabstop>
   <tabstop>btn_open</tabstop>
+  <tabstop>btn_close</tabstop>
   <tabstop>btn_read_eeprom</tabstop>
   <tabstop>btn_get_eeprom_buf</tabstop>
-  <tabstop>btn_write_eeprom</tabstop>
+  <tabstop>btn_eeprom_initdefaults</tabstop>
   <tabstop>btn_set_eeprom_buf</tabstop>
+  <tabstop>btn_write_eeprom</tabstop>
   <tabstop>btn_eeprom_decode</tabstop>
-  <tabstop>btn_close</tabstop>
   <tabstop>btn_test</tabstop>
  </tabstops>
  <resources/>

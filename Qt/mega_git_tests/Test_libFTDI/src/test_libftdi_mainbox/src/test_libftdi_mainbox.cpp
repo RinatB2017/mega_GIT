@@ -139,7 +139,48 @@ void MainBox::choice_test(void)
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
-    emit info("Test");
+    emit info("Test bitbang mode");
+
+    int ret;
+    emit info("set bitbang mode");
+    ret = ftdi_set_bitmode(&ftdi, 0xFF, BITMODE_BITBANG);
+    switch(ret)
+    {
+    case  0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("can't enable bitbang mode");
+        break;
+    case -2:
+        emit error("USB device unavailable");
+        break;
+    }
+
+    unsigned char buf[100] = { 0 };
+    ret = ftdi_read_data(&ftdi, buf, 10);
+    emit info(QString("ret: %1").arg(ret));
+
+    QByteArray ba;
+    ba.append((char *)buf, 10);
+
+    emit info(ba.toHex().toUpper());
+
+    emit info("disabling bitbang mode");
+    ret = ftdi_disable_bitbang(&ftdi);
+    switch(ret)
+    {
+    case  0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("can't disable bitbang mode");
+        break;
+    case -2:
+        emit error("USB device unavailable");
+        break;
+    }
+
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -206,28 +247,6 @@ void MainBox::f_open(void)
         emit error("libusb_get_device_descriptor() failedc");
         return;
     }
-
-    emit info("set bitbang mode");
-    ret = ftdi_set_bitmode(&ftdi, 0xFF, BITMODE_BITBANG);
-    switch(ret)
-    {
-    case  0:
-        emit info("all fine");
-        break;
-    case -1:
-        emit error("can't enable bitbang mode");
-        break;
-    case -2:
-        emit error("USB device unavailable");
-        break;
-    }
-
-    unsigned char buf[100] = { 0 };
-    ret = ftdi_read_data(&ftdi, buf, 10);
-    emit info(QString("ret: %1").arg(ret));
-
-    emit info("disabling bitbang mode");
-    ftdi_disable_bitbang(&ftdi);
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_get_eeprom_buf(void)

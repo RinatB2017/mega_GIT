@@ -53,7 +53,7 @@ Revision History:
 #endif
 
 #ifndef _WINDOWS
-/#include "WinTypes.h"
+#include "WinTypes.h"
 
 #ifdef FTD2XX_API
 #undef FTD2XX_API
@@ -435,11 +435,11 @@ FT_STATUS WINAPI FT_EraseEE(
 //
 typedef struct ft_program_data {
 
-	DWORD Signature1;			// Header - must be 0x00000000 
-	DWORD Signature2;			// Header - must be 0xffffffff
-	DWORD Version;				// Header - FT_PROGRAM_DATA version
-								//      0 = original
-	                            				//      1 = FT2232C extensions
+    DWORD Signature1;			//  Header - must be 0x00000000
+    DWORD Signature2;			//  Header - must be 0xffffffff
+    DWORD Version;				//  Header - FT_PROGRAM_DATA version
+                                //  0 = original
+                                //  1 = FT2232C extensions
 								//	2 = FT232R extensions
 								//	3 = FT2232H extensions
 								//	4 = FT4232H extensions

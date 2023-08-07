@@ -282,7 +282,7 @@ void MainBox::f_set_eeprom_buf(void)
     switch(ret)
     {
     case 0:
-        emit info("All fine");
+        emit info("all fine");
         break;
     case -1:
         emit error("struct ftdi_contxt or ftdi_eeprom of buf missing");
@@ -313,6 +313,12 @@ void MainBox::f_set_eeprom_buf(void)
 void MainBox::f_close(void)
 {
     emit trace(Q_FUNC_INFO);
+
+    if(ftdi.usb_dev != NULL)
+    {
+        emit error("ftdi.usb_dev != NULL");
+        return;
+    }
 
     int ret;
     ret = ftdi_usb_close(&ftdi);
@@ -345,10 +351,13 @@ void MainBox::f_test(void)
     {
     case -3:
         emit info("out of memory");
+        return;
     case -5:
         emit error("libusb_get_device_list() failed");
+        return;
     case -6:
         emit error("libusb_get_device_descriptor() failed");
+        return;
     default:
         emit info(QString("Number of FTDI devices found: %1").arg(ret));
         break;
@@ -392,6 +401,33 @@ void MainBox::f_test(void)
 void MainBox::f_read_eeprom(void)
 {
     int ret;
+
+    ret = ftdi_eeprom_build(&ftdi);
+    switch(ret)
+    {
+    case -1:
+        emit error("eeprom size (128 bytes) exceeded by custom strings");
+        return;
+    case -2:
+        emit error("Invalid eeprom or ftdi pointer");
+        return;
+    case -3:
+        emit error("Invalid cbus function setting     (FIXME: Not in the code?)");
+        return;
+    case -4:
+        emit error("Chip doesn't support invert       (FIXME: Not in the code?)");
+        return;
+    case -5:
+        emit error("Chip doesn't support high current drive         (FIXME: Not in the code?)");
+        return;
+    case -6:
+        emit error("No connected EEPROM or EEPROM Type unknown");
+        return;
+    default:
+        emit info(QString("size of eeprom user area in bytes: %1").arg(ret));
+        break;
+    }
+
     ret = ftdi_read_eeprom(&ftdi);
     switch(ret)
     {

@@ -67,10 +67,12 @@ private:
     void f_open(void);
     void f_close(void);
 
-    void f_get_eeprom_buf(void);
-    void f_set_eeprom_buf(void);
     void f_read_eeprom(void);
+    void f_get_eeprom_buf(void);
+
+    void f_set_eeprom_buf(void);
     void f_write_eeprom(void);
+
     void f_eeprom_decode(void);
     void f_eeprom_initdefaults(void);
 

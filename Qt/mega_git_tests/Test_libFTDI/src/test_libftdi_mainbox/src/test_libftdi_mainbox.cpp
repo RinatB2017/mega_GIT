@@ -380,10 +380,30 @@ void MainBox::f_test(void)
     struct ftdi_device_list *devlist, *curdev;
     char manufacturer[128], description[128], serial[128];
 
-    int i, ret;
+    int ret;
 
-    ftdi_init(&ftdi);
+    ret = ftdi_init(&ftdi);
+    switch(ret)
+    {
+    case 0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("couldn't allocate read buffer");
+        return;
+    case -2:
+        emit error("couldn't allocate struct buffer");
+        return;
+    case -3:
+        emit error("libusb_init() failed");
+        return;
+    }
+
+    // Select first interface
+    ftdi_set_interface(&ftdi, INTERFACE_ANY);
+
     ret = ftdi_usb_find_all(&ftdi, &devlist, get_VID(), get_PID());
+    //ret = ftdi_usb_find_all(&ftdi, &devlist, 0, 0);
     switch(ret)
     {
     case 0:
@@ -403,9 +423,10 @@ void MainBox::f_test(void)
         break;
     }
 
-    for (i=0, curdev = devlist; curdev != NULL; i++, curdev = curdev->next)
+    for (curdev = devlist; curdev != NULL; curdev = curdev->next)
     {
-        ret = ftdi_usb_get_strings(&ftdi, curdev->dev, manufacturer, 128, description, 128, serial, 128);
+        //ret = ftdi_usb_get_strings(&ftdi, curdev->dev, manufacturer, 128, description, 128, serial, 128);
+        ret = ftdi_usb_get_strings(&ftdi, curdev->dev, manufacturer, 128, description, 128, NULL, 0);
         switch(ret)
         {
         case 0:
@@ -435,6 +456,7 @@ void MainBox::f_test(void)
             break;
         }
     }
+    ftdi_list_free(&devlist);
     ftdi_deinit(&ftdi);
 }
 //--------------------------------------------------------------------------------

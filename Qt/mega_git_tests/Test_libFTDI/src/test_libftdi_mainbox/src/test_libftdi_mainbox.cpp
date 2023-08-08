@@ -383,7 +383,7 @@ void MainBox::f_test(void)
     int i, ret;
 
     ftdi_init(&ftdi);
-    ret = ftdi_usb_find_all(&ftdi, &devlist, get_PID(), get_VID());
+    ret = ftdi_usb_find_all(&ftdi, &devlist, get_VID(), get_PID());
     switch(ret)
     {
     case 0:
@@ -408,33 +408,32 @@ void MainBox::f_test(void)
         ret = ftdi_usb_get_strings(&ftdi, curdev->dev, manufacturer, 128, description, 128, serial, 128);
         switch(ret)
         {
-        case   0:
+        case 0:
             emit info("all fine");
             emit info(QString("Manufacturer: [%1], Description: [%2], Serial: [%3]")
                       .arg(manufacturer)
                       .arg(description)
                       .arg(serial));
             break;
-        case  -1:
+        case -1:
             emit error("wrong arguments");
             break;
-        case  -4:
+        case -4:
             emit error("unable to open device");
             break;
-        case  -7:
+        case -7:
             emit error("get product manufacturer failed");
             break;
-        case  -8:
+        case -8:
             emit error("get product description failed");
             break;
-        case  -9:
+        case -9:
             emit error("get serial number failed");
             break;
         case -11:
             emit error("libusb_get_device_descriptor() failed");
             break;
         }
-        curdev = curdev->next;
     }
     ftdi_deinit(&ftdi);
 }

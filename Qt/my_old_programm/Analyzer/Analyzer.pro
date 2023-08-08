@@ -34,7 +34,8 @@ unix {
 }
 
 LIBS    += -lusb-1.0
-LIBS    += /opt/lib64/libftd2xx.so
+#LIBS    += /opt/lib64/libftd2xx.so
+LIBS    += /usr/lib64/libftd2xx.so
 
 LIB_PATH  = "$$PWD/../../lib"
 LIB_PATH2 = "$$PWD/../../lib2"

@@ -125,22 +125,22 @@ void MainBox::tick(void)
     ba.append(temp.toLatin1());
     switch(ui->cb_append->currentIndex())
     {
-    case 0: // tr("no add")
+    case 0:
         break;
 
-    case 1: //  << tr("0x00")
+    case 1:
         ba.append((char)0x00);
         break;
 
-    case 2: //  << tr("0x0D")
+    case 2:
         ba.append((char)0x0D);
         break;
 
-    case 3: //  << tr("0x0A")
+    case 3:
         ba.append((char)0x0A);
         break;
 
-    case 4: //  << tr("0x0D 0x0A")
+    case 4:
         ba.append((char)0x0D);
         ba.append((char)0x0A);
         break;
@@ -189,16 +189,21 @@ void MainBox::updateText(void)
     if(index < 0) index = 0;
     ui->cb_append->clear();
     ui->cb_append->addItems(QStringList()
-                            << tr("no add")
-                            << tr("0x00")
-                            << tr("0x0D")
-                            << tr("0x0A")
-                            << tr("0x0D 0x0A") );
+                            << "no add"
+                            << "0x00"
+                            << "0x0D"
+                            << "0x0A"
+                            << "0x0D 0x0A" );
     ui->cb_append->setCurrentIndex(index);
 }
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)
 {
+    if(ui->serial_widget->isOpen())
+    {
+        messagebox_critical("Ошибка", "Сначала закройте порт");
+        return false;
+    }
     return true;
 }
 //--------------------------------------------------------------------------------

@@ -24,8 +24,6 @@
 #include <QList>
 #include <QTest>
 //--------------------------------------------------------------------------------
-#define private public
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "template_rs232_mainbox.hpp"
 #include "test.hpp"
@@ -53,6 +51,6 @@ void Test::test_func(void)
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
 
-    QCOMPARE(mb->test(), true);
+    QCOMPARE(mb->d_test(), true);
 }
 //--------------------------------------------------------------------------------

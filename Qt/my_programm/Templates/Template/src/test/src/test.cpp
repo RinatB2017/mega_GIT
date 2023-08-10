@@ -24,8 +24,6 @@
 #include <QList>
 #include <QTest>
 //--------------------------------------------------------------------------------
-#define private public
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "template_mainbox.hpp"
 #include "test.hpp"

@@ -42,6 +42,10 @@ public:
                      MySplashScreen *splash);
     virtual ~MainBox();
 
+#ifdef  QT_DEBUG
+    bool d_test(void);
+#endif
+
 signals:
     void send(const QByteArray&);
 

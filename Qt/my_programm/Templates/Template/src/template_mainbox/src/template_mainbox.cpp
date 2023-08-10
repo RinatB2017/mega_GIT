@@ -106,23 +106,33 @@ void MainBox::create_test_bar(void)
     test_commands.append({ id++, "test", &MainBox::test });
 
     test_bar = new QToolBar("testbar");
-    test_bar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, test_bar);
+    Q_ASSERT(test_bar);
 
-    cb_test = new QComboBox(this);
-    cb_test->setObjectName("cb_test");
-    cb_test->setProperty(NO_SAVE, true);
-    foreach (CMD command, test_commands)
+    if(mw && test_bar)
     {
-        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        test_bar->setObjectName("testbar");
+        mw->addToolBar(Qt::TopToolBarArea, test_bar);
+
+        cb_test = new QComboBox(this);
+        Q_ASSERT(cb_test);
+
+        cb_test->setObjectName("cb_test");
+        cb_test->setProperty(NO_SAVE, true);
+        foreach (CMD command, test_commands)
+        {
+            cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        }
+
+        test_bar->addWidget(cb_test);
     }
 
-    test_bar->addWidget(cb_test);
     QToolButton *btn_choice_test = add_button(test_bar,
                                               new QToolButton(this),
                                               qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                               "choice_test",
                                               "choice_test");
+    Q_ASSERT(btn_choice_test);
+
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test,    &QPushButton::clicked,  this,   &MainBox::choice_test);

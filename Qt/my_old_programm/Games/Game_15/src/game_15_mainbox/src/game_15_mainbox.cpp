@@ -64,13 +64,20 @@ void MainBox::add_menu(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    QAction *action = new QAction(this);
-    action->setText("new game");
-    action->setIcon(QIcon(ICON_PROGRAMM));
-    connect(action, SIGNAL(triggered(bool)), this, SLOT(new_game()));
+    if(mw)
+    {
+        QAction *action = new QAction(this);
+        action->setText("new game");
+        action->setIcon(QIcon(ICON_PROGRAMM));
+        connect(action, SIGNAL(triggered(bool)), this, SLOT(new_game()));
 
-    mw->add_filemenu_action(0, action);
-    mw->add_filemenu_separator(1);
+        mw->add_filemenu_action(0, action);
+        mw->add_filemenu_separator(1);
+    }
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 bool MainBox::check_bone(int number)

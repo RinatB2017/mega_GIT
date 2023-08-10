@@ -126,14 +126,21 @@ void MainBox::on_connectType_currentIndexChanged(int index)
     {
         MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
 
-        ui->connectButton->setDisabled(true);
-        if (type == Serial)
+        if(mw)
         {
-            if(mw) mw->statusBar()->showMessage(tr("Could not create Modbus slave."), 5000);
+            ui->connectButton->setDisabled(true);
+            if (type == Serial)
+            {
+                if(mw) mw->statusBar()->showMessage(tr("Could not create Modbus slave."), 5000);
+            }
+            else
+            {
+                if(mw) mw->statusBar()->showMessage(tr("Could not create Modbus server."), 5000);
+            }
         }
         else
         {
-            if(mw) mw->statusBar()->showMessage(tr("Could not create Modbus server."), 5000);
+            emit error("mw not found!");
         }
     }
     else
@@ -176,7 +183,14 @@ void MainBox::handleDeviceError(QModbusDevice::Error newError)
         return;
 
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw) mw->statusBar()->showMessage(modbusDevice->errorString(), 5000);
+    if(mw)
+    {
+        mw->statusBar()->showMessage(modbusDevice->errorString(), 5000);
+    }
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::on_connectButton_clicked()
@@ -184,7 +198,14 @@ void MainBox::on_connectButton_clicked()
     bool intendToConnect = (modbusDevice->state() == QModbusDevice::UnconnectedState);
 
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
-    if(mw) mw->statusBar()->clearMessage();
+    if(mw)
+    {
+        mw->statusBar()->clearMessage();
+    }
+    else
+    {
+        emit error("mw not found!");
+    }
 
     if (intendToConnect)
     {

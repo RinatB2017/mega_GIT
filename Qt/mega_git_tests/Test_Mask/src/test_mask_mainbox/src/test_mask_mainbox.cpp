@@ -68,20 +68,24 @@ void MainBox::init(void)
                                 this);
             //            setVisible(false);    //TODO не надо это разкомментировать
         }
+        else
+        {
+            emit error("mw not found!");
+        }
 #endif
     });
 #endif
 
     QTimer::singleShot(0, [this]{
 #if 1
-    QPixmap maskPix( ":/mask.png" );
-    topLevelWidget()->setMask( maskPix.scaled( size() ).mask() );
+        QPixmap maskPix( ":/mask.png" );
+        topLevelWidget()->setMask( maskPix.scaled( size() ).mask() );
 #else
         QPixmap *pixmap = new QPixmap(800, 600);
 
         QPainter painter(this);
         painter.begin(pixmap);
-//        painter.fillRect(0, 0, 800, 600, Qt::red);
+        //        painter.fillRect(0, 0, 800, 600, Qt::red);
         painter.fillRect(200, 150, 400, 300, Qt::transparent);
         painter.end();
 
@@ -101,37 +105,42 @@ void MainBox::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    commands.clear(); int id = 0;
-    commands.append({ id++, "test",     &MainBox::test });
-
-    testbar = new QToolBar("testbar");
-    testbar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    cb_block = new QCheckBox("block", this);
-    testbar->addWidget(cb_block);
-
-    cb_test = new QComboBox(this);
-    cb_test->setObjectName("cb_test");
-    foreach (CMD command, commands)
+    if(mw)
     {
-        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        commands.clear(); int id = 0;
+        commands.append({ id++, "test",     &MainBox::test });
+
+        testbar = new QToolBar("testbar");
+        testbar->setObjectName("testbar");
+        mw->addToolBar(Qt::TopToolBarArea, testbar);
+
+        cb_block = new QCheckBox("block", this);
+        testbar->addWidget(cb_block);
+
+        cb_test = new QComboBox(this);
+        cb_test->setObjectName("cb_test");
+        foreach (CMD command, commands)
+        {
+            cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        }
+
+        testbar->addWidget(cb_test);
+        QToolButton *btn_choice_test = add_button(testbar,
+                                                  new QToolButton(this),
+                                                  qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                                  "choice_test",
+                                                  "choice_test");
+        btn_choice_test->setObjectName("btn_choice_test");
+
+        connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+
+        connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
+        connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
     }
-
-    testbar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(testbar,
-                                              new QToolButton(this),
-                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                              "choice_test",
-                                              "choice_test");
-    btn_choice_test->setObjectName("btn_choice_test");
-
-    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
-
-    //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -179,7 +188,7 @@ bool MainBox::test(void)
 
     QPainter painter(this);
     painter.begin(maskPix);
-//    painter.fillRect(0, 0, 800, 600, Qt::red);
+    //    painter.fillRect(0, 0, 800, 600, Qt::red);
     painter.fillRect(0, 0, 800, 300, Qt::red);
     painter.end();
 

@@ -87,49 +87,56 @@ void MainBox::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    commands.clear(); int id = 0;
-    commands.append({ id++, "test", &MainBox::test });
-
-    QToolBar *testbar = new QToolBar("testbar");
-    testbar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    cb_test = new QComboBox(this);
-    cb_test->setObjectName("cb_test");
-    foreach (CMD command, commands)
+    if(mw)
     {
-        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        commands.clear(); int id = 0;
+        commands.append({ id++, "test", &MainBox::test });
+
+        QToolBar *testbar = new QToolBar("testbar");
+        testbar->setObjectName("testbar");
+        mw->addToolBar(Qt::TopToolBarArea, testbar);
+
+        cb_test = new QComboBox(this);
+        cb_test->setObjectName("cb_test");
+        foreach (CMD command, commands)
+        {
+            cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        }
+
+        testbar->addWidget(cb_test);
+        QToolButton *btn_choice_test = add_button(testbar,
+                                                  new QToolButton(this),
+                                                  qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                                  "choice_test",
+                                                  "choice_test");
+        btn_choice_test->setObjectName("btn_choice_test");
+
+        QPushButton *btn_timer_start = new QPushButton;
+        btn_timer_start->setObjectName("btn_timer_start");
+        btn_timer_start->setText("START");
+
+        QPushButton *btn_timer_stop = new QPushButton;
+        btn_timer_stop->setObjectName("btn_timer_stop");
+        btn_timer_stop->setText("STOP");
+
+        QPushButton *btn_update = new QPushButton;
+        btn_update->setObjectName("btn_update");
+        btn_update->setText("UPDATE");
+
+        testbar->addWidget(btn_timer_start);
+        testbar->addWidget(btn_timer_stop);
+        testbar->addWidget(btn_update);
+
+        connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+
+        connect(btn_timer_start,    SIGNAL(clicked(bool)),  this,   SLOT(start()));
+        connect(btn_timer_stop,     SIGNAL(clicked(bool)),  this,   SLOT(stop()));
+        connect(btn_update,         SIGNAL(clicked(bool)),  this,   SLOT(update()));
     }
-
-    testbar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(testbar,
-                                              new QToolButton(this),
-                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                              "choice_test",
-                                              "choice_test");
-    btn_choice_test->setObjectName("btn_choice_test");
-
-    QPushButton *btn_timer_start = new QPushButton;
-    btn_timer_start->setObjectName("btn_timer_start");
-    btn_timer_start->setText("START");
-
-    QPushButton *btn_timer_stop = new QPushButton;
-    btn_timer_stop->setObjectName("btn_timer_stop");
-    btn_timer_stop->setText("STOP");
-
-    QPushButton *btn_update = new QPushButton;
-    btn_update->setObjectName("btn_update");
-    btn_update->setText("UPDATE");
-
-    testbar->addWidget(btn_timer_start);
-    testbar->addWidget(btn_timer_stop);
-    testbar->addWidget(btn_update);
-
-    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    connect(btn_timer_start,    SIGNAL(clicked(bool)),  this,   SLOT(start()));
-    connect(btn_timer_stop,     SIGNAL(clicked(bool)),  this,   SLOT(stop()));
-    connect(btn_update,         SIGNAL(clicked(bool)),  this,   SLOT(update()));
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -141,10 +148,10 @@ void MainBox::choice_test(void)
         return;
     }
     auto cmd_it = std::find_if(
-        commands.begin(),
-        commands.end(),
-        [cmd](CMD command){ return command.cmd == cmd; }
-    );
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
     if (cmd_it != commands.end())
     {
         typedef bool (MainBox::*function)(void);

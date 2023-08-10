@@ -328,21 +328,21 @@ int SerialBox5_fix_baudrate::input(const QString &data)
         emit port_is_active(false);
         return E_PORT_NOT_OPEN;
     }
-//    QByteArray sending_data;
-//    sending_data.clear();
-//    sending_data.append(data);
+    //    QByteArray sending_data;
+    //    sending_data.clear();
+    //    sending_data.append(data);
     if(flag_byte_by_byte)
     {
-//        for(int n=0; n<sending_data.length(); n++)
+        //        for(int n=0; n<sending_data.length(); n++)
         for(int n=0; n<data.length(); n++)
         {
-//            write(sending_data.constData()+n, 1);
+            //            write(sending_data.constData()+n, 1);
             write(data.toLatin1().constData()+n, 1);
         }
     }
     else
     {
-//        write(sending_data);
+        //        write(sending_data);
         write(data.toLatin1());
     }
     return E_NO_ERROR;
@@ -379,23 +379,30 @@ bool SerialBox5_fix_baudrate::add_menu(int index)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    QMenu *menu = new QMenu(caption);
-    Q_ASSERT(menu);
+    if(mw)
+    {
+        QMenu *menu = new QMenu(caption);
+        Q_ASSERT(menu);
 
-    QAction *action_flag_in_hex = new QAction(menu);
-    QAction *action_flag_byte_by_byte = new QAction(menu);
+        QAction *action_flag_in_hex = new QAction(menu);
+        QAction *action_flag_byte_by_byte = new QAction(menu);
 
-    action_flag_in_hex->setCheckable(true);
-    action_flag_byte_by_byte->setCheckable(true);
+        action_flag_in_hex->setCheckable(true);
+        action_flag_byte_by_byte->setCheckable(true);
 
-    action_flag_in_hex->setText("in HEX");
-    action_flag_byte_by_byte->setText("byte to byte");
+        action_flag_in_hex->setText("in HEX");
+        action_flag_byte_by_byte->setText("byte to byte");
 
-    menu->addAction(action_flag_in_hex);
-    menu->addAction(action_flag_byte_by_byte);
+        menu->addAction(action_flag_in_hex);
+        menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_in_hex,         &QAction::triggered,    this,   &SerialBox5_fix_baudrate::set_flag_in_hex);
-    connect(action_flag_byte_by_byte,   &QAction::triggered,    this,   &SerialBox5_fix_baudrate::set_flag_byte_by_byte);
+        connect(action_flag_in_hex,         &QAction::triggered,    this,   &SerialBox5_fix_baudrate::set_flag_in_hex);
+        connect(action_flag_byte_by_byte,   &QAction::triggered,    this,   &SerialBox5_fix_baudrate::set_flag_byte_by_byte);
+    }
+    else
+    {
+        emit error("mw not found!");
+    }
 
     Q_UNUSED(index);
 
@@ -407,23 +414,30 @@ bool SerialBox5_fix_baudrate::add_menu(int index, const QString &title)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    QMenu *menu = new QMenu(title);
-    Q_ASSERT(menu);
+    if(mw)
+    {
+        QMenu *menu = new QMenu(title);
+        Q_ASSERT(menu);
 
-    QAction *action_flag_in_hex = new QAction(menu);
-    QAction *action_flag_byte_by_byte = new QAction(menu);
+        QAction *action_flag_in_hex = new QAction(menu);
+        QAction *action_flag_byte_by_byte = new QAction(menu);
 
-    action_flag_in_hex->setCheckable(true);
-    action_flag_byte_by_byte->setCheckable(true);
+        action_flag_in_hex->setCheckable(true);
+        action_flag_byte_by_byte->setCheckable(true);
 
-    action_flag_in_hex->setText("in HEX");
-    action_flag_byte_by_byte->setText("byte to byte");
+        action_flag_in_hex->setText("in HEX");
+        action_flag_byte_by_byte->setText("byte to byte");
 
-    menu->addAction(action_flag_in_hex);
-    menu->addAction(action_flag_byte_by_byte);
+        menu->addAction(action_flag_in_hex);
+        menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_in_hex, &QAction::triggered, this, &SerialBox5_fix_baudrate::set_flag_in_hex);
-    connect(action_flag_byte_by_byte, &QAction::triggered, this, &SerialBox5_fix_baudrate::set_flag_byte_by_byte);
+        connect(action_flag_in_hex, &QAction::triggered, this, &SerialBox5_fix_baudrate::set_flag_in_hex);
+        connect(action_flag_byte_by_byte, &QAction::triggered, this, &SerialBox5_fix_baudrate::set_flag_byte_by_byte);
+    }
+    else
+    {
+        emit error("mw not found!");
+    }
 
     Q_UNUSED(index);
 

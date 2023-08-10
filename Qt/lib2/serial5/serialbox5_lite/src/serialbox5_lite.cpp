@@ -373,27 +373,32 @@ bool SerialBox5_lite::add_menu(int index)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    QMenu *menu = new QMenu(caption);
-    Q_ASSERT(menu);
+    if(mw)
+    {
+        QMenu *menu = new QMenu(caption);
+        Q_ASSERT(menu);
 
-    QAction *action_flag_in_hex = new QAction(menu);
-    QAction *action_flag_byte_by_byte = new QAction(menu);
+        QAction *action_flag_in_hex = new QAction(menu);
+        QAction *action_flag_byte_by_byte = new QAction(menu);
 
-    action_flag_in_hex->setCheckable(true);
-    action_flag_byte_by_byte->setCheckable(true);
+        action_flag_in_hex->setCheckable(true);
+        action_flag_byte_by_byte->setCheckable(true);
 
-    action_flag_in_hex->setText("in HEX");
-    action_flag_byte_by_byte->setText("byte to byte");
+        action_flag_in_hex->setText("in HEX");
+        action_flag_byte_by_byte->setText("byte to byte");
 
-    menu->addAction(action_flag_in_hex);
-    menu->addAction(action_flag_byte_by_byte);
+        menu->addAction(action_flag_in_hex);
+        menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_in_hex,         &QAction::triggered,    this,   &SerialBox5_lite::set_flag_in_hex);
-    connect(action_flag_byte_by_byte,   &QAction::triggered,    this,   &SerialBox5_lite::set_flag_byte_by_byte);
+        connect(action_flag_in_hex,         &QAction::triggered,    this,   &SerialBox5_lite::set_flag_in_hex);
+        connect(action_flag_byte_by_byte,   &QAction::triggered,    this,   &SerialBox5_lite::set_flag_byte_by_byte);
 
-    //---
-    mw->add_optionsmenu_menu(index, menu);
-    //---
+        mw->add_optionsmenu_menu(index, menu);
+    }
+    else
+    {
+        emit error("mw not found!");
+    }
 
     return false;
 }
@@ -403,25 +408,32 @@ bool SerialBox5_lite::add_menu(int index, const QString &title)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    QMenu *menu = new QMenu(title);
-    Q_ASSERT(menu);
+    if(mw)
+    {
+        QMenu *menu = new QMenu(title);
+        Q_ASSERT(menu);
 
-    QAction *action_flag_in_hex = new QAction(menu);
-    QAction *action_flag_byte_by_byte = new QAction(menu);
+        QAction *action_flag_in_hex = new QAction(menu);
+        QAction *action_flag_byte_by_byte = new QAction(menu);
 
-    action_flag_in_hex->setCheckable(true);
-    action_flag_byte_by_byte->setCheckable(true);
+        action_flag_in_hex->setCheckable(true);
+        action_flag_byte_by_byte->setCheckable(true);
 
-    action_flag_in_hex->setText("in HEX");
-    action_flag_byte_by_byte->setText("byte to byte");
+        action_flag_in_hex->setText("in HEX");
+        action_flag_byte_by_byte->setText("byte to byte");
 
-    menu->addAction(action_flag_in_hex);
-    menu->addAction(action_flag_byte_by_byte);
+        menu->addAction(action_flag_in_hex);
+        menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_in_hex, &QAction::triggered, this, &SerialBox5_lite::set_flag_in_hex);
-    connect(action_flag_byte_by_byte, &QAction::triggered, this, &SerialBox5_lite::set_flag_byte_by_byte);
+        connect(action_flag_in_hex, &QAction::triggered, this, &SerialBox5_lite::set_flag_in_hex);
+        connect(action_flag_byte_by_byte, &QAction::triggered, this, &SerialBox5_lite::set_flag_byte_by_byte);
 
-    mw->add_menu(index, menu);
+        mw->add_menu(index, menu);
+    }
+    else
+    {
+        emit error("mw not found!");
+    }
 
     return true;
 }

@@ -65,30 +65,37 @@ void MainBox::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    commands.clear(); int id = 0;
-    commands.append({ id++, "test",                 &MainBox::test });
-
-    QToolBar *testbar = new QToolBar("testbar");
-    testbar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    cb_test = new QComboBox(this);
-    cb_test->setObjectName("cb_test");
-    cb_test->setProperty(NO_SAVE, true);
-    foreach (CMD command, commands)
+    if(mw)
     {
-        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        commands.clear(); int id = 0;
+        commands.append({ id++, "test",                 &MainBox::test });
+
+        QToolBar *testbar = new QToolBar("testbar");
+        testbar->setObjectName("testbar");
+        mw->addToolBar(Qt::TopToolBarArea, testbar);
+
+        cb_test = new QComboBox(this);
+        cb_test->setObjectName("cb_test");
+        cb_test->setProperty(NO_SAVE, true);
+        foreach (CMD command, commands)
+        {
+            cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        }
+
+        testbar->addWidget(cb_test);
+        QToolButton *btn_choice_test = add_button(testbar,
+                                                  new QToolButton(this),
+                                                  qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                                  "choice_test",
+                                                  "choice_test");
+        btn_choice_test->setObjectName("btn_choice_test");
+
+        connect(btn_choice_test,    &QToolButton::clicked,  this,   &MainBox::choice_test);
     }
-
-    testbar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(testbar,
-                                              new QToolButton(this),
-                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                              "choice_test",
-                                              "choice_test");
-    btn_choice_test->setObjectName("btn_choice_test");
-
-    connect(btn_choice_test,    &QToolButton::clicked,  this,   &MainBox::choice_test);
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)

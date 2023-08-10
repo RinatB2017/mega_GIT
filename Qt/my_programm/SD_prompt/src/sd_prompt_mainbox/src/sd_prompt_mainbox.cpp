@@ -105,30 +105,37 @@ void MainBox::create_test_bar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    test_commands.clear(); int id = 0;
-    test_commands.append({ id++, "test", &MainBox::test });
-
-    test_bar = new QToolBar("testbar");
-    test_bar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, test_bar);
-
-    cb_test = new QComboBox(this);
-    cb_test->setObjectName("cb_test");
-    cb_test->setProperty(NO_SAVE, true);
-    foreach (CMD command, test_commands)
+    if(mw)
     {
-        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        test_commands.clear(); int id = 0;
+        test_commands.append({ id++, "test", &MainBox::test });
+
+        test_bar = new QToolBar("testbar");
+        test_bar->setObjectName("testbar");
+        mw->addToolBar(Qt::TopToolBarArea, test_bar);
+
+        cb_test = new QComboBox(this);
+        cb_test->setObjectName("cb_test");
+        cb_test->setProperty(NO_SAVE, true);
+        foreach (CMD command, test_commands)
+        {
+            cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        }
+
+        test_bar->addWidget(cb_test);
+        QToolButton *btn_choice_test = add_button(test_bar,
+                                                  new QToolButton(this),
+                                                  qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                                  "choice_test",
+                                                  "choice_test");
+        btn_choice_test->setObjectName("btn_choice_test");
+
+        connect(btn_choice_test,    &QPushButton::clicked,  this,   &MainBox::choice_test);
     }
-
-    test_bar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(test_bar,
-                                              new QToolButton(this),
-                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                              "choice_test",
-                                              "choice_test");
-    btn_choice_test->setObjectName("btn_choice_test");
-
-    connect(btn_choice_test,    &QPushButton::clicked,  this,   &MainBox::choice_test);
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::create_programm_bar(void)
@@ -136,31 +143,38 @@ void MainBox::create_programm_bar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    programm_commands.clear(); int id = 0;
-    programm_commands.append({ id++, "create positive prompt",   &MainBox::create_positive_prompt });
-    programm_commands.append({ id++, "create negative prompt",   &MainBox::create_negative_prompt });
-
-    programm_bar = new QToolBar("programm_bar");
-    programm_bar->setObjectName("programm_bar");
-    mw->addToolBar(Qt::TopToolBarArea, programm_bar);
-
-    cb_programm = new QComboBox(this);
-    cb_programm->setObjectName("cb_programm");
-    cb_programm->setProperty(NO_SAVE, true);
-    foreach (CMD command, programm_commands)
+    if(mw)
     {
-        cb_programm->addItem(command.cmd_text, QVariant(command.cmd));
+        programm_commands.clear(); int id = 0;
+        programm_commands.append({ id++, "create positive prompt",   &MainBox::create_positive_prompt });
+        programm_commands.append({ id++, "create negative prompt",   &MainBox::create_negative_prompt });
+
+        programm_bar = new QToolBar("programm_bar");
+        programm_bar->setObjectName("programm_bar");
+        mw->addToolBar(Qt::TopToolBarArea, programm_bar);
+
+        cb_programm = new QComboBox(this);
+        cb_programm->setObjectName("cb_programm");
+        cb_programm->setProperty(NO_SAVE, true);
+        foreach (CMD command, programm_commands)
+        {
+            cb_programm->addItem(command.cmd_text, QVariant(command.cmd));
+        }
+
+        programm_bar->addWidget(cb_programm);
+        QToolButton *btn_choice_programm = add_button(programm_bar,
+                                                      new QToolButton(this),
+                                                      qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                                      "choice_programm",
+                                                      "choice_programm");
+        btn_choice_programm->setObjectName("btn_choice_programm");
+
+        connect(btn_choice_programm,    &QPushButton::clicked,  this,   &MainBox::choice_programm);
     }
-
-    programm_bar->addWidget(cb_programm);
-    QToolButton *btn_choice_programm = add_button(programm_bar,
-                                                  new QToolButton(this),
-                                                  qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                                  "choice_programm",
-                                                  "choice_programm");
-    btn_choice_programm->setObjectName("btn_choice_programm");
-
-    connect(btn_choice_programm,    &QPushButton::clicked,  this,   &MainBox::choice_programm);
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)

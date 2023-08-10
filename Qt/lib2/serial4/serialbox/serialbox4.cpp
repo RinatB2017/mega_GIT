@@ -159,7 +159,7 @@ void SerialBox4::createWidgets(void)
 //--------------------------------------------------------------------------------
 #ifndef RS232_NO_FRAME
 void SerialBox4::add_frame_text(QFrame *parent,
-                               const QString &text)
+                                const QString &text)
 {
     QHBoxLayout *hbox = new QHBoxLayout();
     hbox->setMargin(0);
@@ -559,24 +559,31 @@ bool SerialBox4::add_menu(int index)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    QMenu *menu = new QMenu(tr("Настройка RS-232"));
+    if(mw)
+    {
+        QMenu *menu = new QMenu(tr("Настройка RS-232"));
 
-    QAction *action_flag_in_hex = new QAction(menu);
-    QAction *action_flag_byte_by_byte = new QAction(menu);
+        QAction *action_flag_in_hex = new QAction(menu);
+        QAction *action_flag_byte_by_byte = new QAction(menu);
 
-    action_flag_in_hex->setCheckable(true);
-    action_flag_byte_by_byte->setCheckable(true);
+        action_flag_in_hex->setCheckable(true);
+        action_flag_byte_by_byte->setCheckable(true);
 
-    action_flag_in_hex->setText("in HEX");
-    action_flag_byte_by_byte->setText("byte to byte");
+        action_flag_in_hex->setText("in HEX");
+        action_flag_byte_by_byte->setText("byte to byte");
 
-    menu->addAction(action_flag_in_hex);
-    menu->addAction(action_flag_byte_by_byte);
+        menu->addAction(action_flag_in_hex);
+        menu->addAction(action_flag_byte_by_byte);
 
-    connect(action_flag_in_hex, SIGNAL(triggered(bool)), this, SLOT(set_flag_in_hex(bool)));
-    connect(action_flag_byte_by_byte, SIGNAL(triggered(bool)), this, SLOT(set_flag_byte_by_byte(bool)));
+        connect(action_flag_in_hex, SIGNAL(triggered(bool)), this, SLOT(set_flag_in_hex(bool)));
+        connect(action_flag_byte_by_byte, SIGNAL(triggered(bool)), this, SLOT(set_flag_byte_by_byte(bool)));
 
-    mw->add_menu(index, menu);
+        mw->add_menu(index, menu);
+    }
+    else
+    {
+        emit error("mw not found!");
+    }
 
     return true;
 }

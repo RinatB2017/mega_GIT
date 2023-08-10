@@ -100,54 +100,55 @@ void MainBox::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    commands.clear(); int id = 0;
-    commands.append({ id++, "run_cube_widget",      &MainBox::run_cube_widget });
-    commands.append({ id++, "run_ogl_widget",       &MainBox::run_ogl_widget });
-    commands.append({ id++, "test",                 &MainBox::test });
-    commands.append({ id++, "test2",                &MainBox::test2 });
-    commands.append({ id++, "Theme (Windows).css",  &MainBox::set_theme_windows });
-    commands.append({ id++, "Norton Commander.qss", &MainBox::set_norton_commander });
-    commands.append({ id++, "styles.qss",           &MainBox::set_styles });
-
-    QToolBar *testbar = new QToolBar("testbar");
-    testbar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    cb_block = new QCheckBox("block");
-    cb_block->setObjectName("cb_block");
-    testbar->addWidget(cb_block);
-
-    sb_test = new QSpinBox(this);
-    sb_test->setObjectName("sb_test");
-    testbar->addWidget(sb_test);
-
-    cb_test = new QComboBox(this);
-    cb_test->setObjectName("cb_test");
-    cb_test->setProperty(NO_SAVE, true);
-    foreach (CMD command, commands)
+    if(mw)
     {
-        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        commands.clear(); int id = 0;
+        commands.append({ id++, "run_cube_widget",      &MainBox::run_cube_widget });
+        commands.append({ id++, "run_ogl_widget",       &MainBox::run_ogl_widget });
+        commands.append({ id++, "test",                 &MainBox::test });
+        commands.append({ id++, "test2",                &MainBox::test2 });
+        commands.append({ id++, "Theme (Windows).css",  &MainBox::set_theme_windows });
+        commands.append({ id++, "Norton Commander.qss", &MainBox::set_norton_commander });
+        commands.append({ id++, "styles.qss",           &MainBox::set_styles });
+
+        QToolBar *testbar = new QToolBar("testbar");
+        testbar->setObjectName("testbar");
+        mw->addToolBar(Qt::TopToolBarArea, testbar);
+
+        cb_block = new QCheckBox("block");
+        cb_block->setObjectName("cb_block");
+        testbar->addWidget(cb_block);
+
+        sb_test = new QSpinBox(this);
+        sb_test->setObjectName("sb_test");
+        testbar->addWidget(sb_test);
+
+        cb_test = new QComboBox(this);
+        cb_test->setObjectName("cb_test");
+        cb_test->setProperty(NO_SAVE, true);
+        foreach (CMD command, commands)
+        {
+            cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        }
+
+        testbar->addWidget(cb_test);
+        QToolButton *btn_choice_test = add_button(testbar,
+                                                  new QToolButton(this),
+                                                  qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                                  "choice_test",
+                                                  "choice_test");
+        btn_choice_test->setObjectName("btn_choice_test");
+
+        connect(btn_choice_test,    &QToolButton::clicked,  this,   &MainBox::choice_test);
+
+        connect(cb_block,   &QCheckBox::clicked,    cb_test,            &QComboBox::setDisabled);
+        connect(cb_block,   &QCheckBox::clicked,    btn_choice_test,    &QComboBox::setDisabled);
+        connect(cb_block,   &QCheckBox::clicked,    sb_test,            &QComboBox::setDisabled);
     }
-
-    testbar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(testbar,
-                                              new QToolButton(this),
-                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                              "choice_test",
-                                              "choice_test");
-    btn_choice_test->setObjectName("btn_choice_test");
-
-    connect(btn_choice_test,    &QToolButton::clicked,  this,   &MainBox::choice_test);
-
-    connect(cb_block,   &QCheckBox::clicked,    cb_test,            &QComboBox::setDisabled);
-    connect(cb_block,   &QCheckBox::clicked,    btn_choice_test,    &QComboBox::setDisabled);
-    connect(cb_block,   &QCheckBox::clicked,    sb_test,            &QComboBox::setDisabled);
-
-    // testbar->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-
-    //#ifndef NO_MENU
-    //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
-    //#endif
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)

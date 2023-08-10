@@ -65,7 +65,7 @@ void MainBox::init(void)
     ui->QTermWidget_widget->setTerminalFont(font);
     ui->QTermWidget_widget->sendText("export TERM=xterm-256color\n");
     ui->QTermWidget_widget->setScrollBarPosition(QTermWidget::ScrollBarRight);
-//    ui->QTermWidget_widget->setColorScheme("GreenOnBlack");
+    //    ui->QTermWidget_widget->setColorScheme("GreenOnBlack");
 
     // real startup
     connect(ui->QTermWidget_widget, &QTermWidget::finished, qApp, &QApplication::quit);
@@ -76,38 +76,43 @@ void MainBox::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    commands.clear(); int id = 0;
-    commands.append({ id++, "test",     &MainBox::test });
-    commands.append({ id++, "test2",    &MainBox::test2 });
-
-    testbar = new QToolBar("testbar");
-    testbar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    cb_block = new QCheckBox("block", this);
-    testbar->addWidget(cb_block);
-
-    cb_test = new QComboBox(this);
-    cb_test->setObjectName("cb_test");
-    foreach (CMD command, commands)
+    if(mw)
     {
-        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        commands.clear(); int id = 0;
+        commands.append({ id++, "test",     &MainBox::test });
+        commands.append({ id++, "test2",    &MainBox::test2 });
+
+        testbar = new QToolBar("testbar");
+        testbar->setObjectName("testbar");
+        mw->addToolBar(Qt::TopToolBarArea, testbar);
+
+        cb_block = new QCheckBox("block", this);
+        testbar->addWidget(cb_block);
+
+        cb_test = new QComboBox(this);
+        cb_test->setObjectName("cb_test");
+        foreach (CMD command, commands)
+        {
+            cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        }
+
+        testbar->addWidget(cb_test);
+        QToolButton *btn_choice_test = add_button(testbar,
+                                                  new QToolButton(this),
+                                                  qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                                  "choice_test",
+                                                  "choice_test");
+        btn_choice_test->setObjectName("btn_choice_test");
+
+        connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+
+        connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
+        connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
     }
-
-    testbar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(testbar,
-                                              new QToolButton(this),
-                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                              "choice_test",
-                                              "choice_test");
-    btn_choice_test->setObjectName("btn_choice_test");
-
-    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
-
-    //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -117,10 +122,10 @@ void MainBox::choice_test(void)
     if(!ok) return;
 
     auto cmd_it = std::find_if(
-        commands.begin(),
-        commands.end(),
-        [cmd](CMD command){ return command.cmd == cmd; }
-    );
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
     if (cmd_it != commands.end())
     {
         typedef bool (MainBox::*function)(void);

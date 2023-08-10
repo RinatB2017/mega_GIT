@@ -85,29 +85,36 @@ void MainBox::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    commands.clear(); int id = 0;
-    commands.append({ id++, "test", &MainBox::test });
-
-    QToolBar *testbar = new QToolBar("testbar");
-    testbar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    cb_test = new QComboBox(this);
-    cb_test->setObjectName("cb_test");
-    foreach (CMD command, commands)
+    if(mw)
     {
-        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        commands.clear(); int id = 0;
+        commands.append({ id++, "test", &MainBox::test });
+
+        QToolBar *testbar = new QToolBar("testbar");
+        testbar->setObjectName("testbar");
+        mw->addToolBar(Qt::TopToolBarArea, testbar);
+
+        cb_test = new QComboBox(this);
+        cb_test->setObjectName("cb_test");
+        foreach (CMD command, commands)
+        {
+            cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        }
+
+        testbar->addWidget(cb_test);
+        QToolButton *btn_choice_test = add_button(testbar,
+                                                  new QToolButton(this),
+                                                  qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                                  "choice_test",
+                                                  "choice_test");
+        btn_choice_test->setObjectName("btn_choice_test");
+
+        connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
     }
-
-    testbar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(testbar,
-                                              new QToolButton(this),
-                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                              "choice_test",
-                                              "choice_test");
-    btn_choice_test->setObjectName("btn_choice_test");
-
-    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -119,10 +126,10 @@ void MainBox::choice_test(void)
         return;
     }
     auto cmd_it = std::find_if(
-        commands.begin(),
-        commands.end(),
-        [cmd](CMD command){ return command.cmd == cmd; }
-    );
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
     if (cmd_it != commands.end())
     {
         typedef bool (MainBox::*function)(void);
@@ -794,15 +801,15 @@ bool MainBox::s_create_new_image_2(void)
             }
 #ifdef FAST_PIC
             // быстрая отрисовка
-//            quint8 const* orig_pix = orig_line;
-//            blue  = orig_pix[0];
-//            green = orig_pix[1];
-//            red   = orig_pix[2];
+            //            quint8 const* orig_pix = orig_line;
+            //            blue  = orig_pix[0];
+            //            green = orig_pix[1];
+            //            red   = orig_pix[2];
 
-//            quint8 * new_pix = new_line;
-//            new_pix[0] = blue;
-//            new_pix[1] = green;
-//            new_pix[2] = red;
+            //            quint8 * new_pix = new_line;
+            //            new_pix[0] = blue;
+            //            new_pix[1] = green;
+            //            new_pix[2] = red;
 
             quint8 const* orig_line = orig_image->constScanLine(0);
             int orig_stride = orig_image->bytesPerLine();
@@ -810,16 +817,16 @@ bool MainBox::s_create_new_image_2(void)
             quint8 * new_line = new_image->scanLine(0);
             int new_stride = new_image->bytesPerLine();
 
-//            for(int y=0; y<pic_height; y++)
-//            {
-//                for(int x=0; x<pic_width; x++)
-//                {
-//                    new_line[x*new_stride + y*4]     = orig_line[y*orig_stride + x*4];
-//                    new_line[x*new_stride + y*4 + 1] = orig_line[y*orig_stride + x*4 + 1];
-//                    new_line[x*new_stride + y*4 + 2] = orig_line[y*orig_stride + x*4 + 2];
-//                    new_line[x*new_stride + y*4 + 3] = orig_line[y*orig_stride + x*4 + 3];
-//                }
-//            }
+            //            for(int y=0; y<pic_height; y++)
+            //            {
+            //                for(int x=0; x<pic_width; x++)
+            //                {
+            //                    new_line[x*new_stride + y*4]     = orig_line[y*orig_stride + x*4];
+            //                    new_line[x*new_stride + y*4 + 1] = orig_line[y*orig_stride + x*4 + 1];
+            //                    new_line[x*new_stride + y*4 + 2] = orig_line[y*orig_stride + x*4 + 2];
+            //                    new_line[x*new_stride + y*4 + 3] = orig_line[y*orig_stride + x*4 + 3];
+            //                }
+            //            }
 
             new_line[(int)x*new_stride + (int)y*4]     = orig_line[(int)y*orig_stride + (int)x*4];
             new_line[(int)x*new_stride + (int)y*4 + 1] = orig_line[(int)y*orig_stride + (int)x*4 + 1];

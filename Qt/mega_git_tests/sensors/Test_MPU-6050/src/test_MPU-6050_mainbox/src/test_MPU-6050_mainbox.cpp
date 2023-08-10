@@ -73,6 +73,10 @@ void MainBox::init(void)
                             Qt::RightDockWidgetArea,
                             reinterpret_cast<QWidget *>(ui->grapher_widget));
     }
+    else
+    {
+        emit error("mw not found!");
+    }
 #endif
 
 //#ifdef Q_OS_WIN

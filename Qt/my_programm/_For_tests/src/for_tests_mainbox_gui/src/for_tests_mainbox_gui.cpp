@@ -65,6 +65,10 @@ void MainBox_GUI::init(void)
                                 ui->test_frame);
 #endif
         }
+        else
+        {
+            emit error("mw not found!");
+        }
         load_widgets();
     });
 #endif

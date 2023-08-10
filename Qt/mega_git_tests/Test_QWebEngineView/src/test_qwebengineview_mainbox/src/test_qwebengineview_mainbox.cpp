@@ -88,8 +88,8 @@ void MainBox::init(void)
     connect(ui->btn_save_js,    &QToolButton::clicked,
             this,               &MainBox::js_save);
 
-//    connect(ui->btn_get_document_title, &QToolButton::clicked,
-//            ui->browser_widget,         &MyBrowser::get_document_title);
+    //    connect(ui->btn_get_document_title, &QToolButton::clicked,
+    //            ui->browser_widget,         &MyBrowser::get_document_title);
 
     QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, true);
 
@@ -99,6 +99,10 @@ void MainBox::init(void)
     if(mw)
     {
         mw->add_dock_widget("JS", "js_dock", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(ui->groupBox_js));
+    }
+    else
+    {
+        emit error("mw not found!");
     }
 #endif
 #if 0
@@ -322,32 +326,37 @@ void MainBox::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    commands.clear(); int id = 0;
-    commands.append({ id++, "test", &MainBox::test });
-
-    QToolBar *testbar = new QToolBar("testbar");
-    testbar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    cb_test = new QComboBox(this);
-    cb_test->setObjectName("cb_test");
-    foreach (CMD command, commands)
+    if(mw)
     {
-        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        commands.clear(); int id = 0;
+        commands.append({ id++, "test", &MainBox::test });
+
+        QToolBar *testbar = new QToolBar("testbar");
+        testbar->setObjectName("testbar");
+        mw->addToolBar(Qt::TopToolBarArea, testbar);
+
+        cb_test = new QComboBox(this);
+        cb_test->setObjectName("cb_test");
+        foreach (CMD command, commands)
+        {
+            cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        }
+
+        testbar->addWidget(cb_test);
+        QToolButton *btn_choice_test = add_button(testbar,
+                                                  new QToolButton(this),
+                                                  qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                                  "choice_test",
+                                                  "choice_test");
+        btn_choice_test->setObjectName("btn_choice_test");
+
+        connect(btn_choice_test,    &QToolButton::clicked,
+                this,               &MainBox::choice_test);
     }
-
-    testbar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(testbar,
-                                              new QToolButton(this),
-                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                              "choice_test",
-                                              "choice_test");
-    btn_choice_test->setObjectName("btn_choice_test");
-
-    connect(btn_choice_test,    &QToolButton::clicked,
-            this,               &MainBox::choice_test);
-
-    //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -359,10 +368,10 @@ void MainBox::choice_test(void)
         return;
     }
     auto cmd_it = std::find_if(
-        commands.begin(),
-        commands.end(),
-        [cmd](CMD command){ return command.cmd == cmd; }
-    );
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
     if (cmd_it != commands.end())
     {
         typedef bool (MainBox::*function)(void);

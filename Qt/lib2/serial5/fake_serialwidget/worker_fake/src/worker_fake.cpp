@@ -44,6 +44,10 @@ void Worker_fake::init(void)
     {
         mw->add_dock_widget("FAKE log", "fake_log_dock",  Qt::BottomDockWidgetArea, this);
     }
+    else
+    {
+        emit error("mw not found!");
+    }
 #endif
 }
 //--------------------------------------------------------------------------------

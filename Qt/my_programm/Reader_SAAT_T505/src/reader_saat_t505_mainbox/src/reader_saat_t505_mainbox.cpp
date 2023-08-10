@@ -130,35 +130,42 @@ void MainBox::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    commands.clear(); int id = 0;
-    commands.append({ id++, "Read id list", &MainBox::test_0 });
-    commands.append({ id++, "Clean id list", &MainBox::test_1 });
-    commands.append({ id++, "test 2", &MainBox::test_2 });
-    commands.append({ id++, "test 3", &MainBox::test_3 });
-    commands.append({ id++, "test 4", &MainBox::test_4 });
-    commands.append({ id++, "test 5", &MainBox::test_5 });
-    commands.append({ id++, "test 6", nullptr });
-
-    QToolBar *testbar = new QToolBar("testbar");
-    testbar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    cb_test = new QComboBox(this);
-    cb_test->setObjectName("cb_test");
-    foreach (CMD command, commands)
+    if(mw)
     {
-        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        commands.clear(); int id = 0;
+        commands.append({ id++, "Read id list", &MainBox::test_0 });
+        commands.append({ id++, "Clean id list", &MainBox::test_1 });
+        commands.append({ id++, "test 2", &MainBox::test_2 });
+        commands.append({ id++, "test 3", &MainBox::test_3 });
+        commands.append({ id++, "test 4", &MainBox::test_4 });
+        commands.append({ id++, "test 5", &MainBox::test_5 });
+        commands.append({ id++, "test 6", nullptr });
+
+        QToolBar *testbar = new QToolBar("testbar");
+        testbar->setObjectName("testbar");
+        mw->addToolBar(Qt::TopToolBarArea, testbar);
+
+        cb_test = new QComboBox(this);
+        cb_test->setObjectName("cb_test");
+        foreach (CMD command, commands)
+        {
+            cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        }
+
+        testbar->addWidget(cb_test);
+        QToolButton *btn_choice_test = add_button(testbar,
+                                                  new QToolButton(this),
+                                                  qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                                  "choice_test",
+                                                  "choice_test");
+        btn_choice_test->setObjectName("btn_choice_test");
+
+        connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
     }
-
-    testbar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(testbar,
-                                              new QToolButton(this),
-                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                              "choice_test",
-                                              "choice_test");
-    btn_choice_test->setObjectName("btn_choice_test");
-
-    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -170,10 +177,10 @@ void MainBox::choice_test(void)
         return;
     }
     auto cmd_it = std::find_if(
-        commands.begin(),
-        commands.end(),
-        [cmd](CMD command){ return command.cmd == cmd; }
-    );
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
     if (cmd_it != commands.end())
     {
         typedef bool (MainBox::*function)(void);

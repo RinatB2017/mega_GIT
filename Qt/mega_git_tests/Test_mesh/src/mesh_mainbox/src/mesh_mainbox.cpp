@@ -94,6 +94,10 @@ void MainBox::add_serial0(void)
         Mesh_control *control0 = new Mesh_control("control0", this);
         mw->add_dock_widget("Serial0", "serial0", Qt::LeftDockWidgetArea,   reinterpret_cast<QWidget *>(control0));
     }
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::add_serial1(void)
@@ -103,6 +107,10 @@ void MainBox::add_serial1(void)
     {
         Mesh_control *control1 = new Mesh_control("control1", this);
         mw->add_dock_widget("Serial1", "serial1", Qt::RightDockWidgetArea,   reinterpret_cast<QWidget *>(control1));
+    }
+    else
+    {
+        emit error("mw not found!");
     }
 }
 //--------------------------------------------------------------------------------
@@ -114,6 +122,10 @@ void MainBox::add_serial2(void)
         Mesh_control *control2 = new Mesh_control("control2", this);
         mw->add_dock_widget("Serial2", "serial2", Qt::LeftDockWidgetArea,   reinterpret_cast<QWidget *>(control2));
     }
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::add_serial3(void)
@@ -123,6 +135,10 @@ void MainBox::add_serial3(void)
     {
         Mesh_control *control3 = new Mesh_control("control3", this);
         mw->add_dock_widget("Serial3", "serial3", Qt::RightDockWidgetArea,   reinterpret_cast<QWidget *>(control3));
+    }
+    else
+    {
+        emit error("mw not found!");
     }
 }
 //--------------------------------------------------------------------------------

@@ -109,37 +109,44 @@ void MainBox::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    commands.clear(); int id = 0;
-    CMD command;
-    command.cmd = id++; command.cmd_text = "test";   command.func = &MainBox::test;  commands.append(command);
-
-    QToolBar *testbar = new QToolBar(tr("testbar"));
-    testbar->setObjectName("testbar");
-
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    QCheckBox *cb_block = new QCheckBox("block");
-    testbar->addWidget(cb_block);
-
-    cb_test = new QComboBox(this);
-    cb_test->setObjectName("cb_test");
-    foreach (CMD command, commands)
+    if(mw)
     {
-        cb_test->addItem(command.cmd_text, QVariant(Qt::UserRole + command.cmd));
+        commands.clear(); int id = 0;
+        CMD command;
+        command.cmd = id++; command.cmd_text = "test";   command.func = &MainBox::test;  commands.append(command);
+
+        QToolBar *testbar = new QToolBar(tr("testbar"));
+        testbar->setObjectName("testbar");
+
+        mw->addToolBar(Qt::TopToolBarArea, testbar);
+
+        QCheckBox *cb_block = new QCheckBox("block");
+        testbar->addWidget(cb_block);
+
+        cb_test = new QComboBox(this);
+        cb_test->setObjectName("cb_test");
+        foreach (CMD command, commands)
+        {
+            cb_test->addItem(command.cmd_text, QVariant(Qt::UserRole + command.cmd));
+        }
+
+        testbar->addWidget(cb_test);
+        QToolButton *frm_choice_test = add_button(testbar,
+                                                  new QToolButton(this),
+                                                  qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                                  "choice_test",
+                                                  "choice_test");
+        frm_choice_test->setObjectName("frm_choice_test");
+
+        connect(frm_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+
+        connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
+        connect(cb_block, SIGNAL(clicked(bool)), frm_choice_test,   SLOT(setDisabled(bool)));
     }
-
-    testbar->addWidget(cb_test);
-    QToolButton *frm_choice_test = add_button(testbar,
-                                              new QToolButton(this),
-                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                              "choice_test",
-                                              "choice_test");
-    frm_choice_test->setObjectName("frm_choice_test");
-
-    connect(frm_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), frm_choice_test,   SLOT(setDisabled(bool)));
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -148,10 +155,10 @@ void MainBox::choice_test(void)
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
     if(!ok) return;
     auto cmd_it = std::find_if(
-        commands.begin(),
-        commands.end(),
-        [cmd](CMD command){ return command.cmd == cmd; }
-    );
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
     if (cmd_it != commands.end())
     {
         typedef void (MainBox::*function)(void);

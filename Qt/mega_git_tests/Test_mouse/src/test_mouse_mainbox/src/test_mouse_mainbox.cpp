@@ -97,35 +97,42 @@ void MainBox::createTestBar(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    commands.clear(); int id = 0;
-    commands.append({ id++, "test", &MainBox::test });
-
-    QToolBar *testbar = new QToolBar("testbar");
-    testbar->setObjectName("testbar");
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
-
-    cb_block = new QCheckBox("block", this);
-    testbar->addWidget(cb_block);
-
-    cb_test = new QComboBox(this);
-    cb_test->setObjectName("cb_test");
-    foreach (CMD command, commands)
+    if(mw)
     {
-        cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        commands.clear(); int id = 0;
+        commands.append({ id++, "test", &MainBox::test });
+
+        QToolBar *testbar = new QToolBar("testbar");
+        testbar->setObjectName("testbar");
+        mw->addToolBar(Qt::TopToolBarArea, testbar);
+
+        cb_block = new QCheckBox("block", this);
+        testbar->addWidget(cb_block);
+
+        cb_test = new QComboBox(this);
+        cb_test->setObjectName("cb_test");
+        foreach (CMD command, commands)
+        {
+            cb_test->addItem(command.cmd_text, QVariant(command.cmd));
+        }
+
+        testbar->addWidget(cb_test);
+        QToolButton *btn_choice_test = add_button(testbar,
+                                                  new QToolButton(this),
+                                                  qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                                  "choice_test",
+                                                  "choice_test");
+        btn_choice_test->setObjectName("btn_choice_test");
+
+        connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+
+        connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
+        connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
     }
-
-    testbar->addWidget(cb_test);
-    QToolButton *btn_choice_test = add_button(testbar,
-                                              new QToolButton(this),
-                                              qApp->style()->standardIcon(QStyle::SP_MediaPlay),
-                                              "choice_test",
-                                              "choice_test");
-    btn_choice_test->setObjectName("btn_choice_test");
-
-    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
+    else
+    {
+        emit error("mw not found!");
+    }
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -137,10 +144,10 @@ void MainBox::choice_test(void)
         return;
     }
     auto cmd_it = std::find_if(
-        commands.begin(),
-        commands.end(),
-        [cmd](CMD command){ return command.cmd == cmd; }
-    );
+                commands.begin(),
+                commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
     if (cmd_it != commands.end())
     {
         typedef bool (MainBox::*function)(void);
@@ -264,30 +271,37 @@ bool MainBox::test(void)
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
 
-    int mb_x = mw->centralWidget()->x();
-    int mb_y = mw->centralWidget()->y();
-
-    int x = 0;
-    int y = 0;
-    int w = 0;
-    int h = 0;
-
-    bool ok = find_window("Test_mouse", &x, &y, &w, &h);
-    if(ok)
+    if(mw)
     {
-        for(int temp_y=0; temp_y<10; temp_y++)
-        {
-            for(int temp_x=0; temp_x<10; temp_x++)
-            {
-                int pos_x = x + mb_x + 16 + (32 * temp_x);
-                int pos_y = y + mb_y + 16 + (32 * temp_y);
+        int mb_x = mw->centralWidget()->x();
+        int mb_y = mw->centralWidget()->y();
 
-                QPoint pos = QPoint(pos_x, pos_y);
-                //mouse_move_to(pos);
-                mouse_click(Qt::LeftButton, pos);
-                mouse_release(Qt::LeftButton);
+        int x = 0;
+        int y = 0;
+        int w = 0;
+        int h = 0;
+
+        bool ok = find_window("Test_mouse", &x, &y, &w, &h);
+        if(ok)
+        {
+            for(int temp_y=0; temp_y<10; temp_y++)
+            {
+                for(int temp_x=0; temp_x<10; temp_x++)
+                {
+                    int pos_x = x + mb_x + 16 + (32 * temp_x);
+                    int pos_y = y + mb_y + 16 + (32 * temp_y);
+
+                    QPoint pos = QPoint(pos_x, pos_y);
+                    //mouse_move_to(pos);
+                    mouse_click(Qt::LeftButton, pos);
+                    mouse_release(Qt::LeftButton);
+                }
             }
         }
+    }
+    else
+    {
+        emit error("mw not found!");
     }
 #endif
 

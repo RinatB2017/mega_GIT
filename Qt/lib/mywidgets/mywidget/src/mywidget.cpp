@@ -662,6 +662,11 @@ bool MyWidget::add_digital_clock(bool add_spacer)
 
         return true;
     }
+    else
+    {
+        emit error("mw not found!");
+    }
+
     return false;
 }
 //--------------------------------------------------------------------------------
@@ -680,6 +685,11 @@ bool MyWidget::add_lcd_clock(bool add_spacer)
 
         return true;
     }
+    else
+    {
+        emit error("mw not found!");
+    }
+
     return false;
 }
 //--------------------------------------------------------------------------------

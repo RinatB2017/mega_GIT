@@ -113,15 +113,20 @@ void MainBox::createTestBar(void)
     Q_ASSERT(mw);
 
     QToolBar *testbar = new QToolBar("testbar");
-    testbar->setObjectName("testbar");
+    Q_ASSERT(testbar);
 
-    mw->addToolBar(Qt::TopToolBarArea, testbar);
+    if(mw && testbar)
+    {
+        testbar->setObjectName("testbar");
+        mw->addToolBar(Qt::TopToolBarArea, testbar);
+    }
 
     QToolButton *btn_test = add_button(testbar,
                                        new QToolButton(this),
                                        qApp->style()->standardIcon(QStyle::SP_MediaPlay),
                                        "test",
                                        "test");
+    Q_ASSERT(btn_test);
 
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }

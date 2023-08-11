@@ -74,7 +74,6 @@ int main(int argc, char *argv[])
     MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);
 
-    //MainBox *mainBox = new MainBox(0, splash);
     MainBox *mainBox = new MainBox(main_window, splash);
     Q_ASSERT(mainBox);
 

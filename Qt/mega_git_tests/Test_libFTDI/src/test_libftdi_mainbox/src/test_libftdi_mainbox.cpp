@@ -138,6 +138,43 @@ void MainBox::choice_test(void)
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 1
+    union DATA
+    {
+        struct {
+            uint16_t A:1;
+            uint16_t B:1;
+            uint16_t C:1;
+            uint16_t D:1;
+            uint16_t data:12;
+        } bites;
+        uint16_t u16;
+    };
+
+    union U16
+    {
+        DATA u16;
+        struct {
+            uint8_t byte_0;
+            uint8_t byte_1;
+        } u8_2;
+    };
+
+    DATA data;
+    data.u16 = 0;
+
+    data.bites.B = 1;
+    data.bites.data = 0xFFFF;
+
+    U16 u16;
+    u16.u16.u16 = data.u16;
+
+    emit info(QString("byte_0 %1").arg(u16.u8_2.byte_0, 8, 2, QChar('0')));
+    emit info(QString("byte_1 %1").arg(u16.u8_2.byte_1, 8, 2, QChar('0')));
+#endif
+
+#if 0
     emit info("Test bitbang mode");
 
     int ret;
@@ -179,60 +216,30 @@ bool MainBox::test(void)
         emit error("USB device unavailable");
         break;
     }
-
+#endif
     return true;
 }
 //--------------------------------------------------------------------------------
-//#include <libusb-1.0/libusb.h>
-
 bool MainBox::test2(void)
 {
     // Пример отправки данных на MCP4921
     unsigned char data[2] = {0x55, 0xAA}; // Пример данных
     int ret;
 
-    for(int n=0; n<0xFF; n++)
+    ret = ftdi_write_data(&ftdi, data, sizeof(data));
+    if(ret == -666)
     {
-        data[1] = (unsigned char)n;
-        ret = ftdi_write_data(&ftdi, data, sizeof(data));
-        if(ret == -666)
-        {
-            emit error("USB device unavailable");
-            return false;
-        }
-        if(ret < 0)
-        {
-            emit error("error code from usb_bulk_write()");
-            return false;
-        }
-        if(ret > 0)
-        {
-            emit info(QString("%1 sending").arg(ret));
-        }
-
-        wait_msec(100);
+        emit error("USB device unavailable");
+        return false;
     }
-
-    for(int n=0xFF; n>0; n--)
+    if(ret < 0)
     {
-        data[1] = (unsigned char)n;
-        ret = ftdi_write_data(&ftdi, data, sizeof(data));
-        if(ret == -666)
-        {
-            emit error("USB device unavailable");
-            return false;
-        }
-        if(ret < 0)
-        {
-            emit error("error code from usb_bulk_write()");
-            return false;
-        }
-        if(ret > 0)
-        {
-            emit info(QString("%1 sending").arg(ret));
-        }
-
-        wait_msec(100);
+        emit error("error code from usb_bulk_write()");
+        return false;
+    }
+    if(ret > 0)
+    {
+        emit info(QString("%1 sending").arg(ret));
     }
 
     emit info("OK");

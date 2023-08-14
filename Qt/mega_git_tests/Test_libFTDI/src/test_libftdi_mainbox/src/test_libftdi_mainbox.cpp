@@ -324,28 +324,6 @@ void MainBox::f_open(void)
         return;
     }
 
-<<<<<<< HEAD
-    // Пример отправки данных на MCP4921
-    unsigned char data[2] = {0x55, 0xAA}; // Пример данных
-    ret = ftdi_write_data(&ftdi, data, sizeof(data));
-
-    if(ret > 0)
-    {
-        emit info("YES");
-    }
-    if(ret == -666)
-    {
-        emit error("USB device unavailable");
-        return;
-    }
-
-    if(ret < 0)
-    {
-        emit error("error code from usb_bulk_write()");
-    }
-
-=======
->>>>>>> 1b62bcead52427a6e697e580cc0000b0e3da253f
     emit info("OK");
 }
 //--------------------------------------------------------------------------------

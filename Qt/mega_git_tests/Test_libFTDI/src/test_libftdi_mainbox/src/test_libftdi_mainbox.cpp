@@ -187,6 +187,7 @@ bool MainBox::test(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test2(void)
 {
+#if 0
     DATA data;
     data.bites.AB   = 1;
     data.bites.BUF  = 1;
@@ -197,13 +198,17 @@ bool MainBox::test2(void)
     U16 output;
     output.u16 = data.u16;
 
+    uint8_t res_data[2];
+    res_data[0] = output.u8_2.byte_0;
+    res_data[1] = output.u8_2.byte_1;
+#else
     // Пример отправки данных на MCP4921
-    //unsigned char data[2] = {0x55, 0xAA}; // Пример данных
+    unsigned char res_data[2] = {0x55, 0xAA}; // Пример данных
+#endif
 
-    unsigned char res_data[2] = {output.u8_2.byte_0, output.u8_2.byte_1};
     int ret;
 
-    ret = ftdi_write_data(&ftdi, res_data, sizeof(data));
+    ret = ftdi_write_data(&ftdi, res_data, sizeof(res_data));
     if(ret == -666)
     {
         emit error("USB device unavailable");

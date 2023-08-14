@@ -247,6 +247,27 @@ void MainBox::f_open(void)
         emit error("libusb_get_device_descriptor() failedc");
         return;
     }
+
+    // Пример отправки данных на MCP4921
+    unsigned char data[2] = {0x55, 0xAA}; // Пример данных
+    ret = ftdi_write_data(&ftdi, data, sizeof(data));
+
+    if(ret > 0)
+    {
+        emit info("YES");
+    }
+    if(ret == -666)
+    {
+        emit error("USB device unavailable");
+        return;
+    }
+
+    if(ret < 0)
+    {
+        emit error("error code from usb_bulk_write()");
+    }
+
+    emit info("OK");
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_get_eeprom_buf(void)

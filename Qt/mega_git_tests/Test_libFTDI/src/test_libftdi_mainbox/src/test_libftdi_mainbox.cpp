@@ -79,7 +79,8 @@ void MainBox::createTestBar(void)
     Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test", &MainBox::test });
+    commands.append({ id++, "test",     &MainBox::test });
+    commands.append({ id++, "test2",    &MainBox::test2 });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -102,8 +103,6 @@ void MainBox::createTestBar(void)
     btn_choice_test->setObjectName("btn_choice_test");
 
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-    //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());    //TODO странно
 }
 //--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
@@ -184,6 +183,83 @@ bool MainBox::test(void)
     return true;
 }
 //--------------------------------------------------------------------------------
+//#include <libusb-1.0/libusb.h>
+
+bool MainBox::test2(void)
+{
+    // Пример отправки данных на MCP4921
+    unsigned char data[2] = {0x55, 0xAA}; // Пример данных
+    int ret;
+
+    for(int n=0; n<0xFF; n++)
+    {
+        data[1] = (unsigned char)n;
+        ret = ftdi_write_data(&ftdi, data, sizeof(data));
+        if(ret == -666)
+        {
+            emit error("USB device unavailable");
+            return false;
+        }
+        if(ret < 0)
+        {
+            emit error("error code from usb_bulk_write()");
+            return false;
+        }
+        if(ret > 0)
+        {
+            emit info(QString("%1 sending").arg(ret));
+        }
+
+        wait_msec(100);
+    }
+
+    for(int n=0xFF; n>0; n--)
+    {
+        data[1] = (unsigned char)n;
+        ret = ftdi_write_data(&ftdi, data, sizeof(data));
+        if(ret == -666)
+        {
+            emit error("USB device unavailable");
+            return false;
+        }
+        if(ret < 0)
+        {
+            emit error("error code from usb_bulk_write()");
+            return false;
+        }
+        if(ret > 0)
+        {
+            emit info(QString("%1 sending").arg(ret));
+        }
+
+        wait_msec(100);
+    }
+
+    emit info("OK");
+    return true;
+}
+//--------------------------------------------------------------------------------
+void MainBox::wait_msec(int timeout_msec)
+{
+    QElapsedTimer time;
+
+#ifdef TEST
+    timeout_msec = TEST_WAIT_MS;
+#endif
+
+    emit debug(QString("Пауза %1 ms").arg(timeout_msec));
+    if(timeout_msec < 1)
+    {
+        emit debug("timeout_msec < 1");
+        return;
+    }
+    time.start();
+    while(time.elapsed() < timeout_msec)
+    {
+        QCoreApplication::processEvents();
+    }
+}
+//--------------------------------------------------------------------------------
 void MainBox::f_open(void)
 {
     emit trace(Q_FUNC_INFO);
@@ -247,6 +323,8 @@ void MainBox::f_open(void)
         emit error("libusb_get_device_descriptor() failedc");
         return;
     }
+
+    emit info("OK");
 }
 //--------------------------------------------------------------------------------
 void MainBox::f_get_eeprom_buf(void)

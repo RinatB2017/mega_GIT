@@ -139,6 +139,11 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 0
+    uint8_t x = '\xF3';
+    emit info(QString("x: %1").arg(x, 2, 16, QChar('0')));
+#endif
+
 #if 1
     emit info("Test bitbang mode");
 

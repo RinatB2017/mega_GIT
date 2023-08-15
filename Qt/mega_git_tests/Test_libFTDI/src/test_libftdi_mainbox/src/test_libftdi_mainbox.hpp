@@ -56,6 +56,27 @@ private:
         bool (MainBox::*func)(void);
     } CMD_t;
 
+    union DATA
+    {
+        struct {
+            uint16_t AB:1;
+            uint16_t BUF:1;
+            uint16_t GA:1;
+            uint16_t SHDN:1;
+            uint16_t data:12;
+        } bites;
+        uint16_t u16;
+    };
+
+    union U16
+    {
+        uint16_t u16;
+        struct {
+            uint8_t byte_0;
+            uint8_t byte_1;
+        } u8_2;
+    };
+
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 

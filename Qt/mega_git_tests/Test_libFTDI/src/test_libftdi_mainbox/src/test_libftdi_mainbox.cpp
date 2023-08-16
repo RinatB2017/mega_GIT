@@ -139,11 +139,6 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 0
-    uint8_t x = '\xF3';
-    emit info(QString("x: %1").arg(x, 2, 16, QChar('0')));
-#endif
-
 #if 1
     emit info("Test bitbang mode");
 
@@ -190,27 +185,90 @@ bool MainBox::test(void)
     return true;
 }
 //--------------------------------------------------------------------------------
+#define ACBUS_GROUP 0x01
+#define ADBUS_GROUP 0x02
+#define BCBUS_GROUP 0x03
+#define BDBUS_GROUP 0x04
+
+//https://eax.me/libftdi-bitbang/
+
 bool MainBox::test2(void)
 {
+    int ret;
+
+    ret = ftdi_set_bitmode(&ftdi, 0xFF, BITMODE_BITBANG);
+    switch(ret)
+    {
+    case  0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("can't enable bitbang mode");
+        break;
+    case -2:
+        emit error("USB device unavailable");
+        break;
+    }
+
+    ret = ftdi_set_bitmode(&ftdi, ACBUS_GROUP, BITMODE_RESET);
+    switch(ret)
+    {
+    case  0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("can't enable bitbang mode");
+        break;
+    case -2:
+        emit error("USB device unavailable");
+        break;
+    }
+
+    ret = ftdi_set_bitmode(&ftdi, ADBUS_GROUP, BITMODE_RESET);
+    switch(ret)
+    {
+    case  0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("can't enable bitbang mode");
+        break;
+    case -2:
+        emit error("USB device unavailable");
+        break;
+    }
+
+    ret = ftdi_set_bitmode(&ftdi, BCBUS_GROUP, BITMODE_RESET);
+    switch(ret)
+    {
+    case  0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("can't enable bitbang mode");
+        break;
+    case -2:
+        emit error("USB device unavailable");
+        break;
+    }
+
+    ret = ftdi_set_bitmode(&ftdi, BDBUS_GROUP, BITMODE_RESET);
+    switch(ret)
+    {
+    case  0:
+        emit info("all fine");
+        break;
+    case -1:
+        emit error("can't enable bitbang mode");
+        break;
+    case -2:
+        emit error("USB device unavailable");
+        break;
+    }
+
 #if 0
-    DATA data;
-    data.bites.AB   = 1;
-    data.bites.BUF  = 1;
-    data.bites.GA   = 1;
-    data.bites.SHDN = 1;
-    data.bites.data = 4095;
-
-    U16 output;
-    output.u16 = data.u16;
-
-    uint8_t res_data[2];
-    res_data[0] = output.u8_2.byte_0;
-    res_data[1] = output.u8_2.byte_1;
-#else
     // Пример отправки данных на MCP4921
     unsigned char res_data[2] = {0x55, 0xAA}; // Пример данных
-#endif
-
     int ret;
 
     ret = ftdi_write_data(&ftdi, res_data, sizeof(res_data));
@@ -228,6 +286,7 @@ bool MainBox::test2(void)
     {
         emit info(QString("%1 sending").arg(ret));
     }
+#endif
 
     emit info("OK");
     return true;

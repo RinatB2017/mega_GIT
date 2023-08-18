@@ -1,0 +1,6 @@
+#define ACBUS_GROUP 0x01
+#define ADBUS_GROUP 0x02
+#define BCBUS_GROUP 0x03
+#define BDBUS_GROUP 0x04
+
+BITMODE_MPSSE - можно реализовывать SPI или I2C

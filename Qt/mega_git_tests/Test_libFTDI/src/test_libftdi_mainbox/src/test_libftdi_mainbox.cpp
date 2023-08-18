@@ -263,10 +263,12 @@ bool MainBox::test2(void)
 bool MainBox::test3(void)
 {
     ftdi_usb_reset(&ftdi);
-    ftdi_set_interface(&ftdi, INTERFACE_ANY);   // ADBUS1 = INTERFACE_A
+    ftdi_set_interface(&ftdi, INTERFACE_B);   // BDBUS1 = INTERFACE_B
     ftdi_set_bitmode(&ftdi, 0, 0); // reset
     ftdi_set_bitmode(&ftdi, 0, BITMODE_MPSSE); // enable mpsse on all bits
     ftdi_usb_purge_buffers(&ftdi);
+
+    wait_msec(50);
 
     unsigned char res_data[2] = {0xFF, 0xFF};
     write_data(res_data, sizeof(res_data));

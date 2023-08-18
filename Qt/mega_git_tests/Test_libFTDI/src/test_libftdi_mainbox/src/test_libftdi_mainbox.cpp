@@ -79,8 +79,9 @@ void MainBox::createTestBar(void)
     Q_ASSERT(mw);
 
     commands.clear(); int id = 0;
-    commands.append({ id++, "test",     &MainBox::test });
-    commands.append({ id++, "test2",    &MainBox::test2 });
+    commands.append({ id++, "test",         &MainBox::test });
+    commands.append({ id++, "test2",        &MainBox::test2 });
+    commands.append({ id++, "test3 (SPI)",  &MainBox::test3 });
 
     QToolBar *testbar = new QToolBar("testbar");
     testbar->setObjectName("testbar");
@@ -185,100 +186,36 @@ bool MainBox::test(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-#define ACBUS_GROUP 0x01
-#define ADBUS_GROUP 0x02
-#define BCBUS_GROUP 0x03
-#define BDBUS_GROUP 0x04
+bool MainBox::set_bitmode(unsigned char bitmask, unsigned char mode)
+{
+    int ret;
+    bool ok = false;
 
-//https://eax.me/libftdi-bitbang/
+    ret = ftdi_set_bitmode(&ftdi, bitmask, mode);
+    switch(ret)
+    {
+    case  0:
+        emit info("all fine");
+        ok = true;
+        break;
+    case -1:
+        emit error("can't enable bitbang mode");
+        ok = false;
+        break;
+    case -2:
+        emit error("USB device unavailable");
+        ok = false;
+        break;
+    }
 
-bool MainBox::test2(void)
+    return ok;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::write_data(unsigned char *buf, int size)
 {
     int ret;
 
-    ret = ftdi_set_bitmode(&ftdi, 0xFF, BITMODE_BITBANG);
-    switch(ret)
-    {
-    case  0:
-        emit info("all fine");
-        break;
-    case -1:
-        emit error("can't enable bitbang mode");
-        break;
-    case -2:
-        emit error("USB device unavailable");
-        break;
-    }
-
-#if 1
-    ret = ftdi_set_bitmode(&ftdi, ACBUS_GROUP, BITMODE_RESET);
-    switch(ret)
-    {
-    case  0:
-        emit info("all fine");
-        break;
-    case -1:
-        emit error("can't enable bitbang mode");
-        break;
-    case -2:
-        emit error("USB device unavailable");
-        break;
-    }
-#endif
-
-#if 1
-    ret = ftdi_set_bitmode(&ftdi, ADBUS_GROUP, BITMODE_RESET);
-    switch(ret)
-    {
-    case  0:
-        emit info("all fine");
-        break;
-    case -1:
-        emit error("can't enable bitbang mode");
-        break;
-    case -2:
-        emit error("USB device unavailable");
-        break;
-    }
-#endif
-
-#if 1
-    ret = ftdi_set_bitmode(&ftdi, BCBUS_GROUP, BITMODE_RESET);
-    switch(ret)
-    {
-    case  0:
-        emit info("all fine");
-        break;
-    case -1:
-        emit error("can't enable bitbang mode");
-        break;
-    case -2:
-        emit error("USB device unavailable");
-        break;
-    }
-#endif
-
-#if 1
-    ret = ftdi_set_bitmode(&ftdi, BDBUS_GROUP, BITMODE_RESET);
-    switch(ret)
-    {
-    case  0:
-        emit info("all fine");
-        break;
-    case -1:
-        emit error("can't enable bitbang mode");
-        break;
-    case -2:
-        emit error("USB device unavailable");
-        break;
-    }
-#endif
-
-#if 1
-    // Пример отправки данных на MCP4921
-    unsigned char res_data[2] = {0xFF, 0xFF}; // Пример данных
-
-    ret = ftdi_write_data(&ftdi, res_data, sizeof(res_data));
+    ret = ftdi_write_data(&ftdi, buf, size);
     if(ret == -666)
     {
         emit error("USB device unavailable");
@@ -292,10 +229,48 @@ bool MainBox::test2(void)
     if(ret > 0)
     {
         emit info(QString("%1 sending").arg(ret));
+        return true;
     }
+
+    return false;
+}
+//--------------------------------------------------------------------------------
+//https://eax.me/libftdi-bitbang/
+
+bool MainBox::test2(void)
+{
+    set_bitmode(0xFF, BITMODE_BITBANG);
+
+    set_bitmode(ACBUS_GROUP, BITMODE_RESET);
+    set_bitmode(ADBUS_GROUP, BITMODE_RESET);
+    set_bitmode(BCBUS_GROUP, BITMODE_RESET);
+    set_bitmode(BDBUS_GROUP, BITMODE_RESET);
+
+#if 1
+    // Пример отправки данных на MCP4921
+    unsigned char res_data[2] = {0xFF, 0xFF}; // Пример данных
+    write_data(res_data, sizeof(res_data));
 #endif
 
     emit info("OK");
+    return true;
+}
+//--------------------------------------------------------------------------------
+// SPI
+// https://gist.github.com/bjornvaktaren/d2461738ec44e3ad8b3bae4ce69445b4
+
+//TODO надо позже проверить ещё i2c
+bool MainBox::test3(void)
+{
+    ftdi_usb_reset(&ftdi);
+    ftdi_set_interface(&ftdi, INTERFACE_ANY);   // ADBUS1 = INTERFACE_A
+    ftdi_set_bitmode(&ftdi, 0, 0); // reset
+    ftdi_set_bitmode(&ftdi, 0, BITMODE_MPSSE); // enable mpsse on all bits
+    ftdi_usb_purge_buffers(&ftdi);
+
+    unsigned char res_data[2] = {0xFF, 0xFF};
+    write_data(res_data, sizeof(res_data));
+
     return true;
 }
 //--------------------------------------------------------------------------------

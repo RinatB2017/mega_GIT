@@ -1,26 +1,6 @@
-#include <libftdi1/ftdi.h>
-#include <stdio.h>
+#define ACBUS_GROUP 0x01
+#define ADBUS_GROUP 0x02
+#define BCBUS_GROUP 0x03
+#define BDBUS_GROUP 0x04
 
-struct ftdi_context ftdi;
-
-int ftdi_init()
-{
-    int ret;
-
-    if (ftdi_init(&ftdi) < 0)
-    {
-        fprintf(stderr, "ftdi_init failed\n");
-        return -1;
-    }
-
-    if ((ret = ftdi_usb_open(&ftdi, 0x0403, 0x6010)) < 0)
-    {
-        fprintf(stderr, "unable to open ftdi device: %d (%s)\n", ret, ftdi_get_error_string(&ftdi));
-        return -1;
-    }
-
-    // Set BitBang mode
-    ftdi_set_bitmode(&ftdi, 0xFF, BITMODE_BITBANG);
-
-    return 0;
-}
+BITMODE_MPSSE - можно реализовывать SPI или I2C

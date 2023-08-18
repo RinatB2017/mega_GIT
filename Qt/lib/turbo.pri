@@ -40,19 +40,6 @@ android {
     RCC_DIR     = build/rc
 }
 
-win32 {
-    TEMP_PATH = "C:"
-#    TEMP_PATH = "F:"
-    OBJECTS_DIR = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\obj
-    MOC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\moc
-    UI_DIR      = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\ui
-    RCC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\rc
-
-    CONFIG -= debug_and_release #debug_and_release_target
-    CONFIG += no_fixpath
-
-    DEFINES += WIN32_LEAN_AND_MEAN
-}
 ###############################################################################
 unix:!macx {
     DESTDIR = $$(HOME)/Programming/my_programm_bin/$$FOLDER/$$TARGET
@@ -62,33 +49,44 @@ macx {
 }
 
 win32 {
-    BIN_PATH="C:\\temp"
+    BIN_PATH="C:/temp/bin"
+    TEMP_PATH = "C:"
+    OBJECTS_DIR = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\obj
+    MOC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\moc
+    UI_DIR      = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\ui
+    RCC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\rc
+
+    CONFIG -= debug_and_release #debug_and_release_target
+    CONFIG += no_fixpath
+
+    DEFINES += WIN32_LEAN_AND_MEAN
+
     contains(QT_ARCH, i386) {
         message("32-bit")
         CONFIG(debug, debug|release) {
-            DESTDIR = $$BIN_PATH/Win32/debug
+            DESTDIR = $$BIN_PATH/$$FOLDER/Win32/debug
         }
         else {
-            DESTDIR = $$BIN_PATH/Win32/release
+            DESTDIR = $$BIN_PATH/$$FOLDER/Win32/release
         }
     } else {
         message("64-bit")
         win32-g++ {
             message("mingw")
             CONFIG(debug, debug|release) {
-                DESTDIR = $$BIN_PATH/Win64/mingw/debug
+                DESTDIR = $$BIN_PATH/$$FOLDER/Win64/mingw/debug
             }
             else {
-                DESTDIR = $$BIN_PATH/Win64/mingw/release
+                DESTDIR = $$BIN_PATH/$$FOLDER/Win64/mingw/release
             }
         }
         win32-msvc*{
             message("msvc")
             CONFIG(debug, debug|release) {
-                DESTDIR = $$BIN_PATH/Win64/msvc/debug
+                DESTDIR = $$BIN_PATH/$$FOLDER/Win64/msvc/debug
             }
             else {
-                DESTDIR = $$BIN_PATH/Win64/msvc/release
+                DESTDIR = $$BIN_PATH/$$FOLDER/Win64/msvc/release
             }
         }
     }

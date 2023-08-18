@@ -25,6 +25,11 @@
 #define APPNAME "Test_libFTDI"
 
 //#define MAX_EEPROM_SIZE 512
+
+#define ACBUS_GROUP 0x01
+#define ADBUS_GROUP 0x02
+#define BCBUS_GROUP 0x03
+#define BDBUS_GROUP 0x04
 //--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME

@@ -26,7 +26,7 @@
 #include <QtGlobal>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
-#include "mpsse.h"
+//#include "mpsse.h"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -87,8 +87,6 @@ private:
     void init(void);
     void createTestBar(void);
 
-    struct ftdi_context ftdi;
-
     void f_open(void);
     void f_close(void);
 
@@ -102,9 +100,6 @@ private:
     void f_eeprom_initdefaults(void);
 
     void f_test(void);
-
-    bool set_bitmode(unsigned char bitmask, unsigned char mode);
-    bool write_data(unsigned char *buf, int size);
 
     uint16_t get_VID(void);
     uint16_t get_PID(void);

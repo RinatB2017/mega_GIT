@@ -21,7 +21,7 @@
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "test_libftdi_mainbox.hpp"
+#include "test_libmpsse_mainbox.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #include "codecs.h"

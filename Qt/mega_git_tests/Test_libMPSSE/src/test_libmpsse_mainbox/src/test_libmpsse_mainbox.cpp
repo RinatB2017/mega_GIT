@@ -124,140 +124,18 @@ void MainBox::choice_test(void)
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
-
-#if 1
-    emit info("Test bitbang mode");
-
-    int ret;
-    emit info("set bitbang mode");
-    ret = ftdi_set_bitmode(&ftdi, 0xFF, BITMODE_BITBANG);
-    switch(ret)
-    {
-    case  0:
-        emit info("all fine");
-        break;
-    case -1:
-        emit error("can't enable bitbang mode");
-        break;
-    case -2:
-        emit error("USB device unavailable");
-        break;
-    }
-
-    unsigned char buf[100] = { 0 };
-    ret = ftdi_read_data(&ftdi, buf, 10);
-    emit info(QString("ret: %1").arg(ret));
-
-    QByteArray ba;
-    ba.append((char *)buf, 10);
-
-    emit info(ba.toHex().toUpper());
-
-    emit info("disabling bitbang mode");
-    ret = ftdi_disable_bitbang(&ftdi);
-    switch(ret)
-    {
-    case  0:
-        emit info("all fine");
-        break;
-    case -1:
-        emit error("can't disable bitbang mode");
-        break;
-    case -2:
-        emit error("USB device unavailable");
-        break;
-    }
-#endif
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::set_bitmode(unsigned char bitmask, unsigned char mode)
-{
-    int ret;
-    bool ok = false;
-
-    ret = ftdi_set_bitmode(&ftdi, bitmask, mode);
-    switch(ret)
-    {
-    case  0:
-        emit info("all fine");
-        ok = true;
-        break;
-    case -1:
-        emit error("can't enable bitbang mode");
-        ok = false;
-        break;
-    case -2:
-        emit error("USB device unavailable");
-        ok = false;
-        break;
-    }
-
-    return ok;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::write_data(unsigned char *buf, int size)
-{
-    int ret;
-
-    ret = ftdi_write_data(&ftdi, buf, size);
-    if(ret == -666)
-    {
-        emit error("USB device unavailable");
-        return false;
-    }
-    if(ret < 0)
-    {
-        emit error("error code from usb_bulk_write()");
-        return false;
-    }
-    if(ret > 0)
-    {
-        emit info(QString("%1 sending").arg(ret));
-        return true;
-    }
-
-    return false;
-}
-//--------------------------------------------------------------------------------
-//https://eax.me/libftdi-bitbang/
-
 bool MainBox::test2(void)
 {
-    set_bitmode(0xFF, BITMODE_BITBANG);
-
-    set_bitmode(ACBUS_GROUP, BITMODE_RESET);
-    set_bitmode(ADBUS_GROUP, BITMODE_RESET);
-    set_bitmode(BCBUS_GROUP, BITMODE_RESET);
-    set_bitmode(BDBUS_GROUP, BITMODE_RESET);
-
-#if 1
-    // Пример отправки данных на MCP4921
-    unsigned char res_data[2] = {0xFF, 0xFF}; // Пример данных
-    write_data(res_data, sizeof(res_data));
-#endif
-
-    emit info("OK");
+    emit trace(Q_FUNC_INFO);
     return true;
 }
 //--------------------------------------------------------------------------------
-// SPI
-// https://gist.github.com/bjornvaktaren/d2461738ec44e3ad8b3bae4ce69445b4
-
-//TODO надо позже проверить ещё i2c
 bool MainBox::test3(void)
 {
-    ftdi_usb_reset(&ftdi);
-    ftdi_set_interface(&ftdi, INTERFACE_B);   // BDBUS1 = INTERFACE_B
-    ftdi_set_bitmode(&ftdi, 0, 0); // reset
-    ftdi_set_bitmode(&ftdi, 0, BITMODE_MPSSE); // enable mpsse on all bits
-    ftdi_usb_purge_buffers(&ftdi);
-
-    wait_msec(50);
-
-    unsigned char res_data[2] = {0xFF, 0xFF};
-    write_data(res_data, sizeof(res_data));
-
+    emit trace(Q_FUNC_INFO);
     return true;
 }
 //--------------------------------------------------------------------------------

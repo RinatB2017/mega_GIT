@@ -210,6 +210,7 @@ bool MainBox::test2(void)
         break;
     }
 
+#if 0
     ret = ftdi_set_bitmode(&ftdi, ACBUS_GROUP, BITMODE_RESET);
     switch(ret)
     {
@@ -223,7 +224,9 @@ bool MainBox::test2(void)
         emit error("USB device unavailable");
         break;
     }
+#endif
 
+#if 0
     ret = ftdi_set_bitmode(&ftdi, ADBUS_GROUP, BITMODE_RESET);
     switch(ret)
     {
@@ -237,7 +240,9 @@ bool MainBox::test2(void)
         emit error("USB device unavailable");
         break;
     }
+#endif
 
+#if 0
     ret = ftdi_set_bitmode(&ftdi, BCBUS_GROUP, BITMODE_RESET);
     switch(ret)
     {
@@ -251,7 +256,9 @@ bool MainBox::test2(void)
         emit error("USB device unavailable");
         break;
     }
+#endif
 
+#if 1
     ret = ftdi_set_bitmode(&ftdi, BDBUS_GROUP, BITMODE_RESET);
     switch(ret)
     {
@@ -265,11 +272,11 @@ bool MainBox::test2(void)
         emit error("USB device unavailable");
         break;
     }
+#endif
 
-#if 0
+#if 1
     // Пример отправки данных на MCP4921
-    unsigned char res_data[2] = {0x55, 0xAA}; // Пример данных
-    int ret;
+    unsigned char res_data[2] = {0xFF, 0xFF}; // Пример данных
 
     ret = ftdi_write_data(&ftdi, res_data, sizeof(res_data));
     if(ret == -666)

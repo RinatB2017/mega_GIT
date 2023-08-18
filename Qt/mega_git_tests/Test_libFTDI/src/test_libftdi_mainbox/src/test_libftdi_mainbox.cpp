@@ -210,7 +210,7 @@ bool MainBox::test2(void)
         break;
     }
 
-#if 0
+#if 1
     ret = ftdi_set_bitmode(&ftdi, ACBUS_GROUP, BITMODE_RESET);
     switch(ret)
     {
@@ -226,7 +226,7 @@ bool MainBox::test2(void)
     }
 #endif
 
-#if 0
+#if 1
     ret = ftdi_set_bitmode(&ftdi, ADBUS_GROUP, BITMODE_RESET);
     switch(ret)
     {
@@ -242,7 +242,7 @@ bool MainBox::test2(void)
     }
 #endif
 
-#if 0
+#if 1
     ret = ftdi_set_bitmode(&ftdi, BCBUS_GROUP, BITMODE_RESET);
     switch(ret)
     {

@@ -87,25 +87,6 @@ private:
     void init(void);
     void createTestBar(void);
 
-    void f_open(void);
-    void f_close(void);
-
-    void f_read_eeprom(void);
-    void f_get_eeprom_buf(void);
-
-    void f_set_eeprom_buf(void);
-    void f_write_eeprom(void);
-
-    void f_eeprom_decode(void);
-    void f_eeprom_initdefaults(void);
-
-    void f_test(void);
-
-    uint16_t get_VID(void);
-    uint16_t get_PID(void);
-    void set_VID(uint16_t value);
-    void set_PID(uint16_t value);
-
     void wait_msec(int timeout_msec);
 
     void updateText(void);

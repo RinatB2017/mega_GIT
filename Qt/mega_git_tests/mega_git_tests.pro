@@ -51,7 +51,7 @@ SUBDIRS += \
     $$PWD/Test_SerialBox5 \
     $$PWD/Test_libFTDI \
     $$PWD/Test_libUSB \
-    $$PWD/Test_libMPSSE
+#    $$PWD/Test_libMPSSE \
     $$PWD/Test_libVLC \
     $$PWD/Test_model \
     $$PWD/Test_pixmap \

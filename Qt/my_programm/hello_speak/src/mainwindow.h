@@ -48,16 +48,13 @@
 **
 ****************************************************************************/
 
-
-
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QtWidgets/qmainwindow.h>
+#include <QTextToSpeech>
 
 #include "ui_mainwindow.h"
-
-#include <QTextToSpeech>
 
 class MainWindow : public QMainWindow
 {

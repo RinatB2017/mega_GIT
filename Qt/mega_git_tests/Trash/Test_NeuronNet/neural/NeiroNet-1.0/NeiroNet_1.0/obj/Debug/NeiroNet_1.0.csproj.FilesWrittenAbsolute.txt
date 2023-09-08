@@ -1,8 +1,0 @@
-/home/boss/Dropbox/my_programm/neural/NeiroNet-1.0/NeiroNet_1.0/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
-/home/boss/Dropbox/my_programm/neural/NeiroNet-1.0/NeiroNet_1.0/obj/Debug/NeiroNet1.MainForm.resources
-/home/boss/Dropbox/my_programm/neural/NeiroNet-1.0/NeiroNet_1.0/obj/Debug/NeiroNet1.Properties.Resources.resources
-/home/boss/Dropbox/my_programm/neural/NeiroNet-1.0/NeiroNet_1.0/bin/Debug/NeiroNet1.exe.config
-/home/boss/Dropbox/my_programm/neural/NeiroNet-1.0/NeiroNet_1.0/bin/Debug/NeiroNet1.exe.mdb
-/home/boss/Dropbox/my_programm/neural/NeiroNet-1.0/NeiroNet_1.0/bin/Debug/NeiroNet1.exe
-/home/boss/Dropbox/my_programm/neural/NeiroNet-1.0/NeiroNet_1.0/obj/Debug/NeiroNet1.exe
-/home/boss/Dropbox/my_programm/neural/NeiroNet-1.0/NeiroNet_1.0/obj/Debug/NeiroNet1.exe.mdb

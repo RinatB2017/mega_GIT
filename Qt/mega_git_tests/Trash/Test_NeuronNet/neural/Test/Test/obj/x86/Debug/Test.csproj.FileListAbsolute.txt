@@ -1,5 +1,0 @@
-F:\my_programm\neural\Test\Test\obj\x86\Debug\Test.exe
-F:\my_programm\neural\Test\Test\bin\Debug\Test.exe
-F:\my_programm\neural\Test\Test\bin\Debug\Test.pdb
-F:\my_programm\neural\Test\Test\obj\x86\Debug\Test.csprojResolveAssemblyReference.cache
-F:\my_programm\neural\Test\Test\obj\x86\Debug\Test.pdb

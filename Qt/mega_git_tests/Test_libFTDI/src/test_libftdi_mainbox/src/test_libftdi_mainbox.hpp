@@ -60,11 +60,11 @@ private:
     union DATA
     {
         struct {
-            uint16_t AB:1;
-            uint16_t BUF:1;
-            uint16_t GA:1;
-            uint16_t SHDN:1;
             uint16_t data:12;
+            uint16_t SHDN:1;
+            uint16_t GA:1;
+            uint16_t BUF:1;
+            uint16_t AB:1;
         } bites;
         uint16_t u16;
     };

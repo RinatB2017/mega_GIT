@@ -78,6 +78,14 @@ bool SerialWidget::isOpen(void)
 bool SerialWidget::serial_open(void)
 {
     Q_ASSERT(serial5);
+
+    emit debug(QString("portName [%1]").arg(serial5.data()->portName()));
+    emit debug(QString("baudRate %1").arg(serial5.data()->baudRate()));
+    emit debug(QString("dataBits %1").arg(serial5.data()->dataBits()));
+    emit debug(QString("parity %1").arg(serial5.data()->parity()));
+    emit debug(QString("stopBits %1").arg(serial5.data()->stopBits()));
+    emit debug(QString("flowControl %1").arg(serial5.data()->flowControl()));
+
     return serial5->open(QIODevice::ReadWrite);
 }
 //--------------------------------------------------------------------------------
@@ -112,12 +120,6 @@ bool SerialWidget::setBaudRate(qint32 value)
     Q_ASSERT(serial5);
     return serial5->setBaudRate(value);
 }
-//--------------------------------------------------------------------------------
-//void SerialWidget::setSettingsRestoredOnClose(bool state)
-//{
-//    Q_ASSERT(serial5);
-//    serial5->setSettingsRestoredOnClose(state);
-//}
 //--------------------------------------------------------------------------------
 bool SerialWidget::setDataBits(QSerialPort::DataBits value)
 {
@@ -182,6 +184,7 @@ QSerialPort::FlowControl SerialWidget::flowControl(void)
 qint64 SerialWidget::write(const char *data, qint64 len)
 {
     Q_ASSERT(serial5);
+    Q_ASSERT(len > 0);
     return serial5->write(data, len);
 }
 //--------------------------------------------------------------------------------
@@ -194,6 +197,7 @@ qint64 SerialWidget::write(const char *data)
 qint64 SerialWidget::write(const QByteArray &data)
 {
     Q_ASSERT(serial5);
+    Q_ASSERT(!data.isEmpty());
     return serial5->write(data);
 }
 //--------------------------------------------------------------------------------

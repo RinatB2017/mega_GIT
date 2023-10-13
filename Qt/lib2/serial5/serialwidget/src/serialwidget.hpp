@@ -63,8 +63,6 @@ public:
     bool setStopBits(QSerialPort::StopBits value);
     bool setFlowControl(QSerialPort::FlowControl value);
 
-//    void setSettingsRestoredOnClose(bool state);
-
     QString portName(void);
     int baudRate(void);
     QSerialPort::DataBits dataBits(void);

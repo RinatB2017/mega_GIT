@@ -14,7 +14,7 @@ SUBDIRS += \
     $$PWD/Hex_view \
     $$PWD/MTC \
     $$PWD/MTC_runner \
-    $$PWD/QTextToSpeech \
+#    $$PWD/QTextToSpeech \
     $$PWD/SBGlass \
     $$PWD/Sniffer_PCA10000 \
     $$PWD/Tools

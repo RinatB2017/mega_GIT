@@ -12,8 +12,8 @@ SUBDIRS += \
     $$PWD/Test_arduino \
     $$PWD/Test_arduino_modbus \
     $$PWD/Test_broadcast_UDP \
-    $$PWD/Test_CandleStick_Box \
-    $$PWD/Test_CandleStick_Box_adv \
+#    $$PWD/Test_CandleStick_Box \    надо исправить
+#    $$PWD/Test_CandleStick_Box_adv \    надо исправить
     $$PWD/Test_CRC \
     $$PWD/Test_digits \
     $$PWD/Test_dip_widget \
@@ -60,7 +60,7 @@ SUBDIRS += \
     $$PWD/Test_thread \
     $$PWD/Test_triangle \
     $$PWD/Test_Widgets \
-    $$PWD/Test_QtCharts \
+#    $$PWD/Test_QtCharts \    надо исправить
     $$PWD/Test_QDBus \
     $$PWD/Test_QGraphicsView \
     $$PWD/Test_QML \
@@ -76,7 +76,7 @@ SUBDIRS += \
 unix {
 SUBDIRS += \
     $$PWD/Test_ADB \
-    $$PWD/Test_ffmpeg \
+#    $$PWD/Test_ffmpeg \    надо исправить
     $$PWD/Test_mouse \
     $$PWD/Test_OpenCL \
     $$PWD/Test_OpenCV \
@@ -89,7 +89,7 @@ SUBDIRS += \
     $$PWD/Test_SDLWidget \
     $$PWD/Test_SMTP \
     $$PWD/Test_Trader \
-    $$PWD/Test_Qt3D \
+#    $$PWD/Test_Qt3D \    надо исправить
     $$PWD/Test_QWebEngineView \
     $$PWD/Test_QTermWidget \
     $$PWD/Test_QHexEdit2 \

@@ -23,6 +23,10 @@
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
 #define APPNAME "Test_libMPSSE"
+
+#define FT_VER_MAJOR    1
+#define FT_VER_MINOR    0
+#define FT_VER_BUILD    1
 //--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME

@@ -12,8 +12,9 @@ SUBDIRS += \
     $$PWD/Test_arduino \
     $$PWD/Test_arduino_modbus \
     $$PWD/Test_broadcast_UDP \
-#    $$PWD/Test_CandleStick_Box \    надо исправить
-#    $$PWD/Test_CandleStick_Box_adv \    надо исправить
+#    $$PWD/Test_QtCharts \              #надо исправить
+#    $$PWD/Test_CandleStick_Box \       #надо исправить
+#    $$PWD/Test_CandleStick_Box_adv \   #надо исправить
     $$PWD/Test_CRC \
     $$PWD/Test_digits \
     $$PWD/Test_dip_widget \
@@ -51,7 +52,6 @@ SUBDIRS += \
     $$PWD/Test_SerialBox5 \
     $$PWD/Test_libFTDI \
     $$PWD/Test_libUSB \
-#    $$PWD/Test_libMPSSE \
     $$PWD/Test_libVLC \
     $$PWD/Test_model \
     $$PWD/Test_pixmap \
@@ -60,7 +60,6 @@ SUBDIRS += \
     $$PWD/Test_thread \
     $$PWD/Test_triangle \
     $$PWD/Test_Widgets \
-#    $$PWD/Test_QtCharts \    надо исправить
     $$PWD/Test_QDBus \
     $$PWD/Test_QGraphicsView \
     $$PWD/Test_QML \
@@ -73,10 +72,15 @@ SUBDIRS += \
     $$PWD/Test_YouTube \
     $$PWD/Tester
 
+win {
+SUBDIRS += \
+    $$PWD/Test_libMPSSE
+}
+
 unix {
 SUBDIRS += \
     $$PWD/Test_ADB \
-#    $$PWD/Test_ffmpeg \    надо исправить
+#    $$PWD/Test_ffmpeg \    #надо исправить
     $$PWD/Test_mouse \
     $$PWD/Test_OpenCL \
     $$PWD/Test_OpenCV \

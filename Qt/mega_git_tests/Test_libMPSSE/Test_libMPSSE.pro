@@ -7,10 +7,6 @@ TARGET   = Test_libMPSSE
 
 FOLDER  = tests
 
-#DEFINES += FT_VER_MAJOR    1
-#DEFINES += FT_VER_MINOR    0
-#DEFINES += FT_VER_BUILD    1
-
 include (conf/conf.pri)
 
 DEPENDPATH  += \

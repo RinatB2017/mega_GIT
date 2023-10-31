@@ -56,6 +56,7 @@ void MainBox::init(void)
 #ifdef QT_DEBUG
     createTestBar();
 #endif
+    createProgrammBar();
 
     ui->histogram_widget->setObjectName("HistogramBox");
 
@@ -64,10 +65,16 @@ void MainBox::init(void)
     ui->histogram_widget->set_title_axis_Y("тест Y");
 
 #if 1
-    ui->histogram_widget->add_histogram(0, tr("red"), Qt::red);
-    ui->histogram_widget->add_histogram(1, tr("green"), Qt::green);
-    ui->histogram_widget->add_histogram(2, tr("blue"), Qt::blue);
-#else
+    ui->histogram_widget->add_histogram(0, "value", Qt::red);
+#endif
+
+#if 0
+    ui->histogram_widget->add_histogram(0, "red", Qt::red);
+    ui->histogram_widget->add_histogram(1, "green", Qt::green);
+    ui->histogram_widget->add_histogram(2, "blue", Qt::blue);
+#endif
+
+#if 0
     for(int n=0; n<2; n++)
     {
         QColor color = QColor(rand() % 255, rand() % 255, rand() % 255);
@@ -95,6 +102,25 @@ void MainBox::createTestBar(void)
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
+void MainBox::createProgrammBar(void)
+{
+    MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
+    Q_ASSERT(mw);
+
+    QToolBar *testbar = new QToolBar(tr("testbar"));
+    testbar->setObjectName("testbar");
+
+    mw->addToolBar(Qt::TopToolBarArea, testbar);
+
+    QToolButton *btn_test = add_button(testbar,
+                                       new QToolButton(this),
+                                       qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                       "test",
+                                       "test");
+
+    connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
+}
+//--------------------------------------------------------------------------------
 void MainBox::load(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
@@ -114,6 +140,24 @@ void MainBox::test(void)
 #endif
 
 #if 1
+    emit info(tr("test begin"));
+    //ui->histogram_widget->clear();
+    ui->histogram_widget->push_btn_Horizontal(true);
+    ui->histogram_widget->push_btn_Vertical(true);
+    unsigned int pos_x = 0;
+    emit info(QString("cnt = %1").arg(ui->histogram_widget->get_histograms_count()));
+    for(int x=0; x<10; x++)
+    {
+        if(all_break) return;
+        QCoreApplication::processEvents();
+        QRandomGenerator generator;
+        ui->histogram_widget->add_histogram_data(0, pos_x, 5, generator.generate() % 100);
+        pos_x += 7;
+    }
+    emit info(tr("test end"));
+#endif
+
+#if 0
     emit info(tr("test begin"));
     //histogram->clear();
     ui->histogram_widget->push_btn_Horizontal(true);

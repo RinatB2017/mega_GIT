@@ -53,6 +53,7 @@ private:
     void init(void);
 
     void createTestBar(void);
+    void createProgrammBar(void);
 
     void updateText(void);
     bool programm_is_exit(void);

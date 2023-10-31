@@ -532,7 +532,7 @@ void HistogramBox::load_histograms(void)
             QList<QStringList> str = csv->CSVRead();
             foreach (QStringList sl, str)
             {
-                if(sl.count() == 3)
+                if(sl.count() == 1)
                 {
                     bool ok = false;
                     int i = sl.at(0).toInt(&ok);

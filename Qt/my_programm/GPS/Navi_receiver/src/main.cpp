@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 
     splash->finish(main_window);
 
-#ifdef QT_DEBUG
+#ifdef SELF_TEST
     int test_result = QTest::qExec(new Test(), argc, argv);
     if (test_result != EXIT_SUCCESS)
     {

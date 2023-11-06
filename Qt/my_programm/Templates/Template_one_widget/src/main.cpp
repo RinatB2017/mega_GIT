@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 
     mainBox->show();
 
-#ifdef QT_DEBUG
+#ifdef SELF_TEST
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
 
     int test_result = QTest::qExec(new Test(), argc, argv);

@@ -1,6 +1,6 @@
 #include <windows.h>
 
-IDI_ICON1	ICON	DISCARDABLE	"D:\\_Work\\Github\\public\\mega_GIT\\Qt\\my_programm\\Templates\\Template_RS232\\ico\\RS232.ico"
+IDI_ICON1	ICON	DISCARDABLE	"C:\\Users\\Rinat\\Github\\public\\mega_GIT\\Qt\\my_programm\\Templates\\Template_RS232\\ico\\RS232.ico"
 
 VS_VERSION_INFO VERSIONINFO
 	FILEVERSION 1,0,0,0

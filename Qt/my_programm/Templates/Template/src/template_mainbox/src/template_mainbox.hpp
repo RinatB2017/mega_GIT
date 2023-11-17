@@ -21,6 +21,8 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QPointer>
+//--------------------------------------------------------------------------------
 #include "template_mainbox_GUI.hpp"
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"

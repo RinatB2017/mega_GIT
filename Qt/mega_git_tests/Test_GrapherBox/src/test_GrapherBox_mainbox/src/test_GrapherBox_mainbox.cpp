@@ -280,6 +280,16 @@ void MainBox::test(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test");
 
+#if 1
+    for(int n=0; n<360; n++)
+    {
+        qreal x = qreal(100.0)*qCos(qreal(n)*qreal(M_PI)/qreal(180.0));
+        qreal y = qreal(300.0)*qSin(qreal(n)*qreal(M_PI)/qreal(180.0));
+
+        ui->grapher_widget->add_curve_data(curves[0], x, y);
+    }
+#endif
+
 #ifdef USE_SCALE_POINT_TIME
     //TODO тест QTime
     QTime t1 = QTime(0, 0, 0);

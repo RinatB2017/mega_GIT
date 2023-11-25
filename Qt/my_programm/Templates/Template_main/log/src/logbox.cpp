@@ -154,11 +154,13 @@ void LogBox::create_widgets(void)
     vbox = new QVBoxLayout();
     mainbox = new QHBoxLayout();
 
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 #ifndef LOG_READ_ONLY
     hbox->setMargin(0);
 #endif
     vbox->setMargin(0);
     mainbox->setMargin(0);
+#endif
 
 #ifndef LOG_READ_ONLY
     hbox->setSpacing(0);
@@ -576,7 +578,9 @@ void LogBox::load_settings(void)
     if(font_size < 6)  font_size = 6;
 
     font.setFamily(font_name);
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     font.setWeight(font_weight);
+#endif
     font.setPointSize(font_size);
 
     logBox->setFont(font);

@@ -75,8 +75,8 @@ QMAKE_CXXFLAGS += $${OPTIMIZE}
 QMAKE_LFLAGS   += $${OPTIMIZE}
 QMAKE_OBJECTIVE_CFLAGS += $${OPTIMIZE}
 ###############################################################################
-greaterThan(QT_MAJOR_VERSION, 4) {
-    QT += widgets
+greaterThan(QT_MAJOR_VERSION, 5) {
+    QT += core5compat widgets
     DEFINES += HAVE_QT5
     message(Qt5 = $$QT)
 } else {

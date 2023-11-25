@@ -87,10 +87,10 @@ private:
     bool flagErrorAsMessage = false;
     bool flagTextIsWindows = false;
 
-    QProgressBar *progressBar;
-    QHBoxLayout *hbox;
-    QVBoxLayout *vbox;
-    QHBoxLayout *mainbox;
+    QProgressBar *progressBar = nullptr;
+    QHBoxLayout *hbox = nullptr;
+    QVBoxLayout *vbox = nullptr;
+    QHBoxLayout *mainbox = nullptr;
 
     bool old_state_btn_show_Info = false;
     bool old_state_btn_show_Debug = false;

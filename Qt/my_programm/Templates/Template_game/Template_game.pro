@@ -14,7 +14,11 @@ DEPENDPATH  += \
     $$PWD/src/game
 INCLUDEPATH = $$DEPENDPATH
 
-QT += network opengl
+QT  += network opengl
+
+greaterThan(QT_MAJOR_VERSION, 5) {
+    QT  += openglwidgets
+}
 
 HEADERS += \
     game.hpp \

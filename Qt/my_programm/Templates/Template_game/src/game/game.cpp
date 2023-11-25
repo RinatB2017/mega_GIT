@@ -35,9 +35,15 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
+#if (QT_VERSION > QT_VERSION_CHECK(6, 0, 0))
+Game::Game(QWidget *parent) :
+    QOpenGLWidget(parent),
+    m_doVisualUpdates(true)
+#else
 Game::Game(QWidget *parent) :
     QGLWidget(parent),
     m_doVisualUpdates(true)
+#endif
 {
     init_GL();
     init_map(":/map.txt");
@@ -105,7 +111,11 @@ void Game::init_GL(void)
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();
 
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
     qglClearColor(QColor(100,150,80));
+#else
+    glClearColor(100,150,80, 0);
+#endif
 
     glShadeModel(GL_SMOOTH);
     glEnable(GL_DEPTH_TEST);

@@ -24,9 +24,15 @@
 #include <QApplication>
 #include <QMouseEvent>
 #include <QKeyEvent>
-#include <QGLWidget>
 #include <QPointer>
+#include <QPainter>
 #include <QTimer>
+
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+#   include <QGLWidget>
+#else
+#   include <QtOpenGLWidgets/QOpenGLWidget>
+#endif
 //--------------------------------------------------------------------------------
 #define MAX_OBJECTS 4
 //--------------------------------------------------------------------------------
@@ -46,7 +52,11 @@ enum {
 class Player;
 class Map;
 //--------------------------------------------------------------------------------
+#if (QT_VERSION > QT_VERSION_CHECK(6, 0, 0))
+class Game : public QOpenGLWidget
+#else
 class Game : public QGLWidget
+#endif
 {
     Q_OBJECT
 public:

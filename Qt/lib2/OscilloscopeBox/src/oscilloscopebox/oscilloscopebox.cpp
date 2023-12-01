@@ -68,7 +68,21 @@ void OscilloscopeBox::init()
 
     ui->btn_show_frame->setFixedSize(24, 24);
     connect(ui->btn_show_frame, &QToolButton::clicked,  ui->frame,  &QFrame::setVisible);
+
+    //TODO тестовый фрейм
     ui->frame->setVisible(false);
+
+    QTimer::singleShot(1000, [this] {
+        for(int n=0; n<curves.count(); n++)
+        {
+            ui->controls_widget->set_curve_gain(0,
+                                                1000,
+                                                curves[n].correction_gain);
+            ui->controls_widget->set_curve_pos(0,
+                                               1000,
+                                               curves[n].correction_pos_y);
+        }
+    });
 
     updateText();
     updateGraphics();
@@ -94,7 +108,7 @@ int OscilloscopeBox::add_curve(int index_curve,
 
     curve.curve_ID = curves.count();
 
-    curve.correction_multiply = 1.0f;
+    curve.correction_gain = 1.0f;
     curve.correction_pos_y = pos_y;
     curve.last_value = 0;
 
@@ -221,17 +235,15 @@ void OscilloscopeBox::create_widgets(void)
     if(title_axis_Y.isEmpty() == false)
         ui->qwtPlot->setAxisTitle(QwtPlot::yLeft, title_axis_Y);
 
-    ui->knob_position->setUpperBound(1000);
-    ui->knob_multiply->setUpperBound(2);
+    //ui->knob_position->setUpperBound(1000);
+    //ui->knob_multiply->setUpperBound(2);
 
     //---
-    connect(ui->btn_RUN,    SIGNAL(clicked(bool)),  this,   SLOT(click_RUN()));
+    //connect(ui->knob_position,  SIGNAL(valueChanged(double)),  this,   SLOT(position_changed(double)));
+    //connect(ui->knob_multiply,  SIGNAL(valueChanged(double)),  this,   SLOT(multiply_changed(double)));
 
-    connect(ui->knob_position,  SIGNAL(valueChanged(double)),  this,   SLOT(position_changed(double)));
-    connect(ui->knob_multiply,  SIGNAL(valueChanged(double)),  this,   SLOT(multiply_changed(double)));
-
-    connect(ui->controls_widget,    SIGNAL(s_select(bool)), this,   SLOT(click(bool)));
-    connect(ui->controls_widget,    SIGNAL(s_color(int)), this,   SLOT(set_color(int)));
+    connect(ui->controls_widget,    &Oscilloscopebox_controls::s_select,    this,   &OscilloscopeBox::click);
+    connect(ui->controls_widget,    &Oscilloscopebox_controls::s_color,     this,   &OscilloscopeBox::set_color);
     //---
 }
 //--------------------------------------------------------------------------------
@@ -250,11 +262,11 @@ void OscilloscopeBox::click_channel(int channel, bool state)
 {
     current_channel = channel;
 
-    ui->knob_position->setEnabled(state);
-    ui->knob_position->setValue(static_cast<double>(curves[current_channel].correction_pos_y));
+    //ui->knob_position->setEnabled(state);
+    //ui->knob_position->setValue(static_cast<double>(curves[current_channel].correction_pos_y));
 
-    ui->knob_multiply->setEnabled(state);
-    ui->knob_multiply->setValue(static_cast<double>(curves[current_channel].correction_multiply));
+    //ui->knob_multiply->setEnabled(state);
+    //ui->knob_multiply->setValue(static_cast<double>(curves[current_channel].correction_multiply));
 
     legend_state(channel, state);
 }
@@ -299,7 +311,7 @@ void OscilloscopeBox::multiply_changed(double value)
         emit debug("current_channel >= num_curves");
         return;
     }
-    curves[current_channel].correction_multiply = static_cast<float>(value);
+    curves[current_channel].correction_gain = static_cast<float>(value);
 }
 //--------------------------------------------------------------------------------
 void OscilloscopeBox::legend_checked(const QVariant &itemInfo, bool on)
@@ -389,11 +401,11 @@ void OscilloscopeBox::add_curve_data(int channel,
     if(channel >= curves.count())
     {
         emit error(QString(tr("channel > %1"))
-                   .arg(curves.count()));
+                       .arg(curves.count()));
         return;
     }
 
-    data *= static_cast<qreal>(curves[channel].correction_multiply);
+    data *= static_cast<qreal>(curves[channel].correction_gain);
     data += static_cast<qreal>(curves[channel].correction_pos_y);
     curves[channel].last_value = static_cast<float>(data);
 }
@@ -428,8 +440,8 @@ void OscilloscopeBox::load_setting(void)
     if(size != curves.count())
     {
         emit error(QString("bad size curves: size %1 != curves.count %2")
-                   .arg(size)
-                   .arg(curves.count()));
+                       .arg(size)
+                       .arg(curves.count()));
         endArray();
         return;
     }

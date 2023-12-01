@@ -7,7 +7,6 @@
 
 //TODO https://github.com/eiimage/qwt/blob/master/examples/realtime/incrementalplot.cpp
 // возможно, что взято отсюда
-//???
 //--------------------------------------------------------------------------------
 class CurveData: public QwtArraySeriesData<QPointF>
 {
@@ -18,10 +17,6 @@ public:
 
     virtual QRectF boundingRect() const
     {
-        //TODO этого не было
-//        if ( d_boundingRect.width() < 0.0 )
-//            d_boundingRect = qwtBoundingRect( *this );
-
         return d_boundingRect;
     }
 

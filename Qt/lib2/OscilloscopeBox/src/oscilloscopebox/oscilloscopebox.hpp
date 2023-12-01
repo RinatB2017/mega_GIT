@@ -76,7 +76,7 @@ typedef struct
     QString title;
     QColor color;
     float last_value;
-    float correction_multiply;
+    float correction_gain;
     float correction_pos_y;
     QwtPlotCurve *plot_curve;
     CurveData *data_curve;
@@ -125,15 +125,15 @@ private:
     Ui::OscilloscopeBox *ui;
     bool legend_is_visible = false;
 
-    QwtPlotPicker *d_picker;
-    QwtLegend *legend;
+    QwtPlotPicker *d_picker = nullptr;
+    QwtLegend *legend = nullptr;
 
     QColor color = Qt::black;
 
     int num_curves = 0;
     QVector<OSCILLOSCOPE_CURVE> curves;
 
-    QTimer *timer;
+    QTimer *timer = nullptr;
 
     double axis_X_min = 0;
     double axis_X_max = 0;
@@ -158,12 +158,12 @@ private:
 
 #ifndef GRAPHER_NOT_PANNING
     // panning with the left mouse button
-    QwtPlotPanner *plot_panner;
+    QwtPlotPanner *plot_panner = nullptr;
 #endif
 
 #ifndef GRAPHER_NOT_ZOOM
     // zoom in/out with the wheel
-    QwtPlotMagnifier *plot_magnifier;
+    QwtPlotMagnifier *plot_magnifier = nullptr;
 #endif
 
     void set_zoom(bool x_state, bool y_state);

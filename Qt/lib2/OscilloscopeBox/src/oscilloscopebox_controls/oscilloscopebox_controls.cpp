@@ -54,13 +54,22 @@ bool Oscilloscopebox_controls::add_control(QColor color, QString text)
     btns.btn_select->setCheckable(true);
     btns.btn_select->setProperty("index", curves);
 
-    connect(btns.btn_color,     SIGNAL(clicked(bool)),  this,   SLOT(click_color()));
-    connect(btns.btn_select,    SIGNAL(clicked(bool)),  this,   SLOT(click_select(bool)));
+    connect(btns.btn_color,     &QToolButton::clicked,  this,   &Oscilloscopebox_controls::click_color);
+    connect(btns.btn_select,    &QPushButton::clicked,  this,   &Oscilloscopebox_controls::click_select);
 
-    //connect(btns.btn_select,    SIGNAL(clicked(bool)),  this,   SLOT(check_buttons(bool)));
-
+    //TODO добавить регуляторы
     ui->grid->addWidget(btns.btn_color,  curves, 0);
     ui->grid->addWidget(btns.btn_select, curves, 1);
+
+    sl_pos = new QSlider(Qt::Horizontal);
+    ui->grid->addWidget(new QLabel("Pos:"), curves, 2);
+    ui->grid->addWidget(sl_pos,             curves, 3);
+
+    sl_gain = new QSlider(Qt::Horizontal);
+    ui->grid->addWidget(new QLabel("Gain:"), curves, 4);  //TODO
+    ui->grid->addWidget(sl_gain,             curves, 5);
+    //---
+
     curves++;
 
     l_curves.append(btns);
@@ -146,6 +155,24 @@ bool Oscilloscopebox_controls::set_curve_text(int index, QString text)
     if(index >= curves) return false;
 
     l_curves[index].btn_select->setText(text);
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool Oscilloscopebox_controls::set_curve_pos(int min,
+                                             int max,
+                                             int value)
+{
+    sl_pos->setRange(min, max);
+    sl_pos->setValue(value);
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool Oscilloscopebox_controls::set_curve_gain(int min,
+                                              int max,
+                                              int value)
+{
+    sl_gain->setRange(min, max);
+    sl_gain->setValue(value);
     return true;
 }
 //--------------------------------------------------------------------------------

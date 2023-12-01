@@ -23,7 +23,9 @@
 //--------------------------------------------------------------------------------
 #include <QToolButton>
 #include <QPushButton>
+#include <QSlider>
 #include <QWidget>
+#include <QLabel>
 //--------------------------------------------------------------------------------
 namespace Ui {
     class Oscilloscopebox_controls;
@@ -44,6 +46,8 @@ public:
     bool add_control(QColor color,  QString text);
     bool set_curve_color(int index, QColor color);
     bool set_curve_text(int index,  QString text);
+    bool set_curve_pos(int min, int max, int value);
+    bool set_curve_gain(int min, int max, int value);
 
     int get_active_index(void);
 
@@ -63,6 +67,9 @@ private:
     QList<CURVE_BTNS> l_curves;
     int curves = 0;
     int current_index = -1;
+
+    QSlider *sl_pos = nullptr;
+    QSlider *sl_gain = nullptr;
 
     void init(void);
     void update_curves(void);

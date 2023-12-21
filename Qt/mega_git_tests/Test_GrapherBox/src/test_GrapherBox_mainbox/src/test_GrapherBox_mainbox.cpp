@@ -520,7 +520,7 @@ void MainBox::ReadWav(const QString &fileName)
 //--------------------------------------------------------------------------------
 void MainBox::read_wav(void)
 {
-    MyFileDialog *dlg = new MyFileDialog("read_wav", "read_wav");
+    MyFileDialog *dlg = new MyFileDialog("read_wav");
     dlg->setNameFilter("WAV files (*.wav)");
     dlg->setDefaultSuffix("wav");
     dlg->setDirectory(".");

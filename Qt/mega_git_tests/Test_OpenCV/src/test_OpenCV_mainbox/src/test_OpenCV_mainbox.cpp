@@ -106,7 +106,7 @@ void MainBox::onLoad(void)
 {
     MyFileDialog *dlg;
 
-    dlg = new MyFileDialog("load_image", "load_image");
+    dlg = new MyFileDialog("load_image");
     dlg->setNameFilter("Images (*.jpg *.jpeg *.png *.bmp)");
     dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
 //    dlg->setDirectory(m_lastLoadPath);

@@ -215,7 +215,7 @@ void FileManager::s_save_as(void)
         return;
     }
 
-    MyFileDialog *dlg = new MyFileDialog("filemanage", "filemanage", this);
+    MyFileDialog *dlg = new MyFileDialog("filemanage");
     dlg->setNameFilter(QString("%1 files (*.%1)").arg(extension));
     dlg->selectFile("noname");
     dlg->setDefaultSuffix(extension);

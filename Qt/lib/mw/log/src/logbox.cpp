@@ -598,7 +598,7 @@ void LogBox::syslogLog(int level,
 //--------------------------------------------------------------------------------
 void LogBox::save_to(void)
 {
-    MyFileDialog *dlg = new MyFileDialog("log_box", "log_box");
+    MyFileDialog *dlg = new MyFileDialog("log_box");
     dlg->setAcceptMode(MyFileDialog::AcceptSave);
     dlg->setNameFilter("log files (*.log)");
     dlg->setDefaultSuffix("log");
@@ -617,7 +617,7 @@ void LogBox::save_to(void)
 //--------------------------------------------------------------------------------
 void LogBox::save_full_log_to(void)
 {
-    MyFileDialog *dlg = new MyFileDialog("log_box", "log_box");
+    MyFileDialog *dlg = new MyFileDialog("log_box");
     dlg->setAcceptMode(MyFileDialog::AcceptSave);
     dlg->setNameFilter("log files (*.log)");
     dlg->setDefaultSuffix("log");

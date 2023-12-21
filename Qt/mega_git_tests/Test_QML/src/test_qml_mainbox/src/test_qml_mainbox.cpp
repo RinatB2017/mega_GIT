@@ -165,7 +165,7 @@ void MainBox::new_qml(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_qml(void)
 {
-    MyFileDialog *dlg = new MyFileDialog("qml_options", "qml_options", this);
+    MyFileDialog *dlg = new MyFileDialog("qml_options");
     dlg->setNameFilter("QML files (*.qml)");
     dlg->setDefaultSuffix("qml");
     int btn = dlg->exec();
@@ -200,7 +200,7 @@ void MainBox::save_qml(void)
 //--------------------------------------------------------------------------------
 void MainBox::save_qml_as(void)
 {
-    MyFileDialog *dlg = new MyFileDialog("qml_options", "qml_options", this);
+    MyFileDialog *dlg = new MyFileDialog("qml_options");
     dlg->setNameFilter("QML files (*.qml)");
     dlg->setDefaultSuffix("qml");
     dlg->setOption(MyFileDialog::DontConfirmOverwrite, false);

@@ -79,7 +79,7 @@ void OCV_widget::init(void)
 //--------------------------------------------------------------------------------
 void OCV_widget::onLoad(void)
 {
-    MyFileDialog *dlg = new MyFileDialog("picture_dlg", "picture_dlg", this);
+    MyFileDialog *dlg = new MyFileDialog("picture_dlg");
     dlg->setNameFilter("PNG files (*.png)");
     dlg->selectFile("picture");
     dlg->setDefaultSuffix("png");

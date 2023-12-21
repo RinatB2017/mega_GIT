@@ -21,18 +21,17 @@
 #include "myfiledialog.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-MyFileDialog::MyFileDialog(const QString &gName,
-                           const QString &oName,
+MyFileDialog::MyFileDialog(const QString &text_name,
                            QWidget *parent) :
     QFileDialog(parent),
     MySettings(),
-    gName(gName),
-    oName(oName)
+    gName(text_name),
+    oName(text_name)
 {
     setOption(MyFileDialog::DontUseNativeDialog, false);
     setObjectName(oName);
 
-    beginGroup(gName);
+    beginGroup(text_name);
     dir = load_value(oName, QDir::homePath()).toString();
     bool ok;
     int w = load_value("width").toInt(&ok);

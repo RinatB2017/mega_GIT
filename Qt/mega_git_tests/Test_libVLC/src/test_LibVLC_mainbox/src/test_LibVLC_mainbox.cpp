@@ -127,7 +127,7 @@ bool MainBox::test(void)
     filters << "Video Files (*.avi *.mpg *.mov *.mp4 *.mkv)";
     QString filename;
 
-    MyFileDialog *dlg = new MyFileDialog("vlc", "vlc", this);
+    MyFileDialog *dlg = new MyFileDialog("vlc");
     dlg->setNameFilters(filters);
     int btn = dlg->exec();
     if(btn == MyFileDialog::Accepted)

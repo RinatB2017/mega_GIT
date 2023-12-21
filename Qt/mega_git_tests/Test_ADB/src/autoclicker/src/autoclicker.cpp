@@ -127,7 +127,7 @@ void AutoClicker::update(void)
 //--------------------------------------------------------------------------------
 void AutoClicker::load(void)
 {
-    MyFileDialog *dlg = new MyFileDialog("autoclicker_commands", "autoclicker_commands", this);
+    MyFileDialog *dlg = new MyFileDialog("autoclicker_commands");
     dlg->setNameFilter("TXT files (*.txt)");
     dlg->selectFile("noname");
     dlg->setDefaultSuffix("txt");
@@ -143,7 +143,7 @@ void AutoClicker::load(void)
 //--------------------------------------------------------------------------------
 void AutoClicker::save(void)
 {
-    MyFileDialog *dlg = new MyFileDialog("autoclicker_commands", "autoclicker_commands", this);
+    MyFileDialog *dlg = new MyFileDialog("autoclicker_commands");
     dlg->setNameFilter("TXT files (*.txt)");
     dlg->selectFile("noname");
     dlg->setDefaultSuffix("txt");

@@ -195,7 +195,7 @@ void MainBox::save(void)
         return;
     }
     MyFileDialog *dlg;
-    dlg = new MyFileDialog("MyFileDialog", "MyFileDialog");
+    dlg = new MyFileDialog("MyFileDialog");
     dlg->setAcceptMode(QFileDialog::AcceptSave);
     dlg->setNameFilter(tr("qrc files (*.qrc)"));
     dlg->setDefaultSuffix(tr("qrc"));

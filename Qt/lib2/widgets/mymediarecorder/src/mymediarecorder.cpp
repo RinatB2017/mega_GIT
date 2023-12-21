@@ -70,7 +70,7 @@ void MyMediaRecorder::get_frame(QVideoFrame frame)
 //--------------------------------------------------------------------------------
 void MyMediaRecorder::set_filename(void)
 {
-    MyFileDialog *dlg = new MyFileDialog("mediarecorder_box", "mediarecorder_box");
+    MyFileDialog *dlg = new MyFileDialog("mediarecorder_box");
     dlg->setAcceptMode(MyFileDialog::AcceptSave);
     dlg->setNameFilter("AVI files (*.avi)");
     dlg->setDefaultSuffix("avi");

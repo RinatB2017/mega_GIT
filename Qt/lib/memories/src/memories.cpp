@@ -128,7 +128,7 @@ void Memories::name_filters(void)
     QStringList filters;
     filters.append("Movie files (*.avi *.mov *.mpg)");
 
-    MyFileDialog *dlg = new MyFileDialog("memories", "memories");
+    MyFileDialog *dlg = new MyFileDialog("memories");
     dlg->setNameFilters(filters);
     if(dlg->exec())
     {
@@ -143,7 +143,7 @@ void Memories::set_directory(void)
 {
     QString filename;
 
-    MyFileDialog *dlg = new MyFileDialog("memories", "memories");
+    MyFileDialog *dlg = new MyFileDialog("memories");
     dlg->setOption(QFileDialog::ShowDirsOnly, true);
     if(dlg->exec())
     {

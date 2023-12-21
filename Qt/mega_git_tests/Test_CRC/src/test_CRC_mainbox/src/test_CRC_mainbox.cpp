@@ -155,7 +155,7 @@ void MainBox::run_crc(void)
 //--------------------------------------------------------------------------------
 void MainBox::load_file(void)
 {
-    MyFileDialog *dlg = new MyFileDialog("test_crc32", "test_crc32", this);
+    MyFileDialog *dlg = new MyFileDialog("test_crc32");
     int btn = dlg->exec();
     if(btn == MyFileDialog::Accepted)
     {

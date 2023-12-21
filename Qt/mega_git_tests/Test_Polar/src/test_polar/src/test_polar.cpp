@@ -392,7 +392,7 @@ bool MainBox::s_load_orig_image(void)
     QString filename;
     MyFileDialog *dlg = 0;
 
-    dlg = new MyFileDialog("Image", "image_dialog");
+    dlg = new MyFileDialog("Image");
     dlg->setNameFilter(tr("Image Files (*.png *.jpg *.bmp)"));
     if(dlg->exec())
     {

@@ -205,7 +205,7 @@ void MainBox::f_split(void)
 //--------------------------------------------------------------------------------
 void MainBox::f_save_files(void)
 {
-    MyFileDialog *dlg = new MyFileDialog("splitter_dirs", "splitter_dirs", this);
+    MyFileDialog *dlg = new MyFileDialog("splitter_dirs");
     dlg->setOption(QFileDialog::ShowDirsOnly, true);
     int btn = dlg->exec();
     if(btn == MyFileDialog::Accepted)
@@ -265,7 +265,7 @@ void MainBox::f_save_files(void)
 //--------------------------------------------------------------------------------
 void MainBox::f_load_picture(void)
 {
-    MyFileDialog *dlg = new MyFileDialog("splitter_mainbox", "splitter_mainbox", this);
+    MyFileDialog *dlg = new MyFileDialog("splitter_mainbox");
     dlg->setNameFilter("PNG files (*.png)");
     dlg->selectFile(filename);
     dlg->setDefaultSuffix("png");

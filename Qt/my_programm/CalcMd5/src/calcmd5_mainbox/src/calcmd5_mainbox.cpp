@@ -59,7 +59,7 @@ void MainBox::calc_md5(void)
     QFileDialog *dlg;
     QString temp;
 
-    dlg = new MyFileDialog("md5_dlg", "md5_dlg");
+    dlg = new MyFileDialog("md5_dlg");
     dlg->setNameFilter(tr("All files (*.*)"));
     dlg->setOption(QFileDialog::DontUseNativeDialog, true);
     //dlg->setDirectory(".");

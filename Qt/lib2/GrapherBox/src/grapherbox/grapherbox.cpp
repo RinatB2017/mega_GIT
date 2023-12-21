@@ -1295,7 +1295,7 @@ void GrapherBox::load_curves(void)
 {
     QPointer<MyFileDialog> dlg;
 
-    dlg = new MyFileDialog("dlg_grapherbox", "dlg_grapherbox");
+    dlg = new MyFileDialog("dlg_grapherbox");
     dlg->setNameFilter("CSV files (*.csv)");
     dlg->setDefaultSuffix("csv");
 #ifdef Q_OS_LINUX
@@ -1342,7 +1342,7 @@ void GrapherBox::save_curves(void)
     }
 
     //записываем файл
-    QPointer<MyFileDialog> dlg = new MyFileDialog("dlg_grapherbox", "dlg_grapherbox");
+    QPointer<MyFileDialog> dlg = new MyFileDialog("dlg_grapherbox");
     dlg->setAcceptMode(QFileDialog::AcceptSave);
     dlg->setNameFilter("CSV files (*.csv)");
     dlg->setDefaultSuffix("csv");

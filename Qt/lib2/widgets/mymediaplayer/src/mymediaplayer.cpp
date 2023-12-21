@@ -160,7 +160,7 @@ void MyMediaPlayer::load(void)
                                "Any files (*)"
                               });
 
-    MyFileDialog *dlg = new MyFileDialog("mediaplayer_box", "mediaplayer_box");
+    MyFileDialog *dlg = new MyFileDialog("mediaplayer_box");
     dlg->setNameFilters(filters);
     dlg->setDefaultSuffix("mp4");
     dlg->setDirectory(".");

@@ -602,7 +602,7 @@ void LogBox::save_to(void)
     dlg->setAcceptMode(MyFileDialog::AcceptSave);
     dlg->setNameFilter("log files (*.log)");
     dlg->setDefaultSuffix("log");
-    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
+    dlg->setOption(MyFileDialog::DontUseNativeDialog, false);
     dlg->setDirectory(".");
     dlg->selectFile("без имени");
     dlg->setOption(MyFileDialog::DontConfirmOverwrite, false);
@@ -621,7 +621,7 @@ void LogBox::save_full_log_to(void)
     dlg->setAcceptMode(MyFileDialog::AcceptSave);
     dlg->setNameFilter("log files (*.log)");
     dlg->setDefaultSuffix("log");
-    dlg->setOption(MyFileDialog::DontUseNativeDialog, true);
+    dlg->setOption(MyFileDialog::DontUseNativeDialog, false);
     dlg->setDirectory(".");
     dlg->selectFile("без имени");
     dlg->setOption(MyFileDialog::DontConfirmOverwrite, false);

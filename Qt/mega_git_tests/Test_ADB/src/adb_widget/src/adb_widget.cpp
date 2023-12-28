@@ -176,11 +176,13 @@ void ADB_widget::f_get_data(const QByteArray &data)
 void ADB_widget::create_process(void)
 {
     myProcess = new QProcess(this);
-    connect(myProcess,  SIGNAL(started()),                      this,   SLOT(started()));
-    connect(myProcess,  SIGNAL(finished(int)),                  this,   SLOT(finished(int)));
-    connect(myProcess,  SIGNAL(error(QProcess::ProcessError)),  this,   SLOT(process_error(QProcess::ProcessError)));
-    connect(myProcess,  SIGNAL(readyReadStandardOutput()),      this,   SLOT(readData()));
-    connect(myProcess,  SIGNAL(readyReadStandardError()),       this,   SLOT(readData()));
+    connect(myProcess,  &QProcess::started,                     this,   &ADB_widget::started);
+    connect(myProcess,  static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+            this,       &ADB_widget::finished);
+    connect(myProcess,  &QProcess::errorOccurred,
+            this,       &ADB_widget::process_error);
+    connect(myProcess,  &QProcess::readyReadStandardOutput,      this,   &ADB_widget::readData);
+    connect(myProcess,  &QProcess::readyReadStandardError,       this,   &ADB_widget::readData);
 }
 //--------------------------------------------------------------------------------
 void ADB_widget::run_program(const QString &program,

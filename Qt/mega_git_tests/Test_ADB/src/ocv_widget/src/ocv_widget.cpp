@@ -43,7 +43,7 @@ void OCV_widget::init(void)
 
     foreach( QSlider* slider, findChildren< QSlider* >() )
     {
-        connect( slider, SIGNAL( sliderMoved( int ) ), SLOT( refreshHSV() ) );
+        connect(slider, &QSlider::sliderMoved, this,    &OCV_widget::refreshHSV);
         QString sliderName = slider->objectName();
         // slider->setValue( m_settings.value( sliderName, slider->value() ).toInt() );
         if( QSpinBox* sp = findChild< QSpinBox* >( "sp" + sliderName.mid( 2 ) ) )
@@ -51,13 +51,14 @@ void OCV_widget::init(void)
             sp->setMinimum( slider->minimum() );
             sp->setMaximum( slider->maximum() );
             sp->setValue( slider->value() );
-            connect( sp, SIGNAL( valueChanged( int ) ), SLOT( refreshHSV() ) );
+            connect(sp,     static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                    this,   &OCV_widget::refreshHSV);
         }
     }
 
     foreach( const QRadioButton* rb, findChildren< QRadioButton* >() )
     {
-        connect( rb, SIGNAL( clicked( bool ) ), SLOT( refreshHSV() ) );
+        connect(rb, &QRadioButton::clicked, this, &OCV_widget::refreshHSV);
     }
 
     connect(ui->spHueFrom,          static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),  ui->slHueFrom,          &QSlider::setValue);
@@ -102,7 +103,7 @@ void OCV_widget::onLoad(void)
     }
 }
 //--------------------------------------------------------------------------------
-void OCV_widget::refreshHSV()
+void OCV_widget::refreshHSV(void)
 {
     emit trace(Q_FUNC_INFO);
 

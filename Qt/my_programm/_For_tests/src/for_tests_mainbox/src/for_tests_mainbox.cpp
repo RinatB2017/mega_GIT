@@ -301,10 +301,9 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 0
-    int x = 6;
-    Q_ASSERT(x==5 || x==7);
-    emit info(QString("X: %1").arg(x));
+#if 1
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open Image"), "/home/jana", tr("Image Files (*.png *.jpg *.bmp)"));
 #endif
 
 #if 0

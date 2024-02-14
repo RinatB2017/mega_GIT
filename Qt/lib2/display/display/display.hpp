@@ -86,7 +86,7 @@ public:
     void save_setting(void);
 
 private:
-    Diod *a_diod[MAX_DISPLAY_X][MAX_DISPLAY_Y];
+    Diod *a_diod[MAX_DISPLAY_X][MAX_DISPLAY_Y] = { nullptr };
     QGridLayout *grid = nullptr;
     int max_x = 10;
     int max_y = 10;

@@ -301,9 +301,8 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
-    QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open Image"), "/home/jana", tr("Image Files (*.png *.jpg *.bmp)"));
+#if 0
+    char *text = { (char)0x00, (char)0x10, (char)0x20, (char)0x30, (char)0x40, (char)0x50, (char)0x60, (char)0x70 };
 #endif
 
 #if 0

@@ -73,7 +73,9 @@ void IPV4::init(void)
     port->setProperty("NO_SAVE", true);
 
     QHBoxLayout *hbox = new QHBoxLayout;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     hbox->setMargin(0);
+#endif
     hbox->setSpacing(0);
     hbox->addWidget(a);
     hbox->addWidget(new QLabel("."));

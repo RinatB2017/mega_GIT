@@ -50,7 +50,9 @@ IPV4_wo_port::IPV4_wo_port(QWidget *parent) :
     d->setProperty("NO_SAVE", true);
 
     QHBoxLayout *hbox = new QHBoxLayout;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     hbox->setMargin(0);
+#endif
     hbox->setSpacing(0);
     hbox->addWidget(a);
     hbox->addWidget(new QLabel("."));

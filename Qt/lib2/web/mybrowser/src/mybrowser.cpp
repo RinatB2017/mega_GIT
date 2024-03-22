@@ -132,6 +132,7 @@ void MyBrowser::init(void)
 //--------------------------------------------------------------------------------
 void MyBrowser::popup(QPoint)
 {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     QMenu *popup_menu = new_page->createStandardContextMenu();
     if(popup_menu == nullptr)
     {
@@ -149,6 +150,7 @@ void MyBrowser::popup(QPoint)
     connect(attributes_action,  &QAction::triggered,    this,   &MyBrowser::set_attributes);
 
     popup_menu->exec(QCursor::pos());
+#endif
 }
 //--------------------------------------------------------------------------------
 void MyBrowser::set_attributes(void)

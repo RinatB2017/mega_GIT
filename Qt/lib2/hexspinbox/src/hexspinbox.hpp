@@ -18,7 +18,11 @@ protected:
     QString textFromValue(int value) const;
 
 private:
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     QRegExpValidator *validator;
+#else
+    QRegularExpressionValidator *validator;
+#endif
 };
 //--------------------------------------------------------------------------------
 #endif

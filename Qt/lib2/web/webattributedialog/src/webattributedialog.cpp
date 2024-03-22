@@ -103,11 +103,13 @@ void WebAttributeDialog::init(void)
 //--------------------------------------------------------------------------------
 void WebAttributeDialog::set_default(void)
 {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     QWebEngineSettings *ds = QWebEngineSettings::defaultSettings();
     foreach(ATTR attr, sl_attr)
     {
         set(attr.attr_name, ds->testAttribute(attr.attr_value));
     }
+#endif
 }
 //--------------------------------------------------------------------------------
 bool WebAttributeDialog::set(const QString &attribute_name, bool value)

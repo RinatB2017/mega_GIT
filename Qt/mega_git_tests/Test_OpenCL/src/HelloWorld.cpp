@@ -5,7 +5,8 @@
 #ifdef __APPLE__
 #include <OpenCL/cl.h>
 #else
-#include <CL/cl.h>
+//#include <CL/cl.h>
+#include "/usr/include/gegl-0.4/opencl/cl.h"
 #endif
 
 ///

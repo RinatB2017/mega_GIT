@@ -9,7 +9,7 @@ INCLUDEPATH = $$DEPENDPATH
 
 greaterThan(QT_MAJOR_VERSION, 4) {
     QT *= webenginewidgets
-    QT *= webengine
+    # QT *= webengine
 } else {
     QT *= webkit
 }

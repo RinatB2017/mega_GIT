@@ -76,7 +76,9 @@ void QwwNumPadPrivate::_q_clicked(int id) {
 QwwNumPad::QwwNumPad(QWidget *parent) : QWidget(parent), QwwPrivatable(new QwwNumPadPrivate(this)) {
     QGridLayout *l = new QGridLayout(this);
     l->setSpacing(2);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     l->setMargin(2);
+#endif
     QButtonGroup *group = new QButtonGroup(this);
     for (int i=0;i<9;i++) {
         QToolButton *b = new QToolButton;
@@ -148,7 +150,9 @@ void QwwNumPad::animateClick(const QString & button, int msec) {
     QToolButton *buttonPtr = qFindChild<QToolButton*>(this, name);
 #endif
     if (!buttonPtr) return;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     buttonPtr->animateClick(msec);
+#endif
 }
 
 #include "moc_qwwnumpad.cpp"

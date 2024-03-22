@@ -43,7 +43,9 @@ void Widget::init(void)
     label->setPixmap(QPixmap(ICON_PROGRAMM));
 
     QVBoxLayout *vbox = new QVBoxLayout();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     vbox->setMargin(0);
+#endif
     vbox->setSpacing(0);
     vbox->addWidget(label);
     setLayout(vbox);

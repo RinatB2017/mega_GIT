@@ -91,7 +91,7 @@ void MainBox::init(void)
     //    connect(ui->btn_get_document_title, &QToolButton::clicked,
     //            ui->browser_widget,         &MyBrowser::get_document_title);
 
-    QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, true);
+    //QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, true); //FIXME Qt6
 
     //---
 #ifdef USE_DOCK_WIDGETS

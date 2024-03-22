@@ -185,7 +185,11 @@ bool MainBox::create_set(QStringList sl,
 
     if(set)
     {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
         set->setTimestamp(dt2.toTime_t());
+#else
+        set->setTimestamp(dt2.toSecsSinceEpoch());
+#endif
         set->setOpen(d_open);
         set->setHigh(d_high);
         set->setLow(d_low);

@@ -2,9 +2,12 @@
 #ifndef HEXSPINBOX_HPP
 #define HEXSPINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QRegularExpressionValidator>
+
 #include <QSpinBox>
 //--------------------------------------------------------------------------------
-class QRegExpValidator;
+//class QRegExpValidator;
+class QRegularExpressionValidator;
 //--------------------------------------------------------------------------------
 class HexSpinBox : public QSpinBox
 {
@@ -18,7 +21,11 @@ protected:
     QString textFromValue(int value) const;
 
 private:
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     QRegExpValidator *validator;
+#else
+    QRegularExpressionValidator *validator;
+#endif
 };
 //--------------------------------------------------------------------------------
 #endif

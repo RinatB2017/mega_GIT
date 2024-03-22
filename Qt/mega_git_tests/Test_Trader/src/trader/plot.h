@@ -9,7 +9,7 @@
 #include <qwt_plot.h>
 #include <qwt_text.h>
 //--------------------------------------------------------------------------------
-class QwtPlotTradingCurve;
+#include <QwtPlotTradingCurve>
 //--------------------------------------------------------------------------------
 class Plot: public QwtPlot
 {
@@ -34,7 +34,7 @@ private slots:
     void showItem(QwtPlotItem *, bool on);
 
 private:
-    QwtPlotTradingCurve *curve;
+    QwtPlotTradingCurve *curve = nullptr;
     QVector<QwtOHLCSample> tickets;
     QString ticket_name;
 };

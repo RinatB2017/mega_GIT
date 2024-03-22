@@ -931,7 +931,7 @@ void QHexEditPrivate::drawAscii(QPainter &painter, QFontMetrics &fm, const QColo
 
     if(QChar(b).isPrint())
     {
-        w = fm.boundingRect(b).width();
+        w = fm.boundingRect((int)b).width();
         s = QString(b);
     }
     else

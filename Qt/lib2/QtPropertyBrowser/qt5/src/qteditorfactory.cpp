@@ -907,7 +907,11 @@ class QtLineEditFactoryPrivate : public EditorFactoryPrivate<QLineEdit>
 public:
 
     void slotPropertyChanged(QtProperty *property, const QString &value);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     void slotRegExpChanged(QtProperty *property, const QRegExp &regExp);
+#else
+    void slotRegExpChanged(QtProperty *property, const QRegularExpression &regExp);
+#endif
     void slotSetValue(const QString &value);
 };
 
@@ -925,8 +929,13 @@ void QtLineEditFactoryPrivate::slotPropertyChanged(QtProperty *property,
     }
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
 void QtLineEditFactoryPrivate::slotRegExpChanged(QtProperty *property,
             const QRegExp &regExp)
+#else
+void QtLineEditFactoryPrivate::slotRegExpChanged(QtProperty *property,
+                                                 const QRegularExpression &regExp)
+#endif
 {
     if (!m_createdEditors.contains(property))
         return;
@@ -942,7 +951,11 @@ void QtLineEditFactoryPrivate::slotRegExpChanged(QtProperty *property,
         const QValidator *oldValidator = editor->validator();
         QValidator *newValidator = 0;
         if (regExp.isValid()) {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
             newValidator = new QRegExpValidator(regExp, editor);
+#else
+            newValidator = new QRegularExpressionValidator(regExp, editor);
+#endif
         }
         editor->setValidator(newValidator);
         if (oldValidator)
@@ -1019,9 +1032,17 @@ QWidget *QtLineEditFactory::createEditor(QtStringPropertyManager *manager,
 {
 
     QLineEdit *editor = d_ptr->createEditor(property, parent);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     QRegExp regExp = manager->regExp(property);
+#else
+    QRegularExpression regExp = manager->regExp(property);
+#endif
     if (regExp.isValid()) {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
         QValidator *validator = new QRegExpValidator(regExp, editor);
+#else
+        QValidator *validator = new QRegularExpressionValidator(regExp, editor);
+#endif
         editor->setValidator(validator);
     }
     editor->setText(manager->value(property));
@@ -1555,7 +1576,9 @@ QtCharEdit::QtCharEdit(QWidget *parent)
 {
     QHBoxLayout *layout = new QHBoxLayout();
     layout->addWidget(m_lineEdit);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     layout->setMargin(0);
+#endif
     m_lineEdit->installEventFilter(this);
     m_lineEdit->setReadOnly(true);
     m_lineEdit->setFocusProxy(this);

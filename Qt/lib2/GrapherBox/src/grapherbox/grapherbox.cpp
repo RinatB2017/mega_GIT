@@ -38,7 +38,11 @@ public:
     virtual QwtText label(qreal v) const
     {
         QDateTime upDateTime;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
         upDateTime.setTime_t(v);
+#else
+        upDateTime.setSecsSinceEpoch(v);
+#endif
 #ifdef USE_SCALE_POINT_DATETIME_FULL
         return upDateTime.toString("dd.MM.yyyy hh:mm:ss");
 #else
@@ -62,7 +66,11 @@ public:
     {
         QwtText text;
         QDateTime dt;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
         dt.setTime_t(invTransform(point).x());
+#else
+        dt.setSecsSinceEpoch(invTransform(point).x());
+#endif
         text.setText(QString("%1 | %2")
                      .arg(dt.toString("dd.MM.yyyy hh:mm:ss"))
                      .arg(invTransform(point).y()));
@@ -988,7 +996,11 @@ bool GrapherBox::add_curve_data(int channel,
 #ifdef USE_SCALE_POINT_DATETIME
     QDateTime dt;
     dt = QDateTime::currentDateTime();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     qreal x = dt.toTime_t();
+#else
+    qreal x = dt.toSecsSinceEpoch();
+#endif
     curves[channel].real_data.append(QPointF(x, data));
     curves[channel].view_curve->append(QPointF(x, data));
     curves[channel].pos_x++;
@@ -1478,7 +1490,11 @@ void GrapherBox::f_save_curves(QString filename)
             qreal   value = curves[channel].view_curve->sample(static_cast<size_t>(x)).y();
 
             QDateTime dt;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
             dt.setTime_t(pos_date);
+#else
+            dt.setSecsSinceEpoch(pos_date);
+#endif
 
             int year    = dt.date().year();
             int month   = dt.date().month();

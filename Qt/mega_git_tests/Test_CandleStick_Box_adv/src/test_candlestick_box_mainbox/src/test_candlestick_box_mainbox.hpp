@@ -26,7 +26,9 @@
 #include <QProcess>
 
 #include <QtCharts/QCandlestickSet>
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
 QT_CHARTS_USE_NAMESPACE
+#endif
 
 #include "qcandlestickset.h"
 #include "mywidget.hpp"

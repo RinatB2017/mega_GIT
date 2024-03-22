@@ -124,7 +124,7 @@ bool Plot::append(int time,
 //--------------------------------------------------------------------------------
 void Plot::update_ticket(void)
 {
-    curve->setSamples(tickets);
+    //curve->setSamples(tickets); //FIXME Qt6
 }
 //--------------------------------------------------------------------------------
 Plot::Plot(const QString &ticket_name, QWidget *parent):
@@ -167,7 +167,11 @@ Plot::Plot(const QString &ticket_name, QWidget *parent):
                             Qt::RightButton);
 
     QwtPlotPanner *panner = new QwtPlotPanner(canvas());
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     panner->setMouseButton(Qt::MidButton);
+#else
+    panner->setMouseButton(Qt::MiddleButton);
+#endif
 }
 //--------------------------------------------------------------------------------
 void Plot::setMode(int style)

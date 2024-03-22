@@ -27,6 +27,7 @@
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
+#include "display.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -36,7 +37,6 @@ class MySplashScreen;
 class SerialBox5_lite;
 class QSpinBox;
 class QTimer;
-class Display;
 class Palette;
 //--------------------------------------------------------------------------------
 class MainBox : public MyWidget

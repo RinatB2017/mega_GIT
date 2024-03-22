@@ -47,6 +47,10 @@
 #include <QtCore/QDate>
 #include <QtCore/QLocale>
 
+#if QT_VERSION > QT_VERSION_CHECK(6,0,0)
+#   include <QRegularExpression>
+#endif
+
 #if defined(Q_CC_MSVC)
 #    pragma warning(disable: 4786) /* MS VS 6: truncating debug info after 255 characters */
 #endif
@@ -299,7 +303,11 @@ public:
     void slotDecimalsChanged(QtProperty *property, int prec);
     void slotValueChanged(QtProperty *property, bool val);
     void slotValueChanged(QtProperty *property, const QString &val);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     void slotRegExpChanged(QtProperty *property, const QRegExp &regExp);
+#else
+    void slotRegExpChanged(QtProperty *property, const QRegularExpression &regExp);
+#endif
     void slotValueChanged(QtProperty *property, const QDate &val);
     void slotRangeChanged(QtProperty *property, const QDate &min, const QDate &max);
     void slotValueChanged(QtProperty *property, const QTime &val);
@@ -516,7 +524,11 @@ void QtVariantPropertyManagerPrivate::slotValueChanged(QtProperty *property, con
     valueChanged(property, QVariant(val));
 }
 
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
 void QtVariantPropertyManagerPrivate::slotRegExpChanged(QtProperty *property, const QRegExp &regExp)
+#else
+void QtVariantPropertyManagerPrivate::slotRegExpChanged(QtProperty *property, const QRegularExpression &regExp)
+#endif
 {
     if (QtVariantProperty *varProp = m_internalToProperty.value(property, 0))
         emit q_ptr->attributeChanged(varProp, m_regExpAttribute, QVariant(regExp));
@@ -961,8 +973,11 @@ QtVariantPropertyManager::QtVariantPropertyManager(QObject *parent)
     QtStringPropertyManager *stringPropertyManager = new QtStringPropertyManager(this);
     d_ptr->m_typeToPropertyManager[QVariant::String] = stringPropertyManager;
     d_ptr->m_typeToValueType[QVariant::String] = QVariant::String;
-    d_ptr->m_typeToAttributeToAttributeType[QVariant::String][d_ptr->m_regExpAttribute] =
-            QVariant::RegExp;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+    d_ptr->m_typeToAttributeToAttributeType[QVariant::String][d_ptr->m_regExpAttribute] = QVariant::RegExp;
+#else
+    //FIXME надо придумать замену для Qt6
+#endif
     connect(stringPropertyManager, SIGNAL(valueChanged(QtProperty*,QString)),
                 this, SLOT(slotValueChanged(QtProperty*,QString)));
     connect(stringPropertyManager, SIGNAL(regExpChanged(QtProperty*,QRegExp)),
@@ -1688,8 +1703,13 @@ void QtVariantPropertyManager::setAttribute(QtProperty *property,
             doubleManager->setDecimals(internProp, qvariant_cast<int>(value));
         return;
     } else if (QtStringPropertyManager *stringManager = qobject_cast<QtStringPropertyManager *>(manager)) {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
         if (attribute == d_ptr->m_regExpAttribute)
             stringManager->setRegExp(internProp, qvariant_cast<QRegExp>(value));
+#else
+        if (attribute == d_ptr->m_regExpAttribute)
+            stringManager->setRegExp(internProp, qvariant_cast<QRegularExpression>(value));
+#endif
         return;
     } else if (QtDatePropertyManager *dateManager = qobject_cast<QtDatePropertyManager *>(manager)) {
         if (attribute == d_ptr->m_maximumAttribute)

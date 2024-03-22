@@ -105,7 +105,9 @@ void MainBox::init(void)
     frame->setLayout(vbox);
 
     QHBoxLayout *hbox = new QHBoxLayout();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     hbox->setMargin(0);
+#endif
     hbox->addWidget(frame);
     setLayout(hbox);
 }

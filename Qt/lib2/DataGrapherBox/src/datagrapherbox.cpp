@@ -148,7 +148,9 @@ void DataGrapherBox::init(void)
     ui->grapher_widget->setVisible(false);
 #endif
 
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     ui->lcd_layout->setMargin(0);
+#endif
     ui->lcd_layout->setSpacing(0);
 }
 //--------------------------------------------------------------------------------

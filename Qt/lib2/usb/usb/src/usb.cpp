@@ -24,7 +24,7 @@ Usb::Usb(QWidget *parent) :
     MyWidget(parent)
 {
     libusb_init(nullptr);   // инициализация
-    libusb_set_debug(nullptr, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
+    //libusb_set_debug(nullptr, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
     libusb_set_option(nullptr, LIBUSB_OPTION_LOG_LEVEL, USB_DEBUG_LEVEL);
 }
 //--------------------------------------------------------------------------------
@@ -110,8 +110,7 @@ bool Usb::f_read(void)
         return false;
     }
 
-    emit error("No code");
-
+    emit info("OK");
     return true;
 }
 //--------------------------------------------------------------------------------

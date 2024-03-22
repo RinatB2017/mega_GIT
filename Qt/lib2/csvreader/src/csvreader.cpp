@@ -33,8 +33,8 @@ QString trimCSV(QString item)
 {
     if((!item.isEmpty())&&(item[0] == QChar(34)))
         item.remove(0,1);
-    if((!item.isEmpty())&&(!item.isNull())&(item[item.count()-1] == QChar(34)))
-        item.remove(item.count()-1,1);
+    if((!item.isEmpty())&&(!item.isNull())&(item[item.length()-1] == QChar(34))) //count
+        item.remove(item.length()-1,1);  //count
     if(!item.isEmpty())
         item = item.replace("\"\"","\"");
     return item;
@@ -53,7 +53,7 @@ QList<QStringList> CsvReader::CSVRead()
         while(!out.atEnd())
         {
             QString line(out.readLine().simplified());
-            int count = line.count();
+            int count = line.length();   //count
             for (int i = 0;i<count;i++)
             {
                 if (line[i] == QChar(34))

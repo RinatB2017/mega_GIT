@@ -22,7 +22,9 @@ QHexEdit::QHexEdit(QWidget *parent): QFrame(parent)
 
     this->_hlayout = new QHBoxLayout();
     this->_hlayout->setSpacing(0);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     this->_hlayout->setMargin(0);
+#endif
     this->_hlayout->addWidget(this->_scrollarea);
     this->_hlayout->addWidget(this->_vscrollbar);
 

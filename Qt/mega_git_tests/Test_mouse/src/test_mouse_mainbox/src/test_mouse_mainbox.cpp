@@ -51,7 +51,9 @@ void MainBox::init(void)
 #endif
 
     QGridLayout *grid = new QGridLayout(this);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     grid->setMargin(0);
+#endif
     grid->setSpacing(0);
 
     for(int y=0; y<10; y++)

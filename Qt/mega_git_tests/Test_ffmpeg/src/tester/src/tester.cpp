@@ -167,6 +167,7 @@ void Tester::free()
 //--------------------------------------------------------------------------------
 bool Tester::test(void)
 {
+#if 0
     av_register_all();
     avcodec_register_all();
 
@@ -268,5 +269,6 @@ bool Tester::test(void)
     delete[] frameraw;
     finish();
     free();
+#endif
 }
 //--------------------------------------------------------------------------------

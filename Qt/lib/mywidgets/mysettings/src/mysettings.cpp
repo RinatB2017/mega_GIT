@@ -508,7 +508,7 @@ bool MySettings::compare_name(const char *widget_name, QString class_name)
     Q_ASSERT(widget_name);
     int res = strncmp(widget_name,
                       class_name.toLocal8Bit(),
-                      static_cast<size_t>(class_name.count()));
+                      static_cast<size_t>(class_name.length())); //count
     return (res == 0);
 }
 //--------------------------------------------------------------------------------

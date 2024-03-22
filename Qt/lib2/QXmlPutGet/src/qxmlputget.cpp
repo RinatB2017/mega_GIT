@@ -1207,10 +1207,17 @@ QXmlGet::QXmlGet(QDomDocument document) :
             QDomProcessingInstruction procInst = node.toProcessingInstruction();
             mXmlDeclaration = procInst.target();
             QString pseudoParams = procInst.data();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
             QRegExp regExp("(version|encoding|standalone) *= *(?:\"|')([^\"' ]*)(?:\"|')");
             int p = regExp.indexIn(pseudoParams);
+#else
+            QRegularExpression regExp("(version|encoding|standalone) *= *(?:\"|')([^\"' ]*)(?:\"|')");
+            QRegularExpressionMatch match = regExp.match(pseudoParams);
+            int p = match.capturedStart();
+#endif
             while (p > -1)
             {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
                 if (regExp.captureCount()==2 && regExp.cap(1)=="version")
                     mXmlVersion = regExp.cap(2);
                 else if (regExp.captureCount()==2 && regExp.cap(1)=="encoding")
@@ -1218,6 +1225,25 @@ QXmlGet::QXmlGet(QDomDocument document) :
                 else if (regExp.captureCount()==2 && regExp.cap(1)=="standalone")
                     mStandalone = regExp.cap(2)=="yes";
                 p = regExp.indexIn(pseudoParams, p+regExp.matchedLength());
+#else
+                QRegularExpression regExp("(version|encoding|standalone) *= *(?:\"|')([^\"' ]*)(?:\"|')");
+                QRegularExpressionMatch match = regExp.match(pseudoParams, p);
+                if (match.hasMatch()) {
+                    QString capturedText1 = match.captured(1);
+                    QString capturedText2 = match.captured(2);
+
+                    if (capturedText1 == "version")
+                        mXmlVersion = capturedText2;
+                    else if (capturedText1 == "encoding")
+                        mEncoding = capturedText2;
+                    else if (capturedText1 == "standalone")
+                        mStandalone = (capturedText2 == "yes");
+
+                    p = match.capturedEnd();
+                } else {
+                    p = -1; // Обработка некорректного совпадения
+                }
+#endif
             }
         }
     }

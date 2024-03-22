@@ -56,7 +56,11 @@ public:
 #endif
 public slots:
 	void setRegExp(const QString &);
-	void setRegExp(const QRegExp &);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+    void setRegExp(const QRegExp &);
+#else
+    void setRegExp(const QRegularExpression &);
+#endif
 #if QT_VERSION >= 0x050000
 	void setRegularExpression(const QRegularExpression &);
 #endif

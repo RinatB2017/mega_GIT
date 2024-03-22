@@ -132,7 +132,7 @@ void SerialBox5::initEnumerator(void)
     refresh();
     //---
     ui->BaudBox->clear();
-#ifdef Q_OS_LINUX
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     ui->BaudBox->addItem("Undefined Baud",  QSerialPort::UnknownBaud);
 #endif
     ui->BaudBox->addItem("1200 baud",       QSerialPort::Baud1200);
@@ -146,7 +146,7 @@ void SerialBox5::initEnumerator(void)
 
     //---
     ui->DataBitsBox->clear();
-#ifdef Q_OS_LINUX
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     ui->DataBitsBox->addItem("Undefined data bits", QSerialPort::UnknownDataBits);
 #endif
     ui->DataBitsBox->addItem("5 bit",               QSerialPort::Data5);
@@ -155,7 +155,7 @@ void SerialBox5::initEnumerator(void)
     ui->DataBitsBox->addItem("8 bit",               QSerialPort::Data8);
     //---
     ui->ParityBox->clear();
-#ifdef Q_OS_LINUX
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     ui->ParityBox->addItem("Undefined parity",  QSerialPort::UnknownParity);
 #endif
     ui->ParityBox->addItem("None",              QSerialPort::NoParity);
@@ -165,7 +165,7 @@ void SerialBox5::initEnumerator(void)
     ui->ParityBox->addItem("Mark",              QSerialPort::MarkParity);
     //---
     ui->StopBitsBox->clear();
-#ifdef Q_OS_LINUX
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     ui->StopBitsBox->addItem("Undefined stop bits", QSerialPort::UnknownStopBits);
 #endif
     ui->StopBitsBox->addItem("1",                   QSerialPort::OneStop);
@@ -173,7 +173,7 @@ void SerialBox5::initEnumerator(void)
     ui->StopBitsBox->addItem("2",                   QSerialPort::TwoStop);
     //---
     ui->FlowBox->clear();
-#ifdef Q_OS_LINUX
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     ui->FlowBox->addItem("Undefined flow",  QSerialPort::UnknownFlowControl);
 #endif
     ui->FlowBox->addItem("Disable",         QSerialPort::NoFlowControl);

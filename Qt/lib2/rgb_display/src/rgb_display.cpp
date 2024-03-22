@@ -88,7 +88,9 @@ void RGB_display::init(void)
     up_border   = LED_BORDER_H_MM;
 
     grid = new QGridLayout();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     grid->setMargin(1);
+#endif
     grid->setSpacing(1);
 
     QVBoxLayout *vbox2 = new QVBoxLayout();

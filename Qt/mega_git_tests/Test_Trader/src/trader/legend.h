@@ -3,6 +3,7 @@
 #define _LEGEND_HPP
 //--------------------------------------------------------------------------------
 #include <qwt_abstract_legend.h>
+#include <QwtLegendData>
 //--------------------------------------------------------------------------------
 class LegendTreeView;
 class QStandardItem;

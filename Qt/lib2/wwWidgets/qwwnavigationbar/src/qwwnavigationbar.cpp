@@ -111,7 +111,9 @@ QwwNavigationBar::QwwNavigationBar(QWidget *parent)
     bw->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
     d->buttonLayout = new QVBoxLayout(bw);
     d->buttonLayout->setSpacing(0);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     d->buttonLayout->setMargin(0);
+#endif
     d->splitter = new QSplitter(Qt::Vertical);
 //     splitter->setObjectName("__qt__passive_splitter");
     d->splitter->addWidget(d->stack);
@@ -123,7 +125,9 @@ QwwNavigationBar::QwwNavigationBar(QWidget *parent)
     d->topButton->setFlat(true);
     l->addWidget(d->splitter);
     l->setSpacing(0);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     l->setMargin(2);
+#endif
     d->bottomFrame = new QFrame;
     d->bottomFrame->setFrameShape(QFrame::NoFrame);
     d->bottomFrame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -131,7 +135,9 @@ QwwNavigationBar::QwwNavigationBar(QWidget *parent)
     QHBoxLayout *hl = new QHBoxLayout(d->bottomFrame);
     d->bgroup = new QButtonGroup(this);
     hl->setSpacing(2);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     hl->setMargin(1);
+#endif
     hl->addStretch(1);
     connect(d->stack, SIGNAL(currentChanged(int)), this, SIGNAL(currentIndexChanged(int)));
 }

@@ -47,7 +47,11 @@ LegendTreeView::LegendTreeView(Legend *legend):
     QTreeView(legend)
 {
     setFrameStyle(NoFrame);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     viewport()->setBackgroundRole(QPalette::Background);
+#else
+    viewport()->setBackgroundRole(QPalette::WindowText);
+#endif
     viewport()->setAutoFillBackground( false );
 
     setRootIsDecorated(true);
@@ -178,7 +182,9 @@ QSize LegendTreeView::sizeHint() const
     }
 
     int left, right, top, bottom;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     getContentsMargins(&left, &top, &right, &bottom);
+#endif
 
     w += left + right;
     h += top + bottom;

@@ -78,8 +78,10 @@ void QwwLongSpinBoxPrivate::updateEdit() {
 void QwwLongSpinBoxPrivate::updateButtons() {
     Q_Q(QwwLongSpinBox);
     QStyleOptionSpinBox opt;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     opt.init(q);
     opt.activeSubControls = 0;
+#endif
     opt.buttonSymbols = q->buttonSymbols();
     opt.subControls = QStyle::SC_SpinBoxUp | QStyle::SC_SpinBoxDown | QStyle::SC_SpinBoxFrame;
     opt.stepEnabled = q->stepEnabled();

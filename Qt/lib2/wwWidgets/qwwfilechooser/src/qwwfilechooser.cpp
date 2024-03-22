@@ -17,7 +17,7 @@
 #endif
 #include <QToolButton>
 
-#include <QDirModel>
+#include <qt5/QtWidgets/QDirModel>
 #include <QString>
 #include <QShortcut>
 #include <QPainter>

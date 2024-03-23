@@ -14,7 +14,7 @@ DEPENDPATH  += \
 INCLUDEPATH = $$DEPENDPATH
 
 QT += webenginewidgets
-CONFIG += c++11
+# CONFIG += c++11
 
 HEADERS += \
     defines.hpp

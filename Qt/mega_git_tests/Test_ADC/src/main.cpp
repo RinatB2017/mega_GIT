@@ -18,8 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QMessageBox>
-//--------------------------------------------------------------------------------
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
@@ -61,9 +59,10 @@ int main(int argc, char *argv[])
     QPixmap pixmap(":/logo/logo.png");
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
+    Q_ASSERT(splash);
     splash->show();
 
-    MainWindow *main_window = new MainWindow;
+    MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);
 
     MainBox *mainBox = new MainBox(main_window, splash);

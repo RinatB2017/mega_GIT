@@ -130,10 +130,18 @@ void MainBox::serial_log(const QByteArray &data)
             ok = file.open(QIODevice::WriteOnly | QIODevice::Append);
             if(ok)
             {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
                 ba.append(QString("%1|%2|%3\n")
                           .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
                           .arg("SERIAL0")
                           .arg(data.toHex().toUpper().data()));
+#else
+                ba.append(QString("%1|%2|%3\n")
+                          .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
+                          .arg("SERIAL0")
+                          .arg(data.toHex().toUpper().data())
+                          .toLatin1());
+#endif
                 file.write(ba);
                 file.close();
             }
@@ -158,10 +166,18 @@ void MainBox::serial_log(const QByteArray &data)
             ok = file.open(QIODevice::WriteOnly | QIODevice::Append);
             if(ok)
             {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
                 ba.append(QString("%1|%2|%3\n")
                           .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
                           .arg("SERIAL1")
                           .arg(data.toHex().toUpper().data()));
+#else
+                ba.append(QString("%1|%2|%3\n")
+                          .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
+                          .arg("SERIAL1")
+                          .arg(data.toHex().toUpper().data())
+                          .toLatin1());
+#endif
                 file.write(ba);
                 file.close();
             }

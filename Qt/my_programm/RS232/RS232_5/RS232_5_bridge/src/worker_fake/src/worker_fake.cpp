@@ -22,6 +22,11 @@
 #include "worker_fake.hpp"
 #include "ui_worker_fake.h"
 //--------------------------------------------------------------------------------
+#if QT_VERSION > QT_VERSION_CHECK(6,0,0)
+#   include <QRegularExpression>
+#   include <QRegularExpressionValidator>
+#endif
+//--------------------------------------------------------------------------------
 Worker_fake::Worker_fake(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Worker_fake)
@@ -44,8 +49,13 @@ void Worker_fake::init(void)
     connect(ui->btn_send_hex,   &QToolButton::clicked,  this,   &Worker_fake::send_hex);
     connect(ui->btn_send_text,  &QToolButton::clicked,  this,   &Worker_fake::send_text);
 
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     QRegExp regex("^[0-9A-F]{100}$", Qt::CaseInsensitive);  // не более 100 символов
     QRegExpValidator *validator = new QRegExpValidator(regex, this);
+#else
+    QRegularExpression regex("^[0-9A-F]{100}$");  // не более 100 символов
+    QRegularExpressionValidator *validator = new QRegularExpressionValidator(regex, this);
+#endif
     ui->le_hex->setValidator(validator);
 
 #ifdef USE_DOCK_WIDGETS

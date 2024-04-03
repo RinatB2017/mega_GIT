@@ -7,11 +7,11 @@ CONFIG   += ordered
 
 SUBDIRS += \
     $$PWD/_For_tests \
-#     $$PWD/auto_inc_version_pri \
+    # $$PWD/auto_inc_version_pri \
     $$PWD/auto_inc_version_hpp \
     $$PWD/generate_rc \
     $$PWD/CalcMd5 \
-    $$PWD/Get_acceleration_data \
+    # $$PWD/Get_acceleration_data \
     $$PWD/Get_MyIP \
     $$PWD/GP2Y0A02Y \
     $$PWD/GPS \
@@ -36,7 +36,7 @@ SUBDIRS += \
 unix {
 SUBDIRS += \
     $$PWD/QRCodeGenerator \
-    $$PWD/MyBot \
+    # $$PWD/MyBot \
     $$PWD/MyTerminal \
     $$PWD/Teacher \
     $$PWD/Teacher_light \

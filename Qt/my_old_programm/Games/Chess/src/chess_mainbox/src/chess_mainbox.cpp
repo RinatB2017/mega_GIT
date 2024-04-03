@@ -156,17 +156,17 @@ void MainBox::create_engine(void)
 
     m_engine->setProgram("gnuchess");
     m_engine->start();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
 #ifdef Q_OS_LINUX
     m_pid = m_engine->processId();
 #else
     m_pid = m_engine->pid();
 #endif
+#endif
 
-#if 1
     //TODO
     m_engine->write("xboard\n");
     m_engine->write("protover 2\n");    //новая версия протокола
-#endif
 
     whiteMoveRegEx    = QRegExp("\\. \\b([a-h][1-8][a-h][1-8])(q|r|b|n|)\\b");
     blackMoveRegEx    = QRegExp("\\. \\.\\.\\. \\b([a-h][1-8][a-h][1-8])(q|r|b|n|)\\b");

@@ -559,7 +559,11 @@ void QHexEditPrivate::processHexPart(int key)
     if(this->isTextSelected())
         this->removeSelectedText();
 
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     uchar val = static_cast<uchar>(QString(key).toUInt(nullptr, 16));
+#else
+    uchar val = key;
+#endif
 
     if((this->_insmode == QHexEditPrivate::Insert) && !this->_charidx) /* Insert a new byte */
     {
@@ -931,8 +935,13 @@ void QHexEditPrivate::drawAscii(QPainter &painter, QFontMetrics &fm, const QColo
 
     if(QChar(b).isPrint())
     {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
         w = fm.boundingRect((int)b).width();
         s = QString(b);
+#else
+        w = fm.boundingRect(QChar(b)).width();
+        s = QString("%1").arg(b);
+#endif
     }
     else
     {

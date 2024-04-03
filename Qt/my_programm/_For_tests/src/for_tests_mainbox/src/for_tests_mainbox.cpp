@@ -441,8 +441,8 @@ bool MainBox::run_cube_widget(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    CubeWidget *cw = new CubeWidget();
-    cw->show();
+    // CubeWidget *cw = new CubeWidget();
+    // cw->show();
 
     return true;
 }
@@ -451,8 +451,8 @@ bool MainBox::run_ogl_widget(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    ORL_widget *ow = new ORL_widget();
-    ow->show();
+    // ORL_widget *ow = new ORL_widget();
+    // ow->show();
 
     return true;
 }

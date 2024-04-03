@@ -22,10 +22,10 @@
 #define SELECTBOX_HPP
 //--------------------------------------------------------------------------------
 #include <QModelIndex>
+#include <QStringList>
 #include <QDialog>
 //--------------------------------------------------------------------------------
 class QDialogButtonBox;
-class QStringList;
 class QListWidget;
 class QLabel;
 //--------------------------------------------------------------------------------

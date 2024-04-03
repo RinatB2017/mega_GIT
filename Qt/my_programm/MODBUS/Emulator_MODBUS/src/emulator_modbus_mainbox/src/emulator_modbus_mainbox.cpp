@@ -393,8 +393,11 @@ void MainBox::setupWidgetContainers()
     {
         registers.insert(lineEdit->objectName(), lineEdit);
         lineEdit->setProperty("ID", regexp.match(lineEdit->objectName()).captured("ID").toInt());
-        lineEdit->setValidator(new QRegExpValidator(QRegExp(QStringLiteral("[0-9a-f]{0,4}"),
-                                                            Qt::CaseInsensitive), this));
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+        lineEdit->setValidator(new QRegExpValidator(QRegExp(QStringLiteral("[0-9a-f]{0,4}"), Qt::CaseInsensitive), this));
+#else
+        lineEdit->setValidator(new QRegularExpressionValidator(QRegularExpression(QStringLiteral("[0-9a-f]{0,4}")), this));
+#endif
         connect(lineEdit, &QLineEdit::textChanged, this, &MainBox::setRegister);
     }
 }

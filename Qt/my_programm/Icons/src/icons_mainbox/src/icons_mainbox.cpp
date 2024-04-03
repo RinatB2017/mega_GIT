@@ -287,7 +287,9 @@ void MainBox::add_icons(QTabWidget *page,
 
     QWidget *view = new QWidget;
     QGridLayout *gbox = new QGridLayout;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     gbox->setMargin(0);
+#endif
     gbox->setSpacing(0);
 
     QHBoxLayout *hbox = new QHBoxLayout();
@@ -374,7 +376,9 @@ void MainBox::add_icons_from_theme(QTabWidget *page, int max_x)
 
         QWidget *widget = new QWidget();
         QGridLayout *grid = new QGridLayout();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
         grid->setMargin(0);
+#endif
         grid->setSpacing(0);
 
         QHBoxLayout *hbox = new QHBoxLayout();

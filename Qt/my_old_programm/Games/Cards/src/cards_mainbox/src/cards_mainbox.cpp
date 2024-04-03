@@ -216,7 +216,11 @@ void MainBox::test_0(void)
     proc.waitForFinished();
 
     QDomDocument dom;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     bool ok = dom.setContent(&proc);
+#else
+    bool ok = false;    //FIXME непонятно, на что исправить
+#endif
     if(ok == false)
     {
         emit error("FAIL");
@@ -268,7 +272,11 @@ void MainBox::test_2(void)
     proc.waitForFinished();
 
     QDomDocument doc;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     bool ok = doc.setContent(&proc);
+#else
+    bool ok = false;    //FIXME непонятно, на что исправить
+#endif
     if(ok == false)
     {
         emit error("FAIL");

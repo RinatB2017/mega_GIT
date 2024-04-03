@@ -52,7 +52,9 @@ void ChessBoard::create_chessboard(void)
 {
     chessboard_grid = new QGridLayout();
 
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     chessboard_grid->setMargin(0);
+#endif
     chessboard_grid->setSpacing(0);
 
     QFont font;

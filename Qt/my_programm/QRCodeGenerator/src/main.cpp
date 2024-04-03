@@ -23,7 +23,6 @@
 
 #include "mainwindow.h"
 #include <QApplication>
-#include <QTextCodec>
 
 /*
  * Генератор кода взят отсюда: https://github.com/abinghu/qt_rc

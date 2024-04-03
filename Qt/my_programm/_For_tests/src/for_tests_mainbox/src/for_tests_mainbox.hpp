@@ -29,8 +29,8 @@
 #include "myfiledialog.hpp"
 #include "test_classes.hpp"
 #include "mywidget.hpp"
-#include "ogl_widget.hpp"
-#include "cubewidget.h"
+// #include "ogl_widget.hpp"
+// #include "cubewidget.h"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {

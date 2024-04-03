@@ -480,7 +480,11 @@ void MainBox::f_video(void)
     //const QUrl url1 = QUrl("rtsp://192.168.1.88/HD");
 
     const QNetworkRequest requestRtsp1(url1);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     player->setMedia(requestRtsp1);
+#else
+    //FIXME непонятно на что заменить
+#endif
     player->play();
 }
 //--------------------------------------------------------------------------------
@@ -493,8 +497,10 @@ void MainBox::f_error(QMediaPlayer::Error err)
     case QMediaPlayer::FormatError:         emit error("FormatError");          break;
     case QMediaPlayer::NetworkError:        emit error("NetworkError");         break;
     case QMediaPlayer::AccessDeniedError:   emit error("AccessDeniedError");    break;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     case QMediaPlayer::ServiceMissingError: emit error("ServiceMissingError");  break;
     case QMediaPlayer::MediaIsPlaylist:     emit error("MediaIsPlaylist");      break;
+#endif
     }
     emit error(player->errorString());
 }

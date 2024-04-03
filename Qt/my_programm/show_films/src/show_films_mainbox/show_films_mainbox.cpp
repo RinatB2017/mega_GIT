@@ -63,9 +63,13 @@ void MainBox::init_tree_widget(void)
 
     picture_vbox = new QVBoxLayout();
     picture_hbox = new QHBoxLayout();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     picture_vbox->setMargin(0);
+#endif
     picture_vbox->setSpacing(0);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     picture_hbox->setMargin(0);
+#endif
     picture_hbox->setSpacing(0);
     picture_hbox->addStretch();
     picture_hbox->addWidget(lblFilmPicture);

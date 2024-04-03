@@ -63,7 +63,9 @@ private:
     Ui::MainBox *ui;
 
     QProcess *m_engine = nullptr;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     Q_PID m_pid;
+#endif
 
     void init(void);
 

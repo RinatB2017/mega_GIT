@@ -29,7 +29,7 @@ void MainWindow::serial5_error(QSerialPort::SerialPortError err)
     case QSerialPort::DeviceNotFoundError:          ui->te_log->append("DeviceNotFoundError");          break;
     case QSerialPort::PermissionError:              ui->te_log->append("PermissionError");              break;
     case QSerialPort::OpenError:                    ui->te_log->append("OpenError");                    break;
-#ifdef Q_OS_LINUX
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     case QSerialPort::ParityError:                  ui->te_log->append("ParityError");                  break;
     case QSerialPort::FramingError:                 ui->te_log->append("FramingError");                 break;
     case QSerialPort::BreakConditionError:          ui->te_log->append("BreakConditionError");          break;

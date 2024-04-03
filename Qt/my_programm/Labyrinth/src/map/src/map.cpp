@@ -45,7 +45,9 @@ void Map::init(void)
     createTimer();
 
     grid_map = new QGridLayout();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     grid_map->setMargin(0);
+#endif
     grid_map->setSpacing(0);
     setLayout(grid_map);
     setSizePolicy(QSizePolicy::Fixed,   QSizePolicy::Fixed);

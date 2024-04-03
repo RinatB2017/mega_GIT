@@ -79,7 +79,9 @@ void MainBox::prepare_notebook(void)
 
 #ifndef USE_DOCKS
     QVBoxLayout *vbox_other = new QVBoxLayout();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     vbox_other->setMargin(0);
+#endif
     vbox_other->setSpacing(0);
     vbox_other->addWidget(tab);
     vbox_other->addWidget(note);

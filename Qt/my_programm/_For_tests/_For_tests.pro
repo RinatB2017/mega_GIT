@@ -67,8 +67,8 @@ include (src/for_tests_mainbox/for_tests_mainbox.pri)
 include (src/mymainwindow/mymainwindow.pri)
 include (src/widgets/widgets.pri)
 
-include (src/cube/cube.pri)
-include (src/ogl/ogl.pri)
+# include (src/cube/cube.pri)
+# include (src/ogl/ogl.pri)
 
 #message ($$QMAKESPEC)
 

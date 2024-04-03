@@ -79,7 +79,9 @@ void HexView16::init(void)
     tv->setFont(font);
 
     QVBoxLayout *vbox = new QVBoxLayout();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     vbox->setMargin(0);
+#endif
     vbox->setSpacing(0);
     vbox->addWidget(tv);
     setLayout(vbox);

@@ -118,7 +118,9 @@ void Card::create_card(QString name,
     label->setPixmap(result);
 
     QVBoxLayout *vbox = new QVBoxLayout();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     vbox->setMargin(0);
+#endif
     vbox->setSpacing(0);
     vbox->addWidget(label);
     setLayout(vbox);

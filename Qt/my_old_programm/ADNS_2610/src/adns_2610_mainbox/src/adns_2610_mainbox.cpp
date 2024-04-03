@@ -101,7 +101,7 @@ void MainBox::test(void)
         ba.append(i);
         i++;
     }
-    temp.append(0x0D);
+    temp.append((char)0x0D);
 
     QByteArray t;
     t.clear();

@@ -155,7 +155,7 @@ void WIFI_frame::port_error(QSerialPort::SerialPortError serial_error)
     case QSerialPort::DeviceNotFoundError:  emit error("Error: DeviceNotFoundError"); break;
     case QSerialPort::PermissionError:      emit error("Error: PermissionError"); break;
     case QSerialPort::OpenError:            emit error("Error: OpenError"); break;
-#ifdef Q_OS_LINUX
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     case QSerialPort::ParityError:          emit error("Error: ParityError"); break;
     case QSerialPort::FramingError:         emit error("Error: FramingError"); break;
     case QSerialPort::BreakConditionError:  emit error("Error: BreakConditionError"); break;
@@ -359,7 +359,11 @@ bool WIFI_frame::send_at_command(const QString &cmd,
         emit error("No data!");
         return false;
     }
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     serial_data.replace(cmd, "").replace("\r", "").replace("\n", "");
+#else
+    serial_data.replace("\r", "").replace("\n", "");
+#endif
     emit debug(serial_data);
 
     if(serial_data == "ERROR")

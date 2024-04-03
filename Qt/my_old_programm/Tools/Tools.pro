@@ -11,6 +11,6 @@ SUBDIRS += \
     ADC_oscilloscope \
     ADC_oscilloscope_new \
     File_to_RS232 \
-    Generator_Curve \
+    # Generator_Curve \
     Grapher \
     Oscilloscope

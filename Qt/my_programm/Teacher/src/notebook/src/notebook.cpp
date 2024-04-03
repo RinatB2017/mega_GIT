@@ -47,7 +47,9 @@ void Notebook::init(void)
 
     QVBoxLayout *btns = new QVBoxLayout();
     btns->setSpacing(0);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     btns->setMargin(0);
+#endif
 
     foreach (QString text, alphabet)
     {

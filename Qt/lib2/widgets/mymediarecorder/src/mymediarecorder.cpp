@@ -52,6 +52,7 @@ void MyMediaRecorder::init(void)
     ui->btn_stop->setDisabled(true);
 }
 //--------------------------------------------------------------------------------
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
 void MyMediaRecorder::get_frame(QVideoFrame frame)
 {
     if(out.isOpened())
@@ -67,6 +68,7 @@ void MyMediaRecorder::get_frame(QVideoFrame frame)
         out.write(mat);
     }
 }
+#endif
 //--------------------------------------------------------------------------------
 void MyMediaRecorder::set_filename(void)
 {

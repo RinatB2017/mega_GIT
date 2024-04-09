@@ -22,8 +22,10 @@
 #define MYMEDIARECORDER_HPP
 //--------------------------------------------------------------------------------
 #include <QMediaPlayer>
-#include <QVideoProbe>
 #include <QPointer>
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+#   include <QVideoProbe>
+#endif
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
 #   include <opencv2/imgproc/imgproc.hpp>
@@ -52,7 +54,9 @@ public:
     virtual ~MyMediaRecorder();
 
 public slots:
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     void get_frame(QVideoFrame frame);
+#endif
 
 private:
     Ui::MyMediaRecorder *ui;
@@ -68,7 +72,9 @@ private:
     void start(void);
     void stop(void);
 
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     void processFrame(QVideoFrame const &frame);
+#endif
 
     void updateText(void);
     bool programm_is_exit(void);

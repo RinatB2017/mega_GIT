@@ -46,7 +46,6 @@ SUBDIRS += \
     $$PWD/Test_QListWidget \
     $$PWD/Test_QProcess \
     # $$PWD/Test_QsLog \                    #надо исправить
-    $$PWD/Test_RadioGarden \
     $$PWD/Test_RGB_display \
     # $$PWD/Test_RGB_Matrix \               #надо исправить
     $$PWD/Test_SerialBox5 \
@@ -70,8 +69,7 @@ SUBDIRS += \
     $$PWD/Test_Mask \
     $$PWD/Test_TCP_UDP_bridge \
     $$PWD/Test_YouTube \
-    $$PWD/Tester \
-    $$PWD/Test_WebSDR
+    $$PWD/Tester
 
 win {
 SUBDIRS += \

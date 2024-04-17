@@ -70,7 +70,8 @@ SUBDIRS += \
     $$PWD/Test_Mask \
     $$PWD/Test_TCP_UDP_bridge \
     $$PWD/Test_YouTube \
-    $$PWD/Tester
+    $$PWD/Tester \
+    $$PWD/Test_WebSDR
 
 win {
 SUBDIRS += \

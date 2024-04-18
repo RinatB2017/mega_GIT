@@ -34,8 +34,8 @@ CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
 
-LIB_PATH  = "$$PWD/../../../Qt/lib"
-LIB_PATH2 = "$$PWD/../../../Qt/lib2"
+LIB_PATH  = "$$PWD/../../../../Qt/lib"
+LIB_PATH2 = "$$PWD/../../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/web/mybrowser/mybrowser.pri)

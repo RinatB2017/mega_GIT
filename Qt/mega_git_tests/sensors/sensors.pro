@@ -10,4 +10,4 @@ SUBDIRS += \
     $$PWD/Test_ADXL345 \
     $$PWD/Test_GY-652 \
     $$PWD/Test_HTU21D \
-    # $$PWD/Test_MPU-6050   # надо дораюотать для Qt6
+    # $$PWD/Test_MPU-6050   # надо доработать для Qt6

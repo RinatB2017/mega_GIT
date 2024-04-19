@@ -215,6 +215,8 @@ void MainBox::createTestBar(void)
     Q_ASSERT(mw);
 
     QToolBar *testbar = new QToolBar(tr("testbar"));
+    Q_ASSERT(testbar);
+
     testbar->setObjectName("testbar");
     mw->addToolBar(Qt::TopToolBarArea, testbar);
 
@@ -228,6 +230,8 @@ void MainBox::createTestBar(void)
     commands.append({ id++, "test_random_data",     &MainBox::test2 });
 
     cb_test = new QComboBox(this);
+    Q_ASSERT(cb_test);
+
     cb_test->setObjectName("cb_test");
     foreach (CMD command, commands)
     {
@@ -286,7 +290,11 @@ void MainBox::test(void)
         qreal x = qreal(100.0)*qCos(qreal(n)*qreal(M_PI)/qreal(180.0));
         qreal y = qreal(300.0)*qSin(qreal(n)*qreal(M_PI)/qreal(180.0));
 
+#ifdef ONE_CURVE
+        ui->grapher_widget->add_curve_data(curve_0, x, y);
+#else
         ui->grapher_widget->add_curve_data(curves[0], x, y);
+#endif
     }
 #endif
 

@@ -123,7 +123,7 @@ private slots:
     void find_next(const QString &text);
 
 private:
-    QPointer<QTextEdit> logBox;
+    QTextEdit* logBox = nullptr;
 
     QString o_name;
 
@@ -148,7 +148,7 @@ private:
     QPointer<QVBoxLayout> vbox;
     QPointer<QHBoxLayout> mainbox;
 
-    QPointer<FindBox> fb;
+    FindBox *fb = nullptr;
 
     QString autosave_filename = "noname.log";
 

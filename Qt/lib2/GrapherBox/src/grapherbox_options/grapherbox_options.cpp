@@ -162,6 +162,8 @@ int GrapherBox_Options::get_max_axis_y(void)
 void GrapherBox_Options::add_color_button(QColor color, QString text)
 {
     ColorButton *btn = new ColorButton();
+    Q_ASSERT(btn);
+
     btn->setColor(color);
     btn->setText(text);
     color_buttons.append(btn);

@@ -96,7 +96,7 @@ typedef struct
 
     QwtPlotCurve *plot_curve;
 
-    CurveData *view_curve;
+    CurveData *view_curve = nullptr;
     QVector<QPointF> real_data;
 } GRAPHER_CURVE;
 //--------------------------------------------------------------------------------
@@ -261,8 +261,8 @@ private:
     Ui::GrapherBox *ui;
     bool legend_is_visible = true;
 
-    QPointer<QwtPlotPicker> d_picker;
-    QPointer<QwtLegend> legend;
+    QwtPlotPicker *d_picker = nullptr;
+    QwtLegend *legend = nullptr;
 
     QVector<GRAPHER_CURVE> curves;
     QColor curve_colors[MAX_CHANNELS];
@@ -329,7 +329,7 @@ private:
 
 #ifndef GRAPHER_NOT_ZOOM
     // zoom in/out with the wheel
-    QwtPlotMagnifier *plot_magnifier;
+    QwtPlotMagnifier *plot_magnifier = nullptr;
 #endif
 
     int getPositionStep(void);

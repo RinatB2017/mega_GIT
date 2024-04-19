@@ -56,8 +56,8 @@ private slots:
     void set_text(void);
 
 private:
-    QPointer<QPushButton> btn_text;
-    QPointer<QToolButton> btn_color;
+    QPushButton *btn_text  = nullptr;
+    QToolButton *btn_color = nullptr;
     QColor color;
     QString text;
 

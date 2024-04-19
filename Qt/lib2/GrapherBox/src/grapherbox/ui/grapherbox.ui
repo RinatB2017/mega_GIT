@@ -69,7 +69,6 @@
           <widget class="QToolButton" name="btn_all_on">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -82,7 +81,6 @@
           <widget class="QToolButton" name="btn_all_off">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -145,7 +143,6 @@
           <widget class="QToolButton" name="btn_autoscroll">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -161,7 +158,6 @@
           <widget class="QToolButton" name="btn_Statistic">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>

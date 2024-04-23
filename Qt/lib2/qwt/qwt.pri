@@ -9,11 +9,11 @@ QT   += svg opengl printsupport concurrent
 unix {
     DEPENDPATH  += /usr/include/qwt6/
     INCLUDEPATH = $$DEPENDPATH
-    greaterThan(QT_MAJOR_VERSION, 4) {
-        LIBS += -lqwt6-qt5
+    greaterThan(QT_MAJOR_VERSION, 5) {
+        LIBS += -lqwt6-qt6
     }
     else {
-        LIBS += -lqwt6-qt4
+        LIBS += -lqwt6-qt5
     }
 }
 

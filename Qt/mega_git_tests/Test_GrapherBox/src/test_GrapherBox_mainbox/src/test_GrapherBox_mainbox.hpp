@@ -93,7 +93,7 @@ private:
 #ifdef ONE_CURVE
     int curve_0 = 0;
 #else
-    int curves[MAX_CHANNELS];
+    int curves[MAX_CHANNELS] = { 0 };
 #endif
 
     wav_header_t wavHeader;

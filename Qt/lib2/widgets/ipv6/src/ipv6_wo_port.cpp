@@ -39,7 +39,9 @@ IPV6_wo_port::IPV6_wo_port(QWidget *parent) :
     f->setObjectName("IPV6_wo_port_f");
 
     QHBoxLayout *hbox = new QHBoxLayout;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     hbox->setMargin(0);
+#endif
     hbox->setSpacing(0);
     hbox->addWidget(a);
     hbox->addWidget(new QLabel(":"));

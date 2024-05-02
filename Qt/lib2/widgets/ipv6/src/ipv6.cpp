@@ -46,7 +46,9 @@ IPV6::IPV6(QWidget *parent) :
     port->setToolTip("Порт");
 
     QHBoxLayout *hbox = new QHBoxLayout;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     hbox->setMargin(0);
+#endif
     hbox->setSpacing(0);
     hbox->addWidget(a);
     hbox->addWidget(new QLabel("."));

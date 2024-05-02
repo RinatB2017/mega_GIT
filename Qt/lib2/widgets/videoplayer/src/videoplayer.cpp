@@ -39,9 +39,11 @@ VideoPlayer::~VideoPlayer()
 //--------------------------------------------------------------------------------
 void VideoPlayer::set_url(QUrl new_url)
 {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     const QNetworkRequest requestRtsp(new_url);
     player->setMedia(requestRtsp);
     player->play();
+#endif
 }
 //--------------------------------------------------------------------------------
 void VideoPlayer::play(void)
@@ -89,8 +91,10 @@ void VideoPlayer::s_error(QMediaPlayer::Error err)
     case QMediaPlayer::FormatError:         emit error("FormatError");          break;
     case QMediaPlayer::NetworkError:        emit error("NetworkError");         break;
     case QMediaPlayer::AccessDeniedError:   emit error("AccessDeniedError");    break;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     case QMediaPlayer::ServiceMissingError: emit error("ServiceMissingError");  break;
     case QMediaPlayer::MediaIsPlaylist:     emit error("MediaIsPlaylist");      break;
+#endif
     default:
         emit error(QString("unknown error %1").arg(err));
         break;

@@ -3,11 +3,10 @@
 #**********************************************************************************
 
 #DEFINES += LOGO_GL
-#DEFINES += FIXED_SIZE
 
 DEFINES += NO_STYLETOOLBAR
 #DEFINES += NO_STATUSBAR
-# DEFINES += NO_TRAYICON
+DEFINES += NO_TRAYICON
 #DEFINES += NO_TOOLBAR
 #DEFINES += NO_MENU
 #DEFINES += NO_LOG

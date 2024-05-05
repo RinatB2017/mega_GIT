@@ -31,5 +31,9 @@ win32 {
     INCLUDEPATH += $$PWD/$$QWT_PATH/src/
 
     LIBS    += -L$$PWD/lib
-    LIBS    += -lqwt
+    CONFIG(debug, debug|release) {
+        LIBS    += -lqwtd
+    } else {
+        LIBS    += -lqwt
+    }
 }

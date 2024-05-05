@@ -3,29 +3,11 @@
 #**********************************************************************************
 
 !contains(CONFIG, grapherbox) {
-    include ($$PWD/../GrapherBox/GrapherBox.pri)
+    include ($$LIB_PATH2/GrapherBox/GrapherBox.pri)
 }
 !contains(CONFIG, csvreader) {
-    include ($$PWD/../csvreader/csvreader.pri)
+    include ($$LIB_PATH2/csvreader/csvreader.pri)
 }
-
-# собираем qwt прямо из кода
 !contains(CONFIG, qwt) {
-#    DEPENDPATH  += $$PWD/../qwt/include # надо исправить
-#    INCLUDEPATH += $$PWD/../qwt/include # надо исправить
-
-    include ($$PWD/../qwt/qwt.pri)
+    include ($$LIB_PATH2/qwt/qwt.pri)
 }
-
-# подключаем библиотеки
-#unix {
-#    LIBS    += -lqwt
-
-
-#win32 {
-#    message (need QWT libs)
-#    DEFINES += QT_DLL QWT_DLL
-#    LIBS    += -L$$PWD/../qwt/lib
-#    LIBS    += -lqwt
-#    LIBS    += -lqwtmathml
-

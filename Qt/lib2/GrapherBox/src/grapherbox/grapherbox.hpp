@@ -74,6 +74,7 @@ class QwtPlotMagnifier;
 //--------------------------------------------------------------------------------
 #define MAX_CHANNELS 64
 //--------------------------------------------------------------------------------
+// в этой структуре нельзя инициализировать указатели
 typedef struct
 {
     bool is_active;
@@ -96,7 +97,7 @@ typedef struct
 
     QwtPlotCurve *plot_curve;
 
-    CurveData *view_curve = nullptr;
+    CurveData *view_curve;
     QVector<QPointF> real_data;
 } GRAPHER_CURVE;
 //--------------------------------------------------------------------------------

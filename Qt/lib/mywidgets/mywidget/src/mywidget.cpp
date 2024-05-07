@@ -90,19 +90,15 @@ bool MyWidget::check_exists_signals(QWidget *parent)
     if(m_trace == -1)   return false;
     if(m_colorlog == -1)   return false;
 
-#if 1
-#if 1   //TODO надо продумать
     connect(this,   SIGNAL(info(QString)),  parent, SIGNAL(info(QString)));
     connect(this,   SIGNAL(debug(QString)), parent, SIGNAL(debug(QString)));
     connect(this,   SIGNAL(error(QString)), parent, SIGNAL(error(QString)));
     connect(this,   SIGNAL(trace(QString)), parent, SIGNAL(trace(QString)));
-#endif
 
     connect(this,   SIGNAL(clear_log()),    parent, SIGNAL(clear_log()));
 
     connect(this,   SIGNAL(colorLog(QString, QColor, QColor)),
             parent, SIGNAL(colorLog(QString, QColor, QColor)));
-#endif
 
     return true;
 }

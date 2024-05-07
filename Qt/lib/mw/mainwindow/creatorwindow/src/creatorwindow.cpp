@@ -354,7 +354,6 @@ void CreatorWindow::load_translations()
         qApp->installTranslator(translator_system);
     }
     //---
-#if 1
     TRANSLATOR translator_ru;
     translator_ru.translator_obj = new QTranslator(this);
     translator_ru.translator_file = ":/lang/lang_ru.qm";
@@ -363,9 +362,7 @@ void CreatorWindow::load_translations()
     translator_ru.property = P_RU;
     translator_ru.icon_name = P_ICON_RU;
     l_translators.append(translator_ru);
-#endif
 
-#if 1
     TRANSLATOR translator_it;
     translator_it.translator_obj = new QTranslator(this);
     translator_it.translator_file = ":/lang/lang_it.qm";
@@ -374,7 +371,6 @@ void CreatorWindow::load_translations()
     translator_it.property = P_IT;
     translator_it.icon_name = P_ICON_IT;
     l_translators.append(translator_it);
-#endif
 
     foreach (TRANSLATOR translator, l_translators)
     {

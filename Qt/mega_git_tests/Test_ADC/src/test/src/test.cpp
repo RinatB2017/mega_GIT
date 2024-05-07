@@ -43,7 +43,6 @@ void Test::test_grapher(void)
     return;
 #endif
 
-#if 1
     DataGrapherBox *gb = mw->findChild<DataGrapherBox *>();
     QVERIFY(gb);
 
@@ -69,7 +68,6 @@ void Test::test_grapher(void)
         gb->get_curve_data(0, n, &x);
         QCOMPARE((int)x, n);
     }
-#endif
 }
 #endif
 //--------------------------------------------------------------------------------

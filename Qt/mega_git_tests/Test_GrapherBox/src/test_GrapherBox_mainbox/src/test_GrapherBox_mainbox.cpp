@@ -97,10 +97,9 @@ void MainBox::init(void)
 #ifdef ONE_CURVE
     curve_0 = ui->grapher_widget->add_curve("test");
 #else
-    //for(int n=0; n<MAX_CHANNELS; n++)
-    for(int n=0; n<8; n++)
+    for(int n=0; n<MAX_CHANNELS; n++)
     {
-        curves[n] = ui->grapher_widget->add_curve(QString(tr("curve %1")).arg(n));
+        curves[n] = ui->grapher_widget->add_curve(QString("curve %1").arg(n));
     }
 #endif
     ui->grapher_widget->legends_all_on();

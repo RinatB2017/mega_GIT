@@ -44,6 +44,7 @@ public:
 private slots:
     void choice_test(void);
     bool test(void);
+    bool test2(void);
 
     void s_list(void);
     void s_open(void);
@@ -68,6 +69,9 @@ private:
 
     void init(void);
     void createTestBar(void);
+
+    bool test_interface_number(int interface_number);
+    void wait_msec(int msec);
 
     uint16_t get_VID(void);
     uint16_t get_PID(void);

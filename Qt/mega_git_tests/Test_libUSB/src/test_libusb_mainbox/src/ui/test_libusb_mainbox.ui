@@ -50,12 +50,18 @@
         <property name="bottomMargin">
          <number>8</number>
         </property>
+        <item row="1" column="1">
+         <widget class="HexSpinBox" name="sb_PID"/>
+        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
            <string>VID</string>
           </property>
          </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="HexSpinBox" name="sb_VID"/>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_2">
@@ -64,11 +70,15 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="HexSpinBox" name="sb_VID"/>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>NUM</string>
+          </property>
+         </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="HexSpinBox" name="sb_PID"/>
+        <item row="2" column="1">
+         <widget class="QSpinBox" name="sp_interface_number"/>
         </item>
        </layout>
       </item>
@@ -130,7 +140,7 @@
       <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
-         <enum>Qt::Vertical</enum>
+         <enum>Qt::Orientation::Vertical</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -166,6 +176,7 @@
  <tabstops>
   <tabstop>sb_VID</tabstop>
   <tabstop>sb_PID</tabstop>
+  <tabstop>sp_interface_number</tabstop>
   <tabstop>btn_open</tabstop>
   <tabstop>btn_info</tabstop>
   <tabstop>btn_read</tabstop>

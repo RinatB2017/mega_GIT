@@ -32,11 +32,9 @@
 #   include "libusb.h"
 #endif
 //--------------------------------------------------------------------------------
-//#define VID 0x1366
-//#define PID 0x0101
+// #define VID 0x0403
+// #define PID 0x6010
 //--------------------------------------------------------------------------------
-#define DEV_INTF    0    // номер интерфейса
-
 #define USB_DEBUG_LEVEL 3
 
 #define DATA_SIZE   4
@@ -69,6 +67,9 @@ public:
     bool f_send_cmd(uint8_t cmd, QByteArray param, QByteArray *res_ba);
     void print_info(void);
 
+    int  get_interface_number(void);
+    void set_interface_number(int value);
+
 private:
     void dev_open(uint16_t vid, uint16_t pid);
     void dev_close(void);
@@ -85,6 +86,8 @@ private:
     unsigned char buf[1024] = { 0 };
     int length = -1;
     int actual_length = -1;
+
+    int interface_number = 0;
 
     void updateText(void);
     bool programm_is_exit(void);

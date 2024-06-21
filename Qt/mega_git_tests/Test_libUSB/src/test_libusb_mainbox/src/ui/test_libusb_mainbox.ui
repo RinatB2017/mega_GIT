@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>MainBox</class>
  <widget class="QWidget" name="MainBox">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>118</width>
+    <height>378</height>
+   </rect>
+  </property>
   <property name="sizePolicy">
    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
     <horstretch>0</horstretch>
@@ -78,7 +86,7 @@
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QSpinBox" name="sp_interface_number"/>
+         <widget class="QSpinBox" name="sb_interface_number"/>
         </item>
        </layout>
       </item>
@@ -176,7 +184,7 @@
  <tabstops>
   <tabstop>sb_VID</tabstop>
   <tabstop>sb_PID</tabstop>
-  <tabstop>sp_interface_number</tabstop>
+  <tabstop>sb_interface_number</tabstop>
   <tabstop>btn_open</tabstop>
   <tabstop>btn_info</tabstop>
   <tabstop>btn_read</tabstop>

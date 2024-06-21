@@ -94,12 +94,12 @@ bool Usb::f_read(void)
         return false;
     }
 
-    if (libusb_kernel_driver_active(handle, DEV_INTF))
+    if (libusb_kernel_driver_active(handle, interface_number))
     {
-        libusb_detach_kernel_driver(handle, DEV_INTF);
+        libusb_detach_kernel_driver(handle, interface_number);
     }
 
-    int res = libusb_claim_interface(handle,  DEV_INTF);
+    int res = libusb_claim_interface(handle,  interface_number);
     if (res != LIBUSB_SUCCESS)
     {
         emit error(QString("Ошибка захвата интерфейса: err = %1").arg(get_error_string(res)));
@@ -123,12 +123,12 @@ bool Usb::f_write(void)
         return false;
     }
 
-    if (libusb_kernel_driver_active(handle, DEV_INTF))
+    if (libusb_kernel_driver_active(handle, interface_number))
     {
-        libusb_detach_kernel_driver(handle, DEV_INTF);
+        libusb_detach_kernel_driver(handle, interface_number);
     }
 
-    int res = libusb_claim_interface(handle,  DEV_INTF);
+    int res = libusb_claim_interface(handle,  interface_number);
     if (res != LIBUSB_SUCCESS)
     {
         emit error(QString("Ошибка захвата интерфейса: err = %1").arg(get_error_string(res)));
@@ -192,12 +192,12 @@ bool Usb::f_send_cmd(uint8_t cmd,
         return false;
     }
 
-    if (libusb_kernel_driver_active(handle, DEV_INTF))
+    if (libusb_kernel_driver_active(handle, interface_number))
     {
-        libusb_detach_kernel_driver(handle, DEV_INTF);
+        libusb_detach_kernel_driver(handle, interface_number);
     }
 
-    int res = libusb_claim_interface(handle,  DEV_INTF);
+    int res = libusb_claim_interface(handle,  interface_number);
     if (res != LIBUSB_SUCCESS)
     {
         emit error(QString("Ошибка захвата интерфейса: err = %1").arg(get_error_string(res)));
@@ -625,6 +625,16 @@ void Usb::bulk_transfer_loop(libusb_device_handle *handle)
 
     emit info(QString("Прошло: %1 мс").arg(mtime));
 #endif
+}
+//--------------------------------------------------------------------------------
+int Usb::get_interface_number(void)
+{
+    return interface_number;
+}
+//--------------------------------------------------------------------------------
+void Usb::set_interface_number(int value)
+{
+    interface_number = value;
 }
 //--------------------------------------------------------------------------------
 void Usb::updateText(void)

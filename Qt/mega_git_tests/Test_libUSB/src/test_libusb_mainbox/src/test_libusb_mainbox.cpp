@@ -357,6 +357,7 @@ void MainBox::s_info(void)
 {
     emit trace(Q_FUNC_INFO);
     lock_this_button();
+    set_interface_number(ui->sb_interface_number->value());
     print_info();
     unlock_this_button();
 }
@@ -365,6 +366,7 @@ void MainBox::s_read(void)
 {
     emit trace(Q_FUNC_INFO);
     lock_this_button();
+    set_interface_number(ui->sb_interface_number->value());
     f_read();
     unlock_this_button();
 }
@@ -373,6 +375,7 @@ void MainBox::s_write(void)
 {
     emit trace(Q_FUNC_INFO);
     lock_this_button();
+    set_interface_number(ui->sb_interface_number->value());
     f_write();
     unlock_this_button();
 }
@@ -381,6 +384,7 @@ void MainBox::s_close(void)
 {
     emit trace(Q_FUNC_INFO);
     lock_this_button();
+    set_interface_number(ui->sb_interface_number->value());
     f_close();
     unlock_this_button();
 }

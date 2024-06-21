@@ -137,35 +137,14 @@ bool Usb::f_write(void)
 
     //---
     //Write data
-    int actual = 0;
-    unsigned char *data = new unsigned char[4];
-    data[0]='a';
-    data[1]='b';
-    data[2]='c';
-    data[3]='d';
+    uint8_t data[1] = { (uint8_t)0x7F };
 
     /* Send some data to the device */
-    res = libusb_bulk_transfer(handle, EP_OUT, data, sizeof(data), &actual, TIMEOUT);
+    res = libusb_control_transfer(handle, LIBUSB_REQUEST_TYPE_CLASS, 0x01, 0x0000, 0x0000, data, 1, 0);
     if(res != LIBUSB_SUCCESS)
     {
         emit error(QString("libusb_bulk_transfer (send): err = %1").arg(get_error_string(res)));
-    }
-    else
-    {
-        length = 1;
-        /* Receive data from the device */
-        res = libusb_bulk_transfer(handle, 0x81, buf, length, &actual_length, TIMEOUT);
-        if(res != LIBUSB_SUCCESS)
-        {
-            emit error(QString("libusb_bulk_transfer (receive): err = %1").arg(get_error_string(res)));
-        }
-        else
-        {
-            for(int n=0; n<actual_length; n++)
-            {
-                emit info(QString("0x%1 ").arg(buf[n], 2, 16, QChar('0')));
-            }
-        }
+        return false;
     }
 
     emit info("OK");

@@ -172,6 +172,52 @@ bool MainBox::test_interface_number(int interface_number)
         emit error(QString("Ошибка захвата интерфейса: N = %1 err = %2")
                        .arg(interface_number)
                        .arg(res));
+        switch(res)
+        {
+        case LIBUSB_SUCCESS:
+            emit error("LIBUSB_SUCCESS");
+            break;
+        case LIBUSB_ERROR_IO:
+            emit error("LIBUSB_ERROR_IO");
+            break;
+        case LIBUSB_ERROR_INVALID_PARAM:
+            emit error("LIBUSB_ERROR_INVALID_PARAM");
+            break;
+        case LIBUSB_ERROR_ACCESS:
+            emit error("LIBUSB_ERROR_ACCESS");
+            break;
+        case LIBUSB_ERROR_NO_DEVICE:
+            emit error("LIBUSB_ERROR_NO_DEVICE");
+            break;
+        case LIBUSB_ERROR_NOT_FOUND:
+            emit error("LIBUSB_ERROR_NOT_FOUND");
+            break;
+        case LIBUSB_ERROR_BUSY:
+            emit error("LIBUSB_ERROR_BUSY");
+            break;
+        case LIBUSB_ERROR_TIMEOUT:
+            emit error("LIBUSB_ERROR_TIMEOUT");
+            break;
+        case LIBUSB_ERROR_OVERFLOW:
+            emit error("LIBUSB_ERROR_OVERFLOW");
+            break;
+        case LIBUSB_ERROR_PIPE:
+            emit error("LIBUSB_ERROR_PIPE");
+            break;
+        case LIBUSB_ERROR_INTERRUPTED:
+            emit error("LIBUSB_ERROR_INTERRUPTED");
+            break;
+        case LIBUSB_ERROR_NO_MEM:
+            emit error("LIBUSB_ERROR_NO_MEM");
+            break;
+        case LIBUSB_ERROR_NOT_SUPPORTED:
+            emit error("LIBUSB_ERROR_NOT_SUPPORTED");
+            break;
+        case LIBUSB_ERROR_OTHER:
+            emit error("LIBUSB_ERROR_OTHER");
+            break;
+        }
+
         return false;
     }
 
@@ -221,10 +267,21 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test");
 
+#if 1
+    test_interface_number(ui->sb_interface_number->value());
+#endif
+
+#if 0
     for(int n=0; n<100; n++)
     {
-        test_interface_number(n);
+        bool ok = test_interface_number(n);
+        if(ok)
+        {
+            emit info(QString("FOUND on %1").arg(n));
+            return true;
+        }
     }
+#endif
 
     emit info("OK");
     return true;
@@ -240,6 +297,7 @@ bool MainBox::test2(void)
     libusb_init(&ctx);
 
     libusb_device **device_list = NULL;
+    libusb_device_descriptor desc;
     ssize_t device_count = libusb_get_device_list(ctx, &device_list);
     device_list = (libusb_device **)malloc(device_count * sizeof(libusb_device *));
     // device_count = libusb_get_device_list(ctx, &device_list);
@@ -251,7 +309,6 @@ bool MainBox::test2(void)
 
     for (ssize_t i = 0; i < device_count; i++) {
         libusb_device *dev = device_list[i];
-        libusb_device_descriptor desc;
         if(dev == nullptr)
         {
             emit error("NULL");
@@ -269,7 +326,7 @@ bool MainBox::test2(void)
             libusb_device_handle *handle = NULL;
             ret = libusb_open(dev, &handle);
             if (ret < 0)
-{
+            {
                 emit error(QString("Error opening device: %1").arg(ret));
                 continue;
             }

@@ -49,7 +49,7 @@ macx {
 }
 
 win32 {
-    BIN_PATH="C:/temp/bin"
+    BIN_PATH  = "C:/temp/bin"
     TEMP_PATH = "C:"
     OBJECTS_DIR = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\obj
     MOC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\moc

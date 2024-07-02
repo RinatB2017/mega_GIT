@@ -89,7 +89,10 @@ int main(int argc, char *argv[])
 #ifdef SELF_TEST
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
 
-    int test_result = QTest::qExec(new Test(), argc, argv);
+    Test *test = new Test();
+    test->setMainWindow(main_window);
+
+    int test_result = QTest::qExec(test, argc, argv);
     if (test_result != EXIT_SUCCESS)
     {
         return test_result;

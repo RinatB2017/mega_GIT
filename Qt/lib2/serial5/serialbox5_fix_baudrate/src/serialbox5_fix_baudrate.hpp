@@ -25,8 +25,6 @@
 #   include "sendbox5.hpp"
 #endif
 //--------------------------------------------------------------------------------
-#define P_PORT  "port_name"
-//--------------------------------------------------------------------------------
 #include "serialwidget.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -54,11 +52,6 @@ public:
     void set_caption(const QString &value);
 
     bool set_fix_baudrate(int value);
-//    bool set_settings_restored_on_close(bool state);
-//    bool setSettingsRestoredOnClose(bool state);
-
-    void set_portname(const QString &portname);
-    QString get_portname(void);
 
     qint32 get_baudRate(void);
     QSerialPort::DataBits       get_dataBits(void);
@@ -66,10 +59,13 @@ public:
     QSerialPort::StopBits       get_stopBits(void);
     QSerialPort::FlowControl    get_flowControl(void);
 
+    void set_portname(const QString &portname);
+    QString get_portname(void);
+
 private:
     Ui::SerialBox5_fix_baudrate *ui;
 
-    QString caption;
+    QString caption = "no name";
     QString o_name;
 
     bool flag_in_hex = false;
@@ -89,8 +85,6 @@ private:
     void init(void);
     void createWidgets(void);
     void initSerial(void);
-    void setOpenState(void);
-    void setCloseState(void);
     QString ByteArrayToHex(const QByteArray &data);
 
 public slots:
@@ -109,6 +103,9 @@ private slots:
     void get_parameter(void);
 
     void change_icon(bool state);
+
+    void setOpenState(void);
+    void setCloseState(void);
 
     void updateText(void);
     bool programm_is_exit(void);

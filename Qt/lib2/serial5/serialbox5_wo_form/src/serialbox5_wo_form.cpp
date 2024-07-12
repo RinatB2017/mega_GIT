@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -35,8 +35,8 @@ SerialBox5_wo_form::SerialBox5_wo_form(QWidget *parent) :
 }
 //--------------------------------------------------------------------------------
 SerialBox5_wo_form::SerialBox5_wo_form(QWidget *parent,
-                                       const QString &caption,
-                                       const QString &o_name) :
+                       const QString &caption,
+                       const QString &o_name) :
     SerialWidget(parent),
     caption(caption),
     o_name(o_name)
@@ -62,7 +62,7 @@ void SerialBox5_wo_form::init(void)
     initSerial();
 
     setCloseState();
-    updateText();
+    //updateText();
 
     setFixedSize(1, 1);
     setVisible(false);
@@ -186,7 +186,7 @@ void SerialBox5_wo_form::sendData(const QByteArray &sending_data)
 //--------------------------------------------------------------------------------
 void SerialBox5_wo_form::drawData(const QByteArray &data)
 {
-    // qDebug() << "drawData[" << data << "]";
+    //qDebug() << "drawData[" << data.toHex() << "]";
     Q_UNUSED(data)
 }
 //--------------------------------------------------------------------------------
@@ -212,55 +212,41 @@ void SerialBox5_wo_form::save_setting(void)
 //--------------------------------------------------------------------------------
 bool SerialBox5_wo_form::add_menu(int index)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    MainWindow *mw = dynamic_cast<MainWindow *>(QApplication::activeWindow());
     Q_ASSERT(mw);
 
-    if(mw)
-    {
-        QMenu *menu = new QMenu(caption);
-        Q_ASSERT(menu);
+    QMenu *menu = new QMenu(caption);
+    Q_ASSERT(menu);
 
-        QAction *action_flag_byte_by_byte = new QAction(menu);
+    QAction *action_flag_byte_by_byte = new QAction(menu);
 
-        action_flag_byte_by_byte->setCheckable(true);
-        action_flag_byte_by_byte->setText("byte to byte");
-        menu->addAction(action_flag_byte_by_byte);
+    action_flag_byte_by_byte->setCheckable(true);
+    action_flag_byte_by_byte->setText("byte to byte");
+    menu->addAction(action_flag_byte_by_byte);
 
-        connect(action_flag_byte_by_byte,   &QAction::triggered,    this,   &SerialBox5_wo_form::set_flag_byte_by_byte);
+    connect(action_flag_byte_by_byte,   &QAction::triggered,    this,   &SerialBox5_wo_form::set_flag_byte_by_byte);
 
-        mw->add_optionsmenu_menu(index, menu);
-    }
-    else
-    {
-        emit error("mw not found!");
-    }
+    mw->add_optionsmenu_menu(index, menu);
 
     return false;
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5_wo_form::add_menu(int index, const QString &title)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    MainWindow *mw = dynamic_cast<MainWindow *>(QApplication::activeWindow());
     Q_ASSERT(mw);
 
-    if(mw)
-    {
-        QMenu *menu = new QMenu(title);
+    QMenu *menu = new QMenu(title);
 
-        QAction *action_flag_byte_by_byte = new QAction(menu);
+    QAction *action_flag_byte_by_byte = new QAction(menu);
 
-        action_flag_byte_by_byte->setCheckable(true);
-        action_flag_byte_by_byte->setText("byte to byte");
-        menu->addAction(action_flag_byte_by_byte);
+    action_flag_byte_by_byte->setCheckable(true);
+    action_flag_byte_by_byte->setText("byte to byte");
+    menu->addAction(action_flag_byte_by_byte);
 
-        connect(action_flag_byte_by_byte, &QAction::triggered, this, &SerialBox5_wo_form::set_flag_byte_by_byte);
+    connect(action_flag_byte_by_byte, &QAction::triggered, this, &SerialBox5_wo_form::set_flag_byte_by_byte);
 
-        mw->add_menu(index, menu);
-    }
-    else
-    {
-        emit error("mw not found!");
-    }
+    mw->add_menu(index, menu);
 
     return true;
 }
@@ -286,11 +272,18 @@ void SerialBox5_wo_form::get_parameter(void)
             .arg(parity())
             .arg(stopBits())
             .arg(flowControl());
-    emit info(temp);
+    emit debug(temp);
+}
+//--------------------------------------------------------------------------------
+bool SerialBox5_wo_form::set_port_name(const QString &port_name)
+{
+    setPortName(port_name);
+    return true;
 }
 //--------------------------------------------------------------------------------
 bool SerialBox5_wo_form::set_baudRate(qint32 value)
 {
+    emit debug(QString("setBaudRate(%1)").arg(value));
     return setBaudRate(value);
 }
 //--------------------------------------------------------------------------------
@@ -364,16 +357,28 @@ bool SerialBox5_wo_form::power_off(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_wo_form::breakEnabledChanged(bool set)
 {
+#ifdef QT_DEBUG
     emit debug(QString("breakEnabledChanged %1").arg(set));
+#else
+    Q_UNUSED(set);
+#endif
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_wo_form::dataTerminalReadyChanged(bool set)
 {
+#ifdef QT_DEBUG
     emit debug(QString("dataTerminalReadyChanged %1").arg(set));
+#else
+    Q_UNUSED(set);
+#endif
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_wo_form::requestToSendChanged(bool set)
 {
+#ifdef QT_DEBUG
     emit debug(QString("requestToSendChanged %1").arg(set));
+#else
+    Q_UNUSED(set);
+#endif
 }
 //--------------------------------------------------------------------------------

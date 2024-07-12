@@ -39,10 +39,7 @@ typedef enum
 //--------------------------------------------------------------------------------
 SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent) :
     SerialWidget(parent),
-    ui(new Ui::SerialBox5_fix_baudrate),
-    caption("no name"),
-    flag_in_hex(false),
-    flag_byte_by_byte(false)
+    ui(new Ui::SerialBox5_fix_baudrate)
 {
     init();
 }
@@ -51,12 +48,11 @@ SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent,
                                                  const QString &caption,
                                                  const QString &o_name) :
     SerialWidget(parent),
-    ui(new Ui::SerialBox5_fix_baudrate),
-    caption(caption),
-    o_name(o_name),
-    flag_in_hex(false),
-    flag_byte_by_byte(false)
+    ui(new Ui::SerialBox5_fix_baudrate)
 {
+    this->caption = caption;
+    this->o_name  = o_name;
+
     init();
 }
 //--------------------------------------------------------------------------------
@@ -85,11 +81,6 @@ bool SerialBox5_fix_baudrate::set_fix_baudrate(int value)
     fix_baudrate = value;
     return setBaudRate(value);
 }
-//--------------------------------------------------------------------------------
-//bool SerialBox5_fix_baudrate::set_settings_restored_on_close(bool state)
-//{
-//    return setSettingsRestoredOnClose(state);
-//}
 //--------------------------------------------------------------------------------
 qint32 SerialBox5_fix_baudrate::get_baudRate(void)
 {
@@ -123,7 +114,7 @@ void SerialBox5_fix_baudrate::init(void)
     createWidgets();
     initSerial();
 
-    ui->cb_port->setMinimumWidth(150);
+    ui->PortBox->setMinimumWidth(150);
 
     ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
     ui->btn_refresh->setToolTip("Обновить список портов");
@@ -132,8 +123,9 @@ void SerialBox5_fix_baudrate::init(void)
     //setFixedWidth(sizeHint().width());
     //setFixedHeight(sizeHint().height());
 
-    setCloseState();
-    updateText();
+    QTimer::singleShot(100, [this]{
+        setCloseState();
+    });
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::createWidgets(void)
@@ -144,7 +136,7 @@ void SerialBox5_fix_baudrate::createWidgets(void)
     ui->gridLayout->setSpacing(0);
 
     ui->btn_refresh->setProperty(NO_BLOCK, true);
-    ui->cb_port->setProperty(NO_BLOCK, true);
+    ui->PortBox->setProperty(NO_BLOCK, true);
 
     connect(ui->btn_power,      &QPushButton::clicked,  this,   &SerialBox5_fix_baudrate::btnOpenPortClicked);
     connect(ui->btn_refresh,    &QToolButton::clicked,  this,   &SerialBox5_fix_baudrate::refresh);
@@ -177,13 +169,13 @@ void SerialBox5_fix_baudrate::add_frame_text(QFrame *parent,
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::refresh(void)
 {
-    ui->cb_port->clear();
-    ui->cb_port->addItems(get_port_names());
+    ui->PortBox->clear();
+    ui->PortBox->addItems(get_port_names());
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::initSerial(void)
 {
-    ui->cb_port->setProperty(NO_SAVE, true);
+    ui->PortBox->setProperty(NO_SAVE, true);
     ui->btn_power->setProperty(NO_SAVE, true);
     ui->btn_refresh->setProperty(NO_BLOCK, true);
     ui->btn_refresh->setToolTip("Обновить список портов");
@@ -219,7 +211,7 @@ void SerialBox5_fix_baudrate::getStatus(const QString &status, QDateTime current
 void SerialBox5_fix_baudrate::setCloseState(void)
 {
     ui->btn_refresh->setEnabled(true);
-    ui->cb_port->setEnabled(true);
+    ui->PortBox->setEnabled(true);
     ui->btn_power->setChecked(false);
 #ifdef RS232_SEND
     sendBox5->block_interface(true);
@@ -231,7 +223,7 @@ void SerialBox5_fix_baudrate::setCloseState(void)
 void SerialBox5_fix_baudrate::setOpenState()
 {
     ui->btn_refresh->setEnabled(false);
-    ui->cb_port->setEnabled(false);
+    ui->PortBox->setEnabled(false);
     ui->btn_power->setChecked(true);
 #ifdef RS232_SEND
     sendBox5->block_interface(false);
@@ -250,7 +242,7 @@ void SerialBox5_fix_baudrate::btnOpenPortClicked()
     }
     else
     {
-        QString text = ui->cb_port->currentText();
+        QString text = ui->PortBox->currentText();
         if(text.isEmpty())
         {
             if(isOpen())
@@ -298,19 +290,26 @@ int SerialBox5_fix_baudrate::input(const QByteArray &sending_data)
     }
     else
     {
-        QString temp = sending_data;
-        bool containsNonASCII = temp.contains(QRegularExpression(QStringLiteral("[^\\x{0000}-\\x{007F}]")));
+        QString temp = QString(sending_data);
+
+        //if(sending_data.isLetterOrNumber)
+
+        //bool containsNonASCII = temp.contains(QRegularExpression(QStringLiteral("[^\\x{0000}-\\x{007F}]")));
+
+        //bool containsNonASCII = temp.contains(QRegularExpression(QStringLiteral("[^\\x{0020}-\\x{007F}]")));
+        //bool containsNonASCII = temp.contains(QRegularExpression(QStringLiteral("[^[:print:]]")));
+        bool containsNonASCII = temp.contains(QRegularExpression(QStringLiteral("[^\\w\\d\\s]")));
         if(containsNonASCII == false)
         {
             if(temp.isEmpty() == false)
             {
                 QString x_str = temp.remove('\r').remove('\n');
-                emit debug(QString("send: %1").arg(x_str));
+                emit debug(QString("send TXT: %1").arg(x_str));
             }
         }
         else
         {
-            emit debug(QString("send [%1]").arg(sending_data.toHex().toUpper().data()));
+            emit debug(QString("send HEX: [%1]").arg(sending_data.toHex().toUpper().data()));
         }
         write(sending_data);
     }
@@ -328,21 +327,16 @@ int SerialBox5_fix_baudrate::input(const QString &data)
         emit port_is_active(false);
         return E_PORT_NOT_OPEN;
     }
-    //    QByteArray sending_data;
-    //    sending_data.clear();
-    //    sending_data.append(data);
     if(flag_byte_by_byte)
     {
-        //        for(int n=0; n<sending_data.length(); n++)
-        for(int n=0; n<data.length(); n++)
+        int len = data.length();
+        for(int n=0; n<len; n++)
         {
-            //            write(sending_data.constData()+n, 1);
             write(data.toLatin1().constData()+n, 1);
         }
     }
     else
     {
-        //        write(sending_data);
         write(data.toLatin1());
     }
     return E_NO_ERROR;
@@ -401,7 +395,7 @@ bool SerialBox5_fix_baudrate::add_menu(int index)
     }
     else
     {
-        emit error("mw not found!");
+        emit error("mw not found");
     }
 
     Q_UNUSED(index);
@@ -436,7 +430,7 @@ bool SerialBox5_fix_baudrate::add_menu(int index, const QString &title)
     }
     else
     {
-        emit error("mw not found!");
+        emit error("mw not found");
     }
 
     Q_UNUSED(index);
@@ -476,14 +470,10 @@ void SerialBox5_fix_baudrate::get_parameter(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::set_portname(const QString &portname)
 {
-    if(portname.isEmpty())
+    for(int n=0; n<ui->PortBox->count(); n++)
     {
-        return;
-    }
-    for(int n=0; n<ui->cb_port->count(); n++)
-    {
-        ui->cb_port->setCurrentIndex(n);
-        if(ui->cb_port->currentText() == portname)
+        ui->PortBox->setCurrentIndex(n);
+        if(ui->PortBox->currentText() == portname)
         {
             return;
         }
@@ -492,7 +482,7 @@ void SerialBox5_fix_baudrate::set_portname(const QString &portname)
 //--------------------------------------------------------------------------------
 QString SerialBox5_fix_baudrate::get_portname(void)
 {
-    return ui->cb_port->currentText();
+    return ui->PortBox->currentText();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::updateText(void)
@@ -510,16 +500,11 @@ bool SerialBox5_fix_baudrate::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::load_setting(void)
 {
-    int index;
-    bool ok = load_int(P_PORT, &index);
-    if(ok)
-    {
-        ui->cb_port->setCurrentIndex(index);
-    }
+
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::save_setting(void)
 {
-    save_int(P_PORT, ui->cb_port->currentIndex());
+
 }
 //--------------------------------------------------------------------------------

@@ -30,8 +30,6 @@
 #   include "sendbox5.hpp"
 #endif
 //--------------------------------------------------------------------------------
-#define P_PORT  "port_name"
-//--------------------------------------------------------------------------------
 #include "logbox.hpp"
 //--------------------------------------------------------------------------------
 #define MAX_TIME_MSEC   100
@@ -99,9 +97,7 @@ void SerialBox5_lite::init(void)
     ui->PortBox->setMinimumWidth(150);
     ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
 
-#ifdef RS232_FIXED_SIZE
-    setFixedSize(sizeHint());
-#endif
+    setFixedHeight(sizeHint().height());
 
     setCloseState();
     updateText();
@@ -161,8 +157,8 @@ void SerialBox5_lite::initEnumerator(void)
     refresh();
     //---
     ui->BaudBox->clear();
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-    ui->BaudBox->addItem("Undefined Baud",  QSerialPort::UnknownBaud);
+#ifdef Q_OS_LINUX
+    // ui->BaudBox->addItem("Undefined Baud",  QSerialPort::UnknownBaud);
 #endif
     ui->BaudBox->addItem("1200 baud",       QSerialPort::Baud1200);
     ui->BaudBox->addItem("2400 baud",       QSerialPort::Baud2400);
@@ -397,7 +393,7 @@ bool SerialBox5_lite::add_menu(int index)
     }
     else
     {
-        emit error("mw not found!");
+        emit error("mw not found");
     }
 
     return false;
@@ -432,10 +428,23 @@ bool SerialBox5_lite::add_menu(int index, const QString &title)
     }
     else
     {
-        emit error("mw not found!");
+        emit error("mw not found");
     }
 
     return true;
+}
+//--------------------------------------------------------------------------------
+bool SerialBox5_lite::set_baudRate(int value)
+{
+    bool ok;
+    ok = setBaudRate(value);
+    if(ok)
+    {
+        int idx = 0;
+        idx = ui->BaudBox->findData(value);
+        if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
+    }
+    return ok;
 }
 //--------------------------------------------------------------------------------
 qint32 SerialBox5_lite::get_baudRate(void)
@@ -496,12 +505,13 @@ void SerialBox5_lite::get_parameter(void)
 
     QString temp;
     temp.clear();
-    emit info(QString("baudRate %1").arg(baudRate()));
-    emit info(QString("dataBits %1").arg(dataBits()));
-    emit info(QString("parity %1").arg(parity()));
-    emit info(QString("stopBits %1").arg(stopBits()));
-    emit info(QString("flowControl %1").arg(flowControl()));
-    emit info(temp);
+    temp = QString("%1, %2, %3, %4, %5")
+            .arg(baudRate())
+            .arg(dataBits())
+            .arg(parity())
+            .arg(stopBits())
+            .arg(flowControl());
+    emit debug(temp);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::set_test(bool value)
@@ -530,16 +540,11 @@ bool SerialBox5_lite::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::load_setting(void)
 {
-    int index;
-    bool ok = load_int(P_PORT, &index);
-    if(ok)
-    {
-        ui->PortBox->setCurrentIndex(index);
-    }
+
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::save_setting(void)
 {
-    save_int(P_PORT, ui->PortBox->currentIndex());
+
 }
 //--------------------------------------------------------------------------------

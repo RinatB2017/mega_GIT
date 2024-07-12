@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2021                                                       **
+**     Copyright (C) 2022                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -108,7 +108,7 @@ void Text_widget::append(void)
 //--------------------------------------------------------------------------------
 void Text_widget::remove(void)
 {
-    int res = messagebox_question("Удаление команды", "Вы уверены, что хотите удалить вбранную команду?");
+    int res = messagebox_question("Удаление команды", "Вы уверены, что хотите удалить выбранную команду?");
     if(res == QMessageBox::Yes)
     {
         ui->listWidget->takeItem(ui->listWidget->currentIndex().row());
@@ -234,6 +234,19 @@ void Text_widget::f_update(void)
     run();
 }
 //--------------------------------------------------------------------------------
+#include <QKeyEvent>
+void Text_widget::keyPressEvent(QKeyEvent* ev)
+{
+    if (ev->key() == Qt::Key_Insert)
+    {
+        append();
+    }
+    if (ev->key() == Qt::Key_Delete)
+    {
+        remove();
+    }
+}
+//--------------------------------------------------------------------------------
 void Text_widget::load_setting(void)
 {
     QStringList sl = load_stringlist(P_TEXT_WIDGET);
@@ -246,6 +259,12 @@ void Text_widget::load_setting(void)
     if(ok)
     {
         ui->sb_auto->setValue(interval);
+    }
+    int index = 0;
+    ok = load_int(P_INDEX,  &index);
+    if(ok)
+    {
+        ui->cb_append->setCurrentIndex(index);
     }
 
     restoreGeometry(load_value(P_TEXT_WIDGET_GEOMETRY).toByteArray());
@@ -261,5 +280,6 @@ void Text_widget::save_setting(void)
     save_int(P_INTERVAL_TEXT, ui->sb_auto->value());
     save_stringlist(P_TEXT_WIDGET, sl);
     save_value(P_TEXT_WIDGET_GEOMETRY, saveGeometry());
+    save_int(P_INDEX, ui->cb_append->currentIndex());;
 }
 //--------------------------------------------------------------------------------

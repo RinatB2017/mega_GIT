@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2014                                                       **
+**     Copyright (C) 2022                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -74,7 +74,6 @@ class QwtPlotMagnifier;
 //--------------------------------------------------------------------------------
 #define MAX_CHANNELS 64
 //--------------------------------------------------------------------------------
-// в этой структуре нельзя инициализировать указатели
 typedef struct
 {
     bool is_active;
@@ -161,10 +160,7 @@ public slots:
     void remove_all_curve(void);
 
     QColor get_curve_color(int channel);
-    bool set_curve_color(int channel,
-                         QColor color);
-    bool set_curve_title(int channel,
-                         const QString &title);
+    bool set_curve_color(int channel, QColor color);
 
     void set_curve_symbol(int channel,
                           QwtSymbol *symbol);
@@ -325,7 +321,7 @@ private:
 
 #ifndef GRAPHER_NOT_PANNING
     // panning with the left mouse button
-    QwtPlotPanner *plot_panner;
+    QwtPlotPanner *plot_panner = nullptr;
 #endif
 
 #ifndef GRAPHER_NOT_ZOOM

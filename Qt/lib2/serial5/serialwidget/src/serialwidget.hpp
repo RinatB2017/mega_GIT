@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                      **
+**     Copyright (C) 2023                                                      **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -37,7 +37,7 @@ signals:
     void port_close(void);
     void readyRead(void);
     void readChannelFinished(void);
-    void output(const QByteArray &data);
+    void output(const QByteArray &data);    // выходные данные
     void port_is_active(bool);
 
     void s_baudRateChanged(qint32 baudRate, QSerialPort::Directions directions);
@@ -62,6 +62,8 @@ public:
     bool setParity(QSerialPort::Parity value);
     bool setStopBits(QSerialPort::StopBits value);
     bool setFlowControl(QSerialPort::FlowControl value);
+
+//    void setSettingsRestoredOnClose(bool state);
 
     QString portName(void);
     int baudRate(void);
@@ -89,8 +91,8 @@ private slots:
     void timer_stop(void);
 
 private:
-    QPointer<QSerialPort> serial5;
-    QPointer<QTimer> timer;
+    QSerialPort *serial5 = nullptr;
+    QTimer *timer = nullptr;
 
     void init(void);
 

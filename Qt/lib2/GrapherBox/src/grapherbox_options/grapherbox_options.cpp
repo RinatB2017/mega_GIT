@@ -53,8 +53,10 @@ void GrapherBox_Options::init(void)
 
     setFixedSize(sizeHint());
 
-    connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(ui->buttonBox,  &QDialogButtonBox::accepted,
+            this,           &GrapherBox_Options::accept);
+    connect(ui->buttonBox,  &QDialogButtonBox::rejected,
+            this,           &GrapherBox_Options::reject);
 }
 //--------------------------------------------------------------------------------
 void GrapherBox_Options::set_type_device(GrapherBox_Options::Device device)

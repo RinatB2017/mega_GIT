@@ -84,8 +84,8 @@ void ColorButton::init(void)
     setColor(Qt::black);
     setLayout(box);
 
-    connect(btn_color,  &QToolButton::clicked,  this,   &ColorButton::set_color);
-    connect(btn_text,   &QPushButton::clicked,  this,   &ColorButton::set_text);
+    connect(btn_color,  &QToolButton::clicked, this, &ColorButton::set_color);
+    connect(btn_text,   &QToolButton::clicked, this, &ColorButton::set_text);
 }
 //--------------------------------------------------------------------------------
 void ColorButton::set_color(void)

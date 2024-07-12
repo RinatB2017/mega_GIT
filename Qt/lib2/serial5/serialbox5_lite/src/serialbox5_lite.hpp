@@ -48,7 +48,9 @@ public:
     bool add_menu(int index);
     bool add_menu(int index, const QString &title);
 
+    bool set_baudRate(int value);
     qint32 get_baudRate(void);
+
     QSerialPort::DataBits       get_dataBits(void);
     QSerialPort::Parity         get_parity(void);
     QSerialPort::StopBits       get_stopBits(void);

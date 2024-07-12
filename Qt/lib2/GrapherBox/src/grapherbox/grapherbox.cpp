@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2014                                                       **
+**     Copyright (C) 2022                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -38,7 +38,7 @@ public:
     virtual QwtText label(qreal v) const
     {
         QDateTime upDateTime;
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
         upDateTime.setTime_t(v);
 #else
         upDateTime.setSecsSinceEpoch(v);
@@ -46,7 +46,8 @@ public:
 #ifdef USE_SCALE_POINT_DATETIME_FULL
         return upDateTime.toString("dd.MM.yyyy hh:mm:ss");
 #else
-        return upDateTime.toString("dd.MM.yyyy");
+        //return upDateTime.toString("dd.MM.yyyy");
+        return upDateTime.toString("hh:mm:ss");
 #endif
     }
 
@@ -66,7 +67,7 @@ public:
     {
         QwtText text;
         QDateTime dt;
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
         dt.setTime_t(invTransform(point).x());
 #else
         dt.setSecsSinceEpoch(invTransform(point).x());
@@ -168,26 +169,6 @@ bool GrapherBox::set_curve_color(int channel, QColor color)
     }
     curves[channel].plot_curve->setPen(color);
     curves[channel].color = color;
-    updateGraphics();
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool GrapherBox::set_curve_title(int channel,
-                                 const QString &title)
-{
-    if(channel < 0)
-    {
-        emit error("channel < 0");
-        return false;
-    }
-    if(channel >= curves.count())
-    {
-        emit error(QString(tr("channel > %1"))
-                   .arg(curves.count()));
-        return false;
-    }
-    curves[channel].title = title;
-    curves[channel].plot_curve->setTitle(title);
     updateGraphics();
     return true;
 }
@@ -468,8 +449,8 @@ void GrapherBox::create_widgets(void)
         legend->setDefaultItemMode(QwtLegendData::Checkable);
 
         ui->qwtPlot->insertLegend( legend, QwtPlot::RightLegend );
-        connect(legend, SIGNAL(checked(QVariant, bool, int)),
-                this,   SLOT(legend_checked(QVariant, bool)));
+        connect(legend, &QwtLegend::checked,
+                this,   &GrapherBox::legend_checked);
     }
 
 #ifdef USE_SCALE_POINT_DATETIME
@@ -519,24 +500,24 @@ void GrapherBox::create_widgets(void)
 #else
 #endif
 
-    connect(ui->btn_all_on,     SIGNAL(clicked(bool)),  this, SLOT(legends_all_on()));
-    connect(ui->btn_all_off,    SIGNAL(clicked(bool)),  this, SLOT(legends_all_off()));
+    connect(ui->btn_all_on,     &QToolButton::clicked,  this, &GrapherBox::legends_all_on);
+    connect(ui->btn_all_off,    &QToolButton::clicked,  this, &GrapherBox::legends_all_off);
 
-    connect(ui->btn_Options,    SIGNAL(clicked()), this, SLOT(options()));
-    connect(ui->btn_Clear,      SIGNAL(clicked()), this, SLOT(clear()));
-    connect(ui->btn_Load,       SIGNAL(clicked()), this, SLOT(load_curves()));
-    connect(ui->btn_Save,       SIGNAL(clicked()), this, SLOT(save_curves()));
+    connect(ui->btn_Options,    &QToolButton::clicked, this, &GrapherBox::options);
+    connect(ui->btn_Clear,      &QToolButton::clicked, this, &GrapherBox::clear);
+    connect(ui->btn_Load,       &QToolButton::clicked, this, &GrapherBox::load_curves);
+    connect(ui->btn_Save,       &QToolButton::clicked, this, &GrapherBox::save_curves);
 
-    connect(ui->btn_Horizontal, SIGNAL(toggled(bool)), this, SLOT(set_horizontal_alignment(bool)));
-    connect(ui->btn_Vertical,   SIGNAL(toggled(bool)), this, SLOT(set_vertical_alignment(bool)));
+    connect(ui->btn_Horizontal, &QToolButton::toggled, this, &GrapherBox::set_horizontal_alignment);
+    connect(ui->btn_Vertical,   &QToolButton::toggled, this, &GrapherBox::set_vertical_alignment);
 
-    connect(ui->btn_autoscroll, SIGNAL(toggled(bool)), this, SLOT(set_autoscroll(bool)));
+    connect(ui->btn_autoscroll, &QToolButton::toggled, this, &GrapherBox::set_autoscroll);
 
-    connect(ui->btn_Statistic,  SIGNAL(clicked()), this, SLOT(statistic()));
+    connect(ui->btn_Statistic,  &QToolButton::clicked, this, &GrapherBox::statistic);
 
 #ifdef CONTEXT_MENU
     setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(popup(QPoint)));
+    connect(this, &GrapherBox::customContextMenuRequested, this, &GrapherBox::popup);
 #endif
 
     ui->btn_all_on->setToolTip(tr("Все графики включены"));
@@ -996,7 +977,7 @@ bool GrapherBox::add_curve_data(int channel,
 #ifdef USE_SCALE_POINT_DATETIME
     QDateTime dt;
     dt = QDateTime::currentDateTime();
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     qreal x = dt.toTime_t();
 #else
     qreal x = dt.toSecsSinceEpoch();
@@ -1014,7 +995,6 @@ bool GrapherBox::add_curve_data(int channel,
 #else
     curves[channel].real_data.append(QPointF(curves[channel].pos_x, data));
     curves[channel].view_curve->append(QPointF(curves[channel].pos_x, data));
-    //curves[channel].plot_curve->setSamples(curves[channel].view_curve); //FIXME добавил на пробу
     curves[channel].pos_x++;
 #endif
 
@@ -1047,9 +1027,15 @@ bool GrapherBox::add_curve_data(int channel,
                                 QDateTime v_dt,
                                 qreal value)
 {
+#if QT_VERSION > QT_VERSION_CHECK(5, 6, 2)
     return add_curve_data(channel,
                           (int)v_dt.toSecsSinceEpoch(),
                           value);
+#else
+    return add_curve_data(channel,
+                          (int)v_dt.toMSecsSinceEpoch() * 1000,
+                          value);
+#endif
 }
 //--------------------------------------------------------------------------------
 bool GrapherBox::add_curve_data(int channel,
@@ -1191,7 +1177,6 @@ void GrapherBox::set_type_curve_SPLINE_LINES(void)
     for(int n=0; n<get_curves_count(); n++)
     {
         QwtSplineCurveFitter *fitter = new QwtSplineCurveFitter();
-        //fitter->setFitMode(QwtSplineCurveFitter::Spline); //FIXME возможно, что проблема
 
         set_curve_symbol(n, nullptr);
         set_curve_style(n, QwtPlotCurve::Lines);
@@ -1294,7 +1279,6 @@ void GrapherBox::options(void)
                 curves[n].title = text;
                 curves[n].plot_curve->setTitle(text);
                 emit change_text(n, text);
-                //FIXME надо доделать
             }
         }
         //---
@@ -1305,7 +1289,7 @@ void GrapherBox::options(void)
 //--------------------------------------------------------------------------------
 void GrapherBox::load_curves(void)
 {
-    QPointer<MyFileDialog> dlg;
+    MyFileDialog *dlg = nullptr;
 
     dlg = new MyFileDialog("dlg_grapherbox");
     dlg->setNameFilter("CSV files (*.csv)");
@@ -1324,6 +1308,8 @@ void GrapherBox::load_curves(void)
 
         updateGraphics();
     }
+
+    delete dlg;
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::save_curves(void)
@@ -1339,22 +1325,28 @@ void GrapherBox::save_curves(void)
         return;
     }
 
+    int cnt_curve_data = 0;
     for(int n=0; n<curves.count(); n++)
     {
-        if(curves[n].view_curve->samples().size() == 0)
+        if(curves[n].view_curve->samples().size() > 0)
         {
-            QMessageBox msgBox;
-            msgBox.setIcon(QMessageBox::Critical);
-            msgBox.setWindowTitle("Ошибка");
-            msgBox.setText("Нет данных (sample)");
-            msgBox.setStandardButtons(QMessageBox::Ok);
-            msgBox.exec();
-            return;
+            cnt_curve_data++;
         }
     }
 
+    if(cnt_curve_data == 0)
+    {
+        QMessageBox msgBox;
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.setWindowTitle("Ошибка");
+        msgBox.setText("Нет данных (sample)");
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.exec();
+        return;
+    }
+
     //записываем файл
-    QPointer<MyFileDialog> dlg = new MyFileDialog("dlg_grapherbox");
+    MyFileDialog *dlg = new MyFileDialog("dlg_grapherbox");
     dlg->setAcceptMode(QFileDialog::AcceptSave);
     dlg->setNameFilter("CSV files (*.csv)");
     dlg->setDefaultSuffix("csv");
@@ -1372,6 +1364,8 @@ void GrapherBox::save_curves(void)
         QString filename = files.at(0);
         f_save_curves(filename);
     }
+
+    delete dlg;
 }
 //--------------------------------------------------------------------------------
 void GrapherBox::f_load_curves(QString filename)
@@ -1421,8 +1415,13 @@ void GrapherBox::f_load_curves(QString filename)
                 dt.setDate(date);
                 dt.setTime(time);
 
+#if QT_VERSION > QT_VERSION_CHECK(5, 6, 2)
                 curves[channel].real_data.append(QPointF(dt.toSecsSinceEpoch(), value));
                 curves[channel].view_curve->append(QPointF(dt.toSecsSinceEpoch(), value));
+#else
+                curves[channel].real_data.append(QPointF(dt.toMSecsSinceEpoch() * 1000, value));
+                curves[channel].view_curve->append(QPointF(dt.toMSecsSinceEpoch() * 1000, value));
+#endif
                 curves[channel].pos_x++;
 #elif defined(USE_SCALE_POINT_TIME)
             if(sl.count() == 5)
@@ -1476,8 +1475,7 @@ void GrapherBox::f_save_curves(QString filename)
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        emit error(QString(tr("file %1 not writed!"))
-                   .arg(filename));
+        emit error(QString("file %1 not writed!").arg(filename));
         return;
     }
 
@@ -1490,7 +1488,7 @@ void GrapherBox::f_save_curves(QString filename)
             qreal   value = curves[channel].view_curve->sample(static_cast<size_t>(x)).y();
 
             QDateTime dt;
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
             dt.setTime_t(pos_date);
 #else
             dt.setSecsSinceEpoch(pos_date);
@@ -1930,7 +1928,6 @@ void GrapherBox::f_vertical_alignment(void)
 {
     if(curves.isEmpty())
     {
-        //emit error(tr("Нет данных!"));
         return;
     }
 
@@ -1959,7 +1956,6 @@ void GrapherBox::f_horizontal_alignment(void)
 {
     if(curves.isEmpty())
     {
-        //emit error(tr("Нет данных!"));
         return;
     }
 

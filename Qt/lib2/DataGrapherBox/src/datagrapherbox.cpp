@@ -33,29 +33,12 @@ DataGrapherBox::~DataGrapherBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void DataGrapherBox::add_curves(QList<QByteArray> sl)
+void DataGrapherBox::add_curves(QStringList sl)
 {
-    foreach(QByteArray ba_curve_name, sl)
+    // emit trace(Q_FUNC_INFO);
+    foreach(QString curve_name, sl)
     {
-        add_curve(QString(ba_curve_name));
-    }
-}
-//--------------------------------------------------------------------------------
-void DataGrapherBox::update_curves(QList<QByteArray> sl)
-{
-    if(sl.count() <= 2)
-    {
-        emit error("Bad sl count");
-        return;
-    }
-
-    sl.removeFirst();
-
-    int index = 0;
-    foreach(QByteArray ba_curve_name, sl)
-    {
-        update_curve(index, QString(ba_curve_name));
-        index++;
+        add_curve(curve_name);
     }
 }
 //--------------------------------------------------------------------------------
@@ -123,16 +106,15 @@ void DataGrapherBox::init(void)
 #ifndef NO_GRAPHER
     ui->grapher_widget->setObjectName("GrapherBox");
 
+    ui->grapher_widget->set_title("Param");
+    ui->grapher_widget->set_title_axis_X("time");
+    ui->grapher_widget->set_title_axis_Y("value");
     ui->grapher_widget->set_axis_scale_x(0, 100);
     ui->grapher_widget->set_axis_scale_y(0, 5);
 
     connect(ui->grapher_widget, &GrapherBox::change_text,   this,   &DataGrapherBox::change_text);
 
-    QTimer::singleShot(100, [this]{
-        ui->grapher_widget->set_title("Датчики");
-        ui->grapher_widget->set_title_axis_X("время");
-        ui->grapher_widget->set_title_axis_Y("параметр");
-
+    QTimer::singleShot(0, [this]{
         ui->grapher_widget->set_visible_btn_Options(false);
         ui->grapher_widget->set_visible_btn_all_ON(false);
         ui->grapher_widget->set_visible_btn_all_OFF(false);
@@ -148,7 +130,7 @@ void DataGrapherBox::init(void)
     ui->grapher_widget->setVisible(false);
 #endif
 
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     ui->lcd_layout->setMargin(0);
 #endif
     ui->lcd_layout->setSpacing(0);
@@ -264,8 +246,6 @@ int DataGrapherBox::add_curve(QString curve_name)
     // emit trace(Q_FUNC_INFO);
 
     ADC_label *adc_label = new ADC_label(curve_name, this);
-    Q_ASSERT(adc_label);
-
     CURVES cur;
 
     cur.name = curve_name;
@@ -279,23 +259,6 @@ int DataGrapherBox::add_curve(QString curve_name)
     curves.append(cur);
     ui->lcd_layout->addWidget(adc_label);
     return cur.curve_index;
-}
-//--------------------------------------------------------------------------------
-void DataGrapherBox::update_curve(int curve_index,
-                                  const QString &curve_name)
-{
-    if(curve_index < 0)
-    {
-        emit error("curve_index < 0");
-        return;
-    }
-    if(curve_index >= curves.count())
-    {
-        emit error("curve_index > curves.count()");
-        return;
-    }
-    curves[curve_index].obj->set_label_text(curve_name);
-    ui->grapher_widget->set_curve_title(curve_index, curve_name);
 }
 //--------------------------------------------------------------------------------
 void DataGrapherBox::updateText(void)

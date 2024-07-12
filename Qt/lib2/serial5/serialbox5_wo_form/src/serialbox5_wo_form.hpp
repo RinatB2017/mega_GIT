@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                      **
+**     Copyright (C) 2023                                                      **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -53,7 +53,7 @@ public:
 
     void set_caption(const QString &value);
 
-    bool set_PortName(QString port_name);
+    bool set_port_name(const QString &port_name);
     bool set_baudRate(qint32 value);
     bool set_dataBits(QSerialPort::DataBits value);
     bool set_parity(QSerialPort::Parity value);

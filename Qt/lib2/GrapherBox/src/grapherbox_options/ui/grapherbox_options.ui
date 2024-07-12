@@ -2,9 +2,6 @@
 <ui version="4.0">
  <class>GrapherBox_Options</class>
  <widget class="QDialog" name="GrapherBox_Options">
-  <property name="windowTitle">
-   <string>Dialog</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -32,7 +32,7 @@ TCP_Server::TCP_Server(QWidget *parent) :
 //--------------------------------------------------------------------------------
 TCP_Server::~TCP_Server()
 {
-    delete tcpServer;
+    if(tcpServer) delete tcpServer;
 }
 //--------------------------------------------------------------------------------
 bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
@@ -55,7 +55,10 @@ bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
     emit info(QString("IP: %1").arg(tcpServer->serverAddress().toString()));
     emit info(QString("Port: %1").arg(tcpServer->serverPort()));
 
-    connect(tcpServer, SIGNAL(newConnection()), this, SLOT(newConnect()));
+    connect(tcpServer,  &QTcpServer::newConnection,
+            this,       &TCP_Server::newConnect);
+    opened = true;
+    emit port_is_active(opened);
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -65,6 +68,9 @@ void TCP_Server::closeServer(void)
     {
         emit info("Сервер закрыт");
         tcpServer->close();
+
+        opened = false;
+        emit port_is_active(opened);
     }
     if(clientConnection)
     {
@@ -76,38 +82,104 @@ void TCP_Server::closeServer(void)
 void TCP_Server::newConnect(void)
 {
     clientConnection = tcpServer->nextPendingConnection();
-    emit info(QString("Клиент подключился: %1:%2")
-              .arg(clientConnection->peerAddress().toString())
-              .arg(clientConnection->peerPort()));
-    connect(clientConnection,   SIGNAL(disconnected()), this,   SLOT(clientDisconnected()));
-    connect(clientConnection,   SIGNAL(readyRead()),    this,   SLOT(clientReadyRead()));
+    Q_ASSERT(clientConnection);
+    if(clientConnection)
+    {
+        emit info(QString("Клиент подключился: %1:%2")
+                  .arg(clientConnection->peerAddress().toString())
+                  .arg(clientConnection->peerPort()));
+        connect(clientConnection,   &QTcpSocket::disconnected,
+                this,               &TCP_Server::clientDisconnected);
+        connect(clientConnection,   &QTcpSocket::readyRead,
+                this,               &TCP_Server::clientReadyRead);
+    }
 }
 //--------------------------------------------------------------------------------
 void TCP_Server::clientReadyRead(void)
 {
+    Q_ASSERT(clientConnection);
     if(clientConnection->bytesAvailable())
     {
         QByteArray read_block;
 
-        emit info("Получены данные");
-
         read_block = clientConnection->readAll();
-        emit trace(read_block);
-        emit debug(read_block.toHex().toUpper());
+        if(read_block.isEmpty())
+        {
+            return;
+        }
+
+        bool is_string = is_letter_or_number(read_block);
+        if(is_string)
+        {
+            QByteArray temp = read_block;
+            emit info(QString("TCP_Server: получены данные: [%1] %2 bytes")
+                      .arg(temp.replace("\r", "").replace("\n", "").data())
+                      .arg(temp.length()));
+        }
+        else
+        {
+            emit info(QString("TCP_Server: получены данные: [%1] %2 bytes")
+                      .arg(read_block.toHex().toUpper().data())
+                      .arg(read_block.length()));
+        }
 
         emit output(read_block);
     }
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::input(const QByteArray &data)
+void TCP_Server::input(QByteArray data)
 {
-    clientConnection->write(data);
+    bool is_string = is_letter_or_number(data);
+    if(is_string)
+    {
+        QByteArray temp = data;
+        emit info(QString("TCP_Server::input: [%1")
+                  .arg(temp.replace("\r", "").replace("\n", "").toUpper().data()));
+        emit info(QString("clientConnection->write: [%1]")
+                  .arg(temp.replace("\r", "").replace("\n", "").toUpper().data()));
+    }
+    else
+    {
+        emit info(QString("TCP_Server::input: [%1")
+                  .arg(data.toHex().toUpper().data()));
+        emit info(QString("clientConnection->write: [%1]")
+                  .arg(data.toHex().toUpper().data()));
+    }
+    Q_ASSERT(clientConnection);
+    if(clientConnection)
+    {
+        clientConnection->write(data);
+    }
 }
 //--------------------------------------------------------------------------------
 void TCP_Server::clientDisconnected(void)
 {
     emit info("Клиент отключился");
-    delete clientConnection;
+}
+//--------------------------------------------------------------------------------
+bool TCP_Server::is_open(void)
+{
+    return opened;
+}
+//--------------------------------------------------------------------------------
+void TCP_Server::tcp_open(void)
+{
+    createServerOnPort(address, port);
+}
+//--------------------------------------------------------------------------------
+void TCP_Server::tcp_close(void)
+{
+    closeServer();
+}
+//--------------------------------------------------------------------------------
+void TCP_Server::set_address(const QString new_address)
+{
+    address = QHostAddress(new_address);
+}
+//--------------------------------------------------------------------------------
+void TCP_Server::set_port(int new_port)
+{
+    port = new_port;
 }
 //--------------------------------------------------------------------------------
 void TCP_Server::updateText(void)

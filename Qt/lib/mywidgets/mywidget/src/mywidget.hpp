@@ -106,6 +106,8 @@ public:
     bool is_slot_exists(QWidget *obj,
                         const char *slot_sign);
 
+    bool is_letter_or_number(QByteArray ba);
+
     static bool set_param(QString group_name,
                           QString name,
                           QVariant value);
@@ -146,6 +148,8 @@ public:
     QString get_class_name(const QString &fullname);
     QString get_func_name(const QString &fullname);
 
+    void set_all_buttons_no_save(void);
+
 signals:
     void info(const QString &);
     void debug(const QString &);
@@ -171,7 +175,6 @@ private slots:
 
 private:
     void connect_log(QWidget *parent);
-
     bool check_exists_signals(QWidget *parent);
 
     // templates

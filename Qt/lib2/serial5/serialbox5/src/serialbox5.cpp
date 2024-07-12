@@ -105,7 +105,9 @@ void SerialBox5::init(void)
 
     connect(ui->btn_default,    &QPushButton::clicked,  this,   &SerialBox5::set_default);
 
-    setCloseState();
+    QTimer::singleShot(100, [this]{
+        setCloseState();
+    });
     updateText();
 }
 //--------------------------------------------------------------------------------
@@ -132,8 +134,8 @@ void SerialBox5::initEnumerator(void)
     refresh();
     //---
     ui->BaudBox->clear();
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-    ui->BaudBox->addItem("Undefined Baud",  QSerialPort::UnknownBaud);
+#ifdef Q_OS_LINUX
+    // ui->BaudBox->addItem("Undefined Baud",  QSerialPort::UnknownBaud);
 #endif
     ui->BaudBox->addItem("1200 baud",       QSerialPort::Baud1200);
     ui->BaudBox->addItem("2400 baud",       QSerialPort::Baud2400);
@@ -146,8 +148,8 @@ void SerialBox5::initEnumerator(void)
 
     //---
     ui->DataBitsBox->clear();
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-    ui->DataBitsBox->addItem("Undefined data bits", QSerialPort::UnknownDataBits);
+#ifdef Q_OS_LINUX
+    // ui->DataBitsBox->addItem("Undefined data bits", QSerialPort::UnknownDataBits);
 #endif
     ui->DataBitsBox->addItem("5 bit",               QSerialPort::Data5);
     ui->DataBitsBox->addItem("6 bit",               QSerialPort::Data6);
@@ -155,8 +157,8 @@ void SerialBox5::initEnumerator(void)
     ui->DataBitsBox->addItem("8 bit",               QSerialPort::Data8);
     //---
     ui->ParityBox->clear();
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-    ui->ParityBox->addItem("Undefined parity",  QSerialPort::UnknownParity);
+#ifdef Q_OS_LINUX
+    // ui->ParityBox->addItem("Undefined parity",  QSerialPort::UnknownParity);
 #endif
     ui->ParityBox->addItem("None",              QSerialPort::NoParity);
     ui->ParityBox->addItem("Even",              QSerialPort::EvenParity);
@@ -165,16 +167,16 @@ void SerialBox5::initEnumerator(void)
     ui->ParityBox->addItem("Mark",              QSerialPort::MarkParity);
     //---
     ui->StopBitsBox->clear();
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-    ui->StopBitsBox->addItem("Undefined stop bits", QSerialPort::UnknownStopBits);
+#ifdef Q_OS_LINUX
+    // ui->StopBitsBox->addItem("Undefined stop bits", QSerialPort::UnknownStopBits);
 #endif
     ui->StopBitsBox->addItem("1",                   QSerialPort::OneStop);
     ui->StopBitsBox->addItem("1.5",                 QSerialPort::OneAndHalfStop);
     ui->StopBitsBox->addItem("2",                   QSerialPort::TwoStop);
     //---
     ui->FlowBox->clear();
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-    ui->FlowBox->addItem("Undefined flow",  QSerialPort::UnknownFlowControl);
+#ifdef Q_OS_LINUX
+    // ui->FlowBox->addItem("Undefined flow",  QSerialPort::UnknownFlowControl);
 #endif
     ui->FlowBox->addItem("Disable",         QSerialPort::NoFlowControl);
     ui->FlowBox->addItem("Hardware",        QSerialPort::HardwareControl);
@@ -603,7 +605,7 @@ void SerialBox5::get_parameter(void)
             .arg(parity())
             .arg(stopBits())
             .arg(flowControl());
-    emit info(temp);
+    emit debug(temp);
 }
 //--------------------------------------------------------------------------------
 QPushButton *SerialBox5::add_QPushButton(const QString &title)

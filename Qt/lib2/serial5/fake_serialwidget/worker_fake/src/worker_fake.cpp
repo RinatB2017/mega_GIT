@@ -46,7 +46,7 @@ void Worker_fake::init(void)
     }
     else
     {
-        emit error("mw not found!");
+        emit error("mw not found");
     }
 #endif
 }

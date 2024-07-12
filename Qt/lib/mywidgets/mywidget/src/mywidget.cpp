@@ -37,7 +37,7 @@ MyWidget::MyWidget(QWidget *parent) :
     connect_log(parent);
 #endif
 #ifdef QT_DEBUG
-    qDebug() << "MyWidget()";
+    //qDebug() << "MyWidget()";
     //QTimer::singleShot(0, this, SLOT(s_test()));
 #endif
 
@@ -195,6 +195,24 @@ void MyWidget::log(const QString &data)
 #endif
 }
 //--------------------------------------------------------------------------------
+// строка или HEX - вот вопрос :)
+bool MyWidget::is_letter_or_number(QByteArray ba)
+{
+    QString str = ba.data();
+    int len = str.length();
+    for(int n=0; n<len; n++)
+    {
+        QChar s = str.at(n);
+        if(s != '\r' &&
+                s != '\n' &&
+                s != '\t')
+        {
+            if(!s.isPrint())    return false;
+        }
+    }
+    return true;
+}
+//--------------------------------------------------------------------------------
 template<typename T>
 void MyWidget::set_property_widget(void)
 {
@@ -208,7 +226,7 @@ void MyWidget::set_property_widget(void)
 //--------------------------------------------------------------------------------
 void MyWidget::init_w_lists(void)
 {
-    emit trace(Q_FUNC_INFO);
+    //emit trace(Q_FUNC_INFO);
 
     set_property_widget<QLineEdit>();
     set_property_widget<QAbstractSlider>();
@@ -216,6 +234,8 @@ void MyWidget::init_w_lists(void)
     set_property_widget<QAbstractSpinBox>();
     set_property_widget<QComboBox>();
     set_property_widget<QAbstractButton>();
+
+    set_property_widget<QLCDNumber>();
 }
 //--------------------------------------------------------------------------------
 void MyWidget::add_widget_to_w_lists(QWidget *widget)
@@ -226,7 +246,7 @@ void MyWidget::add_widget_to_w_lists(QWidget *widget)
 //--------------------------------------------------------------------------------
 void MyWidget::lock_interface(void)
 {
-    emit trace(Q_FUNC_INFO);
+    //emit trace(Q_FUNC_INFO);
     Q_ASSERT(w_lists.count() > 0);
 
     foreach (QWidget *btn, w_lists)
@@ -237,7 +257,7 @@ void MyWidget::lock_interface(void)
 //--------------------------------------------------------------------------------
 void MyWidget::unlock_interface(void)
 {
-    emit trace(Q_FUNC_INFO);
+    //emit trace(Q_FUNC_INFO);
     Q_ASSERT(w_lists.count() > 0);
 
     foreach (QWidget *btn, w_lists)
@@ -291,7 +311,7 @@ void MyWidget::lock_widget(bool state)
 //--------------------------------------------------------------------------------
 void MyWidget::block_interface(bool state)
 {
-    emit trace(Q_FUNC_INFO);
+    //emit trace(Q_FUNC_INFO);
 
     lock_widget<QAbstractButton>(state);
     lock_widget<QComboBox>(state);
@@ -645,7 +665,7 @@ bool MyWidget::fail(const QString &text)
 //--------------------------------------------------------------------------------
 bool MyWidget::add_digital_clock(bool add_spacer)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    MainWindow *mw = dynamic_cast<MainWindow *>(QApplication::activeWindow());
     if(mw)
     {
         if(add_spacer)
@@ -658,17 +678,12 @@ bool MyWidget::add_digital_clock(bool add_spacer)
 
         return true;
     }
-    else
-    {
-        emit error("mw not found!");
-    }
-
     return false;
 }
 //--------------------------------------------------------------------------------
 bool MyWidget::add_lcd_clock(bool add_spacer)
 {
-    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    MainWindow *mw = dynamic_cast<MainWindow *>(QApplication::activeWindow());
     if(mw)
     {
         if(add_spacer)
@@ -681,11 +696,6 @@ bool MyWidget::add_lcd_clock(bool add_spacer)
 
         return true;
     }
-    else
-    {
-        emit error("mw not found!");
-    }
-
     return false;
 }
 //--------------------------------------------------------------------------------
@@ -749,6 +759,26 @@ QString MyWidget::get_func_name(const QString &fullname)
     return sl.at(1);
 }
 //--------------------------------------------------------------------------------
+void MyWidget::set_all_buttons_no_save(void)
+{
+    const QWidgetList allWidgets = QApplication::allWidgets();
+    for (QWidget *widget : allWidgets)
+    {
+        QPushButton *btn = (QPushButton *)widget;
+        if(btn)
+        {
+            QString oname = btn->objectName();
+            if(oname.length() > 4)
+            {
+                if(oname.left(4) == "btn_")
+                {
+                    widget->setProperty(NO_SAVE, true);
+                }
+            }
+        }
+    }
+}
+//--------------------------------------------------------------------------------
 void MyWidget::changeEvent(QEvent *event)
 {
     switch (event->type())
@@ -779,9 +809,8 @@ bool MyWidget::eventFilter(QObject*, QEvent* event)
 //--------------------------------------------------------------------------------
 void MyWidget::load_widgets(void)
 {
-    QTimer::singleShot(0, [this] {
+    QTimer::singleShot(0, [this]{
         //emit trace(Q_FUNC_INFO);
-
         QWidgetList widgets = qApp->allWidgets();
         Q_ASSERT(widgets.count() > 0);
 
@@ -815,7 +844,7 @@ void MyWidget::load_widgets(void)
 //--------------------------------------------------------------------------------
 void MyWidget::save_widgets(void)
 {
-    //emit trace(Q_FUNC_INFO);
+    emit trace(Q_FUNC_INFO);
 
     QWidgetList widgets = qApp->allWidgets();
     Q_ASSERT(widgets.count() > 0);

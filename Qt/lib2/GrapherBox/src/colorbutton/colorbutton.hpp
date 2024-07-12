@@ -30,6 +30,10 @@
 #include <QPointer>
 #include <QWidget>
 //--------------------------------------------------------------------------------
+#if QT_VERSION < QT_VERSION_CHECK(5,4,0)
+#   define nullptr NULL
+#endif
+//--------------------------------------------------------------------------------
 namespace Ui {
     class ColorButton;
 }
@@ -56,7 +60,7 @@ private slots:
     void set_text(void);
 
 private:
-    QPushButton *btn_text  = nullptr;
+    QPushButton *btn_text = nullptr;
     QToolButton *btn_color = nullptr;
     QColor color;
     QString text;

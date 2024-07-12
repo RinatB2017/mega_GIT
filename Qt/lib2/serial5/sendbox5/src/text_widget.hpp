@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2021                                                       **
+**     Copyright (C) 2022                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -31,6 +31,7 @@
 #define P_TEXT_WIDGET           "text_widget"
 #define P_TEXT_WIDGET_GEOMETRY  "text_widget_geometry"
 #define P_INTERVAL_TEXT         "interval_text"
+#define P_INDEX                 "index_append"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class Text_widget;
@@ -74,6 +75,9 @@ private:
 
     void load_setting(void);
     void save_setting(void);
+
+protected:
+    void keyPressEvent(QKeyEvent* ev);
 };
 //--------------------------------------------------------------------------------
 #endif // TEXT_WIDGET_HPP

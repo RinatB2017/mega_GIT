@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -37,23 +37,36 @@ public:
     explicit TCP_Server(QWidget *parent = nullptr);
     virtual ~TCP_Server();
 
+    bool is_open(void);
+
+    void tcp_open(void);
+    void tcp_close(void);
+
+    void set_address(const QString new_address);
+    void set_port(int new_port);
+
 signals:
+    void port_is_active(bool);
     void output(const QByteArray &);
 
 public slots:    
     bool createServerOnPort(const QHostAddress address, quint16 port);
     void closeServer(void);
-    void input(const QByteArray &data);
+    void input(QByteArray data);
+    void clientReadyRead(void);
 
 private slots:
     void newConnect(void);
-    void clientReadyRead(void);
     void clientDisconnected(void);
 
 private:
-    //Processor *processor = nullptr;
     QTcpServer *tcpServer = nullptr;
     QTcpSocket *clientConnection = nullptr;
+
+    bool opened = false;
+
+    QHostAddress address = QHostAddress::LocalHost;
+    quint16 port = 1000;
 
     void updateText(void);
     bool programm_is_exit(void);

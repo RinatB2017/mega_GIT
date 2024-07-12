@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                      **
+**     Copyright (C) 2023                                                      **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -37,8 +37,9 @@ SerialWidget::~SerialWidget()
     }
     if(serial5)
     {
-        disconnect(serial5, &QSerialPort::errorOccurred,               this,   &SerialWidget::serial5_error);
-
+#if QT_VERSION > QT_VERSION_CHECK(5, 6, 2)
+        disconnect(serial5, &QSerialPort::errorOccurred,    this,   &SerialWidget::serial5_error);
+#endif
         serial5->close();
         delete serial5;
     }
@@ -47,16 +48,28 @@ SerialWidget::~SerialWidget()
 void SerialWidget::init(void)
 {
     serial5 = new QSerialPort(this);
+    Q_ASSERT(serial5);
 
-    //TODO
+    //устанавливаем дефолтные значения
+    serial5->setBaudRate(9600);
+    serial5->setDataBits(QSerialPort::Data8);
+    serial5->setParity(QSerialPort::NoParity);
+    serial5->setStopBits(QSerialPort::OneStop);
+    serial5->setFlowControl(QSerialPort::NoFlowControl);
+    //---
+
     timer = new QTimer(this);
     connect(timer,  &QTimer::timeout,  this,   &SerialWidget::timer_stop);
 
     connect(serial5, &QSerialPort::readyRead,                   this,   &SerialWidget::procSerialDataReceive);
+#if QT_VERSION > QT_VERSION_CHECK(5, 6, 2)
     connect(serial5, &QSerialPort::errorOccurred,               this,   &SerialWidget::serial5_error);
+#endif
 
     connect(serial5, &QSerialPort::baudRateChanged,             this,   &SerialWidget::baudRateChanged);
+#if QT_VERSION > QT_VERSION_CHECK(5, 6, 2)
     connect(serial5, &QSerialPort::breakEnabledChanged,         this,   &SerialWidget::breakEnabledChanged);
+#endif
     connect(serial5, &QSerialPort::dataBitsChanged,             this,   &SerialWidget::dataBitsChanged);
     connect(serial5, &QSerialPort::dataTerminalReadyChanged,    this,   &SerialWidget::dataTerminalReadyChanged);
     connect(serial5, &QSerialPort::flowControlChanged,          this,   &SerialWidget::flowControlChanged);
@@ -64,9 +77,9 @@ void SerialWidget::init(void)
     connect(serial5, &QSerialPort::requestToSendChanged,        this,   &SerialWidget::requestToSendChanged);
     connect(serial5, &QSerialPort::stopBitsChanged,             this,   &SerialWidget::stopBitsChanged);
 
-    QTimer::singleShot(0, [this]{
-        emit port_is_active(isOpen());
-    });
+    //QTimer::singleShot(0, [this]{
+    //    emit port_is_active(false);
+    //});
 }
 //--------------------------------------------------------------------------------
 bool SerialWidget::isOpen(void)
@@ -78,21 +91,16 @@ bool SerialWidget::isOpen(void)
 bool SerialWidget::serial_open(void)
 {
     Q_ASSERT(serial5);
-
-    emit debug(QString("portName [%1]").arg(serial5.data()->portName()));
-    emit debug(QString("baudRate %1").arg(serial5.data()->baudRate()));
-    emit debug(QString("dataBits %1").arg(serial5.data()->dataBits()));
-    emit debug(QString("parity %1").arg(serial5.data()->parity()));
-    emit debug(QString("stopBits %1").arg(serial5.data()->stopBits()));
-    emit debug(QString("flowControl %1").arg(serial5.data()->flowControl()));
-
-    return serial5->open(QIODevice::ReadWrite);
+    bool ok = serial5->open(QIODevice::ReadWrite);
+    emit port_is_active(ok);
+    return ok;
 }
 //--------------------------------------------------------------------------------
 bool SerialWidget::serial_close(void)
 {
     Q_ASSERT(serial5);
     serial5->close();
+    emit port_is_active(false);
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -184,7 +192,6 @@ QSerialPort::FlowControl SerialWidget::flowControl(void)
 qint64 SerialWidget::write(const char *data, qint64 len)
 {
     Q_ASSERT(serial5);
-    Q_ASSERT(len > 0);
     return serial5->write(data, len);
 }
 //--------------------------------------------------------------------------------
@@ -197,7 +204,6 @@ qint64 SerialWidget::write(const char *data)
 qint64 SerialWidget::write(const QByteArray &data)
 {
     Q_ASSERT(serial5);
-    Q_ASSERT(!data.isEmpty());
     return serial5->write(data);
 }
 //--------------------------------------------------------------------------------
@@ -236,10 +242,12 @@ void SerialWidget::serial5_error(QSerialPort::SerialPortError err)
     case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError");          break;
     case QSerialPort::PermissionError:              emit error("PermissionError");              break;
     case QSerialPort::OpenError:                    emit error("OpenError");                    break;
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+#ifdef Q_OS_LINUX
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     case QSerialPort::ParityError:                  emit error("ParityError");                  break;
     case QSerialPort::FramingError:                 emit error("FramingError");                 break;
     case QSerialPort::BreakConditionError:          emit error("BreakConditionError");          break;
+#endif
 #endif
     case QSerialPort::WriteError:                   emit error("WriteError");                   break;
     case QSerialPort::ReadError:                    emit error("ReadError");                    break;
@@ -266,7 +274,9 @@ void SerialWidget::serial5_error(QSerialPort::SerialPortError err)
 //--------------------------------------------------------------------------------
 void SerialWidget::timer_stop(void)
 {
-    emit output(readAll()); //TODO проверить
+    QByteArray data = readAll();
+    emit readyRead();
+    emit output(data);
 }
 //--------------------------------------------------------------------------------
 QString SerialWidget::errorString(void)

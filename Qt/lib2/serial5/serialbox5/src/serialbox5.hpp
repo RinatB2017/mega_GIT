@@ -84,11 +84,11 @@ private:
     bool flag_byte_by_byte = false;
 
 #ifdef RS232_LOG
-    QPointer<LogBox>  logBox;
+    LogBox  *logBox = nullptr;
 #endif
 
 #ifdef RS232_SEND
-    QPointer<SendBox5> sendBox5;
+    SendBox5 *sendBox5 = nullptr;
 #endif
 
     void init(void);

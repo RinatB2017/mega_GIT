@@ -52,7 +52,9 @@ QPdfWidget::QPdfWidget(QWidget *pParent)
 
     // widget layout
     QVBoxLayout *pLayout = new QVBoxLayout();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     pLayout->setMargin(0);
+#endif
     pLayout->addWidget(m->pPdfJsBridge);
     setLayout(pLayout);
 }

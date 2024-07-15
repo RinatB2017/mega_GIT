@@ -22,8 +22,8 @@ QHexEditPrivate::QHexEditPrivate(QScrollArea *scrollarea, QScrollBar *vscrollbar
     this->_selpart = QHexEditPrivate::HexPart;
     this->_insmode = QHexEditPrivate::Overwrite;
 
-    connect(this->_vscrollbar, SIGNAL(valueChanged(int)), this, SLOT(onVScrollBarValueChanged(int)));
-    connect(this->_vscrollbar, SIGNAL(valueChanged(int)), this, SIGNAL(verticalScrollBarValueChanged(int)));
+    connect(this->_vscrollbar, &QScrollBar::valueChanged, this, &QHexEditPrivate::onVScrollBarValueChanged);
+    connect(this->_vscrollbar, &QScrollBar::valueChanged, this, &QHexEditPrivate::verticalScrollBarValueChanged);
 
     QFont f("Monospace", qApp->font().pointSize());
     f.setStyleHint(QFont::TypeWriter); /* Use monospace fonts! */
@@ -44,7 +44,7 @@ QHexEditPrivate::QHexEditPrivate(QScrollArea *scrollarea, QScrollBar *vscrollbar
     this->_timBlink = new QTimer();
     this->_timBlink->setInterval(QHexEditPrivate::CURSOR_BLINK_INTERVAL);
 
-    connect(this->_timBlink, SIGNAL(timeout()), this, SLOT(blinkCursor()));
+    connect(this->_timBlink, &QTimer::timeout, this, &QHexEditPrivate::blinkCursor);
     this->_timBlink->start();
 }
 
@@ -166,7 +166,7 @@ void QHexEditPrivate::setBaseAddress(qint64 ba)
 void QHexEditPrivate::setData(QHexEditData *hexeditdata)
 {
     if(this->_hexeditdata) /* Disconnect previous HexEditData Signals, if any */
-        disconnect(this->_hexeditdata, SIGNAL(dataChanged(qint64,qint64,QHexEditData::ActionType)), this, SLOT(hexEditDataChanged(qint64,qint64,QHexEditData::ActionType)));
+        disconnect(this->_hexeditdata, &QHexEditData::dataChanged, this, &QHexEditPrivate::hexEditDataChanged);
 
     if(hexeditdata)
     {
@@ -176,7 +176,7 @@ void QHexEditPrivate::setData(QHexEditData *hexeditdata)
         this->_highlighter = new QHexEditHighlighter(hexeditdata, QColor(Qt::transparent), this->palette().color(QPalette::WindowText), this);
         this->_comments = new QHexEditComments(this);
 
-        connect(hexeditdata, SIGNAL(dataChanged(qint64,qint64,QHexEditData::ActionType)), SLOT(hexEditDataChanged(qint64,qint64,QHexEditData::ActionType)));
+        connect(hexeditdata, &QHexEditData::dataChanged, this, &QHexEditPrivate::hexEditDataChanged);
 
         /* Check Max Address Width */
         QString addrString = QString("%1").arg(this->_hexeditdata->length() / QHexEditPrivate::BYTES_PER_LINE);
@@ -230,8 +230,16 @@ void QHexEditPrivate::adjust()
 {
     QFontMetrics fm = this->fontMetrics();
 
-    this->_charwidth = fm.boundingRect(" ").width();
+#if (QT_VERSION > QT_VERSION_CHECK(5, 11, 0))
+    this->_charwidth = fm.horizontalAdvance("w");
+#else
+    this->_charwidth = fm.width("w");
+#endif
+
     this->_charheight = fm.height();
+
+    //this->_charwidth  = 16;  //FIXME костыль
+    //this->_charheight = 16;  //FIXME костыль
 
     this->_xposhex =  this->_charwidth * (this->_addressWidth + 1);
     this->_xposascii = this->_xposhex + (this->_charwidth * (QHexEditPrivate::BYTES_PER_LINE * 3));
@@ -562,7 +570,7 @@ void QHexEditPrivate::processHexPart(int key)
 #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     uchar val = static_cast<uchar>(QString(key).toUInt(nullptr, 16));
 #else
-    uchar val = key;
+    uchar val = static_cast<uchar>(key);
 #endif
 
     if((this->_insmode == QHexEditPrivate::Insert) && !this->_charidx) /* Insert a new byte */
@@ -936,10 +944,10 @@ void QHexEditPrivate::drawAscii(QPainter &painter, QFontMetrics &fm, const QColo
     if(QChar(b).isPrint())
     {
 #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-        w = fm.boundingRect((int)b).width();
+        w = fm.boundingRect(b).width();
         s = QString(b);
 #else
-        w = fm.boundingRect(QChar(b)).width();
+        w = fm.boundingRect(QString("%1").arg(b)).width();
         s = QString("%1").arg(b);
 #endif
     }

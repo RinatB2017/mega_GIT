@@ -48,7 +48,7 @@ void QLongLongSpinBox::setRange(qlonglong min, qlonglong max)
 //--------------------------------------------------------------------------------
 void QLongLongSpinBox::stepBy(int steps)
 {
-    auto new_value = m_value;
+    qlonglong new_value = m_value;
     if (steps < 0 && new_value + steps > new_value)
     {
         new_value = std::numeric_limits<qlonglong>::min();

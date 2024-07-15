@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -23,7 +23,6 @@
 //--------------------------------------------------------------------------------
 #include <QLCDNumber>
 #include <QSettings>
-#include <QPointer>
 #include <QTimer>
 #include <QLabel>
 #include <QMenu>
@@ -45,7 +44,7 @@ public:
     virtual ~LCD_clock();
 
 private:
-    QPointer<QTimer> timer;
+    QTimer *timer = nullptr;
 
     int hour = 0;
     int min  = 0;

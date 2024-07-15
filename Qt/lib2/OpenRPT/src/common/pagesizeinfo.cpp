@@ -23,6 +23,7 @@
 #include <qprinter.h>
 
 static PageSizeInfo __pages[] = {
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
   PageSizeInfo("A0", QPrinter::A0, 3311, 4681),
   PageSizeInfo("A1", QPrinter::A1, 2340, 3311),
   PageSizeInfo("A2", QPrinter::A2, 1654, 2340),
@@ -53,6 +54,38 @@ static PageSizeInfo __pages[] = {
   PageSizeInfo("Legal", QPrinter::Legal, 850, 1400),
   PageSizeInfo("Letter", QPrinter::Letter, 850, 1100),
   PageSizeInfo("Tabloid", QPrinter::Tabloid, 1098, 1701),
+#else
+    PageSizeInfo("A0", QPageSize::A0, 3311, 4681),
+    PageSizeInfo("A1", QPageSize::A1, 2340, 3311),
+    PageSizeInfo("A2", QPageSize::A2, 1654, 2340),
+    PageSizeInfo("A3", QPageSize::A3, 1170, 1654),
+    PageSizeInfo("A4", QPageSize::A4, 826, 1170),
+    PageSizeInfo("A5", QPageSize::A5, 583, 826),
+    PageSizeInfo("A6", QPageSize::A6, 413, 583),
+    PageSizeInfo("A7", QPageSize::A7, 291, 413),
+    PageSizeInfo("A8", QPageSize::A8, 205, 291),
+    PageSizeInfo("A9", QPageSize::A9, 146, 205),
+    PageSizeInfo("B0", QPageSize::B0, 4055, 5732),
+    PageSizeInfo("B1", QPageSize::B1, 2866, 4055),
+    PageSizeInfo("B2", QPageSize::B2, 2028, 2866),
+    PageSizeInfo("B3", QPageSize::B3, 1433, 2028),
+    PageSizeInfo("B4", QPageSize::B4, 1013, 1433),
+    PageSizeInfo("B5", QPageSize::B5, 717, 1013),
+    PageSizeInfo("B6", QPageSize::B6, 504, 717),
+    PageSizeInfo("B7", QPageSize::B7, 358, 504),
+    PageSizeInfo("B8", QPageSize::B8, 252, 358),
+    PageSizeInfo("B9", QPageSize::B9, 177, 252),
+    PageSizeInfo("B10", QPageSize::B10, 126, 177),
+    PageSizeInfo("C5E", QPageSize::C5E, 642, 902),
+    PageSizeInfo("Comm10E", QPageSize::Comm10E, 413, 950),
+    PageSizeInfo("DLE", QPageSize::DLE, 433, 866),
+    PageSizeInfo("Executive", QPageSize::Executive, 750, 1000),
+    PageSizeInfo("Folio", QPageSize::Folio, 827, 1300),
+    PageSizeInfo("Ledger", QPageSize::Ledger, 1701, 1098),
+    PageSizeInfo("Legal", QPageSize::Legal, 850, 1400),
+    PageSizeInfo("Letter", QPageSize::Letter, 850, 1100),
+    PageSizeInfo("Tabloid", QPageSize::Tabloid, 1098, 1701),
+#endif
   PageSizeInfo()                // null page size
 };
 

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2022                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -47,7 +47,6 @@ MySplashScreen::MySplashScreen(const QPixmap &pixmap,
 
     adjustSize();
     QRect available_geom = QGuiApplication::screens()[0]->geometry();
-    // QRect available_geom = QDesktopWidget().availableGeometry();
 
     int app_left = available_geom.width() / 2 - width() / 2;
     int app_top  = available_geom.height() / 2 - height() / 2;

@@ -118,7 +118,7 @@ MQLEdit::MQLEdit(QWidget* parent)
     fileDatabaseOpenAction->setEnabled(OpenRPT::loggedIn);
     fileDatabaseSaveAsAction->setEnabled(OpenRPT::loggedIn);
 
-    _pEdit   = new ParameterEdit(this, Qt::Window);
+    _pEdit   = new ParameterEdit(this); // было ParameterEdit(this, Qt::Window);
     _log     = new LogOutput(this);
     _sql     = new LogOutput(this);
     _results = new ResultsOutput(this);

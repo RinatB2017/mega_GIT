@@ -1,7 +1,7 @@
 /*
                           qpdf
 
-    Copyright (C) 2015 Arthur Benilov,
+    Copyright (C) 2022 Arthur Benilov,
     arthur.benilov@gmail.com
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -92,7 +92,7 @@ public slots:
 
 private:
 
-    QPointer<PdfJsBridge> m_bridgePtr;
+    PdfJsBridge *m_bridgePtr = nullptr;
 };
 
 #endif // PDFJSBRIDGE_H

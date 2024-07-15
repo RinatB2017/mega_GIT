@@ -7,10 +7,10 @@ QHexEdit::QHexEdit(QWidget *parent): QFrame(parent)
     this->_hexedit_p = new QHexEditPrivate(this->_scrollarea, this->_vscrollbar);
 
     /* Forward QHexEditPrivate's Signals */
-    connect(this->_hexedit_p, SIGNAL(visibleLinesChanged()), this, SIGNAL(visibleLinesChanged()));
-    connect(this->_hexedit_p, SIGNAL(positionChanged(qint64)), this, SIGNAL(positionChanged(qint64)));
-    connect(this->_hexedit_p, SIGNAL(selectionChanged(qint64)), this, SIGNAL(selectionChanged(qint64)));
-    connect(this->_hexedit_p, SIGNAL(verticalScrollBarValueChanged(int)), this, SIGNAL(verticalScrollBarValueChanged(int)));
+    connect(this->_hexedit_p, &QHexEditPrivate::visibleLinesChanged, this, &QHexEdit::visibleLinesChanged);
+    connect(this->_hexedit_p, &QHexEditPrivate::positionChanged, this, &QHexEdit::positionChanged);
+    connect(this->_hexedit_p, &QHexEditPrivate::selectionChanged, this, &QHexEdit::selectionChanged);
+    connect(this->_hexedit_p, &QHexEditPrivate::verticalScrollBarValueChanged, this, &QHexEdit::verticalScrollBarValueChanged);
 
     this->_scrollarea->setFocusPolicy(Qt::NoFocus);
     this->_scrollarea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff); /* Do not show vertical QScrollBar!!! */

@@ -24,7 +24,7 @@ Usb::Usb(QWidget *parent) :
     MyWidget(parent)
 {
     libusb_init(nullptr);   // инициализация
-    //libusb_set_debug(nullptr, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
+    libusb_set_debug(nullptr, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
     libusb_set_option(nullptr, LIBUSB_OPTION_LOG_LEVEL, USB_DEBUG_LEVEL);
 }
 //--------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ bool Usb::f_test(void)
     return false;
 }
 //--------------------------------------------------------------------------------
-bool Usb::f_read(void)
+bool Usb::f_read(QByteArray *ba)
 {
     if(handle == nullptr)
     {
@@ -94,12 +94,12 @@ bool Usb::f_read(void)
         return false;
     }
 
-    if (libusb_kernel_driver_active(handle, interface_number))
+    if (libusb_kernel_driver_active(handle, DEV_INTF))
     {
-        libusb_detach_kernel_driver(handle, interface_number);
+        libusb_detach_kernel_driver(handle, DEV_INTF);
     }
 
-    int res = libusb_claim_interface(handle,  interface_number);
+    int res = libusb_claim_interface(handle,  DEV_INTF);
     if (res != LIBUSB_SUCCESS)
     {
         emit error(QString("Ошибка захвата интерфейса: err = %1").arg(get_error_string(res)));
@@ -110,12 +110,35 @@ bool Usb::f_read(void)
         return false;
     }
 
-    emit info("OK");
-    return true;
+    unsigned char data[DATA_SIZE];
+    int transferred = 0;
+    int ret = libusb_interrupt_transfer(handle,
+                                        ENDPOINT_IN,
+                                        data,
+                                        DATA_SIZE,
+                                        &transferred,
+                                        TIMEOUT);
+
+    if (ret == LIBUSB_SUCCESS)
+    {
+        emit info("Data received:");
+        for (int i = 0; i < transferred; i++)
+        {
+            (*ba).append(data[i]);
+        }
+        return true;
+    }
+    else
+    {
+        emit error("Transfer failed");
+        return false;
+    }
 }
 //--------------------------------------------------------------------------------
-bool Usb::f_write(void)
+bool Usb::f_write(QByteArray ba)
 {
+    int res = 0;
+
     if(handle == nullptr)
     {
         emit error("Device not open!");
@@ -123,28 +146,88 @@ bool Usb::f_write(void)
         return false;
     }
 
-    if (libusb_kernel_driver_active(handle, interface_number))
+#if 0
+    if (libusb_kernel_driver_active(handle, DEV_INTF))
     {
-        libusb_detach_kernel_driver(handle, interface_number);
+        libusb_detach_kernel_driver(handle, DEV_INTF);
     }
+#endif
 
-    int res = libusb_claim_interface(handle,  interface_number);
+#if 0
+    res = libusb_claim_interface(handle,  DEV_INTF);
     if (res != LIBUSB_SUCCESS)
     {
         emit error(QString("Ошибка захвата интерфейса: err = %1").arg(get_error_string(res)));
         return false;
     }
+#endif
 
     //---
     //Write data
-    uint8_t data[1] = { (uint8_t)0x7F };
-
     /* Send some data to the device */
-    res = libusb_control_transfer(handle, LIBUSB_REQUEST_TYPE_CLASS, 0x01, 0x0000, 0x0000, data, 1, 0);
+#if 1
+    //qDebug() << ba.toHex();
+    emit info(QString("x: 0x%1").arg(LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE | LIBUSB_ENDPOINT_OUT, 2, 16, QChar('0')));
+    emit info(QString("len: %1").arg(ba.length()));
+
+    res = libusb_control_transfer(handle,
+                                  // LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_INTERFACE | LIBUSB_ENDPOINT_OUT,
+                                  LIBUSB_REQUEST_TYPE_CLASS | LIBUSB_RECIPIENT_DEVICE | LIBUSB_ENDPOINT_OUT,
+                                  // LIBUSB_REQUEST_TYPE_VENDOR | LIBUSB_RECIPIENT_DEVICE | LIBUSB_ENDPOINT_OUT,
+                                  LIBUSB_REQUEST_SET_REPORT,
+                                  LIBUSB_HID_OUTPUT_REPORT,
+                                  DEV_INTF,
+                                  (uint8_t *)ba.data(),
+                                  ba.length(),
+                                  TIMEOUT);
+#endif
+
+#if 0
+    int actual = 0;
+    res = libusb_bulk_transfer(handle,
+                               EP_OUT,
+                               (uint8_t *)ba.data(),
+                               ba.length(),
+                               &actual,
+                               TIMEOUT);
+#endif
+
+#if 0
+    unsigned char *data = new unsigned char[4];
+    data[0]='a';
+    data[1]='b';
+    data[2]='c';
+    data[3]='d';
+    int actual = 0;
+    res = libusb_bulk_transfer(handle,
+                               EP_OUT,
+                               data,
+                               sizeof(data),
+                               &actual,
+                               TIMEOUT);
+#endif
     if(res != LIBUSB_SUCCESS)
     {
         emit error(QString("libusb_bulk_transfer (send): err = %1").arg(get_error_string(res)));
         return false;
+    }
+    else
+    {
+        length = 1;
+        /* Receive data from the device */
+        res = libusb_bulk_transfer(handle, 0x81, buf, length, &actual_length, TIMEOUT);
+        if(res != LIBUSB_SUCCESS)
+        {
+            emit error(QString("libusb_bulk_transfer (receive): err = %1").arg(get_error_string(res)));
+            return false;
+        }
+        else
+        {
+            for(int n=0; n<actual_length; n++)
+            {
+                emit info(QString("0x%1 ").arg(buf[n], 2, 16, QChar('0')));
+            }
+        }
     }
 
     emit info("OK");
@@ -171,12 +254,12 @@ bool Usb::f_send_cmd(uint8_t cmd,
         return false;
     }
 
-    if (libusb_kernel_driver_active(handle, interface_number))
+    if (libusb_kernel_driver_active(handle, DEV_INTF))
     {
-        libusb_detach_kernel_driver(handle, interface_number);
+        libusb_detach_kernel_driver(handle, DEV_INTF);
     }
 
-    int res = libusb_claim_interface(handle,  interface_number);
+    int res = libusb_claim_interface(handle,  DEV_INTF);
     if (res != LIBUSB_SUCCESS)
     {
         emit error(QString("Ошибка захвата интерфейса: err = %1").arg(get_error_string(res)));
@@ -243,15 +326,15 @@ void Usb::print_info(void)
     emit info(QString("device class: %1").arg(dev_desc.bDeviceClass));
     emit info(QString("S/N: %1").arg(dev_desc.iSerialNumber));
     emit info(QString("VID:PID: %1:%2")
-              .arg(dev_desc.idVendor,  4, 16, QChar('0'))
-              .arg(dev_desc.idProduct, 4, 16, QChar('0')));
+                  .arg(dev_desc.idVendor,  4, 16, QChar('0'))
+                  .arg(dev_desc.idProduct, 4, 16, QChar('0')));
     emit info(QString("bcdDevice: %1").arg(dev_desc.bcdDevice));
     emit info(QString("iManufacturer: %1")
-              .arg(dev_desc.iManufacturer));
+                  .arg(dev_desc.iManufacturer));
     emit info(QString("iProduct: %1")
-              .arg(dev_desc.iProduct));
+                  .arg(dev_desc.iProduct));
     emit info(QString("iSerialNumber: %1")
-              .arg(dev_desc.iSerialNumber));
+                  .arg(dev_desc.iSerialNumber));
     emit info(QString("nb confs: %1").arg(dev_desc.bNumConfigurations));
     emit info("---");
     emit info(QString("bus %1").arg(bus));
@@ -410,11 +493,11 @@ void Usb::print_devs(libusb_device **devs)
             libusb_close(handle);
         }
         emit info(QString("Bus %1 Device %2: ID %3:%4 %5")
-                  .arg(libusb_get_bus_number(dev),     3, 10, QChar('0'))
-                  .arg(libusb_get_device_address(dev), 3, 10, QChar('0'))
-                  .arg(desc.idVendor,  4, 16, QChar('0'))
-                  .arg(desc.idProduct, 4, 16, QChar('0'))
-                  .arg(iProduct));
+                      .arg(libusb_get_bus_number(dev),     3, 10, QChar('0'))
+                      .arg(libusb_get_device_address(dev), 3, 10, QChar('0'))
+                      .arg(desc.idVendor,  4, 16, QChar('0'))
+                      .arg(desc.idProduct, 4, 16, QChar('0'))
+                      .arg(iProduct));
 
     }
 }
@@ -528,8 +611,8 @@ void Usb::interrupt_transfer_loop(libusb_device_handle *handle)
             for (int n=0; n < DATA_SIZE; n++)
             {
                 emit info(QString("buf[%1] = %2")
-                          .arg(n)
-                          .arg(static_cast<int>(buf[n])));
+                              .arg(n)
+                              .arg(static_cast<int>(buf[n])));
                 cc++;
             }
         }
@@ -581,8 +664,8 @@ void Usb::bulk_transfer_loop(libusb_device_handle *handle)
             for (int n=0; n < DATA_SIZE; n++)
             {
                 emit info(QString("buf[%1] = %2")
-                          .arg(n)
-                          .arg(static_cast<int>(buf[n])));
+                              .arg(n)
+                              .arg(static_cast<int>(buf[n])));
                 cc++;
             }
         }
@@ -604,16 +687,6 @@ void Usb::bulk_transfer_loop(libusb_device_handle *handle)
 
     emit info(QString("Прошло: %1 мс").arg(mtime));
 #endif
-}
-//--------------------------------------------------------------------------------
-int Usb::get_interface_number(void)
-{
-    return interface_number;
-}
-//--------------------------------------------------------------------------------
-void Usb::set_interface_number(int value)
-{
-    interface_number = value;
 }
 //--------------------------------------------------------------------------------
 void Usb::updateText(void)

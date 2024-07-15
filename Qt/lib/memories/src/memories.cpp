@@ -26,12 +26,6 @@ Memories::Memories(QWidget *parent)
 
 }
 //--------------------------------------------------------------------------------
-//  QString("%1").arg(question.buf[n], 2, 16, QChar('0'))
-//  строка в HEX с лидирующими нулями
-//
-//  float c = 1.123456789f;
-//  emit info(QString("%1").arg(c, 0, 'f', 3));
-//--------------------------------------------------------------------------------
 void Memories::read_file(const QString &filename)
 {
     QFile file(filename);
@@ -177,6 +171,16 @@ QTime Memories::elapsed_time(int msec)
     QTime d_time = time.addMSecs(msec);
     emit debug(d_time.toString("elapsed hh:mm:ss"));
     return d_time;
+}
+//--------------------------------------------------------------------------------
+#include <QtEndian>
+uint16_t Memories::convert_array(const QByteArray &ba)
+{
+//    return qFromBigEndian<uint16_t>(ba.data());
+//    return qFromLittleEndian<uint16_t>(ba.data());
+
+    //значение со смещения 2
+    return qFromLittleEndian<quint16>(reinterpret_cast<const uchar*> (ba.data() + 2));
 }
 //--------------------------------------------------------------------------------
 bool Memories::eventFilter(QObject *obj, QEvent *event)

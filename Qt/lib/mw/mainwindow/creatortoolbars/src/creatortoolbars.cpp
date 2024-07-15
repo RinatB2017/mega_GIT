@@ -18,10 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-//#include "for_tests_mainbox.hpp"
 #include "creatortoolbars.hpp"
 #include "mywidget.hpp"
-#include "defines.hpp"
 //--------------------------------------------------------------------------------
 CreatorToolBars::CreatorToolBars(QWidget *parent) :
     CreatorWindow(parent)
@@ -33,7 +31,7 @@ CreatorToolBars::CreatorToolBars(QWidget *parent) :
 //--------------------------------------------------------------------------------
 CreatorToolBars::~CreatorToolBars()
 {
-
+    if(toolbar) delete toolbar;
 }
 //--------------------------------------------------------------------------------
 void CreatorToolBars::init(void)
@@ -131,14 +129,14 @@ void CreatorToolBars::app_toolbar_add_font(void)
 {
     QMenu *menu_fonts = new QMenu();
 
-    QAction *a_app_font = new QAction();
+    QAction *a_app_font = new QAction(this);
     a_app_font->setText("Select the font program");
     a_app_font->setToolTip("Select the font program");
     a_app_font->setStatusTip("Select the font program");
     a_app_font->setProperty(P_APP_ENG_TEXT, "Select the font program");
     connect(a_app_font, &QAction::triggered,  this,   &CreatorWindow::set_app_font);
 
-    QAction *a_log_font = new QAction();
+    QAction *a_log_font = new QAction(this);
     a_log_font->setText("Select the font logging");
     a_log_font->setToolTip("Select the font logging");
     a_log_font->setStatusTip("Select the font logging");
@@ -286,14 +284,14 @@ void CreatorToolBars::app_toolbar_add_help(void)
 //--------------------------------------------------------------------------------
 void CreatorToolBars::app_updateText(void)
 {
-    foreach (auto btn, app_buttons)
+    foreach (QAbstractButton *btn, app_buttons)
     {
         QString text = tr(btn->property(P_APP_ENG_TEXT).toString().toLocal8Bit());
         btn->setText(text);
         btn->setToolTip(text);
         btn->setStatusTip(text);
     }
-    foreach (auto action, app_actions)
+    foreach (QAction *action, app_actions)
     {
         QString text = tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit());
         action->setText(text);

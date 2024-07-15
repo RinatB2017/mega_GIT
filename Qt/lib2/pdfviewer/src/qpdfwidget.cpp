@@ -1,7 +1,7 @@
 /*
                           qpdf
 
-    Copyright (C) 2015 Arthur Benilov,
+    Copyright (C) 2022 Arthur Benilov,
     arthur.benilov@gmail.com
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -52,7 +52,7 @@ QPdfWidget::QPdfWidget(QWidget *pParent)
 
     // widget layout
     QVBoxLayout *pLayout = new QVBoxLayout();
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     pLayout->setMargin(0);
 #endif
     pLayout->addWidget(m->pPdfJsBridge);

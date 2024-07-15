@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2021                                                       **
+**     Copyright (C) 2022                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -22,6 +22,10 @@
 #define COLOR_WIDGET_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
+//--------------------------------------------------------------------------------
+#if QT_VERSION < QT_VERSION_CHECK(5,4,0)
+#   define nullptr NULL
+#endif
 //--------------------------------------------------------------------------------
 class Color_widget : public QWidget
 {

@@ -37,6 +37,16 @@ void MyListWidget::init(void)
     connect(this,   &QListWidget::customContextMenuRequested,   this,   &MyListWidget::popup);
 }
 //--------------------------------------------------------------------------------
+void MyListWidget::delete_item(void)
+{
+    QList<QListWidgetItem*> items = selectedItems();
+    foreach(QListWidgetItem* item, items)
+    {
+        removeItemWidget(item);
+        delete item;
+    }
+}
+//--------------------------------------------------------------------------------
 void MyListWidget::popup(QPoint)
 {
     QMenu *popup_menu = new QMenu(this);

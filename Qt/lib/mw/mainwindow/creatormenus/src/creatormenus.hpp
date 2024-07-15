@@ -22,6 +22,7 @@
 #define CREATORMENUS_HPP
 //--------------------------------------------------------------------------------
 #include <QMenuBar>
+#include <QMenu>
 //--------------------------------------------------------------------------------
 #include "creatortoolbars.hpp"
 //--------------------------------------------------------------------------------
@@ -54,15 +55,15 @@ public:
     bool add_helpmenu_separator(int pos_y);
 
 private:
-    QPointer<QMenuBar> app_mainBar;
+    QMenuBar *app_mainBar = nullptr;
 
     QList<QMenu   *> app_menus;
     QList<QAction *> app_actions;
 
-    QPointer<QMenu> m_app_filemenu;
-    QPointer<QMenu> m_app_optionsmenu;
-//    QPointer<QMenu> m_app_windowsmenu;
-    QPointer<QMenu> m_app_helpmenu;
+    QMenu *m_app_filemenu = nullptr;
+    QMenu *m_app_optionsmenu = nullptr;
+//    QMenu m_app_windowsmenu = nullptr;
+    QMenu *m_app_helpmenu = nullptr;
 
     void init(void);
 
@@ -78,6 +79,8 @@ private:
 #endif
     void app_menu_add_confirm_exit(QMenu *menu);
     void app_menu_add_show_on_top(QMenu *menu);
+    void app_menu_add_move_on_center(QMenu *menu);
+    void app_menu_add_tabify_all_docs(QMenu *menu);
     void app_menu_add_about(QMenu *menu);
     void app_menu_add_help(QMenu *menu);
 

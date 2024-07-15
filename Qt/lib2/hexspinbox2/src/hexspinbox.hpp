@@ -7,6 +7,10 @@
 
 #include <QSpinBox>
 
+#if QT_VERSION < QT_VERSION_CHECK(5,4,0)
+#   define nullptr NULL
+#endif
+
 class HexSpinBox : public QSpinBox
 {
     Q_OBJECT

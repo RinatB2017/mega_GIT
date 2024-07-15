@@ -531,7 +531,11 @@ void tGraph::draw(QPainter & paint) {
     while(dlit.hasNext())
     {
         dlit.next();
-        tlh = qMax(sin45deg * fm.horizontalAdvance(dlit.value().first), tlh);
+#if (QT_VERSION > QT_VERSION_CHECK(5, 11, 0))
+        tlh = qMax(sin45deg * fm. horizontalAdvance(dlit.value().first), tlh);
+#else
+        tlh = qMax(sin45deg * fm.width(dlit.value().first), tlh);
+#endif
     }
     // don't change this variable as we use it later
     int th = (tlh == 0.0 ? 0 : static_cast<int>(tlh + (fm.height() * sin45deg)) + 2);
@@ -556,8 +560,13 @@ void tGraph::draw(QPainter & paint) {
     QString org_str = ( minValue() == 0.0 ? QString() : QString("0") );
     QString max_str = QString().asprintf("%-.0f",maxValue());
 
+#if (QT_VERSION > QT_VERSION_CHECK(5, 11, 0))
     int width = qMax(fm.horizontalAdvance(min_str), fm.horizontalAdvance(max_str));
     if(org_str.length() > 0) width = qMax(width, fm.horizontalAdvance(org_str));
+#else
+    int width = qMax(fm.width(min_str), fm.width(max_str));
+    if(org_str.length() > 0) width = qMax(width, fm.width(org_str));
+#endif
 
     gx1 += width;
 
@@ -567,16 +576,28 @@ void tGraph::draw(QPainter & paint) {
 
     paint.setFont(valueFont());
     int tfa = Qt::AlignTop | Qt::AlignRight;
+#if (QT_VERSION > QT_VERSION_CHECK(5, 11, 0))
     paint.drawText(gx1 - fm.horizontalAdvance(min_str), gy_min, fm.horizontalAdvance(min_str), fm.height(), tfa, min_str);
+#else
+    paint.drawText(gx1 - fm.width(min_str), gy_min, fm.width(min_str), fm.height(), tfa, min_str);
+#endif
     paint.drawLine(gx1 - 3, gy_min, gx1 + 2, gy_min);
+#if (QT_VERSION > QT_VERSION_CHECK(5, 11, 0))
     paint.drawText(gx1 - fm.horizontalAdvance(max_str), gy_max, fm.horizontalAdvance(max_str), fm.height(), tfa, max_str);
+#else
+    paint.drawText(gx1 - fm.width(max_str), gy_max, fm.width(max_str), fm.height(), tfa, max_str);
+#endif
     paint.drawLine(gx1 - 3, gy_max, gx1 + 2, gy_max);
     int gheight = gy2 - gy1;
     double grng = maxValue() - minValue();
     if(org_str.length() > 0) {
         double perc = (0 - minValue()) / grng;
         gy_org = gy2 - static_cast<int>(perc * static_cast<double>(gheight));
+#if (QT_VERSION > QT_VERSION_CHECK(5, 11, 0))
         paint.drawText(gx1 - fm.horizontalAdvance(org_str), gy_org, fm.horizontalAdvance(org_str), fm.height(), tfa, org_str);
+#else
+        paint.drawText(gx1 - fm.width(org_str), gy_org, fm.width(org_str), fm.height(), tfa, org_str);
+#endif
         paint.drawLine(gx1 - 3, gy_org, gx1 + 2, gy_org);
     }
 
@@ -626,7 +647,11 @@ void tGraph::draw(QPainter & paint) {
                 last_label_at = pos + refwidth_div_2;
                 int lx = static_cast<int>(((pos + refwidth_div_2) * cos45deg) - ((gy2 + label_offset) * sin45deg));
                 int ly = static_cast<int>(((pos + refwidth_div_2) * sin45deg) + ((gy2 + label_offset) * cos45deg));
+#if (QT_VERSION > QT_VERSION_CHECK(5, 11, 0))
                 int fmwidth = fm.horizontalAdvance(label);
+#else
+                int fmwidth = fm.width(label);
+#endif
                 paint.save();
                 paint.rotate(-45);
                 paint.drawText(lx - fmwidth, ly - fmheight_div_2, fmwidth, fmheight, Qt::AlignRight | Qt::AlignTop, label);

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2022                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -21,18 +21,24 @@
 #include "helpbrowser.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-HelpBrowser::HelpBrowser(QString &page,
+HelpBrowser::HelpBrowser(const QString &page,
                          QWidget *parent)
     : QWidget(parent)
 {
     textBrowser = new QTextBrowser(this);
+    Q_ASSERT(textBrowser);
     homeButton  = new QPushButton(QObject::tr("Home"), this);
+    Q_ASSERT(homeButton);
     backButton  = new QPushButton(QObject::tr("Back"), this);
+    Q_ASSERT(backButton);
     closeButton = new QPushButton(QObject::tr("Close"), this);
+    Q_ASSERT(closeButton);
 
     QVBoxLayout *mainLayout = new QVBoxLayout();
+    Q_ASSERT(mainLayout);
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
+    Q_ASSERT(buttonLayout);
     buttonLayout->addWidget(homeButton);
     buttonLayout->addWidget(backButton);
     buttonLayout->addStretch(1);
@@ -75,7 +81,8 @@ void HelpBrowser::setCaption(const QString &caption)
     setWindowTitle(caption);
 }
 //--------------------------------------------------------------------------------
-void HelpBrowser::showPage(QString page, bool is_maximized)
+void HelpBrowser::showPage(const QString &page,
+                           bool is_maximized)
 { 
     HelpBrowser *browser = new HelpBrowser(page);
     browser->resize(640, 480);

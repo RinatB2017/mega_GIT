@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2014                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -260,6 +260,27 @@ uint8_t CRC::crc8(uint8_t *pcBlock, uint8_t len)
         crc = Crc8Table[crc ^ *pcBlock++];
 
     return crc;
+}
+//--------------------------------------------------------------------------------
+int8_t CRC::crc8(int8_t *buf, int offset, int length)
+{
+    int startindex = 0;
+    int l;
+    if (offset < length) {
+        startindex = offset;//buf+=offset;
+        l = length - offset;
+    } else
+        l = length;
+    uint32_t crc = 0xff;
+    int i = 0;
+    while (l-- != 0) {
+        crc ^= buf[startindex++];
+        for (i = 0; i < 8; i++)
+            crc = (crc & 0x80) != 0 ?
+                        ((crc << 1) & 0xff) ^ 0x31 :
+                        (crc << 1) & 0xff;
+    }
+    return (int8_t)crc;
 }
 //--------------------------------------------------------------------------------
 uint8_t CRC::pelco_crc8(uint8_t *pcBlock, uint8_t len)

@@ -32,8 +32,13 @@
 
 #include "parameterproperties.h"
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 6, 0)
 ParameterEdit::ParameterEdit(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+#else
+ParameterEdit::ParameterEdit(QWidget* parent)
+    : QWidget(parent)
+#endif
 {
     setupUi(this);
 

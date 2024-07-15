@@ -26,6 +26,10 @@
 #include <QKeyEvent>
 #include <QMenu>
 //--------------------------------------------------------------------------------
+#if QT_VERSION < QT_VERSION_CHECK(5,4,0)
+#   define nullptr NULL
+#endif
+//--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
@@ -45,6 +49,9 @@ public:
 private:
     void init(void);
     void popup(QPoint);
+
+private slots:
+    void delete_item(void);
 
 protected:
     void keyPressEvent(QKeyEvent *event);

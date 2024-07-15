@@ -8,8 +8,7 @@ INCLUDEPATH = $$DEPENDPATH
 HEADERS += \
   ftdi.h \
   ftdi_i.h \
-  ftdi_version_i.h \
-  ftd2xx.h
+  ftdi_version_i.h
   
 SOURCES += ftdi.c
 

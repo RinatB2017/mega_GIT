@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2022                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -23,7 +23,6 @@
 //--------------------------------------------------------------------------------
 #include <QTextCodec>
 #include <QTextEdit>
-#include <QPointer>
 #include <QDialog>
 //--------------------------------------------------------------------------------
 #if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
@@ -57,7 +56,7 @@ public:
 private:
     Ui::Log_options *ui;
     QStringList codecs;
-    QPointer<QTextEdit> logEdit;
+    QTextEdit *logEdit = nullptr;
 
     QString autosave_filename = "noname.log";
 

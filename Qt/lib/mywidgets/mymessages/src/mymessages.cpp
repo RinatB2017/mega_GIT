@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -52,6 +52,13 @@ int MyMessages::messagebox_info(const QString &title,
     QSpacerItem* horizontalSpacer = new QSpacerItem(static_cast<int>(width), 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
     QGridLayout* layout = static_cast<QGridLayout *>(msgBox.layout());
     layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+    QSound::play(":/music/info.wav");
+#else
+    QSoundEffect player;
+    player.setSource(QUrl::fromLocalFile(":/music/info.wav"));
+    player.play();
+#endif
     return msgBox.exec();
 }
 //--------------------------------------------------------------------------------
@@ -60,10 +67,7 @@ int MyMessages::messagebox_question(const QString &title,
                                     unsigned int width)
 {
     QMessageBox msgBox;
-
-    //msgBox.setIconPixmap(QPixmap(":/qmessagebox/qmessagebox-quest.png"));
     msgBox.setIcon(QMessageBox::Question);
-
     msgBox.setWindowTitle(title);
     msgBox.setText(text);
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
@@ -71,6 +75,13 @@ int MyMessages::messagebox_question(const QString &title,
     QSpacerItem* horizontalSpacer = new QSpacerItem(static_cast<int>(width), 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
     QGridLayout* layout = static_cast<QGridLayout *>(msgBox.layout());
     layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+    QSound::play(":/music/question.wav");
+#else
+    QSoundEffect player;
+    player.setSource(QUrl::fromLocalFile(":/music/question.wav"));
+    player.play();
+#endif
     return msgBox.exec();
 }
 //--------------------------------------------------------------------------------
@@ -86,6 +97,13 @@ int MyMessages::messagebox_critical(const QString &title,
     QSpacerItem* horizontalSpacer = new QSpacerItem(static_cast<int>(width), 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
     QGridLayout* layout = static_cast<QGridLayout *>(msgBox.layout());
     layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+    QSound::play(":/music/critical.wav");
+#else
+    QSoundEffect player;
+    player.setSource(QUrl::fromLocalFile(":/music/critical.wav"));
+    player.play();
+#endif
     return msgBox.exec();
 }
 //--------------------------------------------------------------------------------
@@ -101,6 +119,13 @@ int MyMessages::messagebox_warning(const QString &title,
     QSpacerItem* horizontalSpacer = new QSpacerItem(static_cast<int>(width), 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
     QGridLayout* layout = static_cast<QGridLayout *>(msgBox.layout());
     layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+    QSound::play(":/music/warning.wav");
+#else
+    QSoundEffect player;
+    player.setSource(QUrl::fromLocalFile(":/music/warning.wav"));
+    player.play();
+#endif
     return msgBox.exec();
 }
 //--------------------------------------------------------------------------------

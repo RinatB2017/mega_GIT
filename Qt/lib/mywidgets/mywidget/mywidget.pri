@@ -6,6 +6,8 @@ DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
+QT  += multimedia
+
 HEADERS += \
     mywidget.hpp \
     imywidget.hpp

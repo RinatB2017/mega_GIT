@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2022                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -123,7 +123,7 @@ private slots:
     void find_next(const QString &text);
 
 private:
-    QTextEdit* logBox = nullptr;
+    QTextEdit *logBox = nullptr;
 
     QString o_name;
 
@@ -143,10 +143,10 @@ private:
     QTextCodec *current_codec = nullptr;
 #endif
 
-    QPointer<QProgressBar> progressBar;
-    QPointer<QHBoxLayout> hbox;
-    QPointer<QVBoxLayout> vbox;
-    QPointer<QHBoxLayout> mainbox;
+    QProgressBar *progressBar = nullptr;
+    QHBoxLayout *hbox = nullptr;
+    QVBoxLayout *vbox = nullptr;
+    QHBoxLayout *mainbox = nullptr;
 
     FindBox *fb = nullptr;
 

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -23,6 +23,8 @@
 //--------------------------------------------------------------------------------
 #include <QWidget>
 //--------------------------------------------------------------------------------
+#include "docker_mover.hpp"
+//--------------------------------------------------------------------------------
 #ifdef Q_DEBUG
 #   include <QDebug>
 #endif
@@ -43,10 +45,7 @@ private:
     Ui::Dock_position *ui;
     QString dock_name = "dock_name";
 
-    void move_up(void);
-    void move_down(void);
-    void move_left(void);
-    void move_right(void);
+    void show_dlg(void);
 };
 //--------------------------------------------------------------------------------
 #endif // DOCK_POSITION_HPP

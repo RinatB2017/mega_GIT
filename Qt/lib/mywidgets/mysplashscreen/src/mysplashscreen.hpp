@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2022                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -25,7 +25,6 @@
 #include <QSplashScreen>
 #include <QProgressBar>
 #include <QVBoxLayout>
-#include <QPointer>
 #include <QPixmap>
 #include <QScreen>
 #include <QEvent>
@@ -48,7 +47,7 @@ public slots:
                      const QColor &color = Qt::black);
 
 private:
-    QPointer<QProgressBar> progress;
+    QProgressBar *progress = nullptr;
     int current_progress = 0;
     int max_progress = 0;
     

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -56,6 +56,10 @@ void myMessageOutput(QtMsgType type,
 #ifndef NO_LOG_QTRACE
         if(logger) logger->sender_fatal(msg);
 #endif
+        break;
+
+    default:
+        if(logger) logger->sender_info(msg);
         break;
     }
     Q_UNUSED(context);

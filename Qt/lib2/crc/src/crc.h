@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2014                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -22,15 +22,20 @@
 #define CRC_H
 //--------------------------------------------------------------------------------
 #include <QtGlobal>
+#ifdef Q_OS_WIN
+#   include <stdint.h>
+#endif
 //--------------------------------------------------------------------------------
 // для винды не надо включать winsock2.h и надо добавить в проект
 // DEFINES += WIN32_LEAN_AND_MEAN
 //--------------------------------------------------------------------------------
 #ifdef Q_OS_LINUX
-//#   define htons(n) (uint16_t)((((uint16_t) (n)) << 8) | (((uint16_t) (n)) >> 8))
-//#   define htonl(n) (uint32_t)((((uint32_t) (n)) << 16) | (((uint32_t) (n)) >> 16))
 #   define htons(n) static_cast<uint16_t>((static_cast<uint16_t>(n) << 8)  | (static_cast<uint16_t>(n) >> 8))
 #   define htonl(n) static_cast<uint32_t>((static_cast<uint32_t>(n) << 16) | (static_cast<uint32_t>(n) >> 16))
+#endif
+#ifdef Q_OS_WIN
+#   define htons(n) (uint16_t)((((uint16_t) (n)) << 8) | (((uint16_t) (n)) >> 8))
+#   define htonl(n) (uint32_t)((((uint32_t) (n)) << 16) | (((uint32_t) (n)) >> 16))
 #endif
 //--------------------------------------------------------------------------------
 class CRC
@@ -39,6 +44,7 @@ public:
     static uint8_t  pelco_crc8(uint8_t *pcBlock, uint8_t len);
 
     static uint8_t  crc8(uint8_t *pcBlock, uint8_t len);
+    static int8_t   crc8(int8_t *buf, int offset, int length);
     static uint16_t crc16(uint8_t *pcBlock, uint16_t len);
     static uint32_t crc32(const char *buf, size_t len);
     static uint16_t modbus_crc16(uint8_t *pcBlock, uint16_t len);

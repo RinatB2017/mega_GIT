@@ -34,13 +34,13 @@
 #include <QList>
 #include <QTime>
 #include <QPen>
+
+#include <QtGlobal>
+#ifdef Q_OS_WIN
+#   include <stdint.h>
+#endif
 //--------------------------------------------------------------------------------
 #include "myfiledialog.hpp"
-//--------------------------------------------------------------------------------
-#if 0
-    connect(ui->sb_1,   static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged),
-    this,               &Check_in_widget::check_in);
-#endif
 //--------------------------------------------------------------------------------
 class Memories : public QWidget
 {
@@ -67,6 +67,8 @@ public:
 
     QTime diff_time(QTime time_0, QTime time_1);
     QTime elapsed_time(int msec);
+
+    uint16_t convert_array(const QByteArray &ba);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2022                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -24,7 +24,6 @@
 #include <QGuiApplication>
 #include <QTextBrowser>
 #include <QPushButton>
-#include <QPointer>
 #include <QScreen>
 #include <QWidget>
 #include <QEvent>
@@ -36,21 +35,21 @@ class HelpBrowser : public QWidget
 { 
     Q_OBJECT
 public: 
-    explicit HelpBrowser(QString &page,
+    explicit HelpBrowser(const QString &page,
                          QWidget *parent = nullptr);
     virtual ~HelpBrowser();
 
-    static void showPage(QString page,
+    static void showPage(const QString &page,
                          bool is_maximized = true);
 
 private slots: 
     void updateCaption(QUrl);
 
 private:
-    QPointer<QTextBrowser> textBrowser;
-    QPointer<QPushButton>  homeButton;
-    QPointer<QPushButton>  backButton;
-    QPointer<QPushButton>  closeButton;
+    QTextBrowser *textBrowser = nullptr;
+    QPushButton  *homeButton = nullptr;
+    QPushButton  *backButton = nullptr;
+    QPushButton  *closeButton = nullptr;
 
     void setCaption(const QString &caption);
 

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -56,7 +56,10 @@ void MySettings::init(void)
 #ifndef SAVE_INI
     settings = new QSettings(ORGNAME, app_name);
 #else
-    settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
+    settings = new QSettings(QString("%1%2")
+                             .arg(app_name)
+                             .arg(".ini"),
+                             QSettings::IniFormat);
 #endif
 }
 //--------------------------------------------------------------------------------
@@ -247,14 +250,30 @@ bool MySettings::load_property(QWidget *widget, const QString &property_name)
 {
     Q_ASSERT(widget);
 
-    //TODO костыль, надо сделать нормально
+    //TODO временный костыль
     QLabel *label = dynamic_cast<QLabel *>(widget);
     if(label)
     {
         return false;
     }
+    QPushButton *pb = dynamic_cast<QPushButton *>(widget);
+    if(pb)
+    {
+        return false;
+    }
+    QToolButton *tb = dynamic_cast<QToolButton *>(widget);
+    if(tb)
+    {
+        return false;
+    }
     QSpinBox *sb = dynamic_cast<QSpinBox *>(widget);
     if(sb)
+    {
+        if(property_name == "text")
+            return false;
+    }    
+    QDoubleSpinBox *dsb = dynamic_cast<QDoubleSpinBox *>(widget);
+    if(dsb)
     {
         if(property_name == "text")
             return false;
@@ -270,6 +289,7 @@ bool MySettings::load_property(QWidget *widget, const QString &property_name)
     {
         return false;
     }
+
     bool ok = widget->setProperty(property_name.toLocal8Bit(), property);
     return ok;
 }
@@ -278,7 +298,7 @@ bool MySettings::save_property(QWidget *widget, const QString &property_name)
 {
     Q_ASSERT(widget);
 
-    //TODO костыль, надо сделать нормально
+    //TODO временный костыль
     QLabel *label = dynamic_cast<QLabel *>(widget);
     if(label)
     {
@@ -286,6 +306,12 @@ bool MySettings::save_property(QWidget *widget, const QString &property_name)
     }
     QSpinBox *sb = dynamic_cast<QSpinBox *>(widget);
     if(sb)
+    {
+        if(property_name == "text")
+            return false;
+    }
+    QDoubleSpinBox *dsb = dynamic_cast<QDoubleSpinBox *>(widget);
+    if(dsb)
     {
         if(property_name == "text")
             return false;
@@ -508,7 +534,7 @@ bool MySettings::compare_name(const char *widget_name, QString class_name)
     Q_ASSERT(widget_name);
     int res = strncmp(widget_name,
                       class_name.toLocal8Bit(),
-                      static_cast<size_t>(class_name.length())); //count
+                      static_cast<size_t>(class_name.length()));    //count
     return (res == 0);
 }
 //--------------------------------------------------------------------------------

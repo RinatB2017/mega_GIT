@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -24,6 +24,13 @@
 #include <QMessageBox>
 #include <QSpacerItem>
 #include <QGridLayout>
+#include <QSizePolicy>
+
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+#   include <QSound>
+#else
+#   include <QSoundEffect>
+#endif
 //--------------------------------------------------------------------------------
 #define MESSAGEBOX_WIDTH    320
 //--------------------------------------------------------------------------------

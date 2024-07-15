@@ -23,7 +23,6 @@
 //--------------------------------------------------------------------------------
 #include <QStandardItemModel>
 #include <QDateTime>
-#include <QPointer>
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #define P_SYSLOG_VALUE "value"
@@ -82,7 +81,7 @@ private:
     Ui::SysLog *ui;
     QList<syslog_t> l_syslog;
 
-    QPointer<QStandardItemModel> model;
+    QStandardItemModel *model = nullptr;
 
     QString syslog_to_str(int level);
     void add_test_data(int level);

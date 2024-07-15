@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -21,8 +21,14 @@
 #ifndef CONNECTION_HPP
 #define CONNECTION_HPP
 //--------------------------------------------------------------------------------
-#include <stdint.h>
 #include <QObject>
+//--------------------------------------------------------------------------------
+#ifdef Q_OS_LINUX
+#   include <stdint.h>
+#endif
+#ifdef Q_OS_WIN
+#   include <stdint.h>
+#endif
 //--------------------------------------------------------------------------------
 class Connection : public QObject
 {
@@ -46,6 +52,9 @@ public:
     static uint32_t get_uint32_value(void);
     static int32_t  get_int32_value(void);
 
+    static void set_int_value(int value);
+    static int  get_int_value(void);
+
 private:
     explicit Connection(QObject *parent = nullptr);
 
@@ -57,6 +66,8 @@ private:
     static int16_t  value_int16;
     static uint32_t value_uint32;
     static int32_t  value_int32;
+
+    static int      value_int;
 };
 //--------------------------------------------------------------------------------
 #endif

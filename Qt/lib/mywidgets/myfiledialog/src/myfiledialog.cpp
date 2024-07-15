@@ -31,7 +31,7 @@ MyFileDialog::MyFileDialog(const QString &text_name,
     setOption(MyFileDialog::DontUseNativeDialog, false);
     setObjectName(oName);
 
-    beginGroup(text_name);
+    beginGroup(gName);
     dir = load_value(oName, QDir::homePath()).toString();
     bool ok;
     int w = load_value("width").toInt(&ok);

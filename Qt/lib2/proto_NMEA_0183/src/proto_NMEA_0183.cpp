@@ -257,6 +257,25 @@ int Proto_NMEA_0183::check_id_message(const QString &data)
 //--------------------------------------------------------------------------------
 int Proto_NMEA_0183::check_message(QString data)
 {
+    int res;
+
+    QStringList sl = data.split(",");
+    if(sl.count() < 2)
+    {
+        return E_ERROR_UNKNOWN_MESSAGE;
+    }
+
+    res = parse_message_GGA(data);
+    if(res == E_NO_ERROR)   return res;
+
+    res = parse_message_GSA(data);
+    if(res == E_NO_ERROR)   return res;
+
+    return E_ERROR_FORMAT_MESSAGE;
+}
+//--------------------------------------------------------------------------------
+int Proto_NMEA_0183::check_message_old(QString data)
+{
     QStringList sl;
     int id_message;
 
@@ -390,19 +409,12 @@ int Proto_NMEA_0183::calc_latitude(const QString &data,
         return E_NO_ERROR;
     }
 
-    if(data.length() < 9)
-    {
-        return E_ERROR_FORMAT_MESSAGE;
-    }
-
-    // «GGMM.MM» — широта. 2 цифры градусов(«GG»), 2 цифры целых минут, точка и дробная часть минут переменной длины. Лидирующие нули не опускаются.
     ok = string_to_int(data.mid(0, 2), grad);
     if(!ok)
     {
         return E_ERROR_FORMAT_MESSAGE;
     }
-
-    ok = string_to_float(data.mid(2), min);
+    ok = string_to_float(data.left(2), min);
     if(!ok)
     {
         return E_ERROR_FORMAT_MESSAGE;
@@ -542,9 +554,9 @@ int Proto_NMEA_0183::parse_message_GGA(const QString &data)
     emit debug("parse_message_GGA");
 
     sl = data.split(",");
-    if(sl.count() == 0)
+    if(sl.count() != 15)
     {
-        emit debug("sl.count() == 0");
+        emit debug("sl.count() != 15");
         return E_ERROR_UNKNOWN_MESSAGE;
     }
 
@@ -669,6 +681,11 @@ int Proto_NMEA_0183::parse_message_GSA(const QString &data)
 
     ok = string_to_float(sl.at(16), &HDOP);
     if(!ok)
+    {
+        return E_ERROR_FORMAT_MESSAGE;
+    }
+
+    if(sl.at(17).isEmpty())
     {
         return E_ERROR_FORMAT_MESSAGE;
     }

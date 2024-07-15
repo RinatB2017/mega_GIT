@@ -304,28 +304,16 @@ bool parseReportFont(const QDomElement & elemSource, QFont & fontTarget)
                 else if (elemThis.tagName() == "weight")
                 {
                     if (elemThis.text() == "normal")
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-                        fontTarget.setWeight(50);
-#else
-                        fontTarget.setWeight(QFont::Normal);
-#endif
+                        fontTarget.setWeight(QFont::Normal);   //fontTarget.setWeight(50);
                     else if (elemThis.text() == "bold")
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-                        fontTarget.setWeight(75);
-#else
-                        fontTarget.setWeight(QFont::Bold);
-#endif
+                        fontTarget.setWeight(QFont::Bold);   //fontTarget.setWeight(75);
                     else
                     {
                         // This is where we want to convert the string to an int value
                         // that should be between 1 and 100
                         intTemp = elemThis.text().toInt(&valid);
                         if(valid && intTemp >= 1 && intTemp <= 100)
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-                            fontTarget.setWeight(intTemp);
-#else
-                            fontTarget.setWeight(QFont::Normal);
-#endif
+                            fontTarget.setWeight(QFont::Normal);  //fontTarget.setWeight(intTemp);
                         else
                             qDebug("Text not Parsed at <font>:%s\n", elemThis.text().toLatin1().data());
                     }

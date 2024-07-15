@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2022                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -84,11 +84,12 @@ void AboutBox::show_env(void)
 {
     QStringList sl = QProcessEnvironment::systemEnvironment().toStringList();
     QTextEdit *te = new QTextEdit();
+    Q_ASSERT(te);
     te->setObjectName("te");
     te->setWindowModality(Qt::WindowModal);
     te->setMinimumSize(800, 600);
     te->setReadOnly(true);
-    foreach (auto text, sl)
+    foreach (QString text, sl)
     {
         te->append(text);
     }
@@ -151,7 +152,7 @@ void AboutBox::set_programmName(const QString &value)
 void AboutBox::set_version(const QString &value)
 {
     version = value;
-    ui->lbl_version->setText(QString(tr("version %1")).arg(version));
+    ui->lbl_version->setText(QString("version %1").arg(version));
 }
 //--------------------------------------------------------------------------------
 void AboutBox::set_email(const QString &value)

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -33,10 +33,6 @@ Dock_position::Dock_position(const QString &doc_name, QWidget *parent) :
 #ifndef NORMAL_BUTTONS
     int size = 24;
     ui->btn_show->setFixedSize(size, size);
-    ui->btn_up->setFixedSize(size, size);
-    ui->btn_down->setFixedSize(size, size);
-    ui->btn_left->setFixedSize(size, size);
-    ui->btn_right->setFixedSize(size, size);
 
     ui->buttons_layout->setContentsMargins(0, 0, 0, 0);
     ui->buttons_layout->setSpacing(0);
@@ -44,16 +40,8 @@ Dock_position::Dock_position(const QString &doc_name, QWidget *parent) :
 
     ui->btn_show->setToolTip(QObject::tr("Show buttons"));
 
-    connect(ui->btn_show,   &QToolButton::toggled,  ui->btn_up,     &QToolButton::setVisible);
-    connect(ui->btn_show,   &QToolButton::toggled,  ui->btn_down,   &QToolButton::setVisible);
-    connect(ui->btn_show,   &QToolButton::toggled,  ui->btn_left,   &QToolButton::setVisible);
-    connect(ui->btn_show,   &QToolButton::toggled,  ui->btn_right,  &QToolButton::setVisible);
-    ui->btn_show->toggled(false);
-
-    connect(ui->btn_up,     &QToolButton::clicked,  this,   &Dock_position::move_up);
-    connect(ui->btn_down,   &QToolButton::clicked,  this,   &Dock_position::move_down);
-    connect(ui->btn_left,   &QToolButton::clicked,  this,   &Dock_position::move_left);
-    connect(ui->btn_right,  &QToolButton::clicked,  this,   &Dock_position::move_right);
+    connect(ui->btn_show,   &QToolButton::clicked,
+            this,           &Dock_position::show_dlg);
 }
 //--------------------------------------------------------------------------------
 Dock_position::~Dock_position()
@@ -61,96 +49,49 @@ Dock_position::~Dock_position()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Dock_position::move_up(void)
+void Dock_position::show_dlg(void)
 {
-    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
+    MainWindow *mw = reinterpret_cast<MainWindow *>(QApplication::activeWindow());
     if(mw)
     {
         QDockWidget *dw = mw->findChild<QDockWidget *>(dock_name);
         if(dw)
         {
-            mw->addDockWidget(Qt::TopDockWidgetArea, dw);
+            Docker_mover *dm = new Docker_mover();
+            Q_ASSERT(dm);
+            dm->setWindowFlags(Qt::WindowCloseButtonHint);
+            int btn = dm->exec();
+            if(btn == QDialog::Accepted)
+            {
+                DOCKER_STATES state = dm->get_state();
+                switch(state)
+                {
+                case UP:
+                    mw->addDockWidget(Qt::TopDockWidgetArea, dw);
+                    break;
+
+                case DOWN:
+                    mw->addDockWidget(Qt::BottomDockWidgetArea, dw);
+                    break;
+
+                case LEFT:
+                    mw->addDockWidget(Qt::LeftDockWidgetArea, dw);
+                    break;
+
+                case RIGHT:
+                    mw->addDockWidget(Qt::RightDockWidgetArea, dw);
+                    break;
+
+                default:
+                    break;
+                }
+            }
         }
     }
     else
     {
 #ifdef Q_DEBUG
-        qDebug() sl.append("mw is null!";
-#endif
-    }
-}
-//--------------------------------------------------------------------------------
-void Dock_position::move_down(void)
-{
-    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        QDockWidget *dw = mw->findChild<QDockWidget *>(dock_name);
-        if(dw)
-        {
-            mw->addDockWidget(Qt::BottomDockWidgetArea, dw);
-        }
-        else
-        {
-#ifdef Q_DEBUG
-            qDebug() << dock_name sl.append("not found!";
-#endif
-        }
-    }
-    else
-    {
-#ifdef Q_DEBUG
-        qDebug() sl.append("mw is null!";
-#endif
-    }
-}
-//--------------------------------------------------------------------------------
-void Dock_position::move_left(void)
-{
-    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        QDockWidget *dw = mw->findChild<QDockWidget *>(dock_name);
-        if(dw)
-        {
-            mw->addDockWidget(Qt::LeftDockWidgetArea, dw);
-        }
-        else
-        {
-#ifdef Q_DEBUG
-            qDebug() << dock_name sl.append("not found!";
-#endif
-        }
-    }
-    else
-    {
-#ifdef Q_DEBUG
-        qDebug() sl.append("mw is null!";
-#endif
-    }
-}
-//--------------------------------------------------------------------------------
-void Dock_position::move_right(void)
-{
-    MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
-    if(mw)
-    {
-        QDockWidget *dw = mw->findChild<QDockWidget *>(dock_name);
-        if(dw)
-        {
-            mw->addDockWidget(Qt::RightDockWidgetArea, dw);
-        }
-        else
-        {
-#ifdef Q_DEBUG
-            qDebug() << dock_name sl.append("not found!";
-#endif
-        }
-    }
-    else
-    {
-#ifdef Q_DEBUG
-        qDebug() sl.append("mw is null!";
+        qDebug() << "mw is null!";
 #endif
     }
 }

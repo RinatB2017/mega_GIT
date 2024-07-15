@@ -1,6 +1,6 @@
 ﻿/*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2017                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -25,6 +25,7 @@
 #include <QMdiSubWindow>
 #include <QStyleFactory>
 #include <QApplication>
+#include <QApplication>
 #include <QDockWidget>
 #include <QFontDialog>
 #include <QCloseEvent>
@@ -35,12 +36,16 @@
 #include <QMdiArea>
 #include <QtGlobal>
 #include <QMenuBar>
+#include <QWidget>
+#include <QLabel>
 #include <QMenu>
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+#   include <QDesktopWidget>
+#endif
 //--------------------------------------------------------------------------------
 #include "dock_position.hpp"
 #include "helpbrowser.hpp"
 #include "aboutbox.hpp"
-#include "defines.hpp"
 //--------------------------------------------------------------------------------
 #include "syslog.hpp"
 #include "logbox.hpp"
@@ -113,12 +118,12 @@
 #define P_RU    "RU"
 //--------------------------------------------------------------------------------
 typedef struct {
-    QPointer<QTranslator> translator_obj;   // new QTranslator
-    QString translator_file;                // :/lang/lang_ru.qm
-    QString locale_name;                    // ru_RU
-    QString language;                       // Russian
-    QString property;                       // RU
-    QString icon_name;                      // P_ICON_RU
+    QTranslator *translator_obj;    // new QTranslator
+    QString translator_file;        // :/lang/lang_ru.qm
+    QString locale_name;            // ru_RU
+    QString language;               // Russian
+    QString property;               // RU
+    QString icon_name;              // P_ICON_RU
 } TRANSLATOR;
 //--------------------------------------------------------------------------------
 class CreatorWindow : public QMainWindow, public MySettings
@@ -149,6 +154,7 @@ public:
                          Qt::DockWidgetArea area,
                          QWidget *widget,
                          bool no_dock_position = false);
+    void tabify_all_docs(void);
 
     template<typename T>
     void find_and_add_widget_to_dock(const QString &left_oname)
@@ -217,6 +223,7 @@ public slots:
     void setStyles(void);
     void closeOnExit(bool state);
     void alwaysOnTop(bool state);
+    void move_to_center(void);
     void about(void);
     void help(void);
 
@@ -275,16 +282,16 @@ private:
     QString appVersion;
     QString style_name;
 
-    QPointer<QLabel> statusLabel1;
-    QPointer<QLabel> statusLabel2;
+    QLabel *statusLabel1 = nullptr;
+    QLabel *statusLabel2 = nullptr;
 
-    QPointer<QSystemTrayIcon> trayIcon;
-    QPointer<QMenu> trayIconMenu;
+    QSystemTrayIcon *trayIcon = nullptr;
+    QMenu *trayIconMenu = nullptr;
 
-//    QPointer<QMenu> m_app_windowsmenu;
+//    QMenu *m_app_windowsmenu = nullptr;
 
     //TODO тест
-    QPointer<MyWidget> c_widget;
+    MyWidget *c_widget = nullptr;
 
     void load_main(void);
     void save_main(void);
@@ -302,7 +309,7 @@ private:
     void set_cascadeSubWindows(void);
 
 #ifndef NO_STYLETOOLBAR
-    QPointer<QToolBar> styletoolbar;
+    QToolBar *styletoolbar = nullptr;
     void createStyleToolBar(void);
 #ifdef USE_CUSTOM_STYLE
     void createCustomStyleToolBar(void);
@@ -310,9 +317,9 @@ private:
 #endif
 
 #ifndef NO_LOG
-    QPointer<LogBox> lb;
+    LogBox *lb = nullptr;
 #endif
-    QPointer<SysLog> w_syslog;
+    SysLog *w_syslog = nullptr;
 
 #ifndef NO_LOG
     void createLog(void);
@@ -325,7 +332,7 @@ private:
     void check_date(void);
 #endif
 
-    QPointer<QMenuBar> app_mainBar;
+    QMenuBar *app_mainBar = nullptr;
 
     void dockwidget_updateText(void);
 
@@ -339,7 +346,7 @@ protected:
     bool flag_close = false;
     bool flag_always_on_top = false;
 
-    QPointer<QTranslator> translator_system;
+    QTranslator *translator_system = nullptr;
     QList<TRANSLATOR> l_translators;
 
     void changeEvent(QEvent *event);

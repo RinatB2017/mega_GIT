@@ -68,7 +68,9 @@
 #include <QSpinBox>
 #include <QMdiArea>
 #include <QMouseEvent>
-#include <QDesktopWidget>
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+#   include <QDesktopWidget>
+#endif
 #include <QPrintDialog>
 #include <QGraphicsScene>
 #include <QGraphicsView>

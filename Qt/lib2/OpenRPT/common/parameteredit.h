@@ -34,7 +34,11 @@ class ParameterEdit : public QWidget, public Ui::ParameterEdit
   Q_OBJECT
 
   public:
+#if QT_VERSION < QT_VERSION_CHECK(5, 6, 0)
     ParameterEdit(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+#else
+    ParameterEdit(QWidget* parent = 0);
+#endif
     ~ParameterEdit();
 
     Q_INVOKABLE static  QDialog      *ParameterEditDialog(ParameterEdit *p, QWidget *parent = nullptr, Qt::WindowFlags f = Qt::Dialog);

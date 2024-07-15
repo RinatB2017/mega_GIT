@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -21,17 +21,21 @@
 #ifndef MYSETTINGS_HPP
 #define MYSETTINGS_HPP
 //--------------------------------------------------------------------------------
+#include <QPushButton>
+#include <QToolButton>
+
+#include <QStringList>
 #include <QListWidget>
 #include <QSplitter>
 #include <QSettings>
-#include <QPointer>
+#include <QVariant>
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 #define PARAMS_GROUP_NAME   "Params"
-#define NO_BLOCK    "no_block"
-#define NO_SAVE     "no_save"
+#define NO_BLOCK            "no_block"
+#define NO_SAVE             "no_save"
 
 #define STATE_PROPERTY  "state"
 #define FLAG_NO_CLOSE   "flag_no_close"
@@ -98,7 +102,7 @@ public:
     void clear_all(void);
 
 private:
-    QPointer<QSettings> settings;
+    QSettings *settings = nullptr;
 
     void init(void);
 };

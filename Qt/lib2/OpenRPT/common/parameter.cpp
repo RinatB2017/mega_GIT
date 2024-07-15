@@ -19,6 +19,7 @@
  */
 
 #include "parameter.h"
+#include "qdatetime.h"
 #include <QtDebug>
 
 Parameter::Parameter()

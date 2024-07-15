@@ -4,7 +4,11 @@
 //--------------------------------------------------------------------------------
 #include <QSpinBox>
 //--------------------------------------------------------------------------------
-class QRegExpValidator;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+#   include <QRegExpValidator>
+#else
+#   include <QRegularExpressionValidator>
+#endif
 //--------------------------------------------------------------------------------
 class HexSpinBox : public QSpinBox
 {

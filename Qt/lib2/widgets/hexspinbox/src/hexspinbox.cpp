@@ -1,19 +1,6 @@
 //--------------------------------------------------------------------------------
 #include "hexspinbox.hpp"
 //--------------------------------------------------------------------------------
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-HexSpinBox::HexSpinBox(QWidget *parent)
-    : QSpinBox(parent)
-{
-#ifdef HEX16
-    setRange(0, 0xFFFF);
-    validator = new QRegExpValidator(QRegExp(QLatin1String("[0-9A-Fa-f]{1,4}")), this);
-#else
-    setRange(0, 0xFF);
-    validator = new QRegExpValidator(QRegExp(QLatin1String("[0-9A-Fa-f]{1,2}")), this);
-#endif
-}
-#else
 HexSpinBox::HexSpinBox(QWidget *parent)
     : QSpinBox(parent)
 {
@@ -25,7 +12,6 @@ HexSpinBox::HexSpinBox(QWidget *parent)
     validator = new QRegularExpressionValidator(QRegularExpression(QLatin1String("[0-9A-Fa-f]{1,2}")), this);
 #endif
 }
-#endif
 //--------------------------------------------------------------------------------
 QValidator::State HexSpinBox::validate(QString &text, int &pos) const
 {

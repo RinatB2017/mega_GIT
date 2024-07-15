@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2017                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -25,6 +25,7 @@
 #endif
 //--------------------------------------------------------------------------------
 #include "mylogger.hpp"
+//--------------------------------------------------------------------------------
 MyLogger *logger = nullptr;
 //--------------------------------------------------------------------------------
 CreatorWindow::CreatorWindow(QWidget *parent)
@@ -177,8 +178,8 @@ void CreatorWindow::closeEvent(QCloseEvent *event)
 
     QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::Question);
-    msgBox.setWindowTitle(QObject::tr("Exit the program"));
-    msgBox.setText(QObject::tr("Exit the program?"));
+    msgBox.setWindowTitle(CreatorWindow::tr("Exit the program"));
+    msgBox.setText(CreatorWindow::tr("Exit the program?"));
     msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
     msgBox.setDefaultButton(QMessageBox::Yes);
     int btn = msgBox.exec();
@@ -213,7 +214,7 @@ void CreatorWindow::init(void)
     flag_close = true;
 
     app_mainBar = menuBar();
-    //    m_app_windowsmenu = new QMenu(app_mainBar);
+    // m_app_windowsmenu = new QMenu(app_mainBar);
 
 #ifdef APPTITLE
     appTitle = APPTITLE;
@@ -277,6 +278,7 @@ void CreatorWindow::init(void)
 
 #ifdef LOGGER_ON
     logger = new MyLogger();
+
     qInstallMessageHandler(myMessageOutput);
     if(logger)
     {
@@ -455,7 +457,7 @@ void CreatorWindow::alwaysOnTop(bool state)
 {
     flag_always_on_top = state;
 
-    CreatorWindow *mw = reinterpret_cast<CreatorWindow *>(topLevelWidget());
+    CreatorWindow *mw = reinterpret_cast<CreatorWindow *>(QApplication::activeWindow());
     if(mw)
     {
         if(state)
@@ -467,6 +469,27 @@ void CreatorWindow::alwaysOnTop(bool state)
             mw->setWindowFlags(mw->windowFlags() & ~Qt::WindowStaysOnTopHint);
         }
         mw->show();
+    }
+}
+//--------------------------------------------------------------------------------
+void CreatorWindow::move_to_center(void)
+{
+    CreatorWindow *mw = reinterpret_cast<CreatorWindow *>(QApplication::activeWindow());
+    if(mw)
+    {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+        QDesktopWidget *desktop = QApplication::desktop();
+        int screenWidth = desktop->width();
+        int screenHeight = desktop->height();
+#else
+        QScreen *desktop = QGuiApplication::primaryScreen();
+        int screenWidth = desktop->geometry().width();
+        int screenHeight = desktop->geometry().height();
+#endif
+        int x = (screenWidth - width()) / 2;
+        int y = (screenHeight - height()) / 2;
+
+        mw->move(x, y);
     }
 }
 //--------------------------------------------------------------------------------
@@ -553,7 +576,7 @@ void CreatorWindow::about(void)
     about->setProperty(P_ORGNAME,       orgName);
     about->setProperty(P_PROGRAMMNAME,  appName);
     about->setProperty(P_VERSION,       appVersion);
-    about->setProperty(P_AUTHOR,        tr(P_AUTHOR_STR));
+    about->setProperty(P_AUTHOR,        P_AUTHOR_STR);
     about->setProperty(P_EMAIL,         P_EMAIL_STR);
     about->setProperty(P_TELEGRAM,      P_TELEGRAM_STR);
     about->exec();
@@ -967,8 +990,6 @@ bool CreatorWindow::add_dock_widget(QString title,
                                     bool no_dock_position)
 {
     Q_ASSERT(widget);
-    //FIXME надо сделать так, чтобы можно было перенести this
-    // пока удается, обернув вызов этой функции в singleShot, но есть глюки
 
     if(title.isEmpty())
     {
@@ -982,6 +1003,7 @@ bool CreatorWindow::add_dock_widget(QString title,
     }
 
     QDockWidget *dw = new QDockWidget(this);
+    Q_ASSERT(dw);
 
     dw->setObjectName(objectname);
     dw->setWindowTitle(tr(title.toLocal8Bit()));
@@ -991,6 +1013,8 @@ bool CreatorWindow::add_dock_widget(QString title,
     {
         // Dock_position - это стрелки сбоку
         Dock_position *dp = new Dock_position(objectname, this);
+        dp->setObjectName("dock_position");
+        Q_ASSERT(dp);
 
         QWidget *nw = new QWidget(this);
         QHBoxLayout *hbox = new QHBoxLayout();
@@ -1022,6 +1046,25 @@ bool CreatorWindow::add_dock_widget(QString title,
     load_setting();
 
     return true;
+}
+//--------------------------------------------------------------------------------
+void CreatorWindow::tabify_all_docs(void)
+{
+    QList<QDockWidget *> l_docs = findChildren<QDockWidget *>();
+    bool find_first = false;
+    QDockWidget *f_w = nullptr;
+    foreach(QDockWidget *widget, l_docs)
+    {
+        if(!find_first)
+        {
+            find_first = true;
+            f_w = widget;
+        }
+        else
+        {
+            tabifyDockWidget(f_w, widget);
+        }
+    }
 }
 //--------------------------------------------------------------------------------
 void CreatorWindow::dockLocationChanged(Qt::DockWidgetArea area)
@@ -1213,10 +1256,10 @@ bool CreatorWindow::add_new_action(QMenu   *parent,
 #if QT_VERSION >= 0x050000
     connect(action, &QAction::triggered,  this,   slot);
 #else
-    Q_UNUSED(slot); //FIXME
+    Q_UNUSED(slot);
 #endif
 
-    //parent->addAction(action);
+    parent->addAction(action);
     return action;
 }
 //--------------------------------------------------------------------------------
@@ -1228,6 +1271,7 @@ bool CreatorWindow::add_new_action(QMenu   *parent,
     Q_ASSERT(parent);
 
     QAction *action = new QAction(parent);
+    Q_ASSERT(action);
     action->setText(text);
     if(icon)
     {
@@ -1247,11 +1291,10 @@ bool CreatorWindow::add_new_action(QMenu   *parent,
 #if QT_VERSION >= 0x050000
     connect(action, &QAction::triggered,  this,   slot);
 #else
-    Q_UNUSED(slot); //FIXME
+    Q_UNUSED(slot);
 #endif
 
     parent->addAction(action);
-
     return action;
 }
 //--------------------------------------------------------------------------------

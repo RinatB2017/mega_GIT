@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>Dock_position</class>
  <widget class="QWidget" name="Dock_position">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>44</width>
-    <height>295</height>
-   </rect>
-  </property>
   <property name="sizePolicy">
    <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
     <horstretch>0</horstretch>
@@ -34,38 +26,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QToolButton" name="btn_left">
-     <property name="icon">
-      <iconset resource="../../../../pictures/arrow.qrc">
-       <normaloff>:/arrow/arrow-left.png</normaloff>:/arrow/arrow-left.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QToolButton" name="btn_right">
-     <property name="icon">
-      <iconset resource="../../../../pictures/arrow.qrc">
-       <normaloff>:/arrow/arrow-right.png</normaloff>:/arrow/arrow-right.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QToolButton" name="btn_up">
-     <property name="icon">
-      <iconset resource="../../../../pictures/arrow.qrc">
-       <normaloff>:/arrow/arrow-up.png</normaloff>:/arrow/arrow-up.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QToolButton" name="btn_down">
-     <property name="icon">
-      <iconset resource="../../../../pictures/arrow.qrc">
-       <normaloff>:/arrow/arrow-down.png</normaloff>:/arrow/arrow-down.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -82,13 +42,7 @@
  </widget>
  <tabstops>
   <tabstop>btn_show</tabstop>
-  <tabstop>btn_left</tabstop>
-  <tabstop>btn_right</tabstop>
-  <tabstop>btn_up</tabstop>
-  <tabstop>btn_down</tabstop>
  </tabstops>
- <resources>
-  <include location="../../../../pictures/arrow.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

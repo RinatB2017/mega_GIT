@@ -39,7 +39,6 @@ android {
     UI_DIR      = build/ui
     RCC_DIR     = build/rc
 }
-
 ###############################################################################
 unix:!macx {
     DESTDIR = $$(HOME)/Programming/my_programm_bin/$$FOLDER/$$TARGET
@@ -49,12 +48,15 @@ macx {
 }
 
 win32 {
-    BIN_PATH  = "C:/temp/bin"
-    TEMP_PATH = "C:"
-    OBJECTS_DIR = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\obj
-    MOC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\moc
-    UI_DIR      = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\ui
-    RCC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET\\rc
+    BIN_PATH  = "C:\temp\bin"
+    TEMP_PATH = "C:\temp\obj"
+
+    # BIN_PATH  = "Z:\temp\bin"
+    # TEMP_PATH = "Z:\temp\obj"
+    OBJECTS_DIR = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/obj
+    MOC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/moc
+    UI_DIR      = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/ui
+    RCC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/rc
 
     CONFIG -= debug_and_release #debug_and_release_target
     CONFIG += no_fixpath
@@ -136,20 +138,18 @@ unix:!macx {
 #}
 ###############################################################################
 # решение проблемы для кодировке в консоли windows
-win32 {
-    QMAKE_EXTRA_TARGETS += before_build makefilehook
+#win32 {
+#    QMAKE_EXTRA_TARGETS += before_build makefilehook
 
-    makefilehook.target = $(MAKEFILE)
-    makefilehook.depends = .beforebuild
+#    makefilehook.target = $(MAKEFILE)
+#    makefilehook.depends = .beforebuild
 
-    PRE_TARGETDEPS += .beforebuild
+#    PRE_TARGETDEPS += .beforebuild
 
-    before_build.target = .beforebuild
-    before_build.depends = FORCE
-    before_build.commands = chcp 1251
-#    before_build.commands = chcp 866
-#    before_build.commands = chcp 850
-}
+#    before_build.target = .beforebuild
+#    before_build.depends = FORCE
+#    before_build.commands = chcp 1251
+#}
 ###############################################################################
 #
 # не факт, что это правильно будет в будущем

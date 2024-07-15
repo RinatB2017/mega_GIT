@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -30,17 +30,18 @@ uint16_t Connection::value_uint16;
 int16_t  Connection::value_int16;
 uint32_t Connection::value_uint32;
 int32_t  Connection::value_int32;
+int      Connection::value_int;
 //--------------------------------------------------------------------------------
 Connection::Connection(QObject *parent) : QObject(parent)
 {
     value_double = 0;
-    value_float = 0;
-    value_uint8 = 0;
-    value_int8 = 0;
+    value_float  = 0;
+    value_uint8  = 0;
+    value_int8   = 0;
     value_uint16 = 0;
-    value_int16 = 0;
+    value_int16  = 0;
     value_uint32 = 0;
-    value_int32 = 0;
+    value_int32  = 0;
 }
 //--------------------------------------------------------------------------------
 void Connection::set_value(double value)
@@ -121,5 +122,15 @@ uint32_t Connection::get_uint32_value(void)
 int32_t Connection::get_int32_value(void)
 {
     return value_int32;
+}
+//--------------------------------------------------------------------------------
+void Connection::set_int_value(int value)
+{
+    value_int = value;
+}
+//--------------------------------------------------------------------------------
+int Connection::get_int_value(void)
+{
+    return value_int;
 }
 //--------------------------------------------------------------------------------

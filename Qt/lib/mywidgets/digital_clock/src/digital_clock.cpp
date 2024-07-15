@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -127,7 +127,7 @@ void Digital_clock::popup(QPoint)
 
     popup_menu->setStyleSheet("background:white;color:black;");
 
-    QAction *clock_action   = new QAction(tr("options"),   this);
+    QAction *clock_action   = new QAction("options",   this);
 
     popup_menu->addAction(clock_action);
 

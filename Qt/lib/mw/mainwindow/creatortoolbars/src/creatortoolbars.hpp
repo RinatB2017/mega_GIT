@@ -31,11 +31,11 @@ class CreatorToolBars : public CreatorWindow
     Q_OBJECT
 
 public:
-    explicit CreatorToolBars(QWidget *parent);
+    explicit CreatorToolBars(QWidget *parent = nullptr);
     virtual ~CreatorToolBars();
 
 private:
-    QPointer<QToolBar> toolbar;
+    QToolBar *toolbar = nullptr;
     QList<QAbstractButton *> app_buttons;
     QList<QAction *> app_actions;
 

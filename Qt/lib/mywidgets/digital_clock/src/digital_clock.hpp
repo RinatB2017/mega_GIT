@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -22,7 +22,6 @@
 #define DIGITAL_CLOCK_HPP
 //--------------------------------------------------------------------------------
 #include <QSettings>
-#include <QPointer>
 #include <QAction>
 #include <QTimer>
 #include <QLabel>
@@ -45,7 +44,7 @@ public:
     virtual ~Digital_clock();
 
 private:
-    QPointer<QTimer> timer;
+    QTimer *timer = nullptr;
 
     int hour = 0;
     int min  = 0;
@@ -57,7 +56,7 @@ private:
     int t_min  = 0;
     int t_sec  = 0;
 
-    QPointer<QSettings> settings;
+    QSettings *settings = nullptr;
 
     void init(void);
     void correct_time(void);

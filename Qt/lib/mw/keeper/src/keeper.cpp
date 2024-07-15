@@ -47,7 +47,7 @@ bool Keeper::set_value(QString name, QVariant value)
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif
     settings->setValue(name, value);
-    settings->deleteLater();
+    delete settings;
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ bool Keeper::get_value(QString name, QVariant *value)
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
 #endif
     *value = settings->value(name);
-    settings->deleteLater();
+    delete settings;
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -95,7 +95,7 @@ bool Keeper::set_array(QString group_name,
     }
     settings->endGroup();
 
-    settings->deleteLater();
+    delete settings;
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -125,7 +125,7 @@ bool Keeper::get_array(QString group_name,
     settings->endArray();
     settings->endGroup();
 
-    settings->deleteLater();
+    delete settings;
     return true;
 }
 //--------------------------------------------------------------------------------

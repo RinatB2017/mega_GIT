@@ -98,6 +98,7 @@ public:
                  uchar type_proto,
                  ushort mask);
     int check_message(QString data);
+    int check_message_old(QString data);
     void run_self_tests(void);
     void test(void);
 
@@ -145,7 +146,6 @@ signals:
     void output_latitude_string(const QString &data);
     void output_longitude_string(const QString &data);
     void output_observation(const QString &data);
-
     
 private:
     int time_observation_hour = 0;

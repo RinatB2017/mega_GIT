@@ -21,7 +21,6 @@
 //#include "for_tests_mainbox.hpp"
 #include "creatormenus.hpp"
 #include "mywidget.hpp"
-#include "defines.hpp"
 //--------------------------------------------------------------------------------
 CreatorMenus::CreatorMenus(QWidget *parent) :
     CreatorToolBars(parent)
@@ -60,7 +59,6 @@ void CreatorMenus::init(void)
     QTimer::singleShot(0, [this]{
         app_mainBar->addMenu(m_app_filemenu);
         app_mainBar->addMenu(m_app_optionsmenu);
-//        app_mainBar->addMenu(m_app_windowsmenu);
         app_mainBar->addMenu(m_app_helpmenu);
     });
 
@@ -86,6 +84,11 @@ void CreatorMenus::init(void)
     app_menu_add_custom_style(m_app_optionsmenu);
     app_menu_add_separator(m_app_optionsmenu);
 #endif
+
+    app_menu_add_move_on_center(m_app_optionsmenu);
+    app_menu_add_separator(m_app_optionsmenu);
+    app_menu_add_tabify_all_docs(m_app_optionsmenu);
+    app_menu_add_separator(m_app_optionsmenu);
 
     app_menu_add_show_on_top(m_app_optionsmenu);
     app_menu_add_separator(m_app_optionsmenu);
@@ -608,6 +611,38 @@ void CreatorMenus::app_menu_add_show_on_top(QMenu *menu)
     menu->addAction(on_top);
 }
 //--------------------------------------------------------------------------------
+void CreatorMenus::app_menu_add_move_on_center(QMenu *menu)
+{
+    Q_ASSERT(menu);
+
+    QAction *on_center = new QAction(menu);
+    on_center->setProperty(P_APP_ENG_TEXT, "Move on center");
+    on_center->setText("Move on center");
+    on_center->setToolTip("Move on center");
+    on_center->setStatusTip("Move on center");
+    connect(on_center,   &QAction::triggered,    this,   &CreatorWindow::move_to_center);
+
+    app_actions.append(on_center);
+
+    menu->addAction(on_center);
+}
+//--------------------------------------------------------------------------------
+void CreatorMenus::app_menu_add_tabify_all_docs(QMenu *menu)
+{
+    Q_ASSERT(menu);
+
+    QAction *on_center = new QAction(menu);
+    on_center->setProperty(P_APP_ENG_TEXT, "Tabify all docs");
+    on_center->setText("Tabify all docs");
+    on_center->setToolTip("Tabify all docs");
+    on_center->setStatusTip("Tabify all docs");
+    connect(on_center,   &QAction::triggered,    this,   &CreatorWindow::tabify_all_docs);
+
+    app_actions.append(on_center);
+
+    menu->addAction(on_center);
+}
+//--------------------------------------------------------------------------------
 void CreatorMenus::app_menu_add_about(QMenu *menu)
 {
     Q_ASSERT(menu);
@@ -644,11 +679,11 @@ void CreatorMenus::app_menu_add_help(QMenu *menu)
 //--------------------------------------------------------------------------------
 void CreatorMenus::app_updateText(void)
 {
-    foreach (auto menu, app_menus)
+    foreach (QMenu *menu, app_menus)
     {
         menu->setTitle(tr(menu->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
     }
-    foreach (auto action, app_actions)
+    foreach (QAction *action, app_actions)
     {
         QString text = tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit());
         action->setText(text);

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2020                                                       **
+**     Copyright (C) 2023                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef TIMER_MESSAGEBOX_H
-#define TIMER_MESSAGEBOX_H
+#ifndef TIMER_MESSAGEBOX_HPP
+#define TIMER_MESSAGEBOX_HPP
 //--------------------------------------------------------------------------------
 #include <QWidget>
 #include <QStyle>
@@ -40,4 +40,4 @@ private:
     Ui::Timer_messagebox *ui;
 };
 //--------------------------------------------------------------------------------
-#endif // TIMER_MESSAGEBOX_H
+#endif // TIMER_MESSAGEBOX_HPP

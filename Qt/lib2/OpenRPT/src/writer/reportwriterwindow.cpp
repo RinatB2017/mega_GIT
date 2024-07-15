@@ -124,16 +124,6 @@ void ReportWriterWindow::timerEvent(QTimerEvent * e) {
         QSqlDatabase db = QSqlDatabase::database(QSqlDatabase::defaultConnection,false);
         if(db.isValid()) {
             QSqlQuery qry(getSqlFromTag("fmt07", db.driverName()));		// MANU
-
-#if 0
-            if(qry.first() == true) {
-                // Nothing to do.  We were just creating a little traffic
-                qDebug("Keep alive succeeded");
-            } else {
-                // I really don't care
-                qDebug("Keep alive failed");
-            }
-#endif
         }
     }
 }

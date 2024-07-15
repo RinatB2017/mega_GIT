@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2022                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -78,14 +78,16 @@ void LogBox::init(void)
     create_widgets();
 
     logBox->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(logBox, &LogBox::customContextMenuRequested,    this,   &LogBox::popup);
-
-    //    logBox->document()->setMaximumBlockCount(MAX_BLOCK_CNT);
+#ifndef NO_LOG_MENU
+    connect(logBox, &LogBox::customContextMenuRequested,
+            this,   &LogBox::popup);
+#endif
 }
 //--------------------------------------------------------------------------------
 void LogBox::popup(QPoint)
 {
     QMenu *popup_menu = logBox->createStandardContextMenu();
+    Q_ASSERT(popup_menu);
     if(popup_menu == nullptr)
     {
         //errorLog("cannot create standard context menu");
@@ -109,6 +111,7 @@ void LogBox::popup(QPoint)
 
 #ifndef NO_LOG_INFO
     QAction *show_info  = new QAction(popup_menu);
+    Q_ASSERT(show_info);
     show_info->setProperty(P_APP_ENG_TEXT, "is_shows_info");
     show_info->setText(QObject::tr("is_shows_info"));
     show_info->setToolTip(QObject::tr("is_shows_info"));
@@ -122,6 +125,7 @@ void LogBox::popup(QPoint)
 
 #ifndef NO_LOG_DEBUG
     QAction *show_debug = new QAction(popup_menu);
+    Q_ASSERT(show_debug);
     show_debug->setProperty(P_APP_ENG_TEXT, "is_shows_debug");
     show_debug->setText(QObject::tr("is_shows_debug"));
     show_debug->setToolTip(QObject::tr("is_shows_debug"));
@@ -135,6 +139,7 @@ void LogBox::popup(QPoint)
 
 #ifndef NO_LOG_ERROR
     QAction *show_error = new QAction(popup_menu);
+    Q_ASSERT(show_error);
     show_error->setProperty(P_APP_ENG_TEXT, "is_shows_error");
     show_error->setText(QObject::tr("is_shows_error"));
     show_error->setToolTip(QObject::tr("is_shows_error"));
@@ -148,6 +153,7 @@ void LogBox::popup(QPoint)
 
 #ifndef NO_LOG_TRACE
     QAction *show_trace = new QAction(popup_menu);
+    Q_ASSERT(show_trace);
     show_trace->setProperty(P_APP_ENG_TEXT, "is_shows_trace");
     show_trace->setText(QObject::tr("is_shows_trace"));
     show_trace->setToolTip(QObject::tr("is_shows_trace"));
@@ -205,6 +211,7 @@ void LogBox::create_widgets(void)
 {
     QFont font("Liberation Mono", 10);
     logBox = new QTextEdit(this);
+    Q_ASSERT(logBox);
     logBox->setObjectName("te_LogBox");
     //    logBox->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     logBox->setFont(font);
@@ -214,7 +221,7 @@ void LogBox::create_widgets(void)
     //logBox->setStyleSheet("background:white;");
 #endif
 
-    progressBar = new QProgressBar;
+    progressBar = new QProgressBar(this);
     progressBar->setVisible(false);
 
     hbox = new QHBoxLayout();
@@ -363,7 +370,7 @@ void LogBox::append_string(LOG_DATA log_data)
             }
             else
             {
-                errorLog(QString("file %1 not create").arg(autosave_filename));
+                errorLog(QString("file %1 not writed!").arg(autosave_filename));
             }
         }
     }
@@ -388,6 +395,7 @@ void LogBox::append_string(LOG_DATA log_data)
     {
 #ifdef NEED_CODEC
         //TODO проверить надо
+        Q_ASSERT(current_codec);
         logBox->append(current_codec->toUnicode(ba));
 #else
         logBox->append(temp);
@@ -683,6 +691,7 @@ void LogBox::save_log(const QString &filename)
 #ifdef QT_DEBUG
         qDebug() << filename << tr("not open");
 #endif
+        emit error(QString("file %1 not writed!").arg(filename));
         return;
     }
 
@@ -723,6 +732,7 @@ void LogBox::save_full_log(const QString &filename)
 #ifdef QT_DEBUG
         qDebug() << filename << tr("not open");
 #endif
+        emit error(QString("file %1 not writed!").arg(filename));
         return;
     }
 
@@ -853,7 +863,7 @@ void LogBox::keyPressEvent(QKeyEvent *event)
 //--------------------------------------------------------------------------------
 void LogBox::updateText(void)
 {
-    foreach (auto action, app_actions)
+    foreach (QAction *action, app_actions)
     {
         action->setText(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
         action->setToolTip(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
@@ -868,13 +878,6 @@ bool LogBox::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void LogBox::load_setting(void)
 {
-#ifdef QT_DEBUG
-    qDebug() << "LogBox::load_setting(void)";
-#endif
-
-    //    QString text = o_name;
-    //    if(text.isEmpty())  text = "LogBox";
-
     beginGroup(get_full_objectName(this));
 
     flag_is_shows_info  = load_bool(P_FLAG_SHOW_INFO,   true);

@@ -24,6 +24,8 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QHostInfo>
+
+#include <QPointer>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------

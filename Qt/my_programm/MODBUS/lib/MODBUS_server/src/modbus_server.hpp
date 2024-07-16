@@ -22,6 +22,7 @@
 #define MODBUS_SERVER_HPP
 //--------------------------------------------------------------------------------
 #include <QLineEdit>
+#include <QPointer>
 #include <QWidget>
 //--------------------------------------------------------------------------------
 #include <QModbusDataUnit>

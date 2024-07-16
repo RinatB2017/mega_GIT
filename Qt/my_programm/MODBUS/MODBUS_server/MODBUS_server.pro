@@ -30,8 +30,7 @@ RESOURCES += images/images.qrc
 
 OTHER_FILES += doc/notebook.txt
 
-LIB_PATH  = "$$PWD/../../../lib"
-LIB_PATH2 = "$$PWD/../../../lib2"
+include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)

@@ -36,8 +36,7 @@ RESOURCES += no_picture.qrc
 
 include (src/selectbox.pri)
 
-LIB_PATH  = "$$PWD/../../lib"
-LIB_PATH2 = "$$PWD/../../lib2"
+include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)

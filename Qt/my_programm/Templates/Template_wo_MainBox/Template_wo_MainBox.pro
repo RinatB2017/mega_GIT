@@ -37,8 +37,7 @@ CONFIG(debug, debug|release) {
 }
 
 #----------------------------------------------
-LIB_PATH  = "$$PWD/../../../lib"
-LIB_PATH2 = "$$PWD/../../../lib2"
+include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)

@@ -199,15 +199,15 @@ int MainBox::get_direction(int pos_x, int pos_y)
     bool ok = false;
 
     ok = check_left(pos_x, pos_y);
-    if(ok) return LEFT;
+    if(ok) return GAME_LEFT;
     ok = check_right(pos_x, pos_y);
-    if(ok) return RIGHT;
+    if(ok) return GAME_RIGHT;
     ok = check_top(pos_x, pos_y);
-    if(ok) return TOP;
+    if(ok) return GAME_TOP;
     ok = check_bottom(pos_x, pos_y);
-    if(ok) return BOTTOM;
+    if(ok) return GAME_BOTTOM;
 
-    return NONE;
+    return GAME_NONE;
 }
 //--------------------------------------------------------------------------------
 bool MainBox::check_left(int pos_x, int pos_y)
@@ -340,19 +340,19 @@ void MainBox::check_move(QObject *obj)
     int dir = get_direction(x, y);
     switch(dir)
     {
-    case LEFT:
+    case GAME_LEFT:
         move_left(obj);
         break;
 
-    case RIGHT:
+    case GAME_RIGHT:
         move_right(obj);
         break;
 
-    case TOP:
+    case GAME_TOP:
         move_top(obj);
         break;
 
-    case BOTTOM:
+    case GAME_BOTTOM:
         move_bottom(obj);
         break;
 

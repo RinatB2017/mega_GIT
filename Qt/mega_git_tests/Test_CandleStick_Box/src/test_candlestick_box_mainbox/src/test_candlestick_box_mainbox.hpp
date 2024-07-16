@@ -23,6 +23,7 @@
 //--------------------------------------------------------------------------------
 #include <QFileDialog>
 #include <QProcess>
+#include <QPointer>
 
 #include <QtCharts/QCandlestickSet>
 #if QT_VERSION < QT_VERSION_CHECK(6,0,0)

@@ -29,7 +29,7 @@ include (src/test/test.pri)
 
 include (src/PCA10000/pca10000.pri)
 
-LIB_PATH = "$$PWD/../../lib"
+include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/time/time.pri)

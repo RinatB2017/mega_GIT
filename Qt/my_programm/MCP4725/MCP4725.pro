@@ -31,8 +31,7 @@ CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
 
-LIB_PATH  = "$$PWD/../../lib"
-LIB_PATH2 = "$$PWD/../../lib2"
+include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 #include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate_win7/serialbox5_fix_baudrate_win7.pri)

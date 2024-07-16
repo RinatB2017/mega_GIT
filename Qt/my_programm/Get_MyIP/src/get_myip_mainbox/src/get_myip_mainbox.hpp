@@ -25,6 +25,8 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QHostAddress>
+
+#include <QPointer>
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"

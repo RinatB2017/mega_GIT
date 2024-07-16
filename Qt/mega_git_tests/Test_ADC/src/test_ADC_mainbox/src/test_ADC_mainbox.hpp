@@ -21,6 +21,7 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QPointer>
 #include "datagrapherbox.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------

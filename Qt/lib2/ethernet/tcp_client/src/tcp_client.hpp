@@ -21,6 +21,8 @@
 #ifndef TCP_CLIENT_HPP
 #define TCP_CLIENT_HPP
 //--------------------------------------------------------------------------------
+#include <QPointer>
+
 #include <QHostAddress>
 #include <QTcpSocket>
 //--------------------------------------------------------------------------------

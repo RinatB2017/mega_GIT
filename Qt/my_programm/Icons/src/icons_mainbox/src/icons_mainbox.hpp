@@ -24,6 +24,7 @@
 #include <QDirIterator>
 #include <QTableWidget>
 #include <QScrollArea>
+#include <QPointer>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------

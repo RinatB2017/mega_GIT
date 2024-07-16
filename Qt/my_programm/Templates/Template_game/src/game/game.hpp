@@ -43,10 +43,10 @@ enum {
     ALIEN = 3
 };
 enum {
-    TOP = 0,
-    RIGHT,
-    LEFT,
-    BOTTOM
+    GAME_TOP = 0,
+    GAME_RIGHT,
+    GAME_LEFT,
+    GAME_BOTTOM
 };
 //--------------------------------------------------------------------------------
 class Player;

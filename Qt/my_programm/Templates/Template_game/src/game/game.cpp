@@ -50,7 +50,7 @@ Game::Game(QWidget *parent) :
     init_player();
     init_objects();
 
-    alien_direction = RIGHT;
+    alien_direction = GAME_RIGHT;
 
     init_timer();
     //connect(QAbstractEventDispatcher::instance(), SIGNAL(aboutToBlock()), this, SLOT(animate()));
@@ -267,7 +267,7 @@ void Game::move_alien(void)
 {
     switch(alien_direction)
     {
-    case TOP:
+    case GAME_TOP:
         if(map->get(alien_x, alien_y-1) == SPACE)
         {
             map->set(alien_x, alien_y, SPACE);
@@ -276,11 +276,11 @@ void Game::move_alien(void)
         }
         else
         {
-            alien_direction = RIGHT;
+            alien_direction = GAME_RIGHT;
         }
         break;
 
-    case LEFT:
+    case GAME_LEFT:
         if(map->get(alien_x-1, alien_y) == SPACE)
         {
             map->set(alien_x, alien_y, SPACE);
@@ -289,11 +289,11 @@ void Game::move_alien(void)
         }
         else
         {
-            alien_direction = TOP;
+            alien_direction = GAME_TOP;
         }
         break;
 
-    case RIGHT:
+    case GAME_RIGHT:
         if(map->get(alien_x+1, alien_y) == SPACE)
         {
             map->set(alien_x, alien_y, SPACE);
@@ -302,11 +302,11 @@ void Game::move_alien(void)
         }
         else
         {
-            alien_direction = BOTTOM;
+            alien_direction = GAME_BOTTOM;
         }
         break;
 
-    case BOTTOM:
+    case GAME_BOTTOM:
         if(map->get(alien_x, alien_y+1) == SPACE)
         {
             map->set(alien_x, alien_y, SPACE);
@@ -315,7 +315,7 @@ void Game::move_alien(void)
         }
         else
         {
-            alien_direction = LEFT;
+            alien_direction = GAME_LEFT;
         }
         break;
 

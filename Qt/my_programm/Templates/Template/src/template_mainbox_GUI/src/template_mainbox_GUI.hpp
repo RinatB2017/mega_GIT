@@ -23,6 +23,7 @@
 //--------------------------------------------------------------------------------
 #include "ui_template_mainbox_GUI.h"
 //--------------------------------------------------------------------------------
+#include <QPointer>
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mywidget.hpp"

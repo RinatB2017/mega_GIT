@@ -21,6 +21,7 @@
 #ifndef MYMAINWINDOW_HPP
 #define MYMAINWINDOW_HPP
 //--------------------------------------------------------------------------------
+#include <QPointer>
 #include <QPainter>
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"

@@ -14,7 +14,7 @@ QT -= gui
 
 SOURCES += main.cpp
 
-LIB_PATH = "$$PWD/../../lib"
+include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
 
 include ($$LIB_PATH/turbo.pri)
 

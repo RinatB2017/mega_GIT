@@ -33,8 +33,7 @@ CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
 
-LIB_PATH  = "$$PWD/../../lib"
-LIB_PATH2 = "$$PWD/../../lib2"
+include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
 
 LIBS += \
     -lavcodec \

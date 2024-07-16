@@ -23,6 +23,7 @@
 //--------------------------------------------------------------------------------
 #include <QDialogButtonBox>
 #include <QFileDialog>
+#include <QPointer>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 #include "defines.hpp"

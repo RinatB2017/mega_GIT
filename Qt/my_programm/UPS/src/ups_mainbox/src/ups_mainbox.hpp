@@ -23,6 +23,7 @@
 //--------------------------------------------------------------------------------
 #include "ui_ups_mainbox.h"
 //--------------------------------------------------------------------------------
+#include <QPointer>
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"

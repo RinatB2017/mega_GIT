@@ -41,7 +41,7 @@ CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
 
-LIB_PATH  = "$$PWD/../../../Qt/lib"
+include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_games_mainbox/test_games_mainbox.pri)

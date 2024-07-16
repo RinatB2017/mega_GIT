@@ -30,6 +30,7 @@
 #include <QLineEdit>
 #include <QToolBar>
 #include <QPainter>
+#include <QPointer>
 #include <QWidget>
 #include <QDir>
 //--------------------------------------------------------------------------------

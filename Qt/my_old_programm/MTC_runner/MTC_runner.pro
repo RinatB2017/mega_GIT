@@ -27,7 +27,7 @@ win32 {
 
 include (src/test/test.pri)
 
-LIB_PATH = "$$PWD/../../lib"
+include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 

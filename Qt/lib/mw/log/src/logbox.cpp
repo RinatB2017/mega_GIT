@@ -416,7 +416,7 @@ void LogBox::infoLog(const QString &text)
     log_data.time = QTime::currentTime();
     log_data.level = L_INFO;
     log_data.color_text = Qt::blue;
-    log_data.background_color = Qt::white;
+    //TODO log_data.background_color = Qt::white;
     log_data.message = text;
 
     l_full_log_data.append(log_data);
@@ -440,7 +440,7 @@ void LogBox::debugLog(const QString &text)
     log_data.time = QTime::currentTime();
     log_data.level = L_DEBUG;
     log_data.color_text = Qt::darkGreen;
-    log_data.background_color = Qt::white;
+    //TODO log_data.background_color = Qt::white;
     log_data.message = text;
 
     l_full_log_data.append(log_data);
@@ -464,7 +464,7 @@ void LogBox::errorLog(const QString &text)
     log_data.time = QTime::currentTime();
     log_data.level = L_ERROR;
     log_data.color_text = Qt::red;
-    log_data.background_color = Qt::white;
+    //TODO log_data.background_color = Qt::white;
     log_data.message = text;
 
     l_full_log_data.append(log_data);
@@ -488,7 +488,7 @@ void LogBox::traceLog(const QString &text)
     log_data.time = QTime::currentTime();
     log_data.level = L_TRACE;
     log_data.color_text = Qt::gray;
-    log_data.background_color = Qt::white;
+    //TODO log_data.background_color = Qt::white;
     log_data.message = text;
 
     l_full_log_data.append(log_data);

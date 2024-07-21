@@ -417,6 +417,8 @@ void LogBox::infoLog(const QString &text)
     log_data.level = L_INFO;
     log_data.color_text = Qt::blue;
     //TODO log_data.background_color = Qt::white;
+    QPalette palette = QApplication::palette();
+    log_data.background_color = palette.color(QPalette::Base);
     log_data.message = text;
 
     l_full_log_data.append(log_data);
@@ -441,6 +443,8 @@ void LogBox::debugLog(const QString &text)
     log_data.level = L_DEBUG;
     log_data.color_text = Qt::darkGreen;
     //TODO log_data.background_color = Qt::white;
+    QPalette palette = QApplication::palette();
+    log_data.background_color = palette.color(QPalette::Base);
     log_data.message = text;
 
     l_full_log_data.append(log_data);
@@ -465,6 +469,8 @@ void LogBox::errorLog(const QString &text)
     log_data.level = L_ERROR;
     log_data.color_text = Qt::red;
     //TODO log_data.background_color = Qt::white;
+    QPalette palette = QApplication::palette();
+    log_data.background_color = palette.color(QPalette::Base);
     log_data.message = text;
 
     l_full_log_data.append(log_data);
@@ -489,6 +495,8 @@ void LogBox::traceLog(const QString &text)
     log_data.level = L_TRACE;
     log_data.color_text = Qt::gray;
     //TODO log_data.background_color = Qt::white;
+    QPalette palette = QApplication::palette();
+    log_data.background_color = palette.color(QPalette::Base);
     log_data.message = text;
 
     l_full_log_data.append(log_data);

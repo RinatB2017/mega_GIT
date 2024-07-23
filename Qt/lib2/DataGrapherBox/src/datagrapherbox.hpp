@@ -47,8 +47,11 @@ public:
 
     int add_curve(QString curve_name);
     void update_curve(int curve_index, const QString &curve_name);
+
+    void add_curves(QStringList sl);
     void add_curves(QList<QByteArray> sl);
     void update_curves(QList<QByteArray> sl);
+
     void clr_curves(void);
     bool add_data(int curve_index, qreal value);
     int get_max_index(void);

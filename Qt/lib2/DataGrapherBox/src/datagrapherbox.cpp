@@ -33,6 +33,14 @@ DataGrapherBox::~DataGrapherBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
+void DataGrapherBox::add_curves(QStringList sl)
+{
+    foreach(QString curve_name, sl)
+    {
+        add_curve(QString(curve_name));
+    }
+}
+//--------------------------------------------------------------------------------
 void DataGrapherBox::add_curves(QList<QByteArray> sl)
 {
     foreach(QByteArray ba_curve_name, sl)

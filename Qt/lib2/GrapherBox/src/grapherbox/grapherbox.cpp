@@ -345,6 +345,21 @@ bool GrapherBox::add_curve(const QString &title,
     return true;
 }
 //--------------------------------------------------------------------------------
+bool GrapherBox::set_curve_title(int channel,
+                                 const QString &title)
+{
+    //TODO надо доработать
+    if(curves.count() >= MAX_CHANNELS)
+    {
+        emit error(QString("curves.count() %1 > %2").arg(curves.count()).arg(MAX_CHANNELS));
+        return false;
+    }
+
+    curves[channel].title = title;
+    updateText();
+    return false;
+}
+//--------------------------------------------------------------------------------
 void GrapherBox::remove_curve(int curve_ID)
 {
     for(int n=0; n<curves.size(); n++)

@@ -155,6 +155,8 @@ public slots:
                   QwtSymbol *symbol = nullptr);
     bool add_curve(const QString &title,
                    int curve_ID);
+    bool set_curve_title(int channel,
+                         const QString &title);
 
     void remove_curve(int curve_ID);
     void remove_all_curve(void);

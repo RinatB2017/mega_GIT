@@ -202,13 +202,13 @@ void MainBox::analize_packet(QList<QByteArray> sl)
 void MainBox::add_curves(QList<QByteArray> sl)
 {
     // emit trace(Q_FUNC_INFO);
-    //FIXME ui->data_widget->add_curves(sl);
+    ui->data_widget->add_curves(sl);
 }
 //--------------------------------------------------------------------------------
 void MainBox::update_curves(QList<QByteArray> sl)
 {
     // emit trace(Q_FUNC_INFO);
-    //FIXME ui->data_widget->update_curves(sl);
+    ui->data_widget->update_curves(sl);
 }
 //--------------------------------------------------------------------------------
 QVariant MainBox::convert_string(QString str_value)

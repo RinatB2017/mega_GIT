@@ -482,6 +482,15 @@ void CreatorMenus::app_menu_add_theme(QMenu *menu)
     connect(blue_theme,   &QAction::triggered,    this,   &CreatorWindow::set_blue_palette);
     menu_theme->addAction(blue_theme);
     app_actions.append(blue_theme);
+
+    QAction *mfc_theme = new QAction(menu_theme);
+    mfc_theme->setProperty(P_APP_ENG_TEXT, "MFC theme");
+    mfc_theme->setText("MFC theme");
+    mfc_theme->setToolTip("MFC theme");
+    mfc_theme->setStatusTip("MFC theme");
+    connect(mfc_theme,   &QAction::triggered,    this,   &CreatorWindow::set_mfc_palette);
+    menu_theme->addAction(mfc_theme);
+    app_actions.append(mfc_theme);
 }
 //--------------------------------------------------------------------------------
 void CreatorMenus::app_menu_add_lang(QMenu *menu)

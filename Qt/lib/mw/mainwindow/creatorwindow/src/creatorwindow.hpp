@@ -233,6 +233,7 @@ public slots:
     void set_blue_palette(void);
     void set_dark_palette(void);
     void set_light_palette(void);
+    void set_mfc_palette(void);
 
     void showHide(QSystemTrayIcon::ActivationReason r);
     //void iconActivated(QSystemTrayIcon::ActivationReason reason);
@@ -258,7 +259,8 @@ private:
         SYSTEM_THEME = 0,
         LIGHT_THEME,
         DARK_THEME,
-        BLUE_THEME
+        BLUE_THEME,
+        MFC_THEME
     };
 
 //    bool add_windowsmenu_action(QWidget *widget, QAction *action);

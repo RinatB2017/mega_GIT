@@ -647,6 +647,9 @@ void CreatorWindow::load_main(void)
     case BLUE_THEME:
         set_blue_palette();
         break;
+    case MFC_THEME:
+        set_mfc_palette();
+        break;
     default:
         set_system_palette();
         break;
@@ -1218,7 +1221,29 @@ void CreatorWindow::set_light_palette(void)
 
     qApp->setPalette(palette);
 }
-////--------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------
+void CreatorWindow::set_mfc_palette(void)
+{
+    //MFC
+    QPalette palette;
+
+    palette.setColor(QPalette::Window, QColor(240, 240, 240));
+    palette.setColor(QPalette::WindowText, Qt::black);
+    palette.setColor(QPalette::Base, Qt::white);
+    palette.setColor(QPalette::AlternateBase, QColor(233, 231, 227));
+    palette.setColor(QPalette::ToolTipBase, Qt::white);
+    palette.setColor(QPalette::ToolTipText, Qt::black);
+    palette.setColor(QPalette::Text, Qt::black);
+    palette.setColor(QPalette::Button, QColor(240, 240, 240));
+    palette.setColor(QPalette::ButtonText, Qt::black);
+    palette.setColor(QPalette::Highlight, QColor(51, 153, 255));
+    palette.setColor(QPalette::HighlightedText, Qt::white);
+
+    state_theme = MFC_THEME;
+
+    qApp->setPalette(palette);
+}
+//--------------------------------------------------------------------------------
 //bool CreatorWindow::add_windowsmenu_action(QWidget *widget, QAction *action)
 //{
 //    Q_ASSERT(widget);

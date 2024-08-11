@@ -22,15 +22,15 @@ SUBDIRS += \
     $$PWD/Test_database \
     $$PWD/Test_drawbuttons \
     $$PWD/Test_draw_line \
-    # $$PWD/Test_event_filter \             #надо исправить
+    $$PWD/Test_event_filter \
     $$PWD/Test_hsv_color \
     $$PWD/Test_FastTrading \
     $$PWD/Test_GrapherBox \
-    # $$PWD/Test_HistogramBox \             #надо исправить
+    $$PWD/Test_HistogramBox \
     $$PWD/Test_HC-05 \
     $$PWD/Test_HID_device \
     $$PWD/Test_HTML \
-    # $$PWD/Test_QHexEdit \                 #надо исправить
+    $$PWD/Test_QHexEdit \
     $$PWD/Test_mesh \
     $$PWD/Test_md5 \
     $$PWD/Test_lcd_knob \

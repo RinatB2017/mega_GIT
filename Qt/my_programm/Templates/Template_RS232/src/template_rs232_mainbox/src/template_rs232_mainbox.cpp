@@ -23,7 +23,6 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "template_rs232_mainbox.hpp"
-#include "portmanager.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
@@ -49,9 +48,10 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
-    PortManager *pm = new PortManager(ui->cb_ports);
-
     init_serial();
+    init_serial_lite();
+    init_serial_fix();
+
     load_widgets();
 }
 //--------------------------------------------------------------------------------
@@ -64,13 +64,28 @@ void MainBox::init_serial(void)
             ui->serial_widget,  static_cast<int (SerialBox5::*)(const QByteArray&)>(&SerialBox5::input));
     connect(ui->serial_widget,  &SerialBox5::output,
             this,               &MainBox::read_data);
-    connect(ui->serial_widget,  &SerialBox5::port_is_active,
-            this,               &MainBox::port_state);
 }
 //--------------------------------------------------------------------------------
-void MainBox::port_state(bool state)
+void MainBox::init_serial_lite(void)
 {
-    port_active = state;
+    QTimer::singleShot(100, [this]{
+        ui->serial_lite_widget->set_caption("RS232_5 (lite)");
+    });
+    connect(this,                   static_cast<void (MainBox::*)(const QByteArray&)>(&MainBox::send),
+            ui->serial_lite_widget, static_cast<int (SerialBox5_lite::*)(const QByteArray&)>(&SerialBox5_lite::input));
+    connect(ui->serial_lite_widget, &SerialBox5_lite::output,
+            this,                   &MainBox::read_data);
+}
+//--------------------------------------------------------------------------------
+void MainBox::init_serial_fix(void)
+{
+    QTimer::singleShot(100, [this]{
+        ui->serial_fix_widget->set_caption("RS232_5 (fix)");
+    });
+    connect(this,                   static_cast<void (MainBox::*)(const QByteArray&)>(&MainBox::send),
+            ui->serial_fix_widget,  static_cast<int (SerialBox5_fix_baudrate::*)(const QByteArray&)>(&SerialBox5_fix_baudrate::input));
+    connect(ui->serial_fix_widget,  &SerialBox5_fix_baudrate::output,
+            this,                   &MainBox::read_data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::read_data(QByteArray ba)
@@ -147,7 +162,6 @@ bool MainBox::test(void)
 #ifdef QT_DEBUG
     qDebug() << "Test";
 #endif
-    emit info(QString("Serial is %1").arg(port_active ? "open" : "close"));
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -166,11 +180,14 @@ void MainBox::updateText(void)
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)
 {
-    if(port_active)
+    if(ui->serial_widget->isOpen() ||
+        ui->serial_lite_widget->isOpen() ||
+        ui->serial_fix_widget->isOpen())
     {
-        messagebox_warning("Предупреждение!", "Выключите порт перед выходом.");
+        messagebox_warning("Предупреждение!", "Выключите порты перед выходом.");
+        return false;
     }
-    return !port_active;
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::load_setting(void)

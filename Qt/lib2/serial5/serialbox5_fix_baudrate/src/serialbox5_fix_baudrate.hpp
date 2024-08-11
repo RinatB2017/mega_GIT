@@ -71,6 +71,9 @@ private:
     bool flag_in_hex = false;
     bool flag_byte_by_byte = false;
 
+    QTimer *m_timer = nullptr;
+    QStringList m_portNames;
+
     int fix_baudrate = 9600;
 
 #ifndef RS232_NO_FRAME
@@ -83,6 +86,7 @@ private:
 #endif
 
     void init(void);
+    void init_timer(void);
     void createWidgets(void);
     void initSerial(void);
     QString ByteArrayToHex(const QByteArray &data);
@@ -106,6 +110,8 @@ private slots:
 
     void setOpenState(void);
     void setCloseState(void);
+
+    void checkPorts(void);
 
     void updateText(void);
     bool programm_is_exit(void);

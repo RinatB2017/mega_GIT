@@ -37,11 +37,18 @@ CONFIG(debug, debug|release) {
 include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
 
 include ($$LIB_PATH/meta/mainwindow.pri)
+
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
-include ($$LIB_PATH2/serial5/serial5.pri)
+include ($$LIB_PATH2/serial5/sendbox5/sendbox5.pri)
+include ($$LIB_PATH2/serial5/serialbox5/serialbox5.pri)
+include ($$LIB_PATH2/serial5/serialbox5_fix_baudrate/serialbox5_fix_baudrate.pri)
+include ($$LIB_PATH2/serial5/serialbox5_lite/serialbox5_lite.pri)
+
+include ($$LIB_PATH2/power_knock/power_knock.pri)
+include ($$LIB_PATH2/icons/digits.pri)
+include ($$LIB_PATH2/icons/arrows.pri)
 
 include (src/template_rs232_mainbox/template_rs232_mainbox.pri)
-include (src/portmanager/portmanager.pri)
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

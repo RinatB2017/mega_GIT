@@ -83,6 +83,9 @@ private:
 
     bool flag_byte_by_byte = false;
 
+    QTimer *m_timer = nullptr;
+    QStringList m_portNames;
+
 #ifdef RS232_LOG
     LogBox  *logBox = nullptr;
 #endif
@@ -92,6 +95,7 @@ private:
 #endif
 
     void init(void);
+    void init_timer(void);
     void createWidgets(void);
     void initEnumerator(void);
     void initSerial(void);
@@ -132,6 +136,8 @@ private slots:
     void get_parameter(void);
 
     void set_default(void);
+
+    void checkPorts(void);
 
     void updateText(void);
     bool programm_is_exit(void);

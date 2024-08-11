@@ -67,6 +67,9 @@ private:
     bool flag_in_hex = false;
     bool flag_byte_by_byte = false;
 
+    QTimer *m_timer = nullptr;
+    QStringList m_portNames;
+
     //TODO
     bool p_test = false;
     void set_test(bool value);
@@ -82,6 +85,7 @@ private:
 #endif
 
     void init(void);
+    void init_timer(void);
     void createWidgets(void);
     void initEnumerator(void);
     void initSerial(void);
@@ -105,6 +109,8 @@ private slots:
     void getStatus(const QString &status, QDateTime current);
     void get_parameter(void);
     void set_default(void);
+
+    void checkPorts(void);
 
     void change_icon(bool state);
 

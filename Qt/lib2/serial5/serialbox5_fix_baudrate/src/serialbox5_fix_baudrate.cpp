@@ -58,6 +58,11 @@ SerialBox5_fix_baudrate::SerialBox5_fix_baudrate(QWidget *parent,
 //--------------------------------------------------------------------------------
 SerialBox5_fix_baudrate::~SerialBox5_fix_baudrate()
 {
+    if(m_timer)
+    {
+        delete m_timer;
+    }
+
 #ifdef RS232_SEND
     if(sendBox5)
     {
@@ -113,6 +118,7 @@ void SerialBox5_fix_baudrate::init(void)
 
     createWidgets();
     initSerial();
+    init_timer();
 
     ui->PortBox->setMinimumWidth(150);
 
@@ -126,6 +132,44 @@ void SerialBox5_fix_baudrate::init(void)
     QTimer::singleShot(100, [this]{
         setCloseState();
     });
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate::init_timer(void)
+{
+    m_timer = new QTimer(this);
+    connect(m_timer, &QTimer::timeout, this, &SerialBox5_fix_baudrate::checkPorts);
+    m_timer->start(5000);
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_fix_baudrate::checkPorts(void)
+{
+    QStringList currentPortNames;
+    QList<QSerialPortInfo> currentPorts = QSerialPortInfo::availablePorts();
+    for (const QSerialPortInfo &port : currentPorts)
+    {
+        currentPortNames << port.portName();
+    }
+
+    // Сравнение с предыдущим состоянием
+    if (currentPortNames != m_portNames)
+    {
+        m_portNames = currentPortNames;
+
+        QList<QSerialPortInfo> currentPorts = QSerialPortInfo::availablePorts();
+        QStringList currentPortNames;
+        for (const QSerialPortInfo &port : currentPorts)
+        {
+            currentPortNames << port.portName();
+        }
+
+        // Обновление QComboBox
+        QString current_text = ui->PortBox->currentText();
+
+        ui->PortBox->clear();
+        ui->PortBox->addItems(currentPortNames);
+
+        ui->PortBox->setCurrentText(current_text);
+    }
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::createWidgets(void)

@@ -68,6 +68,11 @@ SerialBox5_lite::SerialBox5_lite(QWidget *parent,
 //--------------------------------------------------------------------------------
 SerialBox5_lite::~SerialBox5_lite()
 {
+    if(m_timer)
+    {
+        delete m_timer;
+    }
+
 #ifdef RS232_SEND
     if(sendBox5)
     {
@@ -93,6 +98,7 @@ void SerialBox5_lite::init(void)
     createWidgets();
     initEnumerator();
     initSerial();
+    init_timer();
 
     ui->PortBox->setMinimumWidth(150);
     ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
@@ -101,6 +107,44 @@ void SerialBox5_lite::init(void)
 
     setCloseState();
     updateText();
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_lite::init_timer(void)
+{
+    m_timer = new QTimer(this);
+    connect(m_timer, &QTimer::timeout, this, &SerialBox5_lite::checkPorts);
+    m_timer->start(5000);
+}
+//--------------------------------------------------------------------------------
+void SerialBox5_lite::checkPorts(void)
+{
+    QStringList currentPortNames;
+    QList<QSerialPortInfo> currentPorts = QSerialPortInfo::availablePorts();
+    for (const QSerialPortInfo &port : currentPorts)
+    {
+        currentPortNames << port.portName();
+    }
+
+    // Сравнение с предыдущим состоянием
+    if (currentPortNames != m_portNames)
+    {
+        m_portNames = currentPortNames;
+
+        QList<QSerialPortInfo> currentPorts = QSerialPortInfo::availablePorts();
+        QStringList currentPortNames;
+        for (const QSerialPortInfo &port : currentPorts)
+        {
+            currentPortNames << port.portName();
+        }
+
+        // Обновление QComboBox
+        QString current_text = ui->PortBox->currentText();
+
+        ui->PortBox->clear();
+        ui->PortBox->addItems(currentPortNames);
+
+        ui->PortBox->setCurrentText(current_text);
+    }
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::createWidgets(void)

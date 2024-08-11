@@ -1,5 +1,5 @@
 
-DEPENDPATH      += $$PWD/headers
+DEPENDPATH  += $$PWD/headers
 INCLUDEPATH	= $$DEPENDPATH
 HEADERS += ascii_data.hpp
 

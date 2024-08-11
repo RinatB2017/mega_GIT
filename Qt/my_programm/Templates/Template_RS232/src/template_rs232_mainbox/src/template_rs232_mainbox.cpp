@@ -23,6 +23,7 @@
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
 #include "template_rs232_mainbox.hpp"
+#include "portmanager.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
@@ -47,6 +48,8 @@ void MainBox::init(void)
 #ifdef QT_DEBUG
     createTestBar();
 #endif
+
+    PortManager *pm = new PortManager(ui->cb_ports);
 
     init_serial();
     load_widgets();

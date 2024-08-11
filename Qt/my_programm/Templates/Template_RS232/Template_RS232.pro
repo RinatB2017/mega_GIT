@@ -41,6 +41,7 @@ include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
 
 include (src/template_rs232_mainbox/template_rs232_mainbox.pri)
+include (src/portmanager/portmanager.pri)
 #----------------------------------------------
 
 VPATH = $$INCLUDEPATH

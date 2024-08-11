@@ -36,19 +36,13 @@ SUBDIRS += \
     $$PWD/Test_lcd_knob \
     $$PWD/Test_ledspanel \
     $$PWD/Test_LogBoxs \
-    # $$PWD/Test_OpenRPT \                  #надо исправить
     $$PWD/Test_OscilloscopeBox \
     $$PWD/Test_picture \
     $$PWD/Test_PostgreSQL \
-    # $$PWD/Test_PropertyBrowser \          #надо исправить
-    # $$PWD/Test_QtPropertyBrowser \        #надо исправить
-    # $$PWD/Test_QCustomPlot \              #надо исправить
     $$PWD/Test_QGraphicsScene \
     $$PWD/Test_QListWidget \
     $$PWD/Test_QProcess \
-    # $$PWD/Test_QsLog \                    #надо исправить
     $$PWD/Test_RGB_display \
-    # $$PWD/Test_RGB_Matrix \               #надо исправить
     $$PWD/Test_SerialBox5 \
     $$PWD/Test_libFTDI \
     $$PWD/Test_libUSB \
@@ -56,14 +50,12 @@ SUBDIRS += \
     $$PWD/Test_model \
     $$PWD/Test_pixmap \
     $$PWD/Test_Polar \
-    # $$PWD/Test_SQL \                      #надо исправить
     $$PWD/Test_thread \
     $$PWD/Test_triangle \
     $$PWD/Test_Widgets \
     $$PWD/Test_QDBus \
     $$PWD/Test_QGraphicsView \
     $$PWD/Test_QML \
-    # $$PWD/Test_QStateMachine \            #надо исправить
     $$PWD/Test_QTreeWidget \
     $$PWD/Test_Game \
     $$PWD/Test_Games \
@@ -88,16 +80,26 @@ SUBDIRS += \
     $$PWD/Test_OpenCV \
     $$PWD/Test_OpenMP \
     $$PWD/Test_syslog \
-    # $$PWD/Test_SerialTerm \               #Qt5
     $$PWD/Test_SDL \
     $$PWD/Test_SDLWidget \
-    # $$PWD/Test_SMTP \                     #надо исправить
     $$PWD/Test_Trader \
-    # $$PWD/Test_Qt3D \                     #надо исправить
     $$PWD/Test_QWebEngineView \
     $$PWD/Test_QTermWidget \
+
+    # $$PWD/Test_SQL \                      #надо исправить
+    # $$PWD/Test_SMTP \                     #надо исправить
+    # $$PWD/Test_Qt3D \                     #надо исправить
+    # $$PWD/Test_OpenRPT \                  #надо исправить
+    # $$PWD/Test_PropertyBrowser \          #надо исправить
+    # $$PWD/Test_QtPropertyBrowser \        #надо исправить
+    # $$PWD/Test_QCustomPlot \              #надо исправить
+    # $$PWD/Test_QsLog \                    #надо исправить
+    # $$PWD/Test_RGB_Matrix \               #надо исправить
     # $$PWD/Test_QHexEdit2 \                #надо исправить
+    # $$PWD/Test_wwWidgets                  #надо исправить
+
+    # $$PWD/Test_SerialTerm \               #Qt5
     # $$PWD/Test_QScintilla \               #Qt5
     # $$PWD/Tests_QtPlot3D \                #Qt5
-    # $$PWD/Test_wwWidgets                  #надо исправить
+    # $$PWD/Test_QStateMachine \            #Qt5
 }

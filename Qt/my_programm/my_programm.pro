@@ -39,8 +39,7 @@ SUBDIRS += \
     # $$PWD/MyBot \
     $$PWD/MyTerminal \
     $$PWD/Teacher \
-    $$PWD/Teacher_light \
-    $$PWD/Walkers
+    $$PWD/Teacher_light
 }
     
 lessThan(QT_MAJOR_VERSION, 5) {

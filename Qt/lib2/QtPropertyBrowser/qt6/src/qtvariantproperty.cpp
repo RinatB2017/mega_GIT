@@ -1564,7 +1564,7 @@ void QtVariantPropertyManager::setValue(QtProperty *property, const QVariant &va
 
     int valType = valueType(property);
 
-    if (propType != valType && !val.canConvert(static_cast<QVariant::Type>(valType)))
+    if (propType != valType && !val.canConvert(static_cast<QMetaType::Type>(valType)))
         return;
 
     QtProperty *internProp = propertyToWrappedProperty()->value(property, 0);

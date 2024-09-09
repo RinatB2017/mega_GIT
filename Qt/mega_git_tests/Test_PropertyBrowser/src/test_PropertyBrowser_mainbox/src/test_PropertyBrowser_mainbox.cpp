@@ -111,7 +111,7 @@ void MainBox::init(void)
     layout->addWidget(editor, 1, 0);
 
     QPushButton *pb = new QPushButton("test");
-    connect(pb, SIGNAL(clicked()), this, SLOT(test()));
+    connect(pb, &QPushButton::clicked,  this,   &MainBox::test);
     layout->addWidget(pb);
     layout->setColumnMinimumWidth(0, 250);
 
@@ -277,19 +277,6 @@ void MainBox::test(void)
     layout->addWidget(scroll4, 1, 3);
     layout->addWidget(scroll5, 1, 4);
     w->show();
-
-#if 0
-    QList<QtProperty *> pl = editor->properties();
-    foreach (QtProperty *property, pl)
-    {
-        emit debug(QString("property [%1]").arg(property->valueText()));
-    }
-
-    emit debug(QString("[%1]").arg(editor->property("databits").toString()));
-    bool r = editor->setProperty("databits", "2");
-    emit info(r ? "true" : "false");
-    emit debug(editor->property("databits").toString());
-#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

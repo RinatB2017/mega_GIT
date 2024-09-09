@@ -1211,11 +1211,11 @@ public:
 
     struct Data
     {
-        Data() : regExp(QString(QLatin1Char('*')),  Qt::CaseSensitive, QRegExp::Wildcard)
+        Data() : regExp(QString(QLatin1Char('*')))
         {
         }
         QString val;
-        QRegExp regExp;
+        QRegularExpression regExp;
     };
 
     typedef QMap<const QtProperty *, Data> PropertyValueMap;
@@ -1256,7 +1256,7 @@ public:
 */
 
 /*!
-    \fn void QtStringPropertyManager::regExpChanged(QtProperty *property, const QRegExp &regExp)
+    \fn void QtStringPropertyManager::regExpChanged(QtProperty *property, const QRegExpression &regExp)
 
     This signal is emitted whenever a property created by this manager
     changes its currenlty set regular expression, passing a pointer to
@@ -1303,9 +1303,9 @@ QString QtStringPropertyManager::value(const QtProperty *property) const
 
     \sa setRegExp()
 */
-QRegExp QtStringPropertyManager::regExp(const QtProperty *property) const
+QRegularExpression QtStringPropertyManager::regExp(const QtProperty *property) const
 {
-    return getData<QRegExp>(d_ptr->m_values, &QtStringPropertyManagerPrivate::Data::regExp, property, QRegExp());
+    return getData<QRegularExpression>(d_ptr->m_values, &QtStringPropertyManagerPrivate::Data::regExp, property, QRegularExpression());
 }
 
 /*!
@@ -1340,8 +1340,12 @@ void QtStringPropertyManager::setValue(QtProperty *property, const QString &val)
     if (data.val == val)
         return;
 
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     if (data.regExp.isValid() && !data.regExp.exactMatch(val))
         return;
+#else
+    //FIXME
+#endif
 
     data.val = val;
 
@@ -1356,7 +1360,7 @@ void QtStringPropertyManager::setValue(QtProperty *property, const QString &val)
 
     \sa regExp(), setValue(), regExpChanged()
 */
-void QtStringPropertyManager::setRegExp(QtProperty *property, const QRegExp &regExp)
+void QtStringPropertyManager::setRegExp(QtProperty *property, const QRegularExpression &regExp)
 {
     const QtStringPropertyManagerPrivate::PropertyValueMap::iterator it = d_ptr->m_values.find(property);
     if (it == d_ptr->m_values.end())
@@ -5872,8 +5876,12 @@ void QtFontPropertyManager::setValue(QtProperty *property, const QFont &val)
         return;
 
     const QFont oldVal = it.value();
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     if (oldVal == val && oldVal.resolve() == val.resolve())
         return;
+#else
+    //FIXME
+#endif
 
     it.value() = val;
 

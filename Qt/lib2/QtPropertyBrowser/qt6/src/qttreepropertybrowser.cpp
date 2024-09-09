@@ -144,7 +144,11 @@ QtPropertyEditorView::QtPropertyEditorView(QWidget *parent) :
 
 void QtPropertyEditorView::drawRow(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     QStyleOptionViewItemV3 opt = option;
+#else
+    QStyleOptionViewItem opt = option;
+#endif
     bool hasValue = true;
     if (m_editorPrivate) {
         QtProperty *property = m_editorPrivate->indexToProperty(index);
@@ -342,7 +346,11 @@ void QtPropertyEditorDelegate::paint(QPainter *painter, const QStyleOptionViewIt
         if (property)
             hasValue = property->hasValue();
     }
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     QStyleOptionViewItemV3 opt = option;
+#else
+    QStyleOptionViewItem opt = option;
+#endif
     if ((m_editorPrivate && index.column() == 0) || !hasValue) {
         QtProperty *property = m_editorPrivate->indexToProperty(index);
         if (property && property->isModified()) {
@@ -356,8 +364,13 @@ void QtPropertyEditorDelegate::paint(QPainter *painter, const QStyleOptionViewIt
         opt.palette.setColor(QPalette::Text, opt.palette.color(QPalette::BrightText));
     } else {
         c = m_editorPrivate->calculatedBackgroundColor(m_editorPrivate->indexToBrowserItem(index));
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
         if (c.isValid() && (opt.features & QStyleOptionViewItemV2::Alternate))
             c = c.lighter(112);
+#else
+        if (c.isValid() && (opt.features & QStyleOptionViewItem::Alternate))
+            c = c.lighter(112);
+#endif
     }
     if (c.isValid())
         painter->fillRect(option.rect, c);
@@ -435,7 +448,9 @@ static QIcon drawIndicatorIcon(const QPalette &palette, QStyle *style)
 void QtTreePropertyBrowserPrivate::init(QWidget *parent)
 {
     QHBoxLayout *layout = new QHBoxLayout(parent);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     layout->setMargin(0);
+#endif
     m_treeWidget = new QtPropertyEditorView(parent);
     m_treeWidget->setEditorPrivate(this);
     m_treeWidget->setIconSize(QSize(18, 18));
@@ -557,7 +572,11 @@ void QtTreePropertyBrowserPrivate::propertyInserted(QtBrowserItem *index, QtBrow
     m_indexToItem[index] = newItem;
 
     newItem->setFlags(newItem->flags() | Qt::ItemIsEditable);
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     m_treeWidget->setItemExpanded(newItem, true);
+#else
+    //FIXME надо придумать замену для Qt6
+#endif
 
     updateItem(newItem);
 }

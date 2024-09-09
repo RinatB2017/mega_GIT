@@ -47,6 +47,10 @@
 #include <QtCore/QDate>
 #include <QtCore/QLocale>
 
+#if QT_VERSION > QT_VERSION_CHECK(6,0,0)
+#   include <QRegularExpression>
+#endif
+
 #if defined(Q_CC_MSVC)
 #    pragma warning(disable: 4786) /* MS VS 6: truncating debug info after 255 characters */
 #endif
@@ -299,7 +303,7 @@ public:
     void slotDecimalsChanged(QtProperty *property, int prec);
     void slotValueChanged(QtProperty *property, bool val);
     void slotValueChanged(QtProperty *property, const QString &val);
-    void slotRegExpChanged(QtProperty *property, const QRegExp &regExp);
+    void slotRegExpChanged(QtProperty *property, const QRegularExpression &regExp);
     void slotValueChanged(QtProperty *property, const QDate &val);
     void slotRangeChanged(QtProperty *property, const QDate &min, const QDate &max);
     void slotValueChanged(QtProperty *property, const QTime &val);
@@ -516,7 +520,7 @@ void QtVariantPropertyManagerPrivate::slotValueChanged(QtProperty *property, con
     valueChanged(property, QVariant(val));
 }
 
-void QtVariantPropertyManagerPrivate::slotRegExpChanged(QtProperty *property, const QRegExp &regExp)
+void QtVariantPropertyManagerPrivate::slotRegExpChanged(QtProperty *property, const QRegularExpression &regExp)
 {
     if (QtVariantProperty *varProp = m_internalToProperty.value(property, 0))
         emit q_ptr->attributeChanged(varProp, m_regExpAttribute, QVariant(regExp));
@@ -961,11 +965,15 @@ QtVariantPropertyManager::QtVariantPropertyManager(QObject *parent)
     QtStringPropertyManager *stringPropertyManager = new QtStringPropertyManager(this);
     d_ptr->m_typeToPropertyManager[QVariant::String] = stringPropertyManager;
     d_ptr->m_typeToValueType[QVariant::String] = QVariant::String;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     d_ptr->m_typeToAttributeToAttributeType[QVariant::String][d_ptr->m_regExpAttribute] = QVariant::RegExp;
+#else
+    //FIXME надо придумать замену для Qt6
+#endif
     connect(stringPropertyManager, SIGNAL(valueChanged(QtProperty*,QString)),
                 this, SLOT(slotValueChanged(QtProperty*,QString)));
-    connect(stringPropertyManager, SIGNAL(regExpChanged(QtProperty*,QRegExp)),
-                this, SLOT(slotRegExpChanged(QtProperty*,QRegExp)));
+    connect(stringPropertyManager, SIGNAL(regExpChanged(QtProperty*,QRegularExpression)),
+            this, SLOT(slotRegExpChanged(QtProperty*,QRegularExpression)));
     // DatePropertyManager
     QtDatePropertyManager *datePropertyManager = new QtDatePropertyManager(this);
     d_ptr->m_typeToPropertyManager[QVariant::Date] = datePropertyManager;
@@ -1688,7 +1696,7 @@ void QtVariantPropertyManager::setAttribute(QtProperty *property,
         return;
     } else if (QtStringPropertyManager *stringManager = qobject_cast<QtStringPropertyManager *>(manager)) {
         if (attribute == d_ptr->m_regExpAttribute)
-            stringManager->setRegExp(internProp, qvariant_cast<QRegExp>(value));
+            stringManager->setRegExp(internProp, qvariant_cast<QRegularExpression>(value));
         return;
     } else if (QtDatePropertyManager *dateManager = qobject_cast<QtDatePropertyManager *>(manager)) {
         if (attribute == d_ptr->m_maximumAttribute)

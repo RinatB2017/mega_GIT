@@ -1668,7 +1668,7 @@ void QtVariantPropertyManager::setAttribute(QtProperty *property,
         return;
 
     if (attrType != attributeType(propertyType(property), attribute) &&
-                !value.canConvert((QVariant::Type)attrType))
+                !value.canConvert((QMetaType::Type)attrType))
         return;
 
     QtProperty *internProp = propertyToWrappedProperty()->value(property, 0);

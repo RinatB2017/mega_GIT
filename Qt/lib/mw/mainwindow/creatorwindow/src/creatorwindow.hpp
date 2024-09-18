@@ -140,20 +140,20 @@ public:
 
     void setWindowTitle(const QString &title);
 
-//    bool add_action(QMenu *menu,
-//                    int pos_y,
-//                    QAction *action);
+    //    bool add_action(QMenu *menu,
+    //                    int pos_y,
+    //                    QAction *action);
 
     bool add_separator(QMenu *menu,
                        int pos_y);
 
     bool add_mdi_sorting(void);
 
-    bool add_dock_widget(QString title,
-                         QString objectname,
-                         Qt::DockWidgetArea area,
-                         QWidget *widget,
-                         bool no_dock_position = false);
+    QDockWidget *add_dock_widget(QString title,
+                                 QString objectname,
+                                 Qt::DockWidgetArea area,
+                                 QWidget *widget,
+                                 bool no_dock_position = false);
     void tabify_all_docs(void);
 
     template<typename T>
@@ -217,7 +217,7 @@ public slots:
     void showNormal(void);
     void quit(void);
 
-//private slots:
+    //private slots:
     void log(const QString &data);
     void set_app_font(void);
     void setStyles(void);
@@ -263,7 +263,7 @@ private:
         MFC_THEME
     };
 
-//    bool add_windowsmenu_action(QWidget *widget, QAction *action);
+    //    bool add_windowsmenu_action(QWidget *widget, QAction *action);
     typedef void (CreatorWindow::*v_saveSlot)(void);
     typedef bool (CreatorWindow::*b_saveSlot)(void);
     bool add_new_action(QMenu   *parent,
@@ -290,7 +290,7 @@ private:
     QSystemTrayIcon *trayIcon = nullptr;
     QMenu *trayIconMenu = nullptr;
 
-//    QMenu *m_app_windowsmenu = nullptr;
+    //    QMenu *m_app_windowsmenu = nullptr;
 
     //TODO тест
     MyWidget *c_widget = nullptr;

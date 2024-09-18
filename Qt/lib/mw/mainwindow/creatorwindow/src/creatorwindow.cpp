@@ -30,13 +30,13 @@ MyLogger *logger = nullptr;
 //--------------------------------------------------------------------------------
 CreatorWindow::CreatorWindow(QWidget *parent)
     : QMainWindow(parent),
-      orgName(ORGNAME),
-      appName(APPNAME),
-      appVersion(QString("%1.%2.%3.%4")
-                 .arg(VER_MAJOR)
-                 .arg(VER_MINOR)
-                 .arg(VER_PATCH)
-                 .arg(VER_BUILD))
+    orgName(ORGNAME),
+    appName(APPNAME),
+    appVersion(QString("%1.%2.%3.%4")
+                   .arg(VER_MAJOR)
+                   .arg(VER_MINOR)
+                   .arg(VER_PATCH)
+                   .arg(VER_BUILD))
 {
     init();
 }
@@ -201,8 +201,8 @@ void CreatorWindow::resizeEvent(QResizeEvent *event)
     Q_ASSERT(event);
 #ifndef NO_STATUSBAR
     statusLabel1->setText(QString(QLatin1String("%1 %2"))
-                          .arg(event->size().width())
-                          .arg(event->size().height()));
+                              .arg(event->size().width())
+                              .arg(event->size().height()));
 #else
     Q_UNUSED(event)
 #endif
@@ -229,8 +229,8 @@ void CreatorWindow::init(void)
 
     load_translations();
     setWindowTitle(QString("%1 (ver. %2)")
-                   .arg(appTitle)
-                   .arg(appVersion));
+                       .arg(appTitle)
+                       .arg(appVersion));
     setObjectName("CreatorWindow");
 
     load_setting();
@@ -382,10 +382,10 @@ void CreatorWindow::load_translations()
             QMessageBox::critical(nullptr,
                                   "Error",
                                   QString("appTranslator (%1) not loaded!")
-                                  .arg(translator.translator_file));
+                                      .arg(translator.translator_file));
 #ifdef QT_DEBUG
             qDebug() << QString("appTranslator (%1) not loaded!")
-                        .arg(translator.translator_file);
+                            .arg(translator.translator_file);
 
 #endif
         }
@@ -417,10 +417,10 @@ void CreatorWindow::choice_translator(QAction *menu)
     QString p_lang = menu->property(P_LANG).toString();
 
     auto trans_it = std::find_if(
-                l_translators.begin(),
-                l_translators.end(),
-                [p_lang](TRANSLATOR trans){ return trans.property == p_lang; }
-            );
+        l_translators.begin(),
+        l_translators.end(),
+        [p_lang](TRANSLATOR trans){ return trans.property == p_lang; }
+        );
     if (trans_it != l_translators.end())
     {
         qApp->installTranslator(trans_it->translator_obj);
@@ -769,18 +769,18 @@ void CreatorWindow::createStyleToolBar(void)
 #ifdef TOOLBAR_ORIENTATION
     styletoolbar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     connect(styletoolbar, &QToolBar::orientationChanged, [this]()
-    {
-        switch(styletoolbar->orientation())
-        {
-        case Qt::Horizontal:
-            styletoolbar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-            break;
+            {
+                switch(styletoolbar->orientation())
+                {
+                case Qt::Horizontal:
+                    styletoolbar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+                    break;
 
-        case Qt::Vertical:
-            styletoolbar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-            break;
-        }
-    });
+                case Qt::Vertical:
+                    styletoolbar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+                    break;
+                }
+            });
 #endif
 
     addToolBar(Qt::LeftToolBarArea, styletoolbar);
@@ -986,23 +986,23 @@ void CreatorWindow::set_cascadeSubWindows(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool CreatorWindow::add_dock_widget(QString title,
-                                    QString objectname,
-                                    Qt::DockWidgetArea area,
-                                    QWidget *widget,
-                                    bool no_dock_position)
+QDockWidget * CreatorWindow::add_dock_widget(QString title,
+                                            QString objectname,
+                                            Qt::DockWidgetArea area,
+                                            QWidget *widget,
+                                            bool no_dock_position)
 {
     Q_ASSERT(widget);
 
     if(title.isEmpty())
     {
         emit error("title is empty!");
-        return false;
+        return nullptr;
     }
     if(objectname.isEmpty())
     {
         emit error("objectname is empty!");
-        return false;
+        return nullptr;
     }
 
     QDockWidget *dw = new QDockWidget(this);
@@ -1048,7 +1048,7 @@ bool CreatorWindow::add_dock_widget(QString title,
     addDockWidget(area, dw);
     load_setting();
 
-    return true;
+    return dw;
 }
 //--------------------------------------------------------------------------------
 void CreatorWindow::tabify_all_docs(void)

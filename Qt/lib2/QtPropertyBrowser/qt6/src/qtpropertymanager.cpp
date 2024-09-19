@@ -425,7 +425,7 @@ static QList<QLocale::Country> sortCountries(const QList<QLocale::Country> &coun
     QListIterator<QLocale::Country> itCountry(countries);
     while (itCountry.hasNext()) {
         QLocale::Country country = itCountry.next();
-        nameToCountry.insert(QLocale::countryToString(country), country);
+        nameToCountry.insert(QLocale::territoryToString(country), country);   //TODO countryToString
     }
     return nameToCountry.values();
 }
@@ -452,7 +452,7 @@ void QtMetaEnumProvider::initLocale()
         QList<QLocale::Country> countries;
         countries = QLocale::countriesForLanguage(language);
         if (countries.isEmpty() && language == system.language())
-            countries << system.country();
+            countries << system.territory();  //TODO country()
 
         if (!countries.isEmpty() && !m_languageToIndex.contains(language)) {
             countries = sortCountries(countries);
@@ -464,7 +464,7 @@ void QtMetaEnumProvider::initLocale()
             int countryIdx = 0;
             while (it.hasNext()) {
                 QLocale::Country country = it.next();
-                countryNames << QLocale::countryToString(country);
+                countryNames << QLocale::territoryToString(country);  //TODO countryToString
                 m_indexToCountry[langIdx][countryIdx] = country;
                 m_countryToIndex[language][country] = countryIdx;
                 ++countryIdx;
@@ -2283,14 +2283,14 @@ void QtLocalePropertyManagerPrivate::slotEnumChanged(QtProperty *property, int v
     if (QtProperty *prop = m_languageToProperty.value(property, 0)) {
         const QLocale loc = m_values[prop];
         QLocale::Language newLanguage = loc.language();
-        QLocale::Country newCountry = loc.country();
+        QLocale::Country newCountry = loc.territory();  //TODO country();
         metaEnumProvider()->indexToLocale(value, 0, &newLanguage, 0);
         QLocale newLoc(newLanguage, newCountry);
         q_ptr->setValue(prop, newLoc);
     } else if (QtProperty *prop = m_countryToProperty.value(property, 0)) {
         const QLocale loc = m_values[prop];
         QLocale::Language newLanguage = loc.language();
-        QLocale::Country newCountry = loc.country();
+        QLocale::Country newCountry = loc.territory();  //TODO country();
         metaEnumProvider()->indexToLocale(m_enumPropertyManager->value(m_propertyToLanguage.value(prop)), value, &newLanguage, &newCountry);
         QLocale newLoc(newLanguage, newCountry);
         q_ptr->setValue(prop, newLoc);
@@ -2408,14 +2408,14 @@ QString QtLocalePropertyManager::valueText(const QtProperty *property) const
     int langIdx = 0;
     int countryIdx = 0;
     const QtMetaEnumProvider *me = metaEnumProvider();
-    me->localeToIndex(loc.language(), loc.country(), &langIdx, &countryIdx);
+    me->localeToIndex(loc.language(), loc.territory(), &langIdx, &countryIdx);    //TODO country()
     if (langIdx < 0) {
         qWarning("QtLocalePropertyManager::valueText: Unknown language %d", loc.language());
         return tr("<Invalid>");
     }
     const QString languageName = me->languageEnumNames().at(langIdx);
     if (countryIdx < 0) {
-        qWarning("QtLocalePropertyManager::valueText: Unknown country %d for %s", loc.country(), qPrintable(languageName));
+        qWarning("QtLocalePropertyManager::valueText: Unknown country %d for %s", loc.territory(), qPrintable(languageName)); //TODO country()
         return languageName;
     }
     const QString countryName = me->countryEnumNames(loc.language()).at(countryIdx);
@@ -2444,7 +2444,7 @@ void QtLocalePropertyManager::setValue(QtProperty *property, const QLocale &val)
 
     int langIdx = 0;
     int countryIdx = 0;
-    metaEnumProvider()->localeToIndex(val.language(), val.country(), &langIdx, &countryIdx);
+    metaEnumProvider()->localeToIndex(val.language(), val.territory(), &langIdx, &countryIdx);    //TODO country()
     if (loc.language() != val.language()) {
         d_ptr->m_enumPropertyManager->setValue(d_ptr->m_propertyToLanguage.value(property), langIdx);
         d_ptr->m_enumPropertyManager->setEnumNames(d_ptr->m_propertyToCountry.value(property),
@@ -2466,7 +2466,7 @@ void QtLocalePropertyManager::initializeProperty(QtProperty *property)
 
     int langIdx = 0;
     int countryIdx = 0;
-    metaEnumProvider()->localeToIndex(val.language(), val.country(), &langIdx, &countryIdx);
+    metaEnumProvider()->localeToIndex(val.language(), val.territory(), &langIdx, &countryIdx);    //TODO country()
 
     QtProperty *languageProp = d_ptr->m_enumPropertyManager->addProperty();
     languageProp->setPropertyName(tr("Language"));

@@ -4,6 +4,32 @@
 #include "qled.hpp"
 #include "ledpanel.hpp"
 //--------------------------------------------------------------------------------
+LedPanel::LedPanel(QWidget *parent) :
+    QFrame(parent)
+{
+    unsigned int n;
+
+    count = 8;
+
+    emit log("LedPanel started!");
+    hbox = new QHBoxLayout;
+    for(n=0; n<count; n++)
+    {
+        led[n] = new QLed();
+        led[n]->set_size(32, 32);
+        led[n]->set_tooltip(QString::number(n));
+        led[n]->set_color_on(Qt::green);
+    }
+    for(n=count; n>0; n--)
+    {
+        hbox->addWidget(led[n-1]);
+    }
+    hbox->addStretch();
+
+    setLayout(hbox);
+    setFrameStyle(QFrame::Box | QFrame::Raised);
+}
+//--------------------------------------------------------------------------------
 LedPanel::LedPanel(unsigned int max_leds,
                    unsigned int width_leds,
                    unsigned int height_leds,

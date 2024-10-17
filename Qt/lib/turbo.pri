@@ -51,8 +51,8 @@ win32 {
     BIN_PATH  = "C:\temp\bin"
     TEMP_PATH = "C:\temp\obj"
 
-    # BIN_PATH  = "Z:\temp\bin"
-    # TEMP_PATH = "Z:\temp\obj"
+    # BIN_PATH  = "X:\temp\bin"
+    # TEMP_PATH = "X:\temp\obj"
     OBJECTS_DIR = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/obj
     MOC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/moc
     UI_DIR      = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/ui

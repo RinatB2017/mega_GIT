@@ -105,7 +105,7 @@ void MainBox::createTestBar(void)
                                                   "choice_test");
         btn_choice_test->setObjectName("btn_choice_test");
 
-        connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+        connect(btn_choice_test, &QToolButton::clicked, this, &MainBox::choice_test);
     }
     else
     {

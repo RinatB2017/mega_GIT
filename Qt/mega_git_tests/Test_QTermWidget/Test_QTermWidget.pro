@@ -10,7 +10,8 @@ FOLDER  = tests
 include (conf/conf.pri)
 
 DEPENDPATH  += \
-    /usr/include/qtermwidget5 \
+    # /usr/include/qtermwidget5 \
+    /usr/include/qtermwidget6 \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 

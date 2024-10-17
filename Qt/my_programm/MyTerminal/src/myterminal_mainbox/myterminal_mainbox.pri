@@ -3,7 +3,8 @@
 #**********************************************************************************
 
 DEPENDPATH  += \
-    /usr/include/qtermwidget5 \
+    # /usr/include/qtermwidget5 \
+    /usr/include/qtermwidget6 \
     $$PWD/src \
     $$PWD/src/ui
 INCLUDEPATH = $$DEPENDPATH

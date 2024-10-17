@@ -17,7 +17,8 @@ HEADERS += \
 SOURCES += \
     main.cpp
 
-LIBS    += -lqtermwidget5
+# LIBS    += -lqtermwidget5
+LIBS    += -lqtermwidget6
 
 win32 {
     RC_ICONS = ico/computer.ico

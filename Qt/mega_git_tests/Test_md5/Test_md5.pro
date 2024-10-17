@@ -24,7 +24,6 @@ win32 {
 }
 
 include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
-LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include (src/test_md5_mainbox/test_md5_mainbox.pri)

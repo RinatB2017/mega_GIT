@@ -54,8 +54,8 @@ void MainBox::init(void)
     createTestBar();
 #endif
 
-    connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
-    connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
+    //FIXME connect(this,               &MainBox::send,         ui->serial_widget,  &SerialBox5::input);
+    connect(ui->serial_widget,  &SerialBox5::output,    this,               &MainBox::read_data);
 }
 //--------------------------------------------------------------------------------
 void MainBox::createTestBar(void)
@@ -74,7 +74,7 @@ void MainBox::createTestBar(void)
                                        "test",
                                        "test");
     
-    connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
+    connect(btn_test,           &QToolButton::clicked,          this,       &MainBox::test);
     connect(ui->serial_widget,  &SerialBox5::port_is_active,    btn_test,   &QToolButton::setEnabled);
 }
 //--------------------------------------------------------------------------------

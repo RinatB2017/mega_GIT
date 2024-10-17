@@ -35,7 +35,6 @@ CONFIG(debug, debug|release) {
 
 #----------------------------------------------
 include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
-LIB_PATH2 = "$$PWD/../../../Qt/lib2"
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/widgets/hexspinbox/hexspinbox.pri)

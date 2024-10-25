@@ -89,8 +89,11 @@ QtLocalPeer::QtLocalPeer(QObject* parent, const QString &appId)
     prefix.truncate(6);
 
     QByteArray idc = id.toUtf8();
-    // quint16 idNum = qChecksum(idc.constData(),static_cast<uint>(idc.size()));    //FIXME исправлено, надо проверить
+#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
     quint16 idNum = qChecksum(QByteArrayView(idc));                                 //FIXME исправлено, надо проверить
+#else
+    quint16 idNum = qChecksum(idc.constData(),static_cast<uint>(idc.size()));    //FIXME исправлено, надо проверить
+#endif
     socketName = QLatin1String("qtsingleapp-") + prefix
             + QLatin1Char('-') + QString::number(idNum, 16);
 

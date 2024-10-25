@@ -151,9 +151,6 @@ unix:!macx {
 #    before_build.commands = chcp 1251
 #}
 ###############################################################################
-#
-# не факт, что это правильно будет в будущем
-#
 greaterThan(QT_MAJOR_VERSION, 5) {
     QT += core5compat
     contains(DEFINES, LOGO_GL) {
@@ -165,6 +162,8 @@ win32 {
     QMAKE_CXXFLAGS += /permissive-
 }
     message(Qt6 = $$QT)
+} else {
+    message(Qt5 = $$QT)
 }
 ###############################################################################
 CONFIG(debug, debug|release) {

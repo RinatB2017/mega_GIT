@@ -105,7 +105,9 @@ void SerialBox5_lite::init(void)
 
     setFixedHeight(sizeHint().height());
 
-    setCloseState();
+    QTimer::singleShot(100, [this]{
+        setCloseState();
+    });
     updateText();
 }
 //--------------------------------------------------------------------------------
@@ -584,11 +586,11 @@ bool SerialBox5_lite::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::load_setting(void)
 {
-
+    ui->BaudBox->setCurrentText(load_string(BAUDRATE));
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::save_setting(void)
 {
-
+    save_string(BAUDRATE,   ui->BaudBox->currentText());
 }
 //--------------------------------------------------------------------------------

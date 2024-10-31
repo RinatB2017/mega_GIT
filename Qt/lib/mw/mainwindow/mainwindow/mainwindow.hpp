@@ -22,6 +22,8 @@
 #define MAINWINDOW_HPP
 //--------------------------------------------------------------------------------
 #include "creatormenus.hpp"
+
+#define BAUDRATE    "baudrate"
 //--------------------------------------------------------------------------------
 class MainWindow : public CreatorMenus
 {

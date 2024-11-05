@@ -126,18 +126,7 @@ unix:!macx {
     #QMAKE_CXXFLAGS_WARN_ON -= -Wno-missing-braces -Wno-missing-field-initializers
 }
 ###############################################################################
-# ccache в винде нет, проверю, может это поможет
-#win32 {
-#    CONFIG	 += precompile_header
-#    PRECOMPILED_HEADER  = stable.h
-
-#    HEADERS += stable.h
-#    precompile_header:!isEmpty(PRECOMPILED_HEADER) {
-#        DEFINES += USING_PCH
-#    }
-#}
-###############################################################################
-# решение проблемы для кодировке в консоли windows
+# решение проблемы для кодировки в консоли windows
 #win32 {
 #    QMAKE_EXTRA_TARGETS += before_build makefilehook
 
@@ -157,6 +146,8 @@ greaterThan(QT_MAJOR_VERSION, 5) {
         QT += openglwidgets
     }
 win32 {
+    QMAKE_CXX   = "C:\ccache\ccache.exe $$QMAKE_CXX"
+
     QMAKE_CXXFLAGS += /std:c++17
     QMAKE_CXXFLAGS += /Zc:__cplusplus
     QMAKE_CXXFLAGS += /permissive-

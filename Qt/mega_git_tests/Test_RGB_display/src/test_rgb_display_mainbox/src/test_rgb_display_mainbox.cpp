@@ -66,7 +66,7 @@ void MainBox::init(void)
 
     ui->sb_brightness->setRange(1, 0xFF);
 
-    ui->serial_widget->set_fix_baudrate(BAUDRATE);
+    ui->serial_widget->set_fix_baudrate(9600);
 
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,   SLOT(read_data(QByteArray)));
 

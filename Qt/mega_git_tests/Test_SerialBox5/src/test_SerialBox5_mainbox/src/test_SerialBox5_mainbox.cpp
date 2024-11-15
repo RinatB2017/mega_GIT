@@ -60,7 +60,7 @@ void MainBox::init_serial_widgets(void)
 {
     ui->serial_widget->set_caption("RS-232");
 
-    ui->serial_widget_fix_baudrate->set_fix_baudrate(BAUDRATE);
+    ui->serial_widget_fix_baudrate->set_fix_baudrate(9600);
 
     connect(ui->serial_widget,                      &SerialBox5::output,                    this,   &MainBox::serial_data);
     connect(ui->serial_widget_lite,                 &SerialBox5_lite::output,               this,   &MainBox::serial_data);

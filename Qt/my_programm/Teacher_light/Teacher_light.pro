@@ -31,7 +31,7 @@ RESOURCES   += \
 include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
+include ($$LIB_PATH2/QXmlPutGet/QXmlPutGet.pri)
 include (src/teacher_light_mainbox/teacher_light_mainbox.pri)
 include (src/notebook/notebook.pri)
 

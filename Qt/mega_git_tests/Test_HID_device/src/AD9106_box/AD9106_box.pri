@@ -25,4 +25,4 @@ FORMS   += AD9106_box.ui
 
 RESOURCES   += registers.qrc
 
-include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
+include ($$LIB_PATH2/QXmlPutGet/QXmlPutGet.pri)

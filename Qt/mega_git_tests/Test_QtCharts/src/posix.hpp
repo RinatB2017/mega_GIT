@@ -83,32 +83,32 @@ static inline void printStackTrace(QFile *pFile,
 //--------------------------------------------------------------------------------
 void signalHandler(int signum)
 {
-  // associate each signal with a signal name string.
-  const char* name = NULL;
-  switch(signum)
-  {
+    // associate each signal with a signal name string.
+    char* name = nullptr;
+    switch(signum)
+    {
     case SIGABRT: name = "SIGABRT";  break;
     case SIGSEGV: name = "SIGSEGV";  break;
     case SIGILL:  name = "SIGILL";   break;
     case SIGFPE:  name = "SIGFPE";   break;
     default:  break;
-  }
-  // Dump a stack trace to a file.
-  QFile stackTraceFile;
-  stackTraceFile.setFileName("xxx");
-  if (stackTraceFile.open(QIODevice::WriteOnly | QIODevice::Text))
-  {
-    printStackTrace(&stackTraceFile, signum, name);
-    stackTraceFile.close();
-  }
-  if (name)
-    fprintf(stderr, "Caught signal %d\n", signum);
-  else
-    fprintf(stderr, "Caught signal %d (%s)\n", signum, name);
+    }
+    // Dump a stack trace to a file.
+    QFile stackTraceFile;
+    stackTraceFile.setFileName("xxx");
+    if (stackTraceFile.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        printStackTrace(&stackTraceFile, signum, name);
+        stackTraceFile.close();
+    }
+    if (name)
+        fprintf(stderr, "Caught signal %d\n", signum);
+    else
+        fprintf(stderr, "Caught signal %d (%s)\n", signum, name);
 
-  // If you caught one of the above signals, it is likely you just
-  // want to quit your program right now.
-  exit(signum);
+    // If you caught one of the above signals, it is likely you just
+    // want to quit your program right now.
+    exit(signum);
 }
 //--------------------------------------------------------------------------------
 void posix_death_signal(int signum)

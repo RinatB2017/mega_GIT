@@ -56,14 +56,10 @@ ImageViewer::ImageViewer()
     imageLabel->setScaledContents(true);
 
     scrollArea->setBackgroundRole(QPalette::Dark);
-#if 0
-    scrollArea->setWidget(imageLabel);
-#else
     //TODO
     QHBoxLayout *hbox = new QHBoxLayout();
     hbox->addWidget(imageLabel);
     scrollArea->setLayout(hbox);
-#endif
     scrollArea->setVisible(false);
     //TODO
     scrollArea->setWidgetResizable(true);

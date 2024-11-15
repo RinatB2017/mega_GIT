@@ -63,7 +63,7 @@ void MainBox::init(void)
 //--------------------------------------------------------------------------------
 void MainBox::init_serial_widget(void)
 {
-    ui->serial_widget->set_fix_baudrate(BAUDRATE);
+    ui->serial_widget->set_fix_baudrate(9600);
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_adxl345(QByteArray)));
 }
 //--------------------------------------------------------------------------------

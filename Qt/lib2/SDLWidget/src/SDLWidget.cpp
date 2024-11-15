@@ -51,18 +51,6 @@ QSDLScreenWidget::QSDLScreenWidget(QWidget *parent) :
 
     player_x = 0;
     player_y = 0;
-
-#if 0
-    glGenTextures(1, image_1);
-    glBindTexture(GL_TEXTURE_2D, tex);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
-
-    glTexImage2D(GL_TEXTURE_2D, 0, glFormat, temp->w, temp->h, 0, glFormat, GL_UNSIGNED_BYTE, temp->pixels);
-#endif
 }
 //--------------------------------------------------------------------------------
 void QSDLScreenWidget::resizeEvent(QResizeEvent *)
@@ -156,18 +144,6 @@ void QSDLScreenWidget::keyPressEvent(QKeyEvent *event)
     test();
 }
 //--------------------------------------------------------------------------------
-#if 0
-SDL_Event my_event;//SDL событие
-while(SDL_PollEvent(&my_event))
-{
-    qDebug() << "event";
-    if (my_event.type==SDL_KEYDOWN)    //еcли нажата кнопка на клавиатуре-однократное нажатие
-    {
-        std::cout << "SDL_KEYDOWN";
-        qDebug() << "SDL_KEYDOWN";
-    }
-}
-#endif
 void QSDLScreenWidget::update(void)
 {
     switch(state)

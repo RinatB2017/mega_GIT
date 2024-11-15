@@ -223,8 +223,8 @@ void DIP_widget::mousePressEvent(QMouseEvent *event)
     }
     if(event->button()==Qt::LeftButton)
     {
-        int x = event->x();
-        int y = event->y();
+        int x = event->position().x();
+        int y = event->position().y();
         for(int n=0; n<buttons.size(); n++)
         {
             if(check_pos(buttons[n].rect, QPoint(x,y)))

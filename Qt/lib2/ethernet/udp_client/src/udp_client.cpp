@@ -23,17 +23,6 @@ QString UDP_Client::getLocalAddress(void)
 {
     QString ipAddress;
 
-#if 0
-    QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
-    for (int i = 0; i < ipAddressesList.size(); ++i)
-    {
-        if (ipAddressesList.at(i) != QHostAddress::LocalHost && ipAddressesList.at(i).toIPv4Address())
-        {
-            ipAddress = ipAddressesList.at(i).toString();
-            break;
-        }
-    }
-#endif
     if (ipAddress.isEmpty())
         ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
 

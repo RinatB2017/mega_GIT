@@ -21,5 +21,5 @@ FORMS   += mybrowser.ui
 
 HEADERS += custompage.h
 
-include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
+include ($$LIB_PATH2/QXmlPutGet/QXmlPutGet.pri)
 include ($$LIB_PATH2/web/webattributedialog/webattributedialog.pri)

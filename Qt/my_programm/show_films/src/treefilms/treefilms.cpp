@@ -728,49 +728,15 @@ int TreeFilms::get_file_count(void)
     return file_count;
 }
 //--------------------------------------------------------------------------------
-#if 0
-void TreeFilms::dragEnterEvent(QDragEnterEvent *event)
-{
-    foreach (QString filter, film_filters)
-    {
-        foreach(QUrl url, event->mimeData()->urls())
-        {
-            if (QFileInfo(url.toLocalFile()).suffix().toUpper() == filter.right(3).toUpper())
-            {
-                event->acceptProposedAction();
-                return;
-            }
-        }
-    }
-}
-#endif
-//--------------------------------------------------------------------------------
 void TreeFilms::dropEvent(QDropEvent *event)
 {
-    QTreeWidgetItem* item = itemFromIndex(indexAt(event->pos()));
+    QTreeWidgetItem *item = itemFromIndex(indexAt(event->position().toPoint()));
+    Q_ASSERT(item);
 
     bool is_folder = item->data(0, ROLE_IS_FOLDER).toBool();
     if(is_folder)
     {
         QTreeWidget::dropEvent(event);
     }
-
-#if 0
-    foreach (QString filter, film_filters)
-    {
-        foreach(QUrl url, event->mimeData()->urls())
-        {
-            QString filename = url.toLocalFile();
-            QString suffix = QFileInfo(filename).suffix().toUpper();
-            if(suffix == filter.right(3).toUpper())
-            {
-                event->acceptProposedAction();
-                QString path = QFileInfo(filename).absolutePath();
-                add_film(path, filename);
-                continue;
-            }
-        }
-    }
-#endif
 }
 //--------------------------------------------------------------------------------

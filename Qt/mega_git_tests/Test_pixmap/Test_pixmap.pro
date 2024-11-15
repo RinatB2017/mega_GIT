@@ -31,7 +31,7 @@ win32 {
 
 include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
 
-include ($$LIB_PATH2/QXmlPutGet/qxmlputget.pri)
+include ($$LIB_PATH2/QXmlPutGet/QXmlPutGet.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 
 include (src/test_pixmap_mainbox/test_pixmap_mainbox.pri)

@@ -43,8 +43,8 @@ void ShowPicture::mousePressEvent(QMouseEvent *event)
     if(event->button() == Qt::RightButton)
     {
         //qDebug() << "delete";
-        int x = event->x();
-        int y = event->y();
+        int x = event->position().x();
+        int y = event->position().y();
         int index = 0;
         bool found = false;
         foreach (QRubberBand *band, l_bands)

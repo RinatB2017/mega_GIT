@@ -586,11 +586,11 @@ bool SerialBox5_lite::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::load_setting(void)
 {
-    ui->BaudBox->setCurrentText(load_string(BAUDRATE));
+    ui->BaudBox->setCurrentText(load_string(BAUDNAME));
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::save_setting(void)
 {
-    save_string(BAUDRATE,   ui->BaudBox->currentText());
+    save_string(BAUDNAME,   ui->BaudBox->currentText());
 }
 //--------------------------------------------------------------------------------

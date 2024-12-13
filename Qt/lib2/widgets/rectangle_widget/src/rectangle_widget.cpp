@@ -44,8 +44,8 @@ void RectangeWidget::mousePressEvent(QMouseEvent *event)
     if(event->button() == Qt::LeftButton)
     {
         flag_move = true;
-        dx = event->x();
-        dy = event->y();
+        dx = event->position().x();
+        dy = event->position().y();
     }
 }
 //--------------------------------------------------------------------------------

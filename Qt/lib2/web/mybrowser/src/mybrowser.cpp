@@ -373,7 +373,7 @@ void MyBrowser::click(QWebEngineView * webView, QPoint pos, Qt::MouseButton butt
     }
     if (eventsReciverWidget) {
         QMouseEvent * me;
-        me = new QMouseEvent(QEvent::MouseButtonPress  , pos, button, button, Qt::NoModifier);
+        me = new QMouseEvent(QEvent::MouseButtonPress , pos, button, button, Qt::NoModifier);
         QApplication::postEvent(eventsReciverWidget, me);
         me = new QMouseEvent(QEvent::MouseButtonRelease, pos, button, button, Qt::NoModifier);
         QApplication::postEvent(eventsReciverWidget, me);

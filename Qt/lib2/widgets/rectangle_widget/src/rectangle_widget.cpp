@@ -63,8 +63,8 @@ void RectangeWidget::mouseMoveEvent(QMouseEvent *event)
     {
         if(flag_move)
         {
-            setGeometry(pos().x() + (event->x() - dx),
-                        pos().y() + (event->y() - dy),
+            setGeometry(pos().x() + (event->position().x() - dx),
+                        pos().y() + (event->position().y() - dy),
                         width(),
                         height());
         }

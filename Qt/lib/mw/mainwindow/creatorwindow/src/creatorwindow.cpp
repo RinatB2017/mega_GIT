@@ -573,6 +573,7 @@ void CreatorWindow::about(void)
     Q_ASSERT(about);
 
     about->setProperty(P_AVATAR,        ":/logo/avatar.png");
+    about->setProperty(P_TELEGRAM_QR,   ":/logo/telegram.png");
     about->setProperty(P_ORGNAME,       orgName);
     about->setProperty(P_PROGRAMMNAME,  appName);
     about->setProperty(P_VERSION,       appVersion);

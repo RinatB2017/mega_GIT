@@ -11,6 +11,7 @@
 #include <QUrl>
 //--------------------------------------------------------------------------------
 #define P_AVATAR        "avatar"
+#define P_TELEGRAM_QR   "telegram_qr"
 #define P_ORGNAME       "orgName"
 #define P_PROGRAMMNAME  "programmName"
 #define P_VERSION       "version"
@@ -28,6 +29,7 @@ class AboutBox : public QDialog
 
     //TODO не забыть, что название property должны совпадать с первым полем Q_PROPERTY
     Q_PROPERTY(QString avatar       READ get_avatar         WRITE set_avatar)
+    Q_PROPERTY(QString telegram_qr  READ get_telegram_qr    WRITE set_telegram_qr)
     Q_PROPERTY(QString orgName      READ get_orgName        WRITE set_orgName)
     Q_PROPERTY(QString programmName READ get_programmName   WRITE set_programmName)
     Q_PROPERTY(QString version      READ get_version        WRITE set_version)
@@ -47,6 +49,7 @@ private slots:
 private:
     Ui::AboutBox *ui;
     QString avatar;
+    QString telegram_qr;
     QString orgName;
     QString programmName;
     QString version;
@@ -55,6 +58,7 @@ private:
     QString telegram;
 
     QString get_avatar(void);
+    QString get_telegram_qr(void);
     QString get_orgName(void);
     QString get_programmName(void);
     QString get_version(void);
@@ -63,6 +67,7 @@ private:
     QString get_telegram(void);
 
     void set_avatar(const QString &value);
+    void set_telegram_qr(const QString &value);
     void set_orgName(const QString &value);
     void set_programmName(const QString &value);
     void set_version(const QString &value);

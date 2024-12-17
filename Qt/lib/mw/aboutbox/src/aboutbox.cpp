@@ -101,6 +101,11 @@ QString AboutBox::get_avatar(void)
     return avatar;
 }
 //--------------------------------------------------------------------------------
+QString AboutBox::get_telegram_qr(void)
+{
+    return telegram_qr;
+}
+//--------------------------------------------------------------------------------
 QString AboutBox::get_orgName(void)
 {
     return orgName;
@@ -135,6 +140,12 @@ void AboutBox::set_avatar(const QString &value)
 {
     avatar = value;
     ui->lbl_avatar->setPixmap(QPixmap(avatar));
+}
+//--------------------------------------------------------------------------------
+void AboutBox::set_telegram_qr(const QString &value)
+{
+    telegram_qr = value;
+    ui->lbl_telegram_qr->setPixmap(QPixmap(telegram_qr));
 }
 //--------------------------------------------------------------------------------
 void AboutBox::set_orgName(const QString &value)

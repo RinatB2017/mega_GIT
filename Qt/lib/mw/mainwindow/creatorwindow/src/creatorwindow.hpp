@@ -84,8 +84,7 @@
 
 #define P_EMAIL_STR       "tux4096@gmail.com"
 #define P_AUTHOR_STR      "Author: Bikbao Rinat Zinorovich"
-#define P_TELEGRAM_STR    "https://telegram.im/TrueProgrammer"
-//#define P_TELEGRAM_STR    "https://t-do.ru/TrueProgrammer"
+#define P_TELEGRAM_STR    "https://telegram.im/digitalart_2000"
 
 #define P_FONT_WEIGHT "FontWeight"
 #define P_FONT_SIZE   "FontSize"

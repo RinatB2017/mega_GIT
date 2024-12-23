@@ -273,7 +273,8 @@ int8_t CRC::crc8(int8_t *buf, int offset, int length)
         l = length;
     uint32_t crc = 0xff;
     int i = 0;
-    while (l-- != 0) {
+    while (l-- != 0)
+    {
         crc ^= buf[startindex++];
         for (i = 0; i < 8; i++)
             crc = (crc & 0x80) != 0 ?
@@ -281,6 +282,29 @@ int8_t CRC::crc8(int8_t *buf, int offset, int length)
                         (crc << 1) & 0xff;
     }
     return (int8_t)crc;
+}
+//--------------------------------------------------------------------------------
+uint8_t CRC::calibration_crc8(uint8_t *buf, uint8_t offset, uint16_t length)
+{
+    uint8_t l;
+    if (offset < length)
+    {
+        buf += offset;
+        l = length - offset;
+    }
+    else
+    {
+        l = length;
+    }
+    uint8_t crc = 0xff;
+    int i = 0;
+    while (l--)
+    {
+        crc ^= *buf++;
+        for (i = 0; i < 8; i++)
+            crc = crc & 0x80 ? (crc << 1) ^ 0x31 : crc << 1;
+    }
+    return crc;
 }
 //--------------------------------------------------------------------------------
 uint8_t CRC::pelco_crc8(uint8_t *pcBlock, uint8_t len)

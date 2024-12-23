@@ -45,6 +45,7 @@ public:
 
     static uint8_t  crc8(uint8_t *pcBlock, uint8_t len);
     static int8_t   crc8(int8_t *buf, int offset, int length);
+    static uint8_t  calibration_crc8(uint8_t *buf, uint8_t offset, uint16_t length);
     static uint16_t crc16(uint8_t *pcBlock, uint16_t len);
     static uint32_t crc32(const char *buf, size_t len);
     static uint16_t modbus_crc16(uint8_t *pcBlock, uint16_t len);

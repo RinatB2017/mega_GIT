@@ -21,6 +21,7 @@
 #ifndef CREATORWINDOW_HPP
 #define CREATORWINDOW_HPP
 //--------------------------------------------------------------------------------
+#include <QNetworkInterface>
 #include <QSystemTrayIcon>
 #include <QMdiSubWindow>
 #include <QStyleFactory>

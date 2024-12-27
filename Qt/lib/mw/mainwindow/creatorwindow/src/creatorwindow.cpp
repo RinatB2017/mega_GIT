@@ -535,7 +535,25 @@ void CreatorWindow::createStatusBar(void)
     statusLabel1 = new QLabel(this);
     statusLabel2 = new QLabel(this);
 
+#if 0
     statusLabel1->setText(QString());
+#else
+    QList<QNetworkInterface> interfaces = QNetworkInterface::allInterfaces();
+    foreach (const QNetworkInterface &interface, interfaces)
+    {
+        QList<QNetworkAddressEntry> entries = interface.addressEntries();
+        foreach (const QNetworkAddressEntry &entry, entries)
+        {
+            QHostAddress ip = entry.ip();
+            // Проверяем, что это IPv4 адрес и не является адресом loopback
+            if (ip.protocol() == QAbstractSocket::IPv4Protocol && !ip.isLoopback())
+            {
+                statusLabel1->setText(ip.toString());
+            }
+        }
+    }
+#endif
+
     statusLabel2->setText(QString());
 
     if(statusBar())

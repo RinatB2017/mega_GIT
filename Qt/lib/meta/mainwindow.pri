@@ -20,6 +20,8 @@ include ($$LIB_PATH/mywidgets/timer_options/timer_options.pri)
 include ($$LIB_PATH/mywidgets/digital_clock/digital_clock.pri)
 include ($$LIB_PATH/mywidgets/lcd_clock/lcd_clock.pri)
 
+include ($$LIB_PATH2/simplehttpserver/simplehttpserver.pri)
+
 include ($$LIB_PATH3/docker_mover/docker_mover.pri)
 
 RESOURCES += \

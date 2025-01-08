@@ -23,7 +23,14 @@
 MainWindow::MainWindow(QWidget *parent) :
     CreatorMenus(parent)
 {
-
+    if (server.listen(QHostAddress::Any, 8080))
+    {
+        qDebug() << "Server started on port 8080";
+    }
+    else
+    {
+        qDebug() << "Failed to start server";
+    }
 }
 //--------------------------------------------------------------------------------
 MainWindow::~MainWindow()

@@ -21,6 +21,7 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 //--------------------------------------------------------------------------------
+#include "simplehttpserver.hpp"
 #include "creatormenus.hpp"
 //--------------------------------------------------------------------------------
 class MainWindow : public CreatorMenus
@@ -30,6 +31,8 @@ class MainWindow : public CreatorMenus
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     virtual ~MainWindow();
+
+    SimpleHttpServer server;
 };
 //--------------------------------------------------------------------------------
 #endif // MAINWINDOW_HPP

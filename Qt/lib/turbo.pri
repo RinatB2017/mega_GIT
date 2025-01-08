@@ -48,8 +48,8 @@ macx {
 }
 
 win32 {
-    BIN_PATH  = "C:\temp\bin"
-    TEMP_PATH = "C:\temp\obj"
+    BIN_PATH  = "C:/temp/bin"
+    TEMP_PATH = "C:/temp/obj"
 
     # BIN_PATH  = "X:\temp\bin"
     # TEMP_PATH = "X:\temp\obj"

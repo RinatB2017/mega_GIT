@@ -92,7 +92,7 @@ QByteArray SerialWidget::readAll(void)
 //--------------------------------------------------------------------------------
 qint64 SerialWidget::bytesAvailable(void)
 {
-    return ba_output.count();
+    return ba_output.size();
 }
 //--------------------------------------------------------------------------------
 void SerialWidget::setPortName(QString name)

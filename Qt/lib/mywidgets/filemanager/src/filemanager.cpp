@@ -120,7 +120,7 @@ void FileManager::init(void)
 void FileManager::choice_file(void)
 {
     QString filename = model->filePath(ui->tv_filemanager->currentIndex());
-    if(filename.right(extension.count()).toLower() == extension)
+    if(filename.right(extension.size()).toLower() == extension)
     {
         emit debug(filename);
         if(ui->te_filemanager->document()->isModified())

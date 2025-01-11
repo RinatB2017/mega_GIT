@@ -53,7 +53,7 @@ void HSV_widget::init(void)
 //--------------------------------------------------------------------------------
 void HSV_widget::load_picture(void)
 {
-    MyFileDialog *dlg = new MyFileDialog("hsv_widget", "hsv_widget");
+    MyFileDialog *dlg = new MyFileDialog("hsv_widget");
     dlg->setNameFilter("PNG files (*.png)");
     dlg->setDefaultSuffix("png");
     if(dlg->exec())

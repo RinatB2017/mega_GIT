@@ -72,6 +72,9 @@ void Select_HSV_color::init(void)
     connect(ui->btn_ok,     &QPushButton::clicked,  this,   &Select_HSV_color::accept);
     connect(ui->btn_cancel, &QPushButton::clicked,  this,   &Select_HSV_color::reject);
 
+    ui->btn_ok->setIcon(QIcon::fromTheme("dialog-ok"));
+    ui->btn_cancel->setIcon(QIcon::fromTheme("dialog-cancel"));
+
     ui->color_label->installEventFilter(this);
 
     QList<QLCDNumber *> l_lcd = findChildren<QLCDNumber *>();

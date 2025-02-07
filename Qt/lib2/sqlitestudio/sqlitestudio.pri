@@ -2,58 +2,63 @@
 DEPENDPATH  += $$PWD
 INCLUDEPATH = $$DEPENDPATH
 
+DEPENDPATH  += \
+    $$PWD/src \
+    $$PWD/src/ui
+INCLUDEPATH = $$DEPENDPATH
+
 QT += sql
 
 HEADERS += \
-    src/aboutdialog.h \
-    src/addcolumndialog.h \
-    src/advancedsearchdialog.h \
-    src/createindexdialog.h \
-    src/createtabledialog.h \
-    src/database.h \
-    src/highlighter.h \
-    src/importcsvdialog.h \
-    src/logdialog.h \
-    src/mainwindow.h \
-    src/preferences.h \
-    src/preferencesdialog.h \
-    src/selectobjectdialog.h \
-    src/sqlmodels.h \
-    src/importcsvthread.h \
-    src/createviewdialog.h
+    aboutdialog.h \
+    addcolumndialog.h \
+    advancedsearchdialog.h \
+    createindexdialog.h \
+    createtabledialog.h \
+    database.h \
+    highlighter.h \
+    importcsvdialog.h \
+    logdialog.h \
+    mainwindow.h \
+    preferences.h \
+    preferencesdialog.h \
+    selectobjectdialog.h \
+    sqlmodels.h \
+    importcsvthread.h \
+    createviewdialog.h
 
 FORMS += \
-    src/aboutdialog.ui \
-    src/addcolumndialog.ui \
-    src/advancedsearchdialog.ui \
-    src/createindexdialog.ui \
-    src/createtabledialog.ui \
-    src/importcsvdialog.ui \
-    src/logdialog.ui \
-    src/mainwindow.ui \
-    src/preferencesdialog.ui \
-    src/selectobjectdialog.ui \
-    src/createviewdialog.ui
+    aboutdialog.ui \
+    addcolumndialog.ui \
+    advancedsearchdialog.ui \
+    createindexdialog.ui \
+    createtabledialog.ui \
+    importcsvdialog.ui \
+    logdialog.ui \
+    mainwindow.ui \
+    preferencesdialog.ui \
+    selectobjectdialog.ui \
+    createviewdialog.ui
 
 SOURCES += \
-    src/aboutdialog.cpp \
-    src/addcolumndialog.cpp \
-    src/advancedsearchdialog.cpp \
-    src/createindexdialog.cpp \
-    src/createtabledialog.cpp \
-    src/database.cpp \
-    src/highlighter.cpp \
-    src/importcsvdialog.cpp \
-    src/logdialog.cpp \
-    src/mainwindow.cpp \
-    src/preferences.cpp \
-    src/preferencesdialog.cpp \
-    src/selectobjectdialog.cpp \
-    src/sqlmodels.cpp \
-    src/importcsvthread.cpp \
-    src/createviewdialog.cpp
+    aboutdialog.cpp \
+    addcolumndialog.cpp \
+    advancedsearchdialog.cpp \
+    createindexdialog.cpp \
+    createtabledialog.cpp \
+    database.cpp \
+    highlighter.cpp \
+    importcsvdialog.cpp \
+    logdialog.cpp \
+    mainwindow.cpp \
+    preferences.cpp \
+    preferencesdialog.cpp \
+    selectobjectdialog.cpp \
+    sqlmodels.cpp \
+    importcsvthread.cpp \
+    createviewdialog.cpp
 
-RESOURCES += src/resources.qrc
+RESOURCES += resources.qrc
 
 TRANSLATIONS += \
     languages/sqlitebrowser_fr.ts \

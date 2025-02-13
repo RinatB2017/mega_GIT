@@ -27,7 +27,7 @@
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME
 #define QMAKE_TARGET_PRODUCT    APPNAME
-#define QMAKE_TARGET_COPYRIGHT  "Copyright 2015-2020"
+#define QMAKE_TARGET_COPYRIGHT  "Copyright \\251 2015-2020"
 #define RC_ICONS                ":/images/computer.ico"
 //--------------------------------------------------------------------------------
 #define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD

@@ -27,7 +27,7 @@
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME
 #define QMAKE_TARGET_PRODUCT    APPNAME
-#define QMAKE_TARGET_COPYRIGHT  "Copyright 2020-2025"
+#define QMAKE_TARGET_COPYRIGHT  "Copyright \\251 2020-2025"
 //--------------------------------------------------------------------------------
 #define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
 #define VER_FILEVERSION_STR         VER_STR

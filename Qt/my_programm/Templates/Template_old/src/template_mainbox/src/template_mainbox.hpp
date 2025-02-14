@@ -36,13 +36,13 @@ class MainBox : public MyWidget
 {
     Q_OBJECT
 
-signals:
-    void s_test(void);
-
 public:
     explicit MainBox(QWidget *parent,
                      MySplashScreen *splash);
     virtual ~MainBox();
+
+private slots:
+    void test(void);
 
 private:
     QPointer<MySplashScreen> splash;

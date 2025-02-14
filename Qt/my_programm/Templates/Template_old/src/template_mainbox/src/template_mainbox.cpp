@@ -38,8 +38,13 @@ MainBox::~MainBox()
 void MainBox::init(void)
 {
     ui->setupUi(this);
-    connect(ui->btn_test,   &QPushButton::clicked,  this,   &MainBox::s_test);
+    connect(ui->btn_test,   &QPushButton::clicked,  this,   &MainBox::test);
     load_widgets();
+}
+//--------------------------------------------------------------------------------
+void MainBox::test(void)
+{
+    fail();
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

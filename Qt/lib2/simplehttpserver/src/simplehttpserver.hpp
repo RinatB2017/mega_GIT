@@ -26,6 +26,7 @@
 #include <QTcpSocket>
 #include <QScreen>
 #include <QBuffer>
+#include <QPixmap>
 //--------------------------------------------------------------------------------
 // http://localhost:8080/screenshot
 // int main(int argc, char *argv[])

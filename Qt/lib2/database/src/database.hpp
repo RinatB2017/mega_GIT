@@ -50,6 +50,7 @@ signals:
     void trace(const QString &);
 
 public slots:
+    bool create(const QString new_name);
     bool open(void);
     void close(void);
     void view(const QString &query);

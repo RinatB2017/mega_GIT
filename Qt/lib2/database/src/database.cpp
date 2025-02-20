@@ -77,6 +77,22 @@ QStringList Database::list_drivers(void)
     return QSqlDatabase::drivers();
 }
 //--------------------------------------------------------------------------------
+bool Database::create(const QString new_name)
+{
+    db.close();
+
+    database_name = new_name;
+    bool ok = db.open();
+    if(ok == false)
+    {
+        emit error(QString("База данных %1 не создана! Error: %2")
+                       .arg(database_name.toLatin1().data())
+                       .arg(db.lastError().text()));
+        return false;
+    }
+    return true;
+}
+//--------------------------------------------------------------------------------
 bool Database::open(void)
 {
     if(db.databaseName() != database_name)
@@ -94,7 +110,7 @@ bool Database::open(void)
     bool ok = db.open();
     if(ok == false)
     {
-        emit error(QString(tr("База данных %1 не открыта! Error: %2"))
+        emit error(QString("База данных %1 не открыта! Error: %2")
                    .arg(database_name.toLatin1().data())
                    .arg(db.lastError().text()));
         return false;

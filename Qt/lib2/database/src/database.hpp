@@ -51,7 +51,7 @@ signals:
 
 public slots:
     bool create(const QString new_name);
-    bool open(void);
+    bool open(const QString new_name);
     void close(void);
     void view(const QString &query);
     bool sql(const QString &query);

@@ -79,9 +79,21 @@ QStringList Database::list_drivers(void)
 //--------------------------------------------------------------------------------
 bool Database::create(const QString new_name)
 {
-    db.close();
-
     database_name = new_name;
+
+    if(db.databaseName() != database_name)
+    {
+        if(QSqlDatabase::contains(QSqlDatabase::defaultConnection))
+        {
+            db = QSqlDatabase::database();
+        }
+        else
+        {
+            db = QSqlDatabase::addDatabase(driver_name);
+            db.setDatabaseName(database_name);
+        }
+    }
+
     bool ok = db.open();
     if(ok == false)
     {
@@ -93,8 +105,10 @@ bool Database::create(const QString new_name)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool Database::open(void)
+bool Database::open(const QString new_name)
 {
+    database_name = new_name;
+
     if(db.databaseName() != database_name)
     {
         if(QSqlDatabase::contains(QSqlDatabase::defaultConnection))

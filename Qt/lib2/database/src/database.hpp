@@ -52,7 +52,7 @@ signals:
 
 public slots:
     bool open(const QString new_name);
-    void close(void);
+    bool close(void);
     bool view(const QString &query);
     bool sql(const QString &query);
     QStringList tables(void);

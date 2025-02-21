@@ -104,16 +104,18 @@ bool Database::open(const QString new_name)
     return true;
 }
 //--------------------------------------------------------------------------------
-void Database::close(void)
+bool Database::close(void)
 {
     if(!db.isValid())
     {
         emit error("db not valid");
-        return;
+        return false;
     }
 
     db.close();
     db.removeDatabase(database_name);
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 bool Database::view(const QString &query)

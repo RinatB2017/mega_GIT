@@ -77,34 +77,6 @@ QStringList Database::list_drivers(void)
     return QSqlDatabase::drivers();
 }
 //--------------------------------------------------------------------------------
-bool Database::create(const QString new_name)
-{
-    database_name = new_name;
-
-    if(db.databaseName() != database_name)
-    {
-        if(QSqlDatabase::contains(QSqlDatabase::defaultConnection))
-        {
-            db = QSqlDatabase::database();
-        }
-        else
-        {
-            db = QSqlDatabase::addDatabase(driver_name);
-            db.setDatabaseName(database_name);
-        }
-    }
-
-    bool ok = db.open();
-    if(ok == false)
-    {
-        emit error(QString("База данных %1 не создана! Error: %2")
-                       .arg(database_name.toLatin1().data())
-                       .arg(db.lastError().text()));
-        return false;
-    }
-    return true;
-}
-//--------------------------------------------------------------------------------
 bool Database::open(const QString new_name)
 {
     database_name = new_name;
@@ -118,8 +90,8 @@ bool Database::open(const QString new_name)
         else
         {
             db = QSqlDatabase::addDatabase(driver_name);
-            db.setDatabaseName(database_name);
         }
+        db.setDatabaseName(database_name);
     }
     bool ok = db.open();
     if(ok == false)
@@ -135,16 +107,22 @@ bool Database::open(const QString new_name)
 void Database::close(void)
 {
     if(!db.isValid())
+    {
+        emit error("db not valid");
         return;
+    }
 
     db.close();
     db.removeDatabase(database_name);
 }
 //--------------------------------------------------------------------------------
-void Database::view(const QString &query)
+bool Database::view(const QString &query)
 {
     if(!db.isValid())
-        return;
+    {
+        emit error("db not valid");
+        return false;
+    }
 
     QSqlQueryModel *model = new QSqlQueryModel;
     model->setQuery(QString(query));
@@ -162,12 +140,16 @@ void Database::view(const QString &query)
     table_view->setHorizontalHeader(header);
 
     table_view->show();
+    return true;
 }
 //--------------------------------------------------------------------------------
 bool Database::sql(const QString &query)
 {
     if(!db.isValid())
+    {
+        emit error("db not valid");
         return false;
+    }
 
     QSqlQuery sql;
     bool result = sql.exec(query);
@@ -197,6 +179,15 @@ QString Database::get_lastError(void)
 void Database::removeDatabase(const QString &database_name)
 {
     db.removeDatabase(database_name);
+}
+//--------------------------------------------------------------------------------
+bool Database::check_table_exist(const QString &table_name)
+{
+    QSqlQuery query;
+
+    emit debug(QString("table_name: %1").arg(table_name));
+    QString sql = QString("SELECT 1 FROM '%1' LIMIT 1;").arg(table_name);
+    return query.exec(sql);
 }
 //--------------------------------------------------------------------------------
 bool Database::drop_table(const QString &table_name)

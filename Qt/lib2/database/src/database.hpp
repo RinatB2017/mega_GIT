@@ -39,6 +39,7 @@ public:
     bool isValid(void);
     QString get_lastError(void);
     void removeDatabase(const QString &database_name);
+    bool check_table_exist(const QString &table_name);
     bool drop_table(const QString &table_name);
     int get_count_tables(void);
     QSqlDatabase get_db(void);
@@ -50,10 +51,9 @@ signals:
     void trace(const QString &);
 
 public slots:
-    bool create(const QString new_name);
     bool open(const QString new_name);
     void close(void);
-    void view(const QString &query);
+    bool view(const QString &query);
     bool sql(const QString &query);
     QStringList tables(void);
     bool isOpen(void);

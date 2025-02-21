@@ -132,7 +132,7 @@ bool MainBox::f_open_database(void)
 {
     db = new Database("QSQLITE", "test.db");
     //db = new Database("QPSQL", "test.db", this);
-    return db->open();
+    return db->open("test.db");
 }
 //--------------------------------------------------------------------------------
 bool MainBox::f_close_database(void)

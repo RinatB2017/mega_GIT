@@ -29,7 +29,11 @@ include (src/test/test.pri)
 
 include (src/PCA10000/pca10000.pri)
 
-include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
+win32 {
+    include (Y:/ext_paths.pri)
+} else {
+    include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
+}
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH/time/time.pri)

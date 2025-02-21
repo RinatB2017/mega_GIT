@@ -37,7 +37,11 @@ LIBS    += -lusb-1.0
 #LIBS    += /opt/lib64/libftd2xx.so
 LIBS    += /usr/lib64/libftd2xx.so
 
-include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
+win32 {
+    include (Y:/ext_paths.pri)
+} else {
+    include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
+}
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)

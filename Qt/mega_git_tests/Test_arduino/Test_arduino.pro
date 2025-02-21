@@ -26,7 +26,11 @@ win32 {
     LIBS += -lws2_32
 }
 
-include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
+win32 {
+    include (Y:/ext_paths.pri)
+} else {
+    include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
+}
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)

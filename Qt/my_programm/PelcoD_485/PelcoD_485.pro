@@ -34,7 +34,11 @@ win32 {
 
 RESOURCES	+= images/images.qrc
 
-include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
+win32 {
+    include (Y:/ext_paths.pri)
+} else {
+    include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
+}
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/crc/crc.pri)

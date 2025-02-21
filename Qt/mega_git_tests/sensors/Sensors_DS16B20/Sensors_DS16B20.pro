@@ -38,7 +38,7 @@ win32 {
 } else {
     include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
 }
-
+#----------------------------------------------
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/meta/grapherbox.pri)
 include ($$LIB_PATH2/DataGrapherBox/DataGrapherBox.pri)

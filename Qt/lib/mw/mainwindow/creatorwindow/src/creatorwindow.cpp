@@ -535,9 +535,7 @@ void CreatorWindow::createStatusBar(void)
     statusLabel1 = new QLabel(this);
     statusLabel2 = new QLabel(this);
 
-#if 0
-    statusLabel1->setText(QString());
-#else
+#ifdef SHOW_IP
     QList<QNetworkInterface> interfaces = QNetworkInterface::allInterfaces();
     foreach (const QNetworkInterface &interface, interfaces)
     {
@@ -552,6 +550,8 @@ void CreatorWindow::createStatusBar(void)
             }
         }
     }
+#else
+    statusLabel1->setText(QString());
 #endif
 
     statusLabel2->setText(QString());

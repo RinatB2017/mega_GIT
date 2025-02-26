@@ -478,6 +478,9 @@ void LogBox::errorLog(const QString &text)
     {
         l_log_data.append(log_data);
         append_string(log_data);
+#ifdef ERROR_AS_MESSAGEBOX
+        messagebox_critical("Error", log_data.message);
+#endif
     }
 
 #ifdef FILENAME_LOG

@@ -32,7 +32,9 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     virtual ~MainWindow();
 
+#ifdef GET_SCREENSHOT
     SimpleHttpServer server;
+#endif
 };
 //--------------------------------------------------------------------------------
 #endif // MAINWINDOW_HPP

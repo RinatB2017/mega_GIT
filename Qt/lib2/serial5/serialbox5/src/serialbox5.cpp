@@ -546,6 +546,11 @@ void SerialBox5::updateText(void)
 //--------------------------------------------------------------------------------
 bool SerialBox5::programm_is_exit(void)
 {
+    if(isOpen())
+    {
+        messagebox_critical("Ошибка", "Вначале закройте порт!");
+        return false;
+    }
     return true;
 }
 //--------------------------------------------------------------------------------

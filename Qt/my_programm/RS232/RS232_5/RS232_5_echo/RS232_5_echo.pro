@@ -23,6 +23,10 @@ HEADERS += \
 SOURCES += \
     main.cpp
 
+RESOURCES += \
+    music/music.qrc \
+    ico/icons.qrc
+
 win32 {
     RC_ICONS = ico/RS232.ico
 }
@@ -42,8 +46,5 @@ include (src/rs232_5_echo_mainbox/rs232_5_echo_mainbox.pri)
 lessThan(QT_MAJOR_VERSION, 5) {
     error (Only Qt5)
 }
-
-RESOURCES += \
-    ico/icons.qrc
 
 VPATH = $$INCLUDEPATH

@@ -19,6 +19,10 @@ HEADERS += \
 SOURCES += \
     main.cpp
 
+RESOURCES += \
+    music/music.qrc \
+    ico/icons.qrc
+
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
@@ -42,9 +46,6 @@ include (src/rs232_5_mainbox/rs232_5_mainbox.pri)
 lessThan(QT_MAJOR_VERSION, 5) {
     error (Only Qt5)
 }
-
-RESOURCES += \
-    ico/icons.qrc
 
 VPATH = $$INCLUDEPATH
 

@@ -20,8 +20,8 @@ SOURCES += \
     main.cpp
 
 RESOURCES += \
-    ico/icons.qrc \
-    music/music.qrc
+    music/music.qrc \
+    ico/icons.qrc
 
 win32 {
     RC_ICONS = ico/RS232.ico

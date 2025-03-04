@@ -19,6 +19,10 @@ DEFINES += RS232_LOG
 
 SOURCES += main.cpp
 
+RESOURCES += \
+    music/music.qrc \
+    ico/icons.qrc
+
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)
 }
@@ -38,8 +42,5 @@ include ($$LIB_PATH2/serial5/serialwidget/serialwidget.pri)
 include ($$LIB_PATH2/serial5/serial5.pri)
 
 include (src/test_widget/test_widget.pri)
-
-RESOURCES += \
-    ico/icons.qrc
 
 VPATH = $$INCLUDEPATH

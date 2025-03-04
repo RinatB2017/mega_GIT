@@ -206,7 +206,8 @@ void MainBox::updateText(void)
 //--------------------------------------------------------------------------------
 bool MainBox::programm_is_exit(void)
 {
-    if(ui->serial_widget_0->isOpen() || ui->serial_widget_1->isOpen())
+    if(ui->serial_widget_0->isOpen() ||
+        ui->serial_widget_1->isOpen())
     {
         messagebox_critical("Ошибка", "Сначала закройте порты!");
         return false;

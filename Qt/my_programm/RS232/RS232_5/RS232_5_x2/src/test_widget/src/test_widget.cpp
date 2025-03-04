@@ -163,6 +163,12 @@ void TestWidget::updateText(void)
 //--------------------------------------------------------------------------------
 bool TestWidget::programm_is_exit(void)
 {
+    if(ui->serial_widget->isOpen() ||
+        ui->serial_widget_2->isOpen())
+    {
+        messagebox_critical("Ошибка", "Сначала закройте порты!");
+        return false;
+    }
     return true;
 }
 //--------------------------------------------------------------------------------

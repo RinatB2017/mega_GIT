@@ -206,9 +206,9 @@ void SerialBox5_lite::initEnumerator(void)
 #ifdef Q_OS_LINUX
     // ui->BaudBox->addItem("Undefined Baud",  QSerialPort::UnknownBaud);
 #endif
-    ui->BaudBox->addItem("1200 baud",       QSerialPort::Baud1200);
-    ui->BaudBox->addItem("2400 baud",       QSerialPort::Baud2400);
-    ui->BaudBox->addItem("4800 baud",       QSerialPort::Baud4800);
+    // ui->BaudBox->addItem("1200 baud",       QSerialPort::Baud1200);
+    // ui->BaudBox->addItem("2400 baud",       QSerialPort::Baud2400);
+    // ui->BaudBox->addItem("4800 baud",       QSerialPort::Baud4800);
     ui->BaudBox->addItem("9600 baud",       QSerialPort::Baud9600);
     ui->BaudBox->addItem("19200 baud",      QSerialPort::Baud19200);
     ui->BaudBox->addItem("38400 baud",      QSerialPort::Baud38400);
@@ -270,7 +270,7 @@ void SerialBox5_lite::setCloseState(void)
 {
     ui->btn_refresh->setEnabled(true);
     ui->PortBox->setEnabled(true);
-    ui->BaudBox->setEnabled(false);
+    ui->BaudBox->setEnabled(true);
     ui->btn_power->setChecked(false);
 #ifdef RS232_SEND
     sendBox5->block_interface(true);
@@ -283,7 +283,7 @@ void SerialBox5_lite::setOpenState()
 {
     ui->btn_refresh->setEnabled(false);
     ui->PortBox->setEnabled(false);
-    ui->BaudBox->setEnabled(true);
+    ui->BaudBox->setEnabled(false);
     ui->btn_power->setChecked(true);
 #ifdef RS232_SEND
     sendBox5->block_interface(false);

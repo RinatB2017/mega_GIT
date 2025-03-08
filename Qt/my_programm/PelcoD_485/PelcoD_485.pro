@@ -50,7 +50,7 @@ include ($$LIB_PATH2/serial5/serialbox5/serialbox5.pri)
 include ($$LIB_PATH2/power_knock/power_knock.pri)
 
 include ($$LIB_PATH2/widgets/hexspinbox/hexspinbox.pri)
-include ($$LIB_PATH2/icons/arrows.pri)
+include ($$LIB_PATH2/pictures/arrows.pri)
 
 include (src/pelco_d_485_mainbox/pelco_d_485_mainbox.pri)
 

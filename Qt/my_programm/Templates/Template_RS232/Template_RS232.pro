@@ -50,7 +50,7 @@ include ($$LIB_PATH2/serial5/serialbox5_lite/serialbox5_lite.pri)
 
 include ($$LIB_PATH2/power_knock/power_knock.pri)
 include ($$LIB_PATH2/icons/digits.pri)
-include ($$LIB_PATH2/icons/arrows.pri)
+include ($$LIB_PATH2/pictures/arrows.pri)
 
 include (src/template_rs232_mainbox/template_rs232_mainbox.pri)
 #----------------------------------------------

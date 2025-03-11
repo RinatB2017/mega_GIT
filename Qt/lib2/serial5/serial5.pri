@@ -11,4 +11,4 @@ include (serialbox5_wo_form/serialbox5_wo_form.pri)
 
 include ($$LIB_PATH2/power_knock/power_knock.pri)
 include ($$LIB_PATH2/icons/digits.pri)
-include ($$LIB_PATH2/pictures/arrows.pri)
+include ($$LIB_PATH2/icons/arrows.pri)

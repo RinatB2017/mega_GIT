@@ -42,7 +42,7 @@ win32 {
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/opencv/opencv.pri)
-include ($$LIB_PATH2/pictures/arrows.pri)
+include ($$LIB_PATH2/icons/arrows.pri)
 
 include ($$LIB_PATH2/ethernet/tcp_local_server/tcp_local_server.pri)
 

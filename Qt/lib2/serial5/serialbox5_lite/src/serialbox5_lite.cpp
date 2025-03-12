@@ -68,6 +68,7 @@ SerialBox5_lite::SerialBox5_lite(QWidget *parent,
 //--------------------------------------------------------------------------------
 SerialBox5_lite::~SerialBox5_lite()
 {
+    // save_setting();
     if(m_timer)
     {
         delete m_timer;
@@ -109,6 +110,7 @@ void SerialBox5_lite::init(void)
         setCloseState();
     });
     updateText();
+    // load_setting();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::init_timer(void)
@@ -586,11 +588,19 @@ bool SerialBox5_lite::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::load_setting(void)
 {
-    ui->BaudBox->setCurrentText(load_string(BAUDNAME));
+    QString portname = load_string(SERIALBOX5_LITE_PORTNAME);
+    QString baudrate = load_string(SERIALBOX5_LITE_BAUDRATE);
+
+    ui->PortBox->setCurrentText(portname);
+    ui->BaudBox->setCurrentText(baudrate);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::save_setting(void)
 {
-    save_string(BAUDNAME,   ui->BaudBox->currentText());
+    QString portname = ui->PortBox->currentText();
+    QString baudrate = ui->BaudBox->currentText();
+
+    save_string(SERIALBOX5_LITE_PORTNAME,   portname);
+    save_string(SERIALBOX5_LITE_BAUDRATE,   baudrate);
 }
 //--------------------------------------------------------------------------------

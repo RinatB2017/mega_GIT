@@ -554,16 +554,6 @@ bool SerialBox5::programm_is_exit(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::load_setting(void)
-{
-
-}
-//--------------------------------------------------------------------------------
-void SerialBox5::save_setting(void)
-{
-
-}
-//--------------------------------------------------------------------------------
 bool SerialBox5::add_menu(int index)
 {
     MainWindow *mw = reinterpret_cast<MainWindow *>(topLevelWidget());
@@ -789,5 +779,39 @@ void SerialBox5::stopBitsChanged(QSerialPort::StopBits stopBits)
 {
     int idx = ui->StopBitsBox->findData(stopBits);
     if (idx != -1) ui->StopBitsBox->setCurrentIndex(idx);
+}
+//--------------------------------------------------------------------------------
+void SerialBox5::load_setting(void)
+{
+    QString baud = load_string(SERIALBOX5_BAUD);
+    QString databits = load_string(SERIALBOX5_DATABITS);
+    QString flow = load_string(SERIALBOX5_FLOW);
+    QString parity = load_string(SERIALBOX5_PARITY);
+    QString port = load_string(SERIALBOX5_PORT);
+    QString stopbits = load_string(SERIALBOX5_STOPBITS);
+
+    ui->BaudBox->setCurrentText(baud);
+    ui->DataBitsBox->setCurrentText(databits);
+    ui->FlowBox->setCurrentText(flow);
+    ui->ParityBox->setCurrentText(parity);
+    ui->PortBox->setCurrentText(port);
+    ui->StopBitsBox->setCurrentText(stopbits);
+}
+//--------------------------------------------------------------------------------
+void SerialBox5::save_setting(void)
+{
+    QString baud = ui->BaudBox->currentText();
+    QString databits = ui->DataBitsBox->currentText();
+    QString flow = ui->FlowBox->currentText();
+    QString parity = ui->ParityBox->currentText();
+    QString port = ui->PortBox->currentText();
+    QString stopbits = ui->StopBitsBox->currentText();
+
+    save_string(SERIALBOX5_BAUD,        baud);
+    save_string(SERIALBOX5_DATABITS,    databits);
+    save_string(SERIALBOX5_FLOW,        flow);
+    save_string(SERIALBOX5_PARITY,      parity);
+    save_string(SERIALBOX5_PORT,        port);
+    save_string(SERIALBOX5_STOPBITS,    stopbits);
 }
 //--------------------------------------------------------------------------------

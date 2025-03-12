@@ -109,7 +109,7 @@ void ModbusAsciiWidget::port_read(void)
 {
     QByteArray ba;
     ba = serial->readAll();
-    for(int n=0; n<ba.count(); n++)
+    for(int n=0; n<(int)ba.size(); n++)
     {
         char temp = ba.at(n);
         switch(temp)
@@ -131,7 +131,7 @@ void ModbusAsciiWidget::port_read(void)
 //--------------------------------------------------------------------------------
 bool ModbusAsciiWidget::processing(void)
 {
-    if((clean_data.count() % 8) == 0)
+    if(((int)clean_data.size() % 8) == 0)
     {
         emit get_data(clean_data);
         return true;

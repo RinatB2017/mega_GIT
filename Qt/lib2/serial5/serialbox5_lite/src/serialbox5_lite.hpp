@@ -26,7 +26,8 @@
 #include "serialwidget.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-#define BAUDNAME    "baudrate"
+#define SERIALBOX5_LITE_PORTNAME    "SerialBox5_lite_portname"
+#define SERIALBOX5_LITE_BAUDRATE    "SerialBox5_lite_baudrate"
 //--------------------------------------------------------------------------------
 class LogBox;
 class SendBox5;

@@ -544,11 +544,15 @@ bool SerialBox5_fix_baudrate::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::load_setting(void)
 {
+    QString portname = load_string(SERIALBOX5_FIX_BAUDRATE_PORTNAME);
 
+    ui->PortBox->setCurrentText(portname);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::save_setting(void)
 {
+    QString portname = ui->PortBox->currentText();
 
+    save_string(SERIALBOX5_FIX_BAUDRATE_PORTNAME,   portname);
 }
 //--------------------------------------------------------------------------------

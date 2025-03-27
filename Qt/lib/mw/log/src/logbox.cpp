@@ -386,6 +386,7 @@ void LogBox::append_string(LOG_DATA log_data)
 
 #ifdef NEED_CODEC
         //TODO проверить надо
+        logBox->setTextColor(log_data.color_text);
         logBox->insertPlainText(current_codec->toUnicode(ba));
 #else
         logBox->insertPlainText(temp);

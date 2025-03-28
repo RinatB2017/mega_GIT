@@ -1,5 +1,5 @@
-#include "commands.h"
 #include <QUndoCommand>
+#include "commands.hpp"
 
 
 // Helper class to store single byte commands

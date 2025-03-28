@@ -30,6 +30,6 @@ include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/widgets/qhexedit2/qhexedit2.pri)
 
-include (src/test_QHexEdit2_mainbox/test_QHexEdit2_mainbox.pri)
+include ($$PWD/src/test_QHexEdit2_mainbox/test_QHexEdit2_mainbox.pri)
 
 VPATH = $$INCLUDEPATH

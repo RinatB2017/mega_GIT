@@ -5,8 +5,8 @@
 #include <QPen>
 #include <QBrush>
 
-#include "chunks.h"
-#include "commands.h"
+#include "chunks.hpp"
+#include "commands.hpp"
 
 #ifdef QHEXEDIT_EXPORTS
 #define QHEXEDIT_API Q_DECL_EXPORT

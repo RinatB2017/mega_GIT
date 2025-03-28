@@ -233,7 +233,8 @@ void MyWidget::init_w_lists(void)
     set_property_widget<QAbstractScrollArea>();
     set_property_widget<QAbstractSpinBox>();
     set_property_widget<QComboBox>();
-    set_property_widget<QAbstractButton>();
+    set_property_widget<QPushButton>();
+    set_property_widget<QToolButton>();
 
     set_property_widget<QLCDNumber>();
 }

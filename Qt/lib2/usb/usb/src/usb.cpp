@@ -23,9 +23,9 @@
 Usb::Usb(QWidget *parent) :
     MyWidget(parent)
 {
-    libusb_init(nullptr);   // инициализация
-    libusb_set_debug(nullptr, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
-    libusb_set_option(nullptr, LIBUSB_OPTION_LOG_LEVEL, USB_DEBUG_LEVEL);
+    libusb_init(&ctx);   // инициализация
+    libusb_set_debug(ctx, USB_DEBUG_LEVEL);  // уровень вывода отладочных сообщений
+    libusb_set_option(ctx, LIBUSB_OPTION_LOG_LEVEL, USB_DEBUG_LEVEL);
 }
 //--------------------------------------------------------------------------------
 Usb::~Usb()
@@ -41,13 +41,13 @@ bool Usb::f_list(void)
     int r;
     ssize_t cnt;
 
-    r = libusb_init(nullptr);
+    r = libusb_init(&ctx);
     if (r < 0)
     {
         return false;
     }
 
-    cnt = libusb_get_device_list(nullptr, &devs);
+    cnt = libusb_get_device_list(ctx, &devs);
     if (cnt < 0)
     {
         return false;
@@ -56,7 +56,7 @@ bool Usb::f_list(void)
     print_devs(devs);
     libusb_free_device_list(devs, 1);
 
-    libusb_exit(nullptr);
+    libusb_exit(ctx);
     handle = nullptr;
     ctx = nullptr;
     return true;
@@ -104,7 +104,7 @@ bool Usb::f_read(QByteArray *ba)
     {
         emit error(QString("Ошибка захвата интерфейса: err = %1").arg(get_error_string(res)));
         libusb_close(handle);
-        libusb_exit(nullptr);
+        libusb_exit(ctx);
         handle = nullptr;
         ctx = nullptr;
         return false;
@@ -264,7 +264,7 @@ bool Usb::f_send_cmd(uint8_t cmd,
     {
         emit error(QString("Ошибка захвата интерфейса: err = %1").arg(get_error_string(res)));
         libusb_close(handle);
-        libusb_exit(nullptr);
+        libusb_exit(ctx);
         handle = nullptr;
         ctx = nullptr;
         return false;

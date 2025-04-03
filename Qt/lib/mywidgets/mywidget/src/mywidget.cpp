@@ -261,9 +261,9 @@ void MyWidget::unlock_interface(void)
     //emit trace(Q_FUNC_INFO);
     Q_ASSERT(w_lists.count() > 0);
 
-    foreach (QWidget *btn, w_lists)
+    foreach (QWidget *widget, w_lists)
     {
-        btn->setEnabled(true);
+        widget->setEnabled(true);
     }
 }
 //--------------------------------------------------------------------------------

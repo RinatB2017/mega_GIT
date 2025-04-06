@@ -26,12 +26,12 @@
 #include <QWidget>
 #include <QPen>
 //--------------------------------------------------------------------------------
-#define MAX_WIDTH   150
-// #define MAX_WIDTH   100
+// #define MAX_WIDTH   150
+#define MAX_WIDTH   100
 #define MAX_HEIGHT  50
 
-#define NUM_BUTTONS 8
-// #define NUM_BUTTONS 5
+// #define NUM_BUTTONS 8
+#define NUM_BUTTONS 5
 
 #define DIP_WIDTH   10
 #define DIP_HEIGHT  25

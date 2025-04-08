@@ -1,8 +1,9 @@
 //--------------------------------------------------------------------------------
 #include <QHBoxLayout>
 //--------------------------------------------------------------------------------
-#include "qled.hpp"
+#include "structures.hpp"
 #include "ledpanel.hpp"
+#include "qled.hpp"
 //--------------------------------------------------------------------------------
 LedPanel::LedPanel(QWidget *parent) :
     QFrame(parent)
@@ -81,6 +82,35 @@ void LedPanel::drawValue(unsigned long data)
         mask = 1 << n;
         led[n]->set_state(data & mask);
     }
+}
+//--------------------------------------------------------------------------------
+void LedPanel::set_u8_value(uint8_t value)
+{
+    U_8 u8;
+    u8.value = value;
+    led[7]->set_state(u8.bites.bit7);
+    led[6]->set_state(u8.bites.bit6);
+    led[5]->set_state(u8.bites.bit5);
+    led[4]->set_state(u8.bites.bit4);
+    led[3]->set_state(u8.bites.bit3);
+    led[2]->set_state(u8.bites.bit2);
+    led[1]->set_state(u8.bites.bit1);
+    led[0]->set_state(u8.bites.bit0);
+}
+//--------------------------------------------------------------------------------
+uint8_t LedPanel::get_u8_value(void)
+{
+    U_8 u8;
+    u8.bites.bit7 = led[7]->get_state();
+    u8.bites.bit6 = led[6]->get_state();
+    u8.bites.bit5 = led[5]->get_state();
+    u8.bites.bit4 = led[4]->get_state();
+    u8.bites.bit3 = led[3]->get_state();
+    u8.bites.bit2 = led[2]->get_state();
+    u8.bites.bit1 = led[1]->get_state();
+    u8.bites.bit0 = led[0]->get_state();
+
+    return u8.value;
 }
 //--------------------------------------------------------------------------------
 int LedPanel::setLedToolTip(unsigned int position, const QString &string)

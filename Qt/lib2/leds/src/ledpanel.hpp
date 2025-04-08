@@ -21,6 +21,9 @@ public:
                       QWidget *parent = nullptr);
     virtual ~LedPanel();
 
+    void set_u8_value(uint8_t value);
+    uint8_t get_u8_value(void);
+
 signals:
     void log(const QString &);
 

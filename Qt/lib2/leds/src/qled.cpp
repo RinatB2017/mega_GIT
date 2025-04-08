@@ -10,6 +10,7 @@ QLed::QLed(QWidget *parent) :
 //--------------------------------------------------------------------------------
 void QLed::set_state(bool state)
 {
+    led_state = state;
     if(state)
     {
         current_color = color_on;
@@ -19,6 +20,11 @@ void QLed::set_state(bool state)
         current_color = color_off;
     }
     update();
+}
+//--------------------------------------------------------------------------------
+bool QLed::get_state(void)
+{
+    return led_state;
 }
 //--------------------------------------------------------------------------------
 void QLed::set_size(int w, int h)

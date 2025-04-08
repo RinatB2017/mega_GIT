@@ -16,11 +16,15 @@ public:
     void set_color_on(QColor color);
     void set_color_off(QColor color);
 
+    bool get_state(void);
+
 private:
     QString tooltip = "led";
     QColor color_off = Qt::gray;
     QColor color_on = Qt::red;
     QColor current_color = Qt::gray;
+
+    bool led_state = false;
 
 protected:
     void paintEvent(QPaintEvent *);

@@ -124,5 +124,14 @@ union U_32 {
         unsigned bit31:1;
     } bites;
 };
+union U_32_bytes {
+    uint32_t value;
+    struct {
+        uint8_t D4;
+        uint8_t D5;
+        uint8_t D6;
+        uint8_t D7;
+    } bytes;
+};
 //--------------------------------------------------------------------------------
 #endif

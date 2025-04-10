@@ -65,7 +65,7 @@ union U_8 {
     } bites;
 };
 
-union U_16 {
+union U_16_bites {
     uint16_t value;
     struct {
         unsigned bit0:1;
@@ -87,7 +87,15 @@ union U_16 {
     } bites;
 };
 
-union U_32 {
+union U_16_bytes {
+    uint16_t value;
+    struct {
+        uint8_t byte0;
+        uint8_t byte1;
+    } bytes;
+};
+
+union U_32_bites {
     uint32_t value;
     struct {
         unsigned bit0:1;
@@ -124,13 +132,14 @@ union U_32 {
         unsigned bit31:1;
     } bites;
 };
+
 union U_32_bytes {
     uint32_t value;
     struct {
-        uint8_t D4;
-        uint8_t D5;
-        uint8_t D6;
-        uint8_t D7;
+        uint8_t byte0;
+        uint8_t byte1;
+        uint8_t byte2;
+        uint8_t byte3;
     } bytes;
 };
 //--------------------------------------------------------------------------------

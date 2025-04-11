@@ -218,8 +218,8 @@ bool Show_HSV_color::eventFilter(QObject *obj, QEvent *event)
     {
         if (event->type() == QEvent::MouseButtonPress)
         {
-            int x = ((QMouseEvent *)event)->position().x();
-            int y = ((QMouseEvent *)event)->position().y();
+            int x = ((QMouseEvent *)event)->pos().x();
+            int y = ((QMouseEvent *)event)->pos().y();
 #ifdef Q_OS_LINUX
             QImage image = ui->color_label->pixmap(Qt::ReturnByValue).toImage();
 #endif

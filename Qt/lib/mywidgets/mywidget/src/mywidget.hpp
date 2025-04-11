@@ -22,6 +22,7 @@
 #define MYWIDGET_HPP
 //--------------------------------------------------------------------------------
 #include <QDoubleSpinBox>
+#include <QRadioButton>
 #include <QStringList>
 #include <QToolButton>
 #include <QCheckBox>

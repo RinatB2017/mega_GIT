@@ -35,7 +35,7 @@ MainBox::~MainBox()
 //--------------------------------------------------------------------------------
 void MainBox::init(void)
 {
-    createTestBar();
+    create_test_bar();
 
     // add_lcd_clock();
     // add_digital_clock(false);
@@ -95,7 +95,7 @@ bool MainBox::set_styles(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::create_test_bar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);

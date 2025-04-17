@@ -567,10 +567,14 @@ void LogBox::load_settings(void)
 
     QFont font;
     QString font_name;
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     int font_weight = 0;
+#endif
     int font_size = 0;
 
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     font_weight = settings->value("FontWeight",   QFont::Normal).toInt();
+#endif
     font_size   = settings->value("FontSize",     9).toInt();
     font_name   = settings->value("FontName",     "Liberation Mono").toString();
 

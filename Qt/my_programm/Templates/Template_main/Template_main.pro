@@ -42,6 +42,7 @@ HEADERS += src/defines.hpp
 SOURCES += src/main.cpp
 
 RESOURCES += \
+    music/music.qrc \
     images/images.qrc
 
 include (mainwindow/mainwindow.pri)

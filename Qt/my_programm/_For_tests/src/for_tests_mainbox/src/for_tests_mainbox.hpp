@@ -75,7 +75,7 @@ private:
     bool set_styles(void);
 
     void init(void);
-    void createTestBar(void);
+    void create_test_bar(void);
 
     void calc_line(qreal center_x,
                    qreal center_y,

@@ -25,9 +25,11 @@ win32 {
 
 # не забыть при смене Qt изменить файлы в каталоге win
 RESOURCES += \
+    music/music.qrc \
     ico/icons.qrc
 
-OTHER_FILES += doc/notebook.txt
+OTHER_FILES += \
+    doc/notebook.txt
 
 CONFIG(debug, debug|release) {
     include (src/test/test.pri)

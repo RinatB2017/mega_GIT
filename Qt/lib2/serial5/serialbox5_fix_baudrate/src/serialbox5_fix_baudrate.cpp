@@ -337,11 +337,10 @@ int SerialBox5_fix_baudrate::input(const QByteArray &sending_data)
         QString temp = QString(sending_data);
 
         //if(sending_data.isLetterOrNumber)
-
         //bool containsNonASCII = temp.contains(QRegularExpression(QStringLiteral("[^\\x{0000}-\\x{007F}]")));
-
         //bool containsNonASCII = temp.contains(QRegularExpression(QStringLiteral("[^\\x{0020}-\\x{007F}]")));
         //bool containsNonASCII = temp.contains(QRegularExpression(QStringLiteral("[^[:print:]]")));
+
         bool containsNonASCII = temp.contains(QRegularExpression(QStringLiteral("[^\\w\\d\\s]")));
         if(containsNonASCII == false)
         {

@@ -677,8 +677,15 @@ void CreatorWindow::load_main(void)
 
     endGroup();
 
-    restoreState(load_value(P_WINDOW_STATE).toByteArray());
-    restoreGeometry(load_value(P_GEOMETRY).toByteArray());
+    //TODO geometry
+    QTimer::singleShot(100, [this]() {
+        restoreGeometry(load_value(P_GEOMETRY).toByteArray());
+        restoreState(load_value(P_WINDOW_STATE).toByteArray());
+        if(load_value(P_IS_MAXIMIZED).toBool())
+        {
+            showMaximized();
+        }
+    });
 }
 //--------------------------------------------------------------------------------
 void CreatorWindow::save_main(void)
@@ -705,8 +712,11 @@ void CreatorWindow::save_main(void)
 
     endGroup();
 
+    //TODO geometry
     save_value(P_GEOMETRY,      saveGeometry());
     save_value(P_WINDOW_STATE,  saveState());
+
+    save_value(P_IS_MAXIMIZED, isMaximized());
 }
 //--------------------------------------------------------------------------------
 void CreatorWindow::load_setting(void)

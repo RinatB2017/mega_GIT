@@ -97,8 +97,9 @@
 
 #define P_THEME   "Theme"
 
-#define P_WINDOW_STATE "windowState"
-#define P_GEOMETRY     "geometry"
+#define P_WINDOW_STATE  "windowState"
+#define P_GEOMETRY      "geometry"
+#define P_IS_MAXIMIZED  "isMaximized"
 
 #define P_MAIN    "main"
 

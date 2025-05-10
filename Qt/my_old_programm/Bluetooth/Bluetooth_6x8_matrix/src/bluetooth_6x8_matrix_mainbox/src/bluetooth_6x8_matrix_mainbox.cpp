@@ -60,7 +60,7 @@ void MainBox::init(void)
 
     QGridLayout *grid = new QGridLayout();
     grid->setSpacing(0);
-    grid->setMargin(0);
+    // grid->setMargin(0);
     for(int y=0; y<NUM_STRIPS; y++)
     {
         for(int x=0; x<NUM_LEDS_PER_STRIP; x++)

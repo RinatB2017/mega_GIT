@@ -80,7 +80,7 @@ void ChatServer::startServer(const QBluetoothAddress& localAdapter)
     //! [Class Uuuid must contain at least 1 entry]
     QBluetoothServiceInfo::Sequence classId;
 
-    classId << QVariant::fromValue(QBluetoothUuid(QBluetoothUuid::SerialPort));
+    classId << QVariant::fromValue(QBluetoothUuid(QBluetoothUuid::ServiceClassUuid::SerialPort));
     serviceInfo.setAttribute(QBluetoothServiceInfo::BluetoothProfileDescriptorList,
                              classId);
 
@@ -104,16 +104,16 @@ void ChatServer::startServer(const QBluetoothAddress& localAdapter)
 
     //! [Service Discoverability]
     serviceInfo.setAttribute(QBluetoothServiceInfo::BrowseGroupList,
-                             QBluetoothUuid(QBluetoothUuid::PublicBrowseGroup));
+                             QBluetoothUuid(QBluetoothUuid::ServiceClassUuid::PublicBrowseGroup));
     //! [Service Discoverability]
 
     //! [Protocol descriptor list]
     QBluetoothServiceInfo::Sequence protocolDescriptorList;
     QBluetoothServiceInfo::Sequence protocol;
-    protocol << QVariant::fromValue(QBluetoothUuid(QBluetoothUuid::L2cap));
+    protocol << QVariant::fromValue(QBluetoothUuid(QBluetoothUuid::ProtocolUuid::L2cap));
     protocolDescriptorList.append(QVariant::fromValue(protocol));
     protocol.clear();
-    protocol << QVariant::fromValue(QBluetoothUuid(QBluetoothUuid::Rfcomm))
+    protocol << QVariant::fromValue(QBluetoothUuid(QBluetoothUuid::ProtocolUuid::Rfcomm))
              << QVariant::fromValue(quint8(rfcommServer->serverPort()));
     protocolDescriptorList.append(QVariant::fromValue(protocol));
     serviceInfo.setAttribute(QBluetoothServiceInfo::ProtocolDescriptorList,

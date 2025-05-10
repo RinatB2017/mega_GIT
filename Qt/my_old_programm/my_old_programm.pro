@@ -7,14 +7,14 @@ CONFIG   += ordered
 
 SUBDIRS += \
     $$PWD/ADNS_2610 \
-    # $$PWD/Bluetooth \
+    $$PWD/Bluetooth \
     $$PWD/Ethernet \
     $$PWD/Games \
     $$PWD/GY_521 \
     $$PWD/Hex_view \
     $$PWD/MTC \
     $$PWD/MTC_runner \
-    # $$PWD/QTextToSpeech \
+    # $$PWD/QTextToSpeech \ #qT5
     $$PWD/SBGlass \
     $$PWD/Sniffer_PCA10000 \
     $$PWD/Tools

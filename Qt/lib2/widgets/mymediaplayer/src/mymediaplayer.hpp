@@ -22,6 +22,7 @@
 #define MYMEDIAPLAYER_HPP
 //--------------------------------------------------------------------------------
 #include <QMediaPlayer>
+#include <QVideoFrame>
 #include <QVideoProbe>
 #include <QPointer>
 //--------------------------------------------------------------------------------

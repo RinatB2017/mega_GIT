@@ -56,12 +56,14 @@ SUBDIRS += \
     $$PWD/Test_QDBus \
     $$PWD/Test_QGraphicsView \
     $$PWD/Test_QML \
+    $$PWD/Test_SerialTerm \
     $$PWD/Test_QTreeWidget \
     $$PWD/Test_Game \
     $$PWD/Test_Games \
     $$PWD/Test_Mask \
     $$PWD/Test_TCP_UDP_bridge \
     $$PWD/Test_YouTube \
+    $$PWD/Test_QScintilla \
     $$PWD/Tester
 
 win {
@@ -74,7 +76,6 @@ SUBDIRS += \
 unix {
 SUBDIRS += \
     $$PWD/Test_ADB \
-    $$PWD/Test_ffmpeg \
     $$PWD/Test_mouse \
     $$PWD/Test_OpenCL \
     $$PWD/Test_OpenCV \
@@ -84,22 +85,5 @@ SUBDIRS += \
     $$PWD/Test_SDLWidget \
     $$PWD/Test_Trader \
     $$PWD/Test_QWebEngineView \
-    $$PWD/Test_QTermWidget \
-
-    # $$PWD/Test_SQL \                      #надо исправить
-    # $$PWD/Test_SMTP \                     #надо исправить
-    # $$PWD/Test_Qt3D \                     #надо исправить
-    # $$PWD/Test_OpenRPT \                  #надо исправить
-    # $$PWD/Test_PropertyBrowser \          #надо исправить
-    # $$PWD/Test_QtPropertyBrowser \        #надо исправить
-    # $$PWD/Test_QCustomPlot \              #надо исправить
-    # $$PWD/Test_QsLog \                    #надо исправить
-    # $$PWD/Test_RGB_Matrix \               #надо исправить
-    # $$PWD/Test_QHexEdit2 \                #надо исправить
-    # $$PWD/Test_wwWidgets                  #надо исправить
-
-    # $$PWD/Test_SerialTerm \               #Qt5
-    # $$PWD/Test_QScintilla \               #Qt5
-    # $$PWD/Tests_QtPlot3D \                #Qt5
-    # $$PWD/Test_QStateMachine \            #Qt5
+    $$PWD/Test_QTermWidget
 }

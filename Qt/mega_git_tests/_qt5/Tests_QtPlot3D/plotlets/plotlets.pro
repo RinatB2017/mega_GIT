@@ -3,16 +3,30 @@
 #**********************************************************************************
 
 TEMPLATE = app
-TARGET   = graph
+TARGET   = plotlets
 
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-SOURCES = src/graph.cpp
+SOURCES = \
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/configframe.cpp
 
-LIB_PATH = "$$PWD/../../../../Qt/lib"
-LIB_PATH2 = "$$PWD/../../../../Qt/lib2"
+HEADERS = \
+    src/mainwindow.h \
+    src/functions.h \
+    src/configframe.h
+FORMS   = \
+    src/mainwindowbase.ui \
+    src/configframebase.ui
+
+win32 {
+    include (Y:/ext_paths.pri)
+} else {
+    include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
+}
 
 include ($$LIB_PATH2/qwtplot3d/qwtplot3d.pri)
 

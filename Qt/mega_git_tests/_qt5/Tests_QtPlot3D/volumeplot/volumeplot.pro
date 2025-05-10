@@ -3,30 +3,19 @@
 #**********************************************************************************
 
 TEMPLATE = app
-TARGET   = mesh
+TARGET   = volumeplot
 
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
-SOURCES = \
-    src/main.cpp \
-    src/meshmainwindow.cpp \
-    src/colormapreader.cpp \
-    src/lightingdialog.cpp
+SOURCES = src/volumeplot.cpp
 
-HEADERS = \
-    src/meshmainwindow.h \
-    src/functions.h \
-    src/colormapreader.h \
-    src/lightingdialog.h
-
-FORMS   = \
-    src/meshmainwindowbase.ui \
-    src/lightingdialogbase.ui
-
-LIB_PATH = "$$PWD/../../../../Qt/lib"
-LIB_PATH2 = "$$PWD/../../../../Qt/lib2"
+win32 {
+    include (Y:/ext_paths.pri)
+} else {
+    include ($$(HOME)/Programming/_Github/private/RIP/ext_paths.pri)
+}
 
 include ($$LIB_PATH2/qwtplot3d/qwtplot3d.pri)
 

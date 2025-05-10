@@ -3,7 +3,7 @@
 #**********************************************************************************
 
 unix {
-    DEPENDPATH  += /usr/include/qt5/Qsci
+    DEPENDPATH  += /usr/include/qt6/Qsci
 }
 
 DEPENDPATH  += \

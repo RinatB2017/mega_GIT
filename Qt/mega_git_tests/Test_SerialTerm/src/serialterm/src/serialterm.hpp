@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QSerialPort>
-#include <qtermwidget5/qtermwidget.h>
+#include <qtermwidget6/qtermwidget.h>
 #include <QSettings>
 #include <QThread>
 #include <QDebug>

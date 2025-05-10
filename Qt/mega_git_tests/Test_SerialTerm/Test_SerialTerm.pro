@@ -10,7 +10,7 @@ FOLDER  = tests
 include (conf/conf.pri)
 
 DEPENDPATH  += \
-    /usr/include/qtermwidget5 \
+    /usr/include/qtermwidget6 \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
@@ -20,7 +20,7 @@ HEADERS += \
 SOURCES += \
     main.cpp
 
-LIBS    += -lqtermwidget5
+LIBS    += -lqtermwidget6
 
 win32 {
     RC_ICONS = ico/computer.ico

@@ -15,7 +15,7 @@ INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
 unix {
-    LIBS    += -lqscintilla2_qt5
+    LIBS    += -lqscintilla2_qt6
 }
 
 HEADERS += \

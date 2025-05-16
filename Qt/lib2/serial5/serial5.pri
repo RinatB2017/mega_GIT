@@ -1,7 +1,7 @@
 
 DEPENDPATH  += $$PWD/headers
-INCLUDEPATH	= $$DEPENDPATH
-HEADERS += ascii_data.hpp
+INCLUDEPATH = $$DEPENDPATH
+HEADERS     += ascii_data.hpp
 
 include (sendbox5/sendbox5.pri)
 include (serialbox5/serialbox5.pri)

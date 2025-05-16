@@ -58,9 +58,8 @@ void TestWidget::init(void)
         ui->serial_widget->load_widgets();
         ui->serial_widget_2->load_widgets();
 
-        mw->add_dock_widget("RS232_1", "rs232_1", Qt::LeftDockWidgetArea,  reinterpret_cast<QWidget *>(ui->serial_widget));
-        mw->add_dock_widget("RS232_2", "rs232_2", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(ui->serial_widget_2));
-
+        mw->add_dock_widget("RS232 - 1", "rs232_1", Qt::LeftDockWidgetArea,  reinterpret_cast<QWidget *>(ui->serial_widget));
+        mw->add_dock_widget("RS232 - 2", "rs232_2", Qt::RightDockWidgetArea, reinterpret_cast<QWidget *>(ui->serial_widget_2));
         setVisible(false);
     }
     else

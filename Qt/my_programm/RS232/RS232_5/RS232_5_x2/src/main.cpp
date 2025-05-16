@@ -70,7 +70,6 @@ int main(int argc, char *argv[])
 
     TestWidget *cw = new TestWidget(main_window);
     Q_ASSERT(cw);
-//    QObject::connect(cw, &TestWidget::info,  main_window, &MainWindow::info);
 
     main_window->setCentralWidget(cw);
     main_window->load_setting();

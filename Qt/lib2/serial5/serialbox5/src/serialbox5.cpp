@@ -153,6 +153,13 @@ void SerialBox5::checkPorts(void)
         ui->PortBox->addItems(currentPortNames);
 
         ui->PortBox->setCurrentText(current_text);
+        //TODO прерывание при физическом отключении устройства
+        if(isOpen())
+        {
+            emit error("Прервано!");
+            emit port_close();
+            serial_close();
+        }
     }
 }
 //--------------------------------------------------------------------------------

@@ -172,6 +172,13 @@ void SerialBox5_fix_baudrate::checkPorts(void)
         //TODO прерывание при физическом отключении устройства
         if(isOpen())
         {
+            foreach (QSerialPortInfo port, currentPorts)
+            {
+                if(port.portName() == current_text)
+                {
+                    return;
+                }
+            }
             emit error("Прервано!");
             emit port_close();
             serial_close();

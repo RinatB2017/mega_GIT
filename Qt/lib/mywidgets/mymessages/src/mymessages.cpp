@@ -43,9 +43,9 @@ int MyMessages::messagebox_noicon(const QString &title,
 #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
         QSound::play(":/music/info.wav");
 #else
-        QSoundEffect player;
-        player.setSource(QUrl::fromLocalFile(":/music/info.wav"));
-        player.play();
+        QSoundEffect *player = new QSoundEffect();
+        player->setSource(QUrl::fromLocalFile(":/music/info.wav"));
+        player->play();
 #endif
     }
     return msgBox.exec();
@@ -69,9 +69,9 @@ int MyMessages::messagebox_info(const QString &title,
 #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
         QSound::play(":/music/info.wav");
 #else
-        QSoundEffect player;
-        player.setSource(QUrl::fromLocalFile(":/music/info.wav"));
-        player.play();
+        QSoundEffect *player = new QSoundEffect();
+        player->setSource(QUrl::fromLocalFile(":/music/info.wav"));
+        player->play();
 #endif
     }
     return msgBox.exec();
@@ -96,9 +96,9 @@ int MyMessages::messagebox_question(const QString &title,
 #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
         QSound::play(":/music/question.wav");
 #else
-        QSoundEffect player;
-        player.setSource(QUrl::fromLocalFile(":/music/question.wav"));
-        player.play();
+        QSoundEffect *player = new QSoundEffect();
+        player->setSource(QUrl::fromLocalFile(":/music/question.wav"));
+        player->play();
 #endif
     }
     return msgBox.exec();
@@ -122,9 +122,9 @@ int MyMessages::messagebox_critical(const QString &title,
 #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
         QSound::play(":/music/critical.wav");
 #else
-        QSoundEffect player;
-        player.setSource(QUrl::fromLocalFile(":/music/critical.wav"));
-        player.play();
+        QSoundEffect *player = new QSoundEffect();
+        player->setSource(QUrl::fromLocalFile(":/music/critical.wav"));
+        player->play();
 #endif
     }
     return msgBox.exec();
@@ -148,9 +148,9 @@ int MyMessages::messagebox_warning(const QString &title,
 #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
         QSound::play(":/music/warning.wav");
 #else
-        QSoundEffect player;
-        player.setSource(QUrl::fromLocalFile(":/music/warning.wav"));
-        player.play();
+        QSoundEffect *player = new QSoundEffect();
+        player->setSource(QUrl::fromLocalFile(":/music/warning.wav"));
+        player->play();
 #endif
     }
     return msgBox.exec();

@@ -314,18 +314,26 @@ bool MainBox::test(void)
     emit info(QString("3: %1").arg(ba_res.at(3), 2, 16, QChar('0')));
 #endif
 
-#if 0
+#if 1
     emit info("thread started");
     bool r0 = false;
     bool r1 = false;
     bool r2 = false;
     bool r3 = false;
     bool r4 = false;
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     QtConcurrent::run(this, &MainBox::heavy_function, &r0);
     QtConcurrent::run(this, &MainBox::heavy_function, &r1);
     QtConcurrent::run(this, &MainBox::heavy_function, &r2);
     QtConcurrent::run(this, &MainBox::heavy_function, &r3);
     QtConcurrent::run(this, &MainBox::heavy_function, &r4);
+#else
+    QtConcurrent::run(std::bind(&MainBox::heavy_function, this, &r0));
+    QtConcurrent::run(std::bind(&MainBox::heavy_function, this, &r1));
+    QtConcurrent::run(std::bind(&MainBox::heavy_function, this, &r2));
+    QtConcurrent::run(std::bind(&MainBox::heavy_function, this, &r3));
+    QtConcurrent::run(std::bind(&MainBox::heavy_function, this, &r4));
+#endif
     emit info("thread finished");
 
     QElapsedTimer timer;

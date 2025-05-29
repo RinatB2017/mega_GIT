@@ -5,6 +5,10 @@
 DEPENDPATH  += $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
 
+DEFINES += FT_VER_MAJOR=1
+DEFINES += FT_VER_MINOR=0
+DEFINES += FT_VER_BUILD=1
+
 HEADERS += \
     ftdi_common.h \
     ftdi_infra.h \

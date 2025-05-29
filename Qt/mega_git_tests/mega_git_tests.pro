@@ -44,7 +44,6 @@ SUBDIRS += \
     $$PWD/Test_QProcess \
     $$PWD/Test_RGB_display \
     $$PWD/Test_SerialBox5 \
-    $$PWD/Test_libFTDI \
     $$PWD/Test_libUSB \
     $$PWD/Test_libVLC \
     $$PWD/Test_model \
@@ -68,7 +67,6 @@ SUBDIRS += \
 
 win {
 SUBDIRS += \
-    $$PWD/Test_libMPSSE \
     $$PWD/Test_PGP \
     $$PWD/Test_RSA
 }

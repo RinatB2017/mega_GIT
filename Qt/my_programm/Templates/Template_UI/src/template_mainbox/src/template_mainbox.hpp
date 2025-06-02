@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2025                                                       **
+**     Copyright (C) 2021                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -21,20 +21,14 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
-#include "ui_template_mainbox.h"
-//--------------------------------------------------------------------------------
 #include <QPointer>
 //--------------------------------------------------------------------------------
+#include "template_mainbox_GUI.hpp"
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"
-#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+class MainBox : public MainBox_GUI
 {
     Q_OBJECT
 
@@ -46,11 +40,12 @@ public:
 private slots:
     void choice_test(void);
     void choice_programm(void);
+    bool test(void);
+
+    bool start(void);
+    bool stop(void);
 
 private:
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
     typedef struct CMD
     {
         int cmd;
@@ -66,13 +61,9 @@ private:
     QPointer<QComboBox> cb_programm;
 
     void init(void);
-
     void create_test_bar(void);
     void create_programm_bar(void);
 
-    bool test(void);
-
-    void updateText(void);
     bool programm_is_exit(void);
     void load_setting(void);
     void save_setting(void);

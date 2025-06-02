@@ -22,12 +22,12 @@
 #define DEFINES_HPP
 //--------------------------------------------------------------------------------
 #define ORGNAME "Work"
-#define APPNAME "Template"
+#define APPNAME "Template_UI"
 //--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME
 #define QMAKE_TARGET_PRODUCT    APPNAME
-#define QMAKE_TARGET_COPYRIGHT  "Copyright \\251 2025-2030"
+#define QMAKE_TARGET_COPYRIGHT  "Copyright \\251 2020-2025"
 #define RC_ICONS                ":/images/computer.ico"
 //--------------------------------------------------------------------------------
 #define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD

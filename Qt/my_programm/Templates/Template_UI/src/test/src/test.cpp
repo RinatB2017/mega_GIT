@@ -57,7 +57,7 @@ void Test::test_GUI(void)
 //--------------------------------------------------------------------------------
 void Test::test_func(void)
 {
-    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    MainBox *mb = mw->findChild<MainBox *>("MainBox_GUI");
     QVERIFY(mb);
 }
 //--------------------------------------------------------------------------------

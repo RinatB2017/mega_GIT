@@ -3,7 +3,7 @@
 #**********************************************************************************
 
 TEMPLATE = app
-TARGET   = Template
+TARGET   = Template_old
 
 FOLDER  = _Templates
 
@@ -42,7 +42,6 @@ win32 {
 
 include ($$LIB_PATH/meta/mainwindow.pri)
 
-include (src/template_mainbox_GUI/template_mainbox_GUI.pri)
-include (src/template_mainbox/template_mainbox.pri)
+include ($$PWD/src/template_mainbox/template_mainbox.pri)
 
 VPATH = $$INCLUDEPATH

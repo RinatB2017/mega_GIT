@@ -1,7 +1,7 @@
 /*
                           qpdf
 
-    Copyright (C) 2022 Arthur Benilov,
+    Copyright (C) 2025 Arthur Benilov,
     arthur.benilov@gmail.com
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public

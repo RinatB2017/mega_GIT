@@ -781,6 +781,30 @@ void MyWidget::set_all_buttons_no_save(void)
     }
 }
 //--------------------------------------------------------------------------------
+void MyWidget::show_objectNames(void)
+{
+    QWidgetList wl = qApp->allWidgets();
+    foreach (QWidget *widget, wl)
+    {
+        if(widget->objectName().left(3) == "cb_")
+        {
+            widget->setToolTip(widget->objectName());
+        }
+        if(widget->objectName().left(3) == "sb_")
+        {
+            widget->setToolTip(widget->objectName());
+        }
+        if(widget->objectName().left(4) == "lbl_")
+        {
+            widget->setToolTip(widget->objectName());
+        }
+        if(widget->objectName().left(4) == "btn_")
+        {
+            widget->setToolTip(widget->objectName());
+        }
+    }
+}
+//--------------------------------------------------------------------------------
 void MyWidget::changeEvent(QEvent *event)
 {
     switch (event->type())

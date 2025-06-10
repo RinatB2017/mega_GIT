@@ -151,6 +151,7 @@ public:
     QString get_func_name(const QString &fullname);
 
     void set_all_buttons_no_save(void);
+    void show_objectNames(void);
 
 signals:
     void info(const QString &);

@@ -33,7 +33,9 @@ win32 {
     DEPENDPATH  += $$PWD/$$QWT_PATH/src/
     INCLUDEPATH += $$PWD/$$QWT_PATH/src/
 
-    LIBS    += -L$$PWD/lib
+    # LIBS    += -L$$PWD/lib_64
+    LIBS    += -L$$PWD/lib_32
+
     CONFIG(debug, debug|release) {
         LIBS    += -lqwtd
     } else {

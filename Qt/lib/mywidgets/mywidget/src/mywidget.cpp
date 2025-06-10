@@ -794,6 +794,10 @@ void MyWidget::show_objectNames(void)
         {
             widget->setToolTip(widget->objectName());
         }
+        if(widget->objectName().left(4) == "dsb_")
+        {
+            widget->setToolTip(widget->objectName());
+        }
         if(widget->objectName().left(4) == "lbl_")
         {
             widget->setToolTip(widget->objectName());

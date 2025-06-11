@@ -122,36 +122,26 @@ void SerialBox5_lite::init_timer(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::checkPorts(void)
 {
-    QStringList currentPortNames;
-    QList<QSerialPortInfo> currentPorts = QSerialPortInfo::availablePorts();
-    for (const QSerialPortInfo &port : currentPorts)
-    {
-        currentPortNames << port.portName();
-    }
+    QStringList sl_ports = get_port_names();
 
     // Сравнение с предыдущим состоянием
-    if (currentPortNames != m_portNames)
+    if (sl_ports != m_portNames)
     {
-        m_portNames = currentPortNames;
-
-        QList<QSerialPortInfo> currentPorts = QSerialPortInfo::availablePorts();
-        QStringList currentPortNames;
-        for (const QSerialPortInfo &port : currentPorts)
-        {
-            currentPortNames << port.portName();
-        }
+        m_portNames = sl_ports;
+        sl_ports = get_port_names();
 
         // Обновление QComboBox
         QString current_text = ui->PortBox->currentText();
 
         ui->PortBox->clear();
-        ui->PortBox->addItems(currentPortNames);
+        ui->PortBox->addItems(sl_ports);
 
         ui->PortBox->setCurrentText(current_text);
         //TODO прерывание при физическом отключении устройства
         if(isOpen())
         {
-            foreach (QSerialPortInfo port, currentPorts)
+            QList<QSerialPortInfo> sl_ports_info = QSerialPortInfo::availablePorts();
+            foreach (QSerialPortInfo port, sl_ports_info)
             {
                 if(port.portName() == current_text)
                 {

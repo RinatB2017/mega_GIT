@@ -212,7 +212,19 @@ QStringList SerialWidget::get_port_names(void)
     QStringList sl_ports;
     foreach (QSerialPortInfo p_info, QSerialPortInfo::availablePorts())
     {
-        sl_ports.append(p_info.portName());
+        //FIXME убрать, когда станет нормально работать
+        QString name = p_info.portName();
+        if(name.contains("ttyS"))
+        {
+            if(name.contains("ttyS0"))
+            {
+                sl_ports.append(name);
+            }
+        }
+        else
+        {
+            sl_ports.append(name);
+        }
     }
     return sl_ports;
 }

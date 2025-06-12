@@ -30,6 +30,7 @@
 //--------------------------------------------------------------------------------
 Test::Test()
 {
+    QTest::qWait(0);    // нужно обязательно
     mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
 }

@@ -26,11 +26,12 @@
 #include <QPointer>
 #include <QtPrintSupport/QPrinter>
 #include <QStringListModel>
-//--------------------------------------------------------------------------------
+
 #include "LimeReport"
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
+#include "myfiledialog.hpp"
 #include "mainwindow.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------

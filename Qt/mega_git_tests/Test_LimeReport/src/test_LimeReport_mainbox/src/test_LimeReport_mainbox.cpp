@@ -183,13 +183,25 @@ void MainBox::choice_programm(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
-    QStringListModel* stringListModel = new QStringListModel();
+    MyFileDialog *dlg = new MyFileDialog("report");
+    dlg->setNameFilter("LRXML files (*.lrxml)");
+    dlg->setDefaultSuffix("lrxml");
+    dlg->setOption(MyFileDialog::DontUseNativeDialog, false);
+    dlg->setDirectory(".");
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+        QStringListModel* stringListModel = new QStringListModel();
 
-    report = new LimeReport::ReportEngine(this);
-    report->dataManager()->addModel("string_list", stringListModel,true);
-    report->loadFromFile("demo_reports/simple_list.lrxml");
-    report->previewReport();
-    // report->printReport();
+        report = new LimeReport::ReportEngine(this);
+        report->dataManager()->addModel("string_list", stringListModel,true);
+        report->loadFromFile(filename);
+        // report->loadFromFile("demo_reports/simple_list.lrxml");
+        report->previewReport();
+        // report->printReport();
+    }
+    delete dlg;
 
     emit info("OK");
     return true;

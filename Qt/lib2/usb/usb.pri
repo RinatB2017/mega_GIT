@@ -2,9 +2,9 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-DEPENDPATH  += \
-    $$PWD/src 
-INCLUDEPATH = $$DEPENDPATH
+# DEPENDPATH  += \
+#     $$PWD/src
+# INCLUDEPATH = $$DEPENDPATH
 
 unix {
     LIBS    += -lhidapi-libusb

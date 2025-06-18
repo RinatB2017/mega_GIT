@@ -35,6 +35,7 @@ SUBDIRS += \
     $$PWD/Test_md5 \
     $$PWD/Test_lcd_knob \
     $$PWD/Test_ledspanel \
+    $$PWD/Test_LimeReport \
     $$PWD/Test_LogBoxs \
     $$PWD/Test_OscilloscopeBox \
     $$PWD/Test_picture \

@@ -8,6 +8,7 @@ CONFIG   *= ordered
 SUBDIRS += \
     $$PWD/sensors \
     $$PWD/radio \
+    $$PWD/Test_reports \
     $$PWD/Test_ADC \
     $$PWD/Test_AT \
     $$PWD/Test_arduino \
@@ -35,7 +36,6 @@ SUBDIRS += \
     $$PWD/Test_md5 \
     $$PWD/Test_lcd_knob \
     $$PWD/Test_ledspanel \
-    $$PWD/Test_LimeReport \
     $$PWD/Test_LogBoxs \
     $$PWD/Test_OscilloscopeBox \
     $$PWD/Test_picture \

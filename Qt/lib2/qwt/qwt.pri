@@ -33,8 +33,14 @@ win32 {
     DEPENDPATH  += $$PWD/$$QWT_PATH/src/
     INCLUDEPATH += $$PWD/$$QWT_PATH/src/
 
-    # LIBS    += -L$$PWD/lib_64
-    LIBS    += -L$$PWD/lib_32
+    win32:contains(QT_ARCH, x86_64) {
+        message("64-bit build")
+        LIBS    += -L$$PWD/lib_64
+    }
+    win32:contains(QT_ARCH, i386) {
+        message("32-bit build")
+        LIBS    += -L$$PWD/lib_32
+    }
 
     CONFIG(debug, debug|release) {
         LIBS    += -lqwtd

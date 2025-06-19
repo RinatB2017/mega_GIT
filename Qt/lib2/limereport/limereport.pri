@@ -12,24 +12,21 @@ unix {
     LIBS    += -lQtZint
 }
 win32 {
-    HEADERS += \
-        lrcallbackdatasourceintf.h \
-        lrdatasourceintf.h \
-        lrdatasourcemanagerintf.h \
-        lrglobal.h \
-        lrpreparedpagesintf.h \
-        lrpreviewreportwidget.h \
-        lrrenderengine.h \
-        lrreportdesignwindowintrerface.h \
-        lrreportengine.h \
-        lrscriptenginemanagerintf.h
-    SOURCES += \
-        lrglobal.cpp
+    # HEADERS += \
+    #     lrcallbackdatasourceintf.h \
+    #     lrdatasourceintf.h \
+    #     lrdatasourcemanagerintf.h \
+    #     lrglobal.h \
+    #     lrpreparedpagesintf.h \
+    #     lrpreviewreportwidget.h \
+    #     lrrenderengine.h \
+    #     lrreportdesignwindowintrerface.h \
+    #     lrreportengine.h \
+    #     lrscriptenginemanagerintf.h
+    # SOURCES += \
+    #     lrglobal.cpp
 
     LIBS    += -L$$PWD/win_lib
-    # LIBS    += -llimereport
-    # LIBS    += -lQtZint
-
-    LIBS    += limereport.dll
-    LIBS    += QtZint.dll
+    LIBS    += -llimereport
+    LIBS    += -lQtZint
 }

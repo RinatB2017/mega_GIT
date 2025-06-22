@@ -45,7 +45,8 @@ void MainBox::init(void)
     ui->setupUi(this);
 
 #ifdef QT_DEBUG
-    createTestBar();
+    create_test_bar();
+    show_objectNames();
 #endif
 
     init_serial();
@@ -93,7 +94,7 @@ void MainBox::read_data(QByteArray ba)
     emit info(ba.data());
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::create_test_bar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);

@@ -101,7 +101,7 @@ void SerialBox5_lite::init(void)
     initSerial();
     init_timer();
 
-    ui->PortBox->setMinimumWidth(150);
+    ui->cb_PortBox->setMinimumWidth(150);
     ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
 
     setFixedHeight(sizeHint().height());
@@ -131,12 +131,12 @@ void SerialBox5_lite::checkPorts(void)
         sl_ports = get_port_names();
 
         // Обновление QComboBox
-        QString current_text = ui->PortBox->currentText();
+        QString current_text = ui->cb_PortBox->currentText();
 
-        ui->PortBox->clear();
-        ui->PortBox->addItems(sl_ports);
+        ui->cb_PortBox->clear();
+        ui->cb_PortBox->addItems(sl_ports);
 
-        ui->PortBox->setCurrentText(current_text);
+        ui->cb_PortBox->setCurrentText(current_text);
         //TODO прерывание при физическом отключении устройства
         if(isOpen())
         {
@@ -162,7 +162,7 @@ void SerialBox5_lite::createWidgets(void)
 #endif
     ui->gridLayout->setSpacing(0);
 
-    ui->PortBox->setProperty(NO_BLOCK, true);
+    ui->cb_PortBox->setProperty(NO_BLOCK, true);
     ui->btn_power->setProperty(NO_SAVE, true);
     ui->btn_refresh->setProperty(NO_BLOCK, true);
     ui->btn_refresh->setToolTip("Обновить список портов");
@@ -170,7 +170,7 @@ void SerialBox5_lite::createWidgets(void)
     connect(ui->btn_power,      &QPushButton::clicked,  this,   &SerialBox5_lite::btnOpenPortClicked);
     connect(ui->btn_refresh,    &QPushButton::clicked,  this,   &SerialBox5_lite::refresh);
 
-    connect(ui->BaudBox,     static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5_lite::setBaudBox);
+    connect(ui->cb_BaudBox,     static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5_lite::set_baudRate);
 
     connect(this, &SerialBox5_lite::output, this, &SerialBox5_lite::drawData);
 
@@ -200,32 +200,32 @@ void SerialBox5_lite::add_frame_text(QFrame *parent,
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::refresh(void)
 {
-    ui->PortBox->clear();
-    ui->PortBox->addItems(get_port_names());
+    ui->cb_PortBox->clear();
+    ui->cb_PortBox->addItems(get_port_names());
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::initEnumerator(void)
 {
     refresh();
     //---
-    ui->BaudBox->clear();
+    ui->cb_BaudBox->clear();
 #ifdef Q_OS_LINUX
-    // ui->BaudBox->addItem("Undefined Baud",  QSerialPort::UnknownBaud);
+    // ui->cb_BaudBox->addItem("Undefined Baud",  QSerialPort::UnknownBaud);
 #endif
-    // ui->BaudBox->addItem("1200 baud",       QSerialPort::Baud1200);
-    // ui->BaudBox->addItem("2400 baud",       QSerialPort::Baud2400);
-    // ui->BaudBox->addItem("4800 baud",       QSerialPort::Baud4800);
-    ui->BaudBox->addItem("9600 baud",       QSerialPort::Baud9600);
-    ui->BaudBox->addItem("19200 baud",      QSerialPort::Baud19200);
-    ui->BaudBox->addItem("38400 baud",      QSerialPort::Baud38400);
-    ui->BaudBox->addItem("57600 baud",      QSerialPort::Baud57600);
-    ui->BaudBox->addItem("115200 baud",     QSerialPort::Baud115200);
+    // ui->cb_BaudBox->addItem("1200 baud",       QSerialPort::Baud1200);
+    // ui->cb_BaudBox->addItem("2400 baud",       QSerialPort::Baud2400);
+    // ui->cb_BaudBox->addItem("4800 baud",       QSerialPort::Baud4800);
+    ui->cb_BaudBox->addItem("9600 baud",       QSerialPort::Baud9600);
+    ui->cb_BaudBox->addItem("19200 baud",      QSerialPort::Baud19200);
+    ui->cb_BaudBox->addItem("38400 baud",      QSerialPort::Baud38400);
+    ui->cb_BaudBox->addItem("57600 baud",      QSerialPort::Baud57600);
+    ui->cb_BaudBox->addItem("115200 baud",     QSerialPort::Baud115200);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::initSerial(void)
 {
-    ui->PortBox->setProperty(NO_SAVE, true);
-    ui->BaudBox->setProperty(NO_SAVE, true);
+    ui->cb_PortBox->setProperty(NO_SAVE, true);
+    ui->cb_BaudBox->setProperty(NO_SAVE, true);
     ui->btn_refresh->setToolTip("Обновить список портов");
 
     connect(ui->btn_power,  &QPushButton::toggled,  this,   &SerialBox5_lite::change_icon);
@@ -257,10 +257,10 @@ void SerialBox5_lite::getStatus(const QString &status, QDateTime current)
     get_parameter();
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::setBaudBox(int index)
+void SerialBox5_lite::set_baud_box(int index)
 {
     bool ok = false;
-    int value = ui->BaudBox->itemData(index, Qt::UserRole).toInt(&ok);
+    int value = ui->cb_BaudBox->itemData(index, Qt::UserRole).toInt(&ok);
     if(!ok) return;
     if(value < 0) return;
 
@@ -275,8 +275,8 @@ void SerialBox5_lite::setBaudBox(int index)
 void SerialBox5_lite::setCloseState(void)
 {
     ui->btn_refresh->setEnabled(true);
-    ui->PortBox->setEnabled(true);
-    ui->BaudBox->setEnabled(true);
+    ui->cb_PortBox->setEnabled(true);
+    ui->cb_BaudBox->setEnabled(true);
     ui->btn_power->setChecked(false);
 #ifdef RS232_SEND
     sendBox5->block_interface(true);
@@ -288,8 +288,8 @@ void SerialBox5_lite::setCloseState(void)
 void SerialBox5_lite::setOpenState()
 {
     ui->btn_refresh->setEnabled(false);
-    ui->PortBox->setEnabled(false);
-    ui->BaudBox->setEnabled(false);
+    ui->cb_PortBox->setEnabled(false);
+    ui->cb_BaudBox->setEnabled(false);
     ui->btn_power->setChecked(true);
 #ifdef RS232_SEND
     sendBox5->block_interface(false);
@@ -309,7 +309,7 @@ void SerialBox5_lite::btnOpenPortClicked()
     }
     else
     {
-        QString text = ui->PortBox->currentText();
+        QString text = ui->cb_PortBox->currentText();
         if(text.isEmpty())
         {
             if(isOpen())
@@ -324,8 +324,8 @@ void SerialBox5_lite::btnOpenPortClicked()
         if(result)
         {
             int idx = 0;
-            idx = ui->BaudBox->findData(baudRate());
-            if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
+            idx = ui->cb_BaudBox->findData(baudRate());
+            if (idx != -1) ui->cb_BaudBox->setCurrentIndex(idx);
 
             get_parameter();
             emit port_is_active(result);
@@ -493,8 +493,8 @@ bool SerialBox5_lite::set_baudRate(int value)
     if(ok)
     {
         int idx = 0;
-        idx = ui->BaudBox->findData(value);
-        if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
+        idx = ui->cb_BaudBox->findData(value);
+        if (idx != -1) ui->cb_BaudBox->setCurrentIndex(idx);
     }
     return ok;
 }
@@ -541,9 +541,9 @@ void SerialBox5_lite::set_default(void)
     if(isOpen())
     {
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        ui->BaudBox->setCurrentIndex(ui->BaudBox->findText("9600 baud"));
+        ui->cb_BaudBox->setCurrentIndex(ui->cb_BaudBox->findText("9600 baud"));
 #else
-        ui->BaudBox->setCurrentText("9600 baud");
+        ui->cb_BaudBox->setCurrentText("9600 baud");
 #endif
     }
 }
@@ -595,14 +595,14 @@ void SerialBox5_lite::load_setting(void)
     QString portname = load_string(SERIALBOX5_LITE_PORTNAME);
     QString baudrate = load_string(SERIALBOX5_LITE_BAUDRATE);
 
-    ui->PortBox->setCurrentText(portname);
-    ui->BaudBox->setCurrentText(baudrate);
+    ui->cb_PortBox->setCurrentText(portname);
+    ui->cb_BaudBox->setCurrentText(baudrate);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::save_setting(void)
 {
-    QString portname = ui->PortBox->currentText();
-    QString baudrate = ui->BaudBox->currentText();
+    QString portname = ui->cb_PortBox->currentText();
+    QString baudrate = ui->cb_BaudBox->currentText();
 
     save_string(SERIALBOX5_LITE_PORTNAME,   portname);
     save_string(SERIALBOX5_LITE_BAUDRATE,   baudrate);

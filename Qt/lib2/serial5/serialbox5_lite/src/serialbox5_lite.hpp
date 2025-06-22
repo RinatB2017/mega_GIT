@@ -110,7 +110,7 @@ private slots:
     void sendData(const QByteArray &sending_data);
     void btnOpenPortClicked(void);
     void refresh(void);
-    void setBaudBox(int index);
+    void set_baud_box(int index);
     void getStatus(const QString &status, QDateTime current);
     void get_parameter(void);
     void set_default(void);

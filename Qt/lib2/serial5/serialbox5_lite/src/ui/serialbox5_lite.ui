@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>273</width>
+    <width>304</width>
     <height>72</height>
    </rect>
   </property>
@@ -14,10 +14,10 @@
    <item>
     <widget class="QFrame" name="frame">
      <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+      <enum>QFrame::Shape::StyledPanel</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
+      <enum>QFrame::Shadow::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
@@ -40,7 +40,7 @@
           <item>
            <layout class="QGridLayout" name="gridLayout">
             <item row="0" column="1">
-             <widget class="QComboBox" name="BaudBox"/>
+             <widget class="QComboBox" name="cb_BaudBox"/>
             </item>
             <item row="0" column="2">
              <widget class="QToolButton" name="btn_refresh">
@@ -50,7 +50,7 @@
              </widget>
             </item>
             <item row="0" column="0">
-             <widget class="QComboBox" name="PortBox"/>
+             <widget class="QComboBox" name="cb_PortBox"/>
             </item>
            </layout>
           </item>
@@ -73,7 +73,7 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>PortBox</tabstop>
+  <tabstop>cb_PortBox</tabstop>
   <tabstop>btn_refresh</tabstop>
  </tabstops>
  <resources/>

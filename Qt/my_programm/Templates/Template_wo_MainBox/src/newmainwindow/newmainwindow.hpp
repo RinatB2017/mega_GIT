@@ -53,7 +53,7 @@ private:
                             const QString &text,
                             const QString &tool_tip);
 
-    void createTestBar(void);
+    void create_test_bar(void);
 };
 //--------------------------------------------------------------------------------
 #endif

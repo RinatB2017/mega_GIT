@@ -74,7 +74,7 @@ private:
     QList<CMD> commands;
 
     void init(void);
-    void createTestBar(void);
+    void create_test_bar(void);
 
     void updateText(void);
     bool programm_is_exit(void);

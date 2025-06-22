@@ -41,6 +41,7 @@ void MainBox::init(void)
 
 #ifdef QT_DEBUG
     create_test_bar();
+    show_objectNames();
 #endif
     create_programm_bar();
 

@@ -136,12 +136,12 @@ void SerialBox5::checkPorts(void)
         sl_ports = get_port_names();
 
         // Обновление QComboBox
-        QString current_text = ui->PortBox->currentText();
+        QString current_text = ui->cb_PortBox->currentText();
 
-        ui->PortBox->clear();
-        ui->PortBox->addItems(sl_ports);
+        ui->cb_PortBox->clear();
+        ui->cb_PortBox->addItems(sl_ports);
 
-        ui->PortBox->setCurrentText(current_text);
+        ui->cb_PortBox->setCurrentText(current_text);
         //TODO прерывание при физическом отключении устройства
         if(isOpen())
         {
@@ -174,72 +174,72 @@ void SerialBox5::createWidgets(void)
 //--------------------------------------------------------------------------------
 void SerialBox5::refresh(void)
 {
-    ui->PortBox->clear();
-    ui->PortBox->addItems(get_port_names());
+    ui->cb_PortBox->clear();
+    ui->cb_PortBox->addItems(get_port_names());
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::initEnumerator(void)
 {
     refresh();
     //---
-    ui->BaudBox->clear();
+    ui->cb_BaudBox->clear();
 #ifdef Q_OS_LINUX
-    // ui->BaudBox->addItem("Undefined Baud",  QSerialPort::UnknownBaud);
+    // ui->cb_BaudBox->addItem("Undefined Baud",  QSerialPort::UnknownBaud);
 #endif
-    ui->BaudBox->addItem("1200 baud",       QSerialPort::Baud1200);
-    ui->BaudBox->addItem("2400 baud",       QSerialPort::Baud2400);
-    ui->BaudBox->addItem("4800 baud",       QSerialPort::Baud4800);
-    ui->BaudBox->addItem("9600 baud",       QSerialPort::Baud9600);
-    ui->BaudBox->addItem("19200 baud",      QSerialPort::Baud19200);
-    ui->BaudBox->addItem("38400 baud",      QSerialPort::Baud38400);
-    ui->BaudBox->addItem("57600 baud",      QSerialPort::Baud57600);
-    ui->BaudBox->addItem("115200 baud",     QSerialPort::Baud115200);
+    ui->cb_BaudBox->addItem("1200 baud",       QSerialPort::Baud1200);
+    ui->cb_BaudBox->addItem("2400 baud",       QSerialPort::Baud2400);
+    ui->cb_BaudBox->addItem("4800 baud",       QSerialPort::Baud4800);
+    ui->cb_BaudBox->addItem("9600 baud",       QSerialPort::Baud9600);
+    ui->cb_BaudBox->addItem("19200 baud",      QSerialPort::Baud19200);
+    ui->cb_BaudBox->addItem("38400 baud",      QSerialPort::Baud38400);
+    ui->cb_BaudBox->addItem("57600 baud",      QSerialPort::Baud57600);
+    ui->cb_BaudBox->addItem("115200 baud",     QSerialPort::Baud115200);
 
     //---
-    ui->DataBitsBox->clear();
+    ui->cb_DataBitsBox->clear();
 #ifdef Q_OS_LINUX
-    // ui->DataBitsBox->addItem("Undefined data bits", QSerialPort::UnknownDataBits);
+    // ui->cb_DataBitsBox->addItem("Undefined data bits", QSerialPort::UnknownDataBits);
 #endif
-    ui->DataBitsBox->addItem("5 bit",               QSerialPort::Data5);
-    ui->DataBitsBox->addItem("6 bit",               QSerialPort::Data6);
-    ui->DataBitsBox->addItem("7 bit",               QSerialPort::Data7);
-    ui->DataBitsBox->addItem("8 bit",               QSerialPort::Data8);
+    ui->cb_DataBitsBox->addItem("5 bit",               QSerialPort::Data5);
+    ui->cb_DataBitsBox->addItem("6 bit",               QSerialPort::Data6);
+    ui->cb_DataBitsBox->addItem("7 bit",               QSerialPort::Data7);
+    ui->cb_DataBitsBox->addItem("8 bit",               QSerialPort::Data8);
     //---
-    ui->ParityBox->clear();
+    ui->cb_ParityBox->clear();
 #ifdef Q_OS_LINUX
-    // ui->ParityBox->addItem("Undefined parity",  QSerialPort::UnknownParity);
+    // ui->cb_ParityBox->addItem("Undefined parity",  QSerialPort::UnknownParity);
 #endif
-    ui->ParityBox->addItem("None",              QSerialPort::NoParity);
-    ui->ParityBox->addItem("Even",              QSerialPort::EvenParity);
-    ui->ParityBox->addItem("Odd",               QSerialPort::OddParity);
-    ui->ParityBox->addItem("Space",             QSerialPort::SpaceParity);
-    ui->ParityBox->addItem("Mark",              QSerialPort::MarkParity);
+    ui->cb_ParityBox->addItem("None",              QSerialPort::NoParity);
+    ui->cb_ParityBox->addItem("Even",              QSerialPort::EvenParity);
+    ui->cb_ParityBox->addItem("Odd",               QSerialPort::OddParity);
+    ui->cb_ParityBox->addItem("Space",             QSerialPort::SpaceParity);
+    ui->cb_ParityBox->addItem("Mark",              QSerialPort::MarkParity);
     //---
-    ui->StopBitsBox->clear();
+    ui->cb_StopBitsBox->clear();
 #ifdef Q_OS_LINUX
-    // ui->StopBitsBox->addItem("Undefined stop bits", QSerialPort::UnknownStopBits);
+    // ui->cb_StopBitsBox->addItem("Undefined stop bits", QSerialPort::UnknownStopBits);
 #endif
-    ui->StopBitsBox->addItem("1",                   QSerialPort::OneStop);
-    ui->StopBitsBox->addItem("1.5",                 QSerialPort::OneAndHalfStop);
-    ui->StopBitsBox->addItem("2",                   QSerialPort::TwoStop);
+    ui->cb_StopBitsBox->addItem("1",                   QSerialPort::OneStop);
+    ui->cb_StopBitsBox->addItem("1.5",                 QSerialPort::OneAndHalfStop);
+    ui->cb_StopBitsBox->addItem("2",                   QSerialPort::TwoStop);
     //---
-    ui->FlowBox->clear();
+    ui->cb_FlowBox->clear();
 #ifdef Q_OS_LINUX
-    // ui->FlowBox->addItem("Undefined flow",  QSerialPort::UnknownFlowControl);
+    // ui->cb_FlowBox->addItem("Undefined flow",  QSerialPort::UnknownFlowControl);
 #endif
-    ui->FlowBox->addItem("Disable",         QSerialPort::NoFlowControl);
-    ui->FlowBox->addItem("Hardware",        QSerialPort::HardwareControl);
-    ui->FlowBox->addItem("Software",        QSerialPort::SoftwareControl);
+    ui->cb_FlowBox->addItem("Disable",         QSerialPort::NoFlowControl);
+    ui->cb_FlowBox->addItem("Hardware",        QSerialPort::HardwareControl);
+    ui->cb_FlowBox->addItem("Software",        QSerialPort::SoftwareControl);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::initSerial(void)
 {
-    ui->PortBox->setProperty(NO_SAVE, true);
-    ui->BaudBox->setProperty(NO_SAVE, true);
-    ui->FlowBox->setProperty(NO_SAVE, true);
-    ui->ParityBox->setProperty(NO_SAVE, true);
-    ui->DataBitsBox->setProperty(NO_SAVE, true);
-    ui->StopBitsBox->setProperty(NO_SAVE, true);
+    ui->cb_PortBox->setProperty(NO_SAVE, true);
+    ui->cb_BaudBox->setProperty(NO_SAVE, true);
+    ui->cb_FlowBox->setProperty(NO_SAVE, true);
+    ui->cb_ParityBox->setProperty(NO_SAVE, true);
+    ui->cb_DataBitsBox->setProperty(NO_SAVE, true);
+    ui->cb_StopBitsBox->setProperty(NO_SAVE, true);
     ui->btn_power->setProperty(NO_SAVE, true);
     ui->btn_refresh->setProperty(NO_BLOCK, true);
     ui->btn_refresh->setToolTip("Обновить список портов");
@@ -273,11 +273,11 @@ void SerialBox5::initSerial(void)
     connect(ui->btn_power,      &QPushButton::clicked,  this,   &SerialBox5::btnOpenPortClicked);
     connect(ui->btn_refresh,    &QPushButton::clicked,  this,   &SerialBox5::refresh);
 
-    connect(ui->BaudBox,     static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setBaudBox);
-    connect(ui->DataBitsBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setDataBox);
-    connect(ui->ParityBox,   static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setParityBox);
-    connect(ui->StopBitsBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setStopBox);
-    connect(ui->FlowBox,     static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setFlowBox);
+    connect(ui->cb_BaudBox,     static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setBaudBox);
+    connect(ui->cb_DataBitsBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setDataBox);
+    connect(ui->cb_ParityBox,   static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setParityBox);
+    connect(ui->cb_StopBitsBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setStopBox);
+    connect(ui->cb_FlowBox,     static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),  this,   &SerialBox5::setFlowBox);
 
     connect(this,   &SerialBox5::output, this,   &SerialBox5::drawData);
 }
@@ -293,13 +293,13 @@ void SerialBox5::getStatus(const QString &status, QDateTime current)
 //--------------------------------------------------------------------------------
 void SerialBox5::setCloseState(void)
 {
-    ui->PortBox->setEnabled(true);
+    ui->cb_PortBox->setEnabled(true);
     ui->btn_refresh->setEnabled(true);
-    ui->BaudBox->setEnabled(false);
-    ui->DataBitsBox->setEnabled(false);
-    ui->ParityBox->setEnabled(false);
-    ui->StopBitsBox->setEnabled(false);
-    ui->FlowBox->setEnabled(false);
+    ui->cb_BaudBox->setEnabled(false);
+    ui->cb_DataBitsBox->setEnabled(false);
+    ui->cb_ParityBox->setEnabled(false);
+    ui->cb_StopBitsBox->setEnabled(false);
+    ui->cb_FlowBox->setEnabled(false);
     ui->btn_power->setChecked(false);
 
     ui->btn_default->setEnabled(false);
@@ -313,13 +313,13 @@ void SerialBox5::setCloseState(void)
 //--------------------------------------------------------------------------------
 void SerialBox5::setOpenState()
 {
-    ui->PortBox->setEnabled(false);
+    ui->cb_PortBox->setEnabled(false);
     ui->btn_refresh->setEnabled(false);
-    ui->BaudBox->setEnabled(true);
-    ui->DataBitsBox->setEnabled(true);
-    ui->ParityBox->setEnabled(true);
-    ui->StopBitsBox->setEnabled(true);
-    ui->FlowBox->setEnabled(true);
+    ui->cb_BaudBox->setEnabled(true);
+    ui->cb_DataBitsBox->setEnabled(true);
+    ui->cb_ParityBox->setEnabled(true);
+    ui->cb_StopBitsBox->setEnabled(true);
+    ui->cb_FlowBox->setEnabled(true);
     ui->btn_power->setChecked(true);
 
     ui->btn_default->setEnabled(true);
@@ -341,7 +341,7 @@ void SerialBox5::btnOpenPortClicked()
     }
     else
     {
-        QString text = ui->PortBox->currentText();
+        QString text = ui->cb_PortBox->currentText();
         if(text.isEmpty())
         {
             if(isOpen())
@@ -356,20 +356,20 @@ void SerialBox5::btnOpenPortClicked()
         if(result)
         {
             int idx = 0;
-            idx = ui->BaudBox->findData(baudRate());
-            if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
+            idx = ui->cb_BaudBox->findData(baudRate());
+            if (idx != -1) ui->cb_BaudBox->setCurrentIndex(idx);
 
-            idx = ui->DataBitsBox->findData(dataBits());
-            if (idx != -1) ui->DataBitsBox->setCurrentIndex(idx);
+            idx = ui->cb_DataBitsBox->findData(dataBits());
+            if (idx != -1) ui->cb_DataBitsBox->setCurrentIndex(idx);
 
-            idx = ui->ParityBox->findData(parity());
-            if (idx != -1) ui->ParityBox->setCurrentIndex(idx);
+            idx = ui->cb_ParityBox->findData(parity());
+            if (idx != -1) ui->cb_ParityBox->setCurrentIndex(idx);
 
-            idx = ui->StopBitsBox->findData(stopBits());
-            if (idx != -1) ui->StopBitsBox->setCurrentIndex(idx);
+            idx = ui->cb_StopBitsBox->findData(stopBits());
+            if (idx != -1) ui->cb_StopBitsBox->setCurrentIndex(idx);
 
-            idx = ui->FlowBox->findData(flowControl());
-            if (idx != -1) ui->FlowBox->setCurrentIndex(idx);
+            idx = ui->cb_FlowBox->findData(flowControl());
+            if (idx != -1) ui->cb_FlowBox->setCurrentIndex(idx);
 
             get_parameter();
             emit port_is_active(true);
@@ -482,61 +482,61 @@ void SerialBox5::drawData(const QByteArray &data)
 void SerialBox5::setBaudBox(int index)
 {
     bool ok = false;
-    int value = ui->BaudBox->itemData(index, Qt::UserRole).toInt(&ok);
+    int value = ui->cb_BaudBox->itemData(index, Qt::UserRole).toInt(&ok);
     if(!ok) return;
     if(value < 0) return;
 
     ok = setBaudRate(value);
     if(!ok) emit error("error set baud");
-    else emit info(QString("set %1").arg(ui->BaudBox->currentText()));
+    else emit info(QString("set %1").arg(ui->cb_BaudBox->currentText()));
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::setDataBox(int index)
 {
     bool ok = false;
-    int value = ui->DataBitsBox->itemData(index, Qt::UserRole).toInt(&ok);
+    int value = ui->cb_DataBitsBox->itemData(index, Qt::UserRole).toInt(&ok);
     if(!ok) return;
     if(value < 0) return;
 
     ok = setDataBits(static_cast<QSerialPort::DataBits>(value));
     if(!ok) emit error("error set data");
-    else emit info(QString("set %1").arg(ui->DataBitsBox->currentText()));
+    else emit info(QString("set %1").arg(ui->cb_DataBitsBox->currentText()));
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::setParityBox(int index)
 {
     bool ok = false;
-    int value = ui->ParityBox->itemData(index, Qt::UserRole).toInt(&ok);
+    int value = ui->cb_ParityBox->itemData(index, Qt::UserRole).toInt(&ok);
     if(!ok) return;
     if(value < 0) return;
 
     ok = setParity(static_cast<QSerialPort::Parity>(value));
     if(!ok) emit error("error set parity");
-    else emit info(QString("set %1").arg(ui->ParityBox->currentText()));
+    else emit info(QString("set %1").arg(ui->cb_ParityBox->currentText()));
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::setStopBox(int index)
 {
     bool ok = false;
-    int value = ui->StopBitsBox->itemData(index, Qt::UserRole).toInt(&ok);
+    int value = ui->cb_StopBitsBox->itemData(index, Qt::UserRole).toInt(&ok);
     if(!ok) return;
     if(value < 0) return;
 
     ok = setStopBits(static_cast<QSerialPort::StopBits>(value));
     if(!ok) emit error("error set stopbit");
-    else emit info(QString("set %1").arg(ui->StopBitsBox->currentText()));
+    else emit info(QString("set %1").arg(ui->cb_StopBitsBox->currentText()));
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::setFlowBox(int index)
 {
     bool ok = false;
-    int value = ui->FlowBox->itemData(index, Qt::UserRole).toInt(&ok);
+    int value = ui->cb_FlowBox->itemData(index, Qt::UserRole).toInt(&ok);
     if(!ok) return;
     if(value < 0) return;
 
     ok = setFlowControl(static_cast<QSerialPort::FlowControl>(value));
     if(!ok) emit error("error set flow");
-    else emit info(QString("set %1").arg(ui->FlowBox->currentText()));
+    else emit info(QString("set %1").arg(ui->cb_FlowBox->currentText()));
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::updateText(void)
@@ -617,20 +617,20 @@ void SerialBox5::set_default(void)
 
         int idx = 0;
 
-        idx = ui->BaudBox->findData(baudRate());
-        if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
+        idx = ui->cb_BaudBox->findData(baudRate());
+        if (idx != -1) ui->cb_BaudBox->setCurrentIndex(idx);
 
-        idx = ui->DataBitsBox->findData(dataBits());
-        if (idx != -1) ui->DataBitsBox->setCurrentIndex(idx);
+        idx = ui->cb_DataBitsBox->findData(dataBits());
+        if (idx != -1) ui->cb_DataBitsBox->setCurrentIndex(idx);
 
-        idx = ui->ParityBox->findData(parity());
-        if (idx != -1) ui->ParityBox->setCurrentIndex(idx);
+        idx = ui->cb_ParityBox->findData(parity());
+        if (idx != -1) ui->cb_ParityBox->setCurrentIndex(idx);
 
-        idx = ui->StopBitsBox->findData(stopBits());
-        if (idx != -1) ui->StopBitsBox->setCurrentIndex(idx);
+        idx = ui->cb_StopBitsBox->findData(stopBits());
+        if (idx != -1) ui->cb_StopBitsBox->setCurrentIndex(idx);
 
-        idx = ui->FlowBox->findData(flowControl());
-        if (idx != -1) ui->FlowBox->setCurrentIndex(idx);
+        idx = ui->cb_FlowBox->findData(flowControl());
+        if (idx != -1) ui->cb_FlowBox->setCurrentIndex(idx);
     }
 }
 //--------------------------------------------------------------------------------
@@ -742,8 +742,8 @@ bool SerialBox5::power_off(void)
 //--------------------------------------------------------------------------------
 void SerialBox5::baudRateChanged(qint32 baudRate, QSerialPort::Directions)
 {
-    int idx = ui->BaudBox->findData(baudRate);
-    if (idx != -1) ui->BaudBox->setCurrentIndex(idx);
+    int idx = ui->cb_BaudBox->findData(baudRate);
+    if (idx != -1) ui->cb_BaudBox->setCurrentIndex(idx);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::breakEnabledChanged(bool set)
@@ -753,8 +753,8 @@ void SerialBox5::breakEnabledChanged(bool set)
 //--------------------------------------------------------------------------------
 void SerialBox5::dataBitsChanged(QSerialPort::DataBits dataBits)
 {
-    int idx = ui->DataBitsBox->findData(dataBits);
-    if (idx != -1) ui->DataBitsBox->setCurrentIndex(idx);
+    int idx = ui->cb_DataBitsBox->findData(dataBits);
+    if (idx != -1) ui->cb_DataBitsBox->setCurrentIndex(idx);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::dataTerminalReadyChanged(bool set)
@@ -764,14 +764,14 @@ void SerialBox5::dataTerminalReadyChanged(bool set)
 //--------------------------------------------------------------------------------
 void SerialBox5::flowControlChanged(QSerialPort::FlowControl flow)
 {
-    int idx = ui->FlowBox->findData(flow);
-    if (idx != -1) ui->FlowBox->setCurrentIndex(idx);
+    int idx = ui->cb_FlowBox->findData(flow);
+    if (idx != -1) ui->cb_FlowBox->setCurrentIndex(idx);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::parityChanged(QSerialPort::Parity parity)
 {
-    int idx = ui->ParityBox->findData(parity);
-    if (idx != -1) ui->ParityBox->setCurrentIndex(idx);
+    int idx = ui->cb_ParityBox->findData(parity);
+    if (idx != -1) ui->cb_ParityBox->setCurrentIndex(idx);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::requestToSendChanged(bool set)
@@ -781,8 +781,8 @@ void SerialBox5::requestToSendChanged(bool set)
 //--------------------------------------------------------------------------------
 void SerialBox5::stopBitsChanged(QSerialPort::StopBits stopBits)
 {
-    int idx = ui->StopBitsBox->findData(stopBits);
-    if (idx != -1) ui->StopBitsBox->setCurrentIndex(idx);
+    int idx = ui->cb_StopBitsBox->findData(stopBits);
+    if (idx != -1) ui->cb_StopBitsBox->setCurrentIndex(idx);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::load_setting(void)
@@ -794,22 +794,22 @@ void SerialBox5::load_setting(void)
     QString port = load_string(SERIALBOX5_PORT);
     QString stopbits = load_string(SERIALBOX5_STOPBITS);
 
-    ui->BaudBox->setCurrentText(baud);
-    ui->DataBitsBox->setCurrentText(databits);
-    ui->FlowBox->setCurrentText(flow);
-    ui->ParityBox->setCurrentText(parity);
-    ui->PortBox->setCurrentText(port);
-    ui->StopBitsBox->setCurrentText(stopbits);
+    ui->cb_BaudBox->setCurrentText(baud);
+    ui->cb_DataBitsBox->setCurrentText(databits);
+    ui->cb_FlowBox->setCurrentText(flow);
+    ui->cb_ParityBox->setCurrentText(parity);
+    ui->cb_PortBox->setCurrentText(port);
+    ui->cb_StopBitsBox->setCurrentText(stopbits);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5::save_setting(void)
 {
-    QString baud = ui->BaudBox->currentText();
-    QString databits = ui->DataBitsBox->currentText();
-    QString flow = ui->FlowBox->currentText();
-    QString parity = ui->ParityBox->currentText();
-    QString port = ui->PortBox->currentText();
-    QString stopbits = ui->StopBitsBox->currentText();
+    QString baud = ui->cb_BaudBox->currentText();
+    QString databits = ui->cb_DataBitsBox->currentText();
+    QString flow = ui->cb_FlowBox->currentText();
+    QString parity = ui->cb_ParityBox->currentText();
+    QString port = ui->cb_PortBox->currentText();
+    QString stopbits = ui->cb_StopBitsBox->currentText();
 
     save_string(SERIALBOX5_BAUD,        baud);
     save_string(SERIALBOX5_DATABITS,    databits);

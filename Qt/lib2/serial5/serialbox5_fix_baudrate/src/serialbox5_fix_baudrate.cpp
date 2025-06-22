@@ -120,7 +120,7 @@ void SerialBox5_fix_baudrate::init(void)
     initSerial();
     init_timer();
 
-    ui->PortBox->setMinimumWidth(150);
+    ui->cb_PortBox->setMinimumWidth(150);
 
     ui->btn_power->setIcon(QIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay)));
     ui->btn_refresh->setToolTip("Обновить список портов");
@@ -152,12 +152,12 @@ void SerialBox5_fix_baudrate::checkPorts(void)
         sl_ports = get_port_names();
 
         // Обновление QComboBox
-        QString current_text = ui->PortBox->currentText();
+        QString current_text = ui->cb_PortBox->currentText();
 
-        ui->PortBox->clear();
-        ui->PortBox->addItems(sl_ports);
+        ui->cb_PortBox->clear();
+        ui->cb_PortBox->addItems(sl_ports);
 
-        ui->PortBox->setCurrentText(current_text);
+        ui->cb_PortBox->setCurrentText(current_text);
         //TODO прерывание при физическом отключении устройства
         if(isOpen())
         {
@@ -184,7 +184,7 @@ void SerialBox5_fix_baudrate::createWidgets(void)
     ui->gridLayout->setSpacing(0);
 
     ui->btn_refresh->setProperty(NO_BLOCK, true);
-    ui->PortBox->setProperty(NO_BLOCK, true);
+    ui->cb_PortBox->setProperty(NO_BLOCK, true);
 
     connect(ui->btn_power,      &QPushButton::clicked,  this,   &SerialBox5_fix_baudrate::btnOpenPortClicked);
     connect(ui->btn_refresh,    &QToolButton::clicked,  this,   &SerialBox5_fix_baudrate::refresh);
@@ -217,13 +217,13 @@ void SerialBox5_fix_baudrate::add_frame_text(QFrame *parent,
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::refresh(void)
 {
-    ui->PortBox->clear();
-    ui->PortBox->addItems(get_port_names());
+    ui->cb_PortBox->clear();
+    ui->cb_PortBox->addItems(get_port_names());
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::initSerial(void)
 {
-    ui->PortBox->setProperty(NO_SAVE, true);
+    ui->cb_PortBox->setProperty(NO_SAVE, true);
     ui->btn_power->setProperty(NO_SAVE, true);
     ui->btn_refresh->setProperty(NO_BLOCK, true);
     ui->btn_refresh->setToolTip("Обновить список портов");
@@ -259,7 +259,7 @@ void SerialBox5_fix_baudrate::getStatus(const QString &status, QDateTime current
 void SerialBox5_fix_baudrate::setCloseState(void)
 {
     ui->btn_refresh->setEnabled(true);
-    ui->PortBox->setEnabled(true);
+    ui->cb_PortBox->setEnabled(true);
     ui->btn_power->setChecked(false);
 #ifdef RS232_SEND
     sendBox5->block_interface(true);
@@ -271,7 +271,7 @@ void SerialBox5_fix_baudrate::setCloseState(void)
 void SerialBox5_fix_baudrate::setOpenState()
 {
     ui->btn_refresh->setEnabled(false);
-    ui->PortBox->setEnabled(false);
+    ui->cb_PortBox->setEnabled(false);
     ui->btn_power->setChecked(true);
 #ifdef RS232_SEND
     sendBox5->block_interface(false);
@@ -290,7 +290,7 @@ void SerialBox5_fix_baudrate::btnOpenPortClicked()
     }
     else
     {
-        QString text = ui->PortBox->currentText();
+        QString text = ui->cb_PortBox->currentText();
         if(text.isEmpty())
         {
             if(isOpen())
@@ -517,10 +517,10 @@ void SerialBox5_fix_baudrate::get_parameter(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::set_portname(const QString &portname)
 {
-    for(int n=0; n<ui->PortBox->count(); n++)
+    for(int n=0; n<ui->cb_PortBox->count(); n++)
     {
-        ui->PortBox->setCurrentIndex(n);
-        if(ui->PortBox->currentText() == portname)
+        ui->cb_PortBox->setCurrentIndex(n);
+        if(ui->cb_PortBox->currentText() == portname)
         {
             return;
         }
@@ -529,7 +529,7 @@ void SerialBox5_fix_baudrate::set_portname(const QString &portname)
 //--------------------------------------------------------------------------------
 QString SerialBox5_fix_baudrate::get_portname(void)
 {
-    return ui->PortBox->currentText();
+    return ui->cb_PortBox->currentText();
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::updateText(void)
@@ -549,12 +549,12 @@ void SerialBox5_fix_baudrate::load_setting(void)
 {
     QString portname = load_string(SERIALBOX5_FIX_BAUDRATE_PORTNAME);
 
-    ui->PortBox->setCurrentText(portname);
+    ui->cb_PortBox->setCurrentText(portname);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::save_setting(void)
 {
-    QString portname = ui->PortBox->currentText();
+    QString portname = ui->cb_PortBox->currentText();
 
     save_string(SERIALBOX5_FIX_BAUDRATE_PORTNAME,   portname);
 }

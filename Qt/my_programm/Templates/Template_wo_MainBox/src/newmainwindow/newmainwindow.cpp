@@ -28,7 +28,8 @@ NewMainWindow::NewMainWindow(MainWindow *parent)
     : MainWindow(parent)
 {
 #ifdef QT_DEBUG
-    createTestBar();
+    create_test_bar();
+    show_objectNames();
 #endif
 
     QPushButton *btn = new QPushButton(this);
@@ -69,7 +70,7 @@ QToolButton *NewMainWindow::add_button(QToolBar *tool_bar,
     return tool_button;
 }
 //--------------------------------------------------------------------------------
-void NewMainWindow::createTestBar(void)
+void NewMainWindow::create_test_bar(void)
 {
     commands.clear(); int id = 0;
     commands.append({ id++, "test", &NewMainWindow::test });

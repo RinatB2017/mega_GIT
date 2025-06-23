@@ -786,6 +786,10 @@ void MyWidget::show_objectNames(void)
     QWidgetList wl = qApp->allWidgets();
     foreach (QWidget *widget, wl)
     {
+        if(widget->objectName().left(3) == "gb_")
+        {
+            widget->setToolTip(widget->objectName());
+        }
         if(widget->objectName().left(3) == "cb_")
         {
             widget->setToolTip(widget->objectName());

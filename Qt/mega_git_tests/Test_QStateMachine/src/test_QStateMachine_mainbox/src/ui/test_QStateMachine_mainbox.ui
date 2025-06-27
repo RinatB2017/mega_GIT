@@ -6,13 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>181</width>
-    <height>208</height>
+    <width>401</width>
+    <height>257</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <widget class="QPushButton" name="btn_animated">
+   <property name="text">
+    <string>anim</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

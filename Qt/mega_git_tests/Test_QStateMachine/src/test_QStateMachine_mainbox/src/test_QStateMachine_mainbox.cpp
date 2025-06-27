@@ -53,73 +53,42 @@ void MainBox::init(void)
     ui->setupUi(this);
 
 #ifdef QT_DEBUG
-    createTestBar();
+    create_test_bar();
 #endif
 
-    QPushButton *btn_test = new QPushButton(this);
-    btn_test->setObjectName("btn_test");
-    btn_test->show();
+    QStateMachine *machine = new QStateMachine(this);
 
-    //Будем анимировать размеры кнопочки.
-    QPushButton *button = new QPushButton(this);
-    button->setText("Animated Button");
-    button->setObjectName("button");
-    button->setGeometry(QRect(0, 0, 200, 30));
-    button->show();
-
-    QVBoxLayout *vbox = new QVBoxLayout();
-    vbox->addWidget(button);
-    vbox->addWidget(btn_test);
-    vbox->addStretch(1);
-    setLayout(vbox);
-
-    //Создаем конечный автомат
-    QStateMachine *machine = new QStateMachine;
-
-    //создаем два состояния и назначаем им значения свойства geometry
     QState *state1 = new QState(machine);
-    state1->assignProperty(button, "geometry", QRect(0, 0, 200, 30));
+    state1->assignProperty(ui->btn_animated, "geometry", QRect(0, 0, 100, 100));
 
     QState *state2 = new QState(machine);
-    state2->assignProperty(button, "geometry", QRect(0, 0, 200, 130));
+    state2->assignProperty(ui->btn_animated, "geometry", QRect(200, 0, 100, 100));
+
+    QState *state3 = new QState(machine);
+    state3->assignProperty(ui->btn_animated, "geometry", QRect(200, 200, 100, 100));
+
+    QState *state4 = new QState(machine);
+    state4->assignProperty(ui->btn_animated, "geometry", QRect(0, 200, 100, 100));
 
     machine->setInitialState(state1);
 
-    //Добавляем переход
-    QSignalTransition *transition1 = state1->addTransition(button,  SIGNAL(clicked()), state2);
-    QSignalTransition *transition2 = state2->addTransition(button,  SIGNAL(clicked()), state1);
+    QSignalTransition *transition1 = state1->addTransition(ui->btn_animated,    &QPushButton::clicked,  state2);
+    QSignalTransition *transition2 = state2->addTransition(ui->btn_animated,    &QPushButton::clicked,  state3);
+    QSignalTransition *transition3 = state3->addTransition(ui->btn_animated,    &QPushButton::clicked,  state4);
+    QSignalTransition *transition4 = state4->addTransition(ui->btn_animated,    &QPushButton::clicked,  state1);
 
-    QPropertyAnimation *anim = new QPropertyAnimation(button, "geometry");
+    QPropertyAnimation *anim = new QPropertyAnimation(ui->btn_animated, "geometry");
     anim->setDuration(1000);
 
-    //Добавляем анимацию для перехода
     transition1->addAnimation(anim);
     transition2->addAnimation(anim);
+    transition3->addAnimation(anim);
+    transition4->addAnimation(anim);
 
-    //Любуемся
     machine->start();
-
-#if 1
-    //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-#else
-    if(sizeHint().height() > 0)
-    {
-        setMinimumHeight(sizeHint().height());
-    }
-#endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::start_machine(void)
-{
-    emit info("run");
-
-    m_state->stop();
-
-    m_state->setInitialState(s0);
-    m_state->start();
-}
-//--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::create_test_bar(void)
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -151,11 +120,7 @@ void MainBox::createTestBar(void)
                                                   "choice_test",
                                                   "choice_test");
         btn_choice_test->setObjectName("btn_choice_test");
-
         connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
-
-        connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-        connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
     }
     else
     {

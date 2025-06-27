@@ -45,16 +45,9 @@ public:
                      MySplashScreen *splash);
     virtual ~MainBox();
 
-signals:
-    void signal_0(void);
-    void signal_1(void);
-    void signal_2(void);
-
 private slots:
     void choice_test(void);
     bool test(void);
-
-    void start_machine(void);
 
 private:
     typedef struct CMD
@@ -71,14 +64,8 @@ private:
     QCheckBox *cb_block;
     QList<CMD> commands;
 
-    QStateMachine *m_state;
-    QState *s0;
-    QState *s1;
-    QState *s2;
-
     void init(void);
-
-    void createTestBar(void);
+    void create_test_bar(void);
 
     void updateText(void);
     bool programm_is_exit(void);

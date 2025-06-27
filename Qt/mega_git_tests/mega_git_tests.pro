@@ -43,6 +43,7 @@ SUBDIRS += \
     $$PWD/Test_QGraphicsScene \
     $$PWD/Test_QListWidget \
     $$PWD/Test_QProcess \
+    $$PWD/Test_QStateMachine \
     $$PWD/Test_RGB_display \
     $$PWD/Test_SerialBox5 \
     $$PWD/Test_libUSB \

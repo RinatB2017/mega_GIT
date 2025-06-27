@@ -9,6 +9,8 @@ FOLDER  = tests
 
 include (conf/conf.pri)
 
+ QT += statemachine
+
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH

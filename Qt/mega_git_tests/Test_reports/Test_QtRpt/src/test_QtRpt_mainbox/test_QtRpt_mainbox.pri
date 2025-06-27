@@ -2,17 +2,11 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-unix {
-    LIBS    += -L$$PWD/linux_lib
-    LIBS    += -lQtZint
-}
+DEPENDPATH  += \
+    $$PWD/src \
+    $$PWD/src/ui
+INCLUDEPATH = $$DEPENDPATH
 
-win32 {
-    DEPENDPATH  += \
-        $$PWD/QtRPT
-    INCLUDEPATH = $$DEPENDPATH
-
-    QT      += printsupport qml xml sql
-    LIBS    += -L$$PWD/win_lib
-    LIBS    += -lQtRPT
-}
+HEADERS += test_QtRpt_mainbox.hpp
+SOURCES += test_QtRpt_mainbox.cpp
+FORMS   += test_QtRpt_mainbox.ui

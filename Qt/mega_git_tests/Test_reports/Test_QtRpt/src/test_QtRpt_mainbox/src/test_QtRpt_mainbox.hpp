@@ -18,48 +18,68 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QObject>
-#include <QWidget>
-#include <QList>
-#include <QTest>
+#ifndef MAINBOX_HPP
+#define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include "ui_test_QtRpt_mainbox.h"
+//--------------------------------------------------------------------------------
+#include <QPointer>
+#include <QtPrintSupport/QPrinter>
+#include <QStringListModel>
+
+#include "qtrpt.h"
+//--------------------------------------------------------------------------------
+#include "mywaitsplashscreen.hpp"
+#include "mysplashscreen.hpp"
+#include "myfiledialog.hpp"
 #include "mainwindow.hpp"
-#include "test_QtRpt_mainbox.hpp"
-#include "test.hpp"
+#include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-Test::Test()
-{
-    QTest::qWait(0);    // нужно обязательно
+namespace Ui {
+    class MainBox;
 }
 //--------------------------------------------------------------------------------
-void Test::initTestCase()
+class MainBox : public MyWidget
 {
-    QVERIFY(mw != nullptr);
-}
-//--------------------------------------------------------------------------------
-void Test::setMainWindow(MainWindow *mainWindow)
-{
-    mw = mainWindow;
-}
-//--------------------------------------------------------------------------------
-void Test::test_GUI(void)
-{
-    QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
-    QVERIFY(cb);
+    Q_OBJECT
 
-    QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
-    QVERIFY(tb);
-}
-//--------------------------------------------------------------------------------
-void Test::test_func(void)
-{
-    MainBox *mb = mw->findChild<MainBox *>("MainBox");
-    QVERIFY(mb);
-}
-//--------------------------------------------------------------------------------
-void Test::test_signals(void)
-{
+public:
+    explicit MainBox(QWidget *parent,
+                     MySplashScreen *splash);
+    virtual ~MainBox();
 
-}
+private slots:
+    void choice_test(void);
+    void choice_programm(void);
+    bool test(void);
+
+private:
+    QPointer<MySplashScreen> splash;
+    Ui::MainBox *ui;
+
+    typedef struct CMD
+    {
+        int cmd;
+        QString cmd_text;
+        bool (MainBox::*func)(void);
+    } CMD_t;
+    QList<CMD> test_commands;
+    QList<CMD> programm_commands;
+
+    QPointer<QToolBar> test_bar;
+    QPointer<QToolBar> programm_bar;
+    QPointer<QComboBox> cb_test;
+    QPointer<QComboBox> cb_programm;
+
+    void init(void);
+
+    void create_test_bar(void);
+    void create_programm_bar(void);
+
+    void updateText(void);
+    bool programm_is_exit(void);
+    void load_setting(void);
+    void save_setting(void);
+};
 //--------------------------------------------------------------------------------
+#endif // MAINBOX_HPP

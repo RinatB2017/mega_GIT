@@ -13,8 +13,7 @@ include(../CommonFiles/CommonFiles_QtRpt.pri)
 
 INCLUDEPATH += $$PWD
 
-SOURCES += \
-    $$PWD/qtrpt.cpp \
+SOURCES += $$PWD/qtrpt.cpp \
     $$PWD/RptDsPlugin.cpp \
     $$PWD/RptSql.cpp \
     $$PWD/RptFieldObject.cpp \
@@ -24,8 +23,7 @@ SOURCES += \
     $$PWD/RptScriptEngine.cpp \
     $$PWD/RptDsInline.cpp \
     $$PWD/RptDsAbstract.cpp
-HEADERS += \
-    $$PWD/qtrpt.h \
+HEADERS += $$PWD/qtrpt.h \
     $$PWD/RptDsPlugin.h \
     $$PWD/qtrptnamespace.h \
     $$PWD/RptSql.h \

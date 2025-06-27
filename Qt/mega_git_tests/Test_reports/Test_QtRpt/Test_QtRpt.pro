@@ -9,9 +9,6 @@ FOLDER  = tests
 
 include (conf/conf.pri)
 
-QT      += printsupport
-QT      += qml
-
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH
@@ -47,6 +44,6 @@ win32 {
 include ($$LIB_PATH/meta/mainwindow.pri)
 include ($$LIB_PATH2/qtrpt/qtrpt.pri)
 
-include ($$PWD/src/test_LimeReport_mainbox/test_LimeReport_mainbox.pri)
+include ($$PWD/src/test_QtRpt_mainbox/test_QtRpt_mainbox.pri)
 #-----------------------------------------------------------
 VPATH = $$INCLUDEPATH

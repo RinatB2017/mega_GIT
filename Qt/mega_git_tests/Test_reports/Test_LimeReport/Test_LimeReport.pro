@@ -9,9 +9,6 @@ FOLDER  = tests
 
 include (conf/conf.pri)
 
-QT      += printsupport
-QT      += qml
-
 DEPENDPATH  += \
     $$PWD/src
 INCLUDEPATH = $$DEPENDPATH

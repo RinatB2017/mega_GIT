@@ -18,7 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "test_LimeReport_mainbox.hpp"
+#include "test_QtRpt_mainbox.hpp"
 #include "qtsingleapplication.h"
 #include "mysplashscreen.hpp"
 #include "mainwindow.hpp"

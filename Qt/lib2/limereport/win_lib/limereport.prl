@@ -1,0 +1,4 @@
+QMAKE_PRL_BUILD_DIR = Y:/_qt_report/LimeReport/limereport
+QMAKE_PRO_INPUT = limereport.pro
+QMAKE_PRL_TARGET = limereport.lib
+QMAKE_PRL_CONFIG = lex yacc exceptions depend_includepath testcase_targets import_plugins import_qpa_plugin windows file_copies qmake_use qt warn_on release link_prl flat debug_and_release debug_and_release_target precompile_header autogen_precompile_source embed_manifest_dll embed_manifest_exe shared plugin_manifest intelcet win32 msvc copy_dir_files release ReleaseBuild Release build_pass entrypoint c++11 qtquickcompiler release ReleaseBuild Release build_pass lib dll create_prl link_prl build_translations zint svg qjsengine dialogdesigner embedded_designer release ReleaseBuild Release build_pass have_target shared dll exclusive_builds no_autoqmake thread designer_defines no_link uic opengl no_link moc resources

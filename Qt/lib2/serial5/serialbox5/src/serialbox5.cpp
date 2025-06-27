@@ -791,14 +791,12 @@ void SerialBox5::load_setting(void)
     QString databits = load_string(SERIALBOX5_DATABITS);
     QString flow = load_string(SERIALBOX5_FLOW);
     QString parity = load_string(SERIALBOX5_PARITY);
-    QString port = load_string(SERIALBOX5_PORT);
     QString stopbits = load_string(SERIALBOX5_STOPBITS);
 
     ui->cb_BaudBox->setCurrentText(baud);
     ui->cb_DataBitsBox->setCurrentText(databits);
     ui->cb_FlowBox->setCurrentText(flow);
     ui->cb_ParityBox->setCurrentText(parity);
-    ui->cb_PortBox->setCurrentText(port);
     ui->cb_StopBitsBox->setCurrentText(stopbits);
 }
 //--------------------------------------------------------------------------------
@@ -808,14 +806,12 @@ void SerialBox5::save_setting(void)
     QString databits = ui->cb_DataBitsBox->currentText();
     QString flow = ui->cb_FlowBox->currentText();
     QString parity = ui->cb_ParityBox->currentText();
-    QString port = ui->cb_PortBox->currentText();
     QString stopbits = ui->cb_StopBitsBox->currentText();
 
     save_string(SERIALBOX5_BAUD,        baud);
     save_string(SERIALBOX5_DATABITS,    databits);
     save_string(SERIALBOX5_FLOW,        flow);
     save_string(SERIALBOX5_PARITY,      parity);
-    save_string(SERIALBOX5_PORT,        port);
     save_string(SERIALBOX5_STOPBITS,    stopbits);
 }
 //--------------------------------------------------------------------------------

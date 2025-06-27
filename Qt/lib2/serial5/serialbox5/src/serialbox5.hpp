@@ -36,7 +36,6 @@ class LogBox;
 #define SERIALBOX5_DATABITS "SerialBox5_databits"
 #define SERIALBOX5_FLOW     "SerialBox5_flow"
 #define SERIALBOX5_PARITY   "SerialBox5_parity"
-#define SERIALBOX5_PORT     "SerialBox5_port"
 #define SERIALBOX5_STOPBITS "SerialBox5_stopbits"
 //--------------------------------------------------------------------------------
 namespace Ui

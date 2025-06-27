@@ -592,19 +592,11 @@ bool SerialBox5_lite::programm_is_exit(void)
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::load_setting(void)
 {
-    QString portname = load_string(SERIALBOX5_LITE_PORTNAME);
-    QString baudrate = load_string(SERIALBOX5_LITE_BAUDRATE);
 
-    ui->cb_PortBox->setCurrentText(portname);
-    ui->cb_BaudBox->setCurrentText(baudrate);
 }
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::save_setting(void)
 {
-    QString portname = ui->cb_PortBox->currentText();
-    QString baudrate = ui->cb_BaudBox->currentText();
 
-    save_string(SERIALBOX5_LITE_PORTNAME,   portname);
-    save_string(SERIALBOX5_LITE_BAUDRATE,   baudrate);
 }
 //--------------------------------------------------------------------------------

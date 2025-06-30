@@ -192,12 +192,15 @@ bool MainBox::test(void)
     {
         QStringList files = dlg->selectedFiles();
         QString filename = files.at(0);
-        QStringListModel* stringListModel = new QStringListModel();
+        // QStringListModel* stringListModel = new QStringListModel();
 
         report = new LimeReport::ReportEngine(this);
-        report->dataManager()->addModel("string_list", stringListModel,true);
+        // report->dataManager()->addModel("string_list", stringListModel,true);
         report->loadFromFile(filename);
         // report->loadFromFile("demo_reports/simple_list.lrxml");
+        report->dataManager()->setReportVariable("TextItem5", QVariant::fromValue(1));
+        report->dataManager()->setReportVariable("TextItem6", QVariant("2"));
+        report->dataManager()->setReportVariable("TextItem7", QVariant("3"));
         report->previewReport();
         // report->printReport();
     }

@@ -181,8 +181,40 @@ void MainBox::choice_programm(void)
     }
 }
 //--------------------------------------------------------------------------------
+#include <QSqlQueryModel>
+
 bool MainBox::test(void)
 {
+#if 0
+    QStringList simpleData;
+    simpleData << "Значение 1" << "Значение 2" << "Значение 3";
+
+    QStringListModel *stringListModel = new QStringListModel();
+    stringListModel->setStringList(simpleData);
+
+    report = new LimeReport::ReportEngine(this);
+    report->dataManager()->addModel("string_list", stringListModel, true);
+    report->loadFromFile(":/data/test_report.lrxml");
+    report->previewReport();
+#endif
+
+#if 1
+    QStringList simpleData;
+    simpleData << "1" << "2" << "3";
+
+    QStringListModel* stringListModel = new QStringListModel();
+    stringListModel->setStringList(simpleData);
+
+    report = new LimeReport::ReportEngine(this);
+    report->dataManager()->addModel("string_list", stringListModel,true);
+    report->dataManager()->setReportVariable("var1", "value 1");
+    report->dataManager()->setReportVariable("var2", "value 2");
+    report->dataManager()->setReportVariable("var3", "value 3");
+    report->loadFromFile(":/data/test_report.lrxml");
+    report->previewReport();
+#endif
+
+#if 0
     MyFileDialog *dlg = new MyFileDialog("report");
     dlg->setNameFilter("LRXML files (*.lrxml)");
     dlg->setDefaultSuffix("lrxml");
@@ -205,6 +237,7 @@ bool MainBox::test(void)
         // report->printReport();
     }
     delete dlg;
+#endif
 
     emit info("OK");
     return true;

@@ -2,7 +2,7 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-QT += printsupport qml
+QT += printsupport qml sql
 
 unix {
     DEPENDPATH  += \

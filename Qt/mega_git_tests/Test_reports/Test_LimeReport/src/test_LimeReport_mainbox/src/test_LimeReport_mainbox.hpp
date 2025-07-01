@@ -23,6 +23,11 @@
 //--------------------------------------------------------------------------------
 #include "ui_test_LimeReport_mainbox.h"
 //--------------------------------------------------------------------------------
+#include <QSqlQueryModel>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlError>
+//--------------------------------------------------------------------------------
 #include <QPointer>
 #include <QtPrintSupport/QPrinter>
 #include <QStringListModel>
@@ -51,6 +56,8 @@ public:
 private slots:
     void choice_test(void);
     void choice_programm(void);
+    bool create_database(void);
+    bool show_report(void);
     bool test(void);
 
 private:
@@ -71,10 +78,25 @@ private:
     QPointer<QComboBox> cb_test;
     QPointer<QComboBox> cb_programm;
 
-    // LimeReport::ReportEngine *report = nullptr;
-    LimeReport::ReportEngine *report;
+    LimeReport::ReportEngine *report = nullptr;
+    // LimeReport::ReportEngine *report;
+
+    QSqlDatabase db;
+    QString driver_name;
+    QString database_name;
 
     void init(void);
+
+    bool open_database(const QString &driver_name,
+                       const QString &database_name);
+    bool create_data_table(const QString &table_name);
+    bool add_data_to_table(const QString &table_name,
+                           const QString &text1,
+                           const QString &text2,
+                           const QString &text3);
+    bool check_table_exist(const QString &table_name);
+    bool drop_table(const QString &table_name);
+    void close_database(const QString &database_name);
 
     void create_test_bar(void);
     void create_programm_bar(void);

@@ -2,15 +2,14 @@
 <ui version="4.0">
  <class>MainBox</class>
  <widget class="QWidget" name="MainBox">
-  <layout class="QHBoxLayout" name="horizontalLayout">
-   <item>
-    <widget class="QPushButton" name="btn_test">
-     <property name="text">
-      <string>test</string>
-     </property>
-    </widget>
-   </item>
-  </layout>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>96</width>
+    <height>44</height>
+   </rect>
+  </property>
  </widget>
  <resources/>
  <connections/>

@@ -43,9 +43,6 @@ void MainBox::init(void)
     create_test_bar();
 #endif
     create_programm_bar();
-
-    connect(ui->btn_test,   &QPushButton::clicked,  this,   &MainBox::test);
-
     load_widgets();
 }
 //--------------------------------------------------------------------------------
@@ -57,7 +54,9 @@ void MainBox::create_test_bar(void)
     if(mw)
     {
         test_commands.clear(); int id = 0;
-        test_commands.append({ id++,    "test", &MainBox::test });
+        test_commands.append({ id++,    "create_database",  &MainBox::create_database });
+        test_commands.append({ id++,    "show_report",      &MainBox::show_report });
+        test_commands.append({ id++,    "test",             &MainBox::test });
 
         QToolBar *testbar = new QToolBar("testbar");
         Q_ASSERT(testbar);
@@ -97,7 +96,7 @@ void MainBox::create_programm_bar(void)
     if(mw)
     {
         programm_commands.clear(); int id = 0;
-        programm_commands.append({ id++,    "test", &MainBox::test });
+        programm_commands.append({ id++,    "show_report",  &MainBox::show_report });
 
         programm_bar = new QToolBar("programm_bar");
         programm_bar->setObjectName("programm_bar");
@@ -181,10 +180,78 @@ void MainBox::choice_programm(void)
     }
 }
 //--------------------------------------------------------------------------------
-#include <QSqlQueryModel>
-
-bool MainBox::test(void)
+bool MainBox::create_database(void)
 {
+    bool ok;
+    QString database_name = "test_database.db";
+    QString table_name = "test_table";
+    ok = open_database("QSQLITE", database_name);
+    if(!ok)
+    {
+        emit error("DB not open!");
+        return false;
+    }
+
+    if(check_table_exist(table_name))
+    {
+        ok = drop_table(table_name);
+        if(!ok)
+        {
+            emit error("drop_table failed!");
+            return false;
+        }
+    }
+
+    ok = create_data_table(table_name);
+    if(!ok)
+    {
+        emit error("create_data_table failed!");
+        return false;
+    }
+
+    ok = add_data_to_table(table_name, "a00", "b00", "b00");
+    if(!ok)
+    {
+        emit error("add_data_to_table failed!");
+        return false;
+    }
+    ok = add_data_to_table(table_name, "a01", "b01", "b01");
+    if(!ok)
+    {
+        emit error("add_data_to_table failed!");
+        return false;
+    }
+    ok = add_data_to_table(table_name, "a02", "b02", "b02");
+    if(!ok)
+    {
+        emit error("add_data_to_table failed!");
+        return false;
+    }
+
+    close_database("test_database.db");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::show_report(void)
+{
+#if 1
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("test_database.db");
+    if (!db.open())
+    {
+        emit error("обработка ошибки подключения");
+        return false;
+    }
+
+    QSqlQueryModel* model = new QSqlQueryModel(this);
+    model->setQuery("SELECT * FROM test_table");
+
+    report = new LimeReport::ReportEngine(this);
+    report->dataManager()->addModel("main", model, true);
+    report->loadFromFile(":/data/test_report.lrxml");
+    report->previewReport();
+#endif
+
 #if 0
     QStringList simpleData;
     simpleData << "Значение 1" << "Значение 2" << "Значение 3";
@@ -198,7 +265,7 @@ bool MainBox::test(void)
     report->previewReport();
 #endif
 
-#if 1
+#if 0
     QStringList simpleData;
     simpleData << "1" << "2" << "3";
 
@@ -241,6 +308,120 @@ bool MainBox::test(void)
 
     emit info("OK");
     return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::test(void)
+{
+    emit info("OK");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::open_database(const QString &driver_name,
+                            const QString &database_name)
+{
+    emit info(QString("Open driver %1, database_name %2")
+                  .arg(driver_name)
+                  .arg(database_name));
+
+    this->driver_name = driver_name;
+    this->database_name = database_name;
+
+    if(db.databaseName() != database_name)
+    {
+        if(QSqlDatabase::contains(QSqlDatabase::defaultConnection))
+        {
+            db = QSqlDatabase::database();
+        }
+        else
+        {
+            db = QSqlDatabase::addDatabase(driver_name);
+        }
+        db.setDatabaseName(database_name);
+    }
+
+    bool ok = db.open();
+    if(!ok)
+    {
+        emit error(QString("db %1 not open!").arg(database_name));
+        emit error(db.lastError().text());
+        return false;
+    }
+    emit info("Открытие БД прошло успешно");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::create_data_table(const QString &table_name)
+{
+    QSqlQuery query;
+    bool ok;
+
+    query.prepare(QString("CREATE TABLE %1 ("
+                          "text1 TEXT, "
+                          "text2 TEXT, "
+                          "text3 TEXT) ")
+                      .arg(table_name));
+    ok = query.exec();
+    if(ok == false)
+    {
+        emit error(QString(tr("table '%1' not created"))
+                       .arg(table_name));
+        return false;
+    }
+    emit info(QString("Создание таблицы %1 прошло успешно").arg(table_name));
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::add_data_to_table(const QString &table_name,
+                                const QString &text1,
+                                const QString &text2,
+                                const QString &text3)
+{
+    QSqlQuery query;
+    bool ok;
+
+    query.clear();
+    query.prepare(QString("INSERT INTO %1 ("
+                          "text1, "
+                          "text2, "
+                          "text3) "
+                          "VALUES ("
+                          ":text1, "
+                          ":text2, "
+                          ":text3) ")
+                      .arg(table_name));
+    query.bindValue(":text1", text1);
+    query.bindValue(":text2", text2);
+    query.bindValue(":text3", text3);
+    ok = query.exec();
+    if(!ok)
+    {
+        emit error(query.lastError().text());
+        return false;
+    }
+    emit info("OK");
+    return true;
+}
+//--------------------------------------------------------------------------------
+bool MainBox::check_table_exist(const QString &table_name)
+{
+    QSqlQuery query;
+
+    emit debug(QString("table_name: %1").arg(table_name));
+    QString sql = QString("SELECT 1 FROM '%1' LIMIT 1;").arg(table_name);
+    return query.exec(sql);
+}
+//--------------------------------------------------------------------------------
+bool MainBox::drop_table(const QString &table_name)
+{
+    QSqlQuery sql;
+    return sql.exec(QString("DROP TABLE %1").arg(table_name));
+}
+//--------------------------------------------------------------------------------
+void MainBox::close_database(const QString &database_name)
+{
+    if(!db.isValid()) return;
+    db.close();
+    db.removeDatabase(database_name);
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

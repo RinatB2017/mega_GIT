@@ -97,7 +97,7 @@
               <children Type="Collection">
                 <item ClassName="TextItem" Type="Object">
                   <objectName Type="QString">TextItem4</objectName>
-                  <geometry Type="QRect" height="50" width="404" x="42" y="52"/>
+                  <geometry Type="QRect" height="50" width="1914" x="42" y="52"/>
                   <children Type="Collection"/>
                   <zOrder Type="qreal" Value="0"/>
                   <borders Type="enumAndFlags" Value="0"/>
@@ -111,7 +111,7 @@
                   <itemLocation Type="enumAndFlags" Value="0"/>
                   <stretchToMaxHeight Type="bool" Value="0"/>
                   <itemAlign Type="enumAndFlags" Value="4"/>
-                  <content Type="QString">var1</content>
+                  <content Type="QString">text1</content>
                   <margin Type="int" Value="4"/>
                   <alignment Type="enumAndFlags" Value="33"/>
                   <autoWidth Type="enumAndFlags" Value="0"/>
@@ -144,7 +144,7 @@
                 </item>
                 <item ClassName="TextItem" Type="Object">
                   <objectName Type="QString">TextItem3</objectName>
-                  <geometry Type="QRect" height="50" width="400" x="48" y="152"/>
+                  <geometry Type="QRect" height="50" width="400" x="44" y="124"/>
                   <children Type="Collection"/>
                   <zOrder Type="qreal" Value="0"/>
                   <borders Type="enumAndFlags" Value="0"/>
@@ -158,7 +158,7 @@
                   <itemLocation Type="enumAndFlags" Value="0"/>
                   <stretchToMaxHeight Type="bool" Value="0"/>
                   <itemAlign Type="enumAndFlags" Value="4"/>
-                  <content Type="QString">var2</content>
+                  <content Type="QString">text2</content>
                   <margin Type="int" Value="4"/>
                   <alignment Type="enumAndFlags" Value="33"/>
                   <autoWidth Type="enumAndFlags" Value="0"/>
@@ -191,7 +191,7 @@
                 </item>
                 <item ClassName="TextItem" Type="Object">
                   <objectName Type="QString">TextItem5</objectName>
-                  <geometry Type="QRect" height="50" width="400" x="46" y="250"/>
+                  <geometry Type="QRect" height="50" width="400" x="50" y="196"/>
                   <children Type="Collection"/>
                   <zOrder Type="qreal" Value="0"/>
                   <borders Type="enumAndFlags" Value="0"/>
@@ -205,7 +205,7 @@
                   <itemLocation Type="enumAndFlags" Value="0"/>
                   <stretchToMaxHeight Type="bool" Value="0"/>
                   <itemAlign Type="enumAndFlags" Value="4"/>
-                  <content Type="QString">var3</content>
+                  <content Type="QString">text3</content>
                   <margin Type="int" Value="4"/>
                   <alignment Type="enumAndFlags" Value="33"/>
                   <autoWidth Type="enumAndFlags" Value="0"/>
@@ -382,33 +382,44 @@
     </pages>
     <datasourcesManager ClassName="LimeReport::DataSourceManager" Type="Object">
       <objectName Type="QString">datasources</objectName>
-      <connections Type="Collection"/>
-      <queries Type="Collection"/>
+      <connections Type="Collection">
+        <item ClassName="LimeReport::ConnectionDesc" Type="Object">
+          <objectName Type="QString"></objectName>
+          <name Type="QString">test</name>
+          <driver Type="QString">QSQLITE</driver>
+          <databaseName Type="QString">/home/boss/Programming/my_programm_bin/tests/Test_LimeReport/test_database.db</databaseName>
+          <userName Type="QString"></userName>
+          <password Type="QString" Value=""/>
+          <host Type="QString"></host>
+          <autoconnect Type="bool" Value="1"/>
+          <keepDBCredentials Type="bool" Value="1"/>
+          <port Type="QString"></port>
+        </item>
+      </connections>
+      <queries Type="Collection">
+        <item ClassName="LimeReport::QueryDesc" Type="Object">
+          <objectName Type="QString"></objectName>
+          <queryName Type="QString">text1</queryName>
+          <queryText Type="QString">select text1 from test
+</queryText>
+          <connectionName Type="QString">test</connectionName>
+        </item>
+        <item ClassName="LimeReport::QueryDesc" Type="Object">
+          <objectName Type="QString"></objectName>
+          <queryName Type="QString">text2</queryName>
+          <queryText Type="QString">select text2 from test</queryText>
+          <connectionName Type="QString">test</connectionName>
+        </item>
+        <item ClassName="LimeReport::QueryDesc" Type="Object">
+          <objectName Type="QString"></objectName>
+          <queryName Type="QString">text3</queryName>
+          <queryText Type="QString">select text3 from test</queryText>
+          <connectionName Type="QString">test</connectionName>
+        </item>
+      </queries>
       <subqueries Type="Collection"/>
       <subproxies Type="Collection"/>
-      <variables Type="Collection">
-        <item ClassName="LimeReport::VarDesc" Type="Object">
-          <objectName Type="QString"></objectName>
-          <name Type="QString">var1</name>
-          <value Type="QString"></value>
-          <isMandatory Type="bool" Value="0"/>
-          <dataType Type="int" Value="1"/>
-        </item>
-        <item ClassName="LimeReport::VarDesc" Type="Object">
-          <objectName Type="QString"></objectName>
-          <name Type="QString">var2</name>
-          <value Type="QString"></value>
-          <isMandatory Type="bool" Value="0"/>
-          <dataType Type="int" Value="1"/>
-        </item>
-        <item ClassName="LimeReport::VarDesc" Type="Object">
-          <objectName Type="QString"></objectName>
-          <name Type="QString">var3</name>
-          <value Type="QString"></value>
-          <isMandatory Type="bool" Value="0"/>
-          <dataType Type="int" Value="1"/>
-        </item>
-      </variables>
+      <variables Type="Collection"/>
       <csvs Type="Collection"/>
     </datasourcesManager>
     <scriptContext ClassName="LimeReport::ScriptEngineContext" Type="Object">

@@ -178,138 +178,9 @@ void MainBox::choice_programm(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::create_database(void)
-{
-    bool ok;
-    QString database_name = "test_database.db";
-    QString table_name = "test_table";
-    ok = open_database("QSQLITE", database_name);
-    if(!ok)
-    {
-        emit error("DB not open!");
-        return false;
-    }
-
-    if(check_table_exist(table_name))
-    {
-        ok = drop_table(table_name);
-        if(!ok)
-        {
-            emit error("drop_table failed!");
-            return false;
-        }
-    }
-
-    ok = create_data_table(table_name);
-    if(!ok)
-    {
-        emit error("create_data_table failed!");
-        return false;
-    }
-
-    ok = add_data_to_table(table_name, "a00", "b00", "b00");
-    if(!ok)
-    {
-        emit error("add_data_to_table failed!");
-        return false;
-    }
-    ok = add_data_to_table(table_name, "a01", "b01", "b01");
-    if(!ok)
-    {
-        emit error("add_data_to_table failed!");
-        return false;
-    }
-    ok = add_data_to_table(table_name, "a02", "b02", "b02");
-    if(!ok)
-    {
-        emit error("add_data_to_table failed!");
-        return false;
-    }
-
-    close_database("test_database.db");
-    return true;
-}
-//--------------------------------------------------------------------------------
-bool MainBox::show_report(void)
-{
-#if 1
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("test_database.db");
-    if (!db.open())
-    {
-        emit error("обработка ошибки подключения");
-        return false;
-    }
-
-    QSqlQueryModel* model = new QSqlQueryModel(this);
-    model->setQuery("SELECT * FROM test_table");
-
-    report = new LimeReport::ReportEngine(this);
-    report->dataManager()->addModel("main", model, true);
-    report->loadFromFile(":/data/test_report.lrxml");
-    report->previewReport();
-#endif
-
-#if 0
-    QStringList simpleData;
-    simpleData << "Значение 1" << "Значение 2" << "Значение 3";
-
-    QStringListModel *stringListModel = new QStringListModel();
-    stringListModel->setStringList(simpleData);
-
-    report = new LimeReport::ReportEngine(this);
-    report->dataManager()->addModel("string_list", stringListModel, true);
-    report->loadFromFile(":/data/test_report.lrxml");
-    report->previewReport();
-#endif
-
-#if 0
-    QStringList simpleData;
-    simpleData << "1" << "2" << "3";
-
-    QStringListModel* stringListModel = new QStringListModel();
-    stringListModel->setStringList(simpleData);
-
-    report = new LimeReport::ReportEngine(this);
-    report->dataManager()->addModel("string_list", stringListModel,true);
-    report->dataManager()->setReportVariable("var1", "value 1");
-    report->dataManager()->setReportVariable("var2", "value 2");
-    report->dataManager()->setReportVariable("var3", "value 3");
-    report->loadFromFile(":/data/test_report.lrxml");
-    report->previewReport();
-#endif
-
-#if 0
-    MyFileDialog *dlg = new MyFileDialog("report");
-    dlg->setNameFilter("LRXML files (*.lrxml)");
-    dlg->setDefaultSuffix("lrxml");
-    dlg->setOption(MyFileDialog::DontUseNativeDialog, false);
-    dlg->setDirectory(".");
-    if(dlg->exec())
-    {
-        QStringList files = dlg->selectedFiles();
-        QString filename = files.at(0);
-        // QStringListModel* stringListModel = new QStringListModel();
-
-        report = new LimeReport::ReportEngine(this);
-        // report->dataManager()->addModel("string_list", stringListModel,true);
-        report->loadFromFile(filename);
-        // report->loadFromFile("demo_reports/simple_list.lrxml");
-        report->dataManager()->setReportVariable("TextItem5", QVariant::fromValue(1));
-        report->dataManager()->setReportVariable("TextItem6", QVariant("2"));
-        report->dataManager()->setReportVariable("TextItem7", QVariant("3"));
-        report->previewReport();
-        // report->printReport();
-    }
-    delete dlg;
-#endif
-
-    emit info("OK");
-    return true;
-}
-//--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
+#if 0
     CuteReport::ReportCore *reportCore = new CuteReport::ReportCore(0, 0, false);
     CuteReport::ReportPreview *preview = new CuteReport::ReportPreview();
 
@@ -331,6 +202,7 @@ bool MainBox::test(void)
     preview->connectReport(reportObject);
     preview->show();
     preview->run();
+#endif
 
     emit info("OK");
     return true;

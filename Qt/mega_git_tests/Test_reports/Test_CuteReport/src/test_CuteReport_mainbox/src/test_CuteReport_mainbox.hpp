@@ -27,7 +27,7 @@
 #include <QtPrintSupport/QPrinter>
 #include <QStringListModel>
 //--------------------------------------------------------------------------------
-#include <CuteReport>
+// #include <CuteReport>
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
 #include "mysplashscreen.hpp"
@@ -72,7 +72,6 @@ private:
     QPointer<QComboBox> cb_programm;
 
     void init(void);
-
     void create_test_bar(void);
     void create_programm_bar(void);
 

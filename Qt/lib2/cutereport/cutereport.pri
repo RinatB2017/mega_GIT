@@ -11,4 +11,4 @@ win32 {
     LIBS    += -L$$PWD/win_lib
 }
 
-LIBS    += -lCuteReport
+# LIBS    += -lCuteReport

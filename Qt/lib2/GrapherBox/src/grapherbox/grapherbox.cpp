@@ -596,6 +596,24 @@ void GrapherBox::set_axis_scale_y(qreal new_axis_Y_min, qreal new_axis_Y_max)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
+void GrapherBox::set_visible_legend(bool state)
+{
+    ui->qwtPlot->legend()->setVisible(state);
+    updateGraphics();
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::get_axis_scale_x(qreal *min, qreal *max)
+{
+    *min = axis_X_min;
+    *max = axis_X_max;
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::get_axis_scale_y(qreal *min, qreal *max)
+{
+    *min = axis_Y_min;
+    *max = axis_Y_max;
+}
+//--------------------------------------------------------------------------------
 void GrapherBox::popup(QPoint)
 {
     QMenu *popup_menu = new QMenu(this);
@@ -1721,6 +1739,21 @@ void GrapherBox::set_visible_btn_all_ON(bool state)
 void GrapherBox::set_visible_btn_all_OFF(bool state)
 {
     flag_visible_btn_all_OFF = state;
+    check_visible_buttons();
+}
+//--------------------------------------------------------------------------------
+void GrapherBox::set_visible_btn_ALL(bool state)
+{
+    flag_visible_btn_all_ON = state;
+    flag_visible_btn_all_OFF = state;
+    flag_visible_btn_Horizontal = state;
+    flag_visible_btn_Vertical = state;
+    flag_visible_btn_Options = state;
+    flag_visible_btn_Load = state;
+    flag_visible_btn_Save = state;
+    flag_visible_btn_Statistic = state;
+    flag_visible_btn_Clear = state;
+    flag_visible_btn_Autoscroll = state;
     check_visible_buttons();
 }
 //--------------------------------------------------------------------------------

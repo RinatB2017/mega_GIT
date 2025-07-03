@@ -111,6 +111,11 @@ public:
     void set_axis_scale_x(qreal new_axis_X_min, qreal new_axis_X_max);
     void set_axis_scale_y(qreal new_axis_Y_min, qreal new_axis_Y_max);
 
+    void get_axis_scale_x(qreal *min, qreal *max);
+    void get_axis_scale_y(qreal *min, qreal *max);
+
+    void set_visible_legend(bool state);
+
     void set_title(const QString &title);
     void set_title_axis_X(const QString &title);
     void set_title_axis_Y(const QString &title);
@@ -121,6 +126,8 @@ public:
 
     void set_visible_btn_all_ON(bool state);
     void set_visible_btn_all_OFF(bool state);
+
+    void set_visible_btn_ALL(bool state);
 
     void set_visible_btn_Horizontal(bool state = false);
     void set_visible_btn_Vertical(bool state = false);

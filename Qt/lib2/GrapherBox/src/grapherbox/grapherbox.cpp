@@ -1095,6 +1095,7 @@ bool GrapherBox::add_curve_array(int channel,
         return false;
     }
 
+    curves[channel].pos_x = 0;  // это важно
 #ifdef USE_SCALE_POINT_DATETIME
     foreach (QPointF point, a_points)
     {
@@ -1117,6 +1118,7 @@ bool GrapherBox::add_curve_array(int channel,
         curves[channel].pos_x++;
     }
 #endif
+
     set_horizontal_alignment(ui->btn_Horizontal->isChecked());
     set_vertical_alignment(ui->btn_Vertical->isChecked());
 

@@ -47,13 +47,14 @@ void MultiEdit::init(void)
     }
 }
 //--------------------------------------------------------------------------------
-QTextEdit *MultiEdit::add_page(void)
+CodeEditor *MultiEdit::add_page(void)
 {
     CodeEditor *te = new CodeEditor(this);
 
     te->setObjectName(QString("te_page_%1").arg(ui->tabWidget->count()));
     ui->tabWidget->addTab(te, QString("page%1").arg(ui->tabWidget->count()));
-    return reinterpret_cast<QTextEdit *>(te);
+    // return reinterpret_cast<QTextEdit *>(te);
+    return te;
 }
 //--------------------------------------------------------------------------------
 void MultiEdit::rem_page(void)

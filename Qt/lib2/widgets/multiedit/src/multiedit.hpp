@@ -22,6 +22,7 @@
 #define MULTIEDIT_HPP
 //--------------------------------------------------------------------------------
 #include <QTextDocument>
+#include "codeeditor.hpp"
 #include <QTextEdit>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
@@ -48,7 +49,7 @@ private:
 
     void init(void);
 
-    QTextEdit *add_page(void);
+    CodeEditor *add_page(void);
     void rem_page(void);
 
     void updateText(void);

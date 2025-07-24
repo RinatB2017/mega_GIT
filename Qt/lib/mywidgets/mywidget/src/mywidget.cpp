@@ -52,11 +52,20 @@ MyWidget::MyWidget(QWidget *parent) :
     sl_properties_of_widgets.append("plainText");
     sl_properties_of_widgets.append("currentIndex");
 
+    wbox = new Waiting_box(this);
+
     setAttribute(Qt::WA_DeleteOnClose);
 }
 //--------------------------------------------------------------------------------
 MyWidget::~MyWidget()
 {
+    if(wbox)
+    {
+        wbox->set_close_form(true);
+        wbox->close();
+        delete wbox;
+    }
+
 #ifdef QT_DEBUG
     QString on = objectName();
     if(on.isEmpty())
@@ -68,6 +77,16 @@ MyWidget::~MyWidget()
     //qDebug() << "~MyWidget()" << objectName();
 #endif
 #endif
+}
+//--------------------------------------------------------------------------------
+void MyWidget::lock_buttons(void)
+{
+    wbox->show();
+}
+//--------------------------------------------------------------------------------
+void MyWidget::unlock_buttons(void)
+{
+    wbox->hide();
 }
 //--------------------------------------------------------------------------------
 bool MyWidget::check_exists_signals(QWidget *parent)

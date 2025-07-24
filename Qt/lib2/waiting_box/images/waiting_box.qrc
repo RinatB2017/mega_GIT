@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>homunculus_loxodontus.png</file>
+    </qresource>
+</RCC>

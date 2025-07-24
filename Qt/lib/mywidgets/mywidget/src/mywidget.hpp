@@ -45,6 +45,7 @@
 #include "mymessages.hpp"
 #include "mysettings.hpp"
 #include "imywidget.hpp"
+#include "waiting_box.hpp"
 //--------------------------------------------------------------------------------
 //
 //  шаблон для хранения разнообразных данных
@@ -153,6 +154,9 @@ public:
     void set_all_buttons_no_save(void);
     void show_objectNames(void);
 
+    void lock_buttons(void);
+    void unlock_buttons(void);
+
 signals:
     void info(const QString &);
     void debug(const QString &);
@@ -190,6 +194,8 @@ private:
 
     QList<QWidget *> w_lists;
     QStringList sl_properties_of_widgets;
+
+    Waiting_box *wbox = nullptr;
 
 protected:
     void changeEvent(QEvent *event);

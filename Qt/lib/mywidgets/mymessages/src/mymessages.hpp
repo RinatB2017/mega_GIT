@@ -59,6 +59,10 @@ public:
                                    const QString &text,
                                    unsigned int width = MESSAGEBOX_WIDTH,
                                    bool need_sound = true);
+    static int messagebox_question_ok_cancel(const QString &title,
+                                             const QString &text,
+                                             unsigned int width = MESSAGEBOX_WIDTH,
+                                             bool need_sound = true);
 };
 //--------------------------------------------------------------------------------
 #endif

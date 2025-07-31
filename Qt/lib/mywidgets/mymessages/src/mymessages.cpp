@@ -104,6 +104,33 @@ int MyMessages::messagebox_question(const QString &title,
     return msgBox.exec();
 }
 //--------------------------------------------------------------------------------
+int MyMessages::messagebox_question_ok_cancel(const QString &title,
+                                              const QString &text,
+                                              unsigned int width,
+                                              bool need_sound)
+{
+    QMessageBox msgBox;
+    msgBox.setIcon(QMessageBox::Question);
+    msgBox.setWindowTitle(title);
+    msgBox.setText(text);
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    QSpacerItem* horizontalSpacer = new QSpacerItem(static_cast<int>(width), 0, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QGridLayout* layout = static_cast<QGridLayout *>(msgBox.layout());
+    layout->addItem(horizontalSpacer, layout->rowCount(), 0, 1, layout->columnCount());
+    if(need_sound)
+    {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
+        QSound::play(":/music/question.wav");
+#else
+        QSoundEffect *player = new QSoundEffect();
+        player->setSource(QUrl::fromLocalFile(":/music/question.wav"));
+        player->play();
+#endif
+    }
+    return msgBox.exec();
+}
+//--------------------------------------------------------------------------------
 int MyMessages::messagebox_critical(const QString &title,
                                     const QString &text,
                                     unsigned int width,

@@ -79,7 +79,6 @@ private:
     QPointer<QComboBox> cb_programm;
 
     LimeReport::ReportEngine *report = nullptr;
-    // LimeReport::ReportEngine *report;
 
     QSqlDatabase db;
     QString driver_name;

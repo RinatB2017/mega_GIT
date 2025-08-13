@@ -209,19 +209,25 @@ bool MainBox::create_database(void)
         return false;
     }
 
-    ok = add_data_to_table(table_name, "a00", "b00", "b00");
+    ok = add_data_to_table(table_name, "0 поле_0", "0 поле_1", "0 поле_2");
     if(!ok)
     {
         emit error("add_data_to_table failed!");
         return false;
     }
-    ok = add_data_to_table(table_name, "a01", "b01", "b01");
+    ok = add_data_to_table(table_name, "1 поле_0", "1 поле_1", "1 поле_2");
     if(!ok)
     {
         emit error("add_data_to_table failed!");
         return false;
     }
-    ok = add_data_to_table(table_name, "a02", "b02", "b02");
+    ok = add_data_to_table(table_name, "2 поле_0", "2 поле_1", "2 поле_2");
+    if(!ok)
+    {
+        emit error("add_data_to_table failed!");
+        return false;
+    }
+    ok = add_data_to_table(table_name, "3 поле_0", "3 поле_1", "3 поле_2");
     if(!ok)
     {
         emit error("add_data_to_table failed!");
@@ -235,6 +241,12 @@ bool MainBox::create_database(void)
 bool MainBox::show_report(void)
 {
 #if 1
+    report = new LimeReport::ReportEngine(this);
+    report->loadFromFile("test_report.lrxml");
+    report->previewReport();
+#endif
+
+#if 0
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName("test_database.db");
     if (!db.open())

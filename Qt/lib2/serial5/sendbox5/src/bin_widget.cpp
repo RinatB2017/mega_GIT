@@ -80,7 +80,7 @@ void Bin_widget::init_timer(void)
 //--------------------------------------------------------------------------------
 void Bin_widget::append(void)
 {
-    bool ok;
+    bool ok = false;
     QString text = QInputDialog::getText(this,
                                          "Добавление",
                                          "Команда:",
@@ -104,7 +104,7 @@ void Bin_widget::remove(void)
 //--------------------------------------------------------------------------------
 void Bin_widget::edit(void)
 {
-    bool ok;
+    bool ok = false;
     QString text = QInputDialog::getText(this,
                                          "Добавление",
                                          "Команда:",

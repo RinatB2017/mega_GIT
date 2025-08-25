@@ -93,7 +93,7 @@ void Text_widget::init_timer(void)
 //--------------------------------------------------------------------------------
 void Text_widget::append(void)
 {
-    bool ok;
+    bool ok = false;
     QString text = QInputDialog::getText(this,
                                          "Добавление",
                                          "Команда:",
@@ -117,7 +117,7 @@ void Text_widget::remove(void)
 //--------------------------------------------------------------------------------
 void Text_widget::edit(void)
 {
-    bool ok;
+    bool ok = false;
     QString text = QInputDialog::getText(this,
                                          "Добавление",
                                          "Команда:",

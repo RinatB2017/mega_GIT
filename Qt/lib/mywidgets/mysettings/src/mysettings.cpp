@@ -208,7 +208,7 @@ bool MySettings::load_mdi_subwindows(QWidget *widget)
             int y = 0;
             int w = 0;
             int h = 0;
-            bool ok;
+            bool ok = false;
             ok = load_int("pos_x", &x);
             if(!ok) return false;
             ok = load_int("pos_y", &y);

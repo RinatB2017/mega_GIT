@@ -488,7 +488,7 @@ bool SerialBox5_lite::add_menu(int index, const QString &title)
 //--------------------------------------------------------------------------------
 bool SerialBox5_lite::set_baudRate(int value)
 {
-    bool ok;
+    bool ok = false;
     ok = setBaudRate(value);
     if(ok)
     {

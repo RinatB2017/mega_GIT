@@ -119,6 +119,9 @@ unix:!macx {
     #OPTIMIZE    += -Wno-missing-braces -Wno-missing-field-initializers
     QMAKE_CXX   = ccache g++
 
+    # останавливать сборку после первой ошибки
+    QMAKE_CXXFLAGS += -Wfatal-errors
+
     #CONFIG += warn_off
     #QMAKE_CXXFLAGS += -Wall
     #QMAKE_CFLAGS_WARN_ON   -= -Wno-missing-braces -Wno-missing-field-initializers

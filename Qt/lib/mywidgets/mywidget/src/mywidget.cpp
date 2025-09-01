@@ -809,6 +809,10 @@ void MyWidget::show_objectNames(void)
         {
             widget->setToolTip(widget->objectName());
         }
+        if(widget->objectName().left(3) == "le_")
+        {
+            widget->setToolTip(widget->objectName());
+        }
         if(widget->objectName().left(3) == "cb_")
         {
             widget->setToolTip(widget->objectName());

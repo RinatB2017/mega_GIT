@@ -117,7 +117,7 @@ unix:!macx {
     QMAKE_OBJECTIVE_CFLAGS += $${OPTIMIZE}
 
     #OPTIMIZE    += -Wno-missing-braces -Wno-missing-field-initializers
-    QMAKE_CXX   = ccache g++
+    # QMAKE_CXX   = ccache g++
 
     # останавливать сборку после первой ошибки
     QMAKE_CXXFLAGS += -Wfatal-errors

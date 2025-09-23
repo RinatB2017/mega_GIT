@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/data">
-        <file>test_report.lrxml</file>
-    </qresource>
-</RCC>

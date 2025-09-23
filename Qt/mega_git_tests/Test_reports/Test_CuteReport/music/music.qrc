@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/music">
-        <file>question.wav</file>
-        <file>critical.wav</file>
-        <file>warning.wav</file>
-        <file>info.wav</file>
-    </qresource>
-</RCC>

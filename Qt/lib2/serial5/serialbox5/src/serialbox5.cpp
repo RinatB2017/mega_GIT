@@ -715,6 +715,23 @@ QSerialPort::FlowControl    SerialBox5::get_flowControl(void)
     return flowControl();
 }
 //--------------------------------------------------------------------------------
+void SerialBox5::set_portname(const QString &portname)
+{
+    for(int n=0; n<ui->cb_PortBox->count(); n++)
+    {
+        ui->cb_PortBox->setCurrentIndex(n);
+        if(ui->cb_PortBox->currentText() == portname)
+        {
+            return;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+QString SerialBox5::get_portname(void)
+{
+    return ui->cb_PortBox->currentText();
+}
+//--------------------------------------------------------------------------------
 bool SerialBox5::power_on(void)
 {
     if(isOpen())

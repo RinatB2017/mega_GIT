@@ -86,6 +86,23 @@ SerialBox5_lite::~SerialBox5_lite()
     delete ui;
 }
 //--------------------------------------------------------------------------------
+void SerialBox5_lite::set_portname(const QString &portname)
+{
+    for(int n=0; n<ui->cb_PortBox->count(); n++)
+    {
+        ui->cb_PortBox->setCurrentIndex(n);
+        if(ui->cb_PortBox->currentText() == portname)
+        {
+            return;
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+QString SerialBox5_lite::get_portname(void)
+{
+    return ui->cb_PortBox->currentText();
+}
+//--------------------------------------------------------------------------------
 void SerialBox5_lite::set_caption(const QString &value)
 {
     caption = value;

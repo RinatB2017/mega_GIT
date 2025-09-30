@@ -81,6 +81,9 @@ public:
     QSerialPort::StopBits       get_stopBits(void);
     QSerialPort::FlowControl    get_flowControl(void);
 
+    void set_portname(const QString &portname);
+    QString get_portname(void);
+
     bool power_on(void);
     bool power_off(void);
 

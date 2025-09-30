@@ -58,6 +58,9 @@ public:
     QSerialPort::StopBits       get_stopBits(void);
     QSerialPort::FlowControl    get_flowControl(void);
 
+    void set_portname(const QString &portname);
+    QString get_portname(void);
+
     void set_caption(const QString &value);
 
 private:

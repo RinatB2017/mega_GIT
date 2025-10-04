@@ -49,7 +49,8 @@ macx {
 
 win32 {
     BIN_PATH  = "C:/temp/bin"
-    TEMP_PATH = "W:/temp/obj"
+    TEMP_PATH = "X:/temp/obj"
+    # TEMP_PATH = "W:/temp/obj"
     # в XP нет смысла делать виртуальный диск в системе
 
     OBJECTS_DIR = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/obj

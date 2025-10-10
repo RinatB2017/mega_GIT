@@ -813,6 +813,10 @@ void MyWidget::show_objectNames(void)
         {
             widget->setToolTip(widget->objectName());
         }
+        if(widget->objectName().left(6) == "combo_")
+        {
+            widget->setToolTip(widget->objectName());
+        }
         if(widget->objectName().left(3) == "cb_")
         {
             widget->setToolTip(widget->objectName());

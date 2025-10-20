@@ -1,7 +1,7 @@
 /***************************************************************************
 **                                                                        **
 **  QXmlPutGet, classes for conveniently handling XML with Qt             **
-**  Copyright (C) 2012 Emanuel Eichhammer                                 **
+**  Copyright (C) 2012-2019 Emanuel Eichhammer                            **
 **                                                                        **
 **  This program is free software: you can redistribute it and/or modify  **
 **  it under the terms of the GNU General Public License as published by  **
@@ -19,51 +19,67 @@
 ****************************************************************************
 **           Author: Emanuel Eichhammer                                   **
 **  Website/Contact: http://www.WorksLikeClockwork.com/                   **
-**             Date: 05.03.12                                             **
+**             Date: 15.10.19                                             **
 ****************************************************************************/
 
 #include "qxmlputget.h"
 
 /*! \mainpage
   
-    \section introduction Introduction
+  \section introduction Introduction
 
-    %QXmlPutGet is a library for convenient and intuitive writing and reading of XML. This is a quick
-    and more technical introduction to %QXmlPutGet. For a practically oriented tutorial, visit
+  %QXmlPutGet is a library for convenient and intuitive writing and reading of XML. This is a quick
+  and more technical introduction to %QXmlPutGet. For a practically oriented tutorial, visit
+  
+  http://www.workslikeclockwork.com/index.php/components/xml-classes-for-qt/
+  
+  \section overview Overview
+  The library consists of two classes: writing is done by QXmlPut and reading by QXmlGet.
+  
+  Both classes work on their <i>current element</i>. In QXmlPut this is the element that was
+  previously created (e.g. with QXmlPut::putString), in QXmlGet this is the element which was
+  previously navigated to (e.g. with \ref QXmlGet::find). Due to this concept, writing and
+  especially reading may not always happen in one single call, but multiple calls, that base on the
+  internal state (the <i>current element</i>) of the QXmlPut/QXmlGet instance.
+  
+  In QXmlPut the navigation is tied to the creation of tags (\ref QXmlPut::putSingleTag, \ref
+  QXmlPut::putString, \ref QXmlPut::descend,...).
 
-    http://www.workslikeclockwork.com/index.php/components/xml-classes-for-qt/
+  In QXmlGet the navigation is done by finding tags by name (QXmlGet::find, QXmlGet::findNext), and
+  possibly descending into them (\ref QXmlGet::descend, \ref QXmlGet::descended).
+  
+  Both classes have functions that allow direct jumps inside the underlying QDomDocument (\ref
+  QXmlGet::goTo, \ref QXmlPut::goTo, \ref QXmlGet::element, \ref QXmlPut::element). Use these
+  functions only when necessary, as it's not the way normal linear navigation should be carried
+  out.
+  
+  In QXmlGet, once there is a current element available, it can be accessed e.g. with \ref
+  QXmlGet::getString, \ref QXmlGet::getInt, \ref QXmlGet::getAttributeString etc.
+  
+  In QXmlPut, the current element (which was created with \ref QXmlPut::putString("tagName",
+  "string content"), for example), can further be modified by setting attributes, e.g. with \ref
+  QXmlPut::setAttributeString.
 
-    \section overview Overview
-    The library consists of two classes: writing is done by QXmlPut and reading by QXmlGet.
+  \section widgetsaving Saving and Loading UI State
 
-    Both classes work on their <i>current element</i>. In QXmlPut this is the element that was
-    previously created (e.g. with QXmlPut::putString), in QXmlGet this is the element which was
-    previously navigated to (e.g. with \ref QXmlGet::find). Due to this concept, writing and
-    especially reading may not always happen in one single call, but multiple calls, that base on the
-    internal state (the <i>current element</i>) of the QXmlPut/QXmlGet instance.
-
-    In QXmlPut the navigation is tied to the creation of tags (\ref QXmlPut::putSingleTag, \ref
-    QXmlPut::putString, \ref QXmlPut::descend,...).
-
-    In QXmlGet the navigation is done by finding tags by name (QXmlGet::find, QXmlGet::findNext), and
-    possibly descending into them (\ref QXmlGet::descend, \ref QXmlGet::descended).
-
-    Both classes have functions that allow direct jumps inside the underlying QDomDocument (\ref
-    QXmlGet::goTo, \ref QXmlPut::goTo, \ref QXmlGet::element, \ref QXmlPut::element). Use these
-    functions only when necessary, as it's not the way normal linear navigation should be carried
-    out.
-
-    In QXmlGet, once there is a current element available, it can be accessed e.g. with \ref
-    QXmlGet::getString, \ref QXmlGet::getInt, \ref QXmlGet::getAttributeString etc.
-
-    In QXmlPut, the current element (which was created with \ref QXmlPut::putString("tagName",
-    "string content"), for example), can further be modified by setting attributes, e.g. with \ref
-    QXmlPut::setAttributeString.
+  The %QXmlPutGet library offers very convenient facilities to save and load the state of
+  QWidget-based UIs. Methods such as for example QXmlPut::saveLineEdit or QXmlPut::saveAbstractSlider
+  (and the corresponding QXmlGet::loadLineEdit / QXmlGet::loadAbstractSlider) methods allow saving the
+  states of such widgets. Even more convenient is the method-pair QXmlPut::saveWidget and
+  QXmlGet::loadWidget, which automatically detects the type and saves/loads the widget state. If you
+  wish to save/load all child widgets in a parent widget, consider using QXmlPut::saveWidgetsRecursive
+  and QXmlGet::loadWidgetsRecursive, which also allow specifying a name filter prefix/suffix, and an
+  exclusion list.
 */
 
 // ================================================================================
-// =================== QXMLPut
+// =================== QXmlPut
 // ================================================================================
+
+/*! \class QXmlPut
+  \brief Is used to write to the XML document and save it
+  
+*/
 
 /* start documentation of inline functions */
 
@@ -91,7 +107,7 @@ QXmlPut::QXmlPut(const QString &rootTag) :
     mStandalone(false)
 {
     if (rootTag.isEmpty())
-        qDebug() << FUNCNAME << "root tag can't be empty";
+        qDebug() << Q_FUNC_INFO << "root tag can't be empty";
     mDocument.appendChild(mDocument.createProcessingInstruction(mXmlDeclaration, QString("version=\"%1\" encoding=\"%2\"").arg(mXmlVersion).arg(mEncoding)));
     mDocument.appendChild(mDocument.createElement(rootTag));
     mCurrentParent = mDocument.documentElement();
@@ -100,22 +116,22 @@ QXmlPut::QXmlPut(const QString &rootTag) :
 }
 
 /*!
-    Creates a new XML document with a root tag named \a rootTag. And the specified XML parameters.
-
-    \b example:
-
-    The call
-    \code
-    QXmlPut xmlPut("myRoot", "1.0", "UTF-8", true, "myDocType", "myPublicId", "mySystemId");
-    \endcode
-    creates the following XML document:
-    \code
-    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-    <!DOCTYPE myDocType PUBLIC 'myPublicId' 'mySystemId'>
-    <myRoot>
-    (...)
-    </myRoot>
-    \endcode
+  Creates a new XML document with a root tag named \a rootTag. And the specified XML parameters.
+  
+  \b example:
+  
+  The call
+  \code
+  QXmlPut xmlPut("myRoot", "1.0", "UTF-8", true, "myDocType", "myPublicId", "mySystemId");
+  \endcode
+  creates the following XML document:
+  \code
+  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  <!DOCTYPE myDocType PUBLIC 'myPublicId' 'mySystemId'>
+  <myRoot>
+   (...)
+  </myRoot>
+  \endcode
 */
 QXmlPut::QXmlPut(const QString &rootTag, const QString &xmlVersion, const QString &encoding,  bool standalone, const QString &docType, const QString &publicId, const QString &systemId):
     mDocument(),
@@ -125,11 +141,11 @@ QXmlPut::QXmlPut(const QString &rootTag, const QString &xmlVersion, const QStrin
     mStandalone(standalone)
 {
     if (rootTag.isEmpty())
-        qDebug() << FUNCNAME << "rootTag can't be empty";
+        qDebug() << Q_FUNC_INFO << "rootTag can't be empty";
     if (mXmlVersion.isEmpty())
-        qDebug() << FUNCNAME << "xmlVersion can't be empty";
+        qDebug() << Q_FUNC_INFO << "xmlVersion can't be empty";
     if (mEncoding.isEmpty())
-        qDebug() << FUNCNAME << "encoding can't be empty";
+        qDebug() << Q_FUNC_INFO << "encoding can't be empty";
 
     if (mStandalone)
         mDocument.appendChild(mDocument.createProcessingInstruction(mXmlDeclaration, QString("version=\"%1\" encoding=\"%2\" standalone=\"yes\"").arg(mXmlVersion).arg(mEncoding)));
@@ -156,10 +172,6 @@ QXmlPut::QXmlPut(const QXmlGet &xmlGet) :
     mXmlVersion(xmlGet.mXmlVersion),
     mEncoding(xmlGet.mEncoding),
     mStandalone(xmlGet.mStandalone)
-{
-}
-
-QXmlPut::~QXmlPut()
 {
 }
 
@@ -243,22 +255,22 @@ void QXmlPut::putString(const QString &tagName, const QString &value, bool asCDA
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the string list \a values. If the strings
-    contain many special characters like "<", ">" and linebreaks, you should consider setting \a
-    asCDATA to true, so the strings will be embedded in a CDATA-section which avoids escaping most of
-    the special characters and thus makes it easier for users to read/modify the resulting XML
-    document in a text editor.
-
-    <b>example output:</b>
-    \code
-    <tagName>
+  Inserts a tag with name \a tagName which contains the string list \a values. If the strings
+  contain many special characters like "<", ">" and linebreaks, you should consider setting \a
+  asCDATA to true, so the strings will be embedded in a CDATA-section which avoids escaping most of
+  the special characters and thus makes it easier for users to read/modify the resulting XML
+  document in a text editor.
+  
+  <b>example output:</b>
+  \code
+  <tagName>
     <li>first line</li>
     <li>second line</li>
     <li>third line</li>
-    </tagName>
-    \endcode
-
-    \see putString
+  </tagName>
+  \endcode
+  
+  \see putString
 */
 void QXmlPut::putStringList(const QString &tagName, const QStringList &values, bool asCDATA)
 {
@@ -269,14 +281,14 @@ void QXmlPut::putStringList(const QString &tagName, const QStringList &values, b
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the integer \a value.
-
-    <b>example output:</b>
-    \code
-    <tagName>42</tagName>
-    \endcode
-
-    \see putDouble, putIntVector
+  Inserts a tag with name \a tagName which contains the integer \a value.
+  
+  <b>example output:</b>
+  \code
+  <tagName>42</tagName>
+  \endcode
+  
+  \see putDouble, putIntVector
 */
 void QXmlPut::putInt(const QString &tagName, int value)
 {
@@ -287,14 +299,14 @@ void QXmlPut::putInt(const QString &tagName, int value)
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the integer vector \a value.
-
-    <b>example output:</b>
-    \code
-    <tagName>0;1;1;2;3;5;8;13</tagName>
-    \endcode
-
-    \see putInt
+  Inserts a tag with name \a tagName which contains the integer vector \a value.
+  
+  <b>example output:</b>
+  \code
+  <tagName>0;1;1;2;3;5;8;13</tagName>
+  \endcode
+  
+  \see putInt
 */
 void QXmlPut::putIntVector(const QString &tagName, const QVector<int> &values)
 {
@@ -305,53 +317,53 @@ void QXmlPut::putIntVector(const QString &tagName, const QVector<int> &values)
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the double \a value.
-
-    <b>example output:</b>
-    \code
-    <tagName>3.1415</tagName>
-    \endcode
-
-    \see putInt, putDoubleVector
+  Inserts a tag with name \a tagName which contains the double \a value.
+  
+  <b>example output:</b>
+  \code
+  <tagName>3.1415</tagName>
+  \endcode
+  
+  \see putInt, putDoubleVector
 */
-void QXmlPut::putDouble(const QString &tagName, double value)
+void QXmlPut::putDouble(const QString &tagName, double value, char format, int precision)
 {
     QDomElement el = mDocument.createElement(tagName);
     mCurrentParent.appendChild(el);
     mCurrentElement = el;
-    el.appendChild(mDocument.createTextNode(QString::number(value)));
+    el.appendChild(mDocument.createTextNode(QString::number(value, format, precision)));
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the double vector \a value.
-
-    <b>example output:</b>
-    \code
-    <tagName>0.1;0.24;0.52;-0.22</tagName>
-    \endcode
-
-    \see putDouble
+  Inserts a tag with name \a tagName which contains the double vector \a value.
+  
+  <b>example output:</b>
+  \code
+  <tagName>0.1;0.24;0.52;-0.22</tagName>
+  \endcode
+  
+  \see putDouble
 */
-void QXmlPut::putDoubleVector(const QString &tagName, const QVector<double> &values)
+void QXmlPut::putDoubleVector(const QString &tagName, const QVector<double> &values, char format, int precision)
 {
     QDomElement el = mDocument.createElement(tagName);
     mCurrentParent.appendChild(el);
     mCurrentElement = el;
-    el.appendChild(mDocument.createTextNode(doubleVectorToStr(values)));
+    el.appendChild(mDocument.createTextNode(doubleVectorToStr(values, format, precision)));
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the bool \a value.
-
-    Depending on the specified \a format (see \ref QXmlPutGet::BoolFormat), the boolean value is
-    represented with different strings.
-
-    <b>example output:</b>
-    \code
-    <tagName>yes</tagName>
-    \endcode
-
-    \see putBoolVector
+  Inserts a tag with name \a tagName which contains the bool \a value.
+  
+  Depending on the specified \a format (see \ref QXmlPutGet::BoolFormat), the boolean value is
+  represented with different strings.
+  
+  <b>example output:</b>
+  \code
+  <tagName>yes</tagName>
+  \endcode
+  
+  \see putBoolVector
 */
 void QXmlPut::putBool(const QString &tagName, bool value, QXmlPutGet::BoolFormat format)
 {
@@ -362,17 +374,17 @@ void QXmlPut::putBool(const QString &tagName, bool value, QXmlPutGet::BoolFormat
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the bool vector \a value.
-
-    Depending on the specified \a format (see \ref QXmlPutGet::BoolFormat), the boolean values are
-    represented with different strings.
-
-    <b>example output:</b>
-    \code
-    <tagName>yes;no;no;yes;no;yes</tagName>
-    \endcode
-
-    \see putBool
+  Inserts a tag with name \a tagName which contains the bool vector \a value.
+  
+  Depending on the specified \a format (see \ref QXmlPutGet::BoolFormat), the boolean values are
+  represented with different strings.
+  
+  <b>example output:</b>
+  \code
+  <tagName>yes;no;no;yes;no;yes</tagName>
+  \endcode
+  
+  \see putBool
 */
 void QXmlPut::putBoolVector(const QString &tagName, const QVector<bool> &values, QXmlPutGet::BoolFormat format)
 {
@@ -384,15 +396,15 @@ void QXmlPut::putBoolVector(const QString &tagName, const QVector<bool> &values,
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the QColor \a value.
-
-    If the color contains no transparency component (i.e. alpha is 255), the color is saved in the
-    format "#rrggbb". If it contains alpha, it is saved as "#rrggbbaa".
-
-    <b>example output:</b>
-    \code
-    <tagName>#2280ff</tagName>
-    \endcode
+  Inserts a tag with name \a tagName which contains the QColor \a value.
+  
+  If the color contains no transparency component (i.e. alpha is 255), the color is saved in the
+  format "#rrggbb". If it contains alpha, it is saved as "#rrggbbaa".
+  
+  <b>example output:</b>
+  \code
+  <tagName>#2280ff</tagName>
+  \endcode
 */
 void QXmlPut::putColor(const QString &tagName, const QColor &value)
 {
@@ -403,14 +415,14 @@ void QXmlPut::putColor(const QString &tagName, const QColor &value)
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the QSize \a value.
+  Inserts a tag with name \a tagName which contains the QSize \a value.
 
-    <b>example output:</b>
-    \code
-    <tagName width="640" height="480">
-    \endcode
-
-    \see putSizeF
+  <b>example output:</b>
+  \code
+  <tagName width="640" height="480">
+  \endcode
+  
+  \see putSizeF
 */
 void QXmlPut::putSize(const QString &tagName, const QSize &value)
 {
@@ -420,14 +432,14 @@ void QXmlPut::putSize(const QString &tagName, const QSize &value)
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the QSizeF \a value.
+  Inserts a tag with name \a tagName which contains the QSizeF \a value.
 
-    <b>example output:</b>
-    \code
-    <tagName width="122.4" height="10.95">
-    \endcode
-
-    \see putSize
+  <b>example output:</b>
+  \code
+  <tagName width="122.4" height="10.95">
+  \endcode
+  
+  \see putSize
 */
 void QXmlPut::putSizeF(const QString &tagName, const QSizeF &value)
 {
@@ -437,14 +449,14 @@ void QXmlPut::putSizeF(const QString &tagName, const QSizeF &value)
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the QPoint \a value.
+  Inserts a tag with name \a tagName which contains the QPoint \a value.
 
-    <b>example output:</b>
-    \code
-    <tagName x="640" y="480">
-    \endcode
-
-    \see putPointF
+  <b>example output:</b>
+  \code
+  <tagName x="640" y="480">
+  \endcode
+  
+  \see putPointF
 */
 void QXmlPut::putPoint(const QString &tagName, const QPoint &value)
 {
@@ -454,14 +466,14 @@ void QXmlPut::putPoint(const QString &tagName, const QPoint &value)
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the QPointF \a value.
+  Inserts a tag with name \a tagName which contains the QPointF \a value.
 
-    <b>example output:</b>
-    \code
-    <tagName x="122.4" y="10.95">
-    \endcode
-
-    \see putPoint
+  <b>example output:</b>
+  \code
+  <tagName x="122.4" y="10.95">
+  \endcode
+  
+  \see putPoint
 */
 void QXmlPut::putPointF(const QString &tagName, const QPointF &value)
 {
@@ -471,14 +483,14 @@ void QXmlPut::putPointF(const QString &tagName, const QPointF &value)
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the QRect \a value.
+  Inserts a tag with name \a tagName which contains the QRect \a value.
 
-    <b>example output:</b>
-    \code
-    <tagName left="10" top="15" width="640" height="480">
-    \endcode
-
-    \see putRectF
+  <b>example output:</b>
+  \code
+  <tagName left="10" top="15" width="640" height="480">
+  \endcode
+  
+  \see putRectF
 */
 void QXmlPut::putRect(const QString &tagName, const QRect &value)
 {
@@ -490,14 +502,14 @@ void QXmlPut::putRect(const QString &tagName, const QRect &value)
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the QRectF \a value.
+  Inserts a tag with name \a tagName which contains the QRectF \a value.
 
-    <b>example output:</b>
-    \code
-    <tagName left="10.5" top="14.99" width="122.4" height="10.95">
-    \endcode
-
-    \see putRect
+  <b>example output:</b>
+  \code
+  <tagName left="10.5" top="14.99" width="122.4" height="10.95">
+  \endcode
+  
+  \see putRect
 */
 void QXmlPut::putRectF(const QString &tagName, const QRectF &value)
 {
@@ -509,14 +521,14 @@ void QXmlPut::putRectF(const QString &tagName, const QRectF &value)
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the QDate \a value.
+  Inserts a tag with name \a tagName which contains the QDate \a value.
 
-    <b>example output:</b>
-    \code
-    <tagName>2012-04-03</tagName>
-    \endcode
-
-    \see putTime, putDateTime
+  <b>example output:</b>
+  \code
+  <tagName>2012-04-03</tagName>
+  \endcode
+  
+  \see putTime, putDateTime
 */
 void QXmlPut::putDate(const QString &tagName, const QDate &value)
 {
@@ -527,14 +539,14 @@ void QXmlPut::putDate(const QString &tagName, const QDate &value)
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the QTime \a value.
+  Inserts a tag with name \a tagName which contains the QTime \a value.
 
-    <b>example output:</b>
-    \code
-    <tagName>09:50:27</tagName>
-    \endcode
-
-    \see putDate, putDateTime
+  <b>example output:</b>
+  \code
+  <tagName>09:50:27</tagName>
+  \endcode
+  
+  \see putDate, putDateTime
 */
 void QXmlPut::putTime(const QString &tagName, const QTime &value)
 {
@@ -545,14 +557,14 @@ void QXmlPut::putTime(const QString &tagName, const QTime &value)
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the QDateTime \a value.
+  Inserts a tag with name \a tagName which contains the QDateTime \a value.
 
-    <b>example output:</b>
-    \code
-    <tagName>2012-04-03T09:50:27</tagName>
-    \endcode
-
-    \see putDate, putTime
+  <b>example output:</b>
+  \code
+  <tagName>2012-04-03T09:50:27</tagName>
+  \endcode
+  
+  \see putDate, putTime
 */
 void QXmlPut::putDateTime(const QString &tagName, const QDateTime &value)
 {
@@ -563,23 +575,23 @@ void QXmlPut::putDateTime(const QString &tagName, const QDateTime &value)
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the QByteArray \a value.
+  Inserts a tag with name \a tagName which contains the QByteArray \a value.
+  
+  The data of the QByteArray is saved in base-64. By setting \a compression to a number between 0
+  and 9, the data may be saved uncompressed to highly compressed.
+  To improve handling with text editors, every \a blockWidth characters, a linebreak is inserted
+  into the XML output.
 
-    The data of the QByteArray is saved in base-64. By setting \a compression to a number between 0
-    and 9, the data may be saved uncompressed to highly compressed.
-    To improve handling with text editors, every \a blockWidth characters, a linebreak is inserted
-    into the XML output.
-
-    <b>example output:</b>
-    \code
-    <tagName compression="9"><![CDATA[AAAPmnjatVdrUFNnGoa6u7h1KZ261k4i4
-    oxbnN2t0B0I4SLEdqhgUXBXuVTCZU2rLi
-    cBjykBBUldRi2yR7brKlVAVFQkgYOEnnB
-    /tk/O+bHmeR87/fN9z==
-    ]]></tagName>
-    \endcode
-
-    \see putImage
+  <b>example output:</b>
+  \code
+  <tagName compression="9"><![CDATA[AAAPmnjatVdrUFNnGoa6u7h1KZ261k4i4
+oxbnN2t0B0I4SLEdqhgUXBXuVTCZU2rLi
+cBjykBBUldRi2yR7brKlVAVFQkgYOEnnB
+/tk/O+bHmeR87/fN9z==
+]]></tagName>
+  \endcode
+  
+  \see putImage
 */
 void QXmlPut::putByteArray(const QString &tagName, const QByteArray &value, int blockWidth, int compression)
 {
@@ -597,52 +609,48 @@ void QXmlPut::putByteArray(const QString &tagName, const QByteArray &value, int 
 
     QString newLine = "\n";
     QByteArray sepData;
-    sepData.reserve(data.size() + static_cast<int>(data.size()/static_cast<double>(blockWidth+0.5))*newLine.size());
+    sepData.reserve(data.size() + int(data.size()/double(blockWidth)+0.5)*newLine.size());
     int p = 0;
     while (p < data.size())
     {
         int nextBlock = qMin(blockWidth, data.size()-p);
         sepData.append(data.data()+p, nextBlock);
-        sepData.append(newLine.toLatin1());
+        sepData.append(newLine.toLocal8Bit());
         p += nextBlock;
     }
     el.appendChild(mDocument.createCDATASection(QString(sepData)));
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the QImage \a value.
+  Inserts a tag with name \a tagName which contains the QImage \a value.
+  
+  The data of the QImage is saved in base-64. Compression is determined depending on the \a format,
+  "JPEG" and "JPG" are saved uncompressed (because they are compressed already), all others are
+  compressed. To improve handling with text editors, every \a blockWidth characters, a linebreak is
+  inserted into the XML output.
+  
+  Available formats typically are: BMP, GIF, JPG, JPEG, PNG, PBM, PGM, PPM, TIFF, XBM, XPM.
+  (see QImageReader::supportedImageFormats())
 
-    The data of the QImage is saved in base-64. Compression is determined depending on the \a format,
-    "JPEG" and "JPG" are saved uncompressed (because they are compressed already), all others are
-    compressed. To improve handling with text editors, every \a blockWidth characters, a linebreak is
-    inserted into the XML output.
-
-    Available formats typically are: BMP, GIF, JPG, JPEG, PNG, PBM, PGM, PPM, TIFF, XBM, XPM.
-    (see QImageReader::supportedImageFormats())
-
-    <b>example output:</b>
-    \code
-    <tagName format="PNG" compression="9"><![CDATA[AAAPmnjatVdrUFNnGoa6u7h1KZ261k4i4
-    oxbnN2t0B0I4SLEdqhgUXBXuVTCZU2rLi
-    cBjykBBUldRi2yR7brKlVAVFQkgYOEnnB
-    /tk/O+bHmeR87/fN9z==
-    ]]></tagName>
-    \endcode
-
-    \see putImage
+  <b>example output:</b>
+  \code
+  <tagName format="PNG" compression="9"><![CDATA[AAAPmnjatVdrUFNnGoa6u7h1KZ261k4i4
+oxbnN2t0B0I4SLEdqhgUXBXuVTCZU2rLi
+cBjykBBUldRi2yR7brKlVAVFQkgYOEnnB
+/tk/O+bHmeR87/fN9z==
+]]></tagName>
+  \endcode
+  
+  \see putImage
 */
 void QXmlPut::putImage(const QString &tagName, const QImage &value, QString format, int blockWidth)
 {
     QByteArray data;
     QBuffer buff(&data);
     buff.open(QBuffer::ReadWrite);
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    if (!value.save(&buff, format.toAscii().constData()))
-#else
-    if (!value.save(&buff, format.toLocal8Bit().constData()))
-#endif
+    if (!value.save(&buff, format.toLatin1().constData()))
     {
-        qDebug() << FUNCNAME << "Couldn't write image to buffer with format" << format;
+        qDebug() << Q_FUNC_INFO << "Couldn't write image to buffer with format" << format;
         return;
     }
     buff.close();
@@ -654,14 +662,14 @@ void QXmlPut::putImage(const QString &tagName, const QImage &value, QString form
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the QPen \a value.
+  Inserts a tag with name \a tagName which contains the QPen \a value.
 
-    <b>example output:</b>
-    \code
-    <tagName width="2" joinstyle="0" capstyle="32" miterlimit="2" color="#5018ff" penstyle="3"/>
-    \endcode
-
-    \see putBrush, putFont
+  <b>example output:</b>
+  \code
+  <tagName width="2" joinstyle="0" capstyle="32" miterlimit="2" color="#5018ff" penstyle="3"/>
+  \endcode
+  
+  \see putBrush, putFont
 */
 void QXmlPut::putPen(const QString &tagName, const QPen &value)
 {
@@ -687,14 +695,14 @@ void QXmlPut::putPen(const QString &tagName, const QPen &value)
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the QBrush \a value.
+  Inserts a tag with name \a tagName which contains the QBrush \a value.
 
-    <b>example output:</b>
-    \code
-    <tagName brushstyle="14" color="#5018ff"/>
-    \endcode
-
-    \see putPen, putFont
+  <b>example output:</b>
+  \code
+  <tagName brushstyle="14" color="#5018ff"/>
+  \endcode
+  
+  \see putPen, putFont
 */
 void QXmlPut::putBrush(const QString &tagName, const QBrush &value)
 {
@@ -704,14 +712,14 @@ void QXmlPut::putBrush(const QString &tagName, const QBrush &value)
 }
 
 /*!
-    Inserts a tag with name \a tagName which contains the QFont \a value.
+  Inserts a tag with name \a tagName which contains the QFont \a value.
 
-    <b>example output:</b>
-    \code
-    <tagName fontdescription="Monospace,24,-1,5,75,1,0,0,0,0"/>
-    \endcode
-
-    \see putPen, putBrush
+  <b>example output:</b>
+  \code
+  <tagName fontdescription="Monospace,24,-1,5,75,1,0,0,0,0"/>
+  \endcode
+  
+  \see putPen, putBrush
 */
 void QXmlPut::putFont(const QString &tagName, const QFont &value)
 {
@@ -719,28 +727,385 @@ void QXmlPut::putFont(const QString &tagName, const QFont &value)
     setAttributeString("fontdescription", value.toString());
 }
 
+#ifndef QXMLPUTGET_NO_WIDGETS
+
 /*!
-    Returns a QXmlPut instance on the same Document and at the same position as this instance, but
-    which is restricted to this hierarchy level (and the levels below). This means, the returned
-    QXmlPut instance isn't allowed to \ref rise above the current hierarchy level.
+  Saves the state of the passed widget \a w inside the current parent xml tag.
+  The xml data can later be loaded via the \ref QXmlGet::loadWidget method, or any of
+  the specialized widget loading methods such as \ref QXmlGet::loadLineEdit or
+  \ref QXmlGet::loadSpinBox, etc.
 
-    This is useful if you wish that subroutines can handle their own XML work without possibly
-    interfering with the rest. By passing a restricted instance, it's guaranteed the subroutines
-    don't accidentally write/read outside their designated XML element.
+  If \a warnWhenUnsupported is set to true, a qDebug() output is issued when \a
+  w is of an unsupported widget type.
+  
+  Returns true if the widget was successfully saved to xml. Therefore it
+  returns false if the widget is either unsupported or was not saved for other
+  reasons (e.g. object name is empty).
+  
+  Supported widget types are: QLineEdit, QAbstractButton (and subclasses such
+  as QCheckBox and QRadioButton), QTextEdit, QPlainTextEdit, QSpinBox,
+  QDoubleSpinBox, QComboBox, QAbstractSlider (and subclasses such as QScrollBar
+  and QSlider), QDateTimeEdit (and subclasses such as QTimeEdit and QDateEdit),
+  QFontComboBox, QGroupBox.
+  
+  \note For QComboBox, only the selected item is saved, and possibly the text
+  value if the combo box is editable. If you wish to save all of the items
+  themselves, see \ref QXmlGet::loadComboBox.
+  
+  \see QXmlGet::loadWidget, saveWidgetsRecursive
+*/
+bool QXmlPut::saveWidget(const QWidget *value, bool warnWhenUnsupported)
+{
+    if (const QLineEdit *v = qobject_cast<const QLineEdit*>(value))
+        return saveLineEdit(v);
+    else if (const QAbstractButton *v = qobject_cast<const QAbstractButton*>(value))
+        return saveAbstractButton(v);
+    else if (const QTextEdit *v = qobject_cast<const QTextEdit*>(value))
+        return saveTextEdit(v);
+    else if (const QPlainTextEdit *v = qobject_cast<const QPlainTextEdit*>(value))
+        return savePlainTextEdit(v);
+    else if (const QSpinBox *v = qobject_cast<const QSpinBox*>(value))
+        return saveSpinBox(v);
+    else if (const QDoubleSpinBox *v = qobject_cast<const QDoubleSpinBox*>(value))
+        return saveDoubleSpinBox(v);
+    else if (const QComboBox *v = qobject_cast<const QComboBox*>(value))
+        return saveComboBox(v, false);
+    else if (const QAbstractSlider *v = qobject_cast<const QAbstractSlider*>(value))
+        return saveAbstractSlider(v);
+    else if (const QDateTimeEdit *v = qobject_cast<const QDateTimeEdit*>(value))
+        return saveDateTimeEdit(v);
+    else if (const QFontComboBox *v = qobject_cast<const QFontComboBox*>(value))
+        return saveFontComboBox(v);
+    else if (const QGroupBox *v = qobject_cast<const QGroupBox*>(value))
+        return saveGroupBox(v);
+    else if (warnWhenUnsupported)
+        qDebug() << Q_FUNC_INFO << "The widget class" << value->metaObject()->className() << "(" << value->objectName() << ") is not supported by QXmlPutGet";
+    return false;
+}
 
-    If only the subroutine needs to write to/read from a specific element, consider using \ref
-    descended.
-
-    \b example:
-    \code
-    xmlPut.descend("toptag");
-    xmlPut.putString("exampleTag", "test");
-    writeOtherContent(xmlPut.restricted()); // A subroutine that writes to the <toptag> level
-    xmlPut.rise();
+/*!
+  Saves the widget passed as \a parent to xml, as well as all direct and
+  indirect child widgets that are supported by QXmlPutGet.
+  
+  If \a prefix and/or \a suffix are provided, only widgets that have the
+  according prefix and/or suffix in their object name are considered. This is
+  useful for marking a specific subset of widgets for xml storage already
+  during UI design. Further, any widgets specified in \a exclude are not
+  considered.
+  
+  Returns the number of widgets that were saved to xml.
+  
+  \see QXmlGet::loadWidgetsRecursive
+*/
+int QXmlPut::saveWidgetsRecursive(const QWidget *parent, const QString &prefix, const QString &suffix, const QSet<const QWidget*> &exclude)
+{
+    int count = 0;
+    if (maybeSaveWidget(parent, prefix, suffix, exclude))
+        ++count;
+    QList<QWidget*> widgets = parent->findChildren<QWidget*>();
+    for (int i=0; i<widgets.size(); ++i)
+    {
+        if (maybeSaveWidget(widgets.at(i), prefix, suffix, exclude))
+            ++count;
     }
-    \endcode
+    return count;
+}
 
-    \see descended
+/*!
+  Saves the state of the passed QLineEdit \a w under a dedicated tag inside the
+  current parent xml tag. The xml data can later be retrieved via
+  the corresponding \ref QXmlGet::loadLineEdit method.
+  
+  The line edit's text value is saved to the xml entry. Returns false if the
+  widget couldn't be saved (because it has an empty object name).
+
+  Consider using \ref saveWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlGet::loadLineEdit, saveWidget
+*/
+bool QXmlPut::saveLineEdit(const QLineEdit *value)
+{
+    if (value->objectName().isEmpty()) return false;
+    QString tagName = QString(value->metaObject()->className()).toLower().mid(1);
+    putString(tagName, value->text());
+    setAttributeString("id", value->objectName());
+    return true;
+}
+
+/*!
+  Saves the state of the passed QAbstractButton \a w under a dedicated tag
+  inside the current parent xml tag. The xml data can later be retrieved via
+  the corresponding \ref QXmlGet::loadAbstractButton method.
+  
+  The button's checked state is saved to the xml entry. Returns false if the
+  widget couldn't be saved (because it has an empty object name).
+
+  Consider using \ref saveWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlGet::loadAbstractButton, saveWidget
+*/
+bool QXmlPut::saveAbstractButton(const QAbstractButton *value)
+{
+    if (value->objectName().isEmpty()) return false;
+    QString tagName = QString(value->metaObject()->className()).toLower().mid(1);
+    putSingleTag(tagName);
+    setAttributeString("id", value->objectName());
+    setAttributeBool("checked", value->isChecked());
+    return true;
+}
+
+/*!
+  Saves the state of the passed QTextEdit \a w under a dedicated tag inside the
+  current parent xml tag. The xml data can later be retrieved via the
+  corresponding \ref QXmlGet::loadTextEdit method.
+  
+  The text edit's content is saved to the xml entry. Returns false if the
+  widget couldn't be saved (because it has an empty object name).
+
+  Consider using \ref saveWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlGet::loadTextEdit, saveWidget
+*/
+bool QXmlPut::saveTextEdit(const QTextEdit *value)
+{
+    if (value->objectName().isEmpty()) return false;
+    QString tagName = QString(value->metaObject()->className()).toLower().mid(1);
+    putString(tagName, value->toPlainText(), true);
+    setAttributeString("id", value->objectName());
+    return true;
+}
+
+/*!
+  Saves the state of the passed QPlainTextEdit \a w under a dedicated tag inside the
+  current parent xml tag. The xml data can later be retrieved via the
+  corresponding \ref QXmlGet::loadPlainTextEdit method.
+  
+  The text edit's content is saved to the xml entry. Returns false if the
+  widget couldn't be saved (because it has an empty object name).
+
+  Consider using \ref saveWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlGet::loadPlainTextEdit, saveWidget
+*/
+bool QXmlPut::savePlainTextEdit(const QPlainTextEdit *value)
+{
+    if (value->objectName().isEmpty()) return false;
+    QString tagName = QString(value->metaObject()->className()).toLower().mid(1);
+    putString(tagName, value->toPlainText(), true);
+    setAttributeString("id", value->objectName());
+    return true;
+}
+
+/*!
+  Saves the state of the passed QSpinBox \a w under a dedicated tag inside the
+  current parent xml tag. The xml data can later be retrieved via the
+  corresponding \ref QXmlGet::loadSpinBox method.
+  
+  The spin box value is saved to the xml entry. Returns false if the
+  widget couldn't be saved (because it has an empty object name).
+
+  Consider using \ref saveWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlGet::loadSpinBox, saveWidget
+*/
+bool QXmlPut::saveSpinBox(const QSpinBox *value)
+{
+    if (value->objectName().isEmpty()) return false;
+    QString tagName = QString(value->metaObject()->className()).toLower().mid(1);
+    putInt(tagName, value->value());
+    setAttributeString("id", value->objectName());
+    return true;
+}
+
+/*!
+  Saves the state of the passed QDoubleSpinBox \a w under a dedicated tag
+  inside the current parent xml tag. The xml data can later be retrieved via
+  the corresponding \ref QXmlGet::loadDoubleSpinBox method.
+  
+  The spin box value is saved to the xml entry. Returns false if the
+  widget couldn't be saved (because it has an empty object name).
+
+  Consider using \ref saveWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlGet::loadDoubleSpinBox, saveWidget
+*/
+bool QXmlPut::saveDoubleSpinBox(const QDoubleSpinBox *value)
+{
+    if (value->objectName().isEmpty()) return false;
+    QString tagName = QString(value->metaObject()->className()).toLower().mid(1);
+    putDouble(tagName, value->value());
+    setAttributeString("id", value->objectName());
+    return true;
+}
+
+/*!
+  Saves the state of the passed QComboBox \a w under a dedicated tag inside the
+  current parent xml tag. The xml data can later be retrieved via the
+  corresponding \ref QXmlGet::loadComboBox method.
+  
+  The combo box selection state/text is saved to the xml entry. If \a items is
+  set to true, the items themselves are saved to the xml entry, too. Returns
+  false if the widget couldn't be saved (because it has an empty object name).
+
+  Consider using \ref saveWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlGet::loadComboBox, saveWidget
+*/
+bool QXmlPut::saveComboBox(const QComboBox *value, bool items)
+{
+    if (value->objectName().isEmpty()) return false;
+    QString tagName = QString(value->metaObject()->className()).toLower().mid(1);
+    if (items)
+    {
+        descend(tagName);
+        for (int i=0; i<value->count(); ++i)
+        {
+            putString("item", value->itemText(i));
+            if (value->currentIndex() == i)
+                setAttributeBool("selected", true);
+        }
+        if (value->currentIndex() == -1 || value->itemText(value->currentIndex()) != value->currentText())
+            putString("text", value->currentText());
+        rise();
+    } else
+    {
+        putString(tagName, value->currentText());
+    }
+    setAttributeString("id", value->objectName());
+    return true;
+}
+
+/*!
+  Saves the state of the passed QAbstractSlider \a w under a dedicated tag
+  inside the current parent xml tag. The xml data can later be retrieved via
+  the corresponding \ref QXmlGet::loadAbstractSlider method.
+  
+  The slider value is saved to the xml entry. Returns false if the
+  widget couldn't be saved (because it has an empty object name).
+
+  Consider using \ref saveWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlGet::loadAbstractSlider, saveWidget
+*/
+bool QXmlPut::saveAbstractSlider(const QAbstractSlider *value)
+{
+    if (value->objectName().isEmpty()) return false;
+    QString tagName = QString(value->metaObject()->className()).toLower().mid(1);
+    putInt(tagName, value->value());
+    setAttributeString("id", value->objectName());
+    return true;
+}
+
+/*!
+  Saves the state of the passed QDateTimeEdit \a w under a dedicated tag
+  inside the current parent xml tag. The xml data can later be retrieved via
+  the corresponding \ref QXmlGet::loadDateTimeEdit method.
+  
+  The edit's date/time is saved to the xml entry. Note that this method can
+  also handle subclasses QDateEdit and QTimeEdit. Returns false if the widget
+  couldn't be saved (because it has an empty object name).
+
+  Consider using \ref saveWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlGet::loadDateTimeEdit, saveWidget
+*/
+bool QXmlPut::saveDateTimeEdit(const QDateTimeEdit *value)
+{
+    if (value->objectName().isEmpty()) return false;
+    QString tagName = QString(value->metaObject()->className()).toLower().mid(1);
+    if (const QDateEdit *de = qobject_cast<const QDateEdit*>(value))
+        putDate(tagName, de->date());
+    else if (const QTimeEdit *te = qobject_cast<const QTimeEdit*>(value))
+        putTime(tagName, te->time());
+    else
+        putDateTime(tagName, value->dateTime());
+    setAttributeString("id", value->objectName());
+    return true;
+}
+
+/*!
+  Saves the state of the passed QFontComboBox \a w under a dedicated tag
+  inside the current parent xml tag. The xml data can later be retrieved via
+  the corresponding \ref QXmlGet::loadFontComboBox method.
+  
+  The font combo box selected font descriptor (usually only family, but
+  potentially also size, weight, etc. if set) is saved to the xml entry.
+  Returns false if the widget couldn't be saved (because it has an empty object
+  name).
+
+  Consider using \ref saveWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlGet::loadFontComboBox, saveWidget
+*/
+bool QXmlPut::saveFontComboBox(const QFontComboBox *value)
+{
+    if (value->objectName().isEmpty()) return false;
+    QString tagName = QString(value->metaObject()->className()).toLower().mid(1);
+    putFont(tagName, value->currentFont());
+    setAttributeString("id", value->objectName());
+    return true;
+}
+
+/*!
+  Saves the state of the passed QGroupBox \a w under a dedicated tag inside the
+  current parent xml tag. The xml data can later be retrieved via the
+  corresponding \ref QXmlGet::loadGroupBox method.
+  
+  The group box checked state is saved to the xml entry. Returns false if the
+  widget couldn't be saved (because it has an empty object name).
+
+  Consider using \ref saveWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+  
+  \note this method does not save the group box child widgets to the xml. To
+  achieve this, use \ref saveWidgetsRecursive instead.
+
+  \see QXmlGet::loadGroupBox, saveWidget
+*/
+bool QXmlPut::saveGroupBox(const QGroupBox *value)
+{
+    if (value->objectName().isEmpty()) return false;
+    QString tagName = QString(value->metaObject()->className()).toLower().mid(1);
+    putSingleTag(tagName);
+    setAttributeString("id", value->objectName());
+    setAttributeBool("checked", value->isChecked());
+    return true;
+}
+
+#endif // ifndef QXMLPUTGET_NO_WIDGETS
+
+/*!
+  Returns a QXmlPut instance on the same Document and at the same position as this instance, but
+  which is restricted to this hierarchy level (and the levels below). This means, the returned
+  QXmlPut instance isn't allowed to \ref rise above the current hierarchy level.
+  
+  This is useful if you wish that subroutines can handle their own XML work without possibly
+  interfering with the rest. By passing a restricted instance, it's guaranteed the subroutines
+  don't accidentally write/read outside their designated XML element.
+  
+  If only the subroutine needs to write to/read from a specific element, consider using \ref
+  descended.
+  
+  \b example:
+  \code
+  xmlPut.descend("toptag");
+  xmlPut.putString("exampleTag", "test");
+  writeOtherContent(xmlPut.restricted()); // A subroutine that writes to the <toptag> level
+  xmlPut.rise();
+  }
+  \endcode
+  
+  \see descended
 */
 QXmlPut QXmlPut::restricted()
 {
@@ -750,25 +1115,25 @@ QXmlPut QXmlPut::restricted()
 }
 
 /*!
-    Creates a tag with the name \a tagName and descends into it. Child elements can then be created.
-
-    Once the work in the lower hierarchy level is done, you can return to the previous position in
-    the parent hierarchy level by calling \ref rise.
-
-    If a subroutine needs to write to/read from a specific element, consider using \ref descended
-    instead of a descend-rise-pair.
-
-    \b example:
-    \code
-    xmlPut.descend("toptag");
-    xmlPut.putString("exampleTag", "test");
-    xmlPut.descend("subtag");
-    xmlPut.putInt("answer", 42);
-    xmlPut.rise();
-    xmlPut.rise();
-    \endcode
-
-    \see rise, descended
+  Creates a tag with the name \a tagName and descends into it. Child elements can then be created.
+  
+  Once the work in the lower hierarchy level is done, you can return to the previous position in
+  the parent hierarchy level by calling \ref rise.
+  
+  If a subroutine needs to write to/read from a specific element, consider using \ref descended
+  instead of a descend-rise-pair.
+  
+  \b example:
+  \code
+  xmlPut.descend("toptag");
+  xmlPut.putString("exampleTag", "test");
+  xmlPut.descend("subtag");
+  xmlPut.putInt("answer", 42);
+  xmlPut.rise();
+  xmlPut.rise();
+  \endcode
+  
+  \see rise, descended
 */
 void QXmlPut::descend(const QString &tagName)
 {
@@ -779,25 +1144,25 @@ void QXmlPut::descend(const QString &tagName)
 }
 
 /*!
-    Returns a QXmlPut instance that is descended into and restricted to the current element. Child
-    elements can then be created with the returned instance normally via \ref putString etc.
-
-    Due to the restriction, the returned instance can't rise above its initial hierarchy level, i.e.
-    into or above the hierarchy level of the instance this function is called on.
-
-    When descending into elements like this, there is no need to call \ref rise (and thus no
-    possibility to forget a \ref rise), because the current instance isn't influenced. Whatever
-    descending/rising the subroutine does with the returned instance can't break the callers XML
-    handling code.
-
-    \b example:
-    \code
-    writeHeaderSubroutine(xmlPut.descended("header"));
-    writeBodySubroutine(xmlPut.descended("body"));
-    writeFooterSubroutine(xmlPut.descended("footer"));
-    \endcode
-
-    \see restricted, descend
+  Returns a QXmlPut instance that is descended into and restricted to the current element. Child
+  elements can then be created with the returned instance normally via \ref putString etc.
+  
+  Due to the restriction, the returned instance can't rise above its initial hierarchy level, i.e.
+  into or above the hierarchy level of the instance this function is called on.
+  
+  When descending into elements like this, there is no need to call \ref rise (and thus no
+  possibility to forget a \ref rise), because the current instance isn't influenced. Whatever
+  descending/rising the subroutine does with the returned instance can't break the callers XML
+  handling code.
+  
+  \b example:
+  \code
+  writeHeaderSubroutine(xmlPut.descended("header"));
+  writeBodySubroutine(xmlPut.descended("body"));
+  writeFooterSubroutine(xmlPut.descended("footer"));
+  \endcode
+  
+  \see restricted, descend
 */
 QXmlPut QXmlPut::descended(const QString &tagName)
 {
@@ -809,33 +1174,33 @@ QXmlPut QXmlPut::descended(const QString &tagName)
 }
 
 /*!
-    Rises to the previous position in the parent hierarchy level. This finishes the work in a lower
-    hierarchy level that was started with \ref descend earlier.
-
-    If a subroutine needs to write to/read from a specific element, consider using \ref descended
-    instead of a descend-rise-pair.
-
-    If this instance is restricted (see \ref descended and \ref restricted) and is already inside its
-    highest allowed hierarchy level, a further attempt to \ref rise will return false without
-    changing the current hierarchy level, and cause a corresponding qDebug output.
-
-    \b example:
-    \code
-    xmlPut.descend("toptag");
-    xmlPut.putString("exampleTag", "test");
-    xmlPut.descend("subtag");
-    xmlPut.putInt("answer", 42);
-    xmlPut.rise();
-    xmlPut.rise();
-    \endcode
-
-    \see descend
+  Rises to the previous position in the parent hierarchy level. This finishes the work in a lower
+  hierarchy level that was started with \ref descend earlier.
+  
+  If a subroutine needs to write to/read from a specific element, consider using \ref descended
+  instead of a descend-rise-pair.
+  
+  If this instance is restricted (see \ref descended and \ref restricted) and is already inside its
+  highest allowed hierarchy level, a further attempt to \ref rise will return false without
+  changing the current hierarchy level, and cause a corresponding qDebug output.
+  
+  \b example:
+  \code
+  xmlPut.descend("toptag");
+  xmlPut.putString("exampleTag", "test");
+  xmlPut.descend("subtag");
+  xmlPut.putInt("answer", 42);
+  xmlPut.rise();
+  xmlPut.rise();
+  \endcode
+  
+  \see descend
 */
 bool QXmlPut::rise()
 {
     if (mCurrentParent == mBarrierNode)
     {
-        qDebug() << FUNCNAME << "attept to rise beyond allowed node";
+        qDebug() << Q_FUNC_INFO << "attept to rise beyond allowed node";
         return false;
     }
 
@@ -851,26 +1216,26 @@ bool QXmlPut::rise()
                 mCurrentElement = newParent;
             return true;
         } else
-            qDebug() << FUNCNAME << "Attempt to rise into non-element node";
+            qDebug() << Q_FUNC_INFO << "Attempt to rise into non-element node";
     } else
-        qDebug() << FUNCNAME << "Attempt to rise above document node";
+        qDebug() << Q_FUNC_INFO << "Attempt to rise above document node";
     return false;
 }
 
 /*!
-    Changes the current parent element to \a parentElement. It must be in the current QDomDocument
-    already.
-
-    If this instance is restricted (see \ref descended and \ref restricted) and \a parentElement is
-    not inside the allowed hierarchy, this function will return false without changing the current
-    position, and cause a corresponding qDebug output.
-
-    You probably won't use this function very often, since normal, linear QXmlPutGet navigation
-    should be done with \ref descend, \ref rise, \ref descended, etc. However, it's useful
-    for nonlinear XML navigation, where frequent jumps between different locations in the XML
-    hierarchy need to be done.
-
-    \see element
+  Changes the current parent element to \a parentElement. It must be in the current QDomDocument
+  already.
+  
+  If this instance is restricted (see \ref descended and \ref restricted) and \a parentElement is
+  not inside the allowed hierarchy, this function will return false without changing the current
+  position, and cause a corresponding qDebug output.
+  
+  You probably won't use this function very often, since normal, linear QXmlPutGet navigation
+  should be done with \ref descend, \ref rise, \ref descended, etc. However, it's useful
+  for nonlinear XML navigation, where frequent jumps between different locations in the XML
+  hierarchy need to be done.
+  
+  \see element
 */
 bool QXmlPut::goTo(QDomElement parentElement)
 {
@@ -880,7 +1245,7 @@ bool QXmlPut::goTo(QDomElement parentElement)
         el = el.parentNode().toElement();
     if (el.isNull())
     {
-        qDebug() << FUNCNAME << "attempt to jump outside of allowed tree";
+        qDebug() << Q_FUNC_INFO << "attempt to jump outside of allowed tree";
         return false;
     }
 
@@ -893,18 +1258,18 @@ bool QXmlPut::goTo(QDomElement parentElement)
             mCurrentElement = parentElement;
         return true;
     } else
-        qDebug() << FUNCNAME << "Attempt to go to element not in document";
+        qDebug() << Q_FUNC_INFO << "Attempt to go to element not in document";
     return false;
 }
 
 /*!
-    Adds an attribute with \a name to the current element. The attribute will carry the string \a
-    value.
-
-    <b>example output:</b>
-    \code
-    <tagName name="example string"/>
-    \endcode
+  Adds an attribute with \a name to the current element. The attribute will carry the string \a
+  value.
+  
+  <b>example output:</b>
+  \code
+  <tagName name="example string"/>
+  \endcode
 */
 void QXmlPut::setAttributeString(const QString &name, const QString &value)
 {
@@ -912,12 +1277,12 @@ void QXmlPut::setAttributeString(const QString &name, const QString &value)
 }
 
 /*!
-    Adds an attribute with \a name to the current element. The attribute will carry the int \a value.
-
-    <b>example output:</b>
-    \code
-    <tagName name="2"/>
-    \endcode
+  Adds an attribute with \a name to the current element. The attribute will carry the int \a value.
+  
+  <b>example output:</b>
+  \code
+  <tagName name="2"/>
+  \endcode
 */
 void QXmlPut::setAttributeInt(const QString &name, int value)
 {
@@ -925,13 +1290,13 @@ void QXmlPut::setAttributeInt(const QString &name, int value)
 }
 
 /*!
-    Adds an attribute with \a name to the current element. The attribute will carry the int vector \a
-    value.
-
-    <b>example output:</b>
-    \code
-    <tagName name="2;4;6;8;10"/>
-    \endcode
+  Adds an attribute with \a name to the current element. The attribute will carry the int vector \a
+  value.
+  
+  <b>example output:</b>
+  \code
+  <tagName name="2;4;6;8;10"/>
+  \endcode
 */
 void QXmlPut::setAttributeIntVector(const QString &name, const QVector<int> &value)
 {
@@ -939,43 +1304,43 @@ void QXmlPut::setAttributeIntVector(const QString &name, const QVector<int> &val
 }
 
 /*!
-    Adds an attribute with \a name to the current element. The attribute will carry the double \a
-    value.
-
-    <b>example output:</b>
-    \code
-    <tagName name="3.623"/>
-    \endcode
+  Adds an attribute with \a name to the current element. The attribute will carry the double \a
+  value.
+  
+  <b>example output:</b>
+  \code
+  <tagName name="3.623"/>
+  \endcode
 */
-void QXmlPut::setAttributeDouble(const QString &name, double value)
+void QXmlPut::setAttributeDouble(const QString &name, double value, char format, int precision)
 {
-    mCurrentElement.setAttribute(name, QString::number(value));
+    mCurrentElement.setAttribute(name, QString::number(value, format, precision));
 }
 
 /*!
-    Adds an attribute with \a name to the current element. The attribute will carry the double vector
-    \a value.
-
-    <b>example output:</b>
-    \code
-    <tagName name="3.6;4.2;9.9"/>
-    \endcode
+  Adds an attribute with \a name to the current element. The attribute will carry the double vector
+  \a value.
+  
+  <b>example output:</b>
+  \code
+  <tagName name="3.6;4.2;9.9"/>
+  \endcode
 */
-void QXmlPut::setAttributeDoubleVector(const QString &name, const QVector<double> &value)
+void QXmlPut::setAttributeDoubleVector(const QString &name, const QVector<double> &value, char format, int precision)
 {
-    mCurrentElement.setAttribute(name, doubleVectorToStr(value));
+    mCurrentElement.setAttribute(name, doubleVectorToStr(value, format, precision));
 }
 
 /*!
-    Adds an attribute with \a name to the current element. The attribute will carry the bool \a value.
-
-    Depending on the specified \a format (see \ref QXmlPutGet::BoolFormat), the boolean value is
-    represented with different strings.
-
-    <b>example output:</b>
-    \code
-    <tagName name="no"/>
-    \endcode
+  Adds an attribute with \a name to the current element. The attribute will carry the bool \a value.
+  
+  Depending on the specified \a format (see \ref QXmlPutGet::BoolFormat), the boolean value is
+  represented with different strings.
+  
+  <b>example output:</b>
+  \code
+  <tagName name="no"/>
+  \endcode
 */
 void QXmlPut::setAttributeBool(const QString &name, bool value, QXmlPutGet::BoolFormat format)
 {
@@ -983,15 +1348,15 @@ void QXmlPut::setAttributeBool(const QString &name, bool value, QXmlPutGet::Bool
 }
 
 /*!
-    Adds an attribute with \a name to the current element. The attribute will carry the bool vector \a value.
-
-    Depending on the specified \a format (see \ref QXmlPutGet::BoolFormat), the boolean value is
-    represented with different strings.
-
-    <b>example output:</b>
-    \code
-    <tagName name="no;yes;yes;no;yes"/>
-    \endcode
+  Adds an attribute with \a name to the current element. The attribute will carry the bool vector \a value.
+  
+  Depending on the specified \a format (see \ref QXmlPutGet::BoolFormat), the boolean value is
+  represented with different strings.
+  
+  <b>example output:</b>
+  \code
+  <tagName name="no;yes;yes;no;yes"/>
+  \endcode
 */
 void QXmlPut::setAttributeBoolVector(const QString &name, const QVector<bool> &value, QXmlPutGet::BoolFormat format)
 {
@@ -999,15 +1364,15 @@ void QXmlPut::setAttributeBoolVector(const QString &name, const QVector<bool> &v
 }
 
 /*!
-    Adds an attribute with \a name to the current element. The attribute will carry the QColor \a value.
-
-    If the color contains no transparency component (i.e. alpha is 255), the color is saved in the
-    format "#rrggbb". If it contains alpha, it is saved as "#rrggbbaa".
-
-    <b>example output:</b>
-    \code
-    <tagName name="#83A0FF"/>
-    \endcode
+  Adds an attribute with \a name to the current element. The attribute will carry the QColor \a value.
+  
+  If the color contains no transparency component (i.e. alpha is 255), the color is saved in the
+  format "#rrggbb". If it contains alpha, it is saved as "#rrggbbaa".
+  
+  <b>example output:</b>
+  \code
+  <tagName name="#83A0FF"/>
+  \endcode
 */
 void QXmlPut::setAttributeColor(const QString &name, const QColor &value)
 {
@@ -1015,9 +1380,9 @@ void QXmlPut::setAttributeColor(const QString &name, const QColor &value)
 }
 
 /*!
-    Returns the XML document as a string. Sub-elements are indented by \a spacesPerIndent spaces.
-
-    \see QXmlGet::fromString
+  Returns the XML document as a string. Sub-elements are indented by \a spacesPerIndent spaces.
+  
+  \see QXmlGet::fromString
 */
 QString QXmlPut::toString(int spacesPerIndent) const
 {
@@ -1025,13 +1390,13 @@ QString QXmlPut::toString(int spacesPerIndent) const
 }
 
 /*!
-    Saves the XML document to the file \a fileName. Sub-elements are indented by \a spacesPerIndent spaces.
-
-    The encoding (typically UTF-8) specified in the XML declaration (QXmlPut constructor) is used.
-
-    This function returns false if the file couldn't be created/written to.
-
-    \see QXmlGet::load
+  Saves the XML document to the file \a fileName. Sub-elements are indented by \a spacesPerIndent spaces.
+  
+  The encoding (typically UTF-8) specified in the XML declaration (QXmlPut constructor) is used.
+  
+  This function returns false if the file couldn't be created/written to.
+  
+  \see QXmlGet::load
 */
 bool QXmlPut::save(const QString &fileName, int spacesPerIndent) const
 {
@@ -1043,7 +1408,7 @@ bool QXmlPut::save(const QString &fileName, int spacesPerIndent) const
         file.close();
         return true;
     } else
-        qDebug() << FUNCNAME << "Couldn't open file for writing:" << fileName;
+        qDebug() << Q_FUNC_INFO << "Couldn't open file for writing:" << fileName;
 
     return false;
 }
@@ -1057,7 +1422,7 @@ QString QXmlPut::boolToStr(bool value, QXmlPutGet::BoolFormat format)
     case QXmlPutGet::bf10: return value ? "1" : "0";
     default:
     {
-        qDebug() << FUNCNAME << "Invalid QXmlPutGet::BoolFormat format, using bfYesNo" << (int)format;
+        qDebug() << Q_FUNC_INFO << "Invalid QXmlPutGet::BoolFormat format, using bfYesNo" << int(format);
         return value ? "yes" : "no";
     }
     }
@@ -1084,15 +1449,15 @@ QString QXmlPut::intVectorToStr(const QVector<int> &value)
     return result;
 }
 
-QString QXmlPut::doubleVectorToStr(const QVector<double> &value)
+QString QXmlPut::doubleVectorToStr(const QVector<double> &value, char format='g', int precision=15)
 {
     QString result;
     for (int i=0; i<value.size(); ++i)
     {
         if (i>0)
-            result.append(";"+QString::number(value.at(i)));
+            result.append(";"+QString::number(value.at(i), format, precision));
         else
-            result.append(QString::number(value.at(i)));
+            result.append(QString::number(value.at(i), format, precision));
     }
     return result;
 }
@@ -1110,73 +1475,117 @@ QString QXmlPut::boolVectorToStr(const QVector<bool> &value, QXmlPutGet::BoolFor
     return result;
 }
 
+/*!
+  This method is a helper function for \ref saveWidgetsRecursive. Tries to save
+  the widget \a w to xml.
+  
+  If \a prefix and/or \a suffix are specified, only widgets with object names that have the respective
+  prefix/suffix will be considered. Widgets in \a exclude will not be considered.
+  
+  Returns true only if the widget was saved successfully. Returns false if the
+  widget is not supported, has an empty object name, doesn't match the
+  prefix/suffix requirement, is part of the exclude list, or couldn't be saved
+  to xml for other reasons.
+  
+  \see QXmlGet::maybeLoadWidget
+*/
+bool QXmlPut::maybeSaveWidget(const QWidget *w, const QString &prefix, const QString &suffix, const QSet<const QWidget*> &exclude)
+{
+    if (exclude.contains(w))
+        return false;
+    if (w->objectName().isEmpty())
+        return false;
+    if (!prefix.isEmpty() && !w->objectName().startsWith(prefix))
+        return false;
+    if (!suffix.isEmpty() && !w->objectName().endsWith(suffix))
+        return false;
+
+    // when recursing over child widgets, we will come across QLineEdits that sit
+    // inside QDateEit, QTimeEdit, etc. However, we rather save those parent
+    // widgets and not the internal QLineEdit:
+    if (qobject_cast<QDateEdit*>(w->parentWidget()) ||
+        qobject_cast<QTimeEdit*>(w->parentWidget()) ||
+        qobject_cast<QDateTimeEdit*>(w->parentWidget()) ||
+        qobject_cast<QSpinBox*>(w->parentWidget()) ||
+        qobject_cast<QDoubleSpinBox*>(w->parentWidget()) ||
+        qobject_cast<QComboBox*>(w->parentWidget()))
+        return false;
+
+    return saveWidget(w, false);
+}
+
 
 // ================================================================================
-// =================== QXMLGet
+// =================== QXmlGet
 // ================================================================================
+
+/*! \class QXmlGet
+  \brief Is used to load and read from the XML document
+  
+*/
 
 /* start documentation of inline functions */
 
 /*! \fn QDomElement QXmlGet::element() const
-
-    Returns the current element as a QDomElement. This can be used as a jump target for \ref goTo, or
-    some low-level manipulation of the node with the Qt-DOM-interface.
+  
+  Returns the current element as a QDomElement. This can be used as a jump target for \ref goTo, or
+  some low-level manipulation of the node with the Qt-DOM-interface.
 */
 
 /*! \fn QString QXmlGet::xmlDeclaration() const
-
-    Returns the XML-Declaration (the tag name of the <tt>&lt;? .. ?&gt;</tt> header), which always is "xml".
-
-    (Thus this function is rather redundant, but the DOM provides it, so it is provided here, too.)
+  
+  Returns the XML-Declaration (the tag name of the <tt>&lt;? .. ?&gt;</tt> header), which always is "xml".
+  
+  (Thus this function is rather redundant, but the DOM provides it, so it is provided here, too.)
 */
 
 /*! \fn QString QXmlGet::xmlVersion() const
-
-    Returns the xml version of the document. Typically this is "1.0" or "1.1".
-
-    \b example:
-    \code
-    <?xml version="1.0" encoding="UTF-8"?>
-    (...)
-    \endcode
+  
+  Returns the xml version of the document. Typically this is "1.0" or "1.1".
+  
+  \b example:
+  \code
+  <?xml version="1.0" encoding="UTF-8"?>
+  (...)
+  \endcode
 */
 
 /*! \fn QString QXmlGet::encoding() const
-
-    Returns the encoding of the document, e.g. "UTF-8".
-
-    \b example:
-    \code
-    <?xml version="1.0" encoding="UTF-8"?>
-    (...)
-    \endcode
+  
+  Returns the encoding of the document, e.g. "UTF-8".
+  
+  \b example:
+  \code
+  <?xml version="1.0" encoding="UTF-8"?>
+  (...)
+  \endcode
 */
 
 /*! \fn bool QXmlGet::standalone() const
-
-    Returns the standalone-property of the document's xml declaration.
-
-    \b example:
-    \code
-    <?xml version="1.0" encoding="UTF-8"?>
-    \endcode
-    has standalone false
-    \code
-    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-    \endcode
-    has standalone true.
+  
+  Returns the standalone-property of the document's xml declaration.
+  
+  \b example:
+  \code
+  <?xml version="1.0" encoding="UTF-8"?>
+  \endcode
+  has standalone false
+  \code
+  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  \endcode
+  has standalone true.
 */
 
 /*! \fn QDomDocument QXmlGet::document() const
-
-    Returns the QDomDocument this QXmlGet instance is using.
+  
+  Returns the QDomDocument this QXmlGet instance is using.
 */
 
 /* end documentation of inline functions */
 
 /*!
-    Creates a QXmlGet instance with an empty document. Call \ref fromString or \ref load to conveniently load XML content
-    to the document. If you have a QDomDocument ready, use the \ref QXmlGet(QDomDocument document) constructor instead.
+  Creates a QXmlGet instance with an empty document. Call \ref fromString or \ref load to conveniently load XML content
+  to the document. If you have a QDomDocument ready, use the \ref QXmlGet(QDomDocument document) constructor instead.
 */
 QXmlGet::QXmlGet() :
     mStandalone(false)
@@ -1184,8 +1593,8 @@ QXmlGet::QXmlGet() :
 }
 
 /*! \overload
-
-    Creates a QXmlGet instance from the passed QDomDocument. This instance can then read from the document.
+  
+  Creates a QXmlGet instance from the passed QDomDocument. This instance can then read from the document.
 */
 QXmlGet::QXmlGet(QDomDocument document) :
     mDocument(document),
@@ -1196,9 +1605,8 @@ QXmlGet::QXmlGet(QDomDocument document) :
 {
     if (document.isNull())
     {
-        qDebug() << FUNCNAME << "Attempt to open a QDomDocument that is null";
-    }
-    else
+        qDebug() << Q_FUNC_INFO << "Attempt to open a QDomDocument that is null";
+    } else
     {
         // parse xml header declaration:
         QDomNode node = mDocument.firstChild();
@@ -1207,43 +1615,22 @@ QXmlGet::QXmlGet(QDomDocument document) :
             QDomProcessingInstruction procInst = node.toProcessingInstruction();
             mXmlDeclaration = procInst.target();
             QString pseudoParams = procInst.data();
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-            QRegExp regExp("(version|encoding|standalone) *= *(?:\"|')([^\"' ]*)(?:\"|')");
-            int p = regExp.indexIn(pseudoParams);
-#else
             QRegularExpression regExp("(version|encoding|standalone) *= *(?:\"|')([^\"' ]*)(?:\"|')");
             QRegularExpressionMatch match = regExp.match(pseudoParams);
-            int p = match.capturedStart();
-#endif
+            int p = match.hasMatch() ? match.capturedStart() : -1;
             while (p > -1)
             {
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-                if (regExp.captureCount()==2 && regExp.cap(1)=="version")
-                    mXmlVersion = regExp.cap(2);
-                else if (regExp.captureCount()==2 && regExp.cap(1)=="encoding")
-                    mEncoding = regExp.cap(2);
-                else if (regExp.captureCount()==2 && regExp.cap(1)=="standalone")
-                    mStandalone = regExp.cap(2)=="yes";
-                p = regExp.indexIn(pseudoParams, p+regExp.matchedLength());
-#else
-                QRegularExpression regExp("(version|encoding|standalone) *= *(?:\"|')([^\"' ]*)(?:\"|')");
-                QRegularExpressionMatch match = regExp.match(pseudoParams, p);
-                if (match.hasMatch()) {
-                    QString capturedText1 = match.captured(1);
-                    QString capturedText2 = match.captured(2);
-
-                    if (capturedText1 == "version")
-                        mXmlVersion = capturedText2;
-                    else if (capturedText1 == "encoding")
-                        mEncoding = capturedText2;
-                    else if (capturedText1 == "standalone")
-                        mStandalone = (capturedText2 == "yes");
-
-                    p = match.capturedEnd();
-                } else {
-                    p = -1; // Обработка некорректного совпадения
+                if (regExp.captureCount()==2)
+                {
+                    QString cap1 = match.captured(1);
+                    QString cap2 = match.captured(2);
+                    if (cap1 == "version")
+                        mXmlVersion = cap2;
+                    else if (cap1 == "encoding")
+                        mEncoding = cap2;
+                    else if (cap1 == "standalone")
+                        mStandalone = (cap2 == "yes");
                 }
-#endif
             }
         }
     }
@@ -1255,9 +1642,9 @@ QXmlGet::QXmlGet(QDomDocument document) :
 
 
 /*! \overload
-
-    Creates a QXmlGet instance from the QXmlPut instance \a xmlPut. This way you may now read from
-    the document, to which the QXmlPut instance writes.
+  
+  Creates a QXmlGet instance from the QXmlPut instance \a xmlPut. This way you may now read from
+  the document, to which the QXmlPut instance writes.
 */
 QXmlGet::QXmlGet(const QXmlPut &xmlPut):
     mDocument(xmlPut.mDocument),
@@ -1272,17 +1659,17 @@ QXmlGet::QXmlGet(const QXmlPut &xmlPut):
 }
 
 /*!
-    Returns the doctype name.
-
-    \b example:
-    \code
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE myDocType PUBLIC 'myPublicId' 'mySystemId'>
-    <root>
+  Returns the doctype name.
+  
+  \b example:
+  \code
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE myDocType PUBLIC 'myPublicId' 'mySystemId'>
+  <root>
     (...)
-    </root>
-    \endcode
-    has the doctype "myDocType".
+  </root>
+  \endcode
+  has the doctype "myDocType".
 */
 QString QXmlGet::docType() const
 {
@@ -1290,17 +1677,17 @@ QString QXmlGet::docType() const
 }
 
 /*!
-    Returns the public identifier of the external DTD subset or an empty string if there is no public identifier.
-
-    \b example:
-    \code
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE myDocType PUBLIC 'myPublicId' 'mySystemId'>
-    <root>
+  Returns the public identifier of the external DTD subset or an empty string if there is no public identifier.
+  
+  \b example:
+  \code
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE myDocType PUBLIC 'myPublicId' 'mySystemId'>
+  <root>
     (...)
-    </root>
-    \endcode
-    has the public identifier "myPublicId".
+  </root>
+  \endcode
+  has the public identifier "myPublicId".
 */
 QString QXmlGet::publicId() const
 {
@@ -1308,41 +1695,37 @@ QString QXmlGet::publicId() const
 }
 
 /*!
-    Returns the system identifier of the external DTD subset or an empty string if there is no system identifier.
-
-    \b example:
-    \code
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE myDocType PUBLIC 'myPublicId' 'mySystemId'>
-    <root>
+  Returns the system identifier of the external DTD subset or an empty string if there is no system identifier.
+  
+  \b example:
+  \code
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE myDocType PUBLIC 'myPublicId' 'mySystemId'>
+  <root>
     (...)
-    </root>
-    \endcode
-    has the system identifier "mySystemId".
+  </root>
+  \endcode
+  has the system identifier "mySystemId".
 */
 QString QXmlGet::systemId() const
 {
     return mDocument.doctype().systemId();
 }
 
-QXmlGet::~QXmlGet()
-{
-}
-
 /*!
-    Finds the first element named \a tagName in the current hierarchy level. If this returns true, an
-    element was found. You then can access contents and attributes of this element via the get(...) functions.
-
-    For example, if you expect the element to contain a string as in
-    \verbatim<element>Hellothere!</element>\endverbatim call \ref getString to retrieve "Hello there!".
-
-    If you expect the element to have further child elements and want to descend into their hierarchy
-    level, call \ref descend or \ref descended.
-
-    If you expect more than one element with the name \a tagName in the current hierarchy level,
-    consider using \ref findNext instead, because \ref find would always just find the first element.
-
-    \see findNext, findAndDescend, findNextAndDescend, findReset
+  Finds the first element named \a tagName in the current hierarchy level. If this returns true, an
+  element was found. You then can access contents and attributes of this element via the get(...) functions.
+  
+  For example, if you expect the element to contain a string as in
+  \verbatim<element>Hellothere!</element>\endverbatim call \ref getString to retrieve "Hello there!".
+  
+  If you expect the element to have further child elements and want to descend into their hierarchy
+  level, call \ref descend or \ref descended.
+  
+  If you expect more than one element with the name \a tagName in the current hierarchy level,
+  consider using \ref findNext instead, because \ref find would always just find the first element.
+  
+  \see findNext, findAndDescend, findNextAndDescend, findReset
 */
 bool QXmlGet::find(const QString &tagName)
 {
@@ -1356,15 +1739,15 @@ bool QXmlGet::find(const QString &tagName)
 }
 
 /*!
-    Finds the first element with the specified \a tagName in the current hierarchy level and (if
-    found) descends into it. If such an element is found, the function returns true. In that case you
-    must make sure to call \ref rise after the work in the lower hierarchy level is done.
-
-    If you expect more than one element with the name \a tagName in the current hierarchy level,
-    consider using \ref findNextAndDescend instead, because \ref findAndDescend would always just
-    find the first element.
-
-    \see findNextAndDescend, find, descend, descended
+  Finds the first element with the specified \a tagName in the current hierarchy level and (if
+  found) descends into it. If such an element is found, the function returns true. In that case you
+  must make sure to call \ref rise after the work in the lower hierarchy level is done.
+  
+  If you expect more than one element with the name \a tagName in the current hierarchy level,
+  consider using \ref findNextAndDescend instead, because \ref findAndDescend would always just
+  find the first element.
+  
+  \see findNextAndDescend, find, descend, descended
 */
 bool QXmlGet::findAndDescend(const QString &tagName)
 {
@@ -1377,12 +1760,12 @@ bool QXmlGet::findAndDescend(const QString &tagName)
 }
 
 /*!
-    Resets the current element to the starting position (this means it will be pointing to the parent
-    of the current hierarchy level). Any subsequent call to \ref findNext or \ref findNextAndDescend
-    would start searching from the beginning. Calls to \ref find are not affected, since it always
-    starts searching from the beginning.
-
-    \see findNext, findNextAndDescend, find
+  Resets the current element to the starting position (this means it will be pointing to the parent
+  of the current hierarchy level). Any subsequent call to \ref findNext or \ref findNextAndDescend
+  would start searching from the beginning. Calls to \ref find are not affected, since it always
+  starts searching from the beginning.
+  
+  \see findNext, findNextAndDescend, find
 */
 void QXmlGet::findReset()
 {
@@ -1390,17 +1773,17 @@ void QXmlGet::findReset()
 }
 
 /*!
-    finds the next element after the current element with tag name \a tagName.
-
-    Returns true when an element was found. This makes it possible to use it directly as a
-    condition of a while-loop, looping over all elements with name \a tagName. If you want to descend
-    into every such element, consider using \ref findNextAndDescend.
-
-    Once no next element was found, the function returns false and the current element is reset. This
-    means a subsequent call would restart the loop from the beginning, for example searching for a
-    different \a tagName.
-
-    \see findReset, findNextAndDescend, find
+  finds the next element after the current element with tag name \a tagName.
+  
+  Returns true when an element was found. This makes it possible to use it directly as a
+  condition of a while-loop, looping over all elements with name \a tagName. If you want to descend
+  into every such element, consider using \ref findNextAndDescend.
+  
+  Once no next element was found, the function returns false and the current element is reset. This
+  means a subsequent call would restart the loop from the beginning, for example searching for a
+  different \a tagName.
+  
+  \see findReset, findNextAndDescend, find
 */
 bool QXmlGet::findNext(const QString &tagName)
 {
@@ -1421,17 +1804,17 @@ bool QXmlGet::findNext(const QString &tagName)
 }
 
 /*!
-    finds the next element after the current element with tag name \a tagName and descends into it.
-
-    Returns true when an element was found. This makes it possible to use it directly as a
-    condition of a while-loop, looping over (and descending into) all elements with name \a tagName.
-    Don't forget to call \ref rise at the end of each iteration.
-
-    Once no next element was found, the function returns false and the current element is reset. This
-    means a subsequent call would restart the loop from the beginning, for example searching for a
-    different \a tagName.
-
-    \see findNext, findReset, find
+  finds the next element after the current element with tag name \a tagName and descends into it.
+  
+  Returns true when an element was found. This makes it possible to use it directly as a
+  condition of a while-loop, looping over (and descending into) all elements with name \a tagName.
+  Don't forget to call \ref rise at the end of each iteration.
+  
+  Once no next element was found, the function returns false and the current element is reset. This
+  means a subsequent call would restart the loop from the beginning, for example searching for a
+  different \a tagName.
+  
+  \see findNext, findReset, find
 */
 bool QXmlGet::findNextAndDescend(const QString &tagName)
 {
@@ -1444,10 +1827,10 @@ bool QXmlGet::findNextAndDescend(const QString &tagName)
 }
 
 /*!
-    Returns the number of elements with the specified tag name inside the current element. If \a
-    tagName is empty, all elements are counted.
-
-    \see hasChildren
+  Returns the number of elements with the specified tag name inside the current element. If \a
+  tagName is empty, all elements are counted.
+  
+  \see hasChildren
 */
 int QXmlGet::childCount(const QString &tagName) const
 {
@@ -1466,10 +1849,10 @@ int QXmlGet::childCount(const QString &tagName) const
 }
 
 /*!
-    Returns whether the current element has children (sub elements). If so, you can call \ref descend
-    or \ref descended to change into their hierarchy level to access them.
-
-    \see childCount
+  Returns whether the current element has children (sub elements). If so, you can call \ref descend
+  or \ref descended to change into their hierarchy level to access them.
+  
+  \see childCount
 */
 bool QXmlGet::hasChildren() const
 {
@@ -1477,9 +1860,9 @@ bool QXmlGet::hasChildren() const
 }
 
 /*!
-    Returns the tag name of the current element.
+  Returns the tag name of the current element.
 
-    For example, the element <tt>\verbatim<rect width="4">\endverbatim</tt> has the tag name "rect".
+  For example, the element <tt>\verbatim<rect width="4">\endverbatim</tt> has the tag name "rect".
 */
 QString QXmlGet::tagName() const
 {
@@ -1487,10 +1870,10 @@ QString QXmlGet::tagName() const
 }
 
 /*!
-    Returns the string the current tag contains. If the current tag doesn't contain a string, \a
-    defaultValue is returned.
-
-    \see getStringList
+  Returns the string the current tag contains. If the current tag doesn't contain a string, \a
+  defaultValue is returned.
+  
+  \see getStringList
 */
 QString QXmlGet::getString(const QString &defaultValue) const
 {
@@ -1520,10 +1903,10 @@ QString QXmlGet::getString(const QString &defaultValue) const
 }
 
 /*!
-    Returns the string list the current tag contains. If the current tag doesn't contain a string
-    list, \a defaultValue is returned.
-
-    \see getString
+  Returns the string list the current tag contains. If the current tag doesn't contain a string
+  list, \a defaultValue is returned.
+  
+  \see getString
 */
 QStringList QXmlGet::getStringList(const QStringList &defaultValue)
 {
@@ -1538,10 +1921,10 @@ QStringList QXmlGet::getStringList(const QStringList &defaultValue)
 }
 
 /*!
-    Returns the integer the current tag contains. If the current tag doesn't contain an integer, \a
-    defaultValue is returned.
-
-    \see getIntVector
+  Returns the integer the current tag contains. If the current tag doesn't contain an integer, \a
+  defaultValue is returned.
+  
+  \see getIntVector
 */
 int QXmlGet::getInt(int defaultValue) const
 {
@@ -1558,10 +1941,10 @@ int QXmlGet::getInt(int defaultValue) const
 }
 
 /*!
-    Returns the integer vector the current tag contains. If the current tag doesn't contain an
-    integer vector, \a defaultValue is returned.
-
-    \see getInt
+  Returns the integer vector the current tag contains. If the current tag doesn't contain an
+  integer vector, \a defaultValue is returned.
+  
+  \see getInt
 */
 QVector<int> QXmlGet::getIntVector(const QVector<int> &defaultValue) const
 {
@@ -1576,10 +1959,10 @@ QVector<int> QXmlGet::getIntVector(const QVector<int> &defaultValue) const
 }
 
 /*!
-    Returns the double the current tag contains. If the current tag doesn't contain a double, \a
-    defaultValue is returned.
-
-    \see getDoubleVector
+  Returns the double the current tag contains. If the current tag doesn't contain a double, \a
+  defaultValue is returned.
+  
+  \see getDoubleVector
 */
 double QXmlGet::getDouble(double defaultValue) const
 {
@@ -1596,10 +1979,10 @@ double QXmlGet::getDouble(double defaultValue) const
 }
 
 /*!
-    Returns the double vector the current tag contains. If the current tag doesn't contain a double
-    vector, \a defaultValue is returned.
-
-    \see getDouble
+  Returns the double vector the current tag contains. If the current tag doesn't contain a double
+  vector, \a defaultValue is returned.
+  
+  \see getDouble
 */
 QVector<double> QXmlGet::getDoubleVector(const QVector<double> &defaultValue) const
 {
@@ -1614,12 +1997,12 @@ QVector<double> QXmlGet::getDoubleVector(const QVector<double> &defaultValue) co
 }
 
 /*!
-    Returns the bool the current tag contains. If the current tag doesn't contain a bool, \a
-    defaultValue is returned.
-
-    by setting \a formats, you may specify which boolean formats this function accepts.
-
-    \see getBoolVector, QXmlPutGet::BoolFormat
+  Returns the bool the current tag contains. If the current tag doesn't contain a bool, \a
+  defaultValue is returned.
+  
+  by setting \a formats, you may specify which boolean formats this function accepts.
+  
+  \see getBoolVector, QXmlPutGet::BoolFormat
 */
 bool QXmlGet::getBool(bool defaultValue, QXmlPutGet::BoolFormats formats) const
 {
@@ -1636,12 +2019,12 @@ bool QXmlGet::getBool(bool defaultValue, QXmlPutGet::BoolFormats formats) const
 }
 
 /*!
-    Returns the bool vector the current tag contains. If the current tag doesn't contain a bool
-    vector, \a defaultValue is returned.
-
-    by setting \a formats, you may specify which boolean formats this function accepts.
-
-    \see getBool, QXmlPutGet::BoolFormat
+  Returns the bool vector the current tag contains. If the current tag doesn't contain a bool
+  vector, \a defaultValue is returned.
+  
+  by setting \a formats, you may specify which boolean formats this function accepts.
+  
+  \see getBool, QXmlPutGet::BoolFormat
 */
 QVector<bool> QXmlGet::getBoolVector(const QVector<bool> &defaultValue, QXmlPutGet::BoolFormats formats) const
 {
@@ -1660,8 +2043,8 @@ QVector<bool> QXmlGet::getBoolVector(const QVector<bool> &defaultValue, QXmlPutG
 }
 
 /*!
-    Returns the QColor the current tag contains. If the current tag doesn't contain a QColor, \a
-    defaultValue is returned.
+  Returns the QColor the current tag contains. If the current tag doesn't contain a QColor, \a
+  defaultValue is returned.
 */
 QColor QXmlGet::getColor(const QColor &defaultValue) const
 {
@@ -1677,10 +2060,10 @@ QColor QXmlGet::getColor(const QColor &defaultValue) const
 }
 
 /*!
-    Returns the QSize the current tag contains. If the current tag doesn't contain a QSize, \a
-    defaultValue is returned.
-
-    \see getSizeF
+  Returns the QSize the current tag contains. If the current tag doesn't contain a QSize, \a
+  defaultValue is returned.
+  
+  \see getSizeF
 */
 QSize QXmlGet::getSize(const QSize &defaultValue) const
 {
@@ -1693,10 +2076,10 @@ QSize QXmlGet::getSize(const QSize &defaultValue) const
 }
 
 /*!
-    Returns the QSizeF the current tag contains. If the current tag doesn't contain a QSizeF, \a
-    defaultValue is returned.
-
-    \see getSize
+  Returns the QSizeF the current tag contains. If the current tag doesn't contain a QSizeF, \a
+  defaultValue is returned.
+  
+  \see getSize
 */
 QSizeF QXmlGet::getSizeF(const QSizeF &defaultValue) const
 {
@@ -1709,10 +2092,10 @@ QSizeF QXmlGet::getSizeF(const QSizeF &defaultValue) const
 }
 
 /*!
-    Returns the QPoint the current tag contains. If the current tag doesn't contain a QPoint, \a
-    defaultValue is returned.
-
-    \see getPointF
+  Returns the QPoint the current tag contains. If the current tag doesn't contain a QPoint, \a
+  defaultValue is returned.
+  
+  \see getPointF
 */
 QPoint QXmlGet::getPoint(const QPoint &defaultValue) const
 {
@@ -1725,10 +2108,10 @@ QPoint QXmlGet::getPoint(const QPoint &defaultValue) const
 }
 
 /*!
-    Returns the QPointF the current tag contains. If the current tag doesn't contain a QPointF, \a
-    defaultValue is returned.
-
-    \see getPoint
+  Returns the QPointF the current tag contains. If the current tag doesn't contain a QPointF, \a
+  defaultValue is returned.
+  
+  \see getPoint
 */
 QPointF QXmlGet::getPointF(const QPointF &defaultValue) const
 {
@@ -1741,10 +2124,10 @@ QPointF QXmlGet::getPointF(const QPointF &defaultValue) const
 }
 
 /*!
-    Returns the QRect the current tag contains. If the current tag doesn't contain a QRect, \a
-    defaultValue is returned.
-
-    \see getRectF
+  Returns the QRect the current tag contains. If the current tag doesn't contain a QRect, \a
+  defaultValue is returned.
+  
+  \see getRectF
 */
 QRect QXmlGet::getRect(const QRect &defaultValue) const
 {
@@ -1759,10 +2142,10 @@ QRect QXmlGet::getRect(const QRect &defaultValue) const
 }
 
 /*!
-    Returns the QRectF the current tag contains. If the current tag doesn't contain a QRectF, \a
-    defaultValue is returned.
-
-    \see getRect
+  Returns the QRectF the current tag contains. If the current tag doesn't contain a QRectF, \a
+  defaultValue is returned.
+  
+  \see getRect
 */
 QRectF QXmlGet::getRectF(const QRectF &defaultValue) const
 {
@@ -1777,10 +2160,10 @@ QRectF QXmlGet::getRectF(const QRectF &defaultValue) const
 }
 
 /*!
-    Returns the QDate the current tag contains. If the current tag doesn't contain a QDate, \a
-    defaultValue is returned.
-
-    \see getDateTime, getTime
+  Returns the QDate the current tag contains. If the current tag doesn't contain a QDate, \a
+  defaultValue is returned.
+  
+  \see getDateTime, getTime
 */
 QDate QXmlGet::getDate(const QDate &defaultValue) const
 {
@@ -1796,10 +2179,10 @@ QDate QXmlGet::getDate(const QDate &defaultValue) const
 }
 
 /*!
-    Returns the QTime the current tag contains. If the current tag doesn't contain a QTime, \a
-    defaultValue is returned.
-
-    \see getDateTime, getDate
+  Returns the QTime the current tag contains. If the current tag doesn't contain a QTime, \a
+  defaultValue is returned.
+  
+  \see getDateTime, getDate
 */
 QTime QXmlGet::getTime(const QTime &defaultValue) const
 {
@@ -1815,10 +2198,10 @@ QTime QXmlGet::getTime(const QTime &defaultValue) const
 }
 
 /*!
-    Returns the QDateTime the current tag contains. If the current tag doesn't contain a QDateTime, \a
-    defaultValue is returned.
-
-    \see getTime, getDate
+  Returns the QDateTime the current tag contains. If the current tag doesn't contain a QDateTime, \a
+  defaultValue is returned.
+  
+  \see getTime, getDate
 */
 QDateTime QXmlGet::getDateTime(const QDateTime &defaultValue) const
 {
@@ -1834,8 +2217,8 @@ QDateTime QXmlGet::getDateTime(const QDateTime &defaultValue) const
 }
 
 /*!
-    Returns the QByteArray the current tag contains. If the current tag doesn't contain a QByteArray, \a
-    defaultValue is returned.
+  Returns the QByteArray the current tag contains. If the current tag doesn't contain a QByteArray, \a
+  defaultValue is returned.
 */
 QByteArray QXmlGet::getByteArray(const QByteArray &defaultValue) const
 {
@@ -1843,17 +2226,9 @@ QByteArray QXmlGet::getByteArray(const QByteArray &defaultValue) const
     bool compressed = getAttributeInt("compression", 0) > 0;
     if (!node.isNull() && node.isCDATASection())
     {
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        QByteArray data(node.toCDATASection().data().toAscii());
-#else
-        QByteArray data(node.toCDATASection().data().toLocal8Bit());
-#endif
+        QByteArray data(node.toCDATASection().data().toLatin1());
         QString newLine = "\n";
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-        data.replace(newLine.toAscii(), "");
-#else
-        data.replace(newLine.toLocal8Bit(), "");
-#endif
+        data.replace(newLine.toLatin1(), "");
         data = QByteArray::fromBase64(data);
         if (compressed)
             data = qUncompress(data);
@@ -1863,8 +2238,8 @@ QByteArray QXmlGet::getByteArray(const QByteArray &defaultValue) const
 }
 
 /*!
-    Returns the QImage the current tag contains. If the current tag doesn't contain a QImage, \a
-    defaultValue is returned.
+  Returns the QImage the current tag contains. If the current tag doesn't contain a QImage, \a
+  defaultValue is returned.
 */
 QImage QXmlGet::getImage(const QImage &defaultValue) const
 {
@@ -1875,22 +2250,17 @@ QImage QXmlGet::getImage(const QImage &defaultValue) const
     QBuffer buff(&data);
     buff.open(QBuffer::ReadOnly);
     QImage result;
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
-    if (!result.load(&buff, format.toAscii().constData()))
+    if (!result.load(&buff, format.toLatin1().constData()))
         return defaultValue;
-#else
-    if (!result.load(&buff, format.toLocal8Bit().constData()))
-        return defaultValue;
-#endif
     buff.close();
     return result;
 }
 
 /*!
-    Returns the QPen the current tag contains. If the current tag doesn't contain a QPen, \a
-    defaultValue is returned.
-
-    \see getBrush
+  Returns the QPen the current tag contains. If the current tag doesn't contain a QPen, \a
+  defaultValue is returned.
+  
+  \see getBrush
 */
 QPen QXmlGet::getPen(const QPen &defaultValue) const
 {
@@ -1898,7 +2268,7 @@ QPen QXmlGet::getPen(const QPen &defaultValue) const
     if (hasAttribute("color"))
         result.setColor(getAttributeColor("color", result.color()));
     if (hasAttribute("penstyle"))
-        result.setStyle((Qt::PenStyle)getAttributeInt("penstyle", result.style()));
+        result.setStyle(Qt::PenStyle(getAttributeInt("penstyle", result.style())));
     if (hasAttribute("width"))
         result.setWidthF(getAttributeDouble("width", result.widthF()));
 
@@ -1916,19 +2286,19 @@ QPen QXmlGet::getPen(const QPen &defaultValue) const
             result.setStyle(defaultValue.style());
     }
     if (hasAttribute("capstyle"))
-        result.setCapStyle((Qt::PenCapStyle)getAttributeInt("capstyle", result.capStyle()));
+        result.setCapStyle(Qt::PenCapStyle(getAttributeInt("capstyle", result.capStyle())));
     if (hasAttribute("joinstyle"))
-        result.setJoinStyle((Qt::PenJoinStyle)getAttributeInt("joinstyle", result.joinStyle()));
+        result.setJoinStyle(Qt::PenJoinStyle(getAttributeInt("joinstyle", result.joinStyle())));
     if (hasAttribute("miterlimit"))
         result.setMiterLimit(getAttributeDouble("miterlimit", result.miterLimit()));
     return result;
 }
 
 /*!
-    Returns the QBrush the current tag contains. If the current tag doesn't contain a QBrush, \a
-    defaultValue is returned.
-
-    \see getPen
+  Returns the QBrush the current tag contains. If the current tag doesn't contain a QBrush, \a
+  defaultValue is returned.
+  
+  \see getPen
 */
 QBrush QXmlGet::getBrush(const QBrush &defaultValue) const
 {
@@ -1936,13 +2306,13 @@ QBrush QXmlGet::getBrush(const QBrush &defaultValue) const
     if (hasAttribute("color"))
         result.setColor(getAttributeColor("color", result.color()));
     if (hasAttribute("brushstyle"))
-        result.setStyle((Qt::BrushStyle)getAttributeInt("brushstyle", result.style()));
+        result.setStyle(Qt::BrushStyle(getAttributeInt("brushstyle", result.style())));
     return result;
 }
 
 /*!
-    Returns the QFont the current tag contains. If the current tag doesn't contain a QFont, \a
-    defaultValue is returned.
+  Returns the QFont the current tag contains. If the current tag doesn't contain a QFont, \a
+  defaultValue is returned.
 */
 QFont QXmlGet::getFont(const QFont &defaultValue) const
 {
@@ -1952,8 +2322,395 @@ QFont QXmlGet::getFont(const QFont &defaultValue) const
     return result;
 }
 
+#ifndef QXMLPUTGET_NO_WIDGETS
+
 /*!
-    Returns whether the current tag has an attribute with the name \a name.
+  Loads the state of the passed widget \a w from anywhere inside the current
+  parent xml tag. The xml data must have previously been created via the \ref
+  QXmlPut::saveWidget method, or any of the specialized widget saving methods
+  such as \ref QXmlPut::saveLineEdit or \ref QXmlPut::saveSpinBox, etc.
+
+  If \a warnWhenUnsupported is set to true, a qDebug() output is issued when \a
+  w is of an unsupported widget type.
+  
+  Returns false if the widget \a w is a supported widget but couldn't be
+  found/loaded under this xml tag. Therefore it returns true if the widget was
+  either loaded successfully or it is an unsupported widget. This behavior
+  allows successively calling \ref loadWidget on a group of widgets possibly
+  containing unsupported widgets and only catching load errors if the widget
+  should in principle be available in the xml (see \ref loadWidgetsRecursive).
+  
+  Supported widget types are: QLineEdit, QAbstractButton (and subclasses such
+  as QCheckBox and QRadioButton), QTextEdit, QPlainTextEdit, QSpinBox,
+  QDoubleSpinBox, QComboBox, QAbstractSlider (and subclasses such as QScrollBar
+  and QSlider), QDateTimeEdit (and subclasses such as QTimeEdit and QDateEdit),
+  QFontComboBox, QGroupBox.
+  
+  \note For QComboBox, only the selected item is restored, and possibly the
+  text value if the combo box is editable. If you wish to retrieve all of the
+  items themselves, see \ref loadComboBox.
+  
+  \see QXmlPut::saveWidget, loadWidgetsRecursive
+*/
+bool QXmlGet::loadWidget(QWidget *w, bool warnWhenUnsupported)
+{
+    if (QLineEdit *v = qobject_cast<QLineEdit*>(w))
+        return loadLineEdit(v);
+    else if (QAbstractButton *v = qobject_cast<QAbstractButton*>(w))
+        return loadAbstractButton(v);
+    else if (QTextEdit *v = qobject_cast<QTextEdit*>(w))
+        return loadTextEdit(v);
+    else if (QPlainTextEdit *v = qobject_cast<QPlainTextEdit*>(w))
+        return loadPlainTextEdit(v);
+    else if (QSpinBox *v = qobject_cast<QSpinBox*>(w))
+        return loadSpinBox(v);
+    else if (QDoubleSpinBox *v = qobject_cast<QDoubleSpinBox*>(w))
+        return loadDoubleSpinBox(v);
+    else if (QComboBox *v = qobject_cast<QComboBox*>(w))
+        return loadComboBox(v, false);
+    else if (QAbstractSlider *v = qobject_cast<QAbstractSlider*>(w))
+        return loadAbstractSlider(v);
+    else if (QDateTimeEdit *v = qobject_cast<QDateTimeEdit*>(w))
+        return loadDateTimeEdit(v);
+    else if (QFontComboBox *v = qobject_cast<QFontComboBox*>(w))
+        return loadFontComboBox(v);
+    else if (QGroupBox *v = qobject_cast<QGroupBox*>(w))
+        return loadGroupBox(v);
+    else
+    {
+        if (warnWhenUnsupported)
+            qDebug() << Q_FUNC_INFO << "The widget class" << w->metaObject()->className() << "(" << w->objectName() << ") is not supported by QXmlPutGet";
+        return true;
+    }
+}
+
+/*!
+  Loads the widget passed as \a parent from xml, as well as all direct and
+  indirect child widgets that are supported by QXmlPutGet.
+  
+  If \a prefix and/or \a suffix are provided, only widgets that have the
+  according prefix and/or suffix in their object name are considered. This is
+  useful for marking a specific subset of widgets for xml storage already
+  during UI design. Further, any widgets specified in \a exclude are not
+  considered.
+  
+  Returns whether all widgets were loaded successfully. If false is returned,
+  at least one widget that should have been saved with an according call to
+  \ref QXmlPut::saveWidgetsRecursive (with the same parameters) couldn't be
+  found/loaded.
+  
+  \see QXmlPut::saveWidgetsRecursive
+*/
+bool QXmlGet::loadWidgetsRecursive(QWidget *parent, const QString &prefix, const QString &suffix, const QSet<const QWidget*> &exclude)
+{
+    bool success = true;
+    // note that maybeLoadWidget, same as loadWidget, returns true also if it is
+    // an unsupported widget. this allows catching load errors of widgets that
+    // should in principle be loadable by simply collecting the return values in
+    // the success variable.
+    success &= maybeLoadWidget(parent, prefix, suffix, exclude);
+    QList<QWidget*> widgets = parent->findChildren<QWidget*>();
+    for (int i=0; i<widgets.size(); ++i)
+        success &= maybeLoadWidget(widgets.at(i), prefix, suffix, exclude);
+    return success;
+}
+
+/*!
+  Loads the state of the passed QLineEdit \a w from anywhere inside the current
+  parent xml tag. The xml data must have previously been created via the
+  corresponding \ref QXmlPut::saveLineEdit method.
+  
+  The line edit's text value is retrieved from the xml entry. Returns true if
+  loading was successful.
+
+  Consider using \ref loadWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlPut::saveLineEdit, loadWidget
+*/
+bool QXmlGet::loadLineEdit(QLineEdit *w)
+{
+    if (findWidget(w))
+    {
+        w->setText(getString());
+        return true;
+    }
+    return false;
+}
+
+/*!
+  Loads the state of the passed QAbstractButton \a w from anywhere inside the
+  current parent xml tag. The xml data must have previously been created via
+  the corresponding \ref QXmlPut::saveAbstractButton method.
+  
+  The button's checked state is retrieved from the xml entry. Returns true if
+  loading was successful.
+
+  Consider using \ref loadWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlPut::saveAbstractButton, loadWidget
+*/
+bool QXmlGet::loadAbstractButton(QAbstractButton *w)
+{
+    if (findWidget(w) && w->isCheckable())
+    {
+        w->setChecked(getAttributeBool("checked"));
+        return true;
+    }
+    return false;
+}
+
+/*!
+  Loads the state of the passed QTextEdit \a w from anywhere inside the current
+  parent xml tag. The xml data must have previously been created via the
+  corresponding \ref QXmlPut::saveTextEdit method.
+  
+  The text edit's content is retrieved from the xml entry. Returns true if
+  loading was successful.
+
+  Consider using \ref loadWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlPut::saveTextEdit, loadWidget
+*/
+bool QXmlGet::loadTextEdit(QTextEdit *w)
+{
+    if (findWidget(w))
+    {
+        w->setPlainText(getString());
+        return true;
+    }
+    return false;
+}
+
+/*!
+  Loads the state of the passed QPlainTextEdit \a w from anywhere inside the
+  current parent xml tag. The xml data must have previously been created via
+  the corresponding \ref QXmlPut::savePlainTextEdit method.
+  
+  The text edit's content is retrieved from the xml entry. Returns true if
+  loading was successful.
+
+  Consider using \ref loadWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlPut::savePlainTextEdit, loadWidget
+*/
+bool QXmlGet::loadPlainTextEdit(QPlainTextEdit *w)
+{
+    if (findWidget(w))
+    {
+        w->setPlainText(getString());
+        return true;
+    }
+    return false;
+}
+
+/*!
+  Loads the state of the passed QSpinBox \a w from anywhere inside the
+  current parent xml tag. The xml data must have previously been created via
+  the corresponding \ref QXmlPut::saveSpinBox method.
+  
+  The spin box value is retrieved from the xml entry. Returns true if loading
+  was successful.
+
+  Consider using \ref loadWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlPut::saveSpinBox, loadWidget
+*/
+bool QXmlGet::loadSpinBox(QSpinBox *w)
+{
+    if (findWidget(w))
+    {
+        w->setValue(getInt());
+        return true;
+    }
+    return false;
+}
+
+/*!
+  Loads the state of the passed QDoubleSpinBox \a w from anywhere inside the
+  current parent xml tag. The xml data must have previously been created via
+  the corresponding \ref QXmlPut::saveDoubleSpinBox method.
+  
+  The spin box value is retrieved from the xml entry. Returns true if loading
+  was successful.
+
+  Consider using \ref loadWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlPut::saveDoubleSpinBox, loadWidget
+*/
+bool QXmlGet::loadDoubleSpinBox(QDoubleSpinBox *w)
+{
+    if (findWidget(w))
+    {
+        w->setValue(getDouble());
+        return true;
+    }
+    return false;
+}
+
+/*!
+  Loads the state of the passed QComboBox \a w from anywhere inside the current
+  parent xml tag. The xml data must have previously been created via the
+  corresponding \ref QXmlPut::saveComboBox method.
+  
+  The combo box selection state/text is retrieved from the xml entry. If \a
+  items is set to true, the items themselves are retrieved from the xml entry,
+  too. Returns true if loading was successful.
+
+  Consider using \ref loadWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlPut::saveComboBox, loadWidget
+*/
+bool QXmlGet::loadComboBox(QComboBox *w, bool items)
+{
+    if (findWidget(w))
+    {
+        if (items)
+        {
+            descend();
+            w->setUpdatesEnabled(false);
+            w->clear();
+            while (findNext("item"))
+            {
+                w->addItem(getString());
+                if (getAttributeBool("selected"))
+                    w->setCurrentIndex(w->count()-1);
+            }
+            if (find("text") && w->lineEdit()) // may have no line edit if not editable
+                w->lineEdit()->setText(getString());
+            w->setUpdatesEnabled(true);
+            rise();
+        } else
+        {
+            QString text = getString();
+            bool foundItem = false;
+            for (int i=0; i<w->count(); ++i)
+            {
+                if (w->itemText(i) == text)
+                {
+                    w->setCurrentIndex(i);
+                    foundItem = true;
+                    break;
+                }
+            }
+            if (!foundItem && w->lineEdit()) // may have no line edit if not editable
+                w->lineEdit()->setText(text);
+        }
+        return true;
+    }
+    return false;
+}
+
+/*!
+  Loads the state of the passed QAbstractSlider \a w from anywhere inside the
+  current parent xml tag. The xml data must have previously been created via
+  the corresponding \ref QXmlPut::saveAbstractSlider method.
+  
+  The slider value is retrieved from the xml entry. Returns true if loading was
+  successful.
+
+  Consider using \ref loadWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlPut::saveAbstractSlider, loadWidget
+*/
+bool QXmlGet::loadAbstractSlider(QAbstractSlider *w)
+{
+    if (findWidget(w))
+    {
+        w->setValue(getInt());
+        return true;
+    }
+    return false;
+}
+
+/*!
+  Loads the state of the passed QDateTimeEdit \a w from anywhere inside the
+  current parent xml tag. The xml data must have previously been created via
+  the corresponding \ref QXmlPut::saveDateTimeEdit method.
+  
+  The edit's date/time is retrieved from the xml entry. Note that this method
+  can also handle subclasses QDateEdit and QTimeEdit. Returns true if loading
+  was successful.
+
+  Consider using \ref loadWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlPut::saveDateTimeEdit, loadWidget
+*/
+bool QXmlGet::loadDateTimeEdit(QDateTimeEdit *w)
+{
+    if (findWidget(w))
+    {
+        if (QDateEdit *de = qobject_cast<QDateEdit*>(w))
+            de->setDate(getDate());
+        else if (QTimeEdit *te = qobject_cast<QTimeEdit*>(w))
+            te->setTime(getTime());
+        else
+            w->setDateTime(getDateTime());
+        return true;
+    }
+    return false;
+}
+
+/*!
+  Loads the state of the passed QFontComboBox \a w from anywhere inside the
+  current parent xml tag. The xml data must have previously been created via
+  the corresponding \ref QXmlPut::saveFontComboBox method.
+  
+  The font combo box selected font descriptor (family, size, weight, etc.) is
+  retrieved from the xml entry. Returns true if loading was successful.
+
+  Consider using \ref loadWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+
+  \see QXmlPut::saveFontComboBox, loadWidget
+*/
+bool QXmlGet::loadFontComboBox(QFontComboBox *w)
+{
+    if (findWidget(w))
+    {
+        w->setCurrentFont(getFont());
+        return true;
+    }
+    return false;
+}
+
+/*!
+  Loads the state of the passed QGroupBox \a w from anywhere inside the
+  current parent xml tag. The xml data must have previously been created via
+  the corresponding \ref QXmlPut::saveGroupBox method.
+  
+  If the group box is checkable, its checked state is retrieved from the xml
+  entry. Returns true if loading was successful.
+
+  Consider using \ref loadWidget as a more convenient alternative, since the
+  type of the widget is inferred automatically.
+  
+  \note this method does not save the group box child widgets to the xml.
+
+  \see QXmlPut::saveGroupBox, loadWidget
+*/
+bool QXmlGet::loadGroupBox(QGroupBox *w)
+{
+    if (findWidget(w) && w->isCheckable())
+    {
+        w->setChecked(getAttributeBool("checked"));
+        return true;
+    }
+    return false;
+}
+
+#endif // ifndef QXMLPUTGET_NO_WIDGETS
+
+/*!
+  Returns whether the current tag has an attribute with the name \a name.
 */
 bool QXmlGet::hasAttribute(const QString &name) const
 {
@@ -1961,8 +2718,8 @@ bool QXmlGet::hasAttribute(const QString &name) const
 }
 
 /*!
-    Returns the string the current tag carries as attribute with the name \a name. If the current tag
-    doesn't contain such an attribute,\a defaultValue is returned.
+  Returns the string the current tag carries as attribute with the name \a name. If the current tag
+  doesn't contain such an attribute,\a defaultValue is returned.
 */
 QString QXmlGet::getAttributeString(const QString &name, const QString &defaultValue) const
 {
@@ -1973,10 +2730,10 @@ QString QXmlGet::getAttributeString(const QString &name, const QString &defaultV
 }
 
 /*!
-    Returns the integer the current tag carries as attribute with the name \a name. If the current tag
-    doesn't contain such an attribute,\a defaultValue is returned.
-
-    \see getAttributeIntVector
+  Returns the integer the current tag carries as attribute with the name \a name. If the current tag
+  doesn't contain such an attribute,\a defaultValue is returned.
+  
+  \see getAttributeIntVector
 */
 int QXmlGet::getAttributeInt(const QString &name, int defaultValue) const
 {
@@ -1991,10 +2748,10 @@ int QXmlGet::getAttributeInt(const QString &name, int defaultValue) const
 }
 
 /*!
-    Returns the integer vector the current tag carries as attribute with the name \a name. If the current tag
-    doesn't contain such an attribute,\a defaultValue is returned.
-
-    \see getAttributeInt
+  Returns the integer vector the current tag carries as attribute with the name \a name. If the current tag
+  doesn't contain such an attribute,\a defaultValue is returned.
+  
+  \see getAttributeInt
 */
 QVector<int> QXmlGet::getAttributeIntVector(const QString &name, const QVector<int> &defaultValue) const
 {
@@ -2009,10 +2766,10 @@ QVector<int> QXmlGet::getAttributeIntVector(const QString &name, const QVector<i
 }
 
 /*!
-    Returns the double the current tag carries as attribute with the name \a name. If the current tag
-    doesn't contain such an attribute,\a defaultValue is returned.
-
-    \see getAttributeDoubleVector
+  Returns the double the current tag carries as attribute with the name \a name. If the current tag
+  doesn't contain such an attribute,\a defaultValue is returned.
+  
+  \see getAttributeDoubleVector
 */
 double QXmlGet::getAttributeDouble(const QString &name, double defaultValue) const
 {
@@ -2027,10 +2784,10 @@ double QXmlGet::getAttributeDouble(const QString &name, double defaultValue) con
 }
 
 /*!
-    Returns the double vector the current tag carries as attribute with the name \a name. If the current tag
-    doesn't contain such an attribute,\a defaultValue is returned.
-
-    \see getAttributeDouble
+  Returns the double vector the current tag carries as attribute with the name \a name. If the current tag
+  doesn't contain such an attribute,\a defaultValue is returned.
+  
+  \see getAttributeDouble
 */
 QVector<double> QXmlGet::getAttributeDoubleVector(const QString &name, const QVector<double> &defaultValue) const
 {
@@ -2045,12 +2802,12 @@ QVector<double> QXmlGet::getAttributeDoubleVector(const QString &name, const QVe
 }
 
 /*!
-    Returns the bool the current tag carries as attribute with the name \a name. If the current tag
-    doesn't contain such an attribute,\a defaultValue is returned.
-
-    by setting \a formats, you may specify which boolean formats this function accepts.
-
-    \see getAttributeBoolVector
+  Returns the bool the current tag carries as attribute with the name \a name. If the current tag
+  doesn't contain such an attribute,\a defaultValue is returned.
+  
+  by setting \a formats, you may specify which boolean formats this function accepts.
+  
+  \see getAttributeBoolVector
 */
 bool QXmlGet::getAttributeBool(const QString &name, bool defaultValue, QXmlPutGet::BoolFormats formats) const
 {
@@ -2065,12 +2822,12 @@ bool QXmlGet::getAttributeBool(const QString &name, bool defaultValue, QXmlPutGe
 }
 
 /*!
-    Returns the bool vector the current tag carries as attribute with the name \a name. If the current tag
-    doesn't contain such an attribute,\a defaultValue is returned.
-
-    by setting \a formats, you may specify which boolean formats this function accepts.
-
-    \see getAttributeBool
+  Returns the bool vector the current tag carries as attribute with the name \a name. If the current tag
+  doesn't contain such an attribute,\a defaultValue is returned.
+  
+  by setting \a formats, you may specify which boolean formats this function accepts.
+  
+  \see getAttributeBool
 */
 QVector<bool> QXmlGet::getAttributeBoolVector(const QString &name, const QVector<bool> &defaultValue, QXmlPutGet::BoolFormats formats) const
 {
@@ -2085,8 +2842,8 @@ QVector<bool> QXmlGet::getAttributeBoolVector(const QString &name, const QVector
 }
 
 /*!
-    Returns the QColor the current tag carries as attribute with the name \a name. If the current tag
-    doesn't contain such an attribute,\a defaultValue is returned.
+  Returns the QColor the current tag carries as attribute with the name \a name. If the current tag
+  doesn't contain such an attribute,\a defaultValue is returned.
 */
 QColor QXmlGet::getAttributeColor(const QString &name, const QColor &defaultValue) const
 {
@@ -2101,35 +2858,46 @@ QColor QXmlGet::getAttributeColor(const QString &name, const QColor &defaultValu
 }
 
 /*!
-    Loads the XML content from the string \a str into this QXmlGet instance. Returns true on success.
-
-    If the provided markup contains errors, this function returns false and outputs the error message
-    in \a errorMessage and the location of the error in \a errorLine and \a errorColumn.
-
-    \see QXmlPut::toString
+  Loads the XML content from the string \a str into this QXmlGet instance. Returns true on success.
+  
+  If the provided markup contains errors, this function returns false and outputs the error message
+  in \a errorMessage and the location of the error in \a errorLine and \a errorColumn.
+  
+  \see QXmlPut::toString
 */
 bool QXmlGet::fromString(const QString &str, QString *errorMessage, int *errorLine, int *errorColumn)
 {
     QDomDocument newDoc;
-    if (newDoc.setContent(str, errorMessage, errorLine, errorColumn))
+    QDomDocument::ParseResult result = newDoc.setContent(str);
+    if (result)
     {
         *this = QXmlGet(newDoc);
         return true;
     }
-    return false;
+    else
+    {
+        if (errorMessage)
+            *errorMessage = result.errorMessage;
+        if (errorLine)
+            *errorLine = result.errorLine;
+        if (errorColumn)
+            *errorColumn = result.errorColumn;
+        return false;
+    }
 }
 
+
 /*!
-    Loads the XML content from the file \a fileName into this QXmlGet instance. Returns true on success.
-
-    If the provided markup contains errors, this function returns false and outputs the error message
-    in \a errorMessage and the location of the error in \a errorLine and \a errorColumn.
-
-    If the provided file can't be opened (e.g. because it doesn't exist or the application doesn't
-    have read permission), this function returns false and \a errorMessage, \a errorLine and \a
-    errorColumn are left unchanged.
-
-    \see QXmlPut::save
+  Loads the XML content from the file \a fileName into this QXmlGet instance. Returns true on success.
+  
+  If the provided markup contains errors, this function returns false and outputs the error message
+  in \a errorMessage and the location of the error in \a errorLine and \a errorColumn.
+  
+  If the provided file can't be opened (e.g. because it doesn't exist or the application doesn't
+  have read permission), this function returns false and \a errorMessage, \a errorLine and \a
+  errorColumn are left unchanged.
+  
+  \see QXmlPut::save
 */
 bool QXmlGet::load(const QString &fileName, QString *errorMessage, int *errorLine, int *errorColumn)
 {
@@ -2137,43 +2905,56 @@ bool QXmlGet::load(const QString &fileName, QString *errorMessage, int *errorLin
     if (file.open(QIODevice::ReadOnly))
     {
         QDomDocument newDoc;
-        if (newDoc.setContent(&file, errorMessage, errorLine, errorColumn))
+        QDomDocument::ParseResult result = newDoc.setContent(&file);
+        if (result)
         {
             *this = QXmlGet(newDoc);
             return true;
         }
+        else
+        {
+            if (errorMessage)
+                *errorMessage = result.errorMessage;
+            if (errorLine)
+                *errorLine = result.errorLine;
+            if (errorColumn)
+                *errorColumn = result.errorColumn;
+        }
         file.close();
-    } else
-        qDebug() << FUNCNAME << "Couldn't read from file:" << fileName;
-
+    }
+    else
+    {
+        qDebug() << Q_FUNC_INFO << "Couldn't read from file:" << fileName;
+    }
     return false;
 }
 
+
 /*!
-    Returns a QXmlGet instance on the same Document and at the same position as this instance, but
-    which is restricted to this hierarchy level (and the levels below). This means, the returned
-    QXmlGet instance isn't allowed to \ref rise above the current hierarchy level.
-
-    This is useful if you wish that subroutines can handle their own XML work without possibly
-    interfering with the rest. By passing a restricted instance, it's guaranteed the subroutines
-    don't accidentally write/read outside their designated XML element.
-
-    If only the subroutine needs to write to/read from a specific element, consider using \ref
-    descended.
-
-    \b example:
-    \code
-    if (xmlGet.find("toptag")) // we might have better used findAndDescend() here.
-    {
-        xmlGet.descend();
-        if (xmlGet.find("stringtag"))
-          QString str = xmlGet.getString();
-        readOtherContent(xmlGet.restricted()); // A subroutine that reads from the <toptag> level
-        xmlGet.rise();
-    }
-    \endcode
-
-    \see descended
+  Returns a QXmlGet instance on the same Document and at the same position as this instance, but
+  which is restricted to this hierarchy level (and the levels below). This means, the returned
+  QXmlGet instance isn't allowed to \ref rise above the current hierarchy level.
+  
+  This is useful if you wish that subroutines can handle their own XML work without possibly
+  interfering with the rest. By passing a restricted instance, it's guaranteed the subroutines
+  don't accidentally write/read outside their designated XML element.
+  
+  If only the subroutine needs to write to/read from a specific element, consider using \ref
+  descended.
+  
+  \b example:
+  \code
+  if (xmlGet.find("toptag")) // we might have better used findAndDescend() here.
+  {
+    xmlGet.descend();
+    if (xmlGet.find("stringtag"))
+      QString str = xmlGet.getString();
+    readOtherContent(xmlGet.restricted()); // A subroutine that reads from the <toptag> level
+    xmlGet.rise();
+  }
+  \endcode
+  
+  \see descended
 */
 QXmlGet QXmlGet::restricted()
 {
@@ -2183,58 +2964,58 @@ QXmlGet QXmlGet::restricted()
 }
 
 /*!
-    Descends into the current element. Child elements can then be accessed normally via \ref find
-    etc.
-
-    Once the work in the lower hierarchy level is done, you can return to the previous position in
-    the parent hierarchy level by calling \ref rise.
-
-    If a subroutine needs to write to/read from a specific element, consider using \ref descended
-    instead of a descend-rise-pair.
-
-    \b example:
-    \code
-    if (xmlGet.find("firsttag")) // we might have better used findAndDescend() here.
-    {
-        xmlGet.descend(); // descend into the <firsttag> element, it is now the parent element.
-        if (xmlGet.find("stringtag"))
-          QString str = xmlGet.getString();
-        xmlGet.rise(); // rise from the <firsttag> element. <firsttag> is now the current element again, and not the parent element anymore.
-    }
-    \endcode
-
-    \see rise, descended, findAndDescend, findNextAndDescend
+  Descends into the current element. Child elements can then be accessed normally via \ref find
+  etc.
+  
+  Once the work in the lower hierarchy level is done, you can return to the previous position in
+  the parent hierarchy level by calling \ref rise.
+  
+  If a subroutine needs to write to/read from a specific element, consider using \ref descended
+  instead of a descend-rise-pair.
+  
+  \b example:
+  \code
+  if (xmlGet.find("firsttag")) // we might have better used findAndDescend() here.
+  {
+    xmlGet.descend(); // descend into the <firsttag> element, it is now the parent element.
+    if (xmlGet.find("stringtag"))
+      QString str = xmlGet.getString();
+    xmlGet.rise(); // rise from the <firsttag> element. <firsttag> is now the current element again, and not the parent element anymore.
+  }
+  \endcode
+  
+  \see rise, descended, findAndDescend, findNextAndDescend
 */
 void QXmlGet::descend()
 {
     if (mCurrentParent == mCurrentElement)
-        qDebug() << FUNCNAME << "Descended into own parent, possibly missing a rise()";
+        qDebug() << Q_FUNC_INFO << "Descended into own parent, possibly missing a rise()";
     mCurrentParent = mCurrentElement;
 }
 
 /*!
-    Returns a QXmlGet instance that is descended into and restricted to the current element. Child
-    elements can then be accessed with the returned instance normally via \ref find etc.
-
-    Due to the restriction, the returned instance can't rise above its initial hierarchy level, i.e.
-    into or above the hierarchy level of the instance this function is called on.
-
-    When descending into elements like this, there is no need to call \ref rise (and thus no
-    possibility to forget a \ref rise), because the current instance isn't influenced. Whatever
-    descending/rising the subroutine does with the returned instance can't break the callers XML
-    handling code.
-
-    \b example:
-    \code
-    if (xmlGet.find("header"))
-        readHeaderSubroutine(xmlGet.descended());
-    if (xmlGet.find("body"))
-        readBodySubroutine(xmlGet.descended());
-    if (xmlGet.find("footer"))
-        readFooterSubroutine(xmlGet.descended());
-    \endcode
-
-    \see restricted, descend
+  Returns a QXmlGet instance that is descended into and restricted to the current element. Child
+  elements can then be accessed with the returned instance normally via \ref find etc.
+  
+  Due to the restriction, the returned instance can't rise above its initial hierarchy level, i.e.
+  into or above the hierarchy level of the instance this function is called on.
+  
+  When descending into elements like this, there is no need to call \ref rise (and thus no
+  possibility to forget a \ref rise), because the current instance isn't influenced. Whatever
+  descending/rising the subroutine does with the returned instance can't break the callers XML
+  handling code.
+  
+  \b example:
+  \code
+  if (xmlGet.find("header"))
+    readHeaderSubroutine(xmlGet.descended());
+  if (xmlGet.find("body"))
+    readBodySubroutine(xmlGet.descended());
+  if (xmlGet.find("footer"))
+    readFooterSubroutine(xmlGet.descended());
+  \endcode
+  
+  \see restricted, descend
 */
 QXmlGet QXmlGet::descended()
 {
@@ -2245,34 +3026,34 @@ QXmlGet QXmlGet::descended()
 }
 
 /*!
-    Rises to the previous position in the parent hierarchy level. This finishes the work in a lower
-    hierarchy level that was started with \ref descend earlier.
-
-    If a subroutine needs to write to/read from a specific element, consider using \ref descended
-    instead of a descend-rise-pair.
-
-    If this instance is restricted (see \ref descended and \ref restricted) and is already inside its
-    highest allowed hierarchy level, a further attempt to \ref rise will return false without
-    changing the current hierarchy level, and cause a corresponding qDebug output.
-
-    \b example:
-    \code
-    if (xmlGet.find("firsttag")) // we might have better used findAndDescend() here.
-    {
-        xmlGet.descend(); // descend into the <firsttag> element, it is now the parent element.
-        if (xmlGet.find("stringtag"))
-            QString str = xmlGet.getString();
-        xmlGet.rise(); // rise from the <firsttag> element. <firsttag> is now the current element again, and not the parent element anymore.
-    }
-    \endcode
-
-    \see descend
+  Rises to the previous position in the parent hierarchy level. This finishes the work in a lower
+  hierarchy level that was started with \ref descend earlier.
+  
+  If a subroutine needs to write to/read from a specific element, consider using \ref descended
+  instead of a descend-rise-pair.
+  
+  If this instance is restricted (see \ref descended and \ref restricted) and is already inside its
+  highest allowed hierarchy level, a further attempt to \ref rise will return false without
+  changing the current hierarchy level, and cause a corresponding qDebug output.
+  
+  \b example:
+  \code
+  if (xmlGet.find("firsttag")) // we might have better used findAndDescend() here.
+  {
+    xmlGet.descend(); // descend into the <firsttag> element, it is now the parent element.
+    if (xmlGet.find("stringtag"))
+      QString str = xmlGet.getString();
+    xmlGet.rise(); // rise from the <firsttag> element. <firsttag> is now the current element again, and not the parent element anymore.
+  }
+  \endcode
+  
+  \see descend
 */
 bool QXmlGet::rise()
 {
     if (mCurrentParent == mBarrierNode)
     {
-        qDebug() << FUNCNAME << "attept to rise beyond allowed node";
+        qDebug() << Q_FUNC_INFO << "attept to rise beyond allowed node";
         return false;
     }
 
@@ -2288,26 +3069,26 @@ bool QXmlGet::rise()
                 mCurrentElement = newParent;
             return true;
         } else
-            qDebug() << FUNCNAME << "Attempt to rise into non-element node";
+            qDebug() << Q_FUNC_INFO << "Attempt to rise into non-element node";
     } else
-        qDebug() << FUNCNAME << "Attempt to rise above document node";
+        qDebug() << Q_FUNC_INFO << "Attempt to rise above document node";
     return false;
 }
 
 /*!
-    Changes the current parent element to \a parentElement. It must be in the current QDomDocument
-    already.
-
-    If this instance is restricted (see \ref descended and \ref restricted) and \a parentElement is
-    not inside the allowed hierarchy, this function will return false without changing the current
-    position, and cause a corresponding qDebug output.
-
-    You probably won't use this function very often, since normal, linear QXmlPutGet navigation
-    should be done with \ref find, \ref descend, \ref rise, \ref descended, etc. However, it's useful
-    for nonlinear XML navigation, where frequent jumps between different locations in the XML
-    hierarchy need to be done.
-
-    \see element
+  Changes the current parent element to \a parentElement. It must be in the current QDomDocument
+  already.
+  
+  If this instance is restricted (see \ref descended and \ref restricted) and \a parentElement is
+  not inside the allowed hierarchy, this function will return false without changing the current
+  position, and cause a corresponding qDebug output.
+  
+  You probably won't use this function very often, since normal, linear QXmlPutGet navigation
+  should be done with \ref find, \ref descend, \ref rise, \ref descended, etc. However, it's useful
+  for nonlinear XML navigation, where frequent jumps between different locations in the XML
+  hierarchy need to be done.
+  
+  \see element
 */
 bool QXmlGet::goTo(QDomElement parentElement)
 {
@@ -2317,7 +3098,7 @@ bool QXmlGet::goTo(QDomElement parentElement)
         el = el.parentNode().toElement();
     if (el.isNull())
     {
-        qDebug() << FUNCNAME << "attempt to jump outside of allowed tree";
+        qDebug() << Q_FUNC_INFO << "attempt to jump outside of allowed tree";
         return false;
     }
 
@@ -2330,9 +3111,33 @@ bool QXmlGet::goTo(QDomElement parentElement)
             mCurrentElement = parentElement;
         return true;
     } else
-        qDebug() << FUNCNAME << "Attempt to go to element not in document";
+        qDebug() << Q_FUNC_INFO << "Attempt to go to element not in document";
     return false;
 }
+
+#ifndef QXMLPUTGET_NO_WIDGETS
+/*!
+  Finds the first element matching the type and object name of the passed
+  QWidget \a w, in the current hierarchy level. If this method returns true, an
+  according element was found.
+  
+  This method is used in the methods that load widgets from xml, such as \ref
+  loadLineEdit, \ref loadSpinBox, etc.
+*/
+bool QXmlGet::findWidget(const QWidget *w)
+{
+    if (w->objectName().isEmpty()) return false;
+    QString tagName = QString(w->metaObject()->className()).toLower().mid(1);
+    findReset();
+    while (findNext(tagName))
+    {
+        if (getAttributeString("id") == w->objectName())
+            return true;
+    }
+    return false;
+}
+
+#endif // ifndef QXMLPUTGET_NO_WIDGETS
 
 bool QXmlGet::strToBool(QString value, bool *ok, QXmlPutGet::BoolFormats formats)
 {
@@ -2386,7 +3191,7 @@ QColor QXmlGet::strToColor(QString value, bool *ok)
         // separate off alpha value, because QColor(QString) constructor doesn't parse alpha
         if (value.length() == 1+4) // #RGBA
         {
-            alpha = value.right(1).toInt(&subOk, 16)/15.0*255;
+            alpha = int(value.right(1).toInt(&subOk, 16)/15.0*255);
             if (!subOk)
             {
                 if (ok) *ok = false;
@@ -2404,7 +3209,7 @@ QColor QXmlGet::strToColor(QString value, bool *ok)
             value.chop(2);
         } else if (value.length() == 1+16) // #RRRGGGBBBAAA
         {
-            alpha = value.right(3).toInt(&subOk, 16)/4095.0*255;
+            alpha = int(value.right(3).toInt(&subOk, 16)/4095.0*255);
             if (!subOk)
             {
                 if (ok) *ok = false;
@@ -2478,3 +3283,47 @@ QVector<bool> QXmlGet::strToBoolVector(QString value, bool *ok, QXmlPutGet::Bool
     if (ok) *ok = true;
     return result;
 }
+
+/*!
+  This method is a helper function for \ref loadWidgetsRecursive. Tries to load
+  the widget \a w from xml.
+  
+  If \a prefix and/or \a suffix are specified, only widgets with object names
+  that have the respective prefix/suffix will be considered. Widgets in \a
+  exclude will not be considered.
+  
+  Returns false only if the widget wasn't loaded successfully even though it
+  should have been. Thus returns true if the widget was loaded successfully,
+  but also if the widget is not supported, has an empty object name, doesn't
+  match the prefix/suffix requirement, or is part of the exclude list.
+  
+  \see QXmlPut::maybeSaveWidget
+*/
+bool QXmlGet::maybeLoadWidget(QWidget *w, const QString &prefix, const QString &suffix, const QSet<const QWidget *> &exclude)
+{
+    if (exclude.contains(w))
+        return true;
+    if (w->objectName().isEmpty())
+        return true;
+    if (!prefix.isEmpty() && !w->objectName().startsWith(prefix))
+        return true;
+    if (!suffix.isEmpty() && !w->objectName().endsWith(suffix))
+        return true;
+
+    // when recursing over child widgets, we will come across QLineEdits that sit
+    // inside QDateEit, QTimeEdit, etc. However, we rather save those parent
+    // widgets and not the internal QLineEdit:
+    if (qobject_cast<QDateEdit*>(w->parentWidget()) ||
+        qobject_cast<QTimeEdit*>(w->parentWidget()) ||
+        qobject_cast<QDateTimeEdit*>(w->parentWidget()) ||
+        qobject_cast<QSpinBox*>(w->parentWidget()) ||
+        qobject_cast<QDoubleSpinBox*>(w->parentWidget()) ||
+        qobject_cast<QComboBox*>(w->parentWidget()))
+        return true;
+
+    return loadWidget(w, false);
+}
+
+
+
+

@@ -658,7 +658,7 @@ void LogBox::save_logfile(const QDateTime &dt,
                           int level,
                           const QString log)
 {
-    QString filename = QString("%1.log")
+    QString filename = QString("log/%1.log")
             .arg(APPNAME);
 
     QFile file(filename);

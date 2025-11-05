@@ -121,7 +121,7 @@ unix:!macx {
     QMAKE_CXX   = ccache g++
 
     # останавливать сборку после первой ошибки
-    # QMAKE_CXXFLAGS += -Wfatal-errors
+    QMAKE_CXXFLAGS += -Wfatal-errors
 
     #CONFIG += warn_off
     #QMAKE_CXXFLAGS += -Wall

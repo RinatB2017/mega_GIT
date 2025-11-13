@@ -137,13 +137,9 @@ public:
 
     void setCentralWidget(MyWidget *widget);
     void setCentralWidget(QWidget *widget);
-    void set_c_widget(MyWidget *widget);   //TODO проба
+    void set_c_widget(MyWidget *widget);
 
     void setWindowTitle(const QString &title);
-
-    //    bool add_action(QMenu *menu,
-    //                    int pos_y,
-    //                    QAction *action);
 
     bool add_separator(QMenu *menu,
                        int pos_y);
@@ -291,9 +287,6 @@ private:
     QSystemTrayIcon *trayIcon = nullptr;
     QMenu *trayIconMenu = nullptr;
 
-    //    QMenu *m_app_windowsmenu = nullptr;
-
-    //TODO тест
     MyWidget *c_widget = nullptr;
 
     void load_main(void);

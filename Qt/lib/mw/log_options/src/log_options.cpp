@@ -43,7 +43,6 @@ void Log_options::init(void)
 
     findCodecs();
 
-    //TODO пробуем
     QTextCodec *codec = QTextCodec::codecForLocale();
     for(int n=0; n<ui->cb_CodecForCStrings->count(); n++)
     {
@@ -53,7 +52,6 @@ void Log_options::init(void)
             break;
         }
     }
-    //---
 
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
     ui->cb_CodecForCStrings->setCurrentIndex(ui->cb_CodecForCStrings->findText(QTextCodec::codecForCStrings()->name()));

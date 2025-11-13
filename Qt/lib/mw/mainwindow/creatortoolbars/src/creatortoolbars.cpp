@@ -234,7 +234,7 @@ void CreatorToolBars::app_toolbar_add_style(void)
 #ifdef USE_CUSTOM_STYLE
 void CreatorToolBars::app_toolbar_add_custom_style(void)
 {
-    //TODO пробую самописные стили
+    // пробую самописные стили
 
     QMenu *menu = new QMenu(this);
 

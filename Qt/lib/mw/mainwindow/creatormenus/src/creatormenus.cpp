@@ -563,7 +563,7 @@ void CreatorMenus::app_menu_add_style(QMenu *menu)
 #ifdef USE_CUSTOM_STYLE
 void CreatorMenus::app_menu_add_custom_style(QMenu *menu)
 {
-    //TODO пробую самописные стили
+    // пробую самописные стили
 
     Q_ASSERT(menu);
 

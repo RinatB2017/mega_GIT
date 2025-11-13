@@ -289,7 +289,7 @@ void CreatorWindow::init(void)
     }
 #endif
 
-    //TODO не стоит именно здесь взводить эти аттрибуты, лучше в mywidget
+    // не стоит именно здесь взводить эти аттрибуты, лучше в mywidget
     setAttribute(Qt::WA_DeleteOnClose);
     //setAttribute(Qt::WA_QuitOnClose);
 }
@@ -677,7 +677,6 @@ void CreatorWindow::load_main(void)
 
     endGroup();
 
-    //TODO geometry
     QTimer::singleShot(100, [this]() {
         restoreGeometry(load_value(P_GEOMETRY).toByteArray());
         restoreState(load_value(P_WINDOW_STATE).toByteArray());
@@ -712,7 +711,6 @@ void CreatorWindow::save_main(void)
 
     endGroup();
 
-    //TODO geometry
     save_value(P_GEOMETRY,      saveGeometry());
     save_value(P_WINDOW_STATE,  saveState());
 
@@ -838,7 +836,7 @@ void CreatorWindow::set_norton_style(void)
 #ifdef USE_CUSTOM_STYLE
 void CreatorWindow::createCustomStyleToolBar(void)
 {
-    //TODO пробую самописные стили
+    // пробую самописные стили
     QToolBar *customStyletoolbar = new QToolBar(tr("customstyletoolbar"), this);
     Q_ASSERT(customStyletoolbar);
 
@@ -1055,7 +1053,6 @@ QDockWidget * CreatorWindow::add_dock_widget(QString title,
 
         widget->setParent(dw);
 
-        //TODO не факт, что это правильно
         widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
         hbox->addWidget(widget);

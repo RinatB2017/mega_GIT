@@ -29,7 +29,7 @@ Waiting_box::Waiting_box(QWidget *parent) :
 
     setFixedSize(sizeHint());
     // setWindowModality(Qt::WindowModal);
-    setWindowFlag(Qt::WindowStaysOnTopHint);    //TODO проверка абсолютной модальности
+    setWindowFlag(Qt::WindowStaysOnTopHint);    // проверка абсолютной модальности
     setModal(true);
     // setWindowFlags(Qt::Dialog | Qt::WindowTitleHint);   //убираем кнопку закрытия
 }

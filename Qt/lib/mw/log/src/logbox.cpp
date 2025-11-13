@@ -71,7 +71,6 @@ void LogBox::init(void)
     setObjectName("LogBox");
 
 #ifdef NEED_CODEC
-    //TODO проверить надо
     current_codec = QTextCodec::codecForLocale();
 #endif
 
@@ -213,11 +212,10 @@ void LogBox::create_widgets(void)
     logBox = new QTextEdit(this);
     Q_ASSERT(logBox);
     logBox->setObjectName("te_LogBox");
-    //    logBox->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     logBox->setFont(font);
     logBox->setProperty(NO_SAVE, true);
 #ifdef Q_OS_LINUX
-    //TODO белый цвет, если тема темная
+    // белый цвет, если тема темная
     //logBox->setStyleSheet("background:white;");
 #endif
 
@@ -332,9 +330,9 @@ void LogBox::append_string(LOG_DATA log_data)
     if(flagAddDateTime)
     {
         temp = QString("%1\t%2\t%3")
-                .arg(level_str)
-                .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
-                .arg(log_data.message);
+        .arg(level_str)
+            .arg(QDateTime::currentDateTime().toString("dd-MM-yyyy hh:mm:ss"))
+            .arg(log_data.message);
     }
     else
     {
@@ -345,9 +343,9 @@ void LogBox::append_string(LOG_DATA log_data)
     flagColor ? logBox->setTextBackgroundColor(log_data.background_color) : logBox->setTextBackgroundColor(QColor(Qt::white));
 
 #ifdef NEED_CODEC
-    //TODO проверить надо
     QByteArray ba;
-    ba.append(temp.toStdString().c_str());
+    // ba.append(temp.toStdString().c_str());
+    ba.append(temp.toLocal8Bit());
 #endif
 
     if(flagAutoSave)
@@ -385,7 +383,6 @@ void LogBox::append_string(LOG_DATA log_data)
         }
 
 #ifdef NEED_CODEC
-        //TODO проверить надо
         logBox->setTextColor(log_data.color_text);
         logBox->insertPlainText(current_codec->toUnicode(ba));
 #else
@@ -395,7 +392,7 @@ void LogBox::append_string(LOG_DATA log_data)
     else
     {
 #ifdef NEED_CODEC
-        //TODO проверить надо
+        // logBox->append(QString("Current codec is %1").arg(current_codec->name().data())); //FIXME потом убрать
         Q_ASSERT(current_codec);
         logBox->append(current_codec->toUnicode(ba));
 #else
@@ -417,7 +414,6 @@ void LogBox::infoLog(const QString &text)
     log_data.time = QTime::currentTime();
     log_data.level = L_INFO;
     log_data.color_text = Qt::blue;
-    //TODO log_data.background_color = Qt::white;
     QPalette palette = QApplication::palette();
     log_data.background_color = palette.color(QPalette::Base);
     log_data.message = text;
@@ -443,7 +439,6 @@ void LogBox::debugLog(const QString &text)
     log_data.time = QTime::currentTime();
     log_data.level = L_DEBUG;
     log_data.color_text = Qt::darkGreen;
-    //TODO log_data.background_color = Qt::white;
     QPalette palette = QApplication::palette();
     log_data.background_color = palette.color(QPalette::Base);
     log_data.message = text;
@@ -469,7 +464,6 @@ void LogBox::errorLog(const QString &text)
     log_data.time = QTime::currentTime();
     log_data.level = L_ERROR;
     log_data.color_text = Qt::red;
-    //TODO log_data.background_color = Qt::white;
     QPalette palette = QApplication::palette();
     log_data.background_color = palette.color(QPalette::Base);
     log_data.message = text;
@@ -498,7 +492,6 @@ void LogBox::traceLog(const QString &text)
     log_data.time = QTime::currentTime();
     log_data.level = L_TRACE;
     log_data.color_text = Qt::gray;
-    //TODO log_data.background_color = Qt::white;
     QPalette palette = QApplication::palette();
     log_data.background_color = palette.color(QPalette::Base);
     log_data.message = text;
@@ -569,10 +562,10 @@ void LogBox::syslogLog(QDateTime dt,
                        const QString &message)
 {
     QString temp = QString("%1   %2   %3   %4")
-            .arg(dt.toString("dd-MM-yy hh:mm:ss"))
-            .arg(syslog_to_str(level))
-            .arg(src)
-            .arg(message);
+    .arg(dt.toString("dd-MM-yy hh:mm:ss"))
+        .arg(syslog_to_str(level))
+        .arg(src)
+        .arg(message);
 
     flagColor ? logBox->setTextColor(QColor("blue")) : logBox->setTextColor(QColor("black"));
 
@@ -595,10 +588,10 @@ void LogBox::syslogLog(int level,
                        const QString &message)
 {
     QString temp = QString("%1   %2   %3   %4")
-            .arg(QDateTime::currentDateTime().toString("dd-MM-yy hh:mm:ss"))
-            .arg(syslog_to_str(level))
-            .arg(src)
-            .arg(message);
+    .arg(QDateTime::currentDateTime().toString("dd-MM-yy hh:mm:ss"))
+        .arg(syslog_to_str(level))
+        .arg(src)
+        .arg(message);
 
     flagColor ? logBox->setTextColor(QColor("blue")) : logBox->setTextColor(QColor("black"));
 
@@ -659,7 +652,7 @@ void LogBox::save_logfile(const QDateTime &dt,
                           const QString log)
 {
     QString filename = QString("log/%1.log")
-            .arg(APPNAME);
+    .arg(APPNAME);
 
     QFile file(filename);
     if (!file.open(QIODevice::Append | QIODevice::Text))
@@ -673,7 +666,7 @@ void LogBox::save_logfile(const QDateTime &dt,
     QString temp;
 
     temp.append(QString("%1\t")
-                .arg(dt.toString("dd-MM-yyyy hh:mm:ss")));
+                    .arg(dt.toString("dd-MM-yyyy hh:mm:ss")));
 
     switch (level)
     {
@@ -684,7 +677,7 @@ void LogBox::save_logfile(const QDateTime &dt,
         break;
     }
     temp.append(QString("%1\n")
-                .arg(log));
+                    .arg(log));
 
     file.write(temp.toLocal8Bit());
     file.close();
@@ -716,13 +709,13 @@ void LogBox::save_log(const QString &filename)
         temp.append(QString("%1|").arg(ld.time.toString("hh:mm:ss")));
         temp.append(QString("%1|").arg(ld.level));
         temp.append(QString("#%1%2%3|")
-                    .arg(static_cast<uchar>(ld.color_text.red()),   2, 16, QChar('0'))
-                    .arg(static_cast<uchar>(ld.color_text.green()), 2, 16, QChar('0'))
-                    .arg(static_cast<uchar>(ld.color_text.blue()),  2, 16, QChar('0')));
+                        .arg(static_cast<uchar>(ld.color_text.red()),   2, 16, QChar('0'))
+                        .arg(static_cast<uchar>(ld.color_text.green()), 2, 16, QChar('0'))
+                        .arg(static_cast<uchar>(ld.color_text.blue()),  2, 16, QChar('0')));
         temp.append(QString("#%1%2%3|")
-                    .arg(static_cast<uchar>(ld.background_color.red()),   2, 16, QChar('0'))
-                    .arg(static_cast<uchar>(ld.background_color.green()), 2, 16, QChar('0'))
-                    .arg(static_cast<uchar>(ld.background_color.blue()),  2, 16, QChar('0')));
+                        .arg(static_cast<uchar>(ld.background_color.red()),   2, 16, QChar('0'))
+                        .arg(static_cast<uchar>(ld.background_color.green()), 2, 16, QChar('0'))
+                        .arg(static_cast<uchar>(ld.background_color.blue()),  2, 16, QChar('0')));
         temp.append(QString("%1\n").arg(ld.message));
 
         file.write(temp.toLocal8Bit());
@@ -757,13 +750,13 @@ void LogBox::save_full_log(const QString &filename)
         temp.append(QString("%1|").arg(ld.time.toString("hh:mm:ss")));
         temp.append(QString("%1|").arg(ld.level));
         temp.append(QString("#%1%2%3|")
-                    .arg(static_cast<uchar>(ld.color_text.red()),   2, 16, QChar('0'))
-                    .arg(static_cast<uchar>(ld.color_text.green()), 2, 16, QChar('0'))
-                    .arg(static_cast<uchar>(ld.color_text.blue()),  2, 16, QChar('0')));
+                        .arg(static_cast<uchar>(ld.color_text.red()),   2, 16, QChar('0'))
+                        .arg(static_cast<uchar>(ld.color_text.green()), 2, 16, QChar('0'))
+                        .arg(static_cast<uchar>(ld.color_text.blue()),  2, 16, QChar('0')));
         temp.append(QString("#%1%2%3|")
-                    .arg(static_cast<uchar>(ld.background_color.red()),   2, 16, QChar('0'))
-                    .arg(static_cast<uchar>(ld.background_color.green()), 2, 16, QChar('0'))
-                    .arg(static_cast<uchar>(ld.background_color.blue()),  2, 16, QChar('0')));
+                        .arg(static_cast<uchar>(ld.background_color.red()),   2, 16, QChar('0'))
+                        .arg(static_cast<uchar>(ld.background_color.green()), 2, 16, QChar('0'))
+                        .arg(static_cast<uchar>(ld.background_color.blue()),  2, 16, QChar('0')));
         temp.append(QString("%1\n").arg(ld.message));
 
         file.write(temp.toLocal8Bit());
@@ -795,10 +788,9 @@ void LogBox::changeOptions(void)
     if(res == QDialog::Accepted)
     {
 #ifdef NEED_CODEC
-        //TODO проверить надо
         current_codec = optionsBox->get_text_codec();
         QTextCodec::setCodecForLocale(current_codec);
-        emit debugLog(QString("new codec is %1").arg(current_codec->name().data()));
+        emit infoLog(QString("new codec is %1").arg(current_codec->name().data()));
 #endif
 
         logBox->setReadOnly(optionsBox->property(P_FLAG_READ_ONLY).toBool());

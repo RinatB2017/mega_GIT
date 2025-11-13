@@ -33,7 +33,7 @@ MyWidget::MyWidget(QWidget *parent) :
     MySettings()
 {
 #ifndef RS232_LOG
-    //TODO не надо тут условий. Родитель может быть и пустым, не надо приводить всё к toplevelwidget
+    // не надо тут условий. Родитель может быть и пустым, не надо приводить всё к toplevelwidget
     connect_log(parent);
 #endif
 #ifdef QT_DEBUG
@@ -196,7 +196,7 @@ bool MyWidget::connect_log_signals(QWidget *src, QWidget *dest)
     Q_ASSERT(dest->metaObject()->indexOfSignal("error(QString)") != -1);
     Q_ASSERT(dest->metaObject()->indexOfSignal("trace(QString)") != -1);
 
-    //TODO надо переделать на современный стиль
+    // надо переделать на современный стиль
     connect(src,    SIGNAL(info(QString)),  dest,   SIGNAL(info(QString)));
     connect(src,    SIGNAL(debug(QString)), dest,   SIGNAL(debug(QString)));
     connect(src,    SIGNAL(error(QString)), dest,   SIGNAL(error(QString)));

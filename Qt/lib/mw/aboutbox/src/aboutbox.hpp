@@ -27,7 +27,7 @@ class AboutBox : public QDialog
 {
     Q_OBJECT
 
-    //TODO не забыть, что название property должны совпадать с первым полем Q_PROPERTY
+    // не забыть, что название property должны совпадать с первым полем Q_PROPERTY
     Q_PROPERTY(QString avatar       READ get_avatar         WRITE set_avatar)
     Q_PROPERTY(QString telegram_qr  READ get_telegram_qr    WRITE set_telegram_qr)
     Q_PROPERTY(QString orgName      READ get_orgName        WRITE set_orgName)

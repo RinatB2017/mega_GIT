@@ -250,7 +250,6 @@ bool MySettings::load_property(QWidget *widget, const QString &property_name)
 {
     Q_ASSERT(widget);
 
-    //TODO временный костыль
     QLabel *label = dynamic_cast<QLabel *>(widget);
     if(label)
     {
@@ -298,7 +297,6 @@ bool MySettings::save_property(QWidget *widget, const QString &property_name)
 {
     Q_ASSERT(widget);
 
-    //TODO временный костыль
     QLabel *label = dynamic_cast<QLabel *>(widget);
     if(label)
     {

@@ -351,7 +351,6 @@ void LogBox::append_string(LOG_DATA log_data)
 
 #ifdef NEED_CODEC
     QByteArray ba;
-    // ba.append(temp.toStdString().c_str());
     ba.append(temp.toLocal8Bit());
 #endif
 

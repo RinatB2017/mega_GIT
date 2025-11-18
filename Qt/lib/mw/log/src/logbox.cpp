@@ -71,7 +71,14 @@ void LogBox::init(void)
     setObjectName("LogBox");
 
 #ifdef NEED_CODEC
+#ifdef Q_OS_WIN
+    current_codec = QTextCodec::codecForName("windows-1251");   // костыль для винды
+#else
     current_codec = QTextCodec::codecForLocale();
+#endif
+#ifdef QT_DEBUG
+    qDebug() << QString("Current codec is %1").arg(current_codec->name().data()); //FIXME потом убрать
+#endif
 #endif
 
     create_widgets();

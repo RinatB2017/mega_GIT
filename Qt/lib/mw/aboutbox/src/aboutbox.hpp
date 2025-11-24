@@ -18,6 +18,7 @@
 #define P_EMAIL         "email"
 #define P_AUTHOR        "author"
 #define P_TELEGRAM      "telegram"
+#define P_GITHUB        "github"
 //--------------------------------------------------------------------------------
 namespace Ui {
     class AboutBox;
@@ -36,6 +37,7 @@ class AboutBox : public QDialog
     Q_PROPERTY(QString email        READ get_email          WRITE set_email)
     Q_PROPERTY(QString author       READ get_author         WRITE set_author)
     Q_PROPERTY(QString telegram     READ get_telegram       WRITE set_telegram)
+    Q_PROPERTY(QString github       READ get_github         WRITE set_github)
 
 public:
     explicit AboutBox(QWidget *parent = nullptr);
@@ -56,6 +58,7 @@ private:
     QString email;
     QString author;
     QString telegram;
+    QString github;
 
     QString get_avatar(void);
     QString get_telegram_qr(void);
@@ -65,6 +68,7 @@ private:
     QString get_email(void);
     QString get_author(void);
     QString get_telegram(void);
+    QString get_github(void);
 
     void set_avatar(const QString &value);
     void set_telegram_qr(const QString &value);
@@ -74,6 +78,7 @@ private:
     void set_email(const QString &value);
     void set_author(const QString &value);
     void set_telegram(const QString &value);
+    void set_github(const QString &value);
 
     void init(void);
 

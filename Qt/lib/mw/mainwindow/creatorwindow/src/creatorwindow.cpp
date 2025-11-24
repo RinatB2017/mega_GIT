@@ -598,6 +598,7 @@ void CreatorWindow::about(void)
     about->setProperty(P_AUTHOR,        P_AUTHOR_STR);
     about->setProperty(P_EMAIL,         P_EMAIL_STR);
     about->setProperty(P_TELEGRAM,      P_TELEGRAM_STR);
+    about->setProperty(P_GITHUB,        P_GITHUB_STR);
     about->exec();
 }
 //--------------------------------------------------------------------------------

@@ -136,6 +136,11 @@ QString AboutBox::get_telegram(void)
     return telegram;
 }
 //--------------------------------------------------------------------------------
+QString AboutBox::get_github(void)
+{
+    return github;
+}
+//--------------------------------------------------------------------------------
 void AboutBox::set_avatar(const QString &value)
 {
     avatar = value;
@@ -183,6 +188,13 @@ void AboutBox::set_telegram(const QString &value)
     telegram = value;
     ui->lbl_telegram->setText(QString("<a href='%1'>Telegram</a>").arg(telegram));
     ui->lbl_telegram->setToolTip(telegram);
+}
+//--------------------------------------------------------------------------------
+void AboutBox::set_github(const QString &value)
+{
+    github = value;
+    ui->lbl_github->setText(QString("<a href='%1'>Github</a>").arg(telegram));
+    ui->lbl_github->setToolTip(github);
 }
 //--------------------------------------------------------------------------------
 void AboutBox::send_mail(QString link)

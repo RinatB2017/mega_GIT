@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>AboutBox</class>
  <widget class="QDialog" name="AboutBox">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>190</width>
+    <height>226</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>About</string>
   </property>
@@ -123,6 +131,16 @@
          <widget class="QLabel" name="lbl_telegram">
           <property name="text">
            <string>telegram</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignmentFlag::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="lbl_github">
+          <property name="text">
+           <string>github</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignmentFlag::AlignCenter</set>

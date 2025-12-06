@@ -123,6 +123,11 @@ unix:!macx {
     # останавливать сборку после первой ошибки
     # QMAKE_CXXFLAGS += -Wfatal-errors
 
+    # профилирование
+    # убрать в обычной работе
+    # QMAKE_CXXFLAGS_DEBUG += -pg
+    # QMAKE_LFLAGS_DEBUG += -pg
+
     #CONFIG += warn_off
     #QMAKE_CXXFLAGS += -Wall
     #QMAKE_CFLAGS_WARN_ON   -= -Wno-missing-braces -Wno-missing-field-initializers

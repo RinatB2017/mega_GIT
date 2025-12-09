@@ -126,8 +126,8 @@ unix:!macx {
     # профилирование
     # gprof ./my_prog ./gmon.out -p > result.txt
     # убрать в обычной работе
-    QMAKE_CXXFLAGS_DEBUG += -pg
-    QMAKE_LFLAGS_DEBUG += -pg
+    # QMAKE_CXXFLAGS_DEBUG += -pg
+    # QMAKE_LFLAGS_DEBUG += -pg
 
     #CONFIG += warn_off
     #QMAKE_CXXFLAGS += -Wall

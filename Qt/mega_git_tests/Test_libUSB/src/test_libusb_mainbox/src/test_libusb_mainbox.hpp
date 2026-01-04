@@ -21,6 +21,7 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QElapsedTimer>
 #include <QtGlobal>
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"

@@ -429,6 +429,10 @@ void LogBox::infoLog(const QString &text)
     {
         l_log_data.append(log_data);
         append_string(log_data);
+#ifdef MESSAGE_AS_SPEECH
+        QTextToSpeech *sp = new QTextToSpeech();
+        sp->say(log_data.message);
+#endif
     }
 
 #ifdef FILENAME_LOG
@@ -454,6 +458,10 @@ void LogBox::debugLog(const QString &text)
     {
         l_log_data.append(log_data);
         append_string(log_data);
+#ifdef MESSAGE_AS_SPEECH
+        QTextToSpeech *sp = new QTextToSpeech();
+        sp->say(log_data.message);
+#endif
     }
 
 #ifdef FILENAME_LOG
@@ -482,6 +490,10 @@ void LogBox::errorLog(const QString &text)
 #ifdef ERROR_AS_MESSAGEBOX
         messagebox_critical("Error", log_data.message);
 #endif
+#ifdef MESSAGE_AS_SPEECH
+        QTextToSpeech *sp = new QTextToSpeech();
+        sp->say(log_data.message);
+#endif
     }
 
 #ifdef FILENAME_LOG
@@ -507,6 +519,10 @@ void LogBox::traceLog(const QString &text)
     {
         l_log_data.append(log_data);
         append_string(log_data);
+#ifdef MESSAGE_AS_SPEECH
+        QTextToSpeech *sp = new QTextToSpeech();
+        sp->say(log_data.message);
+#endif
     }
 
 #ifdef FILENAME_LOG

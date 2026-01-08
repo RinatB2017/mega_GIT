@@ -21,6 +21,7 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QTextToSpeech>
 #include <QElapsedTimer>
 //--------------------------------------------------------------------------------
 #include "for_tests_mainbox_gui.hpp"
@@ -69,6 +70,8 @@ private:
     QPointer<QComboBox> cb_test;
     QPointer<QSpinBox>  sb_test;
     QPointer<QCheckBox> cb_block;
+
+    QTextToSpeech sp;
 
     bool set_theme_windows(void);
     bool set_norton_commander(void);

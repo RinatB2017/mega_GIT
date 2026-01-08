@@ -8,6 +8,7 @@ TARGET   = _For_tests
 include (conf/conf.pri)
 
 QT  += concurrent
+QT  += texttospeech
 
 PROGRAMM_PATH  += \
     $$PWD/src

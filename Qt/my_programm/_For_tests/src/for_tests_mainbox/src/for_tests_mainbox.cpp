@@ -301,6 +301,15 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
+#if 1
+    emit info("Text to speech");
+    qDebug() << sp.availableVoices();
+    // sp.setEngine("sapi");  // Попробуйте сначала sapi, winrt глючит
+    // sp.setVoice(sp.availableVoices()[0]);  // Обязательно!
+    sp.setVolume(1.0);
+    sp.say("Hello!");
+#endif
+
 #if 0
     char *text = { (char)0x00, (char)0x10, (char)0x20, (char)0x30, (char)0x40, (char)0x50, (char)0x60, (char)0x70 };
 #endif
@@ -314,7 +323,7 @@ bool MainBox::test(void)
     emit info(QString("3: %1").arg(ba_res.at(3), 2, 16, QChar('0')));
 #endif
 
-#if 1
+#if 0
     emit info("thread started");
     bool r0 = false;
     bool r1 = false;

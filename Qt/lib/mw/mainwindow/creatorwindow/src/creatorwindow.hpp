@@ -201,9 +201,6 @@ signals:
                 int src,
                 QString message);
 
-    void update_app_font(void);
-    void update_log_font(void);
-
 public slots:
     void set_status1_text(const QString &data);
     void set_status2_text(const QString &data);

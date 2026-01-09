@@ -459,8 +459,8 @@ void LogBox::debugLog(const QString &text)
         l_log_data.append(log_data);
         append_string(log_data);
 #ifdef MESSAGE_AS_SPEECH
-        QTextToSpeech *sp = new QTextToSpeech();
-        sp->say(log_data.message);
+        // QTextToSpeech *sp = new QTextToSpeech();
+        // sp->say(log_data.message);
 #endif
     }
 
@@ -520,8 +520,8 @@ void LogBox::traceLog(const QString &text)
         l_log_data.append(log_data);
         append_string(log_data);
 #ifdef MESSAGE_AS_SPEECH
-        QTextToSpeech *sp = new QTextToSpeech();
-        sp->say(log_data.message);
+        // QTextToSpeech *sp = new QTextToSpeech();
+        // sp->say(log_data.message);
 #endif
     }
 

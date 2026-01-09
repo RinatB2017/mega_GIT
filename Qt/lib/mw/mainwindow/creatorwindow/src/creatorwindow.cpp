@@ -1126,6 +1126,7 @@ void CreatorWindow::set_app_font(void)
     if(ok)
     {
         QApplication::setFont(font);
+        emit update_app_font();
     }
 }
 //--------------------------------------------------------------------------------
@@ -1137,6 +1138,7 @@ void CreatorWindow::set_log_font(void)
     if(ok)
     {
         lb->set_font(font);
+        emit update_log_font();
     }
 }
 #endif

@@ -337,6 +337,18 @@ void SerialBox5_lite::btnOpenPortClicked()
             return;
         }
         setPortName(text);
+
+        bool ok = false;
+        int value = ui->cb_BaudBox->itemData(ui->cb_BaudBox->currentIndex(), Qt::UserRole).toInt(&ok);
+        if(ok)
+        {
+            setBaudRate(value);
+        }
+        else
+        {
+            emit error("Bad baudrate");
+            return;
+        }
         result = serial_open();
         if(result)
         {

@@ -297,11 +297,26 @@ QImage MainBox::create_bone(int num)
 #include "memories.hpp"
 
 #include "test_class.hpp"
+
+void set_k_value(uint8_t value)
+{
+    qDebug() << value;
+}
+
+void set_k(uint8_t index)
+{
+    set_k_value(~(1 << index));
+}
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    set_k(5);
+#endif
+
+#if 0
     emit info("Text to speech");
     qDebug() << sp.availableVoices();
     // sp.setEngine("sapi");  // Попробуйте сначала sapi, winrt глючит

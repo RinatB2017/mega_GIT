@@ -51,9 +51,10 @@ signals:
 
 private slots:
     void choice_test(void);
-    bool test(void);
+    void choice_programm(void);
 
     void read_data(QByteArray ba);
+    bool test(void);
 
 private:
     QPointer<MySplashScreen> splash;
@@ -65,16 +66,21 @@ private:
         QString cmd_text;
         bool (MainBox::*func)(void);
     } CMD_t;
+    QList<CMD> test_commands;
+    QList<CMD> programm_commands;
+
+    QPointer<QToolBar> test_bar;
+    QPointer<QToolBar> programm_bar;
+    QPointer<QComboBox> cb_test;
+    QPointer<QComboBox> cb_programm;
 
     void init_serial(void);
     void init_serial_lite(void);
     void init_serial_fix(void);
 
-    QPointer<QComboBox> cb_test;
-    QList<CMD> commands;
-
     void init(void);
     void create_test_bar(void);
+    void create_programm_bar(void);
 
     void updateText(void);
     bool programm_is_exit(void);

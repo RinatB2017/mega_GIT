@@ -25,6 +25,7 @@
 
 #include "text_widget.hpp"
 #include "bin_widget.hpp"
+#include "sendbox5.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {

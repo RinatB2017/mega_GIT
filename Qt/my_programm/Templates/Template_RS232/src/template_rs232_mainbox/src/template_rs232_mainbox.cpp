@@ -48,17 +48,19 @@ void MainBox::init(void)
     create_test_bar();
     show_objectNames();
 #endif
+    create_programm_bar();
 
     init_serial();
     init_serial_lite();
     init_serial_fix();
 
     load_widgets();
+    setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_serial(void)
 {
-    QTimer::singleShot(100, [this]{
+    QTimer::singleShot(0, [this]{
         ui->serial_widget->set_caption("RS232_5");
     });
     connect(this,               static_cast<void (MainBox::*)(const QByteArray&)>(&MainBox::send),
@@ -101,8 +103,8 @@ void MainBox::create_test_bar(void)
 
     if(mw)
     {
-        commands.clear(); int id = 0;
-        commands.append({ id++, "test", &MainBox::test });
+        test_commands.clear(); int id = 0;
+        test_commands.append({ id++, "test", &MainBox::test });
 
         QToolBar *testbar = new QToolBar("testbar");
         testbar->setObjectName("testbar");
@@ -110,7 +112,7 @@ void MainBox::create_test_bar(void)
 
         cb_test = new QComboBox(this);
         cb_test->setObjectName("cb_test");
-        foreach (CMD command, commands)
+        foreach (CMD command, test_commands)
         {
             cb_test->addItem(command.cmd_text, QVariant(command.cmd));
         }
@@ -131,6 +133,44 @@ void MainBox::create_test_bar(void)
     }
 }
 //--------------------------------------------------------------------------------
+void MainBox::create_programm_bar(void)
+{
+    MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
+    Q_ASSERT(mw);
+
+    if(mw)
+    {
+        programm_commands.clear(); int id = 0;
+        programm_commands.append({ id++,    "test", &MainBox::test });
+
+        programm_bar = new QToolBar("programm_bar");
+        programm_bar->setObjectName("programm_bar");
+        mw->addToolBar(Qt::TopToolBarArea, programm_bar);
+
+        cb_programm = new QComboBox(this);
+        cb_programm->setObjectName("cb_programm");
+        cb_programm->setProperty(NO_SAVE, true);
+        foreach (CMD command, programm_commands)
+        {
+            cb_programm->addItem(command.cmd_text, QVariant(command.cmd));
+        }
+
+        programm_bar->addWidget(cb_programm);
+        QToolButton *btn_choice_programm = add_button(programm_bar,
+                                                      new QToolButton(this),
+                                                      qApp->style()->standardIcon(QStyle::SP_MediaPlay),
+                                                      "choice_programm",
+                                                      "choice_programm");
+        btn_choice_programm->setObjectName("btn_choice_programm");
+
+        connect(btn_choice_programm,    &QPushButton::clicked,  this,   &MainBox::choice_programm);
+    }
+    else
+    {
+        emit error("mw not found!");
+    }
+}
+//--------------------------------------------------------------------------------
 void MainBox::choice_test(void)
 {
     bool ok = false;
@@ -138,11 +178,38 @@ void MainBox::choice_test(void)
     if(!ok) return;
 
     auto cmd_it = std::find_if(
-                commands.begin(),
-                commands.end(),
-                [cmd](CMD command){ return command.cmd == cmd; }
-            );
-    if (cmd_it != commands.end())
+        test_commands.begin(),
+        test_commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+        );
+    if (cmd_it != test_commands.end())
+    {
+        typedef bool (MainBox::*function)(void);
+        function x;
+        x = cmd_it->func;
+        if(x)
+        {
+            (this->*x)();
+        }
+        else
+        {
+            emit error("no func");
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::choice_programm(void)
+{
+    bool ok = false;
+    int cmd = cb_programm->itemData(cb_programm->currentIndex(), Qt::UserRole).toInt(&ok);
+    if(!ok) return;
+
+    auto cmd_it = std::find_if(
+        programm_commands.begin(),
+        programm_commands.end(),
+        [cmd](CMD command){ return command.cmd == cmd; }
+        );
+    if (cmd_it != programm_commands.end())
     {
         typedef bool (MainBox::*function)(void);
         function x;

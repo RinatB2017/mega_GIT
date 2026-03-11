@@ -27,9 +27,11 @@
 #include <QPushButton>
 //--------------------------------------------------------------------------------
 #include "serialwidget.hpp"
+#ifdef RS232_SEND
+#include "sendbox5.hpp"
+#endif
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class SendBox5;
 class LogBox;
 //--------------------------------------------------------------------------------
 #define SERIALBOX5_BAUD     "SerialBox5_baud"

@@ -29,7 +29,6 @@ NewMainWindow::NewMainWindow(MainWindow *parent)
 {
 #ifdef QT_DEBUG
     create_test_bar();
-    show_objectNames();
 #endif
 
     QPushButton *btn = new QPushButton(this);

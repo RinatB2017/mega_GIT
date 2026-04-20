@@ -3,41 +3,51 @@
 #**********************************************************************************
 
 #unix:!macx {
-#    OBJECTS_DIR = /dev/shm/my_programm/$$FOLDER/$$TARGET/obj
-#    MOC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/moc
-#    UI_DIR      = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
-#    RCC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/rc
+#    MOC_DIR            = /dev/shm/my_programm/$$FOLDER/$$TARGET/moc
+#    UI_DIR             = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
+#    UI_HEADERS_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
+#    UI_SOURCES_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
+#    OBJECTS_DIR        = /dev/shm/my_programm/$$FOLDER/$$TARGET/obj
+#    RCC_DIR            = /dev/shm/my_programm/$$FOLDER/$$TARGET/rc
 
 
 # https://stackoverflow.com/questions/36871334/qmake-conditional-for-raspberrypi
 linux {
     contains(QMAKE_HOST.arch, arm.*):{
         message(raspberry)
-        OBJECTS_DIR = temp/obj
-        MOC_DIR     = temp/moc
-        UI_DIR      = temp/ui
-        RCC_DIR     = temp/rc
+        MOC_DIR         = temp/moc
+        UI_DIR          = temp/ui
+        UI_HEADERS_DIR  = temp/ui
+        UI_SOURCES_DIR  = temp/ui
+        OBJECTS_DIR     = temp/obj
+        RCC_DIR         = temp/rc
     }else{
         # message(linux)
-        OBJECTS_DIR = /dev/shm/my_programm/$$FOLDER/$$TARGET/obj
-        MOC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/moc
-        UI_DIR      = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
-        RCC_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/rc
+        MOC_DIR         = /dev/shm/my_programm/$$FOLDER/$$TARGET/moc
+        UI_DIR          = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
+        UI_HEADERS_DIR  = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
+        UI_SOURCES_DIR  = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
+        OBJECTS_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/obj
+        RCC_DIR         = /dev/shm/my_programm/$$FOLDER/$$TARGET/rc
     }
 }
 
 macx {
-    OBJECTS_DIR = build/obj
-    MOC_DIR     = build/moc
-    UI_DIR      = build/ui
-    RCC_DIR     = build/rc
+    MOC_DIR         = build/moc
+    UI_DIR          = build/ui
+    UI_HEADERS_DIR  = build/ui
+    UI_SOURCES_DIR  = build/ui
+    OBJECTS_DIR     = build/obj
+    RCC_DIR         = build/rc
 }
 
 android {
-    OBJECTS_DIR = build/obj
-    MOC_DIR     = build/moc
-    UI_DIR      = build/ui
-    RCC_DIR     = build/rc
+    MOC_DIR         = build/moc
+    UI_DIR          = build/ui
+    UI_HEADERS_DIR  = build/ui
+    UI_SOURCES_DIR  = build/ui
+    OBJECTS_DIR     = build/obj
+    RCC_DIR         = build/rc
 }
 ###############################################################################
 unix:!macx {
@@ -53,10 +63,12 @@ win32 {
     # TEMP_PATH = "W:/temp/obj"
     # в XP нет смысла делать виртуальный диск в системе
 
-    OBJECTS_DIR = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/obj
-    MOC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/moc
-    UI_DIR      = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/ui
-    RCC_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/rc
+    MOC_DIR         = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/moc
+    UI_DIR          = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/ui
+    UI_HEADERS_DIR  = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/ui
+    UI_SOURCES_DIR  = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/ui
+    OBJECTS_DIR     = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/obj
+    RCC_DIR         = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/rc
 
     CONFIG -= debug_and_release #debug_and_release_target
     CONFIG += no_fixpath

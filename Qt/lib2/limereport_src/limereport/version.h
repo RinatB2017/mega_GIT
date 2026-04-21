@@ -1,0 +1,7 @@
+#pragma once
+// git will put "#define GIT_ARCHIVE 1" on the next line inside archives. $Format:%n#define GIT_ARCHIVE 1$
+#ifdef GIT_ARCHIVE
+#define LIMEREPORT_VERSION_STR "$Format:%(describe:tags=true)$"
+#else
+#define LIMEREPORT_VERSION_STR "1.7.23-dirty"
+#endif

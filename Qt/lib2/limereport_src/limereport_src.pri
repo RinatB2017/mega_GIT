@@ -2,8 +2,11 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-QT  += sql qml
-QT  += printsupport
+QT += sql
+QT += qml
+QT += printsupport
+QT += designer
+QT += svg
 
 DEPENDPATH  += \
            $$PWD \

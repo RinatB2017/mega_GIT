@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2026                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,74 +18,26 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef TEST_HPP
+#define TEST_HPP
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
-#endif
+#include <QObject>
+#include <QTest>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
+class MainWindow;
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
+class Test : public QObject {
     Q_OBJECT
 
 public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox();
-
-#ifdef  QT_DEBUG
-    bool d_test(void);
-#endif
-
-signals:
-    void send(const QByteArray&);
+    Test();
 
 private slots:
-    void choice_test(void);
-    void choice_programm(void);
-
-    void read_data(QByteArray ba);
-    bool test(void);
-
+    void test_GUI(void);
+    void test_func(void);
+    
 private:
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-    QList<CMD> test_commands;
-    QList<CMD> programm_commands;
-
-    QPointer<QToolBar> test_bar;
-    QPointer<QToolBar> programm_bar;
-    QPointer<QComboBox> cb_test;
-    QPointer<QComboBox> cb_programm;
-
-    void init_serial(void);
-    void init_serial_lite(void);
-    void init_serial_fix(void);
-
-    void init(void);
-    void create_test_bar(void);
-    void create_programm_bar(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    MainWindow *mw = nullptr;
 };
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+#endif

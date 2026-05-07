@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2026                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -21,9 +21,13 @@
 #ifndef MAINBOX_HPP
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
+#include <QElapsedTimer>
 #ifdef QT_DEBUG
 #   include <QDebug>
 #endif
+//--------------------------------------------------------------------------------
+#include "packets.h"
+#include "crc.h"
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
@@ -41,10 +45,6 @@ public:
     explicit MainBox(QWidget *parent,
                      MySplashScreen *splash);
     virtual ~MainBox();
-
-#ifdef  QT_DEBUG
-    bool d_test(void);
-#endif
 
 signals:
     void send(const QByteArray&);
@@ -74,9 +74,23 @@ private:
     QPointer<QComboBox> cb_test;
     QPointer<QComboBox> cb_programm;
 
-    void init_serial(void);
-    void init_serial_lite(void);
+    QByteArray input_ba;
+    QByteArray packet_ba;
+    bool data_is_ready = false;
+    bool is_silence = false;
+
+    void init_widgets(void);
+    void connects(void);
     void init_serial_fix(void);
+
+    bool get_ID(void);
+    void f_send(const QByteArray &data);
+    void wait_msec(int msec, bool waiting = false);
+
+    template<typename T>
+    bool check_answer(int cmd);
+
+    uint8_t crc8(uint8_t *buf,uint8_t offset, uint8_t length);
 
     void init(void);
     void create_test_bar(void);

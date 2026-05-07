@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2026                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,74 +18,27 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
+#ifndef DEFINES_HPP
+#define DEFINES_HPP
 //--------------------------------------------------------------------------------
-#ifdef QT_DEBUG
-#   include <QDebug>
+#define ORGNAME "Work"
+#define APPNAME "Template_sender_packets"
+//--------------------------------------------------------------------------------
+#define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
+#define QMAKE_TARGET_COMPANY    ORGNAME
+#define QMAKE_TARGET_PRODUCT    APPNAME
+#define QMAKE_TARGET_COPYRIGHT  "Copyright \\251 2025-2030"
+//--------------------------------------------------------------------------------
+#define VER_FILEVERSION             VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
+#define VER_FILEVERSION_STR         VER_STR
+#define VER_PRODUCTVERSION          VER_MAJOR,VER_MINOR,VER_PATCH,VER_BUILD
+#define VER_PRODUCTVERSION_STR      VER_STR
+#define VER_FILEDESCRIPTION_STR     APPNAME
+#define VER_INTERNALNAME_STR        APPNAME
+#define VER_LEGALCOPYRIGHT_STR      QMAKE_TARGET_COPYRIGHT
+#define VER_ORIGINALFILENAME_STR    APPNAME
+#define VER_PRODUCTNAME_STR         APPNAME
+//--------------------------------------------------------------------------------
+#define ICON_PROGRAMM   ":/ico/RS232.png"
+//--------------------------------------------------------------------------------
 #endif
-//--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
-}
-//--------------------------------------------------------------------------------
-class MySplashScreen;
-//--------------------------------------------------------------------------------
-class MainBox : public MyWidget
-{
-    Q_OBJECT
-
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox();
-
-#ifdef  QT_DEBUG
-    bool d_test(void);
-#endif
-
-signals:
-    void send(const QByteArray&);
-
-private slots:
-    void choice_test(void);
-    void choice_programm(void);
-
-    void read_data(QByteArray ba);
-    bool test(void);
-
-private:
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-    QList<CMD> test_commands;
-    QList<CMD> programm_commands;
-
-    QPointer<QToolBar> test_bar;
-    QPointer<QToolBar> programm_bar;
-    QPointer<QComboBox> cb_test;
-    QPointer<QComboBox> cb_programm;
-
-    void init_serial(void);
-    void init_serial_lite(void);
-    void init_serial_fix(void);
-
-    void init(void);
-    void create_test_bar(void);
-    void create_programm_bar(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
-//--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP

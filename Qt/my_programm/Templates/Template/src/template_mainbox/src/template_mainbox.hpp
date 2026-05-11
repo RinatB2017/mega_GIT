@@ -66,6 +66,8 @@ private:
     QPointer<QComboBox> cb_programm;
 
     void init(void);
+    void init_widgets(void);
+    void connects(void);
 
     void create_test_bar(void);
     void create_programm_bar(void);

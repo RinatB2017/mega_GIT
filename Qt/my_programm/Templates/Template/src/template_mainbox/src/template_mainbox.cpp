@@ -45,9 +45,20 @@ void MainBox::init(void)
 #endif
     create_programm_bar();
 
-    connect(ui->btn_test,   &QPushButton::clicked,  this,   &MainBox::test);
+    init_widgets();
+    connects();
 
     load_widgets();
+}
+//--------------------------------------------------------------------------------
+void MainBox::init_widgets(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void MainBox::connects(void)
+{
+    connect(ui->btn_test,   &QPushButton::clicked,  this,   &MainBox::test);
 }
 //--------------------------------------------------------------------------------
 void MainBox::create_test_bar(void)

@@ -53,6 +53,7 @@ SUBDIRS += \
     $$PWD/Test_thread \
     $$PWD/Test_triangle \
     $$PWD/Test_Widgets \
+    $$PWD/Test_QtPropertyBrowser \
     $$PWD/Test_QDBus \
     $$PWD/Test_QGraphicsView \
     $$PWD/Test_QML \

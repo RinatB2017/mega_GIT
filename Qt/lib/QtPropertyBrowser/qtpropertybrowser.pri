@@ -2,12 +2,10 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-greaterThan(QT_MAJOR_VERSION, 4) {
-    DEPENDPATH  += $$PWD/qt5/src
-}
-else {
-    DEPENDPATH  += $$PWD/qt4/src
-}
+DEPENDPATH  += $$PWD/qt6/src
+#     DEPENDPATH  += $$PWD/qt5/src
+#     DEPENDPATH  += $$PWD/qt4/src
+
 INCLUDEPATH = $$DEPENDPATH
 
 SOURCES += \

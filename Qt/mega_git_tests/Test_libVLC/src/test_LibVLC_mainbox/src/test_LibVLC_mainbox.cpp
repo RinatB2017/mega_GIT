@@ -145,10 +145,12 @@ bool MainBox::test(void)
     inst = libvlc_new (0, nullptr);
 
     /* Create a new item */
-    m = libvlc_media_new_path (inst, filename.toLocal8Bit());
+    // m = libvlc_media_new_path (inst, filename.toLocal8Bit());    //FIXME
+    m = libvlc_media_new_path (filename.toLocal8Bit());
 
     /* Create a media player playing environement */
-    mp = libvlc_media_player_new_from_media (m);
+    // mp = libvlc_media_player_new_from_media (m); //FIXME
+    mp = libvlc_media_player_new_from_media (inst, m);
     if(mp == NULL)
     {
         emit error("libvlc_media_player_new_from_media return NULL");
@@ -185,7 +187,8 @@ bool MainBox::test_rtsp(void)
 
     inst = libvlc_new (0, nullptr);
     mp = libvlc_media_player_new(inst);
-    m = libvlc_media_new_location(inst, "rtsp://192.168.0.66:554/av0_0");
+    // m = libvlc_media_new_location(inst, "rtsp://192.168.0.66:554/av0_0");    //FIXME
+    m = libvlc_media_new_location("rtsp://192.168.0.66:554/av0_0");
     Q_ASSERT(m);
 
     libvlc_media_player_set_media (mp, m);

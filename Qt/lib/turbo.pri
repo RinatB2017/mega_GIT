@@ -161,6 +161,32 @@ unix:!macx {
 #    before_build.commands = chcp 1251
 #}
 ###############################################################################
+linux {
+MACHINE_ID = $$system(cat /etc/machine-id)
+message("Текущий Machine ID: " $$MACHINE_ID)
+
+contains(MACHINE_ID, "918ac8770c47e05955e6ac056282aa3a") {
+    DEFINES += IS_MACHINE_HOME
+    message("--- Сборка для ДОМА ---")
+} else {
+    DEFINES += IS_MACHINE_WORK
+    message("--- Сборка для РАБОТЫ ---")
+}
+}
+
+win32 {
+    MACHINE_ID = $$system(powershell -Command "(Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Cryptography').MachineGuid")
+    message("Текущий Machine ID: " $$MACHINE_ID)
+
+contains(MACHINE_ID, "b87537d2-72e1-438b-8667-d41b6a9c73dd") {
+    DEFINES += IS_MACHINE_HOME
+    message("--- Сборка для ДОМА ---")
+} else {
+    DEFINES += IS_MACHINE_WORK
+    message("--- Сборка для РАБОТЫ ---")
+}
+}
+###############################################################################
 greaterThan(QT_MAJOR_VERSION, 5) {
     QT += core5compat
     contains(DEFINES, LOGO_GL) {

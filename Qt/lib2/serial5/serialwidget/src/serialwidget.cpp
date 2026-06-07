@@ -256,7 +256,9 @@ void SerialWidget::serial5_error(QSerialPort::SerialPortError err)
     switch(err)
     {
     case QSerialPort::DeviceNotFoundError:          emit error("DeviceNotFoundError");          break;
-    case QSerialPort::PermissionError:              emit error("PermissionError");              break;
+    case QSerialPort::PermissionError:
+        // emit error("PermissionError");
+        break;
     case QSerialPort::OpenError:                    emit error("OpenError");                    break;
 #ifdef Q_OS_LINUX
 #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))

@@ -21,6 +21,8 @@ linux {
         UI_SOURCES_DIR  = temp/ui
         OBJECTS_DIR     = temp/obj
         RCC_DIR         = temp/rc
+
+        QMLCACHE_DIR    = temp/qmlcache
     }else{
         # message(linux)
         MOC_DIR         = /dev/shm/my_programm/$$FOLDER/$$TARGET/moc
@@ -29,6 +31,9 @@ linux {
         UI_SOURCES_DIR  = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
         OBJECTS_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/obj
         RCC_DIR         = /dev/shm/my_programm/$$FOLDER/$$TARGET/rc
+
+        QMLCACHE_DIR    = /dev/shm/my_programm/$$FOLDER/$$TARGET/qmlcache
+        QMAKE_CLEAN     += *_qmlcache.qrc
     }
 }
 

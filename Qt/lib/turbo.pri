@@ -2,15 +2,6 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-#unix:!macx {
-#    MOC_DIR            = /dev/shm/my_programm/$$FOLDER/$$TARGET/moc
-#    UI_DIR             = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
-#    UI_HEADERS_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
-#    UI_SOURCES_DIR     = /dev/shm/my_programm/$$FOLDER/$$TARGET/ui
-#    OBJECTS_DIR        = /dev/shm/my_programm/$$FOLDER/$$TARGET/obj
-#    RCC_DIR            = /dev/shm/my_programm/$$FOLDER/$$TARGET/rc
-
-
 # https://stackoverflow.com/questions/36871334/qmake-conditional-for-raspberrypi
 linux {
     contains(QMAKE_HOST.arch, arm.*):{
@@ -64,8 +55,8 @@ macx {
 
 win32 {
     BIN_PATH  = "C:/temp/bin"
-    # TEMP_PATH = "X:/temp/obj"
-    TEMP_PATH = "W:/temp/obj"
+    TEMP_PATH = "X:/temp/obj"
+    # TEMP_PATH = "W:/temp/obj"
     # в XP нет смысла делать виртуальный диск в системе
 
     MOC_DIR         = $$TEMP_PATH/my_programm/$$FOLDER/$$TARGET/moc
@@ -135,7 +126,8 @@ unix:!macx {
     QMAKE_OBJECTIVE_CFLAGS += $${OPTIMIZE}
 
     #OPTIMIZE    += -Wno-missing-braces -Wno-missing-field-initializers
-    QMAKE_CXX   = ccache g++
+    # QMAKE_CXX   = ccache g++
+    QMAKE_CXX   = ccache $$QMAKE_CXX
 
     # останавливать сборку после первой ошибки
     # QMAKE_CXXFLAGS += -Wfatal-errors

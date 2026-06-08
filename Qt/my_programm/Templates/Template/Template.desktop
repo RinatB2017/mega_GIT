@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Template
+Exec=/home/boss/Programming/my_programm_bin/_Templates/Template/Template
+Icon=/home/boss/Programming/my_programm_bin/_Templates/Template/computer.png
+Terminal=false
+Categories=X-Personal;

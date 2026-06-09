@@ -41,7 +41,7 @@ win32 {
 }
 
 include ($$LIB_PATH/meta/mainwindow.pri)
-# include ($$LIB_PATH/create_shortcut3.pri)
+include ($$LIB_PATH/create_shortcut2.pri)
 
 include ($$PWD/src/template_mainbox/template_mainbox.pri)
 

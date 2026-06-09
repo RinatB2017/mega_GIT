@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
 Name=Template
-Comment=My Custom Project
+Comment=Template
 Exec=/home/boss/Programming/my_programm_bin/_Templates/Template/Template
 Icon=/home/boss/Programming/my_programm_bin/_Templates/Template/computer.ico
 Terminal=false
-Categories=X-Calculate;
+Categories=X-Calculate;X-XFCE-Other;

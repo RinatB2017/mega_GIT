@@ -93,7 +93,7 @@ void LogBox::init(void)
 void LogBox::popup(QPoint)
 {
     QMenu *popup_menu = logBox->createStandardContextMenu();
-    Q_ASSERT(popup_menu);
+    // Q_ASSERT(popup_menu);
     if(popup_menu == nullptr)
     {
         //errorLog("cannot create standard context menu");

@@ -21,8 +21,10 @@
 #ifndef DEFINES_HPP
 #define DEFINES_HPP
 //--------------------------------------------------------------------------------
-#define ORGNAME "Work"
-#define APPNAME "Template_RS232"
+#define ORGNAME     "Work"
+//--------------------------------------------------------------------------------
+#define APPTITLE    "Моя мега программа"
+#define APPNAME     "Template_RS232"
 //--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME

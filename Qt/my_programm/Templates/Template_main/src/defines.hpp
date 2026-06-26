@@ -21,8 +21,10 @@
 #ifndef DEFINES_HPP
 #define DEFINES_HPP
 //--------------------------------------------------------------------------------
-#define ORGNAME "Home"
-#define APPNAME "Template_main"
+#define ORGNAME     "Home"
+//--------------------------------------------------------------------------------
+#define APPTITLE    "Моя мега программа"
+#define APPNAME     "Template_main"
 //--------------------------------------------------------------------------------
 #define VERSION                 VER_MAJOR.VER_MINOR.VER_PATCH.VER_BUILD
 #define QMAKE_TARGET_COMPANY    ORGNAME

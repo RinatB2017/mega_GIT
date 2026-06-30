@@ -51,7 +51,7 @@ Dock_position::~Dock_position()
 //--------------------------------------------------------------------------------
 void Dock_position::show_dlg(void)
 {
-    MainWindow *mw = reinterpret_cast<MainWindow *>(QApplication::activeWindow());
+    MainWindow *mw = qobject_cast<MainWindow *>(QApplication::activeWindow());
     if(mw)
     {
         QDockWidget *dw = mw->findChild<QDockWidget *>(dock_name);

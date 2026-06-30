@@ -195,7 +195,7 @@ void SysLog::click(void)
 {
     emit trace(Q_FUNC_INFO);
 
-    QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
+    QToolButton *btn = qobject_cast<QToolButton *>(sender());
     Q_ASSERT(btn);
 
     emit info(QString("%1").arg(btn->property(P_SYSLOG_VALUE).toInt()));

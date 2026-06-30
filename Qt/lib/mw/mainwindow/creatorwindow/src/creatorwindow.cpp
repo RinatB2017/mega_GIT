@@ -441,7 +441,7 @@ void CreatorWindow::setMenuLanguage(void)
 void CreatorWindow::setToolBarLanguage(void)
 {
 #ifndef ONLY_ENGLISH
-    QAction* menu = reinterpret_cast<QAction*>(sender());
+    QAction* menu = qobject_cast<QAction*>(sender());
     Q_ASSERT(menu);
 
     choice_translator(menu);
@@ -457,7 +457,7 @@ void CreatorWindow::alwaysOnTop(bool state)
 {
     flag_always_on_top = state;
 
-    CreatorWindow *mw = reinterpret_cast<CreatorWindow *>(QApplication::activeWindow());
+    CreatorWindow *mw = qobject_cast<CreatorWindow *>(QApplication::activeWindow());
     if(mw)
     {
         if(state)
@@ -474,7 +474,7 @@ void CreatorWindow::alwaysOnTop(bool state)
 //--------------------------------------------------------------------------------
 void CreatorWindow::move_to_center(void)
 {
-    CreatorWindow *mw = reinterpret_cast<CreatorWindow *>(QApplication::activeWindow());
+    CreatorWindow *mw = qobject_cast<CreatorWindow *>(QApplication::activeWindow());
     if(mw)
     {
 #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
@@ -505,7 +505,7 @@ void CreatorWindow::set_status2_text(const QString &data)
 //--------------------------------------------------------------------------------
 void CreatorWindow::setToolBarStyles(void)
 {
-    QPushButton *button = reinterpret_cast<QPushButton*>(sender());
+    QPushButton *button = qobject_cast<QPushButton*>(sender());
     Q_ASSERT(button);
 
     if(!button)

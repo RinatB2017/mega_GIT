@@ -160,7 +160,7 @@ public:
         QWidgetList lw = qApp->allWidgets();
         foreach (QWidget *widget, lw)
         {
-            T *wt = reinterpret_cast<T *>(widget);
+            T *wt = qobject_cast<T *>(widget);
             if(wt)
             {
                 QString o_name = wt->objectName();

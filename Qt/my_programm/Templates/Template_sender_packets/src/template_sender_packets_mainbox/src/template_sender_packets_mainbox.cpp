@@ -86,7 +86,7 @@ void MainBox::read_data(QByteArray ba)
     }
 
     emit debug(QString("read_data: %1")
-                   .arg(ba.data()));
+               .arg(ba.data()));
 
     for(int n=0; n<ba.length(); n++)
     {
@@ -141,7 +141,7 @@ void MainBox::create_test_bar(void)
                                                   "choice_test");
         btn_choice_test->setObjectName("btn_choice_test");
 
-        connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+        connect(btn_choice_test,    &QToolButton::clicked,  this,   &MainBox::choice_test);
     }
     else
     {
@@ -194,10 +194,10 @@ void MainBox::choice_test(void)
     if(!ok) return;
 
     auto cmd_it = std::find_if(
-        test_commands.begin(),
-        test_commands.end(),
-        [cmd](CMD command){ return command.cmd == cmd; }
-        );
+                test_commands.begin(),
+                test_commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
     if (cmd_it != test_commands.end())
     {
         typedef bool (MainBox::*function)(void);
@@ -221,10 +221,10 @@ void MainBox::choice_programm(void)
     if(!ok) return;
 
     auto cmd_it = std::find_if(
-        programm_commands.begin(),
-        programm_commands.end(),
-        [cmd](CMD command){ return command.cmd == cmd; }
-        );
+                programm_commands.begin(),
+                programm_commands.end(),
+                [cmd](CMD command){ return command.cmd == cmd; }
+            );
     if (cmd_it != programm_commands.end())
     {
         typedef bool (MainBox::*function)(void);
@@ -297,8 +297,8 @@ void MainBox::f_send(const QByteArray &data)
         emit error("No data to send!");
         return;
     }
-    emit info(QString("send to multimeter: %1")
-                  .arg(data.data()));
+    emit debug(QString("send data: %1")
+               .arg(data.data()));
 
     if(ui->serial_widget->isOpen())
     {

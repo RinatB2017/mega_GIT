@@ -96,10 +96,10 @@ void NewMainWindow::create_test_bar(void)
                                               "choice_test");
     btn_choice_test->setObjectName("btn_choice_test");
 
-    connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+    connect(btn_choice_test,    &QToolButton::clicked,  this,   &NewMainWindow::choice_test);
 
-    connect(cb_block, SIGNAL(clicked(bool)), cb_test,           SLOT(setDisabled(bool)));
-    connect(cb_block, SIGNAL(clicked(bool)), btn_choice_test,   SLOT(setDisabled(bool)));
+    connect(cb_block,   &QCheckBox::clicked,    cb_test,            &QComboBox::setDisabled);
+    connect(cb_block,   &QCheckBox::clicked,    btn_choice_test,    &QToolButton::setDisabled);
 
     //testbar->setFixedWidth(toolBar->sizeHint().width());
 }

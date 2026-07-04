@@ -67,6 +67,8 @@ include ($$LIB_PATH2/widgets/color_widget/color_widget.pri)
 
 include ($$LIB_PATH2/widgets/custom_cyber_style/custom_cyber_style.pri)
 
+include ($$LIB_PATH2/test_classes.pri)
+
 include (src/for_tests_mainbox_gui/for_tests_mainbox_gui.pri)
 include (src/for_tests_mainbox/for_tests_mainbox.pri)
 

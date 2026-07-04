@@ -304,8 +304,12 @@ bool MainBox::test(void)
 #endif
 
 #if 1
-    FractalWidget *tc = new FractalWidget();
-    tc->show();
+    // RotateWidget *w = new RotateWidget();
+    // DrawWidget *w = new DrawWidget();
+    LineWidget *w = new LineWidget();
+    // TestWidget *w = new TestWidget();
+    // FractalWidget *w = new FractalWidget();
+    w->show();
 #endif
 
 #if 0

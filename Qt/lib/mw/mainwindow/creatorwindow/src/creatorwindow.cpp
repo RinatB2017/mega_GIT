@@ -292,6 +292,41 @@ void CreatorWindow::init(void)
     // не стоит именно здесь взводить эти аттрибуты, лучше в mywidget
     setAttribute(Qt::WA_DeleteOnClose);
     //setAttribute(Qt::WA_QuitOnClose);
+
+    change_menu();
+
+    //TODO обработка тем
+    connect(QGuiApplication::styleHints(), &QStyleHints::colorSchemeChanged,
+            [this](Qt::ColorScheme scheme) {
+        Q_UNUSED(scheme);
+        emit info("Тема ОС изменилась");
+        change_menu();
+    });
+}
+//--------------------------------------------------------------------------------
+void CreatorWindow::change_menu(void)
+{
+    if (QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark)
+    {
+        // 1. Получаем реальный цвет фона, который стиль использует для меню
+        QPalette stylePalette = QApplication::style()->standardPalette();
+        QColor menuBg = stylePalette.color(QPalette::Window);
+
+        // 2. Считаем яркость фона по формуле человеческого восприятия
+        double brightness = (menuBg.red()   * 0.299) +
+                (menuBg.green() * 0.587) +
+                (menuBg.blue()  * 0.114);
+
+        // 3. Выбираем максимально контрастный цвет для шрифта (черный или белый)
+        QString hexTextColor = (brightness >= 128.0) ? "#000000" : "#ffffff";
+
+        // 4. Применяем свойство color ОДНОВРЕМЕННО для текста QMenu и панели QMenuBar
+        qApp->setStyleSheet(QString("QMenu, QMenuBar { color: %1; }").arg(hexTextColor));
+
+        qDebug() << "Реальный фон меню:" << menuBg.name()
+                 << "| Яркость:" << brightness
+                 << "| Установлен контрастный шрифт для всех меню:" << hexTextColor;
+    }
 }
 //--------------------------------------------------------------------------------
 //    if(now.date().year()        >= DEMO_YEAR &&

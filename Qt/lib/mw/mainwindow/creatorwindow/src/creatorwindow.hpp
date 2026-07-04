@@ -32,6 +32,7 @@
 #include <QCloseEvent>
 #include <QMainWindow>
 #include <QTranslator>
+#include <QStyleHints>
 #include <QStatusBar>
 #include <QShortcut>
 #include <QMdiArea>
@@ -332,12 +333,11 @@ private:
     QMenuBar *app_mainBar = nullptr;
 
     void dockwidget_updateText(void);
-
     // void show_docs(void);
-
     void dockLocationChanged(Qt::DockWidgetArea area);
-
     bool check_exit(void);
+
+    void change_menu(void);
 
 protected:
     bool flag_close = false;

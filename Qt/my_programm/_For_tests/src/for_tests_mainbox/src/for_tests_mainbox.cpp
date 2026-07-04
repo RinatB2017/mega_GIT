@@ -296,24 +296,15 @@ QImage MainBox::create_bone(int num)
 #include "connection.hpp"
 #include "memories.hpp"
 
+#include "custom_cyber_style.hpp"
 #include "test_class.hpp"
-
-void set_k_value(uint8_t value)
-{
-    qDebug() << value;
-}
-
-void set_k(uint8_t index)
-{
-    set_k_value(~(1 << index));
-}
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
 #if 1
-    set_k(5);
+    QApplication::setStyle(new Custom_cyber_style("fusion"));
 #endif
 
 #if 0

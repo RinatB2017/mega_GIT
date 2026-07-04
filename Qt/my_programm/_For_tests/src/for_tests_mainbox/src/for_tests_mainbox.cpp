@@ -292,148 +292,20 @@ QImage MainBox::create_bone(int num)
     return image;
 }
 //--------------------------------------------------------------------------------
-#include <QtConcurrent>
-#include "connection.hpp"
-#include "memories.hpp"
-
 #include "custom_cyber_style.hpp"
-#include "test_class.hpp"
+#include "test_classes.hpp"
 
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
+#if 0
     QApplication::setStyle(new Custom_cyber_style("fusion"));
 #endif
 
-#if 0
-    emit info("Text to speech");
-    qDebug() << sp.availableVoices();
-    // sp.setEngine("sapi");  // Попробуйте сначала sapi, winrt глючит
-    // sp.setVoice(sp.availableVoices()[0]);  // Обязательно!
-    sp.setVolume(1.0);
-    sp.say("Hello!");
-#endif
-
-#if 0
-    char *text = { (char)0x00, (char)0x10, (char)0x20, (char)0x30, (char)0x40, (char)0x50, (char)0x60, (char)0x70 };
-#endif
-
-#if 0
-    QByteArray ba;
-    ba.append(":000102030405\n");
-
-    QByteArray ba_res = ba.fromHex(ba);
-    emit info(QString("len: %1").arg(ba_res.length()));
-    emit info(QString("3: %1").arg(ba_res.at(3), 2, 16, QChar('0')));
-#endif
-
-#if 0
-    emit info("thread started");
-    bool r0 = false;
-    bool r1 = false;
-    bool r2 = false;
-    bool r3 = false;
-    bool r4 = false;
-#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
-    QtConcurrent::run(this, &MainBox::heavy_function, &r0);
-    QtConcurrent::run(this, &MainBox::heavy_function, &r1);
-    QtConcurrent::run(this, &MainBox::heavy_function, &r2);
-    QtConcurrent::run(this, &MainBox::heavy_function, &r3);
-    QtConcurrent::run(this, &MainBox::heavy_function, &r4);
-#else
-    QtConcurrent::run(std::bind(&MainBox::heavy_function, this, &r0));
-    QtConcurrent::run(std::bind(&MainBox::heavy_function, this, &r1));
-    QtConcurrent::run(std::bind(&MainBox::heavy_function, this, &r2));
-    QtConcurrent::run(std::bind(&MainBox::heavy_function, this, &r3));
-    QtConcurrent::run(std::bind(&MainBox::heavy_function, this, &r4));
-#endif
-    emit info("thread finished");
-
-    QElapsedTimer timer;
-    timer.start();
-    while(!r0 ||
-          !r1 ||
-          !r2 ||
-          !r3 ||
-          !r4)
-    {
-        QCoreApplication::processEvents();
-    }
-    emit error(QString("Time threads elapsed %1 msec").arg(timer.elapsed()));
-#endif
-
-#if 0
-    double value = 0.000001;
-    double freq = 5.0;
-
-    //value = 1.23;
-    if(value < 0.01)
-        emit info(QString("UA%1F%2")
-                  .arg(value, 0, 'f')
-                  .arg(freq));
-    else
-        emit info(QString("UA%1F%2")
-                  .arg(value)
-                  .arg(freq));
-#endif
-
-#if 0
-    QString temp;
-    temp = "QLineEdit{ " /
-            "border-width: 1px; "/
-            "border-style: solid; "/
-            "border-color: red white black black ;"/
-            "border-top-style:none; "/
-            "}";
-    //qApp->setStyleSheet( "QTextEdit{ border-width: 1px; border-style: solid; border-color:  red white black black;border-top-style:none; }" );
-    qApp->setStyleSheet( temp );
-#endif
-
-#if 0
-    Test_class *tc = new Test_class();
-    connect_log_signals(tc, this);
+#if 1
+    FractalWidget *tc = new FractalWidget();
     tc->show();
-#endif
-
-#if 0
-    Connection::set_value(1.666);
-#endif
-
-#if 0
-    QImage image(300, 300, QImage::Format_ARGB32);
-    image.fill(QColor(Qt::black));
-
-    QPointF points[360];
-    qreal radius = 50;
-    for(int n=0; n<360; n++)
-    {
-        qreal end_x;
-        qreal end_y;
-        calc_line(150, 150, n, radius, &end_x, &end_y);
-        points[n] = QPointF(end_x, end_y);
-        if((rand() % 10) > 5)
-            radius += rand() % 25;
-        else
-            radius -= rand() % 25;
-        if(radius < 15)
-            radius = 15;
-    }
-    QPainter painter;
-    painter.begin(&image);
-    painter.setPen(QColor(Qt::white));
-    painter.setBrush(QBrush(Qt::red));
-    painter.drawPolygon(points, 360);
-    painter.end();
-
-    QLabel *label = new QLabel();
-    label->setPixmap(QPixmap::fromImage(image));
-    label->show();
-#endif
-
-#if 0
-    emit info("Copyright \\251 2020-2025");
 #endif
 
 #if 0

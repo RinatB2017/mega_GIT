@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QObject>
-#include <QWidget>
-#include <QList>
-#include <QTest>
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "template_mainbox.hpp"
 #include "test.hpp"

@@ -39,6 +39,8 @@ OTHER_FILES += \
 # профилирование
 #include (conf/prof.pri)
 
+LIBS += -lX11
+
 win32 {
     include (Y:/ext_paths.pri)
 } else {

@@ -35,8 +35,8 @@ OTHER_FILES += \
     LICENSE \
     README.md
 
-greaterThan(QT_MAJOR_VERSION, 4) {
-    unix {
-        QMAKE_CXXFLAGS += -std=c++11
-    }
-}
+# greaterThan(QT_MAJOR_VERSION, 4) {
+#     unix {
+#         QMAKE_CXXFLAGS += -std=c++11
+#     }
+# }

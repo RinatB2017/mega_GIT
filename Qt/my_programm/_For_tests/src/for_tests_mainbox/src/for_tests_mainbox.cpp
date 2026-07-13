@@ -295,15 +295,130 @@ QImage MainBox::create_bone(int num)
 #include "custom_cyber_style.hpp"
 #include "test_classes.hpp"
 
+#ifdef Q_OS_LINUX
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+// Важно: в Qt6 нативные заголовочные файлы X11 подключаются напрямую
+#endif
+
+#ifdef Q_OS_LINUX
+void sendX11ClientMessage(unsigned long windowId, const char* atomName, long data0, long data1 = 0) {
+    Display *display = XOpenDisplay(nullptr);
+    if (!display) return;
+
+    XEvent event;
+    event.type = ClientMessage;
+    event.xclient.window = windowId;
+    event.xclient.message_type = XInternAtom(display, atomName, False);
+    event.xclient.format = 32;
+    event.xclient.data.l[0] = data0;
+    event.xclient.data.l[1] = data1;
+    event.xclient.data.l[2] = 0;
+    event.xclient.data.l[3] = 0;
+    event.xclient.data.l[4] = 0;
+
+    XSendEvent(display, DefaultRootWindow(display), False,
+               SubstructureRedirectMask | SubstructureNotifyMask, &event);
+
+    XFlush(display);
+    XCloseDisplay(display);
+}
+#endif
+
+#ifdef Q_OS_LINUX
+void sendX11StateMessage(unsigned long windowId, const char* stateAtomName) {
+    Display *display = XOpenDisplay(nullptr);
+    if (!display) return;
+
+    Atom wmState = XInternAtom(display, "_NET_WM_STATE", False);
+    Atom stateAtom = XInternAtom(display, stateAtomName, False);
+
+    XEvent event;
+    event.type = ClientMessage;
+    event.xclient.window = windowId;
+    event.xclient.message_type = wmState;
+    event.xclient.format = 32;
+    event.xclient.data.l[0] = 1; // 1 = _NET_WM_STATE_ADD (Добавить свойство)
+    event.xclient.data.l[1] = stateAtom;
+    event.xclient.data.l[2] = 0; // Второго атома нет
+    event.xclient.data.l[3] = 1; // Источник: обычное приложение
+    event.xclient.data.l[4] = 0;
+
+    XSendEvent(display, DefaultRootWindow(display), False,
+               SubstructureRedirectMask | SubstructureNotifyMask, &event);
+
+    XFlush(display);
+    XCloseDisplay(display);
+}
+#endif
+
+int getVirtualDesktopsCount() {
+#ifdef Q_OS_LINUX
+    Display *display = XOpenDisplay(nullptr);
+    if (!display) return 1;
+
+    Atom actualType;
+    int actualFormat;
+    unsigned long numItems, bytesAfter;
+    unsigned char *prop = nullptr;
+    int count = 1;
+
+    Atom numberOfDesktopsAtom = XInternAtom(display, "_NET_NUMBER_OF_DESKTOPS", False);
+
+    if (XGetWindowProperty(display, DefaultRootWindow(display), numberOfDesktopsAtom,
+                           0, 1, False, XA_CARDINAL, &actualType, &actualFormat,
+                           &numItems, &bytesAfter, &prop) == Success && prop) {
+        count = static_cast<int>(*reinterpret_cast<unsigned long*>(prop));
+        XFree(prop);
+    }
+
+    XCloseDisplay(display);
+    return count;
+#else
+    return 1; // На Windows рабочих столов в старом стиле нет
+#endif
+}
+
+void setupAlwaysOnTopWidget() {
+    // 1. Создаем обычный виджет без родителя (чтобы он был отдельным окном)
+    QWidget *myWidget = new QWidget(nullptr);
+    myWidget->resize(400, 300);
+    myWidget->setWindowTitle("Глобальное окно");
+
+    // 2. Задаем системные флаги Qt:
+    // QWayland/QX11 в Qt6 понимают флаг WindowStaysOnTopHint как команду "быть сверху"
+    myWidget->setWindowFlags(Qt::Window | Qt::WindowStaysOnTopHint);
+
+    // 3. ОБЯЗАТЕЛЬНО сначала показываем окно на экране!
+    // Только после этого X-сервер выделит окну реальный winId()
+    myWidget->show();
+
+    // 4. Теперь, когда окно создано в X11, дожимаем его низкоуровневыми командами
+#ifdef Q_OS_LINUX
+    // Переносим на все рабочие столы (метод, который мы написали в прошлом шаге)
+    sendX11ClientMessage(myWidget->winId(), "_NET_WM_DESKTOP", 0xFFFFFFFF);
+
+    // Подстраховываем оконный менеджер KDE (KWin), принудительно активируя состояние "Above"
+    // 1 означает "Добавить состояние", второй параметр — атом состояния поверх всех
+    sendX11StateMessage(myWidget->winId(), "_NET_WM_STATE_ABOVE");
+#endif
+}
+
 bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
+
+#if 1
+    // setupAlwaysOnTopWidget();
+    emit info(QString("Количество рабочих столов: %1")
+                  .arg(getVirtualDesktopsCount()));
+#endif
 
 #if 0
     QApplication::setStyle(new Custom_cyber_style("fusion"));
 #endif
 
-#if 1
+#if 0
     // RotateWidget *w = new RotateWidget();
     // DrawWidget *w = new DrawWidget();
     LineWidget *w = new LineWidget();

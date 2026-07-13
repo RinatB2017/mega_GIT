@@ -126,7 +126,6 @@ unix:!macx {
     QMAKE_OBJECTIVE_CFLAGS += $${OPTIMIZE}
 
     #OPTIMIZE    += -Wno-missing-braces -Wno-missing-field-initializers
-    # QMAKE_CXX   = ccache g++
     QMAKE_CXX   = ccache $$QMAKE_CXX
 
     # останавливать сборку после первой ошибки
@@ -189,12 +188,18 @@ greaterThan(QT_MAJOR_VERSION, 5) {
     contains(DEFINES, LOGO_GL) {
         QT += openglwidgets
     }
+
+linux {
+    CONFIG += c++20
+}
 win32 {
     QMAKE_CXX   = "C:\ccache\ccache.exe $$QMAKE_CXX"
 
     QMAKE_CXXFLAGS += /std:c++17
     QMAKE_CXXFLAGS += /Zc:__cplusplus
     QMAKE_CXXFLAGS += /permissive-
+
+    QMAKE_CXXFLAGS += /utf-8
 }
     message(Qt6 = $$QT)
 } else {
@@ -202,7 +207,6 @@ win32 {
 }
 ###############################################################################
 CONFIG(debug, debug|release) {
-    CONFIG += c++17
     CONFIG += console
     CONFIG -= app_bundle
     #message (console ON)
@@ -215,5 +219,24 @@ greaterThan(QT_MAJOR_VERSION, 4) {
 } else {
     DEFINES += HAVE_QT4
     #message(Qt4 = $$QT)
+}
+###############################################################################
+# система уходит глубоко в своп с этим в Linux, не стОит
+win32 {
+    exists(stable.h) {
+        message (PCH)
+        PRECOMPILED_HEADER = stable.h
+        CONFIG += precompile_header
+    }
+}
+###############################################################################
+win32:CONFIG(release, debug|release) {
+    # Автоматически готовим инструмент windeployqt
+    qtPrepareTool(WINDEPLOY_CMD, windeployqt)
+
+    # Собираем команду деплоя.
+    # $(DESTDIR_TARGET) — это переменная самого Makefile, она на 100% содержит путь к вашему .exe
+    # Флаги экранируем от консоли Windows с помощью кавычек
+    QMAKE_POST_LINK += $$escape_expand(\\n) $$WINDEPLOY_CMD --no-compiler-runtime --no-quick-import --no-translations \"$(DESTDIR_TARGET)\"
 }
 ###############################################################################

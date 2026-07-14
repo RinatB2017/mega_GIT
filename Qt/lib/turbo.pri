@@ -143,20 +143,6 @@ unix:!macx {
     #QMAKE_CXXFLAGS_WARN_ON -= -Wno-missing-braces -Wno-missing-field-initializers
 }
 ###############################################################################
-# решение проблемы для кодировки в консоли windows
-#win32 {
-#    QMAKE_EXTRA_TARGETS += before_build makefilehook
-
-#    makefilehook.target = $(MAKEFILE)
-#    makefilehook.depends = .beforebuild
-
-#    PRE_TARGETDEPS += .beforebuild
-
-#    before_build.target = .beforebuild
-#    before_build.depends = FORCE
-#    before_build.commands = chcp 1251
-#}
-###############################################################################
 linux {
 MACHINE_ID = $$system(cat /etc/machine-id)
 message("Текущий Machine ID: " $$MACHINE_ID)

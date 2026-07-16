@@ -53,6 +53,7 @@ public slots:
 
     bool test(void);
     bool test2(void);
+    bool test_style(void);
     bool run_cube_widget(void);
     bool run_ogl_widget(void);
 

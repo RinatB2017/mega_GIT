@@ -18,8 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich  **
 **********************************************************************************/
-#include <QPushButton>
-//--------------------------------------------------------------------------------
 #include "custom_cyber_style.hpp"
 //--------------------------------------------------------------------------------
 void Custom_cyber_style::drawPrimitive(PrimitiveElement element,
@@ -27,49 +25,31 @@ void Custom_cyber_style::drawPrimitive(PrimitiveElement element,
                                        QPainter *painter,
                                        const QWidget *widget) const
 {
-    if (element == PE_PanelButtonCommand)
-    {
-        painter->setRenderHint(QPainter::Antialiasing);
+    // Проверяем, что Qt пытается нарисовать именно фон кнопки (обычной или ToolButton)
+    if (element == PE_PanelButtonCommand || element == PE_FrameButtonBevel) {
 
-        QRect rect = option->rect;
-        QStyle::State state = option->state;
+        painter->save();
+        painter->setRenderHint(QPainter::Antialiasing); // Чтобы скругление было гладким, без зазубрин
 
-        // 1. Цвет фона кнопки
-        QColor bgColor(0x0a, 0x11, 0x28); // Глубокий темно-синий
-        if (state & State_Sunken)
-        {
-            bgColor = QColor(0x00, 0x1d, 0x4a); // Нажата
-        }
-        else if (state & State_MouseOver)
-        {
-            bgColor = QColor(0x1c, 0x25, 0x41); // Наведён курсор
-        }
+        // Берем цвета кнопок, которые мы ранее настроили в палитре приложения
+        QColor buttonColor = option->palette.color(QPalette::Button);
+        painter->setBrush(buttonColor);
+        painter->setPen(Qt::NoPen); // Рисуем без обводки рамки
 
-        // Рисуем тело кнопки
-        painter->setPen(Qt::NoPen);
-        painter->setBrush(bgColor);
-        painter->drawRoundedRect(rect, 6.0, 6.0);
-
-        // 2. Цвет неоновой рамки
-        QColor neonColor(0x00, 0xb4, 0xd8); // Голубой неон
-        if (state & State_Sunken)
-        {
-            neonColor = QColor(0x00, 0x77, 0xb6);
-        }
-        else if (state & State_MouseOver)
-        {
-            neonColor = QColor(0x90, 0xe0, 0xef);
+        // Проверяем состояние: наведена ли мышь прямо сейчас?
+        if (option->state & QStyle::State_MouseOver) {
+            // МЫШЬ НАВЕДЕНА: Рисуем красивый скругленный прямоугольник (радиус 12 пикселей)
+            painter->drawRoundedRect(option->rect, 12, 12);
+        } else {
+            // МЫШЬ УШЛА: Рисуем обычную квадратную кнопку
+            painter->drawRect(option->rect);
         }
 
-        // Рисуем рамку
-        QPen pen(neonColor, 2.0);
-        painter->setPen(pen);
-        painter->setBrush(Qt::NoBrush);
-        painter->drawRoundedRect(rect.adjusted(1, 1, -1, -1), 6.0, 6.0);
-
-        return;
+        painter->restore();
+        return; // Выходим, чтобы базовый стиль не нарисовал свою квадратную форму поверх
     }
 
+    // Все остальные элементы интерфейса (окна, меню и т.д.) отдаем стандартному стилю
     QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
 //--------------------------------------------------------------------------------
@@ -78,75 +58,50 @@ void Custom_cyber_style::drawComplexControl(ComplexControl control,
                                             QPainter *painter,
                                             const QWidget *widget) const
 {
-    // Проверяем, что Qt пытается нарисовать именно QSpinBox
-    if (control == CC_SpinBox)
-    {
-        // Приводим базовую опцию к специальной структуре для спинбоксов
-        auto sbOption = qstyleoption_cast<const QStyleOptionSpinBox *>(option);
-        if (!sbOption)
-            return;
+    // Проверяем, что это слайдер
+    if (control == CC_Slider) {
+        if (const QStyleOptionSlider *sliderOpt = qstyleoption_cast<const QStyleOptionSlider *>(option)) {
 
-        painter->setRenderHint(QPainter::Antialiasing);
-        QRect rect = sbOption->rect;
-        QStyle::State state = sbOption->state;
+            painter->save();
+            painter->setRenderHint(QPainter::Antialiasing);
 
-        // 1. Рисуем общий тёмно-синий фон для всего спинбокса
-        QColor bgColor(0x0a, 0x11, 0x28);
-        painter->setPen(Qt::NoPen);
-        painter->setBrush(bgColor);
-        painter->drawRoundedRect(rect, 4.0, 4.0);
+            // 1. РИСУЕМ ДОРОЖКУ (Groove)
+            if (sliderOpt->subControls & SC_SliderGroove) {
+                // Получаем геометрию дорожки
+                QRect grooveRect = subControlRect(CC_Slider, sliderOpt, SC_SliderGroove, widget);
 
-        // 2. Рисуем неоновую рамку вокруг всего спинбокса
-        QColor neonColor = (state & State_MouseOver) ? QColor(0x90, 0xe0, 0xef)
-                                                     : QColor(0x00, 0xb4, 0xd8);
-        if (state & State_HasFocus)
-            neonColor = Qt::cyan; // Рамка горит ярче, если мы ввели туда курсор
+                painter->setPen(Qt::NoPen);
+                painter->setBrush(QColor(230, 230, 230)); // Светло-серый фон дорожки
+                painter->drawRoundedRect(grooveRect, 3, 3);
 
-        QPen pen(neonColor, 1.5);
-        painter->setPen(pen);
-        painter->setBrush(Qt::NoBrush);
-        painter->drawRoundedRect(rect.adjusted(1, 1, -1, -1), 4.0, 4.0);
+                // Заполняем пройденную часть дорожки КРАСНЫМ
+                QRect activeRect = grooveRect;
+                if (sliderOpt->orientation == Qt::Horizontal) {
+                    // Рассчитываем ширину от начала до текущего положения ручки
+                    QRect handleRect = subControlRect(CC_Slider, sliderOpt, SC_SliderHandle, widget);
+                    activeRect.setRight(handleRect.center().x());
+                }
+                painter->setBrush(Qt::red); // Наш красный акцент
+                painter->drawRoundedRect(activeRect, 3, 3);
+            }
 
-        // 3. Рисуем стрелочки "Вверх" и "Вниз"
-        // Запрашиваем у стиля точные координаты кнопок (они зависят от размера
-        // шрифта)
-        QRect upRect = subControlRect(CC_SpinBox, sbOption, SC_SpinBoxUp, widget);
-        QRect downRect = subControlRect(CC_SpinBox, sbOption, SC_SpinBoxDown, widget);
+            // 2. РИСУЕМ ПОДВИЖНУЮ РУЧКУ (Handle)
+            if (sliderOpt->subControls & SC_SliderHandle) {
+                QRect handleRect = subControlRect(CC_Slider, sliderOpt, SC_SliderHandle, widget);
 
-        // Подсвечиваем стрелочку "Вверх", если мышь наведена конкретно на неё
-        if (sbOption->activeSubControls & SC_SpinBoxUp)
-        {
-            painter->fillRect(upRect, QColor(0x1c, 0x25, 0x41));
+                painter->setBrush(Qt::white); // Наша БЕЛАЯ ручка
+                painter->setPen(QPen(Qt::red, 2)); // С красным контуром
+
+                // Рисуем ручку в виде круглого элемента
+                painter->drawEllipse(handleRect.center(), handleRect.width() / 2, handleRect.height() / 2);
+            }
+
+            painter->restore();
+            return; // Готово! Базовый системный стиль Windows больше не вмешивается
         }
-        // Подсвечиваем стрелочку "Вниз"
-        if (sbOption->activeSubControls & SC_SpinBoxDown)
-        {
-            painter->fillRect(downRect, QColor(0x1c, 0x25, 0x41));
-        }
-
-        // Рисуем сами значки стрелок (треугольники)
-        painter->setPen(Qt::NoPen);
-        painter->setBrush(Qt::white);
-
-        // Стрелка вверх
-        QPolygon upArrow;
-        upArrow << QPoint(upRect.center().x(), upRect.top() + 4)
-                << QPoint(upRect.left() + 4, upRect.bottom() - 4)
-                << QPoint(upRect.right() - 4, upRect.bottom() - 4);
-        painter->drawPolygon(upArrow);
-
-        // Стрелка вниз
-        QPolygon downArrow;
-        downArrow << QPoint(upRect.center().x(), downRect.bottom() - 4)
-                  << QPoint(downRect.left() + 4, downRect.top() + 4)
-                  << QPoint(downRect.right() - 4, downRect.top() + 4);
-        painter->drawPolygon(downArrow);
-
-        return; // Мы полностью отрисовали каркас, прерываем стандартный Fusion
     }
 
-    // Все остальные комплексные элементы (слайдеры, комбобоксы) рисуются базовым
-    // стилем
+    // Для всех остальных сложных элементов вызываем базу
     QProxyStyle::drawComplexControl(control, option, painter, widget);
 }
 //--------------------------------------------------------------------------------
@@ -155,54 +110,166 @@ void Custom_cyber_style::drawControl(ControlElement element,
                                      QPainter *painter,
                                      const QWidget *widget) const
 {
-    // Если Qt рисует иконку/текст внутри QToolButton
-    if (element == CE_ToolButtonLabel)
-    {
-        auto tbOption = qstyleoption_cast<const QStyleOptionToolButton *>(option);
-        if (tbOption)
-        {
-            // Создаем копию опции отрисовки, чтобы безопасно изменить цвета текста
-            // внутри
-            QStyleOptionToolButton labelOption(*tbOption);
+    if (element == CE_ToolBar) {
+        painter->save();
 
-            // Заставляем текст внутри ToolButton всегда быть белым
-            labelOption.palette.setColor(QPalette::ButtonText, Qt::white);
-            labelOption.palette.setColor(QPalette::WindowText, Qt::white);
+        // Закрашиваем весь прямоугольник панели инструментов чистым белым цветом
+        painter->fillRect(option->rect, Qt::white);
 
-            // Вызываем базовый Fusion для деликатного рендеринга иконки и текста.
-            // Fusion сам правильно отцентрирует их, учтет размеры и не сломает
-            // верстку.
-            QProxyStyle::drawControl(element, &labelOption, painter, widget);
-            return;
-        }
+        painter->restore();
+        return; // Выходим, чтобы базовый Fusion не наложил поверх серую заливку или полосы
     }
 
+    if (element == CE_DockWidgetTitle) {
+        painter->save();
+        painter->setRenderHint(QPainter::Antialiasing);
+
+        // Красим фон заголовка в белый цвет
+        painter->fillRect(option->rect, Qt::white);
+
+        // Рисуем вокруг заголовка тонкую синюю рамку для кибер-эффекта
+        QPen borderPen(Qt::blue, 1);
+        painter->setPen(borderPen);
+        painter->drawRect(option->rect.adjusted(0, 0, -1, -1));
+
+        painter->restore();
+
+        // ВАЖНО: Мы вызываем базу ПОСЛЕ нашей заливки,
+        // чтобы Qt сам нарисовал текст названия дока и стандартные иконки поверх белого фона!
+        QProxyStyle::drawControl(element, option, painter, widget);
+        return;
+    }
+
+    // 1. Сначала всегда рисуем саму кнопку
     QProxyStyle::drawControl(element, option, painter, widget);
+
+    // 2. Рисуем крест Х, только если мышь НЕ наведена на кнопку
+    if (element == CE_PushButton || element == CE_ToolButtonLabel) {
+
+        // Проверяем: если флаг State_MouseOver ОТСУТСТВУЕТ
+        if (!(option->state & QStyle::State_MouseOver)) {
+
+            painter->save();
+            painter->setRenderHint(QPainter::Antialiasing);
+
+            QPen crossPen(Qt::black, 2);
+            painter->setPen(crossPen);
+
+            QRect rect = option->rect;
+
+            // Проводим линии из угла в угол
+            painter->drawLine(rect.topLeft(), rect.bottomRight());
+            painter->drawLine(rect.topRight(), rect.bottomLeft());
+
+            painter->restore();
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+int Custom_cyber_style::pixelMetric(PixelMetric metric,
+                                    const QStyleOption *option,
+                                    const QWidget *widget) const
+{
+    switch (metric) {
+
+    // 1. Сделаем все полосы прокрутки (ScrollBar) ультра-тонкими (например, 8 пикселей вместо стандартных 15)
+    case PM_ScrollBarExtent:
+        return 8;
+
+    // 2. Увеличим внутренние отступы (поля) внутри кнопок, чтобы текст не прижимался к краям
+    case PM_ButtonMargin:
+        return 10; // 10 пикселей отступа со всех сторон текста
+
+    // 3. Зададим фиксированный размер для всех иконок на кнопках и в меню (например, сделаем их крупнее — 24х24)
+    case PM_ButtonIconSize:
+    case PM_SmallIconSize:
+        return 24;
+
+    // Для всех остальных сотен метрик обязательно вызываем базовый Fusion-стиль
+    default:
+        return QProxyStyle::pixelMetric(metric, option, widget);
+    }
+}
+//--------------------------------------------------------------------------------
+QSize Custom_cyber_style::sizeFromContents(ContentsType type,
+                                           const QStyleOption *option,
+                                           const QSize &contentsSize,
+                                           const QWidget *widget) const
+{
+    QSize size = QProxyStyle::sizeFromContents(type, option, contentsSize, widget);
+
+    // Если Qt рассчитывает размер для обычной кнопки
+    if (type == CT_PushButton) {
+        size.setHeight(45); // Принудительно делаем ВСЕ кнопки высотой 45 пикселей
+    }
+
+    return size;
 }
 //--------------------------------------------------------------------------------
 void Custom_cyber_style::polish(QWidget *widget)
 {
     QProxyStyle::polish(widget);
+    if (!widget) return;
 
-    // Перехват QPushButton
-    if (qobject_cast<QPushButton *>(widget))
+    if (qobject_cast<QPushButton*>(widget) || qobject_cast<QToolButton*>(widget))
     {
-        QPalette pal = widget->palette();
+        QPalette palette = widget->palette();
+        palette.setColor(QPalette::Button,      Qt::white);
+        palette.setColor(QPalette::ButtonText,  Qt::red);
 
-        // Принудительно делаем текст на кнопках белым
-        pal.setColor(QPalette::ButtonText, Qt::white);
-        pal.setColor(QPalette::WindowText, Qt::white);
-
-        widget->setPalette(pal);
+        widget->setPalette(palette);
     }
-
-    // Перехват QSpinBox
-    if (qobject_cast<QSpinBox *>(widget))
+    else if (qobject_cast<QAbstractSpinBox*>(widget))
     {
-        QPalette pal = widget->palette();
-        pal.setColor(QPalette::Text, Qt::white);                // Белый текст цифр
-        pal.setColor(QPalette::Base, QColor(0x0a, 0x11, 0x28)); // Тёмный фон под цифрами
-        widget->setPalette(pal);
+        QPalette palette = widget->palette();
+
+        palette.setColor(QPalette::Base, Qt::white);      // Фон под цифрами
+        palette.setColor(QPalette::Text, Qt::red);        // Цвет самих цифр
+        palette.setColor(QPalette::Button, Qt::white);    // Фон боковых кнопок
+        palette.setColor(QPalette::ButtonText, Qt::red);  // Цвет стрелочек
+
+        widget->setPalette(palette);
+    }
+    else if (qobject_cast<QRadioButton*>(widget) || qobject_cast<QCheckBox*>(widget))
+    {
+        QPalette palette = widget->palette();
+
+        palette.setColor(QPalette::Base, Qt::white);        // Белый фон внутри кружка
+        palette.setColor(QPalette::Text, Qt::red);          // Красная точка при выборе
+        palette.setColor(QPalette::WindowText, Qt::red);    // Красный цвет текста подписи
+
+        widget->setPalette(palette);
+    }
+    else if (qobject_cast<QComboBox*>(widget))
+    {
+        QPalette palette = widget->palette();
+
+        palette.setColor(QPalette::Base, Qt::white);        // Фон поля и выпадающего списка
+        palette.setColor(QPalette::Text, Qt::red);          // Цвет основного текста и пунктов списка
+        palette.setColor(QPalette::Button, Qt::white);      // Фон области со стрелочкой
+        palette.setColor(QPalette::ButtonText, Qt::red);    // Цвет стрелочки
+
+        widget->setPalette(palette);
+    }
+    else if (qobject_cast<QLineEdit*>(widget))
+    {
+        QPalette palette = widget->palette();
+
+        palette.setColor(QPalette::Base, Qt::white);               // Белый фон поля ввода
+        palette.setColor(QPalette::Text, Qt::red);                 // Красный цвет вводимых букв
+        palette.setColor(QPalette::PlaceholderText, QColor(255, 128, 128)); // Бледно-красный текст подсказки
+
+        widget->setPalette(palette);
+    }
+    else if (qobject_cast<QTextEdit*>(widget) || qobject_cast<QPlainTextEdit*>(widget))
+    {
+        QPalette palette = widget->palette();
+
+        palette.setColor(QPalette::Base, Qt::white);               // Белый фон текстового поля
+        palette.setColor(QPalette::Text, Qt::red);                 // Красный цвет многострочного текста
+        palette.setColor(QPalette::PlaceholderText, QColor(255, 128, 128)); // Бледно-красная подсказка
+
+        widget->setPalette(palette);
     }
 }
 //--------------------------------------------------------------------------------

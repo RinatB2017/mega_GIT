@@ -89,6 +89,56 @@ void MyWidget::unlock_buttons(void)
     wbox->hide();
 }
 //--------------------------------------------------------------------------------
+#if 0
+//TODO надо проверить
+bool MyWidget::check_exists_signals(QWidget *parent)
+{
+    emit trace(Q_FUNC_INFO);
+
+    if (parent == nullptr) {
+        return false;
+    }
+
+    const QMetaObject *thisMeta   = this->metaObject();
+    const QMetaObject *parentMeta = parent->metaObject();
+
+    // 1. Ваш старый проверенный поиск индексов
+    int m_info     = parentMeta->indexOfSignal("info(QString)");
+    int m_debug    = parentMeta->indexOfSignal("debug(QString)");
+    int m_error    = parentMeta->indexOfSignal("error(QString)");
+    int m_trace    = parentMeta->indexOfSignal("trace(QString)");
+    int m_colorlog = parentMeta->indexOfSignal("colorLog(QString,QColor,QColor)");
+
+    if (m_info == -1 || m_debug == -1 || m_error == -1 || m_trace == -1 || m_colorlog == -1) {
+        return false;
+    }
+
+    // 2. Ищем индексы у самого себя (this)
+    int thisInfoIdx     = thisMeta->indexOfSignal("info(QString)");
+    int thisDebugIdx    = thisMeta->indexOfSignal("debug(QString)");
+    int thisErrorIdx    = thisMeta->indexOfSignal("error(QString)");
+    int thisTraceIdx    = thisMeta->indexOfSignal("trace(QString)");
+    int thisColorLogIdx = thisMeta->indexOfSignal("colorLog(QString,QColor,QColor)");
+    int thisClearLogIdx = thisMeta->indexOfSignal("clear_log()");
+
+    int parentClearIdx  = parentMeta->indexOfSignal("clear_log()");
+
+    // 3. СВЯЗЫВАЕМ СИГНАЛЫ (Штатное решение Qt6 без макросов SIGNAL)
+    // Мы собираем QMetaMethod напрямую из мета-объекта и индекса.
+    // Метод QObject::connect принимает их через низкоуровневый вызов без шаблонов C++.
+    QObject::connect(this,   thisMeta->method(thisInfoIdx),     parent, parentMeta->method(m_info));
+    QObject::connect(this,   thisMeta->method(thisDebugIdx),    parent, parentMeta->method(m_debug));
+    QObject::connect(this,   thisMeta->method(thisErrorIdx),    parent, parentMeta->method(m_error));
+    QObject::connect(this,   thisMeta->method(thisTraceIdx),    parent, parentMeta->method(m_trace));
+    QObject::connect(this,   thisMeta->method(thisColorLogIdx), parent, parentMeta->method(m_colorlog));
+
+    if (parentClearIdx != -1) {
+        QObject::connect(this, thisMeta->method(thisClearLogIdx), parent, parentMeta->method(parentClearIdx));
+    }
+
+    return true;
+}
+#else
 bool MyWidget::check_exists_signals(QWidget *parent)
 {
     emit trace(Q_FUNC_INFO);
@@ -121,6 +171,7 @@ bool MyWidget::check_exists_signals(QWidget *parent)
 
     return true;
 }
+#endif
 //--------------------------------------------------------------------------------
 // основная функция
 void MyWidget::connect_log(QWidget *parent)

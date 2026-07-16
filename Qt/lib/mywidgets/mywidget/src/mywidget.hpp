@@ -21,6 +21,7 @@
 #ifndef MYWIDGET_HPP
 #define MYWIDGET_HPP
 //--------------------------------------------------------------------------------
+#include <QMetaMethod>
 #include <QDoubleSpinBox>
 #include <QRadioButton>
 #include <QStringList>

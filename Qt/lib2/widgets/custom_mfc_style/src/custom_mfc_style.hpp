@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef CUSTOM_CYBER_STYLE_HPP
-#define CUSTOM_CYBER_STYLE_HPP
+#ifndef CUSTOM_MFC_STYLE_HPP
+#define CUSTOM_MFC_STYLE_HPP
 //--------------------------------------------------------------------------------
 #include <QPushButton>
 #include <QToolButton>
@@ -30,37 +30,27 @@
 #include <QComboBox>
 #include <QCheckBox>
 #include <QSpinBox>
+#include <QDialogButtonBox>
 
 #include <QProxyStyle>
 #include <QStyleOption>
 #include <QPainter>
 //--------------------------------------------------------------------------------
-class Custom_cyber_style : public QProxyStyle
+class Custom_MFC_style : public QProxyStyle
 {
     Q_OBJECT
 public:
-    explicit Custom_cyber_style(const QString &baseStyle = "fusion")
+    explicit Custom_MFC_style(const QString &baseStyle = "fusion")
         : QProxyStyle(baseStyle) {}
 
     void drawPrimitive(PrimitiveElement element,
                        const QStyleOption *option,
                        QPainter *painter,
                        const QWidget *widget = nullptr) const override;
-    void drawComplexControl(ComplexControl control,
-                            const QStyleOptionComplex *option,
-                            QPainter *painter,
-                            const QWidget *widget = nullptr) const override;
-    void drawControl(ControlElement element,
-                     const QStyleOption *option,
-                     QPainter *painter,
-                     const QWidget *widget = nullptr) const override;
     int pixelMetric(PixelMetric metric,
                     const QStyleOption *option = nullptr,
                     const QWidget *widget = nullptr) const override;
-    QSize sizeFromContents(ContentsType type,
-                           const QStyleOption *option,
-                           const QSize &contentsSize,
-                           const QWidget *widget) const override;
+    int styleHint(StyleHint hint, const QStyleOption *option, const QWidget *widget, QStyleHintReturn *returnData) const override;
 
     // Стандартный метод Qt для точечной настройки палитры виджетов перед показом
     void polish(QWidget *widget) override;

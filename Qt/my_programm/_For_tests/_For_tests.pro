@@ -39,7 +39,9 @@ OTHER_FILES += \
 # профилирование
 #include (conf/prof.pri)
 
-LIBS += -lX11
+linux {
+    LIBS += -lX11
+}
 
 win32 {
     include (Y:/ext_paths.pri)
@@ -68,17 +70,21 @@ include ($$LIB_PATH2/widgets/show_hsv_color/show_hsv_color.pri)
 include ($$LIB_PATH2/widgets/color_widget/color_widget.pri)
 
 include ($$LIB_PATH2/widgets/custom_cyber_style/custom_cyber_style.pri)
+include ($$LIB_PATH2/widgets/custom_mfc_style/custom_mfc_style.pri)
+include ($$LIB_PATH2/widgets/custom_aqua_style/custom_aqua_style.pri)
 
 include ($$LIB_PATH2/test_classes.pri)
 
-include (src/for_tests_mainbox_gui/for_tests_mainbox_gui.pri)
-include (src/for_tests_mainbox/for_tests_mainbox.pri)
+include ($$PWD/src/for_tests_mainbox_gui/for_tests_mainbox_gui.pri)
+include ($$PWD/src/for_tests_mainbox/for_tests_mainbox.pri)
 
-include (src/mymainwindow/mymainwindow.pri)
-include (src/widgets/widgets.pri)
+include ($$PWD/src/mymainwindow/mymainwindow.pri)
+include ($$PWD/src/widgets/widgets.pri)
 
-# include (src/cube/cube.pri)
-# include (src/ogl/ogl.pri)
+include ($$PWD/src/worker/worker.pri)
+
+# include ($$PWD/src/cube/cube.pri)
+# include ($$PWD/src/ogl/ogl.pri)
 
 #message ($$QMAKESPEC)
 

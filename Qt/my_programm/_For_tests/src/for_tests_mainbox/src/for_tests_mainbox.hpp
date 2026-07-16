@@ -23,6 +23,11 @@
 //--------------------------------------------------------------------------------
 #include <QTextToSpeech>
 #include <QElapsedTimer>
+
+#include <QMetaType>
+#include <QMetaObject>
+
+#include <QThread>
 //--------------------------------------------------------------------------------
 #include "for_tests_mainbox_gui.hpp"
 #include "mysplashscreen.hpp"
@@ -33,6 +38,48 @@
 // #include "ogl_widget.hpp"
 // #include "cubewidget.h"
 #include "defines.hpp"
+
+#include "worker.h"
+
+#include "custom_cyber_style.hpp"
+#include "custom_mfc_style.hpp"
+#include "custom_aqua_style.hpp"
+//--------------------------------------------------------------------------------
+class CyberWidget : public QWidget {
+    Q_OBJECT // Обязательно для работы мета-системы
+public:
+    // Q_INVOKABLE — это разрешение для метода newInstance() вызывать этот конструктор
+    Q_INVOKABLE explicit CyberWidget(QWidget *parent = nullptr) : QWidget(parent) {
+
+        // Просто добавим внутрь виджета какой-нибудь текст для наглядности
+        QVBoxLayout *layout = new QVBoxLayout(this);
+        QLabel *label = new QLabel("Привет! Я — CyberWidget.", this);
+        layout->addWidget(label);
+
+        // Сделаем ему рамку, чтобы его было видно на экране
+        setStyleSheet("border: 2px solid blue; background-color: white;");
+    }
+};
+//--------------------------------------------------------------------------------
+class TestClass : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit TestClass(QWidget *parent) : QWidget(parent)
+    {
+
+    }
+
+signals:
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
+
+    void colorLog(const QString &, const QColor &, const QColor &);
+    void clear_log();
+};
 //--------------------------------------------------------------------------------
 namespace Ui {
     class MainBox;
@@ -57,6 +104,10 @@ public slots:
     bool run_cube_widget(void);
     bool run_ogl_widget(void);
 
+    void startThread(void);
+    void stopThread(void);
+    void handleProgress(int value);
+
 private:
     typedef struct
     {
@@ -74,9 +125,14 @@ private:
 
     QTextToSpeech sp;
 
+    QThread *m_thread; // Указатель на объект потока
+    Worker  *m_worker; // <-- ДОБАВЬТЕ ЭТУ СТРОЧКУ!
+
     bool set_theme_windows(void);
     bool set_norton_commander(void);
     bool set_styles(void);
+
+    void createWidgetByName(void);
 
     void init(void);
     void create_test_bar(void);

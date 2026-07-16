@@ -23,13 +23,16 @@
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
     MainBox_GUI(parent),
-    splash(splash)
+    splash(splash),
+    m_thread(nullptr)
 {
     init();
 }
 //--------------------------------------------------------------------------------
 MainBox::~MainBox()
 {
+    stopThread();
+
     save_widgets();
 }
 //--------------------------------------------------------------------------------
@@ -40,6 +43,10 @@ void MainBox::init(void)
     // add_lcd_clock();
     // add_digital_clock(false);
     add_digital_clock();
+
+    // Создаем поток один раз на всё время жизни окна
+    m_thread = new QThread(this);
+    m_worker = nullptr;
 
     load_widgets();
 }
@@ -293,7 +300,100 @@ QImage MainBox::create_bone(int num)
     return image;
 }
 //--------------------------------------------------------------------------------
-#include "custom_cyber_style.hpp"
+void MainBox::createWidgetByName(void)
+{
+    // 1. У нас есть только строка с именем класса
+    QString className = "CyberWidget";
+
+    // 2. Ищем мета-тип по его строковому имени
+    QMetaType type = QMetaType::fromName(className.toUtf8().constData());
+
+    if (type.isValid()) {
+        // 3. Запрашиваем "паспорт" класса (QMetaObject) для этого типа
+        const QMetaObject *metaObject = type.metaObject();
+
+        if (metaObject) {
+            // 4. МЫ СТРОИМ ОБЪЕКТ ПО СТРОКЕ!
+            // Метод newInstance() вызывает конструктор, помеченный как Q_INVOKABLE
+            QObject *obj = metaObject->newInstance();
+
+            if (obj) {
+                // Объект успешно создан. Приводим его к базовому типу QWidget
+                QWidget *widget = qobject_cast<QWidget*>(obj);
+
+                // Теперь с ним можно работать как с обычной формой:
+                widget->setWindowTitle("Я создан по строке!");
+                widget->resize(300, 200);
+                widget->show();
+            } else {
+                emit error("Не удалось вызвать конструктор. Проверьте Q_INVOKABLE!");
+            }
+        }
+    } else {
+        emit error(QString("Класс с именем %1 не зарегистрирован в системе.")
+                       .arg(className));
+    }
+}
+//--------------------------------------------------------------------------------
+void MainBox::startThread(void)
+{
+    if (m_worker != nullptr)
+    {
+        qDebug() << "Поток уже работает!";
+        return;
+    }
+
+    m_worker = new Worker(); // Без родителя
+    m_worker->moveToThread(m_thread);
+
+    connect(m_thread, &QThread::started, m_worker, &Worker::doHeavyWork);
+    connect(m_worker, &Worker::progressChanged, this, &MainBox::handleProgress);
+
+    // Когда воркер завершит цикл, он сам отправит сигнал finished на свое удаление
+    connect(m_worker, &Worker::finished, m_worker, &Worker::deleteLater);
+
+    // Как только воркер физически сотрется, зануляем указатель
+    connect(m_worker, &Worker::destroyed, this, [this](){ m_worker = nullptr; });
+
+    if (!m_thread->isRunning())
+    {
+        m_thread->start();
+    }
+    else
+    {
+        QMetaObject::invokeMethod(m_worker, "doHeavyWork");
+    }
+}
+
+void MainBox::stopThread(void)
+{
+    // Если воркера нет или поток уже спит, останавливать нечего
+    if (!m_worker || !m_thread->isRunning()) return;
+
+    qDebug() << "Запрос на экстренную остановку вычислений...";
+
+    // 1. Вежливо просим воркера выйти из цикла for
+    m_thread->requestInterruption();
+
+    // 2. Просим сам поток завершить свой внутренний цикл ожидания событий Qt
+    m_thread->quit();
+
+    // 3. ЖЕЛЕЗНОЕ ОЖИДАНИЕ: Главный GUI-поток останавливается и ждет,
+    // пока поток в Linux сделает последний вздох.
+    // Это занимает долей миллисекунды, но гарантирует, что QThread не сотрется на бегу!
+    m_thread->wait();
+
+    // Чистим указатель, так как воркер удалится через deleteLater()
+    m_worker = nullptr;
+
+    qDebug() << "Поток безопасно остановлен. Программу можно закрывать.";
+}
+
+void MainBox::handleProgress(int value)
+{
+    qDebug() << "Прогресс, пойманный в интерфейсе:" << value << "%";
+}
+//--------------------------------------------------------------------------------
 #include "test_classes.hpp"
 
 bool MainBox::test(void)
@@ -301,6 +401,15 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    startThread();
+#endif
+
+#if 0
+    qRegisterMetaType<CyberWidget>("CyberWidget");
+    createWidgetByName();
+#endif
+
+#if 0
     // RotateWidget *w = new RotateWidget();
     // DrawWidget *w = new DrawWidget();
     LineWidget *w = new LineWidget();
@@ -325,6 +434,10 @@ bool MainBox::test2(void)
     emit trace(Q_FUNC_INFO);
     emit info("Test2");
 
+#if 1
+    stopThread();
+#endif
+
 #if 0
     emit info(QString("value: %1")
               .arg(Connection::get_double_value()));
@@ -338,7 +451,30 @@ bool MainBox::test_style(void)
     emit trace(Q_FUNC_INFO);
     emit info("test_style");
 
-    QApplication::setStyle(new Custom_cyber_style("fusion"));
+    // QApplication::setStyle(new Custom_cyber_style("fusion"));
+    // QApplication::setStyle(new Custom_MFC_style("fusion"));
+    QApplication::setStyle(new Custom_Aqua_style("fusion"));
+
+    // 2. СБРАСЫВАЕМ ГЛОБАЛЬНУЮ ПАЛИТРУ
+    // Если в старой теме палитра приложения была изменена, её нужно вернуть к дефолту стиля Fusion,
+    // чтобы ваш метод polish() в стиле заново накатил правильные цвета на чистый холст.
+    QApplication::setPalette(QApplication::style()->standardPalette());
+
+    // 3. ПРИНУДИТЕЛЬНОЕ ОБНОВЛЕНИЕ ВСЕХ ВИДЖЕТОВ
+    // Проходим по абсолютно всем виджетам приложения и заставляем их сбросить старый графический кеш
+    for (QWidget *widget : QApplication::allWidgets()) {
+
+        // Оповещаем виджет, что стиль поменялся (это вызовет unpolish для старого стиля и polish для нового)
+        QEvent changeEvent(QEvent::StyleChange);
+        QApplication::sendEvent(widget, &changeEvent);
+
+        // Сбрасываем внутренний кеш геометрии и размеров (чтобы применился ваш pixelMetric)
+        widget->updateGeometry();
+
+        // Ставим виджет в очередь на полную физическую перерисовку экрана
+        widget->update();
+    }
+
     return true;
 }
 //--------------------------------------------------------------------------------

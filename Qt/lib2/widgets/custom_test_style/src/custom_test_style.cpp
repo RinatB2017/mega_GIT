@@ -18,9 +18,9 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich  **
 **********************************************************************************/
-#include "custom_cyber_style.hpp"
+#include "custom_test_style.hpp"
 //--------------------------------------------------------------------------------
-void Custom_cyber_style::drawPrimitive(PrimitiveElement element,
+void Custom_test_style::drawPrimitive(PrimitiveElement element,
                                        const QStyleOption *option,
                                        QPainter *painter,
                                        const QWidget *widget) const
@@ -53,7 +53,7 @@ void Custom_cyber_style::drawPrimitive(PrimitiveElement element,
     QProxyStyle::drawPrimitive(element, option, painter, widget);
 }
 //--------------------------------------------------------------------------------
-void Custom_cyber_style::drawComplexControl(ComplexControl control,
+void Custom_test_style::drawComplexControl(ComplexControl control,
                                             const QStyleOptionComplex *option,
                                             QPainter *painter,
                                             const QWidget *widget) const
@@ -105,7 +105,7 @@ void Custom_cyber_style::drawComplexControl(ComplexControl control,
     QProxyStyle::drawComplexControl(control, option, painter, widget);
 }
 //--------------------------------------------------------------------------------
-void Custom_cyber_style::drawControl(ControlElement element,
+void Custom_test_style::drawControl(ControlElement element,
                                      const QStyleOption *option,
                                      QPainter *painter,
                                      const QWidget *widget) const
@@ -166,7 +166,7 @@ void Custom_cyber_style::drawControl(ControlElement element,
     }
 }
 //--------------------------------------------------------------------------------
-int Custom_cyber_style::pixelMetric(PixelMetric metric,
+int Custom_test_style::pixelMetric(PixelMetric metric,
                                     const QStyleOption *option,
                                     const QWidget *widget) const
 {
@@ -191,7 +191,7 @@ int Custom_cyber_style::pixelMetric(PixelMetric metric,
     }
 }
 //--------------------------------------------------------------------------------
-QSize Custom_cyber_style::sizeFromContents(ContentsType type,
+QSize Custom_test_style::sizeFromContents(ContentsType type,
                                            const QStyleOption *option,
                                            const QSize &contentsSize,
                                            const QWidget *widget) const
@@ -206,7 +206,7 @@ QSize Custom_cyber_style::sizeFromContents(ContentsType type,
     return size;
 }
 //--------------------------------------------------------------------------------
-void Custom_cyber_style::polish(QWidget *widget)
+void Custom_test_style::polish(QWidget *widget)
 {
     QProxyStyle::polish(widget);
     if (!widget) return;

@@ -11,7 +11,8 @@ QT  += concurrent
 QT  += texttospeech
 
 PROGRAMM_PATH  += \
-    $$PWD/src
+    $$PWD/src \
+    $$PWD/DLL
 INCLUDEPATH += $$PROGRAMM_PATH
 DEPENDPATH  += $$PROGRAMM_PATH
 
@@ -69,7 +70,7 @@ include ($$LIB_PATH2/widgets/QLongLongSpinBox/QLongLongSpinBox.pri)
 include ($$LIB_PATH2/widgets/show_hsv_color/show_hsv_color.pri)
 include ($$LIB_PATH2/widgets/color_widget/color_widget.pri)
 
-include ($$LIB_PATH2/widgets/custom_cyber_style/custom_cyber_style.pri)
+include ($$LIB_PATH2/widgets/custom_test_style/custom_test_style.pri)
 include ($$LIB_PATH2/widgets/custom_mfc_style/custom_mfc_style.pri)
 include ($$LIB_PATH2/widgets/custom_aqua_style/custom_aqua_style.pri)
 
@@ -82,6 +83,8 @@ include ($$PWD/src/mymainwindow/mymainwindow.pri)
 include ($$PWD/src/widgets/widgets.pri)
 
 include ($$PWD/src/worker/worker.pri)
+
+include ($$PWD/src/simple_tcp_server/simple_tcp_server.pri)
 
 # include ($$PWD/src/cube/cube.pri)
 # include ($$PWD/src/ogl/ogl.pri)

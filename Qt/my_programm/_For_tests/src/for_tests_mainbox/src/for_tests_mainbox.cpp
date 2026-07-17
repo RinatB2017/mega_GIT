@@ -33,6 +33,11 @@ MainBox::~MainBox()
 {
     stopThread();
 
+    // m_sshServer->stopServer();
+    // delete m_sshServer;
+
+    m_remoteConsole->stopServer();
+
     save_widgets();
 }
 //--------------------------------------------------------------------------------
@@ -47,6 +52,10 @@ void MainBox::init(void)
     // Создаем поток один раз на всё время жизни окна
     m_thread = new QThread(this);
     m_worker = nullptr;
+
+    // m_sshServer = new SimpleSshServer(2222, this);
+
+    m_remoteConsole = new SimpleRemoteConsole(2222, this);
 
     load_widgets();
 }
@@ -401,7 +410,37 @@ bool MainBox::test(void)
     emit trace(Q_FUNC_INFO);
 
 #if 1
+    if (m_remoteConsole->startServer())
+    {
+        emit info("Удаленная консоль успешно запущена.");
+    }
+    else
+    {
+        emit error("Не удалось запустить сервер. Порт занят?");
+    }
+#endif
+
+#if 0
     startThread();
+#endif
+
+#if 0
+    if (m_sshServer->startServer())
+    {
+        emit info("==================================================");
+        emit info("SSH-сервер успешно запущен на порту 2222.");
+        emit info("Имя пользователя: admin");
+        emit info("Пароль: my_secure_password");
+        emit info("Для подключения из Linux используйте команду:");
+        emit info("ssh admin@<IP_АДРЕС_WINDOWS_МАШИНЫ> -p 2222");
+        emit info("==================================================");
+    }
+    else
+    {
+        emit error("Не удалось запустить SSH-сервер. Проверьте приватный RSA-ключ.");
+        return false;
+    }
+    emit info("SSH-сервер запушен");
 #endif
 
 #if 0
@@ -451,7 +490,7 @@ bool MainBox::test_style(void)
     emit trace(Q_FUNC_INFO);
     emit info("test_style");
 
-    // QApplication::setStyle(new Custom_cyber_style("fusion"));
+    // QApplication::setStyle(new Custom_test_style("fusion"));
     // QApplication::setStyle(new Custom_MFC_style("fusion"));
     QApplication::setStyle(new Custom_Aqua_style("fusion"));
 

@@ -41,7 +41,9 @@
 
 #include "worker.h"
 
-#include "custom_cyber_style.hpp"
+#include "simpletcpserver.h"
+
+#include "custom_test_style.hpp"
 #include "custom_mfc_style.hpp"
 #include "custom_aqua_style.hpp"
 //--------------------------------------------------------------------------------
@@ -127,6 +129,9 @@ private:
 
     QThread *m_thread; // Указатель на объект потока
     Worker  *m_worker; // <-- ДОБАВЬТЕ ЭТУ СТРОЧКУ!
+
+    // SimpleSshServer *m_sshServer;
+    SimpleRemoteConsole *m_remoteConsole;
 
     bool set_theme_windows(void);
     bool set_norton_commander(void);

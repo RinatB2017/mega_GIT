@@ -18,8 +18,8 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef CUSTOM_CYBER_STYLE_HPP
-#define CUSTOM_CYBER_STYLE_HPP
+#ifndef CUSTOM_TEST_STYLE_HPP
+#define CUSTOM_TEST_STYLE_HPP
 //--------------------------------------------------------------------------------
 #include <QPushButton>
 #include <QToolButton>
@@ -35,11 +35,11 @@
 #include <QStyleOption>
 #include <QPainter>
 //--------------------------------------------------------------------------------
-class Custom_cyber_style : public QProxyStyle
+class Custom_test_style : public QProxyStyle
 {
     Q_OBJECT
 public:
-    explicit Custom_cyber_style(const QString &baseStyle = "fusion")
+    explicit Custom_test_style(const QString &baseStyle = "fusion")
         : QProxyStyle(baseStyle) {}
 
     void drawPrimitive(PrimitiveElement element,

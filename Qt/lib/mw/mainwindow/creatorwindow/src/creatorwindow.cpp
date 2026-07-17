@@ -618,6 +618,15 @@ void CreatorWindow::setStyles(void)
         return;
     }
     QApplication::setStyle(style);
+
+    emit debug("refresh");
+    for (QWidget *widget : QApplication::allWidgets())
+    {
+        QEvent changeEvent(QEvent::StyleChange);
+        QApplication::sendEvent(widget, &changeEvent);
+        widget->updateGeometry();
+        widget->update();
+    }
 }
 //--------------------------------------------------------------------------------
 void CreatorWindow::about(void)

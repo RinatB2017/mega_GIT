@@ -41,8 +41,6 @@
 
 #include "worker.h"
 
-#include "simpletcpserver.h"
-
 #include "custom_test_style.hpp"
 #include "custom_mfc_style.hpp"
 #include "custom_aqua_style.hpp"

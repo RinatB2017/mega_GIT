@@ -18,7 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include "simplehttpserver.hpp"
+#include "simple_http_server.hpp"
 //--------------------------------------------------------------------------------
 SimpleHttpServer::SimpleHttpServer(QObject *parent) :
     QTcpServer(parent)

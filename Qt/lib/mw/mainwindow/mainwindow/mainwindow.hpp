@@ -21,7 +21,9 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 //--------------------------------------------------------------------------------
-#include "simplehttpserver.hpp"
+#include "simple_http_server.hpp"
+#include "simple_tcp_server.hpp"
+//--------------------------------------------------------------------------------
 #include "creatormenus.hpp"
 //--------------------------------------------------------------------------------
 class MainWindow : public CreatorMenus
@@ -34,6 +36,10 @@ public:
 
 #ifdef GET_SCREENSHOT
     SimpleHttpServer server;
+#endif
+
+#ifdef REMOTE_CONTROL
+    SimpleRemoteConsole m_remoteConsole;
 #endif
 };
 //--------------------------------------------------------------------------------

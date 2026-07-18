@@ -84,8 +84,6 @@ include ($$PWD/src/widgets/widgets.pri)
 
 include ($$PWD/src/worker/worker.pri)
 
-include ($$PWD/src/simple_tcp_server/simple_tcp_server.pri)
-
 # include ($$PWD/src/cube/cube.pri)
 # include ($$PWD/src/ogl/ogl.pri)
 

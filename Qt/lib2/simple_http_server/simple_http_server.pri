@@ -5,5 +5,5 @@
 DEPENDPATH      += $$PWD/src
 INCLUDEPATH     = $$DEPENDPATH
 
-SOURCES += simplehttpserver.cpp
-HEADERS += simplehttpserver.hpp
+SOURCES += simple_http_server.cpp
+HEADERS += simple_http_server.hpp

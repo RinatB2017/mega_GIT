@@ -33,6 +33,17 @@ MainWindow::MainWindow(QWidget *parent) :
         // qDebug() << "Failed to start server";
     }
 #endif
+
+#ifdef REMOTE_CONTROL
+    if (m_remoteConsole.startServer())
+    {
+        qDebug() << "Удаленная консоль успешно запущена.";
+    }
+    else
+    {
+        qDebug() << "Не удалось запустить сервер. Порт занят?";
+    }
+#endif
 }
 //--------------------------------------------------------------------------------
 MainWindow::~MainWindow()

@@ -20,7 +20,9 @@ include ($$LIB_PATH/mywidgets/timer_options/timer_options.pri)
 include ($$LIB_PATH/mywidgets/digital_clock/digital_clock.pri)
 include ($$LIB_PATH/mywidgets/lcd_clock/lcd_clock.pri)
 
-include ($$LIB_PATH2/simplehttpserver/simplehttpserver.pri)
+include ($$LIB_PATH2/simple_http_server/simple_http_server.pri)
+include ($$LIB_PATH2/simple_tcp_server/simple_tcp_server.pri)
+
 include ($$LIB_PATH2/waiting_box/waiting_box.pri)
 
 include ($$LIB_PATH3/docker_mover/docker_mover.pri)

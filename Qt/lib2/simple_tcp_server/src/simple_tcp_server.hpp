@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2025                                                       **
+**     Copyright (C) 2026                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,44 +18,37 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef SIMPLEHTTPSERVER_HPP
-#define SIMPLEHTTPSERVER_HPP
+#ifndef SIMPLE_TCP_SERVER_HPP
+#define SIMPLE_TCP_SERVER_HPP
 //--------------------------------------------------------------------------------
-#include <QApplication>
+#include <QObject>
 #include <QTcpServer>
 #include <QTcpSocket>
-#include <QScreen>
-#include <QBuffer>
-#include <QPixmap>
+#include <QProcess>
+#include <QMap>
 //--------------------------------------------------------------------------------
-// http://localhost:8080/screenshot
-// int main(int argc, char *argv[])
-// {
-//     QApplication app(argc, argv);
-//     SimpleHttpServer server;
-//     if (server.listen(QHostAddress::Any, 8080))
-//     {
-//         qDebug() << "Server started on port 8080";
-//     }
-//     else
-//     {
-//         qDebug() << "Failed to start server";
-//         return 1;
-//     }
-//     return app.exec();
-// }
-//--------------------------------------------------------------------------------
-class SimpleHttpServer : public QTcpServer
+class SimpleRemoteConsole : public QObject
 {
     Q_OBJECT
-
 public:
-    SimpleHttpServer(QObject *parent = nullptr);
+    explicit SimpleRemoteConsole(quint16 port = 2222, QObject *parent = nullptr);
+    ~SimpleRemoteConsole();
+
+    bool startServer();
+    void stopServer();
 
 private slots:
-    void handleNewConnection(void);
-    void sendScreenshot(QTcpSocket *clientSocket);
-    void sendNotFound(QTcpSocket *clientSocket);
+    void onNewConnection();
+    void onClientReadyRead();
+    void onClientDisconnected();
+    void onProcessReadyRead();
+
+private:
+    quint16 m_port;
+    QTcpServer *m_tcpServer;
+
+    // Храним связку: какой сокет клиента управляет каким процессом ОС
+    QMap<QTcpSocket*, QProcess*> m_clients;
 };
 //--------------------------------------------------------------------------------
-#endif // SIMPLEHTTPSERVER_HPP
+#endif

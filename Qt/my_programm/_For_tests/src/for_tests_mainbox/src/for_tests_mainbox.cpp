@@ -409,17 +409,6 @@ bool MainBox::test(void)
 {
     emit trace(Q_FUNC_INFO);
 
-#if 1
-    if (m_remoteConsole->startServer())
-    {
-        emit info("Удаленная консоль успешно запущена.");
-    }
-    else
-    {
-        emit error("Не удалось запустить сервер. Порт занят?");
-    }
-#endif
-
 #if 0
     startThread();
 #endif

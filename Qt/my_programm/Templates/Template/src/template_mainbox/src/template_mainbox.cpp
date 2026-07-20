@@ -195,8 +195,10 @@ void MainBox::choice_programm(void)
 //--------------------------------------------------------------------------------
 bool MainBox::test(void)
 {
-    fail();
-    return false;
+    Draw_widget *w = new Draw_widget();
+    w->show();
+
+    return true;
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText(void)

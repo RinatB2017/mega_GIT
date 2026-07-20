@@ -44,5 +44,6 @@ include ($$LIB_PATH/meta/mainwindow.pri)
 # include ($$LIB_PATH/create_shortcut.pri)
 
 include ($$PWD/src/template_mainbox/template_mainbox.pri)
+include ($$PWD/src/draw_widget/draw_widget.pri)
 
 VPATH = $$INCLUDEPATH

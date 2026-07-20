@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2025                                                       **
+**     Copyright (C) 2026                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,68 +18,38 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#ifndef MAINBOX_HPP
-#define MAINBOX_HPP
-//--------------------------------------------------------------------------------
-#include "ui_template_mainbox.h"
-//--------------------------------------------------------------------------------
-#include <QPointer>
-//--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
-#include "mysplashscreen.hpp"
-#include "mainwindow.hpp"
-#include "mywidget.hpp"
-
 #include "draw_widget.hpp"
 //--------------------------------------------------------------------------------
-namespace Ui {
-    class MainBox;
+Draw_widget::Draw_widget(QWidget *parent) :
+    QWidget(parent)
+{
+    init();
 }
 //--------------------------------------------------------------------------------
-class MainBox : public MyWidget
+Draw_widget::~Draw_widget()
 {
-    Q_OBJECT
 
-public:
-    explicit MainBox(QWidget *parent,
-                     MySplashScreen *splash);
-    virtual ~MainBox();
-
-private slots:
-    void choice_test(void);
-    void choice_programm(void);
-
-private:
-    QPointer<MySplashScreen> splash;
-    Ui::MainBox *ui;
-
-    typedef struct CMD
-    {
-        int cmd;
-        QString cmd_text;
-        bool (MainBox::*func)(void);
-    } CMD_t;
-    QList<CMD> test_commands;
-    QList<CMD> programm_commands;
-
-    QPointer<QToolBar> test_bar;
-    QPointer<QToolBar> programm_bar;
-    QPointer<QComboBox> cb_test;
-    QPointer<QComboBox> cb_programm;
-
-    void init(void);
-    void init_widgets(void);
-    void connects(void);
-
-    void create_test_bar(void);
-    void create_programm_bar(void);
-
-    bool test(void);
-
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
-};
+}
 //--------------------------------------------------------------------------------
-#endif // MAINBOX_HPP
+void Draw_widget::init(void)
+{
+
+}
+//--------------------------------------------------------------------------------
+void Draw_widget::paintEvent(QPaintEvent *)
+{
+    QPainter painter;
+
+    painter.begin(this);
+    painter.setPen(QPen(QColor(210, 210, 210), 1));
+
+    painter.drawLine(0, 0, width(), height());
+
+    painter.end();
+}
+//--------------------------------------------------------------------------------
+void Draw_widget::mousePressEvent(QMouseEvent *event)
+{
+    QWidget::mousePressEvent(event);
+}
+//--------------------------------------------------------------------------------

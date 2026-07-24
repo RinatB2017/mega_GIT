@@ -43,7 +43,8 @@ void Draw_widget::paintEvent(QPaintEvent *)
     painter.begin(this);
     painter.setPen(QPen(QColor(210, 210, 210), 1));
 
-    painter.drawLine(0, 0, width(), height());
+    painter.drawLine(0, 0,          width(), height());
+    painter.drawLine(0, height(),   width(), 0);
 
     painter.end();
 }

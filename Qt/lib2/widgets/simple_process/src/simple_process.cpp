@@ -37,6 +37,7 @@ Simple_process::~Simple_process()
 void Simple_process::init(void)
 {
     myProcess = new QProcess(this);
+
     connect(myProcess,  &QProcess::started,                 this,   &Simple_process::started);
     connect(myProcess,  &QProcess::readyReadStandardOutput, this,   &Simple_process::read_data);
     connect(myProcess,  &QProcess::readyReadStandardError,  this,   &Simple_process::read_error);
@@ -44,6 +45,8 @@ void Simple_process::init(void)
             this,       static_cast<void (Simple_process::*)(int, QProcess::ExitStatus)>(&Simple_process::finished));
     connect(myProcess,  static_cast<void (QProcess::*)(QProcess::ProcessError)>(&QProcess::errorOccurred),
             this,       static_cast<void (Simple_process::*)(QProcess::ProcessError)>(&Simple_process::process_error));
+
+    setVisible(false);
 }
 //--------------------------------------------------------------------------------
 void Simple_process::programm_start(const QString &program,

@@ -31,7 +31,7 @@ Draw_widget::~Draw_widget()
 
 }
 //--------------------------------------------------------------------------------
-void Draw_widget::init(void)
+void Draw_widget::init()
 {
 
 }

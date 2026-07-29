@@ -44,7 +44,7 @@ static const QString s_vertShader = R"(
     attribute vec3 vertexIn;    // xyz顶点坐标
     attribute vec2 textureIn;   // xy纹理坐标
     varying vec2 textureOut;    // 传递给片段着色器的纹理坐标
-    void main(void)
+    void main()
     {
         gl_Position = vec4(vertexIn, 1.0);  // 1.0表示vertexIn是一个顶点位置
         textureOut = textureIn; // 纹理坐标直接传递给片段着色器
@@ -57,7 +57,7 @@ static QString s_fragShader = R"(
     uniform sampler2D textureY;     // uniform 纹理单元，利用纹理单元可以使用多个纹理
     uniform sampler2D textureU;     // sampler2D是2D采样器
     uniform sampler2D textureV;     // 声明yuv三个纹理单元
-    void main(void)
+    void main()
     {
         vec3 yuv;
         vec3 rgb;

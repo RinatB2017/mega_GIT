@@ -33,7 +33,7 @@ PCA10000::PCA10000(QObject *parent) :
     init();
 }
 //--------------------------------------------------------------------------------
-void PCA10000::init(void)
+void PCA10000::init()
 {
     connect(&serial, SIGNAL(readyRead()), this, SLOT(port_read()));
     //connect(&serial, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(port_error(QSerialPort::SerialPortError)));
@@ -63,7 +63,7 @@ void PCA10000::print_info(const QSerialPortInfo &port)
     }
 }
 //--------------------------------------------------------------------------------
-bool PCA10000::find_device(void)
+bool PCA10000::find_device()
 {
     int speed = 460800;
     if(serial.isOpen()) serial.close();
@@ -90,7 +90,7 @@ bool PCA10000::find_device(void)
     return false;
 }
 //--------------------------------------------------------------------------------
-void PCA10000::test(void)
+void PCA10000::test()
 {
     emit info("test");
     if(serial.isOpen() == false)
@@ -111,7 +111,7 @@ void PCA10000::test(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void PCA10000::port_read(void)
+void PCA10000::port_read()
 {
     QByteArray ba = serial.readAll();
     if(ba.isEmpty()) return;
@@ -142,112 +142,112 @@ void PCA10000::port_error(QSerialPort::SerialPortError serial_error)
     }
 }
 //--------------------------------------------------------------------------------
-void PCA10000::encodeToSLIP(void)
+void PCA10000::encodeToSLIP()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::decodeFromSLIP(void)
+void PCA10000::decodeFromSLIP()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::handlePacketHistory(void)
+void PCA10000::handlePacketHistory()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::sendPacket(void)
+void PCA10000::sendPacket()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::sendScan(void)
+void PCA10000::sendScan()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::sendFollow(void)
+void PCA10000::sendFollow()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::sendPingReq(void)
+void PCA10000::sendPingReq()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::sendTK(void)
+void PCA10000::sendTK()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::sendSwitchBaudRate(void)
+void PCA10000::sendSwitchBaudRate()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::switchBaudRate(void)
+void PCA10000::switchBaudRate()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::sendHopSequence(void)
+void PCA10000::sendHopSequence()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::sendGoIdle(void)
+void PCA10000::sendGoIdle()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::findSerialPort(void)
+void PCA10000::findSerialPort()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::readStaticHeader(void)
+void PCA10000::readStaticHeader()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::writeStaticHeader(void)
+void PCA10000::writeStaticHeader()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::readDynamicHeader(void)
+void PCA10000::readDynamicHeader()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::writeDynamicHeader(void)
+void PCA10000::writeDynamicHeader()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::readPayload(void)
+void PCA10000::readPayload()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::readFlags(void)
+void PCA10000::readFlags()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::getList(void)
+void PCA10000::getList()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::asString(void)
+void PCA10000::asString()
 {
 
 }
 //--------------------------------------------------------------------------------
-void PCA10000::validatePacketList(void)
+void PCA10000::validatePacketList()
 {
 
 }

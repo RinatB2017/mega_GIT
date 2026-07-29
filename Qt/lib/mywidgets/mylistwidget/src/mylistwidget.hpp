@@ -47,11 +47,11 @@ public:
     virtual ~MyListWidget();
 
 private:
-    void init(void);
+    void init();
     void popup(QPoint);
 
 private slots:
-    void delete_item(void);
+    void delete_item();
 
 protected:
     void keyPressEvent(QKeyEvent *event);

@@ -55,7 +55,7 @@ void SerialBox5_wo_form::set_caption(const QString &value)
     o_name = value;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_wo_form::init(void)
+void SerialBox5_wo_form::init()
 {
     setObjectName(o_name);
 
@@ -68,7 +68,7 @@ void SerialBox5_wo_form::init(void)
     setVisible(false);
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_wo_form::initSerial(void)
+void SerialBox5_wo_form::initSerial()
 {
     connect(this,   &SerialWidget::s_baudRateChanged,    this,   &SerialBox5_wo_form::set_baudRate);
     connect(this,   &SerialWidget::s_dataBitsChanged,    this,   &SerialBox5_wo_form::set_dataBits);
@@ -91,7 +91,7 @@ void SerialBox5_wo_form::getStatus(const QString &status, QDateTime current)
     get_parameter();
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_wo_form::setCloseState(void)
+void SerialBox5_wo_form::setCloseState()
 {
     emit port_is_active(false);
 }
@@ -190,22 +190,22 @@ void SerialBox5_wo_form::drawData(const QByteArray &data)
     Q_UNUSED(data)
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_wo_form::updateText(void)
+void SerialBox5_wo_form::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool SerialBox5_wo_form::programm_is_exit(void)
+bool SerialBox5_wo_form::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_wo_form::load_setting(void)
+void SerialBox5_wo_form::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_wo_form::save_setting(void)
+void SerialBox5_wo_form::save_setting()
 {
 
 }
@@ -257,7 +257,7 @@ void SerialBox5_wo_form::set_flag_byte_by_byte(bool state)
     flag_byte_by_byte = state;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_wo_form::get_parameter(void)
+void SerialBox5_wo_form::get_parameter()
 {
     if(isOpen() == false)
     {
@@ -307,32 +307,32 @@ bool SerialBox5_wo_form::set_flowControl(QSerialPort::FlowControl value)
     return setFlowControl(value);
 }
 //--------------------------------------------------------------------------------
-qint32 SerialBox5_wo_form::get_baudRate(void)
+qint32 SerialBox5_wo_form::get_baudRate()
 {
     return baudRate();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::DataBits       SerialBox5_wo_form::get_dataBits(void)
+QSerialPort::DataBits       SerialBox5_wo_form::get_dataBits()
 {
     return dataBits();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::Parity         SerialBox5_wo_form::get_parity(void)
+QSerialPort::Parity         SerialBox5_wo_form::get_parity()
 {
     return parity();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::StopBits       SerialBox5_wo_form::get_stopBits(void)
+QSerialPort::StopBits       SerialBox5_wo_form::get_stopBits()
 {
     return stopBits();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::FlowControl    SerialBox5_wo_form::get_flowControl(void)
+QSerialPort::FlowControl    SerialBox5_wo_form::get_flowControl()
 {
     return flowControl();
 }
 //--------------------------------------------------------------------------------
-bool SerialBox5_wo_form::power_on(void)
+bool SerialBox5_wo_form::power_on()
 {
     if(isOpen())
     {
@@ -345,7 +345,7 @@ bool SerialBox5_wo_form::power_on(void)
     return ok;
 }
 //--------------------------------------------------------------------------------
-bool SerialBox5_wo_form::power_off(void)
+bool SerialBox5_wo_form::power_off()
 {
     if(isOpen())
     {

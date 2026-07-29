@@ -36,7 +36,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
     connect(ui->btn_get_my_ip,  &QPushButton::clicked,  this,   &MainBox::show_my_IP);
@@ -49,7 +49,7 @@ void MainBox::init(void)
     show_my_IP();
 }
 //--------------------------------------------------------------------------------
-void MainBox::show_my_IP(void)
+void MainBox::show_my_IP()
 {
     block_this_button(true);
 
@@ -81,22 +81,22 @@ void MainBox::show_my_IP(void)
     block_this_button(false);
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

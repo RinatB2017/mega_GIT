@@ -43,20 +43,20 @@ private:
 
     QPointer<QProcess> myProcess;
 
-    void init(void);
-    void create_engine(void);
+    void init();
+    void create_engine();
 
-    void scan(void);
+    void scan();
 
-    void started(void);
+    void started();
     void finished(int result);
     void process_error(QProcess::ProcessError p_error);
-    void readData(void);
+    void readData();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // SCAN_HOME_NETWORK_HPP

@@ -33,7 +33,7 @@ MDI_widget::~MDI_widget()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MDI_widget::init(void)
+void MDI_widget::init()
 {
     ui->setupUi(this);
 

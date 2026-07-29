@@ -72,7 +72,7 @@ void Database::log(const QString &text)
 #endif
 }
 //--------------------------------------------------------------------------------
-QStringList Database::list_drivers(void)
+QStringList Database::list_drivers()
 {
     return QSqlDatabase::drivers();
 }
@@ -104,7 +104,7 @@ bool Database::open(const QString new_name)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool Database::close(void)
+bool Database::close()
 {
     if(!db.isValid())
     {
@@ -158,22 +158,22 @@ bool Database::sql(const QString &query)
     return result;
 }
 //--------------------------------------------------------------------------------
-QStringList Database::tables(void)
+QStringList Database::tables()
 {
     return db.tables();
 }
 //--------------------------------------------------------------------------------
-bool Database::isOpen(void)
+bool Database::isOpen()
 {
     return db.isOpen();
 }
 //--------------------------------------------------------------------------------
-bool Database::isValid(void)
+bool Database::isValid()
 {
     return db.isValid();
 }
 //--------------------------------------------------------------------------------
-QString Database::get_lastError(void)
+QString Database::get_lastError()
 {
     return db.lastError().text();
 }
@@ -198,12 +198,12 @@ bool Database::drop_table(const QString &table_name)
     return sql.exec(QString("DROP TABLE %1").arg(table_name));
 }
 //--------------------------------------------------------------------------------
-int Database::get_count_tables(void)
+int Database::get_count_tables()
 {
     return db.tables(QSql::Tables).count();
 }
 //--------------------------------------------------------------------------------
-QSqlDatabase Database::get_db(void)
+QSqlDatabase Database::get_db()
 {
     return db;
 }

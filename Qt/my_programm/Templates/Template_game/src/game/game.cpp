@@ -59,14 +59,14 @@ Game::Game(QWidget *parent) :
     setFixedSize(map->get_max_x()*32, map->get_max_y()*32);
 }
 //--------------------------------------------------------------------------------
-void Game::init_timer(void)
+void Game::init_timer()
 {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
     timer->start(INTERVAL_TIMER);
 }
 //--------------------------------------------------------------------------------
-void Game::init_objects(void)
+void Game::init_objects()
 {
     objects[SPACE]  = QBrush(QImage(":/5.png"));
     objects[WALL]   = QBrush(QImage(":/14.png"));
@@ -74,7 +74,7 @@ void Game::init_objects(void)
     objects[ALIEN]  = QBrush(QImage(":/4.png"));
 }
 //--------------------------------------------------------------------------------
-void Game::init_player(void)
+void Game::init_player()
 {
     int x, y;
     for(y=0; y<map->get_max_y(); y++)
@@ -104,7 +104,7 @@ void Game::init_map(const QString &filename)
         QTimer::singleShot(1000, qApp, SLOT(quit()));
 }
 //--------------------------------------------------------------------------------
-void Game::init_GL(void)
+void Game::init_GL()
 {
     makeCurrent();
 
@@ -143,7 +143,7 @@ void Game::init_GL(void)
     setAutoFillBackground(false);
 }
 //--------------------------------------------------------------------------------
-void Game::animate(void)
+void Game::animate()
 {
     paintGL();
 }
@@ -164,7 +164,7 @@ void Game::DrawBlock(QPainter *painter, QBrush brush, int x, int y)
     painter->restore();
 }
 //--------------------------------------------------------------------------------
-void Game::initializeGL(void)
+void Game::initializeGL()
 {
     glEnable(GL_MULTISAMPLE);
 }
@@ -263,7 +263,7 @@ void Game::keyPressEvent(QKeyEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-void Game::move_alien(void)
+void Game::move_alien()
 {
     switch(alien_direction)
     {
@@ -322,7 +322,7 @@ void Game::move_alien(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Game::paintGL(void)
+void Game::paintGL()
 {
     if(m_doVisualUpdates)
     {

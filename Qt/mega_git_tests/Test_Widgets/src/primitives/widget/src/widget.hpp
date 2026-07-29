@@ -37,7 +37,7 @@ public:
     Widget(QWidget *parent);
 
 private:
-    void init(void);
+    void init();
 
     QLabel *label;
     QPoint lastPoint;
@@ -48,10 +48,10 @@ private:
     int width;
     int height;
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     void mousePressEvent(QMouseEvent *event);

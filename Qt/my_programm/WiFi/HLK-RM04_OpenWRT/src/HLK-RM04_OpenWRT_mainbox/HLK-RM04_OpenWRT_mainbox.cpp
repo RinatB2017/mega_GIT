@@ -40,7 +40,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -52,7 +52,7 @@ void MainBox::init(void)
     //connect(&serial, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(port_error(QSerialPort::SerialPortError)));
 }
 //--------------------------------------------------------------------------------
-void MainBox::port_read(void)
+void MainBox::port_read()
 {
     serial_data.append(serial.readAll());
 }
@@ -83,7 +83,7 @@ void MainBox::port_error(QSerialPort::SerialPortError serial_error)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -129,7 +129,7 @@ void MainBox::createTestBar(void)
     connect(btn_load_firmvare,      SIGNAL(clicked()), this, SLOT(load_firmvare()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::refresh_devices(void)
+void MainBox::refresh_devices()
 {
     cb_ports->clear();
     foreach (const QSerialPortInfo &port, QSerialPortInfo::availablePorts())
@@ -138,7 +138,7 @@ void MainBox::refresh_devices(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::open(void)
+void MainBox::open()
 {
     if(serial.isOpen()) serial.close();
     foreach (const QSerialPortInfo &port, QSerialPortInfo::availablePorts())
@@ -169,7 +169,7 @@ void MainBox::open(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::close(void)
+void MainBox::close()
 {
     if(serial.isOpen())
     {
@@ -182,27 +182,27 @@ void MainBox::close(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_firmvare(void)
+void MainBox::load_firmvare()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

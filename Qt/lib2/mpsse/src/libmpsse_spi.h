@@ -170,7 +170,7 @@ typedef struct ChannelContext_t
  * function(eg: DllMain for windows) that is called by the OS automatically during startup.
  * \warning
  */
-FTDIMPSSE_API void Init_libMPSSE(void);
+FTDIMPSSE_API void Init_libMPSSE();
 
 /*!
  * \brief Cleans up the module before unloading
@@ -185,7 +185,7 @@ FTDIMPSSE_API void Init_libMPSSE(void);
  * \note
  * \warning
  */
-FTDIMPSSE_API void Cleanup_libMPSSE(void);
+FTDIMPSSE_API void Cleanup_libMPSSE();
 
 /*!
  * \brief Gets the number of SPI channels connected to the host

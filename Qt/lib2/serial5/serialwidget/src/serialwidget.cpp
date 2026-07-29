@@ -45,7 +45,7 @@ SerialWidget::~SerialWidget()
     }
 }
 //--------------------------------------------------------------------------------
-void SerialWidget::init(void)
+void SerialWidget::init()
 {
     serial5 = new QSerialPort(this);
     Q_ASSERT(serial5);
@@ -82,13 +82,13 @@ void SerialWidget::init(void)
     //});
 }
 //--------------------------------------------------------------------------------
-bool SerialWidget::isOpen(void)
+bool SerialWidget::isOpen()
 {
     Q_ASSERT(serial5);
     return serial5->isOpen();
 }
 //--------------------------------------------------------------------------------
-bool SerialWidget::serial_open(void)
+bool SerialWidget::serial_open()
 {
     Q_ASSERT(serial5);
     bool ok = serial5->open(QIODevice::ReadWrite);
@@ -96,7 +96,7 @@ bool SerialWidget::serial_open(void)
     return ok;
 }
 //--------------------------------------------------------------------------------
-bool SerialWidget::serial_close(void)
+bool SerialWidget::serial_close()
 {
     Q_ASSERT(serial5);
     serial5->close();
@@ -104,13 +104,13 @@ bool SerialWidget::serial_close(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-QByteArray SerialWidget::readAll(void)
+QByteArray SerialWidget::readAll()
 {
     Q_ASSERT(serial5);
     return serial5->readAll();
 }
 //--------------------------------------------------------------------------------
-qint64 SerialWidget::bytesAvailable(void)
+qint64 SerialWidget::bytesAvailable()
 {
     Q_ASSERT(serial5);
     return serial5->bytesAvailable();
@@ -153,37 +153,37 @@ bool SerialWidget::setFlowControl(QSerialPort::FlowControl value)
     return serial5->setFlowControl(value);
 }
 //--------------------------------------------------------------------------------
-QString SerialWidget::portName(void)
+QString SerialWidget::portName()
 {
     Q_ASSERT(serial5);
     return serial5->portName();
 }
 //--------------------------------------------------------------------------------
-int SerialWidget::baudRate(void)
+int SerialWidget::baudRate()
 {
     Q_ASSERT(serial5);
     return serial5->baudRate();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::DataBits SerialWidget::dataBits(void)
+QSerialPort::DataBits SerialWidget::dataBits()
 {
     Q_ASSERT(serial5);
     return serial5->dataBits();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::Parity SerialWidget::parity(void)
+QSerialPort::Parity SerialWidget::parity()
 {
     Q_ASSERT(serial5);
     return serial5->parity();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::StopBits SerialWidget::stopBits(void)
+QSerialPort::StopBits SerialWidget::stopBits()
 {
     Q_ASSERT(serial5);
     return serial5->stopBits();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::FlowControl SerialWidget::flowControl(void)
+QSerialPort::FlowControl SerialWidget::flowControl()
 {
     Q_ASSERT(serial5);
     return serial5->flowControl();
@@ -207,7 +207,7 @@ qint64 SerialWidget::write(const QByteArray &data)
     return serial5->write(data);
 }
 //--------------------------------------------------------------------------------
-QStringList SerialWidget::get_port_names(void)
+QStringList SerialWidget::get_port_names()
 {
     QStringList sl_ports;
     foreach (QSerialPortInfo p_info, QSerialPortInfo::availablePorts())
@@ -233,7 +233,7 @@ QStringList SerialWidget::get_port_names(void)
     return sl_ports;
 }
 //--------------------------------------------------------------------------------
-void SerialWidget::procSerialDataReceive(void)
+void SerialWidget::procSerialDataReceive()
 {
     if(!isOpen())
     {
@@ -290,14 +290,14 @@ void SerialWidget::serial5_error(QSerialPort::SerialPortError err)
     }
 }
 //--------------------------------------------------------------------------------
-void SerialWidget::timer_stop(void)
+void SerialWidget::timer_stop()
 {
     QByteArray data = readAll();
     emit readyRead();
     emit output(data);
 }
 //--------------------------------------------------------------------------------
-QString SerialWidget::errorString(void)
+QString SerialWidget::errorString()
 {
     return serial5->errorString();
 }

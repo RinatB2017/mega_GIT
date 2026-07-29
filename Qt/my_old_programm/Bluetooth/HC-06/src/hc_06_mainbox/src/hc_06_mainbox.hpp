@@ -83,46 +83,46 @@ signals:
     void send(QByteArray);
 
 private slots:
-    void run(void);
+    void run();
     void read_data(QByteArray ba);
 
     QByteArray get_command_string(const QString &cmd);
 
-    void command_AT(void);
-    void command_RESET(void);
-    void command_VERSION(void);
-    void command_ORGL(void);
-    void command_ADDR(void);
-    void command_NAME(void);
-    void command_RNAME(void);
-    void command_ROLE(void);
-    void command_CLASS(void);
-    void command_IAC(void);
-    void command_INQM(void);
-    void command_PSWD(void);
-    void command_UART(void);
-    void command_CMODE(void);
-    void command_BIND(void);
-    void command_POLAR(void);
-    void command_PIO(void);
-    void command_MPIO(void);
-    void command_IPSCAN(void);
-    void command_SNIFF(void);
-    void command_SENM(void);
-    void command_PMSAD(void);
-    void command_RMAAD(void);
-    void command_FSAD(void);
-    void command_ADCN(void);
-    void command_MRAD(void);
-    void command_STATE(void);
-    void command_INIT(void);
-    void command_INQ(void);
-    void command_INQC(void);
-    void command_PAIR(void);
-    void command_LINK(void);
-    void command_DISC(void);
-    void command_ENSNIFF(void);
-    void command_EXSNIFF(void);
+    void command_AT();
+    void command_RESET();
+    void command_VERSION();
+    void command_ORGL();
+    void command_ADDR();
+    void command_NAME();
+    void command_RNAME();
+    void command_ROLE();
+    void command_CLASS();
+    void command_IAC();
+    void command_INQM();
+    void command_PSWD();
+    void command_UART();
+    void command_CMODE();
+    void command_BIND();
+    void command_POLAR();
+    void command_PIO();
+    void command_MPIO();
+    void command_IPSCAN();
+    void command_SNIFF();
+    void command_SENM();
+    void command_PMSAD();
+    void command_RMAAD();
+    void command_FSAD();
+    void command_ADCN();
+    void command_MRAD();
+    void command_STATE();
+    void command_INIT();
+    void command_INQ();
+    void command_INQC();
+    void command_PAIR();
+    void command_LINK();
+    void command_DISC();
+    void command_ENSNIFF();
+    void command_EXSNIFF();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -138,16 +138,16 @@ private:
 
     QComboBox *cb_command;
 
-    void init(void);
+    void init();
     void wait(int max_time_ms);
-    void show_data(void);
+    void show_data();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

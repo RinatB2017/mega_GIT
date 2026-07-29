@@ -38,7 +38,7 @@ Test::Test()
     QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
-void Test::check_serial(void)
+void Test::check_serial()
 {
     SerialBox5 *sb1 = mw->findChild<SerialBox5 *>("serial_widget");
     QVERIFY(sb1);

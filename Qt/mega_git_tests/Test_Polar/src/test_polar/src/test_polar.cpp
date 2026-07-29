@@ -48,7 +48,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -80,7 +80,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -117,7 +117,7 @@ void MainBox::createTestBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -132,7 +132,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -146,7 +146,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit info("Test");
     return true;
@@ -162,7 +162,7 @@ void MainBox::set_pic_height(int value)
     pic_height = value;
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_test(void)
+void MainBox::f_test()
 {
 #if 0
     int pic_width  = 800;
@@ -263,7 +263,7 @@ void MainBox::f_test(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_test_2(void)
+void MainBox::f_test_2()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -370,17 +370,17 @@ void MainBox::show_image(QImage *image,
     widget->show();
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_show_orig_image(void)
+void MainBox::s_show_orig_image()
 {
     show_image(orig_image, 800, 800);
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_show_new_image(void)
+void MainBox::s_show_new_image()
 {
     show_image(new_image, 800, 800);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::s_load_orig_image(void)
+bool MainBox::s_load_orig_image()
 {
     emit trace(Q_FUNC_INFO);
     if(orig_image)
@@ -431,7 +431,7 @@ bool MainBox::s_load_orig_image(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::s_create_orig_image(void)
+bool MainBox::s_create_orig_image()
 {
     emit trace(Q_FUNC_INFO);
     if(orig_image)
@@ -581,7 +581,7 @@ for ( int y = top; y < bottom; ++y, line += stride )
 }
 #endif
 //--------------------------------------------------------------------------------
-bool MainBox::s_create_new_image(void)
+bool MainBox::s_create_new_image()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -695,7 +695,7 @@ bool MainBox::s_create_new_image(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::s_create_new_image_2(void)
+bool MainBox::s_create_new_image_2()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -854,22 +854,22 @@ bool MainBox::s_create_new_image_2(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

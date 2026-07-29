@@ -55,7 +55,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -123,7 +123,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::js_load(void)
+void MainBox::js_load()
 {
     QFileDialog *dlg;
 
@@ -149,7 +149,7 @@ void MainBox::js_load(void)
     delete dlg;
 }
 //--------------------------------------------------------------------------------
-void MainBox::js_save(void)
+void MainBox::js_save()
 {
     QFileDialog *dlg;
 
@@ -207,7 +207,7 @@ void MainBox::save_js(const QString &filename)
     file.close();
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_js_default(void)
+void MainBox::load_js_default()
 {
     QString temp;
 
@@ -260,7 +260,7 @@ void MainBox::load_js_default(void)
     ui->me_js->setPlainText(temp);
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_default(void)
+void MainBox::s_default()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -321,7 +321,7 @@ void MainBox::analize(const QString &data)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -359,7 +359,7 @@ void MainBox::createTestBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -374,7 +374,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -389,28 +389,28 @@ void MainBox::choice_test(void)
 }
 //--------------------------------------------------------------------------------
 #include "mybrowser.hpp"
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit info("Test_0()");
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return is_exit;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

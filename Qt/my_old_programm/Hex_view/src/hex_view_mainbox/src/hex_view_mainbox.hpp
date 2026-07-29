@@ -49,7 +49,7 @@ signals:
     void send(QByteArray);
 
 private slots:
-    void test(void);
+    void test();
     void read_data(QByteArray ba);
     void analize(char data);
     void draw(QByteArray ba);
@@ -63,14 +63,14 @@ private:
 
     QHexEdit *he;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

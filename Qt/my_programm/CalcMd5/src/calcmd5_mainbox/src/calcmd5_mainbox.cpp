@@ -45,7 +45,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -54,7 +54,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::calc_md5(void)
+void MainBox::calc_md5()
 {
     QFileDialog *dlg;
     QString temp;
@@ -91,23 +91,23 @@ QString MainBox::get_md5(const QString &filename)
     return md5_string;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
     ui->BtnOpen->setText(QObject::tr("Open"));
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

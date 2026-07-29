@@ -74,7 +74,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -122,7 +122,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_autorun_js(void)
+void MainBox::s_autorun_js()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -146,7 +146,7 @@ void MainBox::s_autorun_js(void)
     });
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_run_js(void)
+void MainBox::s_run_js()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -165,7 +165,7 @@ void MainBox::s_run_js(void)
     });
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -208,7 +208,7 @@ void MainBox::createTestBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -223,7 +223,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -263,7 +263,7 @@ QString MainBox::get_full_objectName(QWidget *widget)
     return temp_string;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+bool MainBox::test_0()
 {
     emit info("Test_0()");
     //emit info(QString("%1").arg(ui->te_text_js->document()->isModified()));
@@ -282,52 +282,52 @@ bool MainBox::test_0(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
+bool MainBox::test_1()
 {
     emit info("Test_1()");
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
+bool MainBox::test_2()
 {
     emit info("Test_2()");
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
+bool MainBox::test_3()
 {
     emit info("Test_3()");
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
+bool MainBox::test_4()
 {
     emit info("Test_4()");
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
+bool MainBox::test_5()
 {
     emit info("Test_5()");
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

@@ -86,7 +86,7 @@ signals:
     void send(QByteArray);
 
 private slots:
-    void test(void);
+    void test();
     void read_data(QByteArray ba);
 
 private:
@@ -96,16 +96,16 @@ private:
 
     QByteArray clean_data;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
-    void read_modbus(void);
-    void send_answer_data(void);
+    void createTestBar();
+    void read_modbus();
+    void send_answer_data();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

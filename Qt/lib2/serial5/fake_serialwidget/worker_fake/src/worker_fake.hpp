@@ -44,13 +44,13 @@ public:
     virtual ~Worker_fake();
 
     void input(QByteArray data);
-    void port_open(void);
-    void port_close(void);
+    void port_open();
+    void port_close();
 
 private:
     Ui::Worker_fake *ui;
 
-    void init(void);
+    void init();
 };
 //--------------------------------------------------------------------------------
 #endif // Worker_fake_HPP

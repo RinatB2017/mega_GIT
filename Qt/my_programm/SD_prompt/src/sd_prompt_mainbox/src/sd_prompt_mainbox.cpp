@@ -33,7 +33,7 @@ MainBox::~MainBox()
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
 #ifdef QT_DEBUG
     create_test_bar();
@@ -46,7 +46,7 @@ void MainBox::init(void)
             this,   &MainBox::create_negative_prompt);
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -59,7 +59,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != test_commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -73,7 +73,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_programm(void)
+void MainBox::choice_programm()
 {
     bool ok = false;
     int cmd = cb_programm->itemData(cb_programm->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -86,7 +86,7 @@ void MainBox::choice_programm(void)
             );
     if (cmd_it != programm_commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -100,7 +100,7 @@ void MainBox::choice_programm(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_test_bar(void)
+void MainBox::create_test_bar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -138,7 +138,7 @@ void MainBox::create_test_bar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_programm_bar(void)
+void MainBox::create_programm_bar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -177,14 +177,14 @@ void MainBox::create_programm_bar(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::create_positive_prompt(void)
+bool MainBox::create_positive_prompt()
 {
     QString prompt;
 
@@ -198,7 +198,7 @@ bool MainBox::create_positive_prompt(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::create_negative_prompt(void)
+bool MainBox::create_negative_prompt()
 {
     QString prompt;
 
@@ -212,12 +212,12 @@ bool MainBox::create_negative_prompt(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
     int index;
     bool ok;
@@ -239,7 +239,7 @@ void MainBox::load_setting(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 #ifdef QT_DEBUG
     save_int("test_bar", cb_test->currentIndex());

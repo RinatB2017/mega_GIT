@@ -25,7 +25,7 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-Rock::Rock(void)
+Rock::Rock()
 {
     for(int n=0; n<31; n++)
     {
@@ -37,7 +37,7 @@ Rock::Rock(void)
     setPixmap(p_animation.at(index));
 }
 //--------------------------------------------------------------------------------
-void Rock::animation(void)
+void Rock::animation()
 {
     corr++;
     if(corr < 10)

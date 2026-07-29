@@ -69,7 +69,7 @@ void ViewFinder::install(QWidget* widget)
     eventFilter(0, &event);
 }
 //--------------------------------------------------------------------------------
-void ViewFinder::remove(void)
+void ViewFinder::remove()
 {
     // Если стекло было установлено, то удаляем его
     if (parentWidget() != 0)
@@ -83,7 +83,7 @@ void ViewFinder::remove(void)
     }
 }
 //--------------------------------------------------------------------------------
-void ViewFinder::test(void)
+void ViewFinder::test()
 {
 
 }

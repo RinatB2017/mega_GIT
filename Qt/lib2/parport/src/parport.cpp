@@ -50,7 +50,7 @@ Parport::Parport(QObject *parent) :
     load_setting();
 }
 //--------------------------------------------------------------------------------
-void Parport::connect_log(void)
+void Parport::connect_log()
 {
     if(parent)
     {
@@ -255,7 +255,7 @@ void Parport::write_data(unsigned char data)
 #endif
 }
 //--------------------------------------------------------------------------------
-unsigned char Parport::read_data(void)
+unsigned char Parport::read_data()
 {
     unsigned char data;
     if(!port_is_open)
@@ -466,61 +466,61 @@ void Parport::setData7(bool state)
     write_data(data);
 }
 //================================================================================
-unsigned char Parport::getData(void)
+unsigned char Parport::getData()
 {
     return read_data();
 }
 //--------------------------------------------------------------------------------
-bool Parport::getData0(void)
+bool Parport::getData0()
 {
     unsigned char data;
     data = read_data();
     return (data & 1);
 }
 //--------------------------------------------------------------------------------
-bool Parport::getData1(void)
+bool Parport::getData1()
 {
     unsigned char data;
     data = read_data();
     return (data & (1 << 1));
 }
 //--------------------------------------------------------------------------------
-bool Parport::getData2(void)
+bool Parport::getData2()
 {
     unsigned char data;
     data = read_data();
     return (data & (1 << 2));
 }
 //--------------------------------------------------------------------------------
-bool Parport::getData3(void)
+bool Parport::getData3()
 {
     unsigned char data;
     data = read_data();
     return (data & (1 << 3));
 }
 //--------------------------------------------------------------------------------
-bool Parport::getData4(void)
+bool Parport::getData4()
 {
     unsigned char data;
     data = read_data();
     return (data & (1 << 4));
 }
 //--------------------------------------------------------------------------------
-bool Parport::getData5(void)
+bool Parport::getData5()
 {
     unsigned char data;
     data = read_data();
     return (data & (1 << 5));
 }
 //--------------------------------------------------------------------------------
-bool Parport::getData6(void)
+bool Parport::getData6()
 {
     unsigned char data;
     data = read_data();
     return (data & (1 << 6));
 }
 //--------------------------------------------------------------------------------
-bool Parport::getData7(void)
+bool Parport::getData7()
 {
     unsigned char data;
     data = read_data();
@@ -572,35 +572,35 @@ void Parport::setStatusBusy(bool state)
     set_status(status);
 }
 //--------------------------------------------------------------------------------
-bool Parport::getStatusError(void)
+bool Parport::getStatusError()
 {
     unsigned char status;
     status = get_status();
     return (status & PARPORT_STATUS_ERROR);
 }
 //--------------------------------------------------------------------------------
-bool Parport::getStatusSelect(void)
+bool Parport::getStatusSelect()
 {
     unsigned char status;
     status = get_status();
     return (status & PARPORT_STATUS_SELECT);
 }
 //--------------------------------------------------------------------------------
-bool Parport::getStatusPaperOut(void)
+bool Parport::getStatusPaperOut()
 {
     unsigned char status;
     status = get_status();
     return (status & PARPORT_STATUS_PAPEROUT);
 }
 //--------------------------------------------------------------------------------
-bool Parport::getStatusACK(void)
+bool Parport::getStatusACK()
 {
     unsigned char status;
     status = get_status();
     return (status & PARPORT_STATUS_ACK);
 }
 //--------------------------------------------------------------------------------
-bool Parport::getStatusBusy(void)
+bool Parport::getStatusBusy()
 {
     unsigned char status;
     status = get_status();
@@ -663,25 +663,25 @@ void Parport::setAutoFt(bool state)
     set_control(temp);
 }
 //================================================================================
-bool Parport::getSelectIn(void)
+bool Parport::getSelectIn()
 {
     unsigned char temp = get_control();
     return (temp & PARPORT_CONTROL_SELECT);
 }
 //--------------------------------------------------------------------------------
-bool Parport::getInit(void)
+bool Parport::getInit()
 {
     unsigned char temp = get_control();
     return (temp & PARPORT_CONTROL_INIT);
 }
 //--------------------------------------------------------------------------------
-bool Parport::getStrobe(void)
+bool Parport::getStrobe()
 {
     unsigned char temp = get_control();
     return (temp & PARPORT_CONTROL_STROBE);
 }
 //--------------------------------------------------------------------------------
-bool Parport::getAutoFt(void)
+bool Parport::getAutoFt()
 {
     unsigned char temp = get_control();
     return (temp & PARPORT_CONTROL_AUTOFD);
@@ -743,7 +743,7 @@ void Parport::send_LED_off(unsigned char data)
     write_data(temp);
 }
 //--------------------------------------------------------------------------------
-void Parport::load_setting(void)
+void Parport::load_setting()
 {
     bool ok;
     QString temp;

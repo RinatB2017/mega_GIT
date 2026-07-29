@@ -50,20 +50,20 @@ signals:
     void block_widget(bool);
 
 private slots:
-    void choice_test(void);
-    void test_0(void);
-    void test_1(void);
-    void test_2(void);
-    void test_3(void);
-    void test_4(void);
-    void test_5(void);
+    void choice_test();
+    void test_0();
+    void test_1();
+    void test_2();
+    void test_3();
+    void test_4();
+    void test_5();
 
 private:
     struct CMD
     {
         int cmd;
         QString cmd_text;
-        void (MainBox::*func)(void);
+        void (MainBox::*func)();
     };
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
@@ -73,14 +73,14 @@ private:
 
     QStandardItemModel *model = nullptr;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

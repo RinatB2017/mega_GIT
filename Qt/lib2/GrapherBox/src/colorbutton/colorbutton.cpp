@@ -38,7 +38,7 @@ void ColorButton::setColor(QColor new_color)
                              .arg(B, 2, 16, QChar('0')));
 }
 //--------------------------------------------------------------------------------
-QColor ColorButton::getColor(void)
+QColor ColorButton::getColor()
 {
     return color;
 }
@@ -49,12 +49,12 @@ void ColorButton::setText(const QString &new_text)
     btn_text->setText(text);
 }
 //--------------------------------------------------------------------------------
-QString ColorButton::getText(void)
+QString ColorButton::getText()
 {
     return text;
 }
 //--------------------------------------------------------------------------------
-bool ColorButton::isCheckable(void)
+bool ColorButton::isCheckable()
 {
     return btn_text->isCheckable();
 }
@@ -69,7 +69,7 @@ ColorButton::~ColorButton()
 
 }
 //--------------------------------------------------------------------------------
-void ColorButton::init(void)
+void ColorButton::init()
 {
     btn_text = new QPushButton(this);
     btn_color = new QToolButton(this);
@@ -88,7 +88,7 @@ void ColorButton::init(void)
     connect(btn_text,   &QToolButton::clicked, this, &ColorButton::set_text);
 }
 //--------------------------------------------------------------------------------
-void ColorButton::set_color(void)
+void ColorButton::set_color()
 {
     QColorDialog *dlg = new QColorDialog();
     dlg->setCurrentColor(color);
@@ -109,7 +109,7 @@ void ColorButton::set_color(void)
     }
 }
 //--------------------------------------------------------------------------------
-void ColorButton::set_text(void)
+void ColorButton::set_text()
 {
     bool ok = false;
     QString new_text = QInputDialog::getText(this,

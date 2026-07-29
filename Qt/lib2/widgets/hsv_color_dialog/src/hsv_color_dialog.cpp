@@ -39,7 +39,7 @@ void HSV_color_dialog::set_color(QColor color)
     ui->HSV_widget->set_color(color);
 }
 //--------------------------------------------------------------------------------
-QColor HSV_color_dialog::get_color(void)
+QColor HSV_color_dialog::get_color()
 {
     return ui->HSV_widget->get_color();
 }

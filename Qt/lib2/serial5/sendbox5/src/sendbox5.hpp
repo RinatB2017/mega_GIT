@@ -41,7 +41,7 @@ public:
     virtual ~SendBox5();
 
     void block_interface(bool state);
-    void updateText(void);
+    void updateText();
 
 signals:
     void sendData(const QByteArray &data);
@@ -54,8 +54,8 @@ signals:
     void state(bool);
 
 private slots:
-    void send_text_command(void);
-    void send_bin_command(void);
+    void send_text_command();
+    void send_bin_command();
 
 private:
     Ui::SendBox5 *ui;

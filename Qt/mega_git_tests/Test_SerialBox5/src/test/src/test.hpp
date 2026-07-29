@@ -33,7 +33,7 @@ public:
     Test();
 
 private slots:
-    void test_signals(void);
+    void test_signals();
 
 private:
     MainWindow *mw;

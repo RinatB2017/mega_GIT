@@ -36,7 +36,7 @@ ADC_label::~ADC_label()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void ADC_label::init(void)
+void ADC_label::init()
 {
     ui->setupUi(this);
 
@@ -68,22 +68,22 @@ void ADC_label::display(const QString &s)
     ui->lcd_value->display(s);
 }
 //--------------------------------------------------------------------------------
-void ADC_label::updateText(void)
+void ADC_label::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool ADC_label::programm_is_exit(void)
+bool ADC_label::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void ADC_label::load_setting(void)
+void ADC_label::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void ADC_label::save_setting(void)
+void ADC_label::save_setting()
 {
 
 }

@@ -22,7 +22,7 @@ void QLed::set_state(bool state)
     update();
 }
 //--------------------------------------------------------------------------------
-bool QLed::get_state(void)
+bool QLed::get_state()
 {
     return led_state;
 }

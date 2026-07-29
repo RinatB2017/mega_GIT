@@ -31,13 +31,13 @@
 #include "mainwindow.hpp"
 #include "test_QGraphicsView_mainbox.hpp"
 //--------------------------------------------------------------------------------
-Test::Test(void)
+Test::Test()
 {
     mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
     QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
-void Test::test_GUI(void)
+void Test::test_GUI()
 {
     QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
     QVERIFY(cb);
@@ -51,7 +51,7 @@ void Test::test_GUI(void)
     QTest::mouseClick(tb, Qt::LeftButton);
 }
 //--------------------------------------------------------------------------------
-void Test::test_func(void)
+void Test::test_func()
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);

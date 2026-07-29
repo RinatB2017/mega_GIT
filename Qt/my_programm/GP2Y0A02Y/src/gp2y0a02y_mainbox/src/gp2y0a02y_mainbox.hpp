@@ -41,20 +41,20 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
+    void choice_test();
+    bool test_0();
+    bool test_1();
+    bool test_2();
+    bool test_3();
+    bool test_4();
+    bool test_5();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
 
     QPointer<MySplashScreen> splash;
@@ -68,14 +68,14 @@ private:
     int h = 0;
     int timerId = 0;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

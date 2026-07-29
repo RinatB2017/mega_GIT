@@ -18,7 +18,7 @@ Proto_NMEA_0183::Proto_NMEA_0183(QWidget *parent) :
     init();
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::init(void)
+void Proto_NMEA_0183::init()
 {
     time_observation_hour = 0;
     time_observation_min = 0;
@@ -458,7 +458,7 @@ int Proto_NMEA_0183::calc_longitude(const QString &data,
     return E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::print_variable(void)
+void Proto_NMEA_0183::print_variable()
 {
     emit info(QString("time_observation_hour %1").arg(time_observation_hour));
     emit info(QString("time_observation_min %1").arg(time_observation_min));
@@ -1103,7 +1103,7 @@ int Proto_NMEA_0183::parse_message_PIRRA(const QString &data)
     return E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::run_self_tests(void)
+void Proto_NMEA_0183::run_self_tests()
 {
     test_GGA();
     test_GSA();
@@ -1119,7 +1119,7 @@ void Proto_NMEA_0183::run_self_tests(void)
     test_PIRRA();
 }
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::test_GGA(void)
+int Proto_NMEA_0183::test_GGA()
 {
     QString data;
     QString message;
@@ -1161,7 +1161,7 @@ int Proto_NMEA_0183::test_GGA(void)
     return res;
 }
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::test_GSA(void)
+int Proto_NMEA_0183::test_GSA()
 {
     QString data;
     QString message;
@@ -1195,13 +1195,13 @@ int Proto_NMEA_0183::test_GSA(void)
     return res;
 }
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::test_GSV(void)
+int Proto_NMEA_0183::test_GSV()
 {
     emit debug("test_GSV: пока не сделано");
     return E_NO_ERROR;
 }
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::test_RMC(void)
+int Proto_NMEA_0183::test_RMC()
 {
     QString data;
     QString message;
@@ -1241,7 +1241,7 @@ int Proto_NMEA_0183::test_RMC(void)
     return res;
 }
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::test_VTG(void)
+int Proto_NMEA_0183::test_VTG()
 {
     QString data;
     QString message;
@@ -1278,7 +1278,7 @@ int Proto_NMEA_0183::test_VTG(void)
     return res;
 }
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::test_GLL(void)
+int Proto_NMEA_0183::test_GLL()
 {
     QString data;
     QString message;
@@ -1313,7 +1313,7 @@ int Proto_NMEA_0183::test_GLL(void)
     return res;
 }
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::test_ZDA(void)
+int Proto_NMEA_0183::test_ZDA()
 {
     QString data;
     QString message;
@@ -1347,7 +1347,7 @@ int Proto_NMEA_0183::test_ZDA(void)
     return res;
 }
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::test_PIREA(void)
+int Proto_NMEA_0183::test_PIREA()
 {
     QString data;
     QString message;
@@ -1375,7 +1375,7 @@ int Proto_NMEA_0183::test_PIREA(void)
     return res;
 }
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::test_PIRFV(void)
+int Proto_NMEA_0183::test_PIRFV()
 {
     QString data;
     QString message;
@@ -1403,7 +1403,7 @@ int Proto_NMEA_0183::test_PIRFV(void)
     return res;
 }
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::test_PIRGK(void)
+int Proto_NMEA_0183::test_PIRGK()
 {
     QString data;
     QString message;
@@ -1441,7 +1441,7 @@ int Proto_NMEA_0183::test_PIRGK(void)
     return res;
 }
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::test_PIRRA(void)
+int Proto_NMEA_0183::test_PIRRA()
 {
     QString data;
     QString message;
@@ -1473,7 +1473,7 @@ int Proto_NMEA_0183::test_PIRRA(void)
     return res;
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::test(void)
+void Proto_NMEA_0183::test()
 {
 #if 1
     union U_USHORT mask;
@@ -1505,22 +1505,22 @@ void Proto_NMEA_0183::test(void)
 }
 //--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
-float Proto_NMEA_0183::get_latitude_grad(void)
+float Proto_NMEA_0183::get_latitude_grad()
 {
     return latitude_grad;
 }
 //--------------------------------------------------------------------------------
-float Proto_NMEA_0183::get_latitude_min(void)
+float Proto_NMEA_0183::get_latitude_min()
 {
     return latitude_min;
 }
 //--------------------------------------------------------------------------------
-QString Proto_NMEA_0183::get_latitude_dir(void)
+QString Proto_NMEA_0183::get_latitude_dir()
 {
     return latitude_dir;
 }
 //--------------------------------------------------------------------------------
-QString Proto_NMEA_0183::get_latitude_string(void)
+QString Proto_NMEA_0183::get_latitude_string()
 {
     QString latitude_dir;
     QString temp;
@@ -1541,22 +1541,22 @@ QString Proto_NMEA_0183::get_latitude_string(void)
 }
 //--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
-float Proto_NMEA_0183::get_longitude_grad(void)
+float Proto_NMEA_0183::get_longitude_grad()
 {
     return longitude_grad;
 }
 //--------------------------------------------------------------------------------
-float Proto_NMEA_0183::get_longitude_min(void)
+float Proto_NMEA_0183::get_longitude_min()
 {
     return longitude_min;
 }
 //--------------------------------------------------------------------------------
-QString Proto_NMEA_0183::get_longitude_dir(void)
+QString Proto_NMEA_0183::get_longitude_dir()
 {
     return longitude_dir;
 }
 //--------------------------------------------------------------------------------
-QString Proto_NMEA_0183::get_longitude_string(void)
+QString Proto_NMEA_0183::get_longitude_string()
 {
     QString longitude_dir;
     QString temp;
@@ -1578,22 +1578,22 @@ QString Proto_NMEA_0183::get_longitude_string(void)
 }
 //--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::get_observation_hour(void)
+int Proto_NMEA_0183::get_observation_hour()
 {
     return time_observation_hour;
 }
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::get_observation_min(void)
+int Proto_NMEA_0183::get_observation_min()
 {
     return time_observation_min;
 }
 //--------------------------------------------------------------------------------
-int Proto_NMEA_0183::get_observation_sec(void)
+int Proto_NMEA_0183::get_observation_sec()
 {
     return time_observation_sec;
 }
 //--------------------------------------------------------------------------------
-QString Proto_NMEA_0183::get_observation_string(void)
+QString Proto_NMEA_0183::get_observation_string()
 {
     return QString("%1:%2:%3")
             .arg(get_observation_hour(), 2, 10, QLatin1Char('0'))
@@ -1602,7 +1602,7 @@ QString Proto_NMEA_0183::get_observation_string(void)
 }
 //--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
-float Proto_NMEA_0183::get_height(void)
+float Proto_NMEA_0183::get_height()
 {
     return f_height;
 }
@@ -1665,7 +1665,7 @@ void Proto_NMEA_0183::print_error(QByteArray data, int err)
     }
 }
 //--------------------------------------------------------------------------------
-void Proto_NMEA_0183::test_cheksum(void)
+void Proto_NMEA_0183::test_cheksum()
 {
     QString temp = get_checksum("GNGSA,A,1,,,,,,,,,,,,,,,");
     if(temp == "00")

@@ -36,34 +36,34 @@ public:
     virtual ~TestWidget();
 
 public slots:
-    void choice_test(void);
-    bool test(void);
+    void choice_test();
+    bool test();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        bool (TestWidget::*func)(void);
+        bool (TestWidget::*func)();
     } CMD_t;
     QList<CMD> commands;
 
     Ui::TestWidget *ui;
     QPointer<QComboBox> cb_test;
 
-    void createTestBar(void);
+    void createTestBar();
     QToolButton *add_button(QToolBar *tool_bar,
                             QToolButton *tool_button,
                             QIcon icon,
                             const QString &text,
                             const QString &tool_tip);
 
-    void init(void);
+    void init();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // TEST_WIDGET_HPP

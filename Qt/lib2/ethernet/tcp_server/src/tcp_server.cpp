@@ -64,7 +64,7 @@ bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
     return true;
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::closeServer(void)
+void TCP_Server::closeServer()
 {
     if(tcpServer)
     {
@@ -80,7 +80,7 @@ void TCP_Server::closeServer(void)
     emit server_is_open(is_open);
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::newConnect(void)
+void TCP_Server::newConnect()
 {
     clientConnection = tcpServer->nextPendingConnection();
     emit info(QString("Клиент подключился: %1:%2")
@@ -90,7 +90,7 @@ void TCP_Server::newConnect(void)
     connect(clientConnection,   &QTcpSocket::readyRead,     this,   &TCP_Server::clientReadyRead);
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::clientReadyRead(void)
+void TCP_Server::clientReadyRead()
 {
     if(clientConnection->bytesAvailable())
     {
@@ -112,33 +112,33 @@ void TCP_Server::input(const QByteArray &data)
     clientConnection->write(data);
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::clientDisconnected(void)
+void TCP_Server::clientDisconnected()
 {
     emit info("Клиент отключился");
     delete clientConnection;
 }
 //--------------------------------------------------------------------------------
-bool TCP_Server::is_opened(void)
+bool TCP_Server::is_opened()
 {
     return is_open;
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::updateText(void)
+void TCP_Server::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool TCP_Server::programm_is_exit(void)
+bool TCP_Server::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::load_setting(void)
+void TCP_Server::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::save_setting(void)
+void TCP_Server::save_setting()
 {
 
 }

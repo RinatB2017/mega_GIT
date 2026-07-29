@@ -46,7 +46,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -58,7 +58,7 @@ void MainBox::init(void)
     connect(ui->serial_widget,  &SerialBox5::output,    this,               &MainBox::read_data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -78,7 +78,7 @@ void MainBox::createTestBar(void)
     connect(ui->serial_widget,  &SerialBox5::port_is_active,    btn_test,   &QToolButton::setEnabled);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     emit info(tr("test"));
 
@@ -155,22 +155,22 @@ void MainBox::read_data(QByteArray ba)
     is_ready = true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

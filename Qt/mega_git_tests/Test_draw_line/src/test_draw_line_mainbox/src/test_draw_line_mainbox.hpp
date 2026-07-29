@@ -47,8 +47,8 @@ signals:
 
 private slots:
     void read_data(QByteArray ba);
-    void test(void);
-    void set_color(void);
+    void test();
+    void set_color();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -59,11 +59,11 @@ private:
     int color_G = 0;
     int color_B = 0;
 
-    void init(void);
-    void init_widgets(void);
+    void init();
+    void init_widgets();
 
-    void createTestBar(void);
-    void createSerialBox(void);
+    void createTestBar();
+    void createSerialBox();
 
     void block_this_button(bool state);
     void block_interface(bool state);
@@ -72,10 +72,10 @@ private:
     QString convert_data_to_ascii(uint8_t data);
     uint8_t convert_ascii_to_value(char hi, char lo);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

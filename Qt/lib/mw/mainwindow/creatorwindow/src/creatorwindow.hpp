@@ -146,14 +146,14 @@ public:
     bool add_separator(QMenu *menu,
                        int pos_y);
 
-    bool add_mdi_sorting(void);
+    bool add_mdi_sorting();
 
     QDockWidget *add_dock_widget(QString title,
                                  QString objectname,
                                  Qt::DockWidgetArea area,
                                  QWidget *widget,
                                  bool no_dock_position = false);
-    void tabify_all_docs(void);
+    void tabify_all_docs();
 
     template<typename T>
     void find_and_add_widget_to_dock(const QString &left_oname)
@@ -179,18 +179,18 @@ public:
         }
     }
 
-    void load_setting(void);
-    void save_setting(void);
+    void load_setting();
+    void save_setting();
 
 signals:
-    void updateLanguage(void);
+    void updateLanguage();
 
     void info(const QString &);
     void debug(const QString &);
     void error(const QString &);
     void trace(const QString &);
 
-    void clear_log(void);
+    void clear_log();
 
     void colorLog(const QString &, const QColor, const QColor);
 
@@ -208,49 +208,49 @@ public slots:
 
     void set_focus(const QString &);
 #ifndef NO_LOG
-    void set_log_font(void);
+    void set_log_font();
 #endif
 
-    void showMinimized(void);
-    void showMaximized(void);
-    void showNormal(void);
-    void quit(void);
+    void showMinimized();
+    void showMaximized();
+    void showNormal();
+    void quit();
 
     //private slots:
     void log(const QString &data);
-    void set_app_font(void);
-    void setStyles(void);
+    void set_app_font();
+    void setStyles();
     void closeOnExit(bool state);
     void alwaysOnTop(bool state);
-    void move_to_center(void);
-    void about(void);
-    void help(void);
+    void move_to_center();
+    void about();
+    void help();
 
     void choice_translator(QAction *menu);
 
-    void set_system_palette(void);
-    void set_blue_palette(void);
-    void set_dark_palette(void);
-    void set_light_palette(void);
-    void set_mfc_palette(void);
+    void set_system_palette();
+    void set_blue_palette();
+    void set_dark_palette();
+    void set_light_palette();
+    void set_mfc_palette();
 
     void showHide(QSystemTrayIcon::ActivationReason r);
     //void iconActivated(QSystemTrayIcon::ActivationReason reason);
 
-    void setToolBarLanguage(void);
-    void setMenuLanguage(void);
+    void setToolBarLanguage();
+    void setMenuLanguage();
 
-    void change_value(void);
+    void change_value();
 
 #ifndef NO_STYLETOOLBAR
 #ifdef USE_CUSTOM_STYLE
-    void set_norton_style(void);
+    void set_norton_style();
 #endif
 #endif
 
 #if defined (DEMO) && defined (DEMO_YEAR) && defined (DEMO_MONTH) && defined (DEMO_DAY)
-    void kill(void);
-    void kill2(void);
+    void kill();
+    void kill2();
 #endif
 
 private:
@@ -263,8 +263,8 @@ private:
     };
 
     //    bool add_windowsmenu_action(QWidget *widget, QAction *action);
-    typedef void (CreatorWindow::*v_saveSlot)(void);
-    typedef bool (CreatorWindow::*b_saveSlot)(void);
+    typedef void (CreatorWindow::*v_saveSlot)();
+    typedef bool (CreatorWindow::*b_saveSlot)();
     bool add_new_action(QMenu   *parent,
                         QString text,
                         QIcon   *icon,
@@ -291,26 +291,26 @@ private:
 
     MyWidget *c_widget = nullptr;
 
-    void load_main(void);
-    void save_main(void);
+    void load_main();
+    void save_main();
 
-    void init(void);
+    void init();
 
-    void load_translations(void);
+    void load_translations();
 
-    void setToolBarStyles(void);
+    void setToolBarStyles();
 
-    void createStatusBar(void);
-    void createTrayIcon(void);
+    void createStatusBar();
+    void createTrayIcon();
 
-    void set_tileSubWindows(void);
-    void set_cascadeSubWindows(void);
+    void set_tileSubWindows();
+    void set_cascadeSubWindows();
 
 #ifndef NO_STYLETOOLBAR
     QToolBar *styletoolbar = nullptr;
-    void createStyleToolBar(void);
+    void createStyleToolBar();
 #ifdef USE_CUSTOM_STYLE
-    void createCustomStyleToolBar(void);
+    void createCustomStyleToolBar();
 #endif
 #endif
 
@@ -320,24 +320,24 @@ private:
     SysLog *w_syslog = nullptr;
 
 #ifndef NO_LOG
-    void createLog(void);
+    void createLog();
 #endif
-    void createSysLog_dock(void);
+    void createSysLog_dock();
 
     int state_theme = DARK_THEME;
 
 #if defined (DEMO) && defined (DEMO_YEAR) && defined (DEMO_MONTH) && defined (DEMO_DAY)
-    void check_date(void);
+    void check_date();
 #endif
 
     QMenuBar *app_mainBar = nullptr;
 
-    void dockwidget_updateText(void);
-    // void show_docs(void);
+    void dockwidget_updateText();
+    // void show_docs();
     void dockLocationChanged(Qt::DockWidgetArea area);
-    bool check_exit(void);
+    bool check_exit();
 
-    void change_menu(void);
+    void change_menu();
 
 protected:
     bool flag_close = false;

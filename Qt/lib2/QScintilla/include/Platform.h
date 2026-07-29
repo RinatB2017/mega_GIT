@@ -534,12 +534,12 @@ public:
 };
 
 #ifdef  NDEBUG
-#define PLATFORM_ASSERT(c) ((void)0)
+#define PLATFORM_ASSERT(c) (()0)
 #else
 #ifdef SCI_NAMESPACE
-#define PLATFORM_ASSERT(c) ((c) ? (void)(0) : Scintilla::Platform::Assert(#c, __FILE__, __LINE__))
+#define PLATFORM_ASSERT(c) ((c) ? ()(0) : Scintilla::Platform::Assert(#c, __FILE__, __LINE__))
 #else
-#define PLATFORM_ASSERT(c) ((c) ? (void)(0) : Platform::Assert(#c, __FILE__, __LINE__))
+#define PLATFORM_ASSERT(c) ((c) ? ()(0) : Platform::Assert(#c, __FILE__, __LINE__))
 #endif
 #endif
 

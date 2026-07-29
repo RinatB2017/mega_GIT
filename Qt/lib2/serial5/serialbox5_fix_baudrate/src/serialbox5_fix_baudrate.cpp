@@ -87,32 +87,32 @@ bool SerialBox5_fix_baudrate::set_fix_baudrate(int value)
     return setBaudRate(value);
 }
 //--------------------------------------------------------------------------------
-qint32 SerialBox5_fix_baudrate::get_baudRate(void)
+qint32 SerialBox5_fix_baudrate::get_baudRate()
 {
     return baudRate();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::DataBits       SerialBox5_fix_baudrate::get_dataBits(void)
+QSerialPort::DataBits       SerialBox5_fix_baudrate::get_dataBits()
 {
     return dataBits();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::Parity         SerialBox5_fix_baudrate::get_parity(void)
+QSerialPort::Parity         SerialBox5_fix_baudrate::get_parity()
 {
     return parity();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::StopBits       SerialBox5_fix_baudrate::get_stopBits(void)
+QSerialPort::StopBits       SerialBox5_fix_baudrate::get_stopBits()
 {
     return stopBits();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::FlowControl    SerialBox5_fix_baudrate::get_flowControl(void)
+QSerialPort::FlowControl    SerialBox5_fix_baudrate::get_flowControl()
 {
     return flowControl();
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::init(void)
+void SerialBox5_fix_baudrate::init()
 {
     ui->setupUi(this);
 
@@ -134,14 +134,14 @@ void SerialBox5_fix_baudrate::init(void)
     });
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::init_timer(void)
+void SerialBox5_fix_baudrate::init_timer()
 {
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout, this, &SerialBox5_fix_baudrate::checkPorts);
     m_timer->start(5000);
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::checkPorts(void)
+void SerialBox5_fix_baudrate::checkPorts()
 {
     QStringList sl_ports = get_port_names();
 
@@ -176,7 +176,7 @@ void SerialBox5_fix_baudrate::checkPorts(void)
     }
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::createWidgets(void)
+void SerialBox5_fix_baudrate::createWidgets()
 {
 #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     ui->gridLayout->setMargin(0);
@@ -215,13 +215,13 @@ void SerialBox5_fix_baudrate::add_frame_text(QFrame *parent,
 }
 #endif
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::refresh(void)
+void SerialBox5_fix_baudrate::refresh()
 {
     ui->cb_PortBox->clear();
     ui->cb_PortBox->addItems(get_port_names());
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::initSerial(void)
+void SerialBox5_fix_baudrate::initSerial()
 {
     ui->cb_PortBox->setProperty(NO_SAVE, true);
     ui->btn_power->setProperty(NO_SAVE, true);
@@ -256,7 +256,7 @@ void SerialBox5_fix_baudrate::getStatus(const QString &status, QDateTime current
     get_parameter();
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::setCloseState(void)
+void SerialBox5_fix_baudrate::setCloseState()
 {
     ui->btn_refresh->setEnabled(true);
     ui->cb_PortBox->setEnabled(true);
@@ -497,7 +497,7 @@ void SerialBox5_fix_baudrate::set_flag_byte_by_byte(bool state)
     flag_byte_by_byte = state;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::get_parameter(void)
+void SerialBox5_fix_baudrate::get_parameter()
 {
     if(isOpen() == false)
     {
@@ -527,12 +527,12 @@ void SerialBox5_fix_baudrate::set_portname(const QString &portname)
     }
 }
 //--------------------------------------------------------------------------------
-QString SerialBox5_fix_baudrate::get_portname(void)
+QString SerialBox5_fix_baudrate::get_portname()
 {
     return ui->cb_PortBox->currentText();
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::updateText(void)
+void SerialBox5_fix_baudrate::updateText()
 {
 #ifdef RS232_SEND
     sendBox5->updateText();
@@ -540,17 +540,17 @@ void SerialBox5_fix_baudrate::updateText(void)
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool SerialBox5_fix_baudrate::programm_is_exit(void)
+bool SerialBox5_fix_baudrate::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::load_setting(void)
+void SerialBox5_fix_baudrate::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_fix_baudrate::save_setting(void)
+void SerialBox5_fix_baudrate::save_setting()
 {
 
 }

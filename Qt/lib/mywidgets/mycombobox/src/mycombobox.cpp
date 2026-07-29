@@ -33,7 +33,7 @@ MyComboBox::~MyComboBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MyComboBox::init(void)
+void MyComboBox::init()
 {
     ui->setupUi(this);
 
@@ -46,27 +46,27 @@ void MyComboBox::init(void)
     ui->btn_send->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
 }
 //--------------------------------------------------------------------------------
-QString MyComboBox::get_command(void)
+QString MyComboBox::get_command()
 {
     return ui->cb_command->currentText();
 }
 //--------------------------------------------------------------------------------
-void MyComboBox::updateText(void)
+void MyComboBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MyComboBox::programm_is_exit(void)
+bool MyComboBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MyComboBox::load_setting(void)
+void MyComboBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MyComboBox::save_setting(void)
+void MyComboBox::save_setting()
 {
 
 }

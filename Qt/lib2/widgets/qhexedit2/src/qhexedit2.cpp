@@ -26,7 +26,7 @@ QHexEdit2::QHexEdit2(QWidget *parent) :
     init();
 }
 //--------------------------------------------------------------------------------
-void QHexEdit2::init(void)
+void QHexEdit2::init()
 {
     setAcceptDrops(true);
 }

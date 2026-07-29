@@ -65,7 +65,7 @@ public:
 signals:
     
 private slots:
-    void animate(void);
+    void animate();
     
 private:
     void DrawBackground(QPainter*);
@@ -88,20 +88,20 @@ private:
 
     bool m_doVisualUpdates;
 
-    void init_GL(void);
+    void init_GL();
     void init_map(const QString &filename);
-    void init_player(void);
-    void init_objects(void);
-    void init_timer(void);
-    void move_alien(void);
+    void init_player();
+    void init_objects();
+    void init_timer();
+    void move_alien();
 
 protected:
-    void initializeGL(void);
+    void initializeGL();
     void resizeGL(int w, int h);
     void setupViewport(int width, int height);
     void mousePressEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
-    void paintGL(void);
+    void paintGL();
 };
 //--------------------------------------------------------------------------------
 #endif

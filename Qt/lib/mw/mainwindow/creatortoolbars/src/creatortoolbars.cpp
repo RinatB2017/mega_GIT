@@ -34,7 +34,7 @@ CreatorToolBars::~CreatorToolBars()
     if(toolbar) delete toolbar;
 }
 //--------------------------------------------------------------------------------
-void CreatorToolBars::init(void)
+void CreatorToolBars::init()
 {
     toolbar = new QToolBar("toolbar", this);
     Q_ASSERT(toolbar);
@@ -104,13 +104,13 @@ void CreatorToolBars::init(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void CreatorToolBars::app_toolbar_add_separator(void)
+void CreatorToolBars::app_toolbar_add_separator()
 {
     Q_ASSERT(toolbar);
     toolbar->addSeparator();
 }
 //--------------------------------------------------------------------------------
-void CreatorToolBars::app_toolbar_add_exit(void)
+void CreatorToolBars::app_toolbar_add_exit()
 {
     QToolButton *btnExit = new QToolButton(this);
     btnExit->setObjectName("btnExit");
@@ -125,7 +125,7 @@ void CreatorToolBars::app_toolbar_add_exit(void)
 }
 //--------------------------------------------------------------------------------
 #ifndef NO_LOG
-void CreatorToolBars::app_toolbar_add_font(void)
+void CreatorToolBars::app_toolbar_add_font()
 {
     QMenu *menu_fonts = new QMenu();
 
@@ -160,7 +160,7 @@ void CreatorToolBars::app_toolbar_add_font(void)
 }
 #endif
 //--------------------------------------------------------------------------------
-void CreatorToolBars::app_toolbar_add_lang(void)
+void CreatorToolBars::app_toolbar_add_lang()
 {
     QMenu *menu = new QMenu();
 
@@ -203,7 +203,7 @@ void CreatorToolBars::app_toolbar_add_lang(void)
     app_buttons.append(btn_lang);
 }
 //--------------------------------------------------------------------------------
-void CreatorToolBars::app_toolbar_add_style(void)
+void CreatorToolBars::app_toolbar_add_style()
 {
     QMenu *menu = new QMenu(this);
 
@@ -232,7 +232,7 @@ void CreatorToolBars::app_toolbar_add_style(void)
 }
 //--------------------------------------------------------------------------------
 #ifdef USE_CUSTOM_STYLE
-void CreatorToolBars::app_toolbar_add_custom_style(void)
+void CreatorToolBars::app_toolbar_add_custom_style()
 {
     // пробую самописные стили
 
@@ -253,7 +253,7 @@ void CreatorToolBars::app_toolbar_add_custom_style(void)
 }
 #endif
 //--------------------------------------------------------------------------------
-void CreatorToolBars::app_toolbar_add_about(void)
+void CreatorToolBars::app_toolbar_add_about()
 {
     QToolButton *btnAbout = new QToolButton(this);
     btnAbout->setObjectName("btnExit");
@@ -267,7 +267,7 @@ void CreatorToolBars::app_toolbar_add_about(void)
     app_buttons.append(btnAbout);
 }
 //--------------------------------------------------------------------------------
-void CreatorToolBars::app_toolbar_add_help(void)
+void CreatorToolBars::app_toolbar_add_help()
 {
     QToolButton *btnHelp = new QToolButton(this);
     btnHelp->setObjectName("btnHelp");
@@ -282,7 +282,7 @@ void CreatorToolBars::app_toolbar_add_help(void)
     app_buttons.append(btnHelp);
 }
 //--------------------------------------------------------------------------------
-void CreatorToolBars::app_updateText(void)
+void CreatorToolBars::app_updateText()
 {
     foreach (QAbstractButton *btn, app_buttons)
     {

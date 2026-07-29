@@ -30,7 +30,7 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-Scene3::Scene3(void)
+Scene3::Scene3()
 {
     add_background(":/images/10.11-astronomiya.jpg");
 
@@ -52,7 +52,7 @@ Scene3::~Scene3()
 #endif
 }
 //--------------------------------------------------------------------------------
-void Scene3::init_player(void)
+void Scene3::init_player()
 {
     player = new Player;
     player->setPixmap(QPixmap(ICON_PROGRAMM));
@@ -68,7 +68,7 @@ void Scene3::init_player(void)
     player->setPos(x, y);
 }
 //--------------------------------------------------------------------------------
-void Scene3::init_ship(void)
+void Scene3::init_ship()
 {
     ship = new Ship;
     addItem(ship);
@@ -77,7 +77,7 @@ void Scene3::init_ship(void)
                  HEIGHT/2 - ship->boundingRect().height()/2);
 }
 //--------------------------------------------------------------------------------
-void Scene3::init_rocks(void)
+void Scene3::init_rocks()
 {
     //qsrand(QTime(0,0,0).msecsTo(QTime::currentTime()));
     int x = 0;
@@ -113,7 +113,7 @@ void Scene3::init_rocks(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Scene3::update(void)
+void Scene3::update()
 {
     if(is_worked)
     {
@@ -124,7 +124,7 @@ void Scene3::update(void)
     is_worked = false;
 }
 //--------------------------------------------------------------------------------
-void Scene3::draw(void)
+void Scene3::draw()
 {
     move_player();
     move_rocks();
@@ -141,7 +141,7 @@ void Scene3::draw(void)
     check_collision();
 }
 //--------------------------------------------------------------------------------
-void Scene3::fire(void)
+void Scene3::fire()
 {
     if(moved_ship == 0)
     {
@@ -169,7 +169,7 @@ void Scene3::fire(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Scene3::move_player(void)
+void Scene3::move_player()
 {
     if(player == 0)
     {
@@ -233,7 +233,7 @@ void Scene3::move_player(void)
     player->setPos(x, y);
 }
 //--------------------------------------------------------------------------------
-void Scene3::move_rocks(void)
+void Scene3::move_rocks()
 {
     foreach (Rock *rock, rocks)
     {
@@ -242,7 +242,7 @@ void Scene3::move_rocks(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Scene3::check_collision(void)
+void Scene3::check_collision()
 {
     if(player == 0)
     {

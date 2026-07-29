@@ -35,7 +35,7 @@ Serial::~Serial()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Serial::init(void)
+void Serial::init()
 {
     ui->setupUi(this);
 
@@ -213,22 +213,22 @@ bool Serial::work(QByteArray clean_data)
     return true;
 }
 //--------------------------------------------------------------------------------
-void Serial::updateText(void)
+void Serial::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool Serial::programm_is_exit(void)
+bool Serial::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Serial::load_setting(void)
+void Serial::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Serial::save_setting(void)
+void Serial::save_setting()
 {
 
 }

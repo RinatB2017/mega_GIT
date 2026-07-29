@@ -31,7 +31,7 @@ OM_widget::~OM_widget()
 
 }
 //--------------------------------------------------------------------------------
-void OM_widget::init(void)
+void OM_widget::init()
 {
 
 }

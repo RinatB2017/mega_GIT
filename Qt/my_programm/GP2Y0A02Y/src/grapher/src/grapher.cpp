@@ -34,7 +34,7 @@ Grapher::~Grapher()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Grapher::init(void)
+void Grapher::init()
 {
     ui->setupUi(this);
 
@@ -59,7 +59,7 @@ void Grapher::init(void)
     emit info("Grapher started");
 }
 //--------------------------------------------------------------------------------
-void Grapher::clean_all(void)
+void Grapher::clean_all()
 {
     ui->grapher->clear();
 }
@@ -83,22 +83,22 @@ bool Grapher::set_value(int channel, int value)
     return true;
 }
 //--------------------------------------------------------------------------------
-void Grapher::updateText(void)
+void Grapher::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool Grapher::programm_is_exit(void)
+bool Grapher::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Grapher::load_setting(void)
+void Grapher::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Grapher::save_setting(void)
+void Grapher::save_setting()
 {
 
 }

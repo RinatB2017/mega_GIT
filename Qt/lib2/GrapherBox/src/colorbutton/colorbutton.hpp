@@ -47,17 +47,17 @@ public:
     virtual ~ColorButton();
 
     void setColor(QColor new_color);
-    QColor getColor(void);
+    QColor getColor();
 
     void setText(const QString &new_text);
-    QString getText(void);
+    QString getText();
 
-    bool isCheckable(void);
+    bool isCheckable();
     void setCheckable(bool state);
 
 private slots:
-    void set_color(void);
-    void set_text(void);
+    void set_color();
+    void set_text();
 
 private:
     QPushButton *btn_text = nullptr;
@@ -65,7 +65,7 @@ private:
     QColor color;
     QString text;
 
-    void init(void);
+    void init();
 };
 //--------------------------------------------------------------------------------
 #endif // COLORBUTTON_HPP

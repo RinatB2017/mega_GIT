@@ -27,7 +27,7 @@ public slots:
     QByteArray send_data(const QByteArray &data);
 
 private slots:
-    void readPendingDatagrams(void);
+    void readPendingDatagrams();
 
 private:
     QWidget *parent;
@@ -36,13 +36,13 @@ private:
     QString address;
     quint16 port;
 
-    QString getLocalAddress(void);
-    void init(void);
+    QString getLocalAddress();
+    void init();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif

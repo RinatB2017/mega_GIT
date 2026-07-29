@@ -33,7 +33,7 @@ void Color_widget::set_color(QColor color)
     update();
 }
 //--------------------------------------------------------------------------------
-QColor Color_widget::get_color(void)
+QColor Color_widget::get_color()
 {
     return current_color;
 }

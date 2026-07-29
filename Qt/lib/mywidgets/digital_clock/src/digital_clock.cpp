@@ -43,7 +43,7 @@ Digital_clock::~Digital_clock()
     delete settings;
 }
 //--------------------------------------------------------------------------------
-void Digital_clock::init(void)
+void Digital_clock::init()
 {
     timer = new QTimer(this);
     connect(timer,  &QTimer::timeout,
@@ -69,7 +69,7 @@ void Digital_clock::init(void)
     timer->start(1000);
 }
 //--------------------------------------------------------------------------------
-void Digital_clock::correct_time(void)
+void Digital_clock::correct_time()
 {
     QTime time = QTime::currentTime();
     hour = time.hour();
@@ -77,7 +77,7 @@ void Digital_clock::correct_time(void)
     sec  = time.second();
 }
 //--------------------------------------------------------------------------------
-void Digital_clock::timeout(void)
+void Digital_clock::timeout()
 {
     sec++;
     if(sec > 59)
@@ -114,7 +114,7 @@ void Digital_clock::timeout(void)
     emit s_show_message();
 }
 //--------------------------------------------------------------------------------
-void Digital_clock::show_message(void)
+void Digital_clock::show_message()
 {
     Timer_messagebox *msgbox = new Timer_messagebox(message);
     msgbox->setWindowTitle("Warning");
@@ -136,7 +136,7 @@ void Digital_clock::popup(QPoint)
     popup_menu->exec(QCursor::pos());
 }
 //--------------------------------------------------------------------------------
-void Digital_clock::open_option(void)
+void Digital_clock::open_option()
 {
     QTime o_time;
     o_time.setHMS(t_hour, t_min, t_sec);
@@ -158,7 +158,7 @@ void Digital_clock::open_option(void)
     delete dlg;
 }
 //--------------------------------------------------------------------------------
-void Digital_clock::load_setting(void)
+void Digital_clock::load_setting()
 {
 #ifdef QT_DEBUG
     QString app_name = QString("%1(debug)").arg(APPNAME);
@@ -178,7 +178,7 @@ void Digital_clock::load_setting(void)
     t_sec  = settings->value(P_SEC).toInt();
 }
 //--------------------------------------------------------------------------------
-void Digital_clock::save_setting(void)
+void Digital_clock::save_setting()
 {
     settings->setValue(P_MESSAGE,   QVariant::fromValue(message));
     settings->setValue(P_HOUR,      QVariant::fromValue(t_hour));

@@ -41,7 +41,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -58,7 +58,7 @@ void MainBox::init(void)
     connect(ui->btn_stop,   SIGNAL(clicked(bool)),  main_timer, SLOT(stop()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::update(void)
+void MainBox::update()
 {
 #if 1
     for(int n=0; n<5; n++)
@@ -78,7 +78,7 @@ void MainBox::update(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -97,19 +97,19 @@ void MainBox::createTestBar(void)
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::load(void)
+void MainBox::load()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
 }
 //--------------------------------------------------------------------------------
-void MainBox::save(void)
+void MainBox::save()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     emit info("Test");
 
@@ -120,22 +120,22 @@ void MainBox::test(void)
     //ui->oscilloscope_widget->set_curve_color(0, Qt::blue);
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

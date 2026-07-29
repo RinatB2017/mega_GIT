@@ -47,13 +47,13 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void port_read(void);
+    void port_read();
     void port_error(QSerialPort::SerialPortError serial_error);
 
-    void refresh_devices(void);
-    void open(void);
-    void close(void);
-    void load_firmvare(void);
+    void refresh_devices();
+    void open();
+    void close();
+    void load_firmvare();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -68,16 +68,16 @@ private:
     QSerialPort serial;
     QByteArray  serial_data;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
+    void createTestBar();
 
     void block_interface(bool state);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

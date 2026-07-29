@@ -39,9 +39,9 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void test(void);
+    void test();
     void test_open(bool state);
-    void test_send(void);
+    void test_send();
 
     void serial_data(QByteArray data);
 
@@ -49,16 +49,16 @@ private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-    void init(void);
-    void createTestBar(void);
-    void init_serial_widgets(void);
+    void init();
+    void createTestBar();
+    void init_serial_widgets();
 
-    void test_only(void);
+    void test_only();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

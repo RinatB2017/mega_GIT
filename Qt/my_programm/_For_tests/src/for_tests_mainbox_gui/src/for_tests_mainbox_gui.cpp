@@ -35,7 +35,7 @@ MainBox_GUI::~MainBox_GUI()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox_GUI::init(void)
+void MainBox_GUI::init()
 {
     ui->setupUi(this);
 
@@ -84,7 +84,7 @@ void MainBox_GUI::set_item_param(QTreeWidgetItem *item,
     item->setCheckState(0, state);          // Qt::Checked
 }
 //--------------------------------------------------------------------------------
-void MainBox_GUI::btn_1_clicked(void)
+void MainBox_GUI::btn_1_clicked()
 {
     root_item = new QTreeWidgetItem(ui->treeWidget);
     root_item->setText(0, "root");
@@ -128,7 +128,7 @@ void MainBox_GUI::btn_1_clicked(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox_GUI::btn_2_clicked(void)
+void MainBox_GUI::btn_2_clicked()
 {
 #if 1
     int cnt = ui->treeWidget->children().count();
@@ -161,12 +161,12 @@ void MainBox_GUI::set_children_state(QTreeWidgetItem *parent_item,
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox_GUI::f_not_created(void)
+void MainBox_GUI::f_not_created()
 {
     fail();
 }
 //--------------------------------------------------------------------------------
-void MainBox_GUI::updateText(void)
+void MainBox_GUI::updateText()
 {
     ui->retranslateUi(this);
 }

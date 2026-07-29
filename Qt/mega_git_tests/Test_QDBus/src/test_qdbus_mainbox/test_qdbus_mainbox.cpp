@@ -56,7 +56,7 @@ MainBox::~MainBox()
 #define HAL_MGR_PATH  "/org/freedesktop/Hal/Manager"
 //#define HAL_DEVS_PATH "/org/freedesktop/Hal/devices"
 //--------------------------------------------------------------------------------
-void MainBox::connect_system_bus(void)
+void MainBox::connect_system_bus()
 {
     bool ok;
     if (QDBusConnection::systemBus().isConnected())
@@ -117,7 +117,7 @@ void MainBox::connect_system_bus(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::connect_session_bus(void)
+void MainBox::connect_session_bus()
 {
     bool ok;
     if (QDBusConnection::sessionBus().isConnected())
@@ -167,7 +167,7 @@ void MainBox::connect_session_bus(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -202,7 +202,7 @@ void MainBox::DBus_deviceRemoved(QDBusObjectPath dev)
     emit info(QString("DBus_deviceRemoved: %1").arg(dev.path()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -245,7 +245,7 @@ void MainBox::createTestBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -260,7 +260,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -274,7 +274,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+bool MainBox::test_0()
 {
     emit info("Test_0()");
 
@@ -294,7 +294,7 @@ bool MainBox::test_0(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
+bool MainBox::test_1()
 {
     emit info("Test_1()");
 
@@ -316,50 +316,50 @@ bool MainBox::test_1(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
+bool MainBox::test_2()
 {
     emit info("Test_2()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
+bool MainBox::test_3()
 {
     emit info("Test_3()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
+bool MainBox::test_4()
 {
     emit info("Test_4()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
+bool MainBox::test_5()
 {
     emit info("Test_5()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

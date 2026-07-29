@@ -43,11 +43,11 @@ public:
 
     bool set_size_led(int value);
 
-    int get_size_x(void);
-    int get_size_y(void);
+    int get_size_x();
+    int get_size_y();
 
 public slots:
-    void clear(void);
+    void clear();
 
 private:
     int d_width = 0;
@@ -65,10 +65,10 @@ private:
     QColor led_color = Qt::black;
     QColor border_color = Qt::gray;
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     void paintEvent(QPaintEvent *);

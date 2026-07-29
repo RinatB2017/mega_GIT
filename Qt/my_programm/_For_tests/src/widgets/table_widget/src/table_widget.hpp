@@ -40,7 +40,7 @@ public:
 private:
     Ui::Table_widget *ui;
 
-    void init(void);
+    void init();
 };
 //--------------------------------------------------------------------------------
 #endif // TABLE_WIDGET_HPP

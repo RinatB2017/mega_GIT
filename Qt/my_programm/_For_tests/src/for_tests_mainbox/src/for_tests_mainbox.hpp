@@ -96,16 +96,16 @@ public:
     virtual ~MainBox();
 
 public slots:
-    void choice_test(void);
+    void choice_test();
 
-    bool test(void);
-    bool test2(void);
-    bool test_style(void);
-    bool run_cube_widget(void);
-    bool run_ogl_widget(void);
+    bool test();
+    bool test2();
+    bool test_style();
+    bool run_cube_widget();
+    bool run_ogl_widget();
 
-    void startThread(void);
-    void stopThread(void);
+    void startThread();
+    void stopThread();
     void handleProgress(int value);
 
 private:
@@ -113,7 +113,7 @@ private:
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD;
     QList<CMD> commands;
 
@@ -131,14 +131,14 @@ private:
     // SimpleSshServer *m_sshServer;
     SimpleRemoteConsole *m_remoteConsole;
 
-    bool set_theme_windows(void);
-    bool set_norton_commander(void);
-    bool set_styles(void);
+    bool set_theme_windows();
+    bool set_norton_commander();
+    bool set_styles();
 
-    void createWidgetByName(void);
+    void createWidgetByName();
 
-    void init(void);
-    void create_test_bar(void);
+    void init();
+    void create_test_bar();
 
     void calc_line(qreal center_x,
                    qreal center_y,
@@ -157,17 +157,17 @@ private:
     QImage create_bone(int num);
 
     template<typename T1, typename T2>
-    void test_template(void);
+    void test_template();
 
     void heavy_function(bool *result);
 
     template<class T>
     void test_function(int delay);
-    void test_function2(bool (MainBox::*func)(void));
+    void test_function2(bool (MainBox::*func)());
 
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

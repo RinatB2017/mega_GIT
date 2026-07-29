@@ -26,13 +26,13 @@ private:
 
     QSerialPort *serial = nullptr;
 
-    void read_data(void);
+    void read_data();
 
     void serial5_error(QSerialPort::SerialPortError err);
 
-    void get_portname(void);
-    void port_open(void);
-    void port_close(void);
-    void port_send(void);
+    void get_portname();
+    void port_open();
+    void port_close();
+    void port_send();
 };
 #endif // MAINWINDOW_HPP

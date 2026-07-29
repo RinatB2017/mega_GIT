@@ -53,7 +53,7 @@ public:
     SimpleHttpServer(QObject *parent = nullptr);
 
 private slots:
-    void handleNewConnection(void);
+    void handleNewConnection();
     void sendScreenshot(QTcpSocket *clientSocket);
     void sendNotFound(QTcpSocket *clientSocket);
 };

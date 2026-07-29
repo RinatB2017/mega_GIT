@@ -40,7 +40,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -58,7 +58,7 @@ void MainBox::init(void)
     setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_serial(void)
+void MainBox::init_serial()
 {
     QTimer::singleShot(0, [this]{
         ui->serial_widget->set_caption("RS232_5");
@@ -69,7 +69,7 @@ void MainBox::init_serial(void)
             this,               &MainBox::read_data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_serial_lite(void)
+void MainBox::init_serial_lite()
 {
     QTimer::singleShot(100, [this]{
         ui->serial_lite_widget->set_caption("RS232_5 (lite)");
@@ -80,7 +80,7 @@ void MainBox::init_serial_lite(void)
             this,                   &MainBox::read_data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_serial_fix(void)
+void MainBox::init_serial_fix()
 {
     QTimer::singleShot(100, [this]{
         ui->serial_fix_widget->set_caption("RS232_5 (fix)");
@@ -96,7 +96,7 @@ void MainBox::read_data(QByteArray ba)
     emit info(ba.data());
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_test_bar(void)
+void MainBox::create_test_bar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -133,7 +133,7 @@ void MainBox::create_test_bar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_programm_bar(void)
+void MainBox::create_programm_bar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -171,7 +171,7 @@ void MainBox::create_programm_bar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -184,7 +184,7 @@ void MainBox::choice_test(void)
         );
     if (cmd_it != test_commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -198,7 +198,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_programm(void)
+void MainBox::choice_programm()
 {
     bool ok = false;
     int cmd = cb_programm->itemData(cb_programm->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -211,7 +211,7 @@ void MainBox::choice_programm(void)
         );
     if (cmd_it != programm_commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -225,7 +225,7 @@ void MainBox::choice_programm(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
 #ifdef QT_DEBUG
     qDebug() << "Test";
@@ -234,19 +234,19 @@ bool MainBox::test(void)
 }
 //--------------------------------------------------------------------------------
 #ifdef QT_DEBUG
-bool MainBox::d_test(void)
+bool MainBox::d_test()
 {
     return test();
 }
 #endif
 //--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     if(ui->serial_widget->isOpen() ||
         ui->serial_lite_widget->isOpen() ||
@@ -258,12 +258,12 @@ bool MainBox::programm_is_exit(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

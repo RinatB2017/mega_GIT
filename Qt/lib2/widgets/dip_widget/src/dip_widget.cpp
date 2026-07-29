@@ -31,7 +31,7 @@ DIP_widget::~DIP_widget()
 
 }
 //--------------------------------------------------------------------------------
-void DIP_widget::init(void)
+void DIP_widget::init()
 {
     DIP_button btn;
 
@@ -91,7 +91,7 @@ void DIP_widget::set_value(int value)
     setToolTip(QString("Адрес = %1").arg(dip_value));
 }
 //--------------------------------------------------------------------------------
-int DIP_widget::get_value(void)
+int DIP_widget::get_value()
 {
     return dip_value;
 }

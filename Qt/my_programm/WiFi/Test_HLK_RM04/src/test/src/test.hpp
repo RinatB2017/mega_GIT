@@ -38,8 +38,8 @@ public:
     virtual ~Test();
 
 private slots:
-    void test_GUI_network(void);
-    void test_HLK_RM04_widget(void);
+    void test_GUI_network();
+    void test_HLK_RM04_widget();
 
 private:
     MainWindow *mw;

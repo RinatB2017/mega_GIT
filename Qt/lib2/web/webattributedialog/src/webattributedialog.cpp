@@ -33,7 +33,7 @@ WebAttributeDialog::~WebAttributeDialog()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void WebAttributeDialog::init(void)
+void WebAttributeDialog::init()
 {
     ui->setupUi(this);
 
@@ -101,7 +101,7 @@ void WebAttributeDialog::init(void)
     setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
-void WebAttributeDialog::set_default(void)
+void WebAttributeDialog::set_default()
 {
 #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     QWebEngineSettings *ds = QWebEngineSettings::defaultSettings();

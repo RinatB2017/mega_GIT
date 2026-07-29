@@ -56,7 +56,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -153,7 +153,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = reinterpret_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -175,7 +175,7 @@ void MainBox::createTestBar(void)
     //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit info("Test");
     return true;
@@ -347,7 +347,7 @@ void MainBox::f_move_down_right(uint8_t speed)
                .arg(ba.toHex().data()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_zoom_in(void)
+void MainBox::f_zoom_in()
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
@@ -367,7 +367,7 @@ void MainBox::f_zoom_in(void)
                .arg(ba.toHex().data()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_zoom_out(void)
+void MainBox::f_zoom_out()
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
@@ -387,7 +387,7 @@ void MainBox::f_zoom_out(void)
                .arg(ba.toHex().data()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_move_stop(void)
+void MainBox::f_move_stop()
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
@@ -407,7 +407,7 @@ void MainBox::f_move_stop(void)
                .arg(ba.toHex().data()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_send(void)
+void MainBox::f_send()
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
@@ -427,7 +427,7 @@ void MainBox::f_send(void)
                .arg(ba.toHex().data()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::refresh(void)
+void MainBox::refresh()
 {
     PELCO_PACKET packet;
     packet.body.sync     = SYNC_BYTE;
@@ -440,7 +440,7 @@ void MainBox::refresh(void)
     ui->sb_chk_sum->setValue(CRC::pelco_crc8(reinterpret_cast<uint8_t *>(&packet.buf[1]), 5));
 }
 //--------------------------------------------------------------------------------
-void MainBox::pressed(void)
+void MainBox::pressed()
 {
     QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
     if(btn)
@@ -465,7 +465,7 @@ void MainBox::pressed(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_video(void)
+void MainBox::f_video()
 {
     emit trace(Q_FUNC_INFO);
     if(ui->cb_address->currentText().isEmpty())
@@ -505,7 +505,7 @@ void MainBox::f_error(QMediaPlayer::Error err)
     emit error(player->errorString());
 }
 //--------------------------------------------------------------------------------
-void MainBox::released(void)
+void MainBox::released()
 {
     QToolButton *btn = reinterpret_cast<QToolButton *>(sender());
     if(btn)
@@ -515,22 +515,22 @@ void MainBox::released(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

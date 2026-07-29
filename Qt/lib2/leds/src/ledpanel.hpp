@@ -22,7 +22,7 @@ public:
     virtual ~LedPanel();
 
     void set_u8_value(uint8_t value);
-    uint8_t get_u8_value(void);
+    uint8_t get_u8_value();
 
 signals:
     void log(const QString &);

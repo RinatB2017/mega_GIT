@@ -33,22 +33,22 @@ Player::Player(Map *map, bool is_alive, int pos_x, int pos_y)
     init();
 }
 //--------------------------------------------------------------------------------
-bool Player::is_alive(void)
+bool Player::is_alive()
 {
     return alive;
 }
 //--------------------------------------------------------------------------------
-int Player::get_x(void)
+int Player::get_x()
 {
     return pos_x;
 }
 //--------------------------------------------------------------------------------
-int Player::get_y(void)
+int Player::get_y()
 {
     return pos_y;
 }
 //--------------------------------------------------------------------------------
-void Player::top(void)
+void Player::top()
 {
     if(map->get(pos_x, pos_y-1) != 1)
     {
@@ -58,7 +58,7 @@ void Player::top(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Player::bottom(void)
+void Player::bottom()
 {
     if(map->get(pos_x, pos_y+1) != 1)
     {
@@ -68,7 +68,7 @@ void Player::bottom(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Player::left(void)
+void Player::left()
 {
     if(map->get(pos_x-1, pos_y) != 1)
     {
@@ -78,7 +78,7 @@ void Player::left(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Player::right(void)
+void Player::right()
 {
     if(map->get(pos_x+1, pos_y) != 1)
     {
@@ -88,7 +88,7 @@ void Player::right(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Player::init(void)
+void Player::init()
 {
 
 }

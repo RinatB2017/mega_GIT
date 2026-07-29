@@ -51,7 +51,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -62,7 +62,7 @@ void MainBox::init(void)
     create_sniffer();
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -89,7 +89,7 @@ void MainBox::createTestBar(void)
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
@@ -104,7 +104,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_sniffer(void)
+void MainBox::create_sniffer()
 {
     emit info("init sniffer");
     sniffer = new PCA10000();
@@ -115,7 +115,7 @@ void MainBox::create_sniffer(void)
     connect(sniffer, SIGNAL(trace(QString)),    this, SIGNAL(trace(QString)));
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_0(void)
+void MainBox::test_0()
 {
     emit info("find sniffer");
 
@@ -129,37 +129,37 @@ void MainBox::test_0(void)
     sniffer->test();
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_1(void)
+void MainBox::test_1()
 {
     emit info("Test_1()");
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_2(void)
+void MainBox::test_2()
 {
     emit info("Test_2()");
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_3(void)
+void MainBox::test_3()
 {
     emit info("Test_3()");
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

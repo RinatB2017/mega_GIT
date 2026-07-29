@@ -47,7 +47,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -59,7 +59,7 @@ void MainBox::init(void)
     ui->hexedit_widget->setFont(font);
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -85,7 +85,7 @@ void MainBox::createTestBar(void)
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -100,7 +100,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_0(void)
+void MainBox::test_0()
 {
     QByteArray ba;
     ba.clear();
@@ -111,14 +111,14 @@ void MainBox::test_0(void)
     ui->hexedit_widget->setData(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_1(void)
+void MainBox::test_1()
 {
     QHexEditData *data = QHexEditData::fromFile("Test_QHexEdit");
 
     ui->hexedit_widget->setData(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_2(void)
+void MainBox::test_2()
 {
     emit info("Test_2: info");
     emit debug("Test_2: debug");
@@ -126,7 +126,7 @@ void MainBox::test_2(void)
     emit trace("Test_2: trace");
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_3(void)
+void MainBox::test_3()
 {
     emit info("Test_3: info");
     emit debug("Test_3: debug");
@@ -134,22 +134,22 @@ void MainBox::test_3(void)
     emit trace("Test_3: trace");
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

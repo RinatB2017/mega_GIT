@@ -33,7 +33,7 @@ File_widget::~File_widget()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void File_widget::init(void)
+void File_widget::init()
 {
     ui->setupUi(this);
 

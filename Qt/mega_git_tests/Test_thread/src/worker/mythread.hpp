@@ -38,17 +38,17 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
-    void finished(void);
+    void finished();
 
     void set_hour(unsigned char hour);
     void set_min(unsigned char min);
     void set_sec(unsigned char sec);
 
 public slots:
-    void process(void);
+    void process();
 
-    void start(void);
-    void stop(void);
+    void start();
+    void stop();
 
     void set_time(QDateTime dt);
 

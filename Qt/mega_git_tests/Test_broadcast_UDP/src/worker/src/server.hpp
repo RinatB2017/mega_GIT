@@ -39,13 +39,13 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
-    void finished(void);
+    void finished();
 
 public slots:
-    void f_process(void);
+    void f_process();
 
 private slots:
-    void processPendingDatagrams(void);
+    void processPendingDatagrams();
 
 private:
     QUdpSocket *udpSocket = nullptr;

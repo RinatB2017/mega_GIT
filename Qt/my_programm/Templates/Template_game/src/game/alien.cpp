@@ -36,27 +36,27 @@ Alien::Alien(bool is_alive, int pos_x, int pos_y)
     init();
 }
 //--------------------------------------------------------------------------------
-bool Alien::is_alive(void)
+bool Alien::is_alive()
 {
     return alive;
 }
 //--------------------------------------------------------------------------------
-void Alien::init(void)
+void Alien::init()
 {
     state = RUN_RIGHT;
 }
 //--------------------------------------------------------------------------------
-int Alien::get_x(void)
+int Alien::get_x()
 {
     return pos_x;
 }
 //--------------------------------------------------------------------------------
-int Alien::get_y(void)
+int Alien::get_y()
 {
     return pos_y;
 }
 //--------------------------------------------------------------------------------
-void Alien::run(void)
+void Alien::run()
 {
     switch(state)
     {

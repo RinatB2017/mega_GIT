@@ -32,10 +32,10 @@ public:
     virtual ~Default_widget();
 
 private:
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // DEFAULT_WIDGET_HPP

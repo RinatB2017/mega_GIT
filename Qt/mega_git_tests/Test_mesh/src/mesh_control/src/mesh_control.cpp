@@ -35,7 +35,7 @@ Mesh_control::~Mesh_control()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Mesh_control::init(void)
+void Mesh_control::init()
 {
     ui->setupUi(this);
 
@@ -75,34 +75,34 @@ void Mesh_control::read_data(QByteArray data)
     }
 }
 //--------------------------------------------------------------------------------
-void Mesh_control::led_on(void)
+void Mesh_control::led_on()
 {
     emit debug("send 1");
     emit send("1");
 }
 //--------------------------------------------------------------------------------
-void Mesh_control::led_off(void)
+void Mesh_control::led_off()
 {
     emit debug("send 0");
     emit send("0");
 }
 //--------------------------------------------------------------------------------
-void Mesh_control::updateText(void)
+void Mesh_control::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool Mesh_control::programm_is_exit(void)
+bool Mesh_control::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Mesh_control::load_setting(void)
+void Mesh_control::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Mesh_control::save_setting(void)
+void Mesh_control::save_setting()
 {
 
 }

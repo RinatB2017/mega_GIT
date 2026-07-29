@@ -39,7 +39,7 @@ Worker_fake::~Worker_fake()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Worker_fake::init(void)
+void Worker_fake::init()
 {
     ui->setupUi(this);
 
@@ -87,14 +87,14 @@ void Worker_fake::input(QByteArray data)
     }
 }
 //--------------------------------------------------------------------------------
-void Worker_fake::send_hex(void)
+void Worker_fake::send_hex()
 {
     QByteArray ba;
     ba.append(QByteArray::fromHex(ui->le_hex->text().toLocal8Bit()));
     emit output(ba);
 }
 //--------------------------------------------------------------------------------
-void Worker_fake::send_text(void)
+void Worker_fake::send_text()
 {
 //    QByteArray ba;
 //    ba.append(ui->le_text->text());
@@ -103,12 +103,12 @@ void Worker_fake::send_text(void)
     emit output(ui->le_text->text().toLatin1());
 }
 //--------------------------------------------------------------------------------
-void Worker_fake::port_open(void)
+void Worker_fake::port_open()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Worker_fake::port_close(void)
+void Worker_fake::port_close()
 {
 
 }

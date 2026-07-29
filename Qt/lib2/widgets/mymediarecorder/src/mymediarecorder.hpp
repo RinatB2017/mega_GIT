@@ -66,20 +66,20 @@ private:
 
     qreal frames_per_second = 30.0f;
 
-    void init(void);
+    void init();
 
-    void set_filename(void);
-    void start(void);
-    void stop(void);
+    void set_filename();
+    void start();
+    void stop();
 
 #if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     void processFrame(QVideoFrame const &frame);
 #endif
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MYMEDIARECORDER_HPP

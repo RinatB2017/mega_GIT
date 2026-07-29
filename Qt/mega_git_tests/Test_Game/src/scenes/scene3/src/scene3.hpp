@@ -35,7 +35,7 @@ class Scene3 : public BaseScene
     Q_OBJECT
 
 public:
-    Scene3(void);
+    Scene3();
     virtual ~Scene3();
 
 signals:
@@ -45,7 +45,7 @@ signals:
     void trace(const QString &);
 
 public slots:
-    void update(void);
+    void update();
 
 private:
     qreal x = 0.0;
@@ -62,17 +62,17 @@ private:
 
     bool is_worked = false;
 
-    void init_player(void);
-    void init_ship(void);
-    void init_rocks(void);
+    void init_player();
+    void init_ship();
+    void init_rocks();
 
-    void move_player(void);
-    void move_rocks(void);
-    void check_collision(void);
+    void move_player();
+    void move_rocks();
+    void check_collision();
 
-    void fire(void);
+    void fire();
 
-    void draw(void);
+    void draw();
     void calc_line(qreal center_x,
                    qreal center_y,
                    qreal angle,

@@ -66,22 +66,22 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
-    void test(void);
-    void read_wav(void);
-    void test_load(void);
-    void test_save(void);
-    void test0(void);
-    void test1(void);
-    void test2(void);
-    void test3(void);
+    void choice_test();
+    void test();
+    void read_wav();
+    void test_load();
+    void test_save();
+    void test0();
+    void test1();
+    void test2();
+    void test3();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        void (MainBox::*func)(void);
+        void (MainBox::*func)();
     } CMD_t;
     QList<CMD> commands;
     QPointer<QComboBox> cb_test;
@@ -98,19 +98,19 @@ private:
 
     wav_header_t wavHeader;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
     void readWAV(const QString &wavFile);
     void ReadWav(const QString &fileName);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
-    void test_data(void);
-    void test_data2(void);
+    void test_data();
+    void test_data2();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

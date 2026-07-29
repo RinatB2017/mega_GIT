@@ -39,7 +39,7 @@ TestDialog::~TestDialog()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void TestDialog::init(void)
+void TestDialog::init()
 {
     ui->sb_index->setRange(0,  max_index);
     ui->sb_offset->setRange(0, max_offset);
@@ -47,12 +47,12 @@ void TestDialog::init(void)
     setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
-int TestDialog::get_index(void)
+int TestDialog::get_index()
 {
     return ui->sb_index->value();
 }
 //--------------------------------------------------------------------------------
-int TestDialog::get_offset(void)
+int TestDialog::get_offset()
 {
     return ui->sb_offset->value();
 }

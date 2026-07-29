@@ -49,7 +49,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -75,7 +75,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -114,7 +114,7 @@ void MainBox::createTestBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -130,7 +130,7 @@ void MainBox::choice_test(void)
         );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -262,7 +262,7 @@ bool MainBox::test_interface_number(int interface_number)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
@@ -291,7 +291,7 @@ bool MainBox::test(void)
 #include <stdio.h>
 #include <stdlib.h>
 
-bool MainBox::test2(void)
+bool MainBox::test2()
 {
     libusb_context *ctx = NULL;
     libusb_init(&ctx);
@@ -388,14 +388,14 @@ void MainBox::wait_msec(int msec)
     emit debug(QString("Прошло %1 msec").arg(msec));
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_list(void)
+void MainBox::s_list()
 {
     lock_this_button();
     f_list();
     unlock_this_button();
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_open(void)
+void MainBox::s_open()
 {
     emit trace(Q_FUNC_INFO);
     lock_this_button();
@@ -410,7 +410,7 @@ void MainBox::s_open(void)
     unlock_this_button();
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_info(void)
+void MainBox::s_info()
 {
     emit trace(Q_FUNC_INFO);
     lock_this_button();
@@ -419,7 +419,7 @@ void MainBox::s_info(void)
     unlock_this_button();
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_read(void)
+void MainBox::s_read()
 {
     emit trace(Q_FUNC_INFO);
     lock_this_button();
@@ -428,7 +428,7 @@ void MainBox::s_read(void)
     unlock_this_button();
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_write(void)
+void MainBox::s_write()
 {
     emit trace(Q_FUNC_INFO);
     lock_this_button();
@@ -437,7 +437,7 @@ void MainBox::s_write(void)
     unlock_this_button();
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_close(void)
+void MainBox::s_close()
 {
     emit trace(Q_FUNC_INFO);
     lock_this_button();
@@ -446,12 +446,12 @@ void MainBox::s_close(void)
     unlock_this_button();
 }
 //--------------------------------------------------------------------------------
-uint16_t MainBox::get_VID(void)
+uint16_t MainBox::get_VID()
 {
     return static_cast<uint16_t>(ui->sb_VID->value());
 }
 //--------------------------------------------------------------------------------
-uint16_t MainBox::get_PID(void)
+uint16_t MainBox::get_PID()
 {
     return static_cast<uint16_t>(ui->sb_PID->value());
 }

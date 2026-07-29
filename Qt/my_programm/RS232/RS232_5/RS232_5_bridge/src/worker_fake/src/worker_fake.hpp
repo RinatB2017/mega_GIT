@@ -38,23 +38,23 @@ signals:
     void trace(const QString &);
 
     void output(QByteArray text);
-    void readyRead(void);
+    void readyRead();
 
 public:
     explicit Worker_fake(QWidget *parent = nullptr);
     virtual ~Worker_fake();
 
     void input(QByteArray data);
-    void port_open(void);
-    void port_close(void);
+    void port_open();
+    void port_close();
 
 private:
     Ui::Worker_fake *ui;
 
-    void init(void);
+    void init();
 
-    void send_hex(void);
-    void send_text(void);
+    void send_hex();
+    void send_text();
 };
 //--------------------------------------------------------------------------------
 #endif // Worker_fake_HPP

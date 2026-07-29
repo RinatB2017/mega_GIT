@@ -48,30 +48,30 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
+    void choice_test();
 
-    bool test(void);
+    bool test();
 
-    bool f_open_database(void);
-    bool f_close_database(void);
+    bool f_open_database();
+    bool f_close_database();
 
-    bool f_create_all_tables(void);
-    bool f_create_inventory_table(void);
-    bool f_create_item_table(void);
-    bool f_drop_all_tables(void);
-    bool f_drop_inventory_table(void);
-    bool f_drop_item_table(void);
-    bool f_view_inventory_table(void);
-    bool f_view_item_table(void);
-    bool f_append_data_inventory(void);
-    bool f_append_data_item(void);
+    bool f_create_all_tables();
+    bool f_create_inventory_table();
+    bool f_create_item_table();
+    bool f_drop_all_tables();
+    bool f_drop_inventory_table();
+    bool f_drop_item_table();
+    bool f_view_inventory_table();
+    bool f_view_item_table();
+    bool f_append_data_inventory();
+    bool f_append_data_item();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } *cmd_t;
     QList<CMD> commands;
 
@@ -83,14 +83,14 @@ private:
     QPointer<QSqlQueryModel> model;
     QPointer<Database>  db;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

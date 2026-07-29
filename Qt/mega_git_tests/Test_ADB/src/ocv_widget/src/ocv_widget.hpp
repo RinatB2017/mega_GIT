@@ -55,7 +55,7 @@ public slots:
     void get_pixmap(QPixmap pixmap);
 
 private slots:
-    void refreshHSV(void);
+    void refreshHSV();
 
 private:
     Ui::OCV_widget *ui;
@@ -63,14 +63,14 @@ private:
     Mat mOrigImage;
     QImage image;
 
-    void init(void);
+    void init();
 
-    void onLoad(void);
+    void onLoad();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

@@ -33,7 +33,7 @@ MainBox::~MainBox()
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
 #ifdef QT_DEBUG
     createTestBar();
@@ -47,7 +47,7 @@ void MainBox::init(void)
             this,   &MainBox::show_qml);
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -60,7 +60,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -74,7 +74,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -112,7 +112,7 @@ void MainBox::createTestBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::add_menu(void)
+void MainBox::add_menu()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -155,7 +155,7 @@ void MainBox::add_menu(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::new_qml(void)
+void MainBox::new_qml()
 {
     if(QFile::copy(":/qml/default.qml", filename) == false)
     {
@@ -163,7 +163,7 @@ void MainBox::new_qml(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_qml(void)
+void MainBox::load_qml()
 {
     MyFileDialog *dlg = new MyFileDialog("qml_options");
     dlg->setNameFilter("QML files (*.qml)");
@@ -188,7 +188,7 @@ void MainBox::load_qml(void)
     delete dlg;
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_qml(void)
+void MainBox::save_qml()
 {
     QFile file(filename);
     if(file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -198,7 +198,7 @@ void MainBox::save_qml(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_qml_as(void)
+void MainBox::save_qml_as()
 {
     MyFileDialog *dlg = new MyFileDialog("qml_options");
     dlg->setNameFilter("QML files (*.qml)");
@@ -225,7 +225,7 @@ void MainBox::save_qml_as(void)
     delete dlg;
 }
 //--------------------------------------------------------------------------------
-void MainBox::show_qml(void)
+void MainBox::show_qml()
 {
     QString qml_text = get_qml_text();
     if(qml_text.isEmpty())
@@ -246,23 +246,23 @@ void MainBox::show_qml(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

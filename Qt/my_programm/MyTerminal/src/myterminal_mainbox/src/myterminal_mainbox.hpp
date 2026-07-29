@@ -50,15 +50,15 @@ signals:
     void send(const QByteArray&);
 
 private slots:
-    void choice_test(void);
-    bool test(void);
-    bool show_terminal(void);
+    void choice_test();
+    bool test();
+    bool show_terminal();
 
     void read_data(QByteArray ba);
-    void send_command(void);
+    void send_command();
 
     void popup(QPoint);
-    void clear(void);
+    void clear();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -68,16 +68,16 @@ private:
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
 
-    void init_serial(void);
+    void init_serial();
 
     QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
     void parseEscapeSequence(int attribute,
                              QListIterator< QString > & i,
@@ -86,10 +86,10 @@ private:
     void setTextTermFormatting(QTextEdit * textEdit,
                                QString const & text);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

@@ -54,12 +54,12 @@ signals:
     void get_data(const QByteArray &);
 
 private slots:
-    void port_read(void);
+    void port_read();
     void port_error(QSerialPort::SerialPortError serial_error);
 
-    void refresh(void);
-    bool open(void);
-    void close(void);
+    void refresh();
+    bool open();
+    void close();
 
 private:
     QSerialPort *serial;
@@ -75,13 +75,13 @@ private:
     QToolButton *btn_start;
     QToolButton *btn_stop;
 
-    void init(void);
-    bool processing(void);
+    void init();
+    bool processing();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MODBUSASCIIWIDGET_HPP

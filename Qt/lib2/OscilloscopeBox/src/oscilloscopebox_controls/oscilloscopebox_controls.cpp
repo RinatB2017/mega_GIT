@@ -33,7 +33,7 @@ Oscilloscopebox_controls::~Oscilloscopebox_controls()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Oscilloscopebox_controls::init(void)
+void Oscilloscopebox_controls::init()
 {
     ui->setupUi(this);
 }
@@ -97,12 +97,12 @@ void Oscilloscopebox_controls::check_buttons(bool state)
     }
 }
 //--------------------------------------------------------------------------------
-int Oscilloscopebox_controls::get_active_index(void)
+int Oscilloscopebox_controls::get_active_index()
 {
     return current_index;
 }
 //--------------------------------------------------------------------------------
-void Oscilloscopebox_controls::click_color(void)
+void Oscilloscopebox_controls::click_color()
 {
     QToolButton *btn = dynamic_cast<QToolButton *>(sender());
     if(btn == nullptr)

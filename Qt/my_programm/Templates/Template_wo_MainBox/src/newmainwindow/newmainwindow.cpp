@@ -69,7 +69,7 @@ QToolButton *NewMainWindow::add_button(QToolBar *tool_bar,
     return tool_button;
 }
 //--------------------------------------------------------------------------------
-void NewMainWindow::create_test_bar(void)
+void NewMainWindow::create_test_bar()
 {
     commands.clear(); int id = 0;
     commands.append({ id++, "test", &NewMainWindow::test });
@@ -104,7 +104,7 @@ void NewMainWindow::create_test_bar(void)
     //testbar->setFixedWidth(toolBar->sizeHint().width());
 }
 //--------------------------------------------------------------------------------
-void NewMainWindow::choice_test(void)
+void NewMainWindow::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -119,7 +119,7 @@ void NewMainWindow::choice_test(void)
     );
     if (cmd_it != commands.end())
     {
-        typedef bool (NewMainWindow::*function)(void);
+        typedef bool (NewMainWindow::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -133,13 +133,13 @@ void NewMainWindow::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool NewMainWindow::test(void)
+bool NewMainWindow::test()
 {
     emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------
-void NewMainWindow::push(void)
+void NewMainWindow::push()
 {
     emit info("push");
 }

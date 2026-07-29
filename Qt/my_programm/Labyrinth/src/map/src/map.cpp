@@ -40,7 +40,7 @@ Map::~Map()
 
 }
 //--------------------------------------------------------------------------------
-void Map::init(void)
+void Map::init()
 {
     createTimer();
 
@@ -53,13 +53,13 @@ void Map::init(void)
     setSizePolicy(QSizePolicy::Fixed,   QSizePolicy::Fixed);
 }
 //--------------------------------------------------------------------------------
-void Map::createTimer(void)
+void Map::createTimer()
 {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
 }
 //--------------------------------------------------------------------------------
-void Map::init_id_map(void)
+void Map::init_id_map()
 {
     for(int y=0; y<MAX_HEIGHT; y++)
     {
@@ -413,7 +413,7 @@ bool Map::start(int interval_ms)
     return true;
 }
 //--------------------------------------------------------------------------------
-void Map::update(void)
+void Map::update()
 {
 #if 0
     int x = rand() % 100;
@@ -456,28 +456,28 @@ void Map::update(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Map::stop(void)
+void Map::stop()
 {
     timer->stop();
     unsetCursor();
 }
 //--------------------------------------------------------------------------------
-void Map::refresh(void)
+void Map::refresh()
 {
     emit info("refresh");
 }
 //--------------------------------------------------------------------------------
-int Map::rowCount(void)
+int Map::rowCount()
 {
     return max_y;
 }
 //--------------------------------------------------------------------------------
-int Map::columnCount(void)
+int Map::columnCount()
 {
     return max_x;
 }
 //--------------------------------------------------------------------------------
-void Map::check_victory(void)
+void Map::check_victory()
 {
     QString temp = QString("Цель достигнута! (%1)").arg(cnt_move);
     emit info(temp);
@@ -485,7 +485,7 @@ void Map::check_victory(void)
     emit victory();
 }
 //--------------------------------------------------------------------------------
-void Map::player_move_up(void)
+void Map::player_move_up()
 {
     int id_victory = get_id(player_x, player_y-1);
     if(id_victory == EXIT_ID)
@@ -520,7 +520,7 @@ void Map::player_move_up(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Map::player_move_down(void)
+void Map::player_move_down()
 {
     int id_victory = get_id(player_x, player_y+1);
     if(id_victory == EXIT_ID)
@@ -555,7 +555,7 @@ void Map::player_move_down(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Map::player_move_left(void)
+void Map::player_move_left()
 {
     int id_victory = get_id(player_x-1, player_y);
     if(id_victory == EXIT_ID)
@@ -590,7 +590,7 @@ void Map::player_move_left(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Map::player_move_right(void)
+void Map::player_move_right()
 {
     int id_victory = get_id(player_x+1, player_y);
     if(id_victory == EXIT_ID)
@@ -647,7 +647,7 @@ bool Map::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 //--------------------------------------------------------------------------------
-void Map::set_cursor(void)
+void Map::set_cursor()
 {
     QToolButton *btn = dynamic_cast<QToolButton*>(sender());
     if(!btn)
@@ -679,7 +679,7 @@ QPixmap Map::rotate(const QString &filename, int angle)
     return shipPixels;
 }
 //--------------------------------------------------------------------------------
-void Map::remove_player(void)
+void Map::remove_player()
 {
     for(int y=0; y<rowCount(); y++)
     {
@@ -715,7 +715,7 @@ bool Map::set_player(int pos_x, int pos_y)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool Map::set_begin_player(void)
+bool Map::set_begin_player()
 {
     emit debug(QString("begin_player_x %1").arg(begin_player_x));
     emit debug(QString("begin_player_y %1").arg(begin_player_y));
@@ -729,22 +729,22 @@ bool Map::set_begin_player(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void Map::updateText(void)
+void Map::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool Map::programm_is_exit(void)
+bool Map::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Map::load_setting(void)
+void Map::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Map::save_setting(void)
+void Map::save_setting()
 {
 
 }

@@ -125,7 +125,7 @@ void SelectBox::show_picture(const QString &picture_name)
     current_picture = filename;
 }
 //--------------------------------------------------------------------------------
-QString SelectBox::selected_pictures(void)
+QString SelectBox::selected_pictures()
 {
     return current_picture;
 }

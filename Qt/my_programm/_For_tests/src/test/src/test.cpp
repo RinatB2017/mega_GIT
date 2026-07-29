@@ -31,7 +31,7 @@ Test::Test()
     QVERIFY(mb);
 }
 //--------------------------------------------------------------------------------
-void Test::test_GUI(void)
+void Test::test_GUI()
 {
     QTimer::singleShot(0, [this]{
         QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
@@ -46,7 +46,7 @@ void Test::test_GUI(void)
     });
 }
 //--------------------------------------------------------------------------------
-void Test::test_signals(void)
+void Test::test_signals()
 {
     QTimer::singleShot(0, [this]{
         QSignalSpy spy_info(mb,  SIGNAL(info(const QString &)));

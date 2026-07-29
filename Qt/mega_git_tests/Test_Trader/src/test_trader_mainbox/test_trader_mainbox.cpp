@@ -74,7 +74,7 @@ QVector<QPointF> MainBox::circle(float x, float y, float r)
     return vector1;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -112,7 +112,7 @@ void MainBox::init(void)
     setLayout(hbox);
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_plot_currency(void)
+void MainBox::create_plot_currency()
 {
     QStringList sl_currency;
     sl_currency << "EURUSD"
@@ -186,7 +186,7 @@ void MainBox::create_plot_currency(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -217,7 +217,7 @@ void MainBox::createTestBar(void)
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::load(void)
+void MainBox::load()
 {
 #if 0
     //QString filename = "011109.txt";
@@ -324,12 +324,12 @@ void MainBox::load(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::save(void)
+void MainBox::save()
 {
     emit info("save");
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
 #if 1
     Plot *d_plot = new Plot("EURUSD");
@@ -365,18 +365,18 @@ void MainBox::test(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::started(void)
+void MainBox::started()
 {
     emit trace(Q_FUNC_INFO);
     emit info("Starting...");
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_data(void)
+void MainBox::read_data()
 {
     emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_error(void)
+void MainBox::read_error()
 {
     emit trace(Q_FUNC_INFO);
 }
@@ -401,22 +401,22 @@ void MainBox::process_error(QProcess::ProcessError err)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

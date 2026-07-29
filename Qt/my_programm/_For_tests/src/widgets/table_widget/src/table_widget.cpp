@@ -33,7 +33,7 @@ Table_widget::~Table_widget()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Table_widget::init(void)
+void Table_widget::init()
 {
     ui->setupUi(this);
 

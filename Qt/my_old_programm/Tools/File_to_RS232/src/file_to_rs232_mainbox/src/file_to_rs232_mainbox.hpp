@@ -41,27 +41,27 @@ signals:
     void send_data(const QString &);
 
 private slots:
-    void tick(void);
+    void tick();
     void change_timer_interval(double value);
     void power_timer(bool state);
 
-    void load_data(void);
+    void load_data();
 
 private:
     Ui::MainBox *ui;
     QTimer *timer = nullptr;
     int index = 0;
 
-    void init(void);
-    void createSerial(void);
-    void createTimer(void);
+    void init();
+    void createSerial();
+    void createTimer();
 
     void load_file(const QString &filename);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

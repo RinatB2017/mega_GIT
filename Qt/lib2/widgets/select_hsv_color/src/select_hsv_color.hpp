@@ -38,20 +38,20 @@ public:
     virtual ~Select_HSV_color();
 
     void set_color(QColor color);
-    QColor get_color(void);
+    QColor get_color();
 
 private:
     Ui::Select_HSV_color *ui;
 
-    void init(void);
-    void update_color_RGB(void);
-    void update_color_HSV(void);
-    void update_image(void);
+    void init();
+    void update_color_RGB();
+    void update_color_HSV();
+    void update_image();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
     void show_H(int value);
     void show_S(int value);

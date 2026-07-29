@@ -47,8 +47,8 @@ public:
                                       QBrush rect_brush = QBrush(Qt::NoBrush));
     void add_background(QString filename);
 
-    void start(void);
-    void stop(void);
+    void start();
+    void stop();
 
     qreal min_x = 0;
     qreal max_x = 0;
@@ -64,13 +64,13 @@ public:
     bool flag_right = false;
 
 public slots:
-    virtual void update(void) = 0;
+    virtual void update() = 0;
 
 private:
     QTimer *timer = nullptr;
     QGraphicsPixmapItem *background = nullptr;
 
-    void create_timer(void);
+    void create_timer();
 
 protected:
     void keyPressEvent(QKeyEvent *event);

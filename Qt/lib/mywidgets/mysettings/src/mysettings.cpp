@@ -45,7 +45,7 @@ MySettings::~MySettings()
     }
 }
 //--------------------------------------------------------------------------------
-void MySettings::init(void)
+void MySettings::init()
 {
 #ifdef QT_DEBUG
     QString app_name = QString("%1(debug)").arg(APPNAME);
@@ -459,7 +459,7 @@ void MySettings::beginGroup(const QString &prefix)
     settings->beginGroup(prefix);
 }
 //--------------------------------------------------------------------------------
-void MySettings::endGroup(void)
+void MySettings::endGroup()
 {
     Q_ASSERT(settings);
     settings->endGroup();
@@ -477,7 +477,7 @@ int MySettings::beginReadArray(const QString &prefix)
     return settings->beginReadArray(prefix);
 }
 //--------------------------------------------------------------------------------
-void MySettings::endArray(void)
+void MySettings::endArray()
 {
     Q_ASSERT(settings);
     settings->endArray();
@@ -536,7 +536,7 @@ bool MySettings::compare_name(const char *widget_name, QString class_name)
     return (res == 0);
 }
 //--------------------------------------------------------------------------------
-void MySettings::clear_all(void)
+void MySettings::clear_all()
 {
     Q_ASSERT(settings);
     settings->clear();

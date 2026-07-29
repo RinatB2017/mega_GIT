@@ -52,11 +52,11 @@ public slots:
     bool f_tap(int pos_x, int pos_y);
 
 private slots:
-    void started(void);
+    void started();
     void finished(int result);
     void process_error(QProcess::ProcessError p_error);
 
-    void readData(void);
+    void readData();
 
 private:
     Ui::ADB_widget *ui;
@@ -77,39 +77,39 @@ private:
 
     QPointer<TCP_Server> server;
 
-    void init(void);
-    void create_process(void);
+    void init();
+    void create_process();
 
     void run_program(const QString &program,
                      const QStringList &arguments);
     bool test_run(const QStringList &arguments);
 
-    bool f_devices(void);
-    void f_create_screenshot(void);
-    bool f_get_screeshot(void);
-    bool f_get_file_screeshot(void);
-    void f_screen_tap(void);
+    bool f_devices();
+    void f_create_screenshot();
+    bool f_get_screeshot();
+    bool f_get_file_screeshot();
+    void f_screen_tap();
 
     bool f_swipe(int x1, int y1, int x2, int y2, int delay);
-    bool f_test_swipe_LR(void);
-    bool f_test_swipe_RL(void);
-    bool f_test_swipe_UD(void);
-    bool f_test_swipe_DU(void);
+    bool f_test_swipe_LR();
+    bool f_test_swipe_RL();
+    bool f_test_swipe_UD();
+    bool f_test_swipe_DU();
 
-    bool f_adb(void);
-    bool f_test(void);
+    bool f_adb();
+    bool f_test();
 
-    void f_start(void);
-    void f_stop(void);
+    void f_start();
+    void f_stop();
 
-    void f_1(void);
-    void f_2(void);
-    void f_3(void);
-    void f_4(void);
+    void f_1();
+    void f_2();
+    void f_3();
+    void f_4();
 
     void f_get_data(const QByteArray &data);
 
-    void run_cmd(void);
+    void run_cmd();
 
     void f_auto_shot(bool state);
 
@@ -118,10 +118,10 @@ private:
     bool copy_file(const QString &src_filename,
                    const QString &dst_filename);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // ADB_WIDGET_HPP

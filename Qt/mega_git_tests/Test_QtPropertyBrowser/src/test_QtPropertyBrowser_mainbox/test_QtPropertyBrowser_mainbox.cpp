@@ -60,7 +60,7 @@ void MainBox::add_property(QtVariantPropertyManager *variantManager,
     (*l_property).append(d_property);
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -127,7 +127,7 @@ void MainBox::init(void)
     setFixedWidth(sizeHint().width());
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -164,7 +164,7 @@ void MainBox::createTestBar(void)
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
@@ -176,7 +176,7 @@ void MainBox::choice_test(void)
     );
     if (cmd_it != commands.end())
     {
-        typedef void (MainBox::*function)(void);
+        typedef void (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -190,7 +190,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_0(void)
+void MainBox::test_0()
 {
     emit info("Test_0()");
 
@@ -207,7 +207,7 @@ void MainBox::test_0(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_1(void)
+void MainBox::test_1()
 {
     emit info("Test_1()");
 
@@ -224,7 +224,7 @@ void MainBox::test_1(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_2(void)
+void MainBox::test_2()
 {
     emit info("Test_2()");
 
@@ -241,7 +241,7 @@ void MainBox::test_2(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_3(void)
+void MainBox::test_3()
 {
     emit info("Test_3()");
 
@@ -253,7 +253,7 @@ void MainBox::test_3(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_4(void)
+void MainBox::test_4()
 {
     emit info("Test_4()");
 
@@ -265,7 +265,7 @@ void MainBox::test_4(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_5(void)
+void MainBox::test_5()
 {
     emit info("Test_5()");
 
@@ -277,22 +277,22 @@ void MainBox::test_5(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

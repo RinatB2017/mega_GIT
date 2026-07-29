@@ -43,28 +43,28 @@ public:
     virtual ~MainBox();
 
 public slots:
-    bool test(void);
+    bool test();
 
 private slots:
-    void choice_test(void);
+    void choice_test();
 
-    void read_data(void);
-    void read_error(void);
+    void read_data();
+    void read_error();
 
-    void started(void);
+    void started();
     void finished(int result, QProcess::ExitStatus exitStatus);
 
     void process_error(QProcess::ProcessError p_error);
 
-    void run(void);
-    void run_upsdrvctl(void);
+    void run();
+    void run_upsdrvctl();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
     typedef struct DATA
     {
@@ -85,23 +85,23 @@ private:
     QProcess *process = nullptr;
     QPointer<QTimer> timer;
 
-    void init(void);
-    void init_display_data(void);
-    void init_grapher(void);
-    void init_timer(void);
-    void createTestBar(void);
+    void init();
+    void init_display_data();
+    void init_grapher();
+    void init_timer();
+    void createTestBar();
 
-    void prepare_QProcess(void);
+    void prepare_QProcess();
     void show_data(const QString &line);
 
-    void t_start(void);
-    void t_stop(void);
-    void t_update(void);
+    void t_start();
+    void t_stop();
+    void t_update();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

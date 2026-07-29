@@ -49,19 +49,19 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
-    bool test(void);
+    void choice_test();
+    bool test();
 
-    void start(void);
-    void stop(void);
-    void update(void);
+    void start();
+    void stop();
+    void update();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
 
     QPointer<MySplashScreen> splash;
@@ -74,14 +74,14 @@ private:
     //Scene2 *scene;
     Scene3 *scene;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     bool eventFilter(QObject*, QEvent* event);

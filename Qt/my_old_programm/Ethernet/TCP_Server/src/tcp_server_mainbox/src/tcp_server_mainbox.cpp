@@ -44,7 +44,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -59,7 +59,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_connect(void)
+void MainBox::f_connect()
 {
     if(server)
     {
@@ -82,7 +82,7 @@ void MainBox::f_connect(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_disconnect(void)
+void MainBox::f_disconnect()
 {
     emit trace(Q_FUNC_INFO);
     if(server)
@@ -97,22 +97,22 @@ void MainBox::f_get_data(const QByteArray &data)
     emit debug(data.toHex().toUpper());
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

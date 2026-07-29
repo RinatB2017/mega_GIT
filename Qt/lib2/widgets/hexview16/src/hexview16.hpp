@@ -49,7 +49,7 @@ private:
     uint16_t buf[MAX_ROW*MAX_COL + 1] = { 0 };
     QStandardItem *items[MAX_ROW*MAX_COL + 1] = { nullptr };
 
-    void init(void);
+    void init();
 };
 //--------------------------------------------------------------------------------
 #endif // HEXVIEW16_HPP

@@ -75,7 +75,7 @@ private:
     int center_y = 0;
     qreal angle = 0.0;
 
-    void update_widget(void)
+    void update_widget()
     {
         if(angle < 360.0)
             angle++;

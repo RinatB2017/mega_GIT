@@ -31,13 +31,13 @@ MyListWidget::~MyListWidget()
 
 }
 //--------------------------------------------------------------------------------
-void MyListWidget::init(void)
+void MyListWidget::init()
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this,   &QListWidget::customContextMenuRequested,   this,   &MyListWidget::popup);
 }
 //--------------------------------------------------------------------------------
-void MyListWidget::delete_item(void)
+void MyListWidget::delete_item()
 {
     QList<QListWidgetItem*> items = selectedItems();
     foreach(QListWidgetItem* item, items)

@@ -27,8 +27,8 @@
 class BaseItem : public QGraphicsPixmapItem
 {
 public:
-    BaseItem(void);
-    void move(void);
+    BaseItem();
+    void move();
     void setPos(qreal ax, qreal ay);
     void setPixmap(const QPixmap &pixmap);
 

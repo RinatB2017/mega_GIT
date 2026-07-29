@@ -49,12 +49,12 @@ signals:
     void send(const QByteArray&);
 
 private slots:
-    bool test(void);
+    bool test();
     void read_data(QByteArray ba);
 
-    void send_command_SIM800(void);
-    void send_command_SIM900(void);
-    void send_command_SL6087(void);
+    void send_command_SIM800();
+    void send_command_SIM900();
+    void send_command_SL6087();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -64,18 +64,18 @@ private:
     QList<CMD> sl_commands_SIM900;
     QList<CMD> sl_commands_SL6087;
 
-    void init(void);
-    void init_widgets(void);
-    void createTestBar(void);
+    void init();
+    void init_widgets();
+    void createTestBar();
     void lock_widgets(bool state);
 
     template<typename T, typename T2>
     void template_command(T w, T2 sl);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

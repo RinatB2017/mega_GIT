@@ -34,7 +34,7 @@ Bin_widget::~Bin_widget()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Bin_widget::init(void)
+void Bin_widget::init()
 {
     ui->setupUi(this);
 
@@ -72,13 +72,13 @@ void Bin_widget::init(void)
     load_setting();
 }
 //--------------------------------------------------------------------------------
-void Bin_widget::init_timer(void)
+void Bin_widget::init_timer()
 {
     timer = new QTimer();
     connect(timer,  &QTimer::timeout,   this,   &Bin_widget::f_update);
 }
 //--------------------------------------------------------------------------------
-void Bin_widget::append(void)
+void Bin_widget::append()
 {
     bool ok = false;
     QString text = QInputDialog::getText(this,
@@ -93,7 +93,7 @@ void Bin_widget::append(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Bin_widget::remove(void)
+void Bin_widget::remove()
 {
     int res = messagebox_question("Удаление команды", "Вы уверены, что хотите удалить вбранную команду?");
     if(res == QMessageBox::Yes)
@@ -102,7 +102,7 @@ void Bin_widget::remove(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Bin_widget::edit(void)
+void Bin_widget::edit()
 {
     bool ok = false;
     QString text = QInputDialog::getText(this,
@@ -117,7 +117,7 @@ void Bin_widget::edit(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Bin_widget::run(void)
+void Bin_widget::run()
 {
     QListWidgetItem *item = ui->listWidget->currentItem();
     if(!item)
@@ -144,7 +144,7 @@ void Bin_widget::run(void)
     emit send_command(output_data);
 }
 //--------------------------------------------------------------------------------
-void Bin_widget::up(void)
+void Bin_widget::up()
 {
     int curr_row = ui->listWidget->currentRow();
     if(curr_row > 0)
@@ -155,7 +155,7 @@ void Bin_widget::up(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Bin_widget::down(void)
+void Bin_widget::down()
 {
     int curr_row = ui->listWidget->currentRow();
     if(curr_row < ui->listWidget->count() - 1)
@@ -166,7 +166,7 @@ void Bin_widget::down(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Bin_widget::f_start(void)
+void Bin_widget::f_start()
 {
     ui->btn_start->setEnabled(false);
     ui->btn_stop->setEnabled(true);
@@ -185,7 +185,7 @@ void Bin_widget::f_start(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Bin_widget::f_stop(void)
+void Bin_widget::f_stop()
 {
     ui->btn_start->setEnabled(true);
     ui->btn_stop->setEnabled(false);
@@ -204,12 +204,12 @@ void Bin_widget::f_stop(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Bin_widget::f_update(void)
+void Bin_widget::f_update()
 {
     run();
 }
 //--------------------------------------------------------------------------------
-void Bin_widget::load_setting(void)
+void Bin_widget::load_setting()
 {
     QStringList sl = load_stringlist(P_BIN_WIDGET);
     foreach (QString text, sl)
@@ -226,7 +226,7 @@ void Bin_widget::load_setting(void)
     restoreGeometry(load_value(P_BIN_WIDGET_GEOMETRY).toByteArray());
 }
 //--------------------------------------------------------------------------------
-void Bin_widget::save_setting(void)
+void Bin_widget::save_setting()
 {
     QStringList sl;
     for(int i=0; i<ui->listWidget->count(); i++)

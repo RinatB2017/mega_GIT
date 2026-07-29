@@ -149,7 +149,7 @@ bool HistogramBox::get_histogram_data(int channel,
     return true;
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::remove_all_histogram(void)
+void HistogramBox::remove_all_histogram()
 {
     while(histograms.size())
     {
@@ -158,7 +158,7 @@ void HistogramBox::remove_all_histogram(void)
     }
 }
 //--------------------------------------------------------------------------------
-int HistogramBox::get_histograms_count(void)
+int HistogramBox::get_histograms_count()
 {
     return histograms.count();
 }
@@ -231,7 +231,7 @@ void HistogramBox::show_histogram(QwtPlotItem *item, bool on)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::create_widgets(void)
+void HistogramBox::create_widgets()
 {
     QwtPlotGrid *grid = new QwtPlotGrid();
 
@@ -310,7 +310,7 @@ void HistogramBox::popup(QPoint)
     popup_menu->exec(QCursor::pos());
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::slot_setting_action(void)
+void HistogramBox::slot_setting_action()
 {
     HistogramSettings *dlg = new HistogramSettings(histograms, d_picker, this);
     int button = dlg->exec();
@@ -352,7 +352,7 @@ void HistogramBox::legend_checked(const QVariant &itemInfo, bool on)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::clear(void)
+void HistogramBox::clear()
 {
     int button = QMessageBox::question(this,
                                        tr("Очищение гистограм"),
@@ -368,7 +368,7 @@ void HistogramBox::clear(void)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::reset(void)
+void HistogramBox::reset()
 {
     int button = QMessageBox::question(this,
                                        tr("Удаление гистограм"),
@@ -458,7 +458,7 @@ bool HistogramBox::add_histogram_data(int index_histogram,
     return true;
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::updateGraphics(void)
+void HistogramBox::updateGraphics()
 {
     ui->qwtPlot->replot();
 }
@@ -473,22 +473,22 @@ void HistogramBox::updateText()
     }
 }
 //--------------------------------------------------------------------------------
-bool HistogramBox::programm_is_exit(void)
+bool HistogramBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::load_setting(void)
+void HistogramBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::save_setting(void)
+void HistogramBox::save_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::options(void)
+void HistogramBox::options()
 {
     //qDebug() << axis_X_min << axis_X_max << axis_Y_min << axis_Y_max;
     Histogram_Options *dlg = new Histogram_Options(axis_X_min,
@@ -504,7 +504,7 @@ void HistogramBox::options(void)
     }
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::load_histograms(void)
+void HistogramBox::load_histograms()
 {
     QFileDialog *dlg;
 
@@ -554,7 +554,7 @@ void HistogramBox::load_histograms(void)
     }
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::save_histograms(void)
+void HistogramBox::save_histograms()
 {
     if(histograms.isEmpty())
     {
@@ -674,7 +674,7 @@ void HistogramBox::tune_horizontal_axis(bool state)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::statistic(void)
+void HistogramBox::statistic()
 {
     emit info(tr("Статистика:"));
     for(int n=0; n<histograms.count(); n++)
@@ -734,13 +734,13 @@ void HistogramBox::push_btn_Vertical(bool state)
     tune_vertical_axis(state);
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::test(void)
+void HistogramBox::test()
 {
     //test_draw_circle();
     test_get_info();
 }
 //--------------------------------------------------------------------------------
-void HistogramBox::test_get_info(void)
+void HistogramBox::test_get_info()
 {
     //QwtPlotCanvas *canvas = new QwtPlotCanvas();
     //canvas->setFrameStyle(QFrame::Box | QFrame::Plain);

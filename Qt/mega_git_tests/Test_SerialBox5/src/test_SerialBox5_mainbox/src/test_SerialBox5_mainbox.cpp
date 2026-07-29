@@ -44,7 +44,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -56,7 +56,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_serial_widgets(void)
+void MainBox::init_serial_widgets()
 {
     ui->serial_widget->set_caption("RS-232");
 
@@ -87,12 +87,12 @@ void MainBox::init_serial_widgets(void)
     connect(ui->btn_sb_wo_form, &QToolButton::toggled,  this,   &MainBox::test_open);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_only(void)
+void MainBox::test_only()
 {
     messagebox_info("Info", "test_only");
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -121,7 +121,7 @@ void MainBox::serial_data(QByteArray data)
     emit info(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     emit info("test");
 }
@@ -139,7 +139,7 @@ void MainBox::test_open(bool state)
         ui->btn_sb_wo_form->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_send(void)
+void MainBox::test_send()
 {
     if(ui->serial_widget_wo_form->isOpen())
     {
@@ -148,22 +148,22 @@ void MainBox::test_send(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

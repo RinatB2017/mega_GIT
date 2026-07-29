@@ -44,7 +44,7 @@ AutoClicker::~AutoClicker()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void AutoClicker::init(void)
+void AutoClicker::init()
 {
     timer_autoclick = new QTimer(this);
     connect(timer_autoclick,    &QTimer::timeout,   this,   &AutoClicker::update);
@@ -80,20 +80,20 @@ void AutoClicker::init(void)
     connect(ui->btn_test,   &QPushButton::clicked,  this,   &AutoClicker::test);
 }
 //--------------------------------------------------------------------------------
-void AutoClicker::timer_start(void)
+void AutoClicker::timer_start()
 {
     timer_autoclick->start(1000);
     ui->lv_command->setDisabled(true);
 }
 //--------------------------------------------------------------------------------
-void AutoClicker::timer_stop(void)
+void AutoClicker::timer_stop()
 {
     timer_autoclick->stop();
     current_state = STATE_IDLE;
     ui->lv_command->setEnabled(true);
 }
 //--------------------------------------------------------------------------------
-void AutoClicker::test(void)
+void AutoClicker::test()
 {
     emit info("TEST");
     emit debug(QString("rowCount = %1").arg(ui->lv_command->model()->rowCount()));
@@ -108,7 +108,7 @@ void AutoClicker::test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void AutoClicker::update(void)
+void AutoClicker::update()
 {
     QModelIndex cur = ui->lv_command->model()->index(current_command, 0);
     ui->lv_command->setCurrentIndex(cur);
@@ -125,7 +125,7 @@ void AutoClicker::update(void)
     }
 }
 //--------------------------------------------------------------------------------
-void AutoClicker::load(void)
+void AutoClicker::load()
 {
     MyFileDialog *dlg = new MyFileDialog("autoclicker_commands");
     dlg->setNameFilter("TXT files (*.txt)");
@@ -141,7 +141,7 @@ void AutoClicker::load(void)
     }
 }
 //--------------------------------------------------------------------------------
-void AutoClicker::save(void)
+void AutoClicker::save()
 {
     MyFileDialog *dlg = new MyFileDialog("autoclicker_commands");
     dlg->setNameFilter("TXT files (*.txt)");
@@ -210,7 +210,7 @@ bool AutoClicker::save_to_file(const QString &filename)
     return true;
 }
 //--------------------------------------------------------------------------------
-void AutoClicker::append(void)
+void AutoClicker::append()
 {
     bool ok;
     QString text = QInputDialog::getText(this,
@@ -233,7 +233,7 @@ void AutoClicker::append(void)
     }
 }
 //--------------------------------------------------------------------------------
-void AutoClicker::clear(void)
+void AutoClicker::clear()
 {
     int btn = messagebox_question("Question", "Clear all commands?");
     if(btn == QMessageBox::Yes)
@@ -263,7 +263,7 @@ bool AutoClicker::test_command(const QString &command_str)
     return false;
 }
 //--------------------------------------------------------------------------------
-bool AutoClicker::test_commands(void)
+bool AutoClicker::test_commands()
 {
     if(ui->lv_command->model()->rowCount() <= 0)
     {
@@ -302,22 +302,22 @@ void AutoClicker::run_command(const QString &data)
     emit error(cmd);
 }
 //--------------------------------------------------------------------------------
-void AutoClicker::updateText(void)
+void AutoClicker::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool AutoClicker::programm_is_exit(void)
+bool AutoClicker::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void AutoClicker::load_setting(void)
+void AutoClicker::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void AutoClicker::save_setting(void)
+void AutoClicker::save_setting()
 {
 
 }

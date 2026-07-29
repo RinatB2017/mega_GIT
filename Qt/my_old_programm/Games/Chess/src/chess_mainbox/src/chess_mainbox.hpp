@@ -44,19 +44,19 @@ public:
     virtual ~MainBox();
 
 signals:
-    void invalide_move(void);
+    void invalide_move();
 
 private slots:
-    void test(void);
-    void run(void);
-//    void x1(void);
-//    void x2(void);
-    void reverse_chessboard(void);
-    void readData(void);
-    void readError(void);
-    void new_game(void);
+    void test();
+    void run();
+//    void x1();
+//    void x2();
+    void reverse_chessboard();
+    void readData();
+    void readError();
+    void new_game();
 
-    void restore_move(void);
+    void restore_move();
     void move(QString text);
 
 private:
@@ -68,7 +68,7 @@ private:
     Q_PID m_pid;
 #endif
 
-    void init(void);
+    void init();
 
     QPointer<QLineEdit>     le_chess;
     QPointer<QComboBox>     cb_test;
@@ -86,15 +86,15 @@ private:
 
     bool analize(const QString &line);
 
-    void createChessBar(void);
-    void createTestBar(void);
-    void create_chessboard(void);
-    void create_engine(void);
+    void createChessBar();
+    void createTestBar();
+    void create_chessboard();
+    void create_engine();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

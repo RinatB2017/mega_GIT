@@ -43,20 +43,20 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
-    void test_0(void);
-    void test_1(void);
-    void test_2(void);
-    void test_3(void);
-    void test_4(void);
-    void test_5(void);
+    void choice_test();
+    void test_0();
+    void test_1();
+    void test_2();
+    void test_3();
+    void test_4();
+    void test_5();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        void (MainBox::*func)(void);
+        void (MainBox::*func)();
     } CMD_t;
 
     QPointer<MySplashScreen> splash;
@@ -70,10 +70,10 @@ private:
 
     QCA::SecureArray crypt_data;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
-    bool generate_keys(void);
+    bool generate_keys();
     bool load_private_file(QString filename, QCA::SecureArray passPhrase);
     bool load_public_file(QString filename);
     bool save_private_file(QString filename, QCA::SecureArray passPhrase);
@@ -81,10 +81,10 @@ private:
     bool crypt(QCA::SecureArray data, QCA::SecureArray &result);
     bool decrypt(QCA::SecureArray data, QByteArray *result);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

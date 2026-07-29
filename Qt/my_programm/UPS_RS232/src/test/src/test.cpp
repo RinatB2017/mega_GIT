@@ -38,7 +38,7 @@ Test::Test()
     QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
-void Test::check_serial(void)
+void Test::check_serial()
 {
     SerialBox5_fix_baudrate *sb1 = mw->findChild<SerialBox5_fix_baudrate *>("RS232_5");
     QVERIFY(sb1);

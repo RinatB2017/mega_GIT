@@ -57,7 +57,7 @@ class Param
 {
 public:
     void set(const T& Element) { value = Element; }
-    T get(void) { return value; }
+    T get() { return value; }
 
 private:
     T value;
@@ -95,13 +95,13 @@ public:
     explicit MyWidget(QWidget *parent = nullptr);
     virtual ~MyWidget();
 
-    void init_w_lists(void);
+    void init_w_lists();
     void add_widget_to_w_lists(QWidget *widget);
-    void lock_interface(void);
-    void unlock_interface(void);
+    void lock_interface();
+    void unlock_interface();
 
-    void lock_this_button(void);
-    void unlock_this_button(void);
+    void lock_this_button();
+    void unlock_this_button();
 
     void block_this_button(bool state);
     void block_widget(const QString &name,
@@ -119,12 +119,12 @@ public:
                           QString name,
                           QVariant default_value,
                           QVariant *value);
-    static QStringList get_all_param_name(void);
+    static QStringList get_all_param_name();
 
     void block_close(bool state);
 
-    void load_widgets(void);
-    void save_widgets(void);
+    void load_widgets();
+    void save_widgets();
 
     void load_checkBox(QList<check_box> data);
     void load_comboBox(QList<combo_box> data);
@@ -152,11 +152,11 @@ public:
     QString get_class_name(const QString &fullname);
     QString get_func_name(const QString &fullname);
 
-    void set_all_buttons_no_save(void);
-    void show_objectNames(void);
+    void set_all_buttons_no_save();
+    void show_objectNames();
 
-    void lock_buttons(void);
-    void unlock_buttons(void);
+    void lock_buttons();
+    void unlock_buttons();
 
 signals:
     void info(const QString &);
@@ -164,22 +164,22 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
-    void clear_log(void);
+    void clear_log();
 
     void colorLog(const QString &, const QColor, const QColor);
 
 public slots:
     void block_interface(bool state);
-    void check_tooltips(void);
+    void check_tooltips();
 #ifdef BLOCK_WHEEL
-    void block_wheel(void);
+    void block_wheel();
 #endif
 
 private slots:
     void log(const QString &data);
 
-    void s_test(void);
-    void show_objectname(void);
+    void s_test();
+    void show_objectname();
 
 private:
     void connect_log(QWidget *parent);
@@ -190,7 +190,7 @@ private:
     void lock_widget(bool state);
 
     template<typename T>
-    void set_property_widget(void);
+    void set_property_widget();
     //---
 
     QList<QWidget *> w_lists;

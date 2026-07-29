@@ -40,22 +40,22 @@ public:
     virtual ~MultiEdit();
 
     void setPlainText(const QString &text);
-    QString toPlainText(void) const;
+    QString toPlainText() const;
     void setTabStopDistance(qreal distance);
-    QTextDocument *document(void) const;
+    QTextDocument *document() const;
 
 private:
     Ui::MultiEdit *ui;
 
-    void init(void);
+    void init();
 
-    CodeEditor *add_page(void);
-    void rem_page(void);
+    CodeEditor *add_page();
+    void rem_page();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MULTIEDIT_HPP

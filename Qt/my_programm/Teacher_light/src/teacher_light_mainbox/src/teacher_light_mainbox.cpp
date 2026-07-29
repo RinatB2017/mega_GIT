@@ -46,7 +46,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_tab(void)
+void MainBox::prepare_tab()
 {
     QLabel *lbl_picture = new QLabel(this);
     lbl_picture->setPixmap(QPixmap(":/english_table.png"));
@@ -73,7 +73,7 @@ void MainBox::prepare_tab(void)
     tab->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_notebook(void)
+void MainBox::prepare_notebook()
 {
     note = new Notebook(this);
 
@@ -92,7 +92,7 @@ void MainBox::prepare_notebook(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_grids(void)
+void MainBox::prepare_grids()
 {
     QList<QStringList> lists;
     QStringList sl;
@@ -197,7 +197,7 @@ void MainBox::prepare_grids(void)
     //---
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_widgets(void)
+void MainBox::create_widgets()
 {
     prepare_grids();
     prepare_tab();
@@ -235,28 +235,28 @@ void MainBox::create_widgets(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
     create_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

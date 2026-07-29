@@ -37,7 +37,7 @@ Test::Test()
     Q_ASSERT(gb);
 }
 //--------------------------------------------------------------------------------
-void Test::test_grapherbox(void)
+void Test::test_grapherbox()
 {
     QTimer::singleShot(0, [this] {
         const int cnt_buf = 1024;

@@ -34,7 +34,7 @@ MultiEdit::~MultiEdit()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MultiEdit::init(void)
+void MultiEdit::init()
 {
     ui->setupUi(this);
 
@@ -47,7 +47,7 @@ void MultiEdit::init(void)
     }
 }
 //--------------------------------------------------------------------------------
-CodeEditor *MultiEdit::add_page(void)
+CodeEditor *MultiEdit::add_page()
 {
     CodeEditor *te = new CodeEditor(this);
 
@@ -57,7 +57,7 @@ CodeEditor *MultiEdit::add_page(void)
     return te;
 }
 //--------------------------------------------------------------------------------
-void MultiEdit::rem_page(void)
+void MultiEdit::rem_page()
 {
     if(ui->tabWidget->count() <= 1)
     {
@@ -73,7 +73,7 @@ void MultiEdit::setPlainText(const QString &text)
     edit->setPlainText(text);
 }
 //--------------------------------------------------------------------------------
-QString MultiEdit::toPlainText(void) const
+QString MultiEdit::toPlainText() const
 {
     QTextEdit *edit = reinterpret_cast<QTextEdit *>(ui->tabWidget->currentWidget());
     Q_ASSERT(edit);
@@ -89,7 +89,7 @@ void MultiEdit::setTabStopDistance(qreal distance)
     }
 }
 //--------------------------------------------------------------------------------
-QTextDocument *MultiEdit::document(void) const
+QTextDocument *MultiEdit::document() const
 {
     QTextEdit *edit = reinterpret_cast<QTextEdit *>(ui->tabWidget->currentWidget());
     if(edit)
@@ -99,17 +99,17 @@ QTextDocument *MultiEdit::document(void) const
     return nullptr;
 }
 //--------------------------------------------------------------------------------
-void MultiEdit::updateText(void)
+void MultiEdit::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MultiEdit::programm_is_exit(void)
+bool MultiEdit::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MultiEdit::load_setting(void)
+void MultiEdit::load_setting()
 {
     beginGroup("MultiEdit");
     int cnt_tabs = 0;
@@ -125,7 +125,7 @@ void MultiEdit::load_setting(void)
     endGroup();
 }
 //--------------------------------------------------------------------------------
-void MultiEdit::save_setting(void)
+void MultiEdit::save_setting()
 {
     beginGroup("MultiEdit");
     int cnt_tabs = ui->tabWidget->count();

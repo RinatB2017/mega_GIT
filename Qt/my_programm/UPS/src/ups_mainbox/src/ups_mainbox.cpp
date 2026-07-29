@@ -46,7 +46,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -75,7 +75,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_display_data(void)
+void MainBox::init_display_data()
 {
     display_data.append({ "battery.charge",             ui->lcd_battery_charge,             0 });
     display_data.append({ "battery.voltage",            ui->lcd_battery_voltage,            1 });
@@ -90,7 +90,7 @@ void MainBox::init_display_data(void)
     display_data.append({ "ups.temperature",            ui->lcd_ups_temperature,            10 });
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_grapher(void)
+void MainBox::init_grapher()
 {
     foreach (DATA data, display_data)
     {
@@ -104,7 +104,7 @@ void MainBox::init_grapher(void)
     ui->grapher_widget->set_visible_btn_Statistic(false);
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_timer(void)
+void MainBox::init_timer()
 {
     timer = new QTimer(this);
     connect(timer,  &QTimer::timeout,   this,   &MainBox::t_update);
@@ -122,7 +122,7 @@ void MainBox::init_timer(void)
     connect(ui->btn_stop,   &QToolButton::clicked,      this,   &MainBox::t_stop);
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -160,7 +160,7 @@ void MainBox::createTestBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -173,7 +173,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -187,7 +187,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_QProcess(void)
+void MainBox::prepare_QProcess()
 {
     process = new QProcess();
     process->setProcessChannelMode(QProcess::SeparateChannels);
@@ -208,7 +208,7 @@ void MainBox::prepare_QProcess(void)
     process->setProcessEnvironment(env);
 }
 //--------------------------------------------------------------------------------
-void MainBox::t_start(void)
+void MainBox::t_start()
 {
     timer->start(ui->sb_interval->value() * 1000);
 
@@ -219,7 +219,7 @@ void MainBox::t_start(void)
     ui->btn_stop->setEnabled(true);
 }
 //--------------------------------------------------------------------------------
-void MainBox::t_stop(void)
+void MainBox::t_stop()
 {
     timer->stop();
 
@@ -230,12 +230,12 @@ void MainBox::t_stop(void)
     ui->btn_stop->setEnabled(false);
 }
 //--------------------------------------------------------------------------------
-void MainBox::t_update(void)
+void MainBox::t_update()
 {
     run();
 }
 //--------------------------------------------------------------------------------
-void MainBox::started(void)
+void MainBox::started()
 {
 #ifdef QT_DEBUG
     emit debug("Процесс начат!");
@@ -306,7 +306,7 @@ void MainBox::process_error(QProcess::ProcessError p_error)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_data(void)
+void MainBox::read_data()
 {
     QByteArray data = process->readAllStandardOutput();
     //emit info(data);
@@ -347,13 +347,13 @@ void MainBox::show_data(const QString &line)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_error(void)
+void MainBox::read_error()
 {
     QByteArray data = process->readAllStandardError();
     emit error(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::run(void)
+void MainBox::run()
 {
     if(process)
     {
@@ -371,7 +371,7 @@ void MainBox::run(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::run_upsdrvctl(void)
+void MainBox::run_upsdrvctl()
 {
     if(process)
     {
@@ -386,29 +386,29 @@ void MainBox::run_upsdrvctl(void)
     process->start("sudo", params);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit info("Test");
     emit info(qApp->applicationVersion());
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

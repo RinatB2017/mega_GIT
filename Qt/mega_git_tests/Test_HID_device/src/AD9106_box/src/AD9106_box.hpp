@@ -92,33 +92,33 @@ signals:
     void block_widget(bool);
 
 private slots:
-    void choice_test(void);
-    void test(void);
+    void choice_test();
+    void test();
 
     //---
-    void dev_open(void);
-    void dev_close(void);
-    void dev_read_all_registers(void);
-    void dev_write_all_registers(void);
+    void dev_open();
+    void dev_close();
+    void dev_read_all_registers();
+    void dev_write_all_registers();
 
-    void ApplySettings(void);
-    void StopGeneration(void);
-    void ManualReset(void);
+    void ApplySettings();
+    void StopGeneration();
+    void ManualReset();
 
-    void read_xml(void);
-    void convert_xml(void);
+    void read_xml();
+    void convert_xml();
 
-    void set_values(void);
+    void set_values();
     //---
-    void btn_open_click(void);
-    void btn_read_all_click(void);
-    void btn_close_click(void);
-    void btn_ApplySettings_click(void);
-    void btn_StopGeneration_click(void);
-    void btn_ManualReset_click(void);
-    void btn_read_xml_click(void);
-    void btn_convert_xml_click(void);
-    void btn_set_values_click(void);
+    void btn_open_click();
+    void btn_read_all_click();
+    void btn_close_click();
+    void btn_ApplySettings_click();
+    void btn_StopGeneration_click();
+    void btn_ManualReset_click();
+    void btn_read_xml_click();
+    void btn_convert_xml_click();
+    void btn_set_values_click();
     //---
 
     void click(bool state);
@@ -128,7 +128,7 @@ private:
     {
         int cmd;
         QString cmd_text;
-        void (AD9106_Box::*func)(void);
+        void (AD9106_Box::*func)();
     };
     Ui::AD9106_Box *ui;
 
@@ -161,15 +161,15 @@ private:
     CurveBox *curve;
 #endif
 
-    void init(void);
-    void init_sl_registers(void);
+    void init();
+    void init_sl_registers();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     void changeEvent(QEvent *event);

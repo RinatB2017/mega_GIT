@@ -41,7 +41,7 @@ Test::Test()
     QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
-void Test::check_serial_1(void)
+void Test::check_serial_1()
 {
     SerialBox5 *sb1 = mw->findChild<SerialBox5 *>("RS-232_1");
     QVERIFY(sb1);
@@ -66,7 +66,7 @@ void Test::check_serial_1(void)
     QTest::qWait(1000);
 }
 //--------------------------------------------------------------------------------
-void Test::check_serial_2(void)
+void Test::check_serial_2()
 {
     SerialBox5 *sb2 = mw->findChild<SerialBox5 *>("RS-232_2");
     QVERIFY(sb2);

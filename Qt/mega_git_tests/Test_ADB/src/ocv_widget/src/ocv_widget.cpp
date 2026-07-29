@@ -33,7 +33,7 @@ OCV_widget::~OCV_widget()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void OCV_widget::init(void)
+void OCV_widget::init()
 {
     ui->setupUi(this);
 
@@ -78,7 +78,7 @@ void OCV_widget::init(void)
     connect(ui->slValueTo,          static_cast<void (QSlider::*)(int)>(&QSlider::valueChanged),    ui->spValueTo,          &QSpinBox::setValue);
 }
 //--------------------------------------------------------------------------------
-void OCV_widget::onLoad(void)
+void OCV_widget::onLoad()
 {
     MyFileDialog *dlg = new MyFileDialog("picture_dlg");
     dlg->setNameFilter("PNG files (*.png)");
@@ -103,7 +103,7 @@ void OCV_widget::onLoad(void)
     }
 }
 //--------------------------------------------------------------------------------
-void OCV_widget::refreshHSV(void)
+void OCV_widget::refreshHSV()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -283,22 +283,22 @@ bool OCV_widget::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 //--------------------------------------------------------------------------------
-void OCV_widget::updateText(void)
+void OCV_widget::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool OCV_widget::programm_is_exit(void)
+bool OCV_widget::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void OCV_widget::load_setting(void)
+void OCV_widget::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void OCV_widget::save_setting(void)
+void OCV_widget::save_setting()
 {
 
 }

@@ -43,7 +43,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -58,7 +58,7 @@ void MainBox::init(void)
     setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_widgets(void)
+void MainBox::init_widgets()
 {
     ui->btn_new_map->setIcon(qApp->style()->standardIcon(QStyle::SP_FileDialogNewFolder));
     ui->btn_load_map->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogOpenButton));
@@ -87,7 +87,7 @@ void MainBox::init_widgets(void)
     connect(ui->btn_step,       SIGNAL(clicked(bool)),  this,           SLOT(show_minimap()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::update_map(void)
+void MainBox::update_map()
 {
     ui->btn_start->setEnabled(true);
     ui->btn_stop->setDisabled(true);
@@ -95,7 +95,7 @@ void MainBox::update_map(void)
     unlock_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::lock_widgets(void)
+void MainBox::lock_widgets()
 {
     ui->btn_new_map->setDisabled(true);
     ui->btn_load_map->setDisabled(true);
@@ -110,7 +110,7 @@ void MainBox::lock_widgets(void)
     ui->sb_interval->setDisabled(true);
 }
 //--------------------------------------------------------------------------------
-void MainBox::unlock_widgets(void)
+void MainBox::unlock_widgets()
 {
     ui->btn_new_map->setEnabled(true);
     ui->btn_load_map->setEnabled(true);
@@ -150,7 +150,7 @@ QToolButton * MainBox::create_button(const QString &name,
     return btn;
 }
 //--------------------------------------------------------------------------------
-void MainBox::createImagesDock(void)
+void MainBox::createImagesDock()
 {
     MainWindow *mw = dynamic_cast<MainWindow*>(parentWidget());
     Q_ASSERT(mw);
@@ -171,7 +171,7 @@ void MainBox::createImagesDock(void)
     mw->addToolBar(Qt::TopToolBarArea, image_bar);
 }
 //--------------------------------------------------------------------------------
-void MainBox::start(void)
+void MainBox::start()
 {
     bool ok = ui->map_widget->start(ui->sb_interval->value());
     if(ok)
@@ -180,18 +180,18 @@ void MainBox::start(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::stop(void)
+void MainBox::stop()
 {
     ui->map_widget->stop();
     unlock_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::refresh(void)
+void MainBox::refresh()
 {
     ui->map_widget->refresh();
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     emit info("test");
 
@@ -231,7 +231,7 @@ void MainBox::test(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::show_minimap(void)
+void MainBox::show_minimap()
 {
     bool ok = false;
     int player_x = 0;
@@ -269,7 +269,7 @@ void MainBox::show_minimap(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::new_map(void)
+void MainBox::new_map()
 {
     emit info("Create MAP");
 
@@ -311,7 +311,7 @@ void MainBox::new_map(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_map(void)
+void MainBox::load_map()
 {
     emit info("Load MAP");
 
@@ -335,7 +335,7 @@ void MainBox::load_map(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_map(void)
+void MainBox::save_map()
 {
     emit info("Save MAP");
 
@@ -367,28 +367,28 @@ void MainBox::save_map(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::new_game(void)
+void MainBox::new_game()
 {
     ui->map_widget->remove_player();
     ui->map_widget->set_begin_player();
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

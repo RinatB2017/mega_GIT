@@ -49,16 +49,16 @@ signals:
     void send(QString);
 
 private slots:
-    void choice_test(void);
-    bool test(void);
+    void choice_test();
+    bool test();
 
     void run_JS(bool);
     void test_JS(bool);
 
-    void s_default(void);
+    void s_default();
 
-    void js_load(void);
-    void js_save(void);
+    void js_load();
+    void js_save();
 
     void analize(const QString &data);
 
@@ -67,7 +67,7 @@ private:
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
 
     Ui::MainBox *ui;
@@ -78,18 +78,18 @@ private:
     QPointer<Highlighter> highlighter_js;
     bool is_exit = true;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
-    void load_js_default(void);
+    void load_js_default();
 
     void load_js(const QString &filename);
     void save_js(const QString &filename);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

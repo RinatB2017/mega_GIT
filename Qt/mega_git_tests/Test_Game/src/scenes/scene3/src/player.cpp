@@ -21,7 +21,7 @@
 #include "player.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-Player::Player(void)
+Player::Player()
 {
 
 }

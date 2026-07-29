@@ -45,19 +45,19 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void test(void);
+    void test();
 
 private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif

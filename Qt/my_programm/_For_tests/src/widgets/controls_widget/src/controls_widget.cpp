@@ -33,7 +33,7 @@ Controls_widget::~Controls_widget()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Controls_widget::init(void)
+void Controls_widget::init()
 {
     ui->setupUi(this);
 
@@ -98,12 +98,12 @@ void Controls_widget::init(void)
     ui->hex_widget->setMinimum(std::numeric_limits<qlonglong>::min());
 }
 //--------------------------------------------------------------------------------
-void Controls_widget::delete_string(void)
+void Controls_widget::delete_string()
 {
     ui->comboBox->removeItem(ui->comboBox->currentIndex());
 }
 //--------------------------------------------------------------------------------
-bool Controls_widget::programm_is_exit(void)
+bool Controls_widget::programm_is_exit()
 {
     bool is_exit = ui->cb_fag_exit->isChecked();
     if(is_exit == false)

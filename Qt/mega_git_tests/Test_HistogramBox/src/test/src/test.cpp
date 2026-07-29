@@ -31,7 +31,7 @@ Test::Test()
     QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
-void Test::test_grapher(void)
+void Test::test_grapher()
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);

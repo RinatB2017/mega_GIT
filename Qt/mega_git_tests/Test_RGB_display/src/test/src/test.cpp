@@ -44,12 +44,12 @@ Test::~Test()
 
 }
 //--------------------------------------------------------------------------------
-void Test::test_GUI(void)
+void Test::test_GUI()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Test::test_mainbox(void)
+void Test::test_mainbox()
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
@@ -62,12 +62,12 @@ void Test::test_mainbox(void)
     QCOMPARE(mb->test_5(), true);
 }
 //--------------------------------------------------------------------------------
-void Test::test_func(void)
+void Test::test_func()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Test::test_slider(void)
+void Test::test_slider()
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);

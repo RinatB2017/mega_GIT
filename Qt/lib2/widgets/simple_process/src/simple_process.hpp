@@ -43,22 +43,22 @@ public:
     void setProcessEnvironment(QProcessEnvironment env);
 
 private slots:
-    void started(void);
+    void started();
     void finished(int result, QProcess::ExitStatus exitStatus);
     void process_error(QProcess::ProcessError err);
-    void read_data(void);
-    void read_error(void);
+    void read_data();
+    void read_error();
 
 private:
     QPointer<QProcess> myProcess;
     QElapsedTimer timer;
 
-    void init(void);
+    void init();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // SIMPLE_PROCESS_HPP

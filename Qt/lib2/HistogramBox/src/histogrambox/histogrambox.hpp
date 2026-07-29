@@ -82,9 +82,9 @@ public:
     void push_btn_Horizontal(bool state);
     void push_btn_Vertical(bool state);
 
-    void test(void);
+    void test();
 
-    int get_histograms_count(void);
+    int get_histograms_count();
 
     int get_pos_x(int index_histogram);
 
@@ -92,7 +92,7 @@ public:
                             int index,
                             float *data);
 
-    void remove_all_histogram(void);
+    void remove_all_histogram();
 
 public slots:
     int add_histogram(int index_histogram,
@@ -110,24 +110,24 @@ public slots:
     bool add_histogram_data(int index_histogram,
                             unsigned int width,
                             int height);
-    void clear(void);
-    void reset(void);
+    void clear();
+    void reset();
 
 private slots:
-    void updateGraphics(void);
+    void updateGraphics();
     void legend_checked(const QVariant &itemInfo, bool on);
-    void options(void);
+    void options();
 
-    void load_histograms(void);
-    void save_histograms(void);
+    void load_histograms();
+    void save_histograms();
 
     void tune_vertical_axis(bool state = true);
     void tune_horizontal_axis(bool state = true);
 
     void popup(QPoint);
-    void slot_setting_action(void);
+    void slot_setting_action();
 
-    void statistic(void);
+    void statistic();
 
 private:
     Ui::HistogramBox *ui;
@@ -147,21 +147,21 @@ private:
     QString title_axis_X;
     QString title_axis_Y;
 
-    void init(void);
-    void create_widgets(void);
+    void init();
+    void create_widgets();
 
     QVariant itemToInfo(QwtPlotItem *plotItem) const;
     void show_histogram( QwtPlotItem *, bool on );
 
-    int getPositionStep(void);
-    int getSizeStep(void);
+    int getPositionStep();
+    int getSizeStep();
 
-    void test_get_info(void);
+    void test_get_info();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif

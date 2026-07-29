@@ -34,7 +34,7 @@ Notebook::~Notebook()
     delete sw;
 }
 //--------------------------------------------------------------------------------
-void Notebook::init(void)
+void Notebook::init()
 {
     alphabet.clear();
     alphabet << "A" << "B" << "C" << "D" << "E" << "F" << "G" << "H" << "I" << "J" << "K" << "L" << "M"
@@ -96,7 +96,7 @@ void Notebook::init(void)
     setLayout(e);
 }
 //--------------------------------------------------------------------------------
-void Notebook::save_all(void)
+void Notebook::save_all()
 {
     QStringList alphabet;
     alphabet << "A" << "B" << "C" << "D" << "E" << "F" << "G" << "H" << "I" << "J" << "K" << "L" << "M"
@@ -125,7 +125,7 @@ void Notebook::save_all(void)
     xmlPut->save("alphabet.xml");
 }
 //--------------------------------------------------------------------------------
-void Notebook::check_modified(void)
+void Notebook::check_modified()
 {
     bool not_saved = false;
     for(int n=0; n<sw->count(); n++)
@@ -150,7 +150,7 @@ void Notebook::check_modified(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Notebook::btn_click(void)
+void Notebook::btn_click()
 {
     QToolButton *btn = dynamic_cast<QToolButton *>(sender());
     Q_ASSERT(btn);
@@ -227,22 +227,22 @@ bool Notebook::save_data(QString name, QStringList *data)
     return false;
 }
 //--------------------------------------------------------------------------------
-void Notebook::updateText(void)
+void Notebook::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool Notebook::programm_is_exit(void)
+bool Notebook::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Notebook::load_setting(void)
+void Notebook::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Notebook::save_setting(void)
+void Notebook::save_setting()
 {
 
 }

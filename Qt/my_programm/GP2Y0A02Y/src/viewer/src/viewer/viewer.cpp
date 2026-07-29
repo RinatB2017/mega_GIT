@@ -33,7 +33,7 @@ Viewer::~Viewer()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Viewer::init(void)
+void Viewer::init()
 {
     ui->setupUi(this);
 
@@ -68,22 +68,22 @@ bool Viewer::set_value(int channel, int value)
     return true;
 }
 //--------------------------------------------------------------------------------
-void Viewer::updateText(void)
+void Viewer::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool Viewer::programm_is_exit(void)
+bool Viewer::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Viewer::load_setting(void)
+void Viewer::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Viewer::save_setting(void)
+void Viewer::save_setting()
 {
 
 }

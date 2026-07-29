@@ -48,16 +48,16 @@ public:
     Q_PROPERTY(bool flag_ErrorAsMessage READ get_flag_ErrorAsMessage    WRITE set_flag_ErrorAsMessage)
     Q_PROPERTY(bool flag_TextIsWindows  READ get_flag_TextIsWindows     WRITE set_flag_TextIsWindows)
 
-    bool get_flag_ReadOnly(void);
-    bool get_flag_AcceptRichText(void);
+    bool get_flag_ReadOnly();
+    bool get_flag_AcceptRichText();
 
-    bool get_flag_NoCRLF(void);
-    bool get_flag_AddDateTime(void);
-    bool get_flag_Color(void);
-    bool get_flag_AutoLoad(void);
-    bool get_flag_AutoSave(void);
-    bool get_flag_ErrorAsMessage(void);
-    bool get_flag_TextIsWindows(void);
+    bool get_flag_NoCRLF();
+    bool get_flag_AddDateTime();
+    bool get_flag_Color();
+    bool get_flag_AutoLoad();
+    bool get_flag_AutoSave();
+    bool get_flag_ErrorAsMessage();
+    bool get_flag_TextIsWindows();
 
     void set_flag_ReadOnly(bool value);
     void set_flag_AcceptRichText(bool value);
@@ -75,7 +75,7 @@ private:
     QList<QString> codecs;
     QTextEdit *logEdit;
 
-    void findCodecs(void);
+    void findCodecs();
 };
 //--------------------------------------------------------------------------------
 #endif // OPTIONS_BOX_HPP

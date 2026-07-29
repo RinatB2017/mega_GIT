@@ -26,19 +26,19 @@ class Alien
 public:
     Alien(bool is_alive, int pos_x, int pos_y);
 
-    bool is_alive(void);
+    bool is_alive();
 
-    int get_x(void);
-    int get_y(void);
+    int get_x();
+    int get_y();
 
-    void run(void);
+    void run();
 
 private:
     bool alive;
     int state;
     int pos_x;
     int pos_y;
-    void init(void);
+    void init();
 
 };
 //--------------------------------------------------------------------------------

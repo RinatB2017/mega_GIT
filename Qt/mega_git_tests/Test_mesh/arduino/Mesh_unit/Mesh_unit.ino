@@ -82,7 +82,7 @@ transmission_status_t manageResponse(const String &response, ESP8266WiFiMesh &me
   // Our last request got a response, so time to create a new request.
   meshInstance.setMessage("Hello world request #" + String(++requestNumber) + " from " + meshInstance.getMeshName() + meshInstance.getNodeID() + ".");
 
-  // (void)meshInstance; // This is useful to remove a "unused parameter" compiler warning. Does nothing else.
+  // ()meshInstance; // This is useful to remove a "unused parameter" compiler warning. Does nothing else.
   return statusCode;
 }
 

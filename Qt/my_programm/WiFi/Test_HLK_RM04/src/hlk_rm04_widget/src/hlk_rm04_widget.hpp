@@ -48,18 +48,18 @@ public:
     virtual ~HLK_RM04_widget();
 
 private slots:
-    void readChannelFinished(void);
+    void readChannelFinished();
     int split_data(QByteArray dirty_data);
     void read_data(QByteArray ba);
     void lock_iface(bool state);
     void unlock_iface(bool state);  //FIXME костыль
 
 private slots:
-    void choice_command(void);
-    void choice_serial_to(void);
-    void send_text(void);
+    void choice_command();
+    void choice_serial_to();
+    void send_text();
 
-    void init_widgets(void);
+    void init_widgets();
 
 private:
     enum {
@@ -112,7 +112,7 @@ private:
     {
         int cmd;
         QString cmd_text;
-        void (HLK_RM04_widget::*func)(void);
+        void (HLK_RM04_widget::*func)();
     } CMD_t;
     QList<CMD> l_commands;
     QList<CMD> l_serial_to;
@@ -121,20 +121,20 @@ private:
     QByteArray serial_data;
     QStringList sl_read_data;
 
-    void init(void);
-    void init_serial(void);
+    void init();
+    void init_serial();
 
     void send_command(QString cmd);
     void send_cmd(const QString &cmd, const QString &name, int default_cnt = 2);
 
-    QString get_ssid(void);
-    QString get_password(void);
-    QUrl get_ip(void);
-    QUrl get_remote_ip(void);
-    QUrl get_mask(void);
-    QUrl get_gate(void);
-    int get_remote_port(void);
-    QString get_encrypt_type(void);
+    QString get_ssid();
+    QString get_password();
+    QUrl get_ip();
+    QUrl get_remote_ip();
+    QUrl get_mask();
+    QUrl get_gate();
+    int get_remote_port();
+    QString get_encrypt_type();
 
     void set_ssid(QString ssid);
     void set_password(QString password);
@@ -145,66 +145,66 @@ private:
     void set_remote_port(int port);
     void set_encrypt_type(QString encrypt_type);
 
-    QUrl get_net_ip(void);
-    QUrl get_net_mask(void);
-    QUrl get_net_dns(void);
-    QUrl get_net_gate(void);
+    QUrl get_net_ip();
+    QUrl get_net_mask();
+    QUrl get_net_dns();
+    QUrl get_net_gate();
 
-    QUrl get_dhcpd_ip(void);
-    QUrl get_dhcpd_mask(void);
-    QUrl get_dhcpd_gate(void);
-    QUrl get_dhcpd_dns(void);
+    QUrl get_dhcpd_ip();
+    QUrl get_dhcpd_mask();
+    QUrl get_dhcpd_gate();
+    QUrl get_dhcpd_dns();
 
     void wait_msec(int timeout_msec);
 
-    void s_test(void);
-    void s_info(void);
-    void s_scan(void);
-    void s_get_MAC(void);
-        void s_get_netmode(void);
-        void s_set_netmode(void);
-        void s_get_wifi_conf(void);
-        void s_set_wifi_conf(void);
-    void s_channel(void);
-        void s_get_net_IP(void);
-        void s_set_net_IP(void);
-        void s_get_net_DNS(void);
-        void s_set_net_DNS(void);
-    void s_dhcpd(void);
-        void s_get_dhcpd_ip(void);
-        void s_set_dhcpd_ip(void);
-        void s_get_dhcpd_dns(void);
-        void s_set_dhcpd_dns(void);
-        void s_get_dhcpd_time(void);
-        void s_set_dhcpd_time(void);
-    void s_net_commit(void);
-    void s_out_trans(void);
-        void s_get_remote_IP(void);
-        void s_set_remote_IP(void);
-        void s_get_remote_port(void);
-        void s_set_remote_port(void);
-    void s_remote_pro(void);
-    void s_timeout(void);
-    void s_mode(void);
-    void s_uart(void);
-    void s_uartpacklen(void);
-    void s_uartpacktimeout(void);
-    void s_escape(void);
-    void s_tcp_auto(void);
-    void s_default(void);
-    void s_reboot(void);
-    void s_ver(void);
+    void s_test();
+    void s_info();
+    void s_scan();
+    void s_get_MAC();
+        void s_get_netmode();
+        void s_set_netmode();
+        void s_get_wifi_conf();
+        void s_set_wifi_conf();
+    void s_channel();
+        void s_get_net_IP();
+        void s_set_net_IP();
+        void s_get_net_DNS();
+        void s_set_net_DNS();
+    void s_dhcpd();
+        void s_get_dhcpd_ip();
+        void s_set_dhcpd_ip();
+        void s_get_dhcpd_dns();
+        void s_set_dhcpd_dns();
+        void s_get_dhcpd_time();
+        void s_set_dhcpd_time();
+    void s_net_commit();
+    void s_out_trans();
+        void s_get_remote_IP();
+        void s_set_remote_IP();
+        void s_get_remote_port();
+        void s_set_remote_port();
+    void s_remote_pro();
+    void s_timeout();
+    void s_mode();
+    void s_uart();
+    void s_uartpacklen();
+    void s_uartpacktimeout();
+    void s_escape();
+    void s_tcp_auto();
+    void s_default();
+    void s_reboot();
+    void s_ver();
 
-    void s_serial_to_ethernet_dynamic_ip(void);
-    void s_serial_to_ethernet_static_ip(void);
-    void s_serial_to_wifi_client(void);
-    void s_serial_to_wifi_client_static(void);
-    void s_serial_to_wifi_ap(void);
+    void s_serial_to_ethernet_dynamic_ip();
+    void s_serial_to_ethernet_static_ip();
+    void s_serial_to_wifi_client();
+    void s_serial_to_wifi_client_static();
+    void s_serial_to_wifi_ap();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     bool eventFilter(QObject*, QEvent* event);

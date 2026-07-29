@@ -90,7 +90,7 @@ public:
     explicit OscilloscopeBox(QWidget *parent = nullptr);
     virtual ~OscilloscopeBox();
 
-    void test(void);
+    void test();
     bool set_curve_color(int index, QColor color);
     bool get_curve_color(int index, QColor *color);
 
@@ -106,15 +106,15 @@ private slots:
     int add_curve(int index_curve,
                   int pos_y,
                   const QColor &color);
-    void updateGraphics(void);
+    void updateGraphics();
     void legend_checked(const QVariant &itemInfo, bool on);
 
     void click(bool state);
 
-    void update(void);
+    void update();
 
     void click_channel(int channel, bool state);
-    void click_RUN(void);
+    void click_RUN();
 
     void position_changed(double value);
     void multiply_changed(double value);
@@ -148,10 +148,10 @@ private:
     QString title_axis_X;
     QString title_axis_Y;
 
-    void init(void);
-    void create_widgets(void);
-    void create_timer(void);
-    void create_curves(void);
+    void init();
+    void create_widgets();
+    void create_timer();
+    void create_curves();
 
     QVariant itemToInfo(QwtPlotItem *plotItem) const;
     void showCurve(QwtPlotItem *, bool on);
@@ -169,10 +169,10 @@ private:
     void set_zoom(bool x_state, bool y_state);
     void set_panning(bool x_state, bool y_state);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif

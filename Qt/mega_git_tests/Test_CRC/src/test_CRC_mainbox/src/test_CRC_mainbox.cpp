@@ -47,7 +47,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -62,7 +62,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -99,7 +99,7 @@ void MainBox::createTestBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -114,7 +114,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -128,13 +128,13 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::run_crc(void)
+void MainBox::run_crc()
 {
     QString he_str = ui->le_hex_string->text();
     if(he_str.isEmpty())
@@ -153,7 +153,7 @@ void MainBox::run_crc(void)
     show_crc(ba);
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_file(void)
+void MainBox::load_file()
 {
     MyFileDialog *dlg = new MyFileDialog("test_crc32");
     int btn = dlg->exec();
@@ -195,22 +195,22 @@ void MainBox::show_crc(QByteArray ba)
     ui->le_java_crc16->setText(QString("%1").arg(java_crc16, 4, 16, QChar('0')).toUpper());
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

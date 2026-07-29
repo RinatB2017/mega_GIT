@@ -53,7 +53,7 @@ MODBUS_client::~MODBUS_client()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::init(void)
+void MODBUS_client::init()
 {
     ui->setupUi(this);
 
@@ -99,7 +99,7 @@ void MODBUS_client::stateChanged(QModbusDevice::State state)
     }
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::test_write_coils(void)
+void MODBUS_client::test_write_coils()
 {
     emit debug("MODBUS_client::test_write");
 
@@ -130,7 +130,7 @@ void MODBUS_client::test_write_coils(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::test_write_holding_registers(void)
+void MODBUS_client::test_write_holding_registers()
 {
     emit debug("MODBUS_client::test_write");
 
@@ -161,7 +161,7 @@ void MODBUS_client::test_write_holding_registers(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::test_read_discrete_inputs(void)
+void MODBUS_client::test_read_discrete_inputs()
 {
     emit debug("MODBUS_client::test_read");
 
@@ -188,7 +188,7 @@ void MODBUS_client::test_read_discrete_inputs(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::test_read_coils(void)
+void MODBUS_client::test_read_coils()
 {
     emit debug("MODBUS_client::test_read");
 
@@ -215,7 +215,7 @@ void MODBUS_client::test_read_coils(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::test_read_input_registers(void)
+void MODBUS_client::test_read_input_registers()
 {
     emit debug("MODBUS_client::test_read");
 
@@ -242,7 +242,7 @@ void MODBUS_client::test_read_input_registers(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::test_read_holding_registers(void)
+void MODBUS_client::test_read_holding_registers()
 {
     emit debug("MODBUS_client::test_read");
 
@@ -269,7 +269,7 @@ void MODBUS_client::test_read_holding_registers(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::connect_device(void)
+void MODBUS_client::connect_device()
 {
     emit info("MODBUS_client::connect_device");
 
@@ -301,7 +301,7 @@ void MODBUS_client::connect_device(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::disconnect_device(void)
+void MODBUS_client::disconnect_device()
 {
     if (modbusDevice->connectDevice())
     {
@@ -310,7 +310,7 @@ void MODBUS_client::disconnect_device(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::connect_tcp_device(void)
+void MODBUS_client::connect_tcp_device()
 {
     emit info("MODBUS_client::connect_device");
 
@@ -343,7 +343,7 @@ void MODBUS_client::connect_tcp_device(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::disconnect_tcp_device(void)
+void MODBUS_client::disconnect_tcp_device()
 {
     if (modbusDevice->connectDevice())
     {
@@ -353,7 +353,7 @@ void MODBUS_client::disconnect_tcp_device(void)
 }
 //--------------------------------------------------------------------------------
 //.arg(QString::number(unit.value(i), unit.registerType() <= QModbusDataUnit::Coils ? 10 : 16));
-void MODBUS_client::readReady(void)
+void MODBUS_client::readReady()
 {
     emit debug("MODBUS_client::readReady");
 
@@ -405,7 +405,7 @@ QModbusDataUnit MODBUS_client::writeRequest() const
                            static_cast<quint16>(numberOfEntries));
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::refresh(void)
+void MODBUS_client::refresh()
 {
     ui->cb_port->clear();
     foreach (QSerialPortInfo port, QSerialPortInfo::availablePorts())
@@ -419,22 +419,22 @@ void MODBUS_client::refresh(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::updateText(void)
+void MODBUS_client::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MODBUS_client::programm_is_exit(void)
+bool MODBUS_client::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::load_setting(void)
+void MODBUS_client::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MODBUS_client::save_setting(void)
+void MODBUS_client::save_setting()
 {
 
 }

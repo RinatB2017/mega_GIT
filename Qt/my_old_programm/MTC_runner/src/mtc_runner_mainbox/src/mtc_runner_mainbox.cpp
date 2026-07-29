@@ -41,7 +41,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -56,7 +56,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::createRunBar(void)
+void MainBox::createRunBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -81,7 +81,7 @@ void MainBox::createRunBar(void)
     connect(btn_run, SIGNAL(clicked()), this, SLOT(run()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::createScriptBar(void)
+void MainBox::createScriptBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -105,7 +105,7 @@ void MainBox::createScriptBar(void)
     connect(cb_auto_run, SIGNAL(toggled(bool)), this, SLOT(auto_run(bool)));
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_script(void)
+void MainBox::choice_script()
 {
     QFileDialog dialog(this);
     dialog.setWindowTitle(tr("Выберите скрипт"));
@@ -127,7 +127,7 @@ void MainBox::auto_run(bool state)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::run(void)
+void MainBox::run()
 {
     if(process)
     {
@@ -137,27 +137,27 @@ void MainBox::run(void)
     procfunc();
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::procfunc(void)
+void MainBox::procfunc()
 {
     process = new QProcess();
     process->setProcessChannelMode(QProcess::SeparateChannels);
@@ -181,19 +181,19 @@ void MainBox::procfunc(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_data(void)
+void MainBox::read_data()
 {
     QByteArray data = process->readAllStandardOutput();
     emit info(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_error(void)
+void MainBox::read_error()
 {
     QByteArray data = process->readAllStandardError();
     emit error(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::started(void)
+void MainBox::started()
 {
     emit info(tr("Процесс начат!"));
 }

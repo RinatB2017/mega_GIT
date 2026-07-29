@@ -35,7 +35,7 @@ MyThread::~MyThread()
     if(udp_socket2) delete udp_socket2;
 }
 //--------------------------------------------------------------------------------
-void MyThread::process(void)
+void MyThread::process()
 {
     emit info("process");
     while(!flag_exit)
@@ -45,7 +45,7 @@ void MyThread::process(void)
     emit finished();
 }
 //--------------------------------------------------------------------------------
-void MyThread::init(void)
+void MyThread::init()
 {
     udp_socket1 = new QUdpSocket(this);
     udp_socket2 = new QUdpSocket(this);
@@ -61,12 +61,12 @@ void MyThread::set_port2(quint16 value)
     port2 = value;
 }
 //--------------------------------------------------------------------------------
-void MyThread::start(void)
+void MyThread::start()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MyThread::stop(void)
+void MyThread::stop()
 {
     flag_exit = true;
 }

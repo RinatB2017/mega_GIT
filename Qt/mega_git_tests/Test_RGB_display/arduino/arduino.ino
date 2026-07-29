@@ -48,17 +48,17 @@ int i_brightness = 0;
 
 int index = 0;
 //---------------------------------------------------------------
-void init_leds(void)
+void init_leds()
 {
   controllers = &FastLED.addLeds<WS2812, LED_PIN, GRB>(line_leds, LEDS_PER_STRIP);
 }
 //---------------------------------------------------------------
-void show_leds(void)
+void show_leds()
 {
   controllers->show(line_leds, LEDS_PER_STRIP, i_brightness);
 }
 //---------------------------------------------------------------
-void clear_leds(void)
+void clear_leds()
 {
   int x = 0;
   for (x = 0; x < LEDS_PER_STRIP; x++) line_leds[x] = 0;
@@ -123,7 +123,7 @@ uint8_t convert_ascii_to_value(uint8_t hi, uint8_t lo)
   return r_byte;
 }
 //---------------------------------------------------------------
-bool convert_raw_to_modbus(void)
+bool convert_raw_to_modbus()
 {
   if (index_ascii_buf == 0)
   {
@@ -159,7 +159,7 @@ bool convert_raw_to_modbus(void)
   return true;
 }
 //---------------------------------------------------------------
-void command(void)
+void command()
 {
   bool ok = convert_raw_to_modbus();
   if (!ok)
@@ -227,7 +227,7 @@ void serialEvent()
   }
 }
 //---------------------------------------------------------------
-void test(void)
+void test()
 {
   if (index < LEDS_PER_STRIP)
     index++;
@@ -248,7 +248,7 @@ void test(void)
   show_leds();
 }
 //---------------------------------------------------------------
-void calc_elapsed_time(void)
+void calc_elapsed_time()
 {
   i_brightness = 1;
 
@@ -272,7 +272,7 @@ void calc_elapsed_time(void)
   while (1);
 }
 //---------------------------------------------------------------
-void loop(void)
+void loop()
 {
   //test();
   //calc_elapsed_time();

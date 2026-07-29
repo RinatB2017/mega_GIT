@@ -46,7 +46,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -102,7 +102,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::onLoad(void)
+void MainBox::onLoad()
 {
     MyFileDialog *dlg;
 
@@ -126,7 +126,7 @@ void MainBox::onLoad(void)
     delete dlg;
 }
 //--------------------------------------------------------------------------------
-void MainBox::refreshHSV(void)
+void MainBox::refreshHSV()
 {
     if(mOrigImage.empty())
     {
@@ -248,7 +248,7 @@ void MainBox::refreshHSV(void)
                 );
 }
 //--------------------------------------------------------------------------------
-bool MainBox::create_detectors(void)
+bool MainBox::create_detectors()
 {
     QString file;
 
@@ -299,7 +299,7 @@ bool MainBox::create_detectors(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::find_faces(void)
+void MainBox::find_faces()
 {
     if(mOrigImage.data == nullptr)
     {
@@ -354,7 +354,7 @@ void MainBox::find_faces(void)
                           );
 }
 //--------------------------------------------------------------------------------
-void MainBox::find_polygons(void)
+void MainBox::find_polygons()
 {
     cv::Mat thresholdedMat;
     cv::cvtColor(mOrigImage, thresholdedMat, cv::COLOR_RGB2HSV);
@@ -402,7 +402,7 @@ void MainBox::find_polygons(void)
               .arg(countour.size()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::s_test(void)
+void MainBox::s_test()
 {
     //find_faces();
     find_polygons();
@@ -432,22 +432,22 @@ void MainBox::set_minNeighbors(int value)
     find_faces();
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

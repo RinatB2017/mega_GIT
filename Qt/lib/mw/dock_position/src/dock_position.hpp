@@ -45,7 +45,7 @@ private:
     Ui::Dock_position *ui;
     QString dock_name = "dock_name";
 
-    void show_dlg(void);
+    void show_dlg();
 };
 //--------------------------------------------------------------------------------
 #endif // DOCK_POSITION_HPP

@@ -31,7 +31,7 @@ Test::Test()
     QVERIFY(mb);
 }
 //--------------------------------------------------------------------------------
-void Test::test_GUI(void)
+void Test::test_GUI()
 {
     QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
     QVERIFY(cb);
@@ -44,7 +44,7 @@ void Test::test_GUI(void)
     QVERIFY(tb);
 }
 //--------------------------------------------------------------------------------
-void Test::test_signals(void)
+void Test::test_signals()
 {
 
 }

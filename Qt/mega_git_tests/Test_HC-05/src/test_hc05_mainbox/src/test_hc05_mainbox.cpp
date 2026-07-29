@@ -44,7 +44,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -61,7 +61,7 @@ void MainBox::init(void)
     connect(ui->btn_reset,          &QPushButton::clicked,  this,   &MainBox::reset);
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_serial(void)
+void MainBox::init_serial()
 {
     connect(&serial, SIGNAL(readyRead()), this, SLOT(port_read()));
     connect(&serial, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(port_error(QSerialPort::SerialPortError)));
@@ -93,7 +93,7 @@ void MainBox::port_error(QSerialPort::SerialPortError serial_error)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::find_device(void)
+void MainBox::find_device()
 {
     QList<int> speeds;
 
@@ -146,7 +146,7 @@ void MainBox::find_device(void)
     emit error(QString("%1 не найден").arg(DEVICE_NAME));
 }
 //--------------------------------------------------------------------------------
-bool MainBox::send_AT(void)
+bool MainBox::send_AT()
 {
     if(serial.isOpen() == false)
     {
@@ -157,7 +157,7 @@ bool MainBox::send_AT(void)
     return send_command("AT");
 }
 //--------------------------------------------------------------------------------
-bool MainBox::reset(void)
+bool MainBox::reset()
 {
     // [HC-05_white] addr (00:21:13:03:C4:81)
     // [HC-05_black] addr (00:14:02:10:09:04)
@@ -165,7 +165,7 @@ bool MainBox::reset(void)
     return send_command("AT+ORGL");
 }
 //--------------------------------------------------------------------------------
-bool MainBox::get_version(void)
+bool MainBox::get_version()
 {
     // [HC-05_white] addr (00:21:13:03:C4:81)
     // [HC-05_black] addr (00:14:02:10:09:04)
@@ -173,7 +173,7 @@ bool MainBox::get_version(void)
     return send_command("AT+VERSION?");
 }
 //--------------------------------------------------------------------------------
-bool MainBox::get_address(void)
+bool MainBox::get_address()
 {
     // [HC-05_white] addr (00:21:13:03:C4:81)
     // [HC-05_black] addr (00:14:02:10:09:04)
@@ -181,7 +181,7 @@ bool MainBox::get_address(void)
     return send_command("AT+ADDR?");
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     // [HC-05_white] addr (00:21:13:03:C4:81)
     // [HC-05_black] addr (00:14:02:10:09:04)
@@ -275,7 +275,7 @@ bool MainBox::send_command(QString cmd_string)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::port_read(void)
+void MainBox::port_read()
 {
     rs232_data.append(serial.readAll());
     is_ready = true;
@@ -301,7 +301,7 @@ void MainBox::wait(int time_msec)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -338,7 +338,7 @@ void MainBox::createTestBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -353,7 +353,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -367,18 +367,18 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_test(void)
+bool MainBox::f_test()
 {
     emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     if(serial.isOpen())
     {
@@ -388,12 +388,12 @@ bool MainBox::programm_is_exit(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

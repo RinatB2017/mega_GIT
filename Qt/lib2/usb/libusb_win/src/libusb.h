@@ -1324,7 +1324,7 @@ void LIBUSB_CALL libusb_exit(libusb_context *ctx);
 LIBUSB_DEPRECATED_FOR(libusb_set_option)
 void LIBUSB_CALL libusb_set_debug(libusb_context *ctx, int level);
 void LIBUSB_CALL libusb_set_log_cb(libusb_context *ctx, libusb_log_cb cb, int mode);
-const struct libusb_version * LIBUSB_CALL libusb_get_version(void);
+const struct libusb_version * LIBUSB_CALL libusb_get_version();
 int LIBUSB_CALL libusb_has_capability(uint32_t capability);
 const char * LIBUSB_CALL libusb_error_name(int errcode);
 int LIBUSB_CALL libusb_setlocale(const char *locale);

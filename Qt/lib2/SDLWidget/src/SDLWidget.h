@@ -15,13 +15,13 @@ public:
     QSDLScreenWidget(QWidget *parent = nullptr);
     void draw_image(SDL_Surface *image, int pos_x, int pos_y);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 private slots:
-    void update(void);
+    void update();
 
 private:
     SDL_Surface *screen;
@@ -53,7 +53,7 @@ private:
     bool player_move_right;
     int state;
 
-    void test(void);
+    void test();
 
 protected:
 #if 1

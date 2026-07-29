@@ -51,18 +51,18 @@ public:
     virtual ~MyBrowser();
 
     void setUrl(const QUrl &url);
-    void run(void);
+    void run();
     void run_javascript(QString javascript);
 
 signals:
     void send(const QString &);
 
-    void loadStarted(void);
+    void loadStarted();
     void loadFinished(bool);
     void loadProgress(int progress);
 
 public slots:
-    void get_document_title(void);
+    void get_document_title();
 
 private:
     Ui::MyBrowser *ui;
@@ -78,23 +78,23 @@ private:
     QPointer<QWebEngineCookieStore> m_store;
     QVector<QNetworkCookie> m_cookies;
 
-    void init(void);
+    void init();
 
     void popup(QPoint);
-    void set_attributes(void);
+    void set_attributes();
 
-    void load_proxies(void);
-    void s_run(void);
+    void load_proxies();
+    void s_run();
     void refresh_url(const QUrl &url);
     bool containsCookie(const QNetworkCookie &cookie);
     void handleCookieAdded(const QNetworkCookie &cookie);
 
     void click(QWebEngineView * webView, QPoint pos, Qt::MouseButton button);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 
 #endif // MYBROWSER_HPP

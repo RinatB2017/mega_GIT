@@ -42,7 +42,7 @@ public slots:
     void traceLog(QString text);
 
 private slots:
-    void update(void);
+    void update();
 
 private:
     LogBox *le;

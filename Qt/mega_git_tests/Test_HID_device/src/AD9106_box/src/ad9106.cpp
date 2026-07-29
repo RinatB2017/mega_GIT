@@ -27,7 +27,7 @@ AD9106::AD9106(QObject *parent) : QObject(parent)
     init();
 }
 //--------------------------------------------------------------------------------
-void AD9106::init(void)
+void AD9106::init()
 {
     reg r = { "xxx", 5, 4 };
     AD9106_registers.append(r);
@@ -112,7 +112,7 @@ bool AD9106::get_sl_name_registers(QStringList *sl)
     return true;
 }
 //--------------------------------------------------------------------------------
-uint16_t AD9106::get_SRAM_StartAddress(void)
+uint16_t AD9106::get_SRAM_StartAddress()
 {
     return SRAM_StartAddress;
 }
@@ -136,7 +136,7 @@ bool AD9106::get_reg(QString name, reg_t *reg)
     return false;
 }
 //--------------------------------------------------------------------------------
-int AD9106::get_cnt_registers(void)
+int AD9106::get_cnt_registers()
 {
     return AD9106_registers.length();
 }

@@ -44,7 +44,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -84,7 +84,7 @@ void MainBox::init(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_scene_0(void)
+void MainBox::create_scene_0()
 {
     scene_0 = new QGraphicsScene();
     scene_0->setSceneRect(0, 0, 500, 500);
@@ -95,7 +95,7 @@ void MainBox::create_scene_0(void)
     item->moveBy(250,250);
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_scene_1(void)
+void MainBox::create_scene_1()
 {
     QFont font("Liberation Mono", 24);
 
@@ -111,7 +111,7 @@ void MainBox::create_scene_1(void)
     item_1->setRotation(-45);
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_scene_2(void)
+void MainBox::create_scene_2()
 {
     QFont font("Liberation Mono", 24);
 
@@ -125,7 +125,7 @@ void MainBox::create_scene_2(void)
     item_2->setRotation(-15);
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -169,7 +169,7 @@ void MainBox::createTestBar(void)
     testbar->setFixedWidth(testbar->sizeHint().width() + 10);
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -181,7 +181,7 @@ void MainBox::choice_test(void)
     );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -195,27 +195,27 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::up(void)
+void MainBox::up()
 {
     pos_y -= delta;
 }
 //--------------------------------------------------------------------------------
-void MainBox::down(void)
+void MainBox::down()
 {
     pos_y += delta;
 }
 //--------------------------------------------------------------------------------
-void MainBox::left(void)
+void MainBox::left()
 {
     pos_x -= delta;
 }
 //--------------------------------------------------------------------------------
-void MainBox::right(void)
+void MainBox::right()
 {
     pos_x += delta;
 }
 //--------------------------------------------------------------------------------
-void MainBox::update(void)
+void MainBox::update()
 {
     qreal old_pos_x = pos_x;
     qreal old_pos_y = pos_y;
@@ -249,7 +249,7 @@ void MainBox::update(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+bool MainBox::test_0()
 {
     emit info("Test_0()");
 
@@ -274,7 +274,7 @@ bool MainBox::test_0(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
+bool MainBox::test_1()
 {
     emit info("Test_1()");
 
@@ -284,7 +284,7 @@ bool MainBox::test_1(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
+bool MainBox::test_2()
 {
     emit info("Test_2()");
 
@@ -294,21 +294,21 @@ bool MainBox::test_2(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
+bool MainBox::test_3()
 {
     emit info("Test_3()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
+bool MainBox::test_4()
 {
     emit info("Test_4()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
+bool MainBox::test_5()
 {
     emit info("Test_5()");
 
@@ -359,22 +359,22 @@ void MainBox::keyReleaseEvent(QKeyEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

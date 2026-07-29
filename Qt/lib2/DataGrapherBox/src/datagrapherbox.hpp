@@ -52,9 +52,9 @@ public:
     void add_curves(QList<QByteArray> sl);
     void update_curves(QList<QByteArray> sl);
 
-    void clr_curves(void);
+    void clr_curves();
     bool add_data(int curve_index, qreal value);
-    int get_max_index(void);
+    int get_max_index();
     bool get_curve_data(int channel,
                         int index,
                         qreal *data);
@@ -63,7 +63,7 @@ private:
     Ui::DataGrapherBox *ui;
     QList<CURVES> curves;
 
-    void init(void);
+    void init();
     QString convert(qreal value);
     qreal convert_adc(QVariant value);
     QVariant convert_string(QString str_value);
@@ -71,10 +71,10 @@ private:
     void show_data_ADC(QStringList sl);
     void change_text(int curve_index, QString text);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // DATA_GRAPHERBOX_HPP

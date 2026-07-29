@@ -29,7 +29,7 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-Scene::Scene(void)
+Scene::Scene()
 {
     int r_width = 100;
     int r_height = 100;
@@ -54,7 +54,7 @@ Scene::~Scene()
 #endif
 }
 //--------------------------------------------------------------------------------
-void Scene::update(void)
+void Scene::update()
 {
     switch (direction)
     {

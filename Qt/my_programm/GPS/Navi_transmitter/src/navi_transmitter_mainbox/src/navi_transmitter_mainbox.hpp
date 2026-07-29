@@ -50,25 +50,25 @@ signals:
     void send(QByteArray);
 
 private slots:
-    void test(void);
+    void test();
 
-    void test_GGA(void);
-    void test_GSA(void);
-    void test_GSV(void);
-    void test_RMC(void);
-    void test_VTG(void);
-    void test_GLL(void);
-    void test_ZDA(void);
+    void test_GGA();
+    void test_GSA();
+    void test_GSV();
+    void test_RMC();
+    void test_VTG();
+    void test_GLL();
+    void test_ZDA();
 
-    void test_PIREA(void);
-    void test_PIRFV(void);
-    void test_PIRGK(void);
-    void test_PIRRA(void);
+    void test_PIREA();
+    void test_PIRFV();
+    void test_PIRGK();
+    void test_PIRRA();
 
     void read_data(QByteArray);
-    void start(void);
-    void stop(void);
-    void update(void);
+    void start();
+    void stop();
+    void update();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -80,19 +80,19 @@ private:
 
     QTimer *timer = nullptr;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
     QString get_checksum(const QString &data);
-    void read_fake_data(void);
+    void read_fake_data();
 
-    QString get_utc_string(void);
-    QString get_latitude_string(void);
-    QString get_longitude_string(void);
+    QString get_utc_string();
+    QString get_latitude_string();
+    QString get_longitude_string();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

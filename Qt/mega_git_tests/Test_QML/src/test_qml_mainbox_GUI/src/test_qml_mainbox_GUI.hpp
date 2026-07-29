@@ -36,22 +36,22 @@ class MainBox_GUI : public MyWidget
     Q_OBJECT
 
 signals:
-    void btn_show_qml(void);
+    void btn_show_qml();
 
 public:
     explicit MainBox_GUI(QWidget *parent,
                          MySplashScreen *splash);
     virtual ~MainBox_GUI();
 
-    QString get_qml_text(void);
+    QString get_qml_text();
     void set_qml_text(const QString &text);
 
 private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox_GUI *ui;
 
-    void init(void);
-    void updateText(void);
+    void init();
+    void updateText();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_GUI_HPP

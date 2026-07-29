@@ -37,7 +37,7 @@ class MainBox_GUI : public MyWidget
     Q_OBJECT
 
 signals:
-    void s_test(void);
+    void s_test();
 
 public:
     explicit MainBox_GUI(QWidget *parent,
@@ -48,8 +48,8 @@ private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox_GUI *ui;
 
-    void init(void);
-    void updateText(void);
+    void init();
+    void updateText();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_GUI_HPP

@@ -36,7 +36,7 @@ Mouse::~Mouse()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Mouse::init(void)
+void Mouse::init()
 {
     ui->setupUi(this);
 
@@ -70,22 +70,22 @@ bool Mouse::get(int x, int y, int *id)
     return ui->w_minimap->get(x, y, id);
 }
 //--------------------------------------------------------------------------------
-void Mouse::updateText(void)
+void Mouse::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool Mouse::programm_is_exit(void)
+bool Mouse::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Mouse::load_setting(void)
+void Mouse::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Mouse::save_setting(void)
+void Mouse::save_setting()
 {
 
 }

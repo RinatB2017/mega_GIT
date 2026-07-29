@@ -36,10 +36,10 @@ public:
 private:
     uint8_t buf[MAX_SIZE];
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     void paintEvent(QPaintEvent *);

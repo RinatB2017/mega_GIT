@@ -42,7 +42,7 @@ private:
     Ui::File_widget *ui;
     QPointer<QFileSystemModel> file_model;
 
-    void init(void);
+    void init();
 };
 //--------------------------------------------------------------------------------
 #endif // FILE_WIDGET_HPP

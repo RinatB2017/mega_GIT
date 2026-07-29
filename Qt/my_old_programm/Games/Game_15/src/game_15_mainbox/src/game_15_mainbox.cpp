@@ -46,7 +46,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -59,7 +59,7 @@ void MainBox::init(void)
     setMinimumSize(BONE_SIZE * MAX_X, BONE_SIZE * MAX_Y);
 }
 //--------------------------------------------------------------------------------
-void MainBox::add_menu(void)
+void MainBox::add_menu()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -100,7 +100,7 @@ bool MainBox::check_bone(int number)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::map_randomize(void)
+void MainBox::map_randomize()
 {
     bool ok = false;
     int bone = 0;
@@ -120,7 +120,7 @@ void MainBox::map_randomize(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::new_game(void)
+void MainBox::new_game()
 {
     map_randomize();
 
@@ -142,7 +142,7 @@ void MainBox::new_game(void)
     emit set_status_text(QString("%1").arg(cnt_move));
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_bones(void)
+void MainBox::create_bones()
 {
     bone_width  = BONE_SIZE;
     bone_height = BONE_SIZE;
@@ -171,7 +171,7 @@ void MainBox::bone_move(int property_id, int pos_x, int pos_y)
     check_win();
 }
 //--------------------------------------------------------------------------------
-void MainBox::check_win(void)
+void MainBox::check_win()
 {
     int n = 1;
     for(int y=0; y<MAX_Y; y++)
@@ -371,22 +371,22 @@ bool MainBox::eventFilter(QObject *obj, QEvent *event)
     return QObject::eventFilter(obj, event);
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

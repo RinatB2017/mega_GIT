@@ -36,13 +36,13 @@ public:
                       QObject *parent = nullptr);
     virtual ~Database();
 
-    bool isValid(void);
-    QString get_lastError(void);
+    bool isValid();
+    QString get_lastError();
     void removeDatabase(const QString &database_name);
     bool check_table_exist(const QString &table_name);
     bool drop_table(const QString &table_name);
-    int get_count_tables(void);
-    QSqlDatabase get_db(void);
+    int get_count_tables();
+    QSqlDatabase get_db();
 
 signals:
     void info(const QString &);
@@ -52,12 +52,12 @@ signals:
 
 public slots:
     bool open(const QString new_name);
-    bool close(void);
+    bool close();
     bool view(const QString &query);
     bool sql(const QString &query);
-    QStringList tables(void);
-    bool isOpen(void);
-    QStringList list_drivers(void);
+    QStringList tables();
+    bool isOpen();
+    QStringList list_drivers();
 
 private slots:
     void log(const QString &text);

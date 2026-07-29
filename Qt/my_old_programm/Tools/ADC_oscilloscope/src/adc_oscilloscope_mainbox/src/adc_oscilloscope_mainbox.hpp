@@ -80,7 +80,7 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void test(void);
+    void test();
 
     void get_data(const DATA &data);
     void get_data(const QByteArray &data);
@@ -93,20 +93,20 @@ private:
     ModbusAsciiWidget *widget;
     Serial_thread *thread;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
-    void createSerialBar(void);
+    void createTestBar();
+    void createSerialBar();
 
     void add_data_1byte(unsigned int index_curve, int8_t  data);
     void add_data_2byte(unsigned int index_curve, int16_t data);
     void add_data_4byte(unsigned int index_curve, int32_t data);
     void add_data_float(unsigned int index_curve, float data);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

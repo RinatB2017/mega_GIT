@@ -44,20 +44,20 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void start(void);
-    void stop(void);
-    void refresh(void);
+    void start();
+    void stop();
+    void refresh();
 
-    void new_map(void);
-    void load_map(void);
-    void save_map(void);
+    void new_map();
+    void load_map();
+    void save_map();
 
-    void new_game(void);
+    void new_game();
 
-    void update_map(void);
+    void update_map();
 
-    void show_minimap(void);
-    void test(void);
+    void show_minimap();
+    void test();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -65,20 +65,20 @@ private:
 
     QPointer<QComboBox> cb_test;
 
-    void init(void);
+    void init();
 
-    void init_widgets(void);
-    void createImagesDock(void);
+    void init_widgets();
+    void createImagesDock();
 
-    void lock_widgets(void);
-    void unlock_widgets(void);
+    void lock_widgets();
+    void unlock_widgets();
 
     QToolButton *create_button(const QString &name, int id);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

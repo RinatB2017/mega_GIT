@@ -55,7 +55,7 @@ HID_device::~HID_device()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void HID_device::init(void)
+void HID_device::init()
 {
     ui->setupUi(this);
 
@@ -82,7 +82,7 @@ void HID_device::init(void)
     block_buttons(true);
 }
 //--------------------------------------------------------------------------------
-void HID_device::createTestBar(void)
+void HID_device::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -112,7 +112,7 @@ void HID_device::createTestBar(void)
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 }
 //--------------------------------------------------------------------------------
-void HID_device::choice_test(void)
+void HID_device::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
@@ -124,7 +124,7 @@ void HID_device::choice_test(void)
     );
     if (cmd_it != commands.end())
     {
-        typedef void (HID_device::*function)(void);
+        typedef void (HID_device::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -138,7 +138,7 @@ void HID_device::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void HID_device::dev_list(void)
+void HID_device::dev_list()
 {
     // Enumerate and print the HID devices on the system
     struct hid_device_info *devs, *cur_dev;
@@ -170,7 +170,7 @@ void HID_device::dev_list(void)
     hid_free_enumeration(devs);
 }
 //--------------------------------------------------------------------------------
-void HID_device::dev_open(void)
+void HID_device::dev_open()
 {
     uint16_t VID = static_cast<uint16_t>(ui->vid_widget->value());
     uint16_t PID = static_cast<uint16_t>(ui->pid_widget->value());
@@ -237,7 +237,7 @@ void HID_device::dev_open(void)
     block_buttons(false);
 }
 //--------------------------------------------------------------------------------
-void HID_device::dev_close(void)
+void HID_device::dev_close()
 {
     if(dev != nullptr)
     {
@@ -248,7 +248,7 @@ void HID_device::dev_close(void)
     block_buttons(true);
 }
 //--------------------------------------------------------------------------------
-void HID_device::test(void)
+void HID_device::test()
 {
     if(dev == nullptr)
     {
@@ -322,7 +322,7 @@ void HID_device::test(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void HID_device::dev_read(void)
+void HID_device::dev_read()
 {
     if(dev == nullptr)
     {
@@ -354,7 +354,7 @@ void HID_device::dev_read(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void HID_device::dev_write(void)
+void HID_device::dev_write()
 {
     if(dev == nullptr)
     {
@@ -506,7 +506,7 @@ void HID_device::block_buttons(bool state)
     ui->btn_test->setDisabled(state);
 }
 //--------------------------------------------------------------------------------
-void HID_device::f_test(void)
+void HID_device::f_test()
 {
     emit info("Test");
 
@@ -532,22 +532,22 @@ void HID_device::f_test(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void HID_device::updateText(void)
+void HID_device::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool HID_device::programm_is_exit(void)
+bool HID_device::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void HID_device::load_setting(void)
+void HID_device::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void HID_device::save_setting(void)
+void HID_device::save_setting()
 {
 
 }

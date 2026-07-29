@@ -38,7 +38,7 @@ private:
     MainWindow *mw;
 
 #ifndef NO_GRAPHER
-    void test_grapher(void);
+    void test_grapher();
 #endif
 };
 //--------------------------------------------------------------------------------

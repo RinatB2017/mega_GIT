@@ -33,7 +33,7 @@ bool player_move_right = false;
 
 int cnt_draw_alien = 0;
 //--------------------------------------------------------------------------------
-void init(void)
+void init()
 {
     screen = 0;
     SDL_QuitSubSystem(SDL_INIT_VIDEO);
@@ -118,7 +118,7 @@ void copy_image(SDL_Surface *image,
     dst.h = image->h;
     SDL_BlitSurface(image, NULL, buffer, &dst);
 }
-void draw_map(void)
+void draw_map()
 {
     SDL_Surface *buffer = 0;
     buffer = SDL_CreateRGBSurface(SDL_HWSURFACE,25*32,25*32,32,0x00FF0000,0x0000FF00,0x000000FF,0x00000000);
@@ -144,7 +144,7 @@ void draw_map(void)
 }
 #endif
 //--------------------------------------------------------------------------------
-bool draw(void)
+bool draw()
 {
     bool ok = false;
     if(player_move_up)    ok = true;
@@ -154,7 +154,7 @@ bool draw(void)
     return ok;
 }
 //--------------------------------------------------------------------------------
-bool keyboard(void)
+bool keyboard()
 {
     bool ok = false;
     while(SDL_PollEvent(&event))
@@ -202,17 +202,17 @@ bool keyboard(void)
     return ok;
 }
 //--------------------------------------------------------------------------------
-void draw_background(void)
+void draw_background()
 {
     SDL_BlitSurface(background, NULL, screen, 0);
 }
 //--------------------------------------------------------------------------------
-void clear_screen(void)
+void clear_screen()
 {
     SDL_FillRect(screen, NULL, 0);
 }
 //--------------------------------------------------------------------------------
-void draw_player(void)
+void draw_player()
 {
 #ifdef SINGLE_APP
     if((player_x_old == player_x) && (player_y_old == player_y)) return;
@@ -225,7 +225,7 @@ void draw_player(void)
     draw_image(player, player_x, player_y);
 }
 //--------------------------------------------------------------------------------
-void draw_alien(void)
+void draw_alien()
 {
     cnt_draw_alien++;
     if(cnt_draw_alien>10)
@@ -248,7 +248,7 @@ void draw_alien(void)
     draw_image(current_alien, 200, 200);
 }
 //--------------------------------------------------------------------------------
-void draw_map(void)
+void draw_map()
 {
     for(int n=0; n<25; n++)
     {
@@ -269,7 +269,7 @@ void draw_map(void)
     }
 }
 //--------------------------------------------------------------------------------
-void test(void)
+void test()
 {
     int buf[10][10] = { 0 };
     buf[5][5] = 5;
@@ -283,7 +283,7 @@ void test(void)
     }
 }
 //--------------------------------------------------------------------------------
-int main(void)
+int main()
 {
     init();
 

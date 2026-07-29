@@ -33,7 +33,7 @@ Check_in_widget::~Check_in_widget()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Check_in_widget::init(void)
+void Check_in_widget::init()
 {
     ui->setupUi(this);
 
@@ -45,7 +45,7 @@ void Check_in_widget::init(void)
     check_in();
 }
 //--------------------------------------------------------------------------------
-void Check_in_widget::check_in(void)
+void Check_in_widget::check_in()
 {
     int a = ui->sb_1->value();
     int b = ui->sb_2->value();
@@ -55,7 +55,7 @@ void Check_in_widget::check_in(void)
     ui->btn_ok->setEnabled(res);
 }
 //--------------------------------------------------------------------------------
-void Check_in_widget::victory(void)
+void Check_in_widget::victory()
 {
     messagebox_info("Info", "Victory!");
 }

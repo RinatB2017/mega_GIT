@@ -65,7 +65,7 @@ private:
 //    QMenu m_app_windowsmenu = nullptr;
     QMenu *m_app_helpmenu = nullptr;
 
-    void init(void);
+    void init();
 
     void app_menu_add_separator(QMenu *menu);
     void app_menu_add_exit(QMenu *menu);
@@ -84,7 +84,7 @@ private:
     void app_menu_add_about(QMenu *menu);
     void app_menu_add_help(QMenu *menu);
 
-    void app_updateText(void);
+    void app_updateText();
 
 protected:
     void changeEvent(QEvent *event);

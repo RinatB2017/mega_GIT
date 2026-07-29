@@ -108,26 +108,26 @@ signals:
     void block_widget(bool);
 
 private slots:
-    void choice_test(void);
-    void f_test(void);
+    void choice_test();
+    void f_test();
 
     //---
-    void dev_list(void);
-    void dev_open(void);
-    void dev_close(void);
-    void dev_read(void);
-    void dev_write(void);
+    void dev_list();
+    void dev_open();
+    void dev_close();
+    void dev_read();
+    void dev_write();
     //---
     void leds_state(bool state);
     //---
-    void test(void);
+    void test();
 
 private:
     struct CMD
     {
         int cmd;
         QString cmd_text;
-        void (HID_device::*func)(void);
+        void (HID_device::*func)();
     };
     Ui::HID_device *ui;
 
@@ -142,14 +142,14 @@ private:
 
     wchar_t wstr[MAX_STR];
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
     void block_buttons(bool state);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
     bool send_cmd(int cmd, int state);
 };
 //--------------------------------------------------------------------------------

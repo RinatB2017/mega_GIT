@@ -64,7 +64,7 @@ static void ColouriseKVIrcDoc(Sci_PositionU startPos, Sci_Position length,
      * when asked for (transitions leaving strings and keywords do this
      * already) */
     bool next = true;
-    for( ; sc.More(); next ? sc.Forward() : (void)0 )
+    for( ; sc.More(); next ? sc.Forward() : ()0 )
     {
         /* Resetting next */
         next = true;

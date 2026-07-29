@@ -36,7 +36,7 @@ public:
     virtual ~HSV_color_dialog();
 
     void set_color(QColor color);
-    QColor get_color(void);
+    QColor get_color();
 
 private:
     Ui::HSV_color_dialog *ui;

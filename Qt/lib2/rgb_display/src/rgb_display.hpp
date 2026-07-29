@@ -54,27 +54,27 @@ public:
 
     void show_picture(int begin_x, int begin_y);
 
-    int get_max_x(void);
-    int get_max_y(void);
+    int get_max_x();
+    int get_max_y();
 
-    int get_picture_w(void);
-    int get_picture_h(void);
+    int get_picture_w();
+    int get_picture_h();
 
-    void load_leds(void);
-    void save_leds(void);
+    void load_leds();
+    void save_leds();
 
     bool set_brightness(int value);
 
 public slots:
-    bool load_ico(void);
-    bool load_pic(void);
+    bool load_ico();
+    bool load_pic();
 
-    void send_test_data(void);
+    void send_test_data();
 
 private slots:
-    void set_display(void);
-    void get_display(void);
-    void set_default(void);
+    void set_display();
+    void get_display();
+    void set_default();
 
 private:
     QGridLayout *grid;
@@ -94,15 +94,15 @@ private:
 
     int brightness = 0;
 
-    void init(void);
-    void clean_grid(void);
-    void create_new_display(void);
+    void init();
+    void clean_grid();
+    void create_new_display();
     bool load_picture(QString fileName);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // RGB_DISLPAY_HPP

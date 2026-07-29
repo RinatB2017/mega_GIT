@@ -56,7 +56,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -74,7 +74,7 @@ void MainBox::init(void)
     setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
-void MainBox::createChessBar(void)
+void MainBox::createChessBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -98,7 +98,7 @@ void MainBox::createChessBar(void)
     connect(le_chess,   &QLineEdit::returnPressed,  this,   &MainBox::run);
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -132,7 +132,7 @@ void MainBox::createTestBar(void)
     //connect(le_test,    &QComboBox::editTextChanged,    this,   &MainBox::test);
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_chessboard(void)
+void MainBox::create_chessboard()
 {
     connect(ui->chessboard_widget,  &ChessBoard::s_move,    this,   &MainBox::move);
 }
@@ -144,7 +144,7 @@ void MainBox::move(QString text)
     m_engine->write(text.toLocal8Bit());
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_engine(void)
+void MainBox::create_engine()
 {
     m_engine = new QProcess(this);
     m_engine->setProcessChannelMode(QProcess::SeparateChannels);
@@ -176,28 +176,28 @@ void MainBox::create_engine(void)
     coordenateRegEx   = QRegExp("\\b([a-h][1-8][a-h][1-8])(q|r|b|n|)\\b");
 }
 //--------------------------------------------------------------------------------
-//void MainBox::x1(void)
+//void MainBox::x1()
 //{
 //    emit info(m_engine->readAll());
 //}
 //--------------------------------------------------------------------------------
-//void MainBox::x2(void)
+//void MainBox::x2()
 //{
 //    emit info(m_engine->readAll());
 //}
 //--------------------------------------------------------------------------------
-void MainBox::new_game(void)
+void MainBox::new_game()
 {
     ui->chessboard_widget->new_game();
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     QString temp = cb_test->currentText().append("\n");
     m_engine->write(temp.toLatin1());
 }
 //--------------------------------------------------------------------------------
-void MainBox::reverse_chessboard(void)
+void MainBox::reverse_chessboard()
 {
     ui->chessboard_widget->clear_figures();
     ui->chessboard_widget->set_figure(ChessBoard::PAWN_BLACK, "A2");
@@ -237,7 +237,7 @@ void MainBox::reverse_chessboard(void)
     ui->chessboard_widget->set_figure(ChessBoard::ROOK_WHITE,   "H8");
 }
 //--------------------------------------------------------------------------------
-void MainBox::run(void)
+void MainBox::run()
 {
     QString text = le_chess->text().trimmed();
     //le_test->clear();
@@ -303,7 +303,7 @@ bool MainBox::analize(const QString &line)
     return false;
 }
 //--------------------------------------------------------------------------------
-void MainBox::readData(void)
+void MainBox::readData()
 {
     QString output = m_engine->readAllStandardOutput();
     if(output.isEmpty())
@@ -321,7 +321,7 @@ void MainBox::readData(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::readError(void)
+void MainBox::readError()
 {
     QString output = m_engine->readAllStandardError();
     if(output.isEmpty())
@@ -331,29 +331,29 @@ void MainBox::readError(void)
     emit error(output);
 }
 //--------------------------------------------------------------------------------
-void MainBox::restore_move(void)
+void MainBox::restore_move()
 {
     emit error("restore_move");
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 #ifdef QT_DEBUG
     load_combobox_property(cb_test);
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 #ifdef QT_DEBUG
     save_combobox_property(cb_test);

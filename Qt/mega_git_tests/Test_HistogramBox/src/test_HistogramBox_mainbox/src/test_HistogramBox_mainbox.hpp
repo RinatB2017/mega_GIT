@@ -41,24 +41,24 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void load(void);
-    void save(void);
-    void test(void);
+    void load();
+    void save();
+    void test();
 
 private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
     bool all_break = false;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
-    void createProgrammBar(void);
+    void createTestBar();
+    void createProgrammBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

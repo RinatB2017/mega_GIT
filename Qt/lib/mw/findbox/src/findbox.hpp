@@ -43,11 +43,11 @@ public:
 private:
     Ui::FindBox *ui;
 
-    void init(void);
+    void init();
 
-    void f_hide(void);
-    void f_prev(void);
-    void f_next(void);
+    void f_hide();
+    void f_prev();
+    void f_next();
 };
 
 #endif // FINDBOX_HPP

@@ -94,12 +94,12 @@ void IPV4_wo_port::setObjectName(const QString &name)
     QWidget::setObjectName(name);
 }
 //--------------------------------------------------------------------------------
-void IPV4_wo_port::work(void)
+void IPV4_wo_port::work()
 {
     emit s_get_url(get_url());
 }
 //--------------------------------------------------------------------------------
-QUrl IPV4_wo_port::get_url(void)
+QUrl IPV4_wo_port::get_url()
 {
     QUrl url;
     url.setHost(QString("%1.%2.%3.%4")
@@ -162,22 +162,22 @@ void IPV4_wo_port::set_d(int value)
     d->setValue(value);
 }
 //--------------------------------------------------------------------------------
-int IPV4_wo_port::get_a(void)
+int IPV4_wo_port::get_a()
 {
     return a->value();
 }
 //--------------------------------------------------------------------------------
-int IPV4_wo_port::get_b(void)
+int IPV4_wo_port::get_b()
 {
     return b->value();
 }
 //--------------------------------------------------------------------------------
-int IPV4_wo_port::get_c(void)
+int IPV4_wo_port::get_c()
 {
     return c->value();
 }
 //--------------------------------------------------------------------------------
-int IPV4_wo_port::get_d(void)
+int IPV4_wo_port::get_d()
 {
     return d->value();
 }
@@ -194,27 +194,27 @@ bool IPV4_wo_port::eventFilter(QObject*, QEvent* event)
     return false;
 }
 //--------------------------------------------------------------------------------
-bool IPV4_wo_port::no_exit(void)
+bool IPV4_wo_port::no_exit()
 {
     return false;
 }
 //--------------------------------------------------------------------------------
-void IPV4_wo_port::updateText(void)
+void IPV4_wo_port::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool IPV4_wo_port::programm_is_exit(void)
+bool IPV4_wo_port::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void IPV4_wo_port::load_setting(void)
+void IPV4_wo_port::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void IPV4_wo_port::save_setting(void)
+void IPV4_wo_port::save_setting()
 {
 
 }

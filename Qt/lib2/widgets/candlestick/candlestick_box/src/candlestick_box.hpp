@@ -48,28 +48,28 @@ public:
     virtual ~CandleStick_Box();
 
     void append(QCandlestickSet *set, qreal volume);
-    void update_data(void);
-    void clear_data(void);
+    void update_data();
+    void clear_data();
 
     bool get_ticket_data(int index, QCandlestickSet *set, qreal *volume);
 
     void set_ticket_name(const QString &new_ticket_name);
-    QString get_ticket_name(void);
-    int get_max_index(void);
+    QString get_ticket_name();
+    int get_max_index();
 
-    void scroll_left(void);
-    void scroll_right(void);
-    void scroll_up(void);
-    void scroll_down(void);
+    void scroll_left();
+    void scroll_right();
+    void scroll_up();
+    void scroll_down();
 
-    void move_left(void);
-    void move_right(void);
-    void move_up(void);
-    void move_down(void);
+    void move_left();
+    void move_right();
+    void move_up();
+    void move_down();
 
     void zoom(qreal factor);
 
-    void test2(void);
+    void test2();
 
 private:
     Ui::CandleStick_Box *ui;
@@ -87,25 +87,25 @@ private:
     int index_min = 0;
     int index_max = 0;
 
-    void init(void);
+    void init();
 
     bool get_index(QString key, int *index);
 
-    void test(void);
+    void test();
 
     void hovered_candle(bool state, QCandlestickSet *set);
 //    void pressed_candle(QCandlestickSet *set);
 //    void released_candle(QCandlestickSet *set);
 
-    void chart_test(void);
+    void chart_test();
 
-    void set_theme_light(void);
-    void set_theme_dark(void);
+    void set_theme_light();
+    void set_theme_dark();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
     qreal mFactor=1.0;
 

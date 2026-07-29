@@ -42,19 +42,19 @@ public slots:
     QString get_md5(const QString &filename);
 
 private slots:
-    void test(void);
+    void test();
 
 private:
     Ui::MainBox *ui;
     QWidget *parent;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

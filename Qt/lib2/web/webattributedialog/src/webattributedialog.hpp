@@ -61,8 +61,8 @@ private:
     } *ATTR_t;
     QList<ATTR> sl_attr;
 
-    void init(void);
-    void set_default(void);
+    void init();
+    void set_default();
 };
 //--------------------------------------------------------------------------------
 #endif // WEBATTRIBUTEDIALOG_HPP

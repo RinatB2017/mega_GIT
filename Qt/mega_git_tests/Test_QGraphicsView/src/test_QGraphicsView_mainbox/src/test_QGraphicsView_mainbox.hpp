@@ -43,27 +43,27 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
+    void choice_test();
+    bool test_0();
+    bool test_1();
+    bool test_2();
+    bool test_3();
+    bool test_4();
+    bool test_5();
 
-    void up(void);
-    void down(void);
-    void left(void);
-    void right(void);
+    void up();
+    void down();
+    void left();
+    void right();
 
-    void update(void);
+    void update();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
 
     QPointer<MySplashScreen> splash;
@@ -72,9 +72,9 @@ private:
     QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
+    void createTestBar();
 
     QGraphicsPixmapItem *item;
     QGraphicsRectItem *rect_0;
@@ -97,14 +97,14 @@ private:
     QGraphicsScene *scene_1;
     QGraphicsScene *scene_2;
 
-    void create_scene_0(void);
-    void create_scene_1(void);
-    void create_scene_2(void);
+    void create_scene_0();
+    void create_scene_1();
+    void create_scene_2();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     bool eventFilter(QObject *, QEvent *e);

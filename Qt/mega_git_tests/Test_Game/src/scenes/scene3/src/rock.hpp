@@ -29,8 +29,8 @@
 class Rock : public BaseItem
 {
 public:
-    Rock(void);
-    void animation(void);
+    Rock();
+    void animation();
 
 private:
     QList<QPixmap> p_animation;

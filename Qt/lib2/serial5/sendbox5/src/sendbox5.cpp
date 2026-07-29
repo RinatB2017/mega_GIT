@@ -51,7 +51,7 @@ SendBox5::~SendBox5()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void SendBox5::send_text_command(void)
+void SendBox5::send_text_command()
 {
     Text_widget *tw = new Text_widget();
     connect(tw, &Text_widget::info,     this,   &SendBox5::info);
@@ -62,7 +62,7 @@ void SendBox5::send_text_command(void)
     tw->exec();
 }
 //--------------------------------------------------------------------------------
-void SendBox5::send_bin_command(void)
+void SendBox5::send_bin_command()
 {
     Bin_widget *hw = new Bin_widget();
     connect(hw, &Bin_widget::info,     this,   &SendBox5::info);
@@ -79,7 +79,7 @@ void SendBox5::block_interface(bool state)
     ui->btn_bin_commands->setDisabled(state);
 }
 //--------------------------------------------------------------------------------
-void SendBox5::updateText(void)
+void SendBox5::updateText()
 {
 
 }

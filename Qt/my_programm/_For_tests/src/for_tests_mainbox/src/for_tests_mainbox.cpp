@@ -41,7 +41,7 @@ MainBox::~MainBox()
     save_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     create_test_bar();
 
@@ -60,7 +60,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-bool MainBox::set_theme_windows(void)
+bool MainBox::set_theme_windows()
 {
     QString filename = ":/themes_css/Theme (Windows).css";
     QFile file(filename);
@@ -77,7 +77,7 @@ bool MainBox::set_theme_windows(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::set_norton_commander(void)
+bool MainBox::set_norton_commander()
 {
     QString filename = ":/themes_qss/Norton Commander.qss";
     QFile file(filename);
@@ -94,7 +94,7 @@ bool MainBox::set_norton_commander(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::set_styles(void)
+bool MainBox::set_styles()
 {
     QString filename = ":/themes_qss/styles.qss";
     QFile file(filename);
@@ -111,7 +111,7 @@ bool MainBox::set_styles(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_test_bar(void)
+void MainBox::create_test_bar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -168,7 +168,7 @@ void MainBox::create_test_bar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -181,7 +181,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -200,7 +200,7 @@ void MainBox::choice_test(void)
 }
 //--------------------------------------------------------------------------------
 template<typename T1, typename T2>
-void MainBox::test_template(void)
+void MainBox::test_template()
 {
     QList<T1 *> allle = findChildren<T1 *>();
     foreach (T1 *obj, allle)
@@ -222,9 +222,9 @@ void MainBox::test_function(int delay)
     });
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_function2(bool (MainBox::*func)(void))
+void MainBox::test_function2(bool (MainBox::*func)())
 {
-    typedef bool (MainBox::*function)(void);
+    typedef bool (MainBox::*function)();
     function f;
     f = func;
 
@@ -309,7 +309,7 @@ QImage MainBox::create_bone(int num)
     return image;
 }
 //--------------------------------------------------------------------------------
-void MainBox::createWidgetByName(void)
+void MainBox::createWidgetByName()
 {
     // 1. У нас есть только строка с именем класса
     QString className = "CyberWidget";
@@ -344,7 +344,7 @@ void MainBox::createWidgetByName(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::startThread(void)
+void MainBox::startThread()
 {
     if (m_worker != nullptr)
     {
@@ -374,7 +374,7 @@ void MainBox::startThread(void)
     }
 }
 
-void MainBox::stopThread(void)
+void MainBox::stopThread()
 {
     // Если воркера нет или поток уже спит, останавливать нечего
     if (!m_worker || !m_thread->isRunning()) return;
@@ -405,7 +405,7 @@ void MainBox::handleProgress(int value)
 //--------------------------------------------------------------------------------
 #include "test_classes.hpp"
 
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -457,7 +457,7 @@ bool MainBox::test(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test2(void)
+bool MainBox::test2()
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test2");
@@ -474,7 +474,7 @@ bool MainBox::test2(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_style(void)
+bool MainBox::test_style()
 {
     emit trace(Q_FUNC_INFO);
     emit info("test_style");
@@ -506,7 +506,7 @@ bool MainBox::test_style(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::run_cube_widget(void)
+bool MainBox::run_cube_widget()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -516,7 +516,7 @@ bool MainBox::run_cube_widget(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::run_ogl_widget(void)
+bool MainBox::run_ogl_widget()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -526,12 +526,12 @@ bool MainBox::run_ogl_widget(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 #ifdef QT_DEBUG
     qDebug() << "MainBox::load_setting";
@@ -563,7 +563,7 @@ void MainBox::load_setting(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 #ifdef QT_DEBUG
     qDebug() << "MainBox::save_setting";

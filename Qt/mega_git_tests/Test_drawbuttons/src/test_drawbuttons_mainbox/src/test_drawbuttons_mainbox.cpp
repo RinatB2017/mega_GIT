@@ -65,7 +65,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -76,7 +76,7 @@ void MainBox::init(void)
     draw_my_buttons();
 }
 //--------------------------------------------------------------------------------
-void MainBox::draw_my_buttons(void)
+void MainBox::draw_my_buttons()
 {
     QHBoxLayout *hbox = new QHBoxLayout();
     hbox->setSpacing(0);
@@ -100,7 +100,7 @@ void MainBox::draw_my_buttons(void)
     setLayout(hbox);
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -140,7 +140,7 @@ void MainBox::set_item_param(QTreeWidgetItem *item,
     item->setCheckState(pos, state);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     emit debug(tr("тест"));
 
@@ -158,7 +158,7 @@ void MainBox::test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::usb(void)
+void MainBox::usb()
 {
 #if 0
     usb_init();
@@ -220,22 +220,22 @@ void MainBox::usb(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

@@ -50,8 +50,8 @@ public:
 
 private slots:
     void calc(double voltage);
-    void updateGraphics(void);
-    void drawGraphics(void);
+    void updateGraphics();
+    void drawGraphics();
 
 private:
     Ui::MainBox *ui;
@@ -67,14 +67,14 @@ private:
     int curve_interference = 0;
     int curve_envelope = 0;
 
-    void init(void);
-    int getPositionStep(void);
-    int getSizeStep(void);
+    void init();
+    int getPositionStep();
+    int getSizeStep();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

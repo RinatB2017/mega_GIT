@@ -32,7 +32,7 @@ TCP_Client::TCP_Client(QWidget* parent)
     init();
 }
 //--------------------------------------------------------------------------------
-void TCP_Client::init(void)
+void TCP_Client::init()
 {
     tcpSocket = new QTcpSocket();
     connect(tcpSocket,  &QTcpSocket::readyRead,     this,   &TCP_Client::readyData);
@@ -41,7 +41,7 @@ void TCP_Client::init(void)
     connect(tcpSocket,  SIGNAL(stateChanged(QAbstractSocket::SocketState)), this,   SIGNAL(state_changed(QAbstractSocket::SocketState)));
 }
 //--------------------------------------------------------------------------------
-void TCP_Client::readyData(void)
+void TCP_Client::readyData()
 {
     emit readyRead();
 }
@@ -135,7 +135,7 @@ void TCP_Client::connect_to_host(QString address, quint16 port)
     }
 }
 //--------------------------------------------------------------------------------
-void TCP_Client::disconnect_from_host(void)
+void TCP_Client::disconnect_from_host()
 {
     if(tcpSocket)
     {
@@ -153,7 +153,7 @@ qint64 TCP_Client::write_data(QByteArray data)
     return 0;
 }
 //--------------------------------------------------------------------------------
-QByteArray TCP_Client::readAll(void)
+QByteArray TCP_Client::readAll()
 {
     if(tcpSocket == nullptr)
     {
@@ -166,7 +166,7 @@ QByteArray TCP_Client::readAll(void)
     return nullptr;
 }
 //--------------------------------------------------------------------------------
-QString TCP_Client::get_errorString(void)
+QString TCP_Client::get_errorString()
 {
     if(tcpSocket == nullptr)
     {
@@ -179,7 +179,7 @@ QString TCP_Client::get_errorString(void)
     return "tcpSocket not open";
 }
 //--------------------------------------------------------------------------------
-QTcpSocket::SocketState TCP_Client::get_state(void)
+QTcpSocket::SocketState TCP_Client::get_state()
 {
     return tcpSocket->state();
 }
@@ -189,22 +189,22 @@ QByteArray TCP_Client::input(const QByteArray &data)
     return send_data(data);
 }
 //--------------------------------------------------------------------------------
-void TCP_Client::updateText(void)
+void TCP_Client::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool TCP_Client::programm_is_exit(void)
+bool TCP_Client::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void TCP_Client::load_setting(void)
+void TCP_Client::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void TCP_Client::save_setting(void)
+void TCP_Client::save_setting()
 {
 
 }

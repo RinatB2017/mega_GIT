@@ -37,9 +37,9 @@ private slots:
 private:
     MainWindow *mw;
 
-    void test_GUI(void);
-    void test_func(void);
-    void test_signals(void);
+    void test_GUI();
+    void test_func();
+    void test_signals();
 };
 //--------------------------------------------------------------------------------
 #endif

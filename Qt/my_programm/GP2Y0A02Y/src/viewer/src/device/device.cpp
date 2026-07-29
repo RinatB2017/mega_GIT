@@ -33,7 +33,7 @@ Device::~Device()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Device::init(void)
+void Device::init()
 {
     ui->setupUi(this);
 

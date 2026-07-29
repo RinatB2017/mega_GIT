@@ -140,7 +140,7 @@ unsigned char MainBox::convert_ansi_to_dec(char data)
     return temp;
 }
 //--------------------------------------------------------------------------------
-void MainBox::drawing(void)
+void MainBox::drawing()
 {
     for(int n=0; n<dirty_data.length(); n+=4)
     {
@@ -167,17 +167,17 @@ void MainBox::updateText()
 
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

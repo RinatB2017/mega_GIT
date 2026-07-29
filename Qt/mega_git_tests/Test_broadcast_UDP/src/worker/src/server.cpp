@@ -32,7 +32,7 @@ Server::~Server()
 
 }
 //--------------------------------------------------------------------------------
-void Server::f_process(void)
+void Server::f_process()
 {
     emit info("Server started!");
 
@@ -59,7 +59,7 @@ void Server::f_process(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Server::processPendingDatagrams(void)
+void Server::processPendingDatagrams()
 {
     while (udpSocket->hasPendingDatagrams())
     {

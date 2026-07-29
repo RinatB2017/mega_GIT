@@ -39,7 +39,7 @@ public:
                             int max_progress = 100);
 
     void set_progress(int value);
-    void add_progress(void);
+    void add_progress();
 
 public slots:
     void showMessage(const QString &message,

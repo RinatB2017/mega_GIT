@@ -66,9 +66,9 @@ signals:
                 QString);
 
 private slots:
-    void start(void);
-    void stop(void);
-    void update(void);
+    void start();
+    void stop();
+    void update();
 
 private:
     int def_src = 0;
@@ -87,8 +87,8 @@ private:
 
     QTimer *timer = nullptr;
 
-    void init(void);
-    void init_timer(void);
+    void init();
+    void init_timer();
 };
 //--------------------------------------------------------------------------------
 #endif // SENDER_SYSLOG_HPP

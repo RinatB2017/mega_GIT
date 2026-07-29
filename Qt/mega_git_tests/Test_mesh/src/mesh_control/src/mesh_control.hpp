@@ -41,18 +41,18 @@ signals:
 private slots:
     void read_data(QByteArray data);
 
-    void led_on(void);
-    void led_off(void);
+    void led_on();
+    void led_off();
 
 private:
     Ui::Mesh_control *ui;
 
-    void init(void);
+    void init();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MESH_CONTROL_HPP

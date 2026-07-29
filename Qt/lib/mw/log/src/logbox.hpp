@@ -83,14 +83,14 @@ public:
     void set_flagAutoSave(bool state);
 
 public slots:
-    void clear(void);
+    void clear();
     void progress(int);
-    void clearProgress(void);
+    void clearProgress();
     void setVisibleProgressBar(bool);
     void setColorLog(bool state);
 
     void  set_font(QFont font);
-    QFont get_font(void);
+    QFont get_font();
 
     void infoLog(const  QString &text);
     void debugLog(const QString &text);
@@ -114,12 +114,12 @@ public slots:
                    const QString &src,
                    const QString &message);
 
-    void update_log(void);
+    void update_log();
 
 private slots:
-    void changeOptions(void);
-    void save_to(void);
-    void save_full_log_to(void);
+    void changeOptions();
+    void save_to();
+    void save_full_log_to();
 
     void popup(QPoint);
 
@@ -161,8 +161,8 @@ private:
     QList<LOG_DATA> l_log_data;
     QList<LOG_DATA> l_full_log_data;
 
-    void init(void);
-    void create_widgets(void);
+    void init();
+    void create_widgets();
 
     void slot_is_shows_info(bool state);
     void slot_is_shows_debug(bool state);
@@ -178,10 +178,10 @@ private:
     void append_string(LOG_DATA log_data);
     QString syslog_to_str(int level);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     void changeEvent(QEvent *event);

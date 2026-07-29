@@ -41,7 +41,7 @@ private:
     Ui::Device *ui;
     int value = 0;
 
-    void init(void);
+    void init();
 };
 //--------------------------------------------------------------------------------
 #endif // DEVICE_HPP

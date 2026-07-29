@@ -38,10 +38,10 @@ public:
 private:
     Ui::Check_in_widget *ui;
 
-    void init(void);
+    void init();
 
-    void check_in(void);
-    void victory(void);
+    void check_in();
+    void victory();
 };
 //--------------------------------------------------------------------------------
 #endif // CHECK_IN_WIDGET_HPP

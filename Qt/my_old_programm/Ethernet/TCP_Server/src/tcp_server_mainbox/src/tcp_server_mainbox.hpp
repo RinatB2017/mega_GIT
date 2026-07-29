@@ -40,19 +40,19 @@ public:
 private slots:
     void f_get_data(const QByteArray &data);
 
-    void f_connect(void);
-    void f_disconnect(void);
+    void f_connect();
+    void f_disconnect();
 
 private:
     Ui::MainBox *ui;
     TCP_Server *server;
 
-    void init(void);
+    void init();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

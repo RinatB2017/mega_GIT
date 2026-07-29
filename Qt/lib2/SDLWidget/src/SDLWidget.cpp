@@ -144,7 +144,7 @@ void QSDLScreenWidget::keyPressEvent(QKeyEvent *event)
     test();
 }
 //--------------------------------------------------------------------------------
-void QSDLScreenWidget::update(void)
+void QSDLScreenWidget::update()
 {
     switch(state)
     {
@@ -188,7 +188,7 @@ void QSDLScreenWidget::update(void)
     repaint();
 }
 //--------------------------------------------------------------------------------
-void QSDLScreenWidget::test(void)
+void QSDLScreenWidget::test()
 {
     if (screen)
     {
@@ -256,22 +256,22 @@ void QSDLScreenWidget::paintEvent(QPaintEvent *)
     }
 }
 //--------------------------------------------------------------------------------
-void QSDLScreenWidget::updateText(void)
+void QSDLScreenWidget::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool QSDLScreenWidget::programm_is_exit(void)
+bool QSDLScreenWidget::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void QSDLScreenWidget::load_setting(void)
+void QSDLScreenWidget::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void QSDLScreenWidget::save_setting(void)
+void QSDLScreenWidget::save_setting()
 {
 
 }

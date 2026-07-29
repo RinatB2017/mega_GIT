@@ -43,17 +43,17 @@ public:
     static void set_value(uint32_t value);
     static void set_value(int32_t value);
 
-    static double   get_double_value(void);
-    static float    get_float_value(void);
-    static uint8_t  get_uint8_value(void);
-    static int8_t   get_int8_value(void);
-    static uint16_t get_uint16_value(void);
-    static int16_t  get_int16_value(void);
-    static uint32_t get_uint32_value(void);
-    static int32_t  get_int32_value(void);
+    static double   get_double_value();
+    static float    get_float_value();
+    static uint8_t  get_uint8_value();
+    static int8_t   get_int8_value();
+    static uint16_t get_uint16_value();
+    static int16_t  get_int16_value();
+    static uint32_t get_uint32_value();
+    static int32_t  get_int32_value();
 
     static void set_int_value(int value);
-    static int  get_int_value(void);
+    static int  get_int_value();
 
 private:
     explicit Connection(QObject *parent = nullptr);

@@ -57,22 +57,22 @@ private:
 
     QTimer *timer = nullptr;
 
-    void init(void);
-    void init_timer(void);
+    void init();
+    void init_timer();
 
-    void append(void);
-    void remove(void);
-    void edit(void);
-    void run(void);
-    void up(void);
-    void down(void);
+    void append();
+    void remove();
+    void edit();
+    void run();
+    void up();
+    void down();
 
-    void f_start(void);
-    void f_stop(void);
-    void f_update(void);
+    void f_start();
+    void f_stop();
+    void f_update();
 
-    void load_setting(void);
-    void save_setting(void);
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // BIN_WIDGET_HPP

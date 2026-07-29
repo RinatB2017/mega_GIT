@@ -45,9 +45,9 @@ signals:
     void send(QByteArray);
 
 private slots:
-    void test(void);
+    void test();
     void read_data(QByteArray data);
-    void clean_data(void);
+    void clean_data();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -65,14 +65,14 @@ private:
     int curve_GYR_y = 0;
     int curve_GYR_z = 0;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

@@ -41,20 +41,20 @@ public:
 
     QString get_caption(bool *ok);
     void get_color(int *r, int *g, int *b);
-    int get_index(void);
+    int get_index();
 
 private slots:
-    void change_color(void);
+    void change_color();
 
 private:
     int index;
     QLineEdit *caption_curve = nullptr;
     QLabel *color_curve = nullptr;
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

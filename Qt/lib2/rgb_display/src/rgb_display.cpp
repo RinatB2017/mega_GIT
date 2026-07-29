@@ -76,7 +76,7 @@ bool RGB_display::get_param(int *cnt_led_x,
     return true;
 }
 //--------------------------------------------------------------------------------
-void RGB_display::init(void)
+void RGB_display::init()
 {
     max_x = SCREEN_WIDTH;
     max_y = SCREEN_HEIGTH;
@@ -110,7 +110,7 @@ void RGB_display::init(void)
     //setFixedSize(width(), height());
 }
 //--------------------------------------------------------------------------------
-void RGB_display::clean_grid(void)
+void RGB_display::clean_grid()
 {
     for(int y=0; y<grid->rowCount(); y++)
     {
@@ -131,7 +131,7 @@ void RGB_display::clean_grid(void)
     l_buttons.clear();
 }
 //--------------------------------------------------------------------------------
-void RGB_display::create_new_display(void)
+void RGB_display::create_new_display()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -162,7 +162,7 @@ void RGB_display::create_new_display(void)
     emit debug(QString("created %1 leds").arg(l_buttons.count()));
 }
 //--------------------------------------------------------------------------------
-void RGB_display::set_display(void)
+void RGB_display::set_display()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -177,7 +177,7 @@ void RGB_display::set_display(void)
     //setFixedSize(width(), height());
 }
 //--------------------------------------------------------------------------------
-void RGB_display::get_display(void)
+void RGB_display::get_display()
 {
     if(l_buttons.count() == 0)
     {
@@ -198,7 +198,7 @@ void RGB_display::get_display(void)
     emit debug(QString("u_border %1").arg(u_border));
 }
 //--------------------------------------------------------------------------------
-void RGB_display::set_default(void)
+void RGB_display::set_default()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -212,12 +212,12 @@ void RGB_display::set_default(void)
     create_new_display();
 }
 //--------------------------------------------------------------------------------
-bool RGB_display::load_ico(void)
+bool RGB_display::load_ico()
 {
     return load_picture(":/mainwindow/computer.png");
 }
 //--------------------------------------------------------------------------------
-bool RGB_display::load_pic(void)
+bool RGB_display::load_pic()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Image"), ".", tr("Image Files (*.png *.jpg *.bmp)"));
@@ -314,7 +314,7 @@ void RGB_display::show_picture(int begin_x, int begin_y)
     emit send(packet_str);
 }
 //--------------------------------------------------------------------------------
-void RGB_display::load_leds(void)
+void RGB_display::load_leds()
 {
 #ifndef SAVE_INI
     QSettings *settings = new QSettings(ORGNAME, APPNAME);
@@ -339,7 +339,7 @@ void RGB_display::load_leds(void)
     settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
-void RGB_display::save_leds(void)
+void RGB_display::save_leds()
 {
 #ifndef SAVE_INI
     QSettings *settings = new QSettings(ORGNAME, APPNAME);
@@ -367,27 +367,27 @@ void RGB_display::save_leds(void)
     settings->deleteLater();
 }
 //--------------------------------------------------------------------------------
-int RGB_display::get_max_x(void)
+int RGB_display::get_max_x()
 {
     return max_x;
 }
 //--------------------------------------------------------------------------------
-int RGB_display::get_max_y(void)
+int RGB_display::get_max_y()
 {
     return max_y;
 }
 //--------------------------------------------------------------------------------
-int RGB_display::get_picture_w(void)
+int RGB_display::get_picture_w()
 {
     return picture.width();
 }
 //--------------------------------------------------------------------------------
-int RGB_display::get_picture_h(void)
+int RGB_display::get_picture_h()
 {
     return picture.height();
 }
 //--------------------------------------------------------------------------------
-void RGB_display::send_test_data(void)
+void RGB_display::send_test_data()
 {
     PACKET packet;
 
@@ -439,22 +439,22 @@ bool RGB_display::set_brightness(int value)
     return true;
 }
 //--------------------------------------------------------------------------------
-void RGB_display::updateText(void)
+void RGB_display::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool RGB_display::programm_is_exit(void)
+bool RGB_display::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void RGB_display::load_setting(void)
+void RGB_display::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void RGB_display::save_setting(void)
+void RGB_display::save_setting()
 {
 
 }

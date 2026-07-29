@@ -41,7 +41,7 @@ Scan_home_network::~Scan_home_network()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Scan_home_network::init(void)
+void Scan_home_network::init()
 {
     ui->setupUi(this);
 
@@ -53,7 +53,7 @@ void Scan_home_network::init(void)
     create_engine();
 }
 //--------------------------------------------------------------------------------
-void Scan_home_network::scan(void)
+void Scan_home_network::scan()
 {
     QStringList params;
     params.append("-sn");
@@ -65,7 +65,7 @@ void Scan_home_network::scan(void)
     myProcess->start("nmap", params);
 }
 //--------------------------------------------------------------------------------
-void Scan_home_network::create_engine(void)
+void Scan_home_network::create_engine()
 {
     myProcess = new QProcess(this);
     connect(myProcess,  &QProcess::started,                 this,   &Scan_home_network::started);
@@ -76,7 +76,7 @@ void Scan_home_network::create_engine(void)
     connect(myProcess,  &QProcess::readyReadStandardError,  this,   &Scan_home_network::readData);
 }
 //--------------------------------------------------------------------------------
-void Scan_home_network::started(void)
+void Scan_home_network::started()
 {
     block_interface(true);
     emit info("Процесс начат!");
@@ -126,23 +126,23 @@ void Scan_home_network::process_error(QProcess::ProcessError p_error)
     }
 }
 //--------------------------------------------------------------------------------
-void Scan_home_network::readData(void)
+void Scan_home_network::readData()
 {
     QString output = myProcess->readAllStandardOutput();
     ui->log_widget->infoLog(output);
 }
 //--------------------------------------------------------------------------------
-void Scan_home_network::updateText(void)
+void Scan_home_network::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool Scan_home_network::programm_is_exit(void)
+bool Scan_home_network::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Scan_home_network::load_setting(void)
+void Scan_home_network::load_setting()
 {
     QUrl url;
     url.setHost(load_string(IPV4));
@@ -157,7 +157,7 @@ void Scan_home_network::load_setting(void)
     ui->ipv4_widget->set_url(QUrl(url));
 }
 //--------------------------------------------------------------------------------
-void Scan_home_network::save_setting(void)
+void Scan_home_network::save_setting()
 {
     save_string(IPV4,   ui->ipv4_widget->get_url().host());
     save_int(MASK,      ui->sb_mask->value());

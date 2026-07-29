@@ -37,7 +37,7 @@ MyBrowser::~MyBrowser()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MyBrowser::init(void)
+void MyBrowser::init()
 {
     ui->setupUi(this);
 
@@ -153,7 +153,7 @@ void MyBrowser::popup(QPoint)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MyBrowser::set_attributes(void)
+void MyBrowser::set_attributes()
 {
     //FIXME убрать говнокод
     QWebEngineSettings *settings = new_page->settings();
@@ -235,12 +235,12 @@ void MyBrowser::setUrl(const QUrl &url)
     ui->le_address->setText(url.toString(QUrl::FullyEncoded));
 }
 //--------------------------------------------------------------------------------
-void MyBrowser::run(void)
+void MyBrowser::run()
 {
     s_run();
 }
 //--------------------------------------------------------------------------------
-void MyBrowser::load_proxies(void)
+void MyBrowser::load_proxies()
 {
     bool ok = false;
     QXmlGet xmlGet;
@@ -280,7 +280,7 @@ void MyBrowser::load_proxies(void)
     emit info(QString(tr("load %1 proxy")).arg(ui->cb_proxy->count()));
 }
 //--------------------------------------------------------------------------------
-void MyBrowser::s_run(void)
+void MyBrowser::s_run()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -323,7 +323,7 @@ void MyBrowser::s_run(void)
     ui->webEngineView->load(QUrl(address));
 }
 //--------------------------------------------------------------------------------
-void MyBrowser::get_document_title(void)
+void MyBrowser::get_document_title()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -402,22 +402,22 @@ void MyBrowser::handleCookieAdded(const QNetworkCookie &cookie)
     m_cookies.append(cookie);
 }
 //--------------------------------------------------------------------------------
-void MyBrowser::updateText(void)
+void MyBrowser::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MyBrowser::programm_is_exit(void)
+bool MyBrowser::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MyBrowser::load_setting(void)
+void MyBrowser::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MyBrowser::save_setting(void)
+void MyBrowser::save_setting()
 {
 
 }

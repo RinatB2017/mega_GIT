@@ -42,13 +42,13 @@ public:
     explicit ShowPicture(QWidget *parent = nullptr);
     virtual ~ShowPicture();
 
-    QList<QRubberBand *> get_rects(void);
-    bool clr_rects(void);
+    QList<QRubberBand *> get_rects();
+    bool clr_rects();
     bool get_pixmap(uint x, uint y, uint w, uint h, QPixmap *pixmap);
 
     void set_rect_max(uint value);
 
-    void test(void);
+    void test();
 
     bool correct(int x, int y, QRect rect);
     bool correct(int id, QRect rect);
@@ -63,7 +63,7 @@ private:
 
     int max_rect = 100;
 
-    void init(void);
+    void init();
 
 protected:
     virtual void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;

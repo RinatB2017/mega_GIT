@@ -31,7 +31,7 @@ Card::Card(QWidget *parent) :
     init();
 }
 //--------------------------------------------------------------------------------
-void Card::init(void)
+void Card::init()
 {
 
 }
@@ -261,22 +261,22 @@ void Card::mouseReleaseEvent(QMouseEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-void Card::updateText(void)
+void Card::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool Card::programm_is_exit(void)
+bool Card::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Card::load_setting(void)
+void Card::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Card::save_setting(void)
+void Card::save_setting()
 {
 
 }

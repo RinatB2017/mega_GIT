@@ -28,7 +28,7 @@ Bone::Bone(QWidget *parent) :
     init();
 }
 //--------------------------------------------------------------------------------
-void Bone::init(void)
+void Bone::init()
 {
     label = new QLabel(this);
     label->setFont(QFont("Liberation Sans", 24));

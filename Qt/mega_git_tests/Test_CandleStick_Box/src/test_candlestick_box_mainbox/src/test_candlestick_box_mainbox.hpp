@@ -50,15 +50,15 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void load(void);
-    void save(void);
-    void test(void);
-    void test2(void);
-    void test3(void);
+    void load();
+    void save();
+    void test();
+    void test2();
+    void test3();
 
-    void started(void);
-    void read_data(void);
-    void read_error(void);
+    void started();
+    void read_data();
+    void read_error();
     void finished(int state);
     void process_error(QProcess::ProcessError err);
 
@@ -74,9 +74,9 @@ private:
     GrapherBox *grapher;
 #endif
 
-    void init(void);
-    void init_process(void);
-    void createTestBar(void);
+    void init();
+    void init_process();
+    void createTestBar();
     bool create_set(QStringList sl, QCandlestickSet *set);
 
     QVector<QPointF> circle(qreal x, qreal y, qreal r);
@@ -84,10 +84,10 @@ private:
 
     void print_set(QCandlestickSet *set);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

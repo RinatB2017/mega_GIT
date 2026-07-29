@@ -32,7 +32,7 @@ class FT2232H_thread : public QThread
     Q_OBJECT
 public:
     explicit FT2232H_thread(QObject *parent = nullptr);
-    void run(void);
+    void run();
 
 signals:
     void info(const QString &);
@@ -50,12 +50,12 @@ private:
     DWORD dwNumBytesSent, dwNumBytesRead, dwNumInputBuffer;
 
     FT_HANDLE ftdiHandle;
-    void SPI_CSEnable(void);
-    void SPI_CSDisable(void);
+    void SPI_CSEnable();
+    void SPI_CSDisable();
 
     BOOL SPI_Initial(FT_HANDLE ftHandle);
     BOOL open(int deviceNumber);
-    BOOL close(void);
+    BOOL close();
 
     void print_error(const QString &function,
                      FT_STATUS status);

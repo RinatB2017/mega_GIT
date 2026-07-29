@@ -40,7 +40,7 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void test(void);
+    void test();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -53,26 +53,26 @@ private:
     int picture_height = 0;
     int step = 0;
 
-    void init(void);
+    void init();
 
     bool get_int(QXmlGet *xml, QString name, int *data);
 
     bool load_wall(QPixmap *pixmap);
     bool load_field(QPixmap *pixmap);
-    void load_labirint(void);
-    void load_images(void);
+    void load_labirint();
+    void load_images();
 
-    void move_left(void);
-    void move_right(void);
-    void move_up(void);
-    void move_down(void);
+    void move_left();
+    void move_right();
+    void move_up();
+    void move_down();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     void keyPressEvent(QKeyEvent *event);

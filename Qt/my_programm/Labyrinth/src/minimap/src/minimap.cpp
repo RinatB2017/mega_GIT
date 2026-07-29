@@ -36,7 +36,7 @@ MiniMap::~MiniMap()
 
 }
 //--------------------------------------------------------------------------------
-void MiniMap::init(void)
+void MiniMap::init()
 {
     grid_map = new QGridLayout();
     grid_map->setSpacing(0);
@@ -167,22 +167,22 @@ bool MiniMap::get(int x, int y, int *id)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MiniMap::updateText(void)
+void MiniMap::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool MiniMap::programm_is_exit(void)
+bool MiniMap::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MiniMap::load_setting(void)
+void MiniMap::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MiniMap::save_setting(void)
+void MiniMap::save_setting()
 {
 
 }

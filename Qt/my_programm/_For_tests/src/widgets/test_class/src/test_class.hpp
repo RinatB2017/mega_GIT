@@ -38,32 +38,32 @@ public:
 private:
     typedef struct
     {
-        bool (Test_class::*check_box)(void);
-        void (Test_class::*func)(void);
+        bool (Test_class::*check_box)();
+        void (Test_class::*func)();
     } CMD;
     QList<CMD> commands;
 
     Ui::Test_class *ui;
 
-    void init(void);
-    void test(void);
+    void init();
+    void test();
 
-    bool get_0(void);
-    bool get_1(void);
-    bool get_2(void);
-    bool get_3(void);
-    bool get_4(void);
+    bool get_0();
+    bool get_1();
+    bool get_2();
+    bool get_3();
+    bool get_4();
 
-    void f_0(void);
-    void f_1(void);
-    void f_2(void);
-    void f_3(void);
-    void f_4(void);
+    void f_0();
+    void f_1();
+    void f_2();
+    void f_3();
+    void f_4();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // TEST_CLASS_HPP

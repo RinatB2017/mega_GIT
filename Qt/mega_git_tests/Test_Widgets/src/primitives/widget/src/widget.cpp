@@ -37,7 +37,7 @@ Widget::Widget(QWidget *parent) :
     init();
 }
 //--------------------------------------------------------------------------------
-void Widget::init(void)
+void Widget::init()
 {
     label = new QLabel();
     label->setPixmap(QPixmap(ICON_PROGRAMM));
@@ -79,22 +79,22 @@ void Widget::mouseReleaseEvent(QMouseEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-void Widget::updateText(void)
+void Widget::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool Widget::programm_is_exit(void)
+bool Widget::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Widget::load_setting(void)
+void Widget::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Widget::save_setting(void)
+void Widget::save_setting()
 {
 
 }

@@ -32,9 +32,9 @@ public:
     virtual ~ViewFinder();
 
     void install(QWidget* widget);
-    void remove(void);
+    void remove();
 
-    void test(void);
+    void test();
 
 protected:
     bool eventFilter(QObject*, QEvent* event);

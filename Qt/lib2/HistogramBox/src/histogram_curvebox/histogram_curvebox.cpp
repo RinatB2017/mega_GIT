@@ -95,12 +95,12 @@ void Histogram_CurveBox::get_color(int *r, int *g, int *b)
     *b = color_curve->palette().window().color().blue();
 }
 //--------------------------------------------------------------------------------
-int Histogram_CurveBox::get_index(void)
+int Histogram_CurveBox::get_index()
 {
     return index;
 }
 //--------------------------------------------------------------------------------
-void Histogram_CurveBox::change_color(void)
+void Histogram_CurveBox::change_color()
 {
     emit info("change_color");
     QColorDialog *dlg = new QColorDialog(this);
@@ -121,22 +121,22 @@ void Histogram_CurveBox::change_color(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Histogram_CurveBox::updateText(void)
+void Histogram_CurveBox::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool Histogram_CurveBox::programm_is_exit(void)
+bool Histogram_CurveBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Histogram_CurveBox::load_setting(void)
+void Histogram_CurveBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Histogram_CurveBox::save_setting(void)
+void Histogram_CurveBox::save_setting()
 {
 
 }

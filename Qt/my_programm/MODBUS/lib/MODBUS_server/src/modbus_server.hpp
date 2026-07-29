@@ -54,13 +54,13 @@ private slots:
                        int address,
                        int size);
 
-    void connect_device(void);
-    void disconnect_device(void);
+    void connect_device();
+    void disconnect_device();
 
-    void connect_tcp_device(void);
-    void disconnect_tcp_device(void);
+    void connect_tcp_device();
+    void disconnect_tcp_device();
 
-    void refresh(void);
+    void refresh();
 
 private:
     Ui::MODBUS_server *ui;
@@ -77,14 +77,14 @@ private:
     QPointer<HexView16> he_input_registers;
     QPointer<HexView16> he_holding_registers;
 
-    void init(void);
-    void init_modbusDevice(void);
-    void init_tab_widget(void);
+    void init();
+    void init_modbusDevice();
+    void init_tab_widget();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif

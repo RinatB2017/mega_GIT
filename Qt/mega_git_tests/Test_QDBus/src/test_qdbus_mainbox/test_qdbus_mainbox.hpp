@@ -48,13 +48,13 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
+    void choice_test();
+    bool test_0();
+    bool test_1();
+    bool test_2();
+    bool test_3();
+    bool test_4();
+    bool test_5();
 
     void UDisks_deviceAdded(QDBusObjectPath dev);
     void UDisks_deviceRemoved(QDBusObjectPath dev);
@@ -66,7 +66,7 @@ private:
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
 
     QPointer<MySplashScreen> splash;
@@ -78,17 +78,17 @@ private:
     //QDBusConnection system_bus;
     //QDBusConnection session_bus;
 
-    void init(void);
+    void init();
 
-    void connect_system_bus(void);
-    void connect_session_bus(void);
+    void connect_system_bus();
+    void connect_session_bus();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

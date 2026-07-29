@@ -32,7 +32,7 @@ class IPV4 : public MyWidget
     Q_OBJECT
 
 signals:
-    void editingFinished(void);
+    void editingFinished();
     void s_get_url(QUrl);
 
 public:
@@ -41,11 +41,11 @@ public:
 
     void setObjectName(const QString &name);
 
-    QUrl get_url(void);
+    QUrl get_url();
     void set_url(QUrl url);
 
 private slots:
-    void work(void);
+    void work();
 
 private:
     QPointer<QSpinBox> a;
@@ -55,12 +55,12 @@ private:
 
     QPointer<QSpinBox> port;
 
-    void init(void);
+    void init();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     bool eventFilter(QObject*, QEvent* event);

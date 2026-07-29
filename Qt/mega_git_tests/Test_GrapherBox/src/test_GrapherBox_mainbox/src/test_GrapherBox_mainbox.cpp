@@ -55,7 +55,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
     all_break = false;
@@ -124,7 +124,7 @@ void MainBox::init(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_data(void)
+void MainBox::test_data()
 {
     typedef struct
     {
@@ -173,7 +173,7 @@ void MainBox::test_data(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_data2(void)
+void MainBox::test_data2()
 {
     qreal begin_y = 1000;
 
@@ -208,7 +208,7 @@ void MainBox::test_data2(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -249,7 +249,7 @@ void MainBox::createTestBar(void)
     //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -264,7 +264,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef void (MainBox::*function)(void);
+        typedef void (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -278,7 +278,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
@@ -525,7 +525,7 @@ void MainBox::ReadWav(const QString &fileName)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_wav(void)
+void MainBox::read_wav()
 {
     MyFileDialog *dlg = new MyFileDialog("read_wav");
     dlg->setNameFilter("WAV files (*.wav)");
@@ -542,7 +542,7 @@ void MainBox::read_wav(void)
     delete dlg;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_load(void)
+void MainBox::test_load()
 {
     QByteArray ba = load_bytearray("test_data");
     emit info(QString("%1").arg(ba.size()));
@@ -567,7 +567,7 @@ void MainBox::test_load(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_save(void)
+void MainBox::test_save()
 {
     int cnt = 0;
     bool ok = ui->grapher_widget->get_curve_data_count(0, &cnt);
@@ -602,7 +602,7 @@ void MainBox::test_save(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test0(void)
+void MainBox::test0()
 {
     emit trace(Q_FUNC_INFO);
     block_interface(true);
@@ -610,7 +610,7 @@ void MainBox::test0(void)
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test1(void)
+void MainBox::test1()
 {
     TestDialog *dlg = new TestDialog(ui->grapher_widget->get_curves_count()-1,
                                      1000);
@@ -626,7 +626,7 @@ void MainBox::test1(void)
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test2(void)
+void MainBox::test2()
 {
     TestDialog *dlg = new TestDialog(ui->grapher_widget->get_curves_count()-1,
                                      1000);
@@ -642,29 +642,29 @@ void MainBox::test2(void)
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test3(void)
+void MainBox::test3()
 {
     block_interface(true);
     ui->grapher_widget->test_draw_circle();
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

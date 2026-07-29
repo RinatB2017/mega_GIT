@@ -34,7 +34,7 @@ MyThread::~MyThread()
 
 }
 //--------------------------------------------------------------------------------
-void MyThread::process(void)
+void MyThread::process()
 {
     emit info("process");
     QElapsedTimer time;
@@ -89,12 +89,12 @@ void MyThread::set_time(QDateTime dt)
     sec  = static_cast<uint8_t>(dt.time().second());
 }
 //--------------------------------------------------------------------------------
-void MyThread::start(void)
+void MyThread::start()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MyThread::stop(void)
+void MyThread::stop()
 {
     flag_exit = true;
 }

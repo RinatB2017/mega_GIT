@@ -40,8 +40,8 @@ public:
                       QWidget *parent);
     void get_RGB(int index, int *r, int *g, int *b, bool *ok);
     QString get_caption(int index, bool *ok);
-    QwtPicker::RubberBand get_rubberband(void);
-    QColor get_rubberband_color(void);
+    QwtPicker::RubberBand get_rubberband();
+    QColor get_rubberband_color();
 
 signals:
     void info(const QString &);
@@ -54,8 +54,8 @@ private:
     QComboBox *rubberband_curve = nullptr;
     QLabel *rubberband_color = nullptr;
 
-    void connect_log(void);
-    void change_rubberband_color(void);
+    void connect_log();
+    void change_rubberband_color();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

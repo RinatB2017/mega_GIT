@@ -43,8 +43,8 @@ public:
     virtual ~MainBox();
 
 public slots:
-    void choice_test(void);
-    bool test(void);
+    void choice_test();
+    bool test();
 
 private:
     Ui::MainBox *ui;
@@ -52,7 +52,7 @@ private:
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } *cmd_t;
     QList<CMD> commands;
 
@@ -60,19 +60,19 @@ private:
 
     QSqlDatabase db;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
-    void open(void);
-    void close(void);
-    void show(void);
-    void create_table(void);
-    void run_sql(void);
+    void open();
+    void close();
+    void show();
+    void create_table();
+    void run_sql();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

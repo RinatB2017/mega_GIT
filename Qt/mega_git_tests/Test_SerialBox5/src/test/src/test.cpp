@@ -37,7 +37,7 @@ Test::Test()
     QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
-void Test::test_signals(void)
+void Test::test_signals()
 {
     SerialBox5 *sb                              = mw->findChild<SerialBox5 *>("serial_widget");
     SerialBox5_lite *sb_lite                    = mw->findChild<SerialBox5_lite *>("serial_widget_lite");

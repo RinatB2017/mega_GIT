@@ -29,7 +29,7 @@
 class Player : public BaseItem
 {
 public:
-    Player(void);
+    Player();
 };
 //--------------------------------------------------------------------------------
 #endif // PLAYER_HPP

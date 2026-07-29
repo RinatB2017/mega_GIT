@@ -91,7 +91,7 @@ void SerialBox5::set_caption(QString value)
     }
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::init(void)
+void SerialBox5::init()
 {
     ui->setupUi(this);
 
@@ -114,14 +114,14 @@ void SerialBox5::init(void)
     updateText();
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::init_timer(void)
+void SerialBox5::init_timer()
 {
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout, this, &SerialBox5::checkPorts);
     m_timer->start(5000);
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::checkPorts(void)
+void SerialBox5::checkPorts()
 {
     QStringList sl_ports = get_port_names();
 
@@ -156,7 +156,7 @@ void SerialBox5::checkPorts(void)
     }
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::createWidgets(void)
+void SerialBox5::createWidgets()
 {
     QFont font("Liberation Sans", 8, QFont::Bold);
     ui->captionBox->setFont(font);
@@ -168,13 +168,13 @@ void SerialBox5::createWidgets(void)
     ui->gridLayout->setSpacing(0);
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::refresh(void)
+void SerialBox5::refresh()
 {
     ui->cb_PortBox->clear();
     ui->cb_PortBox->addItems(get_port_names());
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::initEnumerator(void)
+void SerialBox5::initEnumerator()
 {
     refresh();
     //---
@@ -228,7 +228,7 @@ void SerialBox5::initEnumerator(void)
     ui->cb_FlowBox->addItem("Software",        QSerialPort::SoftwareControl);
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::initSerial(void)
+void SerialBox5::initSerial()
 {
     ui->cb_PortBox->setProperty(NO_SAVE, true);
     ui->cb_BaudBox->setProperty(NO_SAVE, true);
@@ -287,7 +287,7 @@ void SerialBox5::getStatus(const QString &status, QDateTime current)
     get_parameter();
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::setCloseState(void)
+void SerialBox5::setCloseState()
 {
     ui->cb_PortBox->setEnabled(true);
     ui->btn_refresh->setEnabled(true);
@@ -535,7 +535,7 @@ void SerialBox5::setFlowBox(int index)
     else emit info(QString("set %1").arg(ui->cb_FlowBox->currentText()));
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::updateText(void)
+void SerialBox5::updateText()
 {
     ui->retranslateUi(this);
 
@@ -544,7 +544,7 @@ void SerialBox5::updateText(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-bool SerialBox5::programm_is_exit(void)
+bool SerialBox5::programm_is_exit()
 {
     if(isOpen())
     {
@@ -601,7 +601,7 @@ void SerialBox5::set_flag_byte_by_byte(bool state)
     flag_byte_by_byte = state;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::set_default(void)
+void SerialBox5::set_default()
 {
     if(isOpen())
     {
@@ -630,7 +630,7 @@ void SerialBox5::set_default(void)
     }
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::get_parameter(void)
+void SerialBox5::get_parameter()
 {
     if(isOpen() == false)
     {
@@ -686,27 +686,27 @@ bool SerialBox5::set_flowControl(QSerialPort::FlowControl value)
     return setFlowControl(value);
 }
 //--------------------------------------------------------------------------------
-qint32 SerialBox5::get_baudRate(void)
+qint32 SerialBox5::get_baudRate()
 {
     return baudRate();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::DataBits       SerialBox5::get_dataBits(void)
+QSerialPort::DataBits       SerialBox5::get_dataBits()
 {
     return dataBits();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::Parity         SerialBox5::get_parity(void)
+QSerialPort::Parity         SerialBox5::get_parity()
 {
     return parity();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::StopBits       SerialBox5::get_stopBits(void)
+QSerialPort::StopBits       SerialBox5::get_stopBits()
 {
     return stopBits();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::FlowControl    SerialBox5::get_flowControl(void)
+QSerialPort::FlowControl    SerialBox5::get_flowControl()
 {
     return flowControl();
 }
@@ -723,12 +723,12 @@ void SerialBox5::set_portname(const QString &portname)
     }
 }
 //--------------------------------------------------------------------------------
-QString SerialBox5::get_portname(void)
+QString SerialBox5::get_portname()
 {
     return ui->cb_PortBox->currentText();
 }
 //--------------------------------------------------------------------------------
-bool SerialBox5::power_on(void)
+bool SerialBox5::power_on()
 {
     if(isOpen())
     {
@@ -742,7 +742,7 @@ bool SerialBox5::power_on(void)
     return ok;
 }
 //--------------------------------------------------------------------------------
-bool SerialBox5::power_off(void)
+bool SerialBox5::power_off()
 {
     if(isOpen())
     {
@@ -798,7 +798,7 @@ void SerialBox5::stopBitsChanged(QSerialPort::StopBits stopBits)
     if (idx != -1) ui->cb_StopBitsBox->setCurrentIndex(idx);
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::load_setting(void)
+void SerialBox5::load_setting()
 {
     QString baud = load_string(SERIALBOX5_BAUD);
     QString databits = load_string(SERIALBOX5_DATABITS);
@@ -813,7 +813,7 @@ void SerialBox5::load_setting(void)
     ui->cb_StopBitsBox->setCurrentText(stopbits);
 }
 //--------------------------------------------------------------------------------
-void SerialBox5::save_setting(void)
+void SerialBox5::save_setting()
 {
     QString baud = ui->cb_BaudBox->currentText();
     QString databits = ui->cb_DataBitsBox->currentText();

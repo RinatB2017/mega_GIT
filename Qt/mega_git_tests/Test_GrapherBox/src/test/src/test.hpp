@@ -34,7 +34,7 @@ public:
     Test();
 
 private slots:
-    void test_grapherbox(void);
+    void test_grapherbox();
 
 private:
     MainWindow *mw = nullptr;

@@ -196,7 +196,7 @@ void Cleanup(cl_context context, cl_command_queue commandQueue,
 ///
 //	main() for HelloWorld example
 //
-int main(void)
+int main()
 {
     cl_context context = 0;
     cl_command_queue commandQueue = 0;

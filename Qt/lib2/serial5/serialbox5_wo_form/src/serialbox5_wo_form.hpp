@@ -60,14 +60,14 @@ public:
     bool set_stopBits(QSerialPort::StopBits value);
     bool set_flowControl(QSerialPort::FlowControl value);
 
-    qint32 get_baudRate(void);
-    QSerialPort::DataBits       get_dataBits(void);
-    QSerialPort::Parity         get_parity(void);
-    QSerialPort::StopBits       get_stopBits(void);
-    QSerialPort::FlowControl    get_flowControl(void);
+    qint32 get_baudRate();
+    QSerialPort::DataBits       get_dataBits();
+    QSerialPort::Parity         get_parity();
+    QSerialPort::StopBits       get_stopBits();
+    QSerialPort::FlowControl    get_flowControl();
 
-    bool power_on(void);
-    bool power_off(void);
+    bool power_on();
+    bool power_off();
 
 private:
     QString caption;
@@ -75,10 +75,10 @@ private:
 
     bool flag_byte_by_byte = false;
 
-    void init(void);
-    void initSerial(void);
-    void setOpenState(void);
-    void setCloseState(void);
+    void init();
+    void initSerial();
+    void setOpenState();
+    void setCloseState();
     QString ByteArrayToHex(const QByteArray &data);
 
 public slots:
@@ -97,12 +97,12 @@ private slots:
 
     void getStatus(const QString &status, QDateTime current);
 
-    void get_parameter(void);
+    void get_parameter();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // SERIALBOX5_WO_FORM_HPP

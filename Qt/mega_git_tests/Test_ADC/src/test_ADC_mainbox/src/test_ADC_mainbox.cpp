@@ -47,7 +47,7 @@ MainBox::~MainBox()
 }
 //--------------------------------------------------------------------------------
 #include "grapherbox.hpp"
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -85,12 +85,12 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::clr_curves(void)
+void MainBox::clr_curves()
 {
     ui->data_widget->clr_curves();
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -267,7 +267,7 @@ void MainBox::show_data_ADC(QList<QByteArray> sl)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -282,7 +282,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef void (MainBox::*function)(void);
+        typedef void (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -296,17 +296,17 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     if(ui->serial_widget->isOpen())
     {
@@ -316,12 +316,12 @@ bool MainBox::programm_is_exit(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
     ui->serial_widget->set_portname(load_string(P_NAME));
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
     save_string(P_NAME, ui->serial_widget->get_portname());
 }

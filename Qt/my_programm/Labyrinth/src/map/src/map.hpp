@@ -35,24 +35,24 @@ public:
     Map(QWidget *parent = nullptr);
     virtual ~Map();
 
-    void remove_player(void);
+    void remove_player();
     bool set_player(int pos_x, int pos_y);
-    bool set_begin_player(void);
+    bool set_begin_player();
 
     void new_map(int max_x, int max_y);
     bool load_map(const QString &filename);
     bool save_map(const QString &filename);
 
-    int rowCount(void);
-    int columnCount(void);
+    int rowCount();
+    int columnCount();
 
     bool find_start(int *x, int *y);
     bool find_player(int *x, int *y);
 
-    void player_move_up(void);
-    void player_move_down(void);
-    void player_move_left(void);
-    void player_move_right(void);
+    void player_move_up();
+    void player_move_down();
+    void player_move_left();
+    void player_move_right();
 
     int get_id(int x, int y);
 
@@ -63,16 +63,16 @@ public:
 
 signals:
     void move_to(int x, int y);
-    void victory(void);
+    void victory();
 
 public slots:
     bool start(int interval_ms);
-    void stop(void);
-    void refresh(void);
+    void stop();
+    void refresh();
 
-    void set_cursor(void);
+    void set_cursor();
 
-    void update(void);
+    void update();
 
 private:
     QGridLayout *grid_map;
@@ -97,17 +97,17 @@ private:
     int start_y = 0;
     QTimer *timer;
 
-    void init(void);
-    void init_id_map(void);
-    void createTimer(void);
+    void init();
+    void init_id_map();
+    void createTimer();
 
     QPixmap rotate(const QString &filename, int angle);
-    void check_victory(void);
+    void check_victory();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

@@ -37,7 +37,7 @@ Test::Test()
 }
 //--------------------------------------------------------------------------------
 #ifndef NO_GRAPHER
-void Test::test_grapher(void)
+void Test::test_grapher()
 {
 #ifdef NO_GRAPHER
     return;

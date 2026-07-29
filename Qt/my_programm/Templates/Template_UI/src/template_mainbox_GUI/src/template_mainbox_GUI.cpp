@@ -35,14 +35,14 @@ MainBox_GUI::~MainBox_GUI()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox_GUI::init(void)
+void MainBox_GUI::init()
 {
     ui->setupUi(this);
     connect(ui->btn_test,   &QPushButton::clicked,  this,   &MainBox_GUI::s_test);
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox_GUI::updateText(void)
+void MainBox_GUI::updateText()
 {
     ui->retranslateUi(this);
 }

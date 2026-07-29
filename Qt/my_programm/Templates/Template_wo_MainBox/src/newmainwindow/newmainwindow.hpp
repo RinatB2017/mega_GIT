@@ -31,17 +31,17 @@ public:
     NewMainWindow(MainWindow *parent = nullptr);
 
 private slots:
-    void choice_test(void);
-    bool test(void);
+    void choice_test();
+    bool test();
 
-    void push(void);
+    void push();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        bool (NewMainWindow::*func)(void);
+        bool (NewMainWindow::*func)();
     } CMD_t;
     QPointer<QComboBox> cb_test;
     QCheckBox *cb_block;
@@ -53,7 +53,7 @@ private:
                             const QString &text,
                             const QString &tool_tip);
 
-    void create_test_bar(void);
+    void create_test_bar();
 };
 //--------------------------------------------------------------------------------
 #endif

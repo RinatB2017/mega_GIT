@@ -127,11 +127,11 @@ class MyMainBox : public MyWidget
     Q_OBJECT
 
 public:
-    void updateText(void) {}
-    void load_setting(void) {}
-    void save_setting(void) {}
+    void updateText() {}
+    void load_setting() {}
+    void save_setting() {}
 
-    bool programm_is_exit(void)
+    bool programm_is_exit()
     {
         return true;
     }
@@ -157,11 +157,11 @@ public:
 #endif
 
 private slots:
-    void file_action_click(void);
-    void options_action_click(void);
-    void help_action_click(void);
+    void file_action_click();
+    void options_action_click();
+    void help_action_click();
 
-    void click_btn(void);
+    void click_btn();
 
 private:
     static QFile *m_logFile;
@@ -170,8 +170,8 @@ private:
     QPointer<QAction> options_action;
     QPointer<QAction> help_action;
 
-    void create_local_menus(void);
-    void create_toolbars(void);
+    void create_local_menus();
+    void create_toolbars();
 
 protected:
 //    void changeEvent(QEvent *event);

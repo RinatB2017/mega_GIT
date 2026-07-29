@@ -122,7 +122,7 @@ bool Plot::append(int time,
     return true;
 }
 //--------------------------------------------------------------------------------
-void Plot::update_ticket(void)
+void Plot::update_ticket()
 {
     //curve->setSamples(tickets); //FIXME Qt6
 }
@@ -195,18 +195,18 @@ void Plot::showItem(QwtPlotItem *item, bool on)
     replot();
 }
 //--------------------------------------------------------------------------------
-void Plot::exportPlot(void)
+void Plot::exportPlot()
 {
     QwtPlotRenderer renderer;
     renderer.exportTo(this, "stockchart.pdf");
 }
 //--------------------------------------------------------------------------------
-QString Plot::get_ticket_name(void)
+QString Plot::get_ticket_name()
 {
     return ticket_name;
 }
 //--------------------------------------------------------------------------------
-void Plot::test(void)
+void Plot::test()
 {
     showItem(curve, true);
 }

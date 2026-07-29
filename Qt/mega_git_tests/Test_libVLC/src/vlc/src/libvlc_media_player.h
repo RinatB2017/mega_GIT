@@ -466,8 +466,8 @@ void libvlc_video_set_format_callbacks( libvlc_media_player_t *mp,
  *
  * @code{.m}
  * \@protocol VLCOpenGLVideoViewEmbedding <NSObject>
- * - (void)addVoutSubview:(NSView *)view;
- * - (void)removeVoutSubview:(NSView *)view;
+ * - ()addVoutSubview:(NSView *)view;
+ * - ()removeVoutSubview:(NSView *)view;
  * \@end
  * @endcode
  *
@@ -1185,7 +1185,7 @@ LIBVLC_API void libvlc_video_set_aspect_ratio( libvlc_media_player_t *p_mi, cons
  * \return video viewpoint or NULL
  *         (the result must be released with free() or libvlc_free()).
  */
-LIBVLC_API libvlc_video_viewpoint_t *libvlc_video_new_viewpoint(void);
+LIBVLC_API libvlc_video_viewpoint_t *libvlc_video_new_viewpoint();
 
 /**
  * Update the video viewpoint information.

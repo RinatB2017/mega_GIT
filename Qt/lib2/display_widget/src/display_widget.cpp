@@ -81,17 +81,17 @@ bool Display_widget::set_size_led(int value)
     return true;
 }
 //--------------------------------------------------------------------------------
-int Display_widget::get_size_x(void)
+int Display_widget::get_size_x()
 {
     return max_x;
 }
 //--------------------------------------------------------------------------------
-int Display_widget::get_size_y(void)
+int Display_widget::get_size_y()
 {
     return max_y;
 }
 //--------------------------------------------------------------------------------
-void Display_widget::clear(void)
+void Display_widget::clear()
 {
     for(int n=0; n<MAX_BUF; n++)
     {
@@ -135,22 +135,22 @@ void Display_widget::paintEvent(QPaintEvent *)
     }
 }
 //--------------------------------------------------------------------------------
-void Display_widget::updateText(void)
+void Display_widget::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool Display_widget::programm_is_exit(void)
+bool Display_widget::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Display_widget::load_setting(void)
+void Display_widget::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Display_widget::save_setting(void)
+void Display_widget::save_setting()
 {
 
 }

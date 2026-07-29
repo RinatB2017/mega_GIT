@@ -48,7 +48,7 @@ signals:
     void set_status_text(const QString &);
 
 private slots:
-    void new_game(void);
+    void new_game();
     void bone_move(int id, int pos_x, int pos_y);
     void check_move(QObject *obj);
 
@@ -63,12 +63,12 @@ private:
 
     int cnt_move = 0;
 
-    void init(void);
-    void add_menu(void);
-    void create_bones(void);
-    void map_randomize(void);
+    void init();
+    void add_menu();
+    void create_bones();
+    void map_randomize();
     bool check_bone(int number);
-    void check_win(void);
+    void check_win();
 
     bool check_left(int pos_x, int pos_y);
     bool check_right(int pos_x, int pos_y);
@@ -80,10 +80,10 @@ private:
     void move_top(QObject *obj);
     void move_bottom(QObject *obj);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

@@ -45,8 +45,8 @@ signals:
     void send(QByteArray);
 
 private slots:
-    void test(void);
-    void test2(void);
+    void test();
+    void test2();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -54,13 +54,13 @@ private:
 
 //    QPointer<WIFI_frame> wf;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

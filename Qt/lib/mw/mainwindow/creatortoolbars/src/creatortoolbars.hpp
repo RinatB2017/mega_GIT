@@ -39,22 +39,22 @@ private:
     QList<QAbstractButton *> app_buttons;
     QList<QAction *> app_actions;
 
-    void init(void);
+    void init();
 
-    void app_toolbar_add_separator(void);
-    void app_toolbar_add_exit(void);
+    void app_toolbar_add_separator();
+    void app_toolbar_add_exit();
 #ifndef NO_LOG
-    void app_toolbar_add_font(void);
+    void app_toolbar_add_font();
 #endif
-    void app_toolbar_add_lang(void);
-    void app_toolbar_add_style(void);
+    void app_toolbar_add_lang();
+    void app_toolbar_add_style();
 #ifdef USE_CUSTOM_STYLE
-    void app_toolbar_add_custom_style(void);
+    void app_toolbar_add_custom_style();
 #endif
-    void app_toolbar_add_about(void);
-    void app_toolbar_add_help(void);
+    void app_toolbar_add_about();
+    void app_toolbar_add_help();
 
-    void app_updateText(void);
+    void app_updateText();
 
 protected:
     void changeEvent(QEvent *event);

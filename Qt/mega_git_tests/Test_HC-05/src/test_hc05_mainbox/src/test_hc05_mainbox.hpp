@@ -44,18 +44,18 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
-    bool f_test(void);
+    void choice_test();
+    bool f_test();
 
-    void find_device(void);
-    bool get_version(void);
-    bool get_address(void);
-    bool reset(void);
+    void find_device();
+    bool get_version();
+    bool get_address();
+    bool reset();
 
-    void port_read(void);
+    void port_read();
     void port_error(QSerialPort::SerialPortError serial_error);
 
-    void test(void);
+    void test();
 
 private:
     MySplashScreen *splash = 0;
@@ -65,7 +65,7 @@ private:
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
 
     QSerialPort serial;
@@ -75,21 +75,21 @@ private:
 
     bool flag_closed = false;
 
-    void init_serial(void);
-    bool send_AT(void);
+    void init_serial();
+    bool send_AT();
     void wait(int time_msec);
 
     QComboBox *cb_test = 0;
     QList<CMD> commands;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
     bool send_command(QString cmd_string);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

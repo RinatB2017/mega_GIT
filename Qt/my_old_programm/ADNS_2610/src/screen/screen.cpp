@@ -44,22 +44,22 @@ void Screen::draw(QByteArray data)
     update();
 }
 //--------------------------------------------------------------------------------
-void Screen::updateText(void)
+void Screen::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool Screen::programm_is_exit(void)
+bool Screen::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Screen::load_setting(void)
+void Screen::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Screen::save_setting(void)
+void Screen::save_setting()
 {
 
 }

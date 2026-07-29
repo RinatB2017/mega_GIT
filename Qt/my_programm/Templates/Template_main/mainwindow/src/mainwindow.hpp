@@ -48,14 +48,14 @@ signals:
                 QString message);
 
 private slots:
-    void test(void);
+    void test();
 
 private:
-    void create_menu(void);
-    void create_toolbars(void);
-    void create_central_widget(void);
-    void create_menu_dock(void);
-    void create_log_dock(void);
+    void create_menu();
+    void create_toolbars();
+    void create_central_widget();
+    void create_menu_dock();
+    void create_log_dock();
 
 protected:
     void closeEvent(QCloseEvent *event);

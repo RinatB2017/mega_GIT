@@ -47,13 +47,13 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void load(void);
-    void save(void);
-    void test(void);
+    void load();
+    void save();
+    void test();
 
-    void started(void);
-    void read_data(void);
-    void read_error(void);
+    void started();
+    void read_data();
+    void read_error();
     void finished(int state);
     void process_error(QProcess::ProcessError err);
 
@@ -68,18 +68,18 @@ private:
     GrapherBox *grapher;
 #endif
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
-    void create_plot_currency(void);
+    void createTestBar();
+    void create_plot_currency();
 
     QVector<QPointF> circle(float x, float y, float r);
     QVector<QLine> circle_line(float x, float y, float r);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

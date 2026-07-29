@@ -49,13 +49,13 @@ private:
     int max_x = MIN_WIDTH;
     int max_y = MIN_HEIGHT;
 
-    void init(void);
+    void init();
     bool add_item(int x, int y, int id);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MINIMAP_HPP

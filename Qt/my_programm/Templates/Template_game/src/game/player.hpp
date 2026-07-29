@@ -28,22 +28,22 @@ class Player
 public:
     explicit Player(Map *map, bool is_alive, int pos_x, int pos_y);
 
-    bool is_alive(void);
+    bool is_alive();
 
-    int get_x(void);
-    int get_y(void);
+    int get_x();
+    int get_y();
 
-    void top(void);
-    void bottom(void);
-    void left(void);
-    void right(void);
+    void top();
+    void bottom();
+    void left();
+    void right();
 
 private:
     bool alive;
     int pos_x;
     int pos_y;
     Map *map;
-    void init(void);
+    void init();
 
 };
 //--------------------------------------------------------------------------------

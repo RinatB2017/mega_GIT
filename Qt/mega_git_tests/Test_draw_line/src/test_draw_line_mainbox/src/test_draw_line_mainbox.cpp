@@ -47,7 +47,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -59,7 +59,7 @@ void MainBox::init(void)
     init_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_widgets(void)
+void MainBox::init_widgets()
 {
     ui->sb_len_line->setRange(1, 0xFFFF);
     ui->sb_len_pause->setRange(0, 0xFFFF);
@@ -90,7 +90,7 @@ void MainBox::init_widgets(void)
     connect(ui->serial_widget,  &SerialBox5::port_is_active,    ui->btn_color,  &QPushButton::setEnabled);
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -109,13 +109,13 @@ void MainBox::createTestBar(void)
     connect(btn_test,   SIGNAL(clicked(bool)), this, SLOT(set_color()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::createSerialBox(void)
+void MainBox::createSerialBox()
 {
     connect(this,               SIGNAL(send(QByteArray)),   ui->serial_widget,  SLOT(input(QByteArray)));
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     F_01 packet;
 
@@ -142,7 +142,7 @@ void MainBox::test(void)
     emit send(send_packet.toLatin1());
 }
 //--------------------------------------------------------------------------------
-void MainBox::set_color(void)
+void MainBox::set_color()
 {
     QColorDialog *dlg = new QColorDialog;
     dlg->setCurrentColor(QColor(color_R, color_G, color_B));
@@ -326,22 +326,22 @@ void MainBox::block_widget(const QString &name, bool state)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

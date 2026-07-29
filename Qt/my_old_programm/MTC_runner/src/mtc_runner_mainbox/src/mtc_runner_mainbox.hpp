@@ -43,25 +43,25 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void run(void);
+    void run();
 
-    void procfunc(void);
-    void read_data(void);
-    void read_error(void);
+    void procfunc();
+    void read_data();
+    void read_error();
 
-    void started(void);
+    void started();
     void finished(int result);
 
     void process_error(QProcess::ProcessError p_error);
 
-    void choice_script(void);
+    void choice_script();
     void auto_run(bool state);
 
 private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-    void init(void);
+    void init();
 
     QCheckBox *cb_auto_run;
     QToolButton *btn_script;
@@ -69,13 +69,13 @@ private:
     QToolButton *btn_run;
     QProcess *process;
 
-    void createRunBar(void);
-    void createScriptBar(void);
+    void createRunBar();
+    void createScriptBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

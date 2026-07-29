@@ -106,7 +106,7 @@ Chat::Chat(QWidget *parent)
 
 //-----------------------------------------------------------------------------------------------------------------
 //TODO
-void Chat::test(void)
+void Chat::test()
 {
     ui->chat->append("test");
 

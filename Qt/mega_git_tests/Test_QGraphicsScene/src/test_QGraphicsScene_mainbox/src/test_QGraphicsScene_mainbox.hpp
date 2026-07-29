@@ -44,7 +44,7 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void test(void);
+    void test();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -60,15 +60,15 @@ private:
     Item *rectangle_G = nullptr;
     Item *rectangle_B = nullptr;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
+    void createTestBar();
     void block_interface(bool state);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

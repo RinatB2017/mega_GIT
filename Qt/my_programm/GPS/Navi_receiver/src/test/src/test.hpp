@@ -31,7 +31,7 @@ public:
     Test();
 
 private slots:
-    void test_func(void);
+    void test_func();
 };
 //--------------------------------------------------------------------------------
 #endif

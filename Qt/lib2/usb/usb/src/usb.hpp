@@ -63,20 +63,20 @@ public:
     explicit Usb(QWidget *parent = nullptr);
     virtual ~Usb();
 
-    bool f_list(void);
+    bool f_list();
     bool f_open(uint16_t vid, uint16_t pid);
     bool f_read(QByteArray *ba);
     bool f_write(QByteArray ba);
-    bool f_close(void);
+    bool f_close();
 
-    bool f_test(void);
+    bool f_test();
 
     bool f_send_cmd(uint8_t cmd, QByteArray param, QByteArray *res_ba);
-    void print_info(void);
+    void print_info();
 
 private:
     void dev_open(uint16_t vid, uint16_t pid);
-    void dev_close(void);
+    void dev_close();
 
     void print_devs(libusb_device **devs);
     QString get_error_string(int err);
@@ -91,10 +91,10 @@ private:
     int length = -1;
     int actual_length = -1;
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // USB_HPP

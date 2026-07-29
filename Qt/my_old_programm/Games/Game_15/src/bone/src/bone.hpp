@@ -33,7 +33,7 @@ public:
 
 private:
     QLabel *label;
-    void init(void);
+    void init();
 };
 //--------------------------------------------------------------------------------
 #endif

@@ -31,11 +31,11 @@ class Test : public QObject
     Q_OBJECT
 
 public:
-    Test(void);
+    Test();
 
 private slots:
-    void test_GUI(void);
-    void test_func(void);
+    void test_GUI();
+    void test_func();
 
 private:
     MainWindow *mw;

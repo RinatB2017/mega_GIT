@@ -42,7 +42,7 @@ public:
                      QSvgRenderer *renderer);
 
 private:
-    void init(void);
+    void init();
 
     QPointer<QLabel> label;
     QPoint lastPoint;
@@ -61,10 +61,10 @@ private:
     int get_corr_x2(QPixmap *pix);
     int get_corr_y2(QPixmap *pix);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     void mousePressEvent(QMouseEvent *event);

@@ -38,7 +38,7 @@ void Timer_options::set_time(const QTime &time)
     ui->timeEdit->setTime(time);
 }
 //--------------------------------------------------------------------------------
-QTime Timer_options::get_time(void)
+QTime Timer_options::get_time()
 {
     return ui->timeEdit->time();
 }
@@ -48,7 +48,7 @@ void Timer_options::set_message(const QString &message)
     ui->le_message->setText(message);
 }
 //--------------------------------------------------------------------------------
-QString Timer_options::get_message(void)
+QString Timer_options::get_message()
 {
     return ui->le_message->text();
 }

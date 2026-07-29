@@ -34,7 +34,7 @@ MyMediaRecorder::~MyMediaRecorder()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MyMediaRecorder::init(void)
+void MyMediaRecorder::init()
 {
     ui->setupUi(this);
 
@@ -70,7 +70,7 @@ void MyMediaRecorder::get_frame(QVideoFrame frame)
 }
 #endif
 //--------------------------------------------------------------------------------
-void MyMediaRecorder::set_filename(void)
+void MyMediaRecorder::set_filename()
 {
     MyFileDialog *dlg = new MyFileDialog("mediarecorder_box");
     dlg->setAcceptMode(MyFileDialog::AcceptSave);
@@ -90,7 +90,7 @@ void MyMediaRecorder::set_filename(void)
     delete dlg;
 }
 //--------------------------------------------------------------------------------
-void MyMediaRecorder::start(void)
+void MyMediaRecorder::start()
 {
     int frame_width = 1280;
     int frame_height = 720;
@@ -115,29 +115,29 @@ void MyMediaRecorder::start(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MyMediaRecorder::stop(void)
+void MyMediaRecorder::stop()
 {
     out.release();
     ui->btn_start->setEnabled(true);
     ui->btn_stop->setDisabled(true);
 }
 //--------------------------------------------------------------------------------
-void MyMediaRecorder::updateText(void)
+void MyMediaRecorder::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MyMediaRecorder::programm_is_exit(void)
+bool MyMediaRecorder::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MyMediaRecorder::load_setting(void)
+void MyMediaRecorder::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MyMediaRecorder::save_setting(void)
+void MyMediaRecorder::save_setting()
 {
 
 }

@@ -122,7 +122,7 @@ public:
 
     void set_legend_is_visible(bool state);
 
-    void check_visible_buttons(void);
+    void check_visible_buttons();
 
     void set_visible_btn_all_ON(bool state);
     void set_visible_btn_all_OFF(bool state);
@@ -143,16 +143,16 @@ public:
     void push_btn_Vertical(bool state);
 
     void set_silense(bool state);
-    bool get_silense(void);
+    bool get_silense();
 
-    int get_curves_count(void);
+    int get_curves_count();
 
     void set_zoom(bool x_state, bool y_state);
 
     void set_panning(bool x_state, bool y_state);
 
-    bool get_vertical_alignment(void);
-    bool get_horizontal_alignment(void);
+    bool get_vertical_alignment();
+    bool get_horizontal_alignment();
 
 signals:
     void change_text(int, QString);
@@ -166,7 +166,7 @@ public slots:
                          const QString &title);
 
     void remove_curve(int curve_ID);
-    void remove_all_curve(void);
+    void remove_all_curve();
 
     QColor get_curve_color(int channel);
     bool set_curve_color(int channel, QColor color);
@@ -208,16 +208,16 @@ public slots:
     bool get_curve_data_count(int channel, int *cnt);
     bool get_pos_x(int channel, long *value);
 
-    void clear(void);
-    void reset(void);
+    void clear();
+    void reset();
 
-    void click_legend(void);
+    void click_legend();
 
     //---
     void setAxisScaleDraw(int axisId, QwtScaleDraw *scaleDraw);
-    void clear_d_picker(void);
+    void clear_d_picker();
     void set_d_picker(QwtPlotPicker *picker);
-    QWidget *get_qwtPlot_canvas(void);
+    QWidget *get_qwtPlot_canvas();
     //---
 
     void set_axis_label_rotation(int angle);
@@ -227,27 +227,27 @@ public slots:
     void correct(int channel,
                  float mul);
 
-    void test(void);
-    void test2(void);
-    void test_sinus(void);
+    void test();
+    void test2();
+    void test_sinus();
     void test_single_sinus(int index, int offset);
     void test_random_data(int index, int offset);
-    void test_draw_circle(void);
+    void test_draw_circle();
 
     void legend_on(int curve_ID);
     void legend_off(int curve_ID);
 
-    void legends_all_on(void);
-    void legends_all_off(void);
+    void legends_all_on();
+    void legends_all_off();
 
-    void updateGraphics(void);
+    void updateGraphics();
 
 private slots:
     void legend_checked(const QVariant &itemInfo, bool on);
-    void options(void);
+    void options();
 
-    void load_curves(void);
-    void save_curves(void);
+    void load_curves();
+    void save_curves();
 
     void set_vertical_alignment(bool state = true);
     void set_horizontal_alignment(bool state = true);
@@ -256,7 +256,7 @@ private slots:
 
     void popup(QPoint);
 
-    void statistic(void);
+    void statistic();
 
     //---
     void clicked(QVariant v, int i);
@@ -313,20 +313,20 @@ private:
     bool flag_type_curve_LINES = false;
     bool flag_type_curve_SPLINE_LINES = false;
 
-    void init(void);
-    void create_widgets(void);
+    void init();
+    void create_widgets();
 
     QVariant itemToInfo(QwtPlotItem *plotItem) const;
     void showCurve( QwtPlotItem *, bool on );
 
-    void autoscroll(void);
+    void autoscroll();
 
-    void set_device_RECORDER(void);
-    void set_device_OSCILLOSCOPE(void);
+    void set_device_RECORDER();
+    void set_device_OSCILLOSCOPE();
 
-    void set_type_curve_DOTS(void);
-    void set_type_curve_LINES(void);
-    void set_type_curve_SPLINE_LINES(void);
+    void set_type_curve_DOTS();
+    void set_type_curve_LINES();
+    void set_type_curve_SPLINE_LINES();
 
 #ifndef GRAPHER_NOT_PANNING
     // panning with the left mouse button
@@ -338,22 +338,22 @@ private:
     QwtPlotMagnifier *plot_magnifier = nullptr;
 #endif
 
-    int getPositionStep(void);
-    int getSizeStep(void);
+    int getPositionStep();
+    int getSizeStep();
 
-    void test_get_info(void);
+    void test_get_info();
 
-    void f_vertical_alignment(void);
-    void f_horizontal_alignment(void);
-    void f_autoscroll(void);
+    void f_vertical_alignment();
+    void f_horizontal_alignment();
+    void f_autoscroll();
 
     void f_load_curves(QString filename);
     void f_save_curves(QString filename);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif

@@ -42,10 +42,10 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void test(void);
+    void test();
 
-    void server_thread_is_finished(void);
-    void client_thread_is_finished(void);
+    void server_thread_is_finished();
+    void client_thread_is_finished();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -54,18 +54,18 @@ private:
     Server *server = nullptr;
     Client *client = nullptr;
 
-    void init(void);
-    void connect_log(void);
+    void init();
+    void connect_log();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    bool create_server(void);
-    bool create_client(void);
+    bool create_server();
+    bool create_client();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

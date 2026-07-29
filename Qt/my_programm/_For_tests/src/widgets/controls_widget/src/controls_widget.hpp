@@ -38,10 +38,10 @@ public:
 private:
     Ui::Controls_widget *ui;
 
-    void init(void);
-    void delete_string(void);
+    void init();
+    void delete_string();
 
-    bool programm_is_exit(void);
+    bool programm_is_exit();
 };
 //--------------------------------------------------------------------------------
 #endif // CONTROLS_WIDGET_HPP

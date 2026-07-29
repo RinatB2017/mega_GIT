@@ -37,7 +37,7 @@ class LCD_clock : public QLCDNumber
     Q_OBJECT
 
 signals:
-    void s_show_message(void);
+    void s_show_message();
 
 public:
     explicit LCD_clock(QWidget *parent = nullptr);
@@ -58,16 +58,16 @@ private:
 
     QSettings *settings = nullptr;
 
-    void init(void);
-    void correct_time(void);
-    void timeout(void);
-    void show_message(void);
+    void init();
+    void correct_time();
+    void timeout();
+    void show_message();
 
     void popup(QPoint);
-    void open_option(void);
+    void open_option();
 
-    void load_setting(void);
-    void save_setting(void);
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // LCD_CLOCK_HPP

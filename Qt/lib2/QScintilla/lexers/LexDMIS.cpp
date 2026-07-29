@@ -50,11 +50,11 @@ class LexerDMIS : public ILexer
 		WordList m_codeFoldingEnd;
 
 		char * SCI_METHOD UpperCase(char *item);
-		void SCI_METHOD InitWordListSets(void);
+		void SCI_METHOD InitWordListSets();
 
 	public:
-		LexerDMIS(void);
-		virtual ~LexerDMIS(void);
+		LexerDMIS();
+		virtual ~LexerDMIS();
 
 		int SCI_METHOD Version() const {
 			return lvOriginal;
@@ -109,7 +109,7 @@ char * SCI_METHOD LexerDMIS::UpperCase(char *item)
 	return itemStart;
 }
 
-void SCI_METHOD LexerDMIS::InitWordListSets(void)
+void SCI_METHOD LexerDMIS::InitWordListSets()
 {
 	size_t totalLen = 0;
 
@@ -130,7 +130,7 @@ void SCI_METHOD LexerDMIS::InitWordListSets(void)
 }
 
 
-LexerDMIS::LexerDMIS(void) {
+LexerDMIS::LexerDMIS() {
 	this->InitWordListSets();
 
 	this->m_majorWords.Clear();
@@ -141,7 +141,7 @@ LexerDMIS::LexerDMIS(void) {
 	this->m_codeFoldingEnd.Clear();
 }
 
-LexerDMIS::~LexerDMIS(void) {
+LexerDMIS::~LexerDMIS() {
 	delete[] this->m_wordListSets;
 }
 

@@ -98,7 +98,7 @@ void LedPanel::set_u8_value(uint8_t value)
     led[0]->set_state(u8.bites.bit0);
 }
 //--------------------------------------------------------------------------------
-uint8_t LedPanel::get_u8_value(void)
+uint8_t LedPanel::get_u8_value()
 {
     U_8 u8;
     u8.bites.bit7 = led[7]->get_state();

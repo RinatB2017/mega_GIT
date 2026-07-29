@@ -21,17 +21,17 @@ painlessMesh  mesh;
 // User stub
 void sendMessage() ; // Prototype so PlatformIO doesn't complain
 
-void led_ON(void);
-void led_OFF(void);
+void led_ON();
+void led_OFF();
 //--------------------------------------------------------------------------------
 Task taskSendMessage( TASK_SECOND * 1 , TASK_FOREVER, &sendMessage );
 //--------------------------------------------------------------------------------
-void led_ON(void)
+void led_ON()
 {
     digitalWrite(LED_BUILTIN, LOW);
 }
 //--------------------------------------------------------------------------------
-void led_OFF(void)
+void led_OFF()
 {
     digitalWrite(LED_BUILTIN, HIGH);
 }

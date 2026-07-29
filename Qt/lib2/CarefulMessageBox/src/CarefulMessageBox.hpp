@@ -38,7 +38,7 @@ public:
 signals:
     
 private slots:
-    void click(void);
+    void click();
     
 private:
     QPushButton *buttons[MAX_BUTTONS];

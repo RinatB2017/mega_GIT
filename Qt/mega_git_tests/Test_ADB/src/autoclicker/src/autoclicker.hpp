@@ -65,28 +65,28 @@ private:
 
     QList<COMMAND> correct_commands;
 
-    void init(void);
-    void timer_start(void);
-    void timer_stop(void);
-    void test(void);
-    void update(void);
+    void init();
+    void timer_start();
+    void timer_stop();
+    void test();
+    void update();
 
-    void load(void);
-    void save(void);
+    void load();
+    void save();
 
     bool load_from_file(const QString &filename);
     bool save_to_file(const QString &filename);
 
-    void append(void);
-    void clear(void);
+    void append();
+    void clear();
 
-    bool test_commands(void);
+    bool test_commands();
     void run_command(const QString &data);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // AUTOCLICKER_HPP

@@ -69,7 +69,7 @@ QVector<QPointF> MainBox::circle(qreal x, qreal y, qreal r)
     return vector1;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -88,7 +88,7 @@ void MainBox::init(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_process(void)
+void MainBox::init_process()
 {
     process = new QProcess(this);
     process->setProcessChannelMode(QProcess::SeparateChannels);
@@ -101,7 +101,7 @@ void MainBox::init_process(void)
     connect(process, SIGNAL(error(QProcess::ProcessError)), this, SLOT(process_error(QProcess::ProcessError)));
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -199,7 +199,7 @@ bool MainBox::create_set(QStringList sl,
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load(void)
+void MainBox::load()
 {
 #if 0
     //QString filename = "011109.txt";
@@ -283,7 +283,7 @@ void MainBox::load(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::save(void)
+void MainBox::save()
 {
     emit info("save");
 }
@@ -298,7 +298,7 @@ void MainBox::print_set(QCandlestickSet *set)
               .arg((quint64)set->timestamp()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     ui->CandleStick_widget->set_ticket_name("TEST");
 
@@ -423,7 +423,7 @@ void MainBox::test(void)
     ui->CandleStick_widget->show();
 }
 //--------------------------------------------------------------------------------
-void MainBox::test2(void)
+void MainBox::test2()
 {
     QStringList args;
     args << "-rc";
@@ -448,25 +448,25 @@ void MainBox::test2(void)
     process->start("wget", args);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test3(void)
+void MainBox::test3()
 {
     fail();
 }
 //--------------------------------------------------------------------------------
-void MainBox::started(void)
+void MainBox::started()
 {
     emit trace(Q_FUNC_INFO);
     emit info("Starting...");
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_data(void)
+void MainBox::read_data()
 {
     Q_ASSERT(process);
     QByteArray data = process->readAllStandardOutput();
     emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_error(void)
+void MainBox::read_error()
 {
     emit trace(Q_FUNC_INFO);
 }
@@ -491,22 +491,22 @@ void MainBox::process_error(QProcess::ProcessError err)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

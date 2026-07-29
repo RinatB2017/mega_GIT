@@ -182,7 +182,7 @@ void OscilloscopeBox::showCurve(QwtPlotItem *item, bool on)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void OscilloscopeBox::create_widgets(void)
+void OscilloscopeBox::create_widgets()
 {
     QwtPlotGrid *grid = new QwtPlotGrid();
 
@@ -271,7 +271,7 @@ void OscilloscopeBox::click_channel(int channel, bool state)
     legend_state(channel, state);
 }
 //--------------------------------------------------------------------------------
-void OscilloscopeBox::click_RUN(void)
+void OscilloscopeBox::click_RUN()
 {
     state_RUN = !state_RUN;
     if(state_RUN)
@@ -321,7 +321,7 @@ void OscilloscopeBox::legend_checked(const QVariant &itemInfo, bool on)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void OscilloscopeBox::create_curves(void)
+void OscilloscopeBox::create_curves()
 {
     QList<QColor> l_colors;
     l_colors << QColor(Qt::red);
@@ -356,14 +356,14 @@ void OscilloscopeBox::create_curves(void)
     }
 }
 //--------------------------------------------------------------------------------
-void OscilloscopeBox::create_timer(void)
+void OscilloscopeBox::create_timer()
 {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     timer->start();
 }
 //--------------------------------------------------------------------------------
-void OscilloscopeBox::update(void)
+void OscilloscopeBox::update()
 {
     //int cnt = 0;
     for(int channel=0; channel<num_curves; channel++)
@@ -410,7 +410,7 @@ void OscilloscopeBox::add_curve_data(int channel,
     curves[channel].last_value = static_cast<float>(data);
 }
 //--------------------------------------------------------------------------------
-void OscilloscopeBox::updateGraphics(void)
+void OscilloscopeBox::updateGraphics()
 {
     ui->qwtPlot->replot();
 }
@@ -425,12 +425,12 @@ void OscilloscopeBox::updateText()
     }
 }
 //--------------------------------------------------------------------------------
-bool OscilloscopeBox::programm_is_exit(void)
+bool OscilloscopeBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void OscilloscopeBox::load_setting(void)
+void OscilloscopeBox::load_setting()
 {
 #ifdef Q_DEBUG
     qDebug() << "load_setting";
@@ -464,7 +464,7 @@ void OscilloscopeBox::load_setting(void)
     endArray();
 }
 //--------------------------------------------------------------------------------
-void OscilloscopeBox::save_setting(void)
+void OscilloscopeBox::save_setting()
 {
 #ifdef Q_DEBUG
     qDebug() << "save_setting";
@@ -487,7 +487,7 @@ void OscilloscopeBox::save_setting(void)
     endArray();
 }
 //--------------------------------------------------------------------------------
-void OscilloscopeBox::test(void)
+void OscilloscopeBox::test()
 {
 
 }

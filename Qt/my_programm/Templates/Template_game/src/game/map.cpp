@@ -28,12 +28,12 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-Map::Map(void)
+Map::Map()
 {
     init();
 }
 //--------------------------------------------------------------------------------
-void Map::init(void)
+void Map::init()
 {
     int x,y;
     for(y=0; y<MAX_Y; y++)
@@ -90,12 +90,12 @@ void Map::set_max_y(int value)
     height = value;
 }
 //--------------------------------------------------------------------------------
-int Map::get_max_x(void)
+int Map::get_max_x()
 {
     return width;
 }
 //--------------------------------------------------------------------------------
-int Map::get_max_y(void)
+int Map::get_max_y()
 {
     return height;
 }

@@ -40,13 +40,13 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void test(void);
+    void test();
 
 private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
 
-    void init(void);
+    void init();
 
     void set_item_param(QTreeWidgetItem *item,
                         int pos,
@@ -55,16 +55,16 @@ private:
                         Qt::CheckState state);
 
 
-    void createTestBar(void);
-    void usb(void);
-    void draw_my_buttons(void);
+    void createTestBar();
+    void usb();
+    void draw_my_buttons();
 
     QStringList qslGetPrintText(const QStringList qslStructText);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

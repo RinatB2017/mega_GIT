@@ -23,7 +23,7 @@ typedef struct
     uint8_t c;
 } A;
 
-void MainBox::test_0(void)
+void MainBox::test_0()
 {
     int x = offsetof(A, A::buf[5].b);
     //int x = offsetof(A, A::a);

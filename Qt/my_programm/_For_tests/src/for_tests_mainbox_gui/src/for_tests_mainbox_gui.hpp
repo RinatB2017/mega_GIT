@@ -47,12 +47,12 @@ private:
         QTreeWidgetItem *item;
         QString caption;
         Qt::CheckState state;
-        void (MainBox_GUI::*func)(void);
+        void (MainBox_GUI::*func)();
     } *item_t;
     QList<ITEM> items;
 
-    void init(void);
-    void updateText(void);
+    void init();
+    void updateText();
 
     QTreeWidgetItem *root_item = nullptr;
     void set_item_param(QTreeWidgetItem *item,
@@ -61,10 +61,10 @@ private:
                         Qt::CheckState state);
     void set_children_state(QTreeWidgetItem *parent_item,
                             Qt::CheckState state);
-    void f_not_created(void);
+    void f_not_created();
 
-    void btn_1_clicked(void);
-    void btn_2_clicked(void);
+    void btn_1_clicked();
+    void btn_2_clicked();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_GUI_HPP

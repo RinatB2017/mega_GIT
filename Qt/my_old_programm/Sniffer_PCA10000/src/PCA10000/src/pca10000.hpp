@@ -31,9 +31,9 @@ class PCA10000 : public QObject
 public:
     explicit PCA10000(QObject *parent = nullptr);
 
-    bool find_device(void);
+    bool find_device();
     void print_info(const QSerialPortInfo &port);
-    void test(void);
+    void test();
 
 signals:
     void info(const QString &);
@@ -42,7 +42,7 @@ signals:
     void trace(const QString &);
 
 private slots:
-    void port_read(void);
+    void port_read();
     void port_error(QSerialPort::SerialPortError serial_error);
 
 private:
@@ -52,32 +52,32 @@ private:
     QSerialPort serial;
 #endif
 
-    void init(void);
+    void init();
 
     QByteArray sniffer_data;
 
-    void encodeToSLIP(void);
-    void decodeFromSLIP(void);
-    void handlePacketHistory(void);
-    void sendPacket(void);
-    void sendScan(void);
-    void sendFollow(void);
-    void sendPingReq(void);
-    void sendTK(void);
-    void sendSwitchBaudRate(void);
-    void switchBaudRate(void);
-    void sendHopSequence(void);
-    void sendGoIdle(void);
-    void findSerialPort(void);
-    void readStaticHeader(void);
-    void writeStaticHeader(void);
-    void readDynamicHeader(void);
-    void writeDynamicHeader(void);
-    void readPayload(void);
-    void readFlags(void);
-    void getList(void);
-    void asString(void);
-    void validatePacketList(void);
+    void encodeToSLIP();
+    void decodeFromSLIP();
+    void handlePacketHistory();
+    void sendPacket();
+    void sendScan();
+    void sendFollow();
+    void sendPingReq();
+    void sendTK();
+    void sendSwitchBaudRate();
+    void switchBaudRate();
+    void sendHopSequence();
+    void sendGoIdle();
+    void findSerialPort();
+    void readStaticHeader();
+    void writeStaticHeader();
+    void readDynamicHeader();
+    void writeDynamicHeader();
+    void readPayload();
+    void readFlags();
+    void getList();
+    void asString();
+    void validatePacketList();
 };
 //--------------------------------------------------------------------------------
 #endif

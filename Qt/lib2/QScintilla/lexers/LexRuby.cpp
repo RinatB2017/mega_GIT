@@ -1480,7 +1480,7 @@ static void ColouriseRbDoc(Sci_PositionU startPos, Sci_Position length, int init
     if (state == SCE_RB_WORD) {
         // We've ended on a word, possibly at EOF, and need to
         // classify it.
-        (void) ClassifyWordRb(styler.GetStartSegment(), lengthDoc - 1, keywords, styler, prevWord);
+        () ClassifyWordRb(styler.GetStartSegment(), lengthDoc - 1, keywords, styler, prevWord);
     } else {
         styler.ColourTo(lengthDoc - 1, state);
     }

@@ -48,7 +48,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -62,7 +62,7 @@ void MainBox::init(void)
     setLayout(vbox);
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_grapher(void)
+void MainBox::create_grapher()
 {
     grapher = new GrapherBox(this);
     grapher->set_title("Анализатор");
@@ -107,7 +107,7 @@ void MainBox::append_data(int x,
     //emit debug(temp);
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -131,7 +131,7 @@ void MainBox::createTestBar(void)
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     emit info(tr("test"));
 
@@ -162,32 +162,32 @@ void MainBox::draw_value(int x, unsigned short data)
     append_data(x, data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::measuring_started(void)
+void MainBox::measuring_started()
 {
     emit info("started");
 }
 //--------------------------------------------------------------------------------
-void MainBox::measuring_finished(void)
+void MainBox::measuring_finished()
 {
     emit info("finished");
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

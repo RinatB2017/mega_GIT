@@ -59,11 +59,11 @@ public:
     void save_file(const QString &filename);
 
     void show_image(QImage image);
-    void draw_sinus(void);
-    void name_filters(void);
+    void draw_sinus();
+    void name_filters();
 
-    void set_directory(void);
-    void single_shot(void);
+    void set_directory();
+    void single_shot();
 
     QTime diff_time(QTime time_0, QTime time_1);
     QTime elapsed_time(int msec);

@@ -42,7 +42,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -57,7 +57,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_serial(void)
+void MainBox::init_serial()
 {
     connect(this,               static_cast<void (MainBox::*)(const QByteArray&)>(&MainBox::send),
             ui->serial_widget,  static_cast<int (SerialBox5_fix_baudrate::*)(const QByteArray&)>(&SerialBox5_fix_baudrate::input));
@@ -88,7 +88,7 @@ void MainBox::read_data(QByteArray ba)
     ui->te_terminal->moveCursor(QTextCursor::End);
 }
 //--------------------------------------------------------------------------------
-void MainBox::send_command(void)
+void MainBox::send_command()
 {
     if(ui->serial_widget->isOpen() == false)
     {
@@ -108,7 +108,7 @@ void MainBox::send_command(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -146,7 +146,7 @@ void MainBox::createTestBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -159,7 +159,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -690,7 +690,7 @@ void MainBox::setTextTermFormatting(QTextEdit * textEdit,
     textEdit->setTextCursor(cursor);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
 #ifdef QT_DEBUG
     qDebug() << "Test";
@@ -712,7 +712,7 @@ bool MainBox::test(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::show_terminal(void)
+bool MainBox::show_terminal()
 {
     QTermWidget *console = new QTermWidget();
 #if 1
@@ -748,27 +748,27 @@ void MainBox::popup(QPoint)
     popup_menu->exec(QCursor::pos());
 }
 //--------------------------------------------------------------------------------
-void MainBox::clear(void)
+void MainBox::clear()
 {
     ui->te_terminal->clear();
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

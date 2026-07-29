@@ -79,12 +79,12 @@ MyWidget::~MyWidget()
 #endif
 }
 //--------------------------------------------------------------------------------
-void MyWidget::lock_buttons(void)
+void MyWidget::lock_buttons()
 {
     wbox->show();
 }
 //--------------------------------------------------------------------------------
-void MyWidget::unlock_buttons(void)
+void MyWidget::unlock_buttons()
 {
     wbox->hide();
 }
@@ -284,7 +284,7 @@ bool MyWidget::is_letter_or_number(QByteArray ba)
 }
 //--------------------------------------------------------------------------------
 template<typename T>
-void MyWidget::set_property_widget(void)
+void MyWidget::set_property_widget()
 {
     QList<T *> allle = findChildren<T *>();
     foreach (T *obj, allle)
@@ -294,7 +294,7 @@ void MyWidget::set_property_widget(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MyWidget::init_w_lists(void)
+void MyWidget::init_w_lists()
 {
     //emit trace(Q_FUNC_INFO);
 
@@ -316,7 +316,7 @@ void MyWidget::add_widget_to_w_lists(QWidget *widget)
     w_lists.append(widget);
 }
 //--------------------------------------------------------------------------------
-void MyWidget::lock_interface(void)
+void MyWidget::lock_interface()
 {
     //emit trace(Q_FUNC_INFO);
     Q_ASSERT(w_lists.count() > 0);
@@ -327,7 +327,7 @@ void MyWidget::lock_interface(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MyWidget::unlock_interface(void)
+void MyWidget::unlock_interface()
 {
     //emit trace(Q_FUNC_INFO);
     Q_ASSERT(w_lists.count() > 0);
@@ -338,7 +338,7 @@ void MyWidget::unlock_interface(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MyWidget::lock_this_button(void)
+void MyWidget::lock_this_button()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -348,7 +348,7 @@ void MyWidget::lock_this_button(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MyWidget::unlock_this_button(void)
+void MyWidget::unlock_this_button()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -482,7 +482,7 @@ bool MyWidget::get_param(QString group_name,
     return true;
 }
 //--------------------------------------------------------------------------------
-QStringList MyWidget::get_all_param_name(void)
+QStringList MyWidget::get_all_param_name()
 {
 #ifdef QT_DEBUG
     QString app_name = QString("%1(debug)").arg(APPNAME);
@@ -521,7 +521,7 @@ void MyWidget::closeEvent(QCloseEvent *)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MyWidget::s_test(void)
+void MyWidget::s_test()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -530,7 +530,7 @@ void MyWidget::s_test(void)
 }
 //--------------------------------------------------------------------------------
 #ifdef BLOCK_WHEEL
-void MyWidget::block_wheel(void)
+void MyWidget::block_wheel()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -545,7 +545,7 @@ void MyWidget::block_wheel(void)
 }
 #endif
 //--------------------------------------------------------------------------------
-void MyWidget::show_objectname(void)
+void MyWidget::show_objectname()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -704,7 +704,7 @@ QToolButton *MyWidget::add_button(QToolBar *tool_bar,
     return tool_button;
 }
 //--------------------------------------------------------------------------------
-void MyWidget::check_tooltips(void)
+void MyWidget::check_tooltips()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -802,7 +802,7 @@ QString MyWidget::get_class_name(const QString &fullname)
 
     temp = temp.replace("::", ":")
             .replace("()", "")
-            .replace("(void)", "")
+            .replace("()", "")
             .replace("void ", "");
     QStringList sl = temp.split(":");
     if(sl.count() != 2)
@@ -821,7 +821,7 @@ QString MyWidget::get_func_name(const QString &fullname)
 
     temp = temp.replace("::", ":")
             .replace("()", "")
-            .replace("(void)", "")
+            .replace("()", "")
             .replace("void ", "");
     QStringList sl = temp.split(":");
     if(sl.count() != 2)
@@ -831,7 +831,7 @@ QString MyWidget::get_func_name(const QString &fullname)
     return sl.at(1);
 }
 //--------------------------------------------------------------------------------
-void MyWidget::set_all_buttons_no_save(void)
+void MyWidget::set_all_buttons_no_save()
 {
     const QWidgetList allWidgets = QApplication::allWidgets();
     for (QWidget *widget : allWidgets)
@@ -851,7 +851,7 @@ void MyWidget::set_all_buttons_no_save(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MyWidget::show_objectNames(void)
+void MyWidget::show_objectNames()
 {
     QWidgetList wl = qApp->allWidgets();
     foreach (QWidget *widget, wl)
@@ -919,7 +919,7 @@ bool MyWidget::eventFilter(QObject*, QEvent* event)
 }
 #endif
 //--------------------------------------------------------------------------------
-void MyWidget::load_widgets(void)
+void MyWidget::load_widgets()
 {
     QTimer::singleShot(0, [this]{
         //emit trace(Q_FUNC_INFO);
@@ -954,7 +954,7 @@ void MyWidget::load_widgets(void)
     });
 }
 //--------------------------------------------------------------------------------
-void MyWidget::save_widgets(void)
+void MyWidget::save_widgets()
 {
     emit trace(Q_FUNC_INFO);
 

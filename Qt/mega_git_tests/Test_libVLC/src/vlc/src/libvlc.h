@@ -90,14 +90,14 @@ typedef int64_t libvlc_time_t;
  * @warning
  * This will be NULL if there was no error.
  */
-LIBVLC_API const char *libvlc_errmsg (void);
+LIBVLC_API const char *libvlc_errmsg ();
 
 /**
  * Clears the LibVLC error status for the current thread. This is optional.
  * By default, the error status is automatically overridden when a new error
  * occurs, and destroyed when the thread exits.
  */
-LIBVLC_API void libvlc_clearerr (void);
+LIBVLC_API void libvlc_clearerr ();
 
 /**
  * Sets the LibVLC error status and message for the current thread.
@@ -264,7 +264,7 @@ void libvlc_set_app_id( libvlc_instance_t *p_instance, const char *id,
  *
  * \return a string containing the libvlc version
  */
-LIBVLC_API const char * libvlc_get_version(void);
+LIBVLC_API const char * libvlc_get_version();
 
 /**
  * Retrieve libvlc compiler version.
@@ -273,7 +273,7 @@ LIBVLC_API const char * libvlc_get_version(void);
  *
  * \return a string containing the libvlc compiler version
  */
-LIBVLC_API const char * libvlc_get_compiler(void);
+LIBVLC_API const char * libvlc_get_compiler();
 
 /**
  * Retrieve libvlc changeset.
@@ -282,7 +282,7 @@ LIBVLC_API const char * libvlc_get_compiler(void);
  *
  * \return a string containing the libvlc changeset
  */
-LIBVLC_API const char * libvlc_get_changeset(void);
+LIBVLC_API const char * libvlc_get_changeset();
 
 /**
  * Frees an heap allocation returned by a LibVLC function.
@@ -558,7 +558,7 @@ libvlc_module_description_t *libvlc_video_filter_list_get( libvlc_instance_t *p_
  * \note On systems that support it, the POSIX monotonic clock is used.
  */
 LIBVLC_API
-int64_t libvlc_clock(void);
+int64_t libvlc_clock();
 
 /**
  * Return the delay (in microseconds) until a certain timestamp.

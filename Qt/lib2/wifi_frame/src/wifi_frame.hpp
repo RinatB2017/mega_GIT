@@ -45,20 +45,20 @@ public:
                          bool no_response = false);
 
 public slots:
-    void update_ports(void);
+    void update_ports();
 
 private slots:
-    void create_server(void);
-    void create_client(void);
-    void send_data(void);
+    void create_server();
+    void create_client();
+    void send_data();
 
-    void read_settings(void);
+    void read_settings();
 
-    void server_port_read(void);
-    void client_port_read(void);
+    void server_port_read();
+    void client_port_read();
     void port_error(QSerialPort::SerialPortError serial_error);
 
-    void readChannelFinished(void);
+    void readChannelFinished();
 
     void lock_interface(bool state);
     void unlock_interface(bool state);  //FIXME костыль
@@ -72,8 +72,8 @@ private:
     QByteArray serial_data;
     bool is_ready = false;
 
-    void init(void);
-    void connect_serial(void);
+    void init();
+    void connect_serial();
     bool send_command(QString cmd,
                       int wait_ms = 100);
 
@@ -81,19 +81,19 @@ private:
     bool send_cmd_create_client(bool is_silense = false);
 
     void wait_msec(int timeout_msec);
-    void add_server_cmd_layout(void);
-    void add_client_cmd_layout(void);
-    void add_grid_layout(void);
+    void add_server_cmd_layout();
+    void add_client_cmd_layout();
+    void add_grid_layout();
 
-    QString get_server_string(void);
-    QString get_client_string(void);
+    QString get_server_string();
+    QString get_client_string();
 
     void show_hex_data(QByteArray &data);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     void changeEvent(QEvent *event);

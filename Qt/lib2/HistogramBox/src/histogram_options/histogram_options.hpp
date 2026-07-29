@@ -39,10 +39,10 @@ public:
                       QWidget *parent = nullptr);
     virtual ~Histogram_Options();
 
-    int get_min_axis_x(void);
-    int get_max_axis_x(void);
-    int get_min_axis_y(void);
-    int get_max_axis_y(void);
+    int get_min_axis_x();
+    int get_max_axis_x();
+    int get_min_axis_y();
+    int get_max_axis_y();
 
 private:
     Ui::Histogram_Options *ui;
@@ -52,7 +52,7 @@ private:
     double min_axis_Y;
     double max_axis_Y;
 
-    void init(void);
+    void init();
 };
 //--------------------------------------------------------------------------------
 #endif // HISTOGRAMBOX_OPTIONS_HPP

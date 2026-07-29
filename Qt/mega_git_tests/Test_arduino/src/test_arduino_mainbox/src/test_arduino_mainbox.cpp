@@ -46,7 +46,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -148,7 +148,7 @@ void MainBox::init(void)
     QTimer::singleShot(500, this, SLOT(update_frame_color()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::update_frame_color(void)
+void MainBox::update_frame_color()
 {
     set_color_frame(ui->Slider_R->value(),
                     ui->Slider_G->value(),
@@ -187,7 +187,7 @@ void MainBox::read_data(const QByteArray &data)
     received_array.append(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -206,7 +206,7 @@ void MainBox::createTestBar(void)
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::clear_data(void)
+void MainBox::clear_data()
 {
     for(int n=0; n<MAX_EEPROM_BYTES; n++)
     {
@@ -222,17 +222,17 @@ void MainBox::append_data(char *buf, int len)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::append_end_byte(void)
+void MainBox::append_end_byte()
 {
     sending_array.append(END_BYTE);
 }
 //--------------------------------------------------------------------------------
-void MainBox::clear_sending_array(void)
+void MainBox::clear_sending_array()
 {
     sending_array.clear();
 }
 //--------------------------------------------------------------------------------
-void MainBox::clear_receive_array(void)
+void MainBox::clear_receive_array()
 {
     received_array.clear();
 }
@@ -250,7 +250,7 @@ void MainBox::wait_msec(int timeout_msec)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::send_data(void)
+void MainBox::send_data()
 {
     if(ui->serial_widget->isOpen() == false)
     {
@@ -279,7 +279,7 @@ void MainBox::set_color_frame(int color_R,
                                    .arg(color_B));
 }
 //--------------------------------------------------------------------------------
-void MainBox::set_color(void)
+void MainBox::set_color()
 {
     QColorDialog *dlg = new QColorDialog(this);
 #ifdef QT_DEBUG
@@ -379,52 +379,52 @@ void MainBox::prepare_modbus_command(unsigned short cmd)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_modbus_color_all(void)
+void MainBox::prepare_modbus_color_all()
 {
     prepare_modbus_command(CMD_SET_ALL_COLOR);
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_modbus_color_R(void)
+void MainBox::prepare_modbus_color_R()
 {
     prepare_modbus_command(CMD_SET_COLOR_R);
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_modbus_color_G(void)
+void MainBox::prepare_modbus_color_G()
 {
     prepare_modbus_command(CMD_SET_COLOR_G);
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_modbus_color_B(void)
+void MainBox::prepare_modbus_color_B()
 {
     prepare_modbus_command(CMD_SET_COLOR_B);
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_modbus_color_W(void)
+void MainBox::prepare_modbus_color_W()
 {
     prepare_modbus_command(CMD_SET_COLOR_W);
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_modbus_motor_1(void)
+void MainBox::prepare_modbus_motor_1()
 {
     prepare_modbus_command(CMD_RUN_MOTOR_1);
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_modbus_motor_2(void)
+void MainBox::prepare_modbus_motor_2()
 {
     prepare_modbus_command(CMD_RUN_MOTOR_2);
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_modbus_motor_all(void)
+void MainBox::prepare_modbus_motor_all()
 {
     prepare_modbus_command(CMD_RUN_ALL_MOTOR);
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_modbus_set_all(void)
+void MainBox::prepare_modbus_set_all()
 {
     prepare_modbus_command(CMD_SET_ALL);
 }
 //--------------------------------------------------------------------------------
-void MainBox::append_crc(void)
+void MainBox::append_crc()
 {
     uint crc16 = calculateCRC_16(reinterpret_cast<uchar *>(sending_array.data()),
                                  static_cast<uchar>(sending_array.size()));
@@ -433,7 +433,7 @@ void MainBox::append_crc(void)
     emit debug(QString("CRC %1").arg(crc16, 0, 16));
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     emit info("test");
 
@@ -464,7 +464,7 @@ void MainBox::test(void)
     emit info("the end");
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_set_color_R(void)
+void MainBox::command_set_color_R()
 {
     emit info("command_set_color_R");
 
@@ -475,7 +475,7 @@ void MainBox::command_set_color_R(void)
     send_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_set_color_G(void)
+void MainBox::command_set_color_G()
 {
     emit info("command_set_color_G");
 
@@ -486,7 +486,7 @@ void MainBox::command_set_color_G(void)
     send_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_set_color_B(void)
+void MainBox::command_set_color_B()
 {
     emit info("command_set_color_B");
 
@@ -497,7 +497,7 @@ void MainBox::command_set_color_B(void)
     send_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_set_color_W(void)
+void MainBox::command_set_color_W()
 {
     emit info("command_set_color_W");
 
@@ -508,7 +508,7 @@ void MainBox::command_set_color_W(void)
     send_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_set_color_all(void)
+void MainBox::command_set_color_all()
 {
     emit info("command_set_color_all");
 
@@ -519,7 +519,7 @@ void MainBox::command_set_color_all(void)
     send_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_run_motor_1(void)
+void MainBox::command_run_motor_1()
 {
     emit info("command_run_motor_1");
 
@@ -530,7 +530,7 @@ void MainBox::command_run_motor_1(void)
     send_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_run_motor_2(void)
+void MainBox::command_run_motor_2()
 {
     emit info("command_run_motor_2");
 
@@ -541,7 +541,7 @@ void MainBox::command_run_motor_2(void)
     send_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_run_motors(void)
+void MainBox::command_run_motors()
 {
     emit info("command_run_motors");
 
@@ -552,22 +552,22 @@ void MainBox::command_run_motors(void)
     send_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

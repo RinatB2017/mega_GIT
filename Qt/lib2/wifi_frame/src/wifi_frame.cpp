@@ -49,7 +49,7 @@ WIFI_frame::WIFI_frame(const QString &caption,
     init();
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::connect_serial(void)
+void WIFI_frame::connect_serial()
 {
     connect(ui->serial_widget,  SIGNAL(port_is_active(bool)),   this,   SLOT(unlock_interface(bool)));
 
@@ -62,12 +62,12 @@ void WIFI_frame::connect_serial(void)
 //    connect(ui->serial_widget,  SIGNAL(s_error(QSerialPort::SerialPortError)),  this,   SLOT(port_error(QSerialPort::SerialPortError)));
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::readChannelFinished(void)
+void WIFI_frame::readChannelFinished()
 {
     emit error("readChannelFinished");
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::add_grid_layout(void)
+void WIFI_frame::add_grid_layout()
 {
     ui->le_Network->setText("A00000001");
     ui->le_Password->setText("0000000000");
@@ -89,7 +89,7 @@ void WIFI_frame::add_grid_layout(void)
     ui->cb_EncryptType->addItem("wpawpa2_aes");
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::init(void)
+void WIFI_frame::init()
 {
     ui->setupUi(this);
     connect_serial();
@@ -113,7 +113,7 @@ void WIFI_frame::init(void)
     lock_interface(false);
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::server_port_read(void)
+void WIFI_frame::server_port_read()
 {
     emit debug(QString("server_is_created %1").arg(server_is_created ? "true" : "false"));
     if(server_is_created)
@@ -135,7 +135,7 @@ void WIFI_frame::server_port_read(void)
     }
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::client_port_read(void)
+void WIFI_frame::client_port_read()
 {
     //serial->waitForReadyRead(100);
     while(ui->serial_widget->bytesAvailable())
@@ -173,7 +173,7 @@ void WIFI_frame::port_error(QSerialPort::SerialPortError serial_error)
     }
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::read_settings(void)
+void WIFI_frame::read_settings()
 {
     bool ok = false;
 
@@ -281,7 +281,7 @@ void WIFI_frame::read_settings(void)
     emit info("end read");
 }
 //--------------------------------------------------------------------------------
-QString WIFI_frame::get_server_string(void)
+QString WIFI_frame::get_server_string()
 {
     QString temp;
     temp.clear();
@@ -304,7 +304,7 @@ QString WIFI_frame::get_server_string(void)
     return temp;
 }
 //--------------------------------------------------------------------------------
-QString WIFI_frame::get_client_string(void)
+QString WIFI_frame::get_client_string()
 {
     QString temp;
     temp.clear();
@@ -586,7 +586,7 @@ bool WIFI_frame::send_cmd_create_client(bool is_silense)
     return true;
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::create_server(void)
+void WIFI_frame::create_server()
 {
     emit info("create server");
     server_is_created = true;
@@ -601,7 +601,7 @@ void WIFI_frame::create_server(void)
     emit info("The end!");
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::create_client(void)
+void WIFI_frame::create_client()
 {
     emit info("create client");
 
@@ -614,7 +614,7 @@ void WIFI_frame::create_client(void)
     emit info("The end!");
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::send_data(void)
+void WIFI_frame::send_data()
 {
     emit info("send data");
     bool ok = send_command("client: question", 1000);
@@ -624,7 +624,7 @@ void WIFI_frame::send_data(void)
         emit info(QString("received: %1").arg(serial_data.data()));
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::add_server_cmd_layout(void)
+void WIFI_frame::add_server_cmd_layout()
 {
     if(is_server)
     {
@@ -632,7 +632,7 @@ void WIFI_frame::add_server_cmd_layout(void)
     }
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::add_client_cmd_layout(void)
+void WIFI_frame::add_client_cmd_layout()
 {
     if(is_server == false)
     {
@@ -697,27 +697,27 @@ void WIFI_frame::show_hex_data(QByteArray &data)
     hexedit->show();
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::update_ports(void)
+void WIFI_frame::update_ports()
 {
     emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::updateText(void)
+void WIFI_frame::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool WIFI_frame::programm_is_exit(void)
+bool WIFI_frame::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::load_setting(void)
+void WIFI_frame::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void WIFI_frame::save_setting(void)
+void WIFI_frame::save_setting()
 {
 
 }

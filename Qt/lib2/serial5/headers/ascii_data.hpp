@@ -29,7 +29,7 @@ class Ascii_data : public QObject
     Q_OBJECT
 
 public:
-    Ascii_data(void)
+    Ascii_data()
     {
         dirty_data.clear();
     }
@@ -65,7 +65,7 @@ public slots:
 private:
     QByteArray dirty_data;
 
-    void analize(void)
+    void analize()
     {
         QByteArray temp = QByteArray::fromHex(dirty_data);
         if(temp.isEmpty() == false)

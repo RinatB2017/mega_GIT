@@ -45,7 +45,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -60,7 +60,7 @@ void MainBox::init(void)
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)), this,               SLOT(read_data(QByteArray)));
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_protocol(void)
+void MainBox::init_protocol()
 {
     emit info("init protocol NMEA-0183");
     proto = new Proto_NMEA_0183();
@@ -76,7 +76,7 @@ void MainBox::init_protocol(void)
     connect(proto,  SIGNAL(output_observation(QString)),        this,   SIGNAL(output_observation(QString)));
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -122,14 +122,14 @@ void MainBox::createTestBar(void)
     //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     emit info(tr("test"));
 
     read_fake_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::skip_backward(void)
+void MainBox::skip_backward()
 {
     if(fake_data.isEmpty())
     {
@@ -142,7 +142,7 @@ void MainBox::skip_backward(void)
     read_data(fake_data.at(index_fake_data));
 }
 //--------------------------------------------------------------------------------
-void MainBox::seek_backward(void)
+void MainBox::seek_backward()
 {
     if(fake_data.isEmpty())
     {
@@ -157,7 +157,7 @@ void MainBox::seek_backward(void)
     read_data(fake_data.at(index_fake_data));
 }
 //--------------------------------------------------------------------------------
-void MainBox::seek_forward(void)
+void MainBox::seek_forward()
 {
     if(fake_data.isEmpty())
     {
@@ -172,7 +172,7 @@ void MainBox::seek_forward(void)
     read_data(fake_data.at(index_fake_data));
 }
 //--------------------------------------------------------------------------------
-void MainBox::skip_forward(void)
+void MainBox::skip_forward()
 {
     if(fake_data.isEmpty())
     {
@@ -185,7 +185,7 @@ void MainBox::skip_forward(void)
     read_data(fake_data.at(index_fake_data));
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_fake_data(void)
+void MainBox::read_fake_data()
 {
     QFile file(":/test_data.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -228,7 +228,7 @@ void MainBox::read_data(QByteArray ba)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::analize(void)
+void MainBox::analize()
 {
     int err = proto->check_message(data_rs232.data());
     if(err == Proto_NMEA_0183::E_ERROR_UNKNOWN_MESSAGE)
@@ -266,22 +266,22 @@ void MainBox::analize(void)
     ui->le_time->setText(str_time);
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

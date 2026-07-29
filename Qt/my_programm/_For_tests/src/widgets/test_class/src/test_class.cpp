@@ -33,7 +33,7 @@ Test_class::~Test_class()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Test_class::init(void)
+void Test_class::init()
 {
     ui->setupUi(this);
 
@@ -47,10 +47,10 @@ void Test_class::init(void)
             this,           &Test_class::test);
 }
 //--------------------------------------------------------------------------------
-void Test_class::test(void)
+void Test_class::test()
 {
-    typedef bool (Test_class::*check_box)(void);
-    typedef void (Test_class::*func)(void);
+    typedef bool (Test_class::*check_box)();
+    typedef void (Test_class::*func)();
 
     foreach (CMD cmd, commands)
     {
@@ -65,72 +65,72 @@ void Test_class::test(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool Test_class::get_0(void)
+bool Test_class::get_0()
 {
     return ui->cb_0->isChecked();
 }
 //--------------------------------------------------------------------------------
-bool Test_class::get_1(void)
+bool Test_class::get_1()
 {
     return ui->cb_1->isChecked();
 }
 //--------------------------------------------------------------------------------
-bool Test_class::get_2(void)
+bool Test_class::get_2()
 {
     return ui->cb_2->isChecked();
 }
 //--------------------------------------------------------------------------------
-bool Test_class::get_3(void)
+bool Test_class::get_3()
 {
     return ui->cb_3->isChecked();
 }
 //--------------------------------------------------------------------------------
-bool Test_class::get_4(void)
+bool Test_class::get_4()
 {
     return ui->cb_4->isChecked();
 }
 //--------------------------------------------------------------------------------
-void Test_class::f_0(void)
+void Test_class::f_0()
 {
     emit info(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
-void Test_class::f_1(void)
+void Test_class::f_1()
 {
     emit info(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
-void Test_class::f_2(void)
+void Test_class::f_2()
 {
     emit info(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
-void Test_class::f_3(void)
+void Test_class::f_3()
 {
     emit info(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
-void Test_class::f_4(void)
+void Test_class::f_4()
 {
     emit info(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
-void Test_class::updateText(void)
+void Test_class::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool Test_class::programm_is_exit(void)
+bool Test_class::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Test_class::load_setting(void)
+void Test_class::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Test_class::save_setting(void)
+void Test_class::save_setting()
 {
 
 }

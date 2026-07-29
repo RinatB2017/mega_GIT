@@ -33,7 +33,7 @@ QString original_filename = "filename";
 QString product_name = "my_product";
 QString product_version = "0.0.0.0";
 //--------------------------------------------------------------------------------
-QString get_result_rc(void)
+QString get_result_rc()
 {
     QString result;
 

@@ -38,7 +38,7 @@ public:
               const QString &path = "path",
               const QString &filename = "filename",
               const QStringList &list_pict = QStringList());
-    QString selected_pictures(void);
+    QString selected_pictures();
     
 signals:
     

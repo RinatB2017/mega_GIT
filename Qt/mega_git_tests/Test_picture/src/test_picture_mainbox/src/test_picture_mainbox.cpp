@@ -45,7 +45,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -78,7 +78,7 @@ void MainBox::init(void)
     grapher_curve = ui->grapher_widget->add_curve("data");
     emit debug(QString("grapher_curve %1").arg(grapher_curve));
 
-    connect(ui->btn_load_picture,   &QPushButton::clicked,  this,   static_cast<void (MainBox::*)(void)>(&MainBox::load_picture));
+    connect(ui->btn_load_picture,   &QPushButton::clicked,  this,   static_cast<void (MainBox::*)()>(&MainBox::load_picture));
     connect(ui->btn_find_max_color, &QPushButton::clicked,  this,   &MainBox::find_max_color);
     connect(ui->btn_redraw_picture, &QPushButton::clicked,  this,   &MainBox::redraw_picture);
 
@@ -89,7 +89,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -132,7 +132,7 @@ void MainBox::createTestBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -147,7 +147,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -182,7 +182,7 @@ bool MainBox::load_picture(QString fileName)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_picture(void)
+void MainBox::load_picture()
 {
     QFileDialog *dlg;
     QString filename;
@@ -205,7 +205,7 @@ void MainBox::load_picture(void)
     load_picture(filename);
 }
 //--------------------------------------------------------------------------------
-void MainBox::find_max_color(void)
+void MainBox::find_max_color()
 {
     if(picture.isNull())
     {
@@ -258,7 +258,7 @@ void MainBox::find_max_color(void)
     emit info(QString("B %1").arg(qBlue(max_color)));
 }
 //--------------------------------------------------------------------------------
-void MainBox::redraw_picture(void)
+void MainBox::redraw_picture()
 {
     if(picture.isNull())
     {
@@ -363,7 +363,7 @@ void MainBox::show_only_color(QSpinBox *min_value, QSpinBox *max_value)
     ui->new_picture->setPixmap(QPixmap::fromImage(tmp));
 }
 //--------------------------------------------------------------------------------
-void MainBox::show_only_R(void)
+void MainBox::show_only_R()
 {
     //show_only_color(ui->sb_R_min, ui->sb_R_max);
 
@@ -426,7 +426,7 @@ void MainBox::show_only_R(void)
     ui->new_picture->setPixmap(QPixmap::fromImage(tmp));
 }
 //--------------------------------------------------------------------------------
-void MainBox::show_only_G(void)
+void MainBox::show_only_G()
 {
     if(picture.isNull())
     {
@@ -487,7 +487,7 @@ void MainBox::show_only_G(void)
     ui->new_picture->setPixmap(QPixmap::fromImage(tmp));
 }
 //--------------------------------------------------------------------------------
-void MainBox::show_only_B(void)
+void MainBox::show_only_B()
 {
     if(picture.isNull())
     {
@@ -548,28 +548,28 @@ void MainBox::show_only_B(void)
     ui->new_picture->setPixmap(QPixmap::fromImage(tmp));
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

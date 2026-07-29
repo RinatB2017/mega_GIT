@@ -52,17 +52,17 @@ enum {
 class Map
 {
 public:
-    Map(void);
+    Map();
 
-    void init(void);
+    void init();
 
     int load(const QString &filename);
 
     void set_max_x(int value);
     void set_max_y(int value);
 
-    int get_max_x(void);
-    int get_max_y(void);
+    int get_max_x();
+    int get_max_y();
 
     int  set(int x, int y, char value);
     char get(int x, int y);

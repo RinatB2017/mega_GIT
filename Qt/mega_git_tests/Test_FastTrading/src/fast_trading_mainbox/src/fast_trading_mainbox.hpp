@@ -42,21 +42,21 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
-    bool test(void);
+    void choice_test();
+    bool test();
 
-    void generate(void);
-    void calc(void);
+    void generate();
+    void calc();
 
-    void redraw_generate_data(void);
-    void redraw_calc_data(void);
+    void redraw_generate_data();
+    void redraw_calc_data();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
 
     QPointer<MySplashScreen> splash;
@@ -74,26 +74,26 @@ private:
     int curve_data = 0;
     int curve_profit;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
-    void init_grapher_data(void);
-    void init_grapher_profit(void);
-    void init_widgets(void);
+    void init_grapher_data();
+    void init_grapher_profit();
+    void init_widgets();
 
-    int get_count(void);
-    int get_inc_price(void);
-    int get_price(void);
+    int get_count();
+    int get_inc_price();
+    int get_price();
 
-    int get_order_up_profit(void);
-    int get_order_up_loss(void);
-    int get_order_down_profit(void);
-    int get_order_down_loss(void);
+    int get_order_up_profit();
+    int get_order_up_loss();
+    int get_order_down_profit();
+    int get_order_down_loss();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

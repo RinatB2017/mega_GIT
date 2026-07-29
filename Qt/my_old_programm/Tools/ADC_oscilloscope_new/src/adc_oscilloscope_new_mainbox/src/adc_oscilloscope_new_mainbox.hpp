@@ -69,18 +69,18 @@ private:
     SerialBox5 *serial;
     QByteArray dirty_data;
 
-    void init(void);
-    int getPositionStep(void);
-    int getSizeStep(void);
+    void init();
+    int getPositionStep();
+    int getSizeStep();
 
     unsigned char convert_ansi_to_dec(char data);
-    void drawing(void);
+    void drawing();
     void append(double value);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

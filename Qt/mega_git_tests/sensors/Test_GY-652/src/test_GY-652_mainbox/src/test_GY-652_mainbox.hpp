@@ -46,7 +46,7 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void test(void);
+    void test();
 
     void data_gy652(QByteArray data);
 
@@ -61,13 +61,13 @@ private:
 
     QString convert(qreal value);
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

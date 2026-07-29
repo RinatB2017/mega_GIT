@@ -43,23 +43,23 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
-    bool test(void);
-    bool test2(void);
+    void choice_test();
+    bool test();
+    bool test2();
 
-    void s_list(void);
-    void s_open(void);
-    void s_info(void);
-    void s_read(void);
-    void s_write(void);
-    void s_close(void);
+    void s_list();
+    void s_open();
+    void s_info();
+    void s_read();
+    void s_write();
+    void s_close();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
 
     QPointer<MySplashScreen> splash;
@@ -68,14 +68,14 @@ private:
     QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
     bool test_interface_number(int interface_number);
     void wait_msec(int msec);
 
-    uint16_t get_VID(void);
-    uint16_t get_PID(void);
+    uint16_t get_VID();
+    uint16_t get_PID();
     void set_VID(uint16_t value);
     void set_PID(uint16_t value);
 };

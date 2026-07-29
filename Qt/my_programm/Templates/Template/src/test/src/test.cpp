@@ -37,7 +37,7 @@ void Test::setMainWindow(MainWindow *mainWindow)
     mw = mainWindow;
 }
 //--------------------------------------------------------------------------------
-void Test::test_GUI(void)
+void Test::test_GUI()
 {
     QComboBox *cb = mw->findChild<QComboBox *>("cb_test");
     QVERIFY(cb);
@@ -49,13 +49,13 @@ void Test::test_GUI(void)
     QTest::mouseClick(tb, Qt::LeftButton);
 }
 //--------------------------------------------------------------------------------
-void Test::test_func(void)
+void Test::test_func()
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
 }
 //--------------------------------------------------------------------------------
-void Test::test_signals(void)
+void Test::test_signals()
 {
 
 }

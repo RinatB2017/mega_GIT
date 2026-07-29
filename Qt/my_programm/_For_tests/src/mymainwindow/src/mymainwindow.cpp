@@ -115,7 +115,7 @@ void MyMainWindow::messageHandler(QtMsgType type,
 }
 #endif
 //--------------------------------------------------------------------------------
-void MyMainWindow::create_local_menus(void)
+void MyMainWindow::create_local_menus()
 {
     file_action = new QAction(this);
     file_action->setProperty(P_APP_ENG_TEXT, "file_action");
@@ -147,7 +147,7 @@ void MyMainWindow::create_local_menus(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MyMainWindow::create_toolbars(void)
+void MyMainWindow::create_toolbars()
 {
     QToolBar *toolBar = new QToolBar("tb", this);
     Q_ASSERT(toolBar);
@@ -198,7 +198,7 @@ void MyMainWindow::create_toolbars(void)
 //#endif
 }
 //--------------------------------------------------------------------------------
-void MyMainWindow::click_btn(void)
+void MyMainWindow::click_btn()
 {
     QToolButton *btn = dynamic_cast<QToolButton *>(sender());
     if(btn)
@@ -207,21 +207,21 @@ void MyMainWindow::click_btn(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MyMainWindow::file_action_click(void)
+void MyMainWindow::file_action_click()
 {
     QString title = "Информация";
     QString text = "file_action_click";
     MyWidget::messagebox_info(title, text);
 }
 //--------------------------------------------------------------------------------
-void MyMainWindow::options_action_click(void)
+void MyMainWindow::options_action_click()
 {
     QString title = "Информация";
     QString text = "options_action_click";
     MyWidget::messagebox_info(title, text);
 }
 //--------------------------------------------------------------------------------
-void MyMainWindow::help_action_click(void)
+void MyMainWindow::help_action_click()
 {
     QString title = "Информация";
     QString text = "help_action_click";

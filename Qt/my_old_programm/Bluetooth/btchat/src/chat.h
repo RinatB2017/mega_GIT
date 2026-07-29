@@ -80,7 +80,7 @@ private slots:
 
     void newAdapterSelected();
 
-    void test(void);
+    void test();
 
 private:
     int adapterFromUserSelection() const;

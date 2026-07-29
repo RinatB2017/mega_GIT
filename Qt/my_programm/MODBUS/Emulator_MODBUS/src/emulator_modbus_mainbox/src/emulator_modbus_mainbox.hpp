@@ -44,13 +44,13 @@ class MainBox : public MyWidget
 public:
     explicit MainBox(QWidget *parent,
                      MySplashScreen *splash);
-    virtual ~MainBox(void);
+    virtual ~MainBox();
 
 private slots:
-    void test(void);
+    void test();
 
 private Q_SLOTS:
-    void on_connectButton_clicked(void);
+    void on_connectButton_clicked();
     void onStateChanged(int state);
 
     void coilChanged(int id);
@@ -69,13 +69,13 @@ private:
     Ui::MainBox *ui;
     QPointer<SerialBox5> serialBox;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    void initActions(void);
-    void setupDeviceData(void);
-    void setupWidgetContainers(void);
+    void initActions();
+    void setupDeviceData();
+    void setupWidgetContainers();
 
     QPointer<QModbusServer> modbusDevice;
 
@@ -84,10 +84,10 @@ private:
     QHash<QString, QLineEdit *> registers;
     SettingsDialog *m_settingsDialog;
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

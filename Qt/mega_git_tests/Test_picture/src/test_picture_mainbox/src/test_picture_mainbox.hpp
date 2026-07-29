@@ -43,23 +43,23 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
-    bool test(void);
+    void choice_test();
+    bool test();
 
-    void load_picture(void);
-    void find_max_color(void);
-    void redraw_picture(void);
+    void load_picture();
+    void find_max_color();
+    void redraw_picture();
 
-    void show_only_R(void);
-    void show_only_G(void);
-    void show_only_B(void);
+    void show_only_R();
+    void show_only_G();
+    void show_only_B();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
 
     QPointer<MySplashScreen> splash;
@@ -75,17 +75,17 @@ private:
     QCheckBox *cb_block;
     QList<CMD> commands;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
     bool load_picture(QString fileName);
 
     void show_only_color(QSpinBox *min_value, QSpinBox *max_value);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

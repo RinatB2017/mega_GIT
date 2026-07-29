@@ -36,14 +36,14 @@ Test::Test()
     QVERIFY(mw);
 }
 //--------------------------------------------------------------------------------
-void Test::test_GUI(void)
+void Test::test_GUI()
 {
     QToolButton *tb = mw->findChild<QToolButton *>("btn_choice_test");
     QVERIFY(tb);
     QTest::mouseClick(tb, Qt::LeftButton);
 }
 //--------------------------------------------------------------------------------
-void Test::test_func(void)
+void Test::test_func()
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);

@@ -50,13 +50,13 @@ signals:
     void send(QByteArray);
 
 private slots:
-    void test(void);
+    void test();
     void read_data(QByteArray ba);
 
-    void skip_backward(void);
-    void seek_backward(void);
-    void seek_forward(void);
-    void skip_forward(void);
+    void skip_backward();
+    void seek_backward();
+    void seek_forward();
+    void skip_forward();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -70,16 +70,16 @@ private:
     int max_index_fake_data = 0;
     QPointer<QLineEdit> le_index;
 
-    void init(void);
-    void init_protocol(void);
-    void createTestBar(void);
-    void read_fake_data(void);
-    void analize(void);
+    void init();
+    void init_protocol();
+    void createTestBar();
+    void read_fake_data();
+    void analize();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

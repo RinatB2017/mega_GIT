@@ -244,7 +244,7 @@ static HANDLE open_device(const char *path, BOOL enumerate)
 	return handle;
 }
 
-int HID_API_EXPORT hid_init(void)
+int HID_API_EXPORT hid_init()
 {
 #ifndef HIDAPI_USE_DDK
 	if (!initialized) {
@@ -258,7 +258,7 @@ int HID_API_EXPORT hid_init(void)
 	return 0;
 }
 
-int HID_API_EXPORT hid_exit(void)
+int HID_API_EXPORT hid_exit()
 {
 #ifndef HIDAPI_USE_DDK
 	if (lib_handle)

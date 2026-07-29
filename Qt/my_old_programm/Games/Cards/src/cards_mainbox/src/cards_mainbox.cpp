@@ -49,7 +49,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -61,7 +61,7 @@ void MainBox::init(void)
     setMinimumSize(640, 480);
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_and_show_cards(void)
+void MainBox::prepare_and_show_cards()
 {
     QSvgRenderer *re =  new QSvgRenderer(QString(":/cards/Ancient_Egyptians.svgz"));
     if(re == nullptr)
@@ -141,7 +141,7 @@ void MainBox::prepare_and_show_cards(void)
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -167,7 +167,7 @@ void MainBox::createTestBar(void)
     connect(btn_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
@@ -205,7 +205,7 @@ void MainBox::show_node(QDomNode node, QString space)
     }
 }
 
-void MainBox::test_0(void)
+void MainBox::test_0()
 {
     emit info("Test_0()");
 
@@ -237,7 +237,7 @@ void MainBox::test_0(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_1(void)
+void MainBox::test_1()
 {
     emit info("Test_1()");
 
@@ -261,7 +261,7 @@ void MainBox::test_1(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_2(void)
+void MainBox::test_2()
 {
     emit info("Test_2()");
 
@@ -300,27 +300,27 @@ void MainBox::test_2(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_3(void)
+void MainBox::test_3()
 {
     emit info("Test_3()");
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

@@ -29,7 +29,7 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-Scene2::Scene2(void)
+Scene2::Scene2()
 {
     add_background(":/images/10.11-astronomiya.jpg");
 
@@ -114,7 +114,7 @@ Scene2::~Scene2()
     }
 }
 //--------------------------------------------------------------------------------
-void Scene2::update(void)
+void Scene2::update()
 {
     qreal rot = tux->rotation() + 0.5;
     tux->setRotation(rot);
@@ -129,7 +129,7 @@ void Scene2::update(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void Scene2::move(void)
+void Scene2::move()
 {
     if(flag_up)
     {

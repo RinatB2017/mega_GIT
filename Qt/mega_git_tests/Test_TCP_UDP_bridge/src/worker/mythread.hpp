@@ -40,16 +40,16 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
-    void finished(void);
+    void finished();
 
 public slots:
-    void process(void);
+    void process();
 
     void set_port1(quint16 value);
     void set_port2(quint16 value);
 
-    void start(void);
-    void stop(void);
+    void start();
+    void stop();
 
 private:
     bool flag_exit = false;
@@ -60,7 +60,7 @@ private:
     quint16 port1 = 0;
     quint16 port2 = 0;
 
-    void init(void);
+    void init();
 };
 //--------------------------------------------------------------------------------
 #endif // MYTHREAD_HPP

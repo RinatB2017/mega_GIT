@@ -34,7 +34,7 @@ Simple_process::~Simple_process()
     }
 }
 //--------------------------------------------------------------------------------
-void Simple_process::init(void)
+void Simple_process::init()
 {
     myProcess = new QProcess(this);
 
@@ -65,7 +65,7 @@ void Simple_process::setProcessEnvironment(QProcessEnvironment env)
     myProcess->setProcessEnvironment(env);
 }
 //--------------------------------------------------------------------------------
-void Simple_process::started(void)
+void Simple_process::started()
 {
     emit info("Процесс начат!");
     timer.start();
@@ -103,34 +103,34 @@ void Simple_process::process_error(QProcess::ProcessError err)
     }
 }
 //--------------------------------------------------------------------------------
-void Simple_process::read_data(void)
+void Simple_process::read_data()
 {
     QString output = myProcess->readAllStandardOutput();
     emit info(output);
 }
 //--------------------------------------------------------------------------------
-void Simple_process::read_error(void)
+void Simple_process::read_error()
 {
     QString output = myProcess->readAllStandardError();
     emit info(output);
 }
 //--------------------------------------------------------------------------------
-void Simple_process::updateText(void)
+void Simple_process::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool Simple_process::programm_is_exit(void)
+bool Simple_process::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Simple_process::load_setting(void)
+void Simple_process::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Simple_process::save_setting(void)
+void Simple_process::save_setting()
 {
 
 }

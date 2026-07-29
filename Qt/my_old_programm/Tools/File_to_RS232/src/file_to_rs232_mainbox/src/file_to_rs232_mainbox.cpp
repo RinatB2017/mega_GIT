@@ -43,7 +43,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -53,7 +53,7 @@ void MainBox::init(void)
     connect(ui->btn_load, SIGNAL(clicked()), this, SLOT(load_data()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_data(void)
+void MainBox::load_data()
 {
     QFileDialog *dlg;
 
@@ -87,7 +87,7 @@ void MainBox::power_timer(bool state)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTimer(void)
+void MainBox::createTimer()
 {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(tick()));
@@ -103,13 +103,13 @@ void MainBox::createTimer(void)
     connect(ui->knob_Interval, SIGNAL(valueChanged(double)), this, SLOT(change_timer_interval(double)));
 }
 //--------------------------------------------------------------------------------
-void MainBox::createSerial(void)
+void MainBox::createSerial()
 {
     ui->serial_widget->set_caption("RS-232");
     connect(this,   SIGNAL(send_data(QString)), ui->serial_widget,  SLOT(input(QString)));
 }
 //--------------------------------------------------------------------------------
-void MainBox::tick(void)
+void MainBox::tick()
 {
     QByteArray ba;
     QString temp;
@@ -177,7 +177,7 @@ void MainBox::load_file(const QString &filename)
     file.close();
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     int index;
 
@@ -197,7 +197,7 @@ void MainBox::updateText(void)
     ui->cb_append->setCurrentIndex(index);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     if(ui->serial_widget->isOpen())
     {
@@ -207,12 +207,12 @@ bool MainBox::programm_is_exit(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

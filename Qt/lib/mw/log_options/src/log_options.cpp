@@ -35,7 +35,7 @@ Log_options::~Log_options()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Log_options::init(void)
+void Log_options::init()
 {
     ui->setupUi(this);
 
@@ -73,7 +73,7 @@ void Log_options::init(void)
     setFixedSize(sizeHint());
 }
 //--------------------------------------------------------------------------------
-void Log_options::findCodecs(void)
+void Log_options::findCodecs()
 {
     codecs.clear();
     foreach (int mib, QTextCodec::availableMibs())
@@ -87,7 +87,7 @@ void Log_options::findCodecs(void)
     ui->cb_CodecForCStrings->addItems(codecs);
 }
 //--------------------------------------------------------------------------------
-QTextCodec *Log_options::get_text_codec(void)
+QTextCodec *Log_options::get_text_codec()
 {
     QString codec_name = ui->cb_CodecForCStrings->currentText();
     if(codec_name.isEmpty())
@@ -97,42 +97,42 @@ QTextCodec *Log_options::get_text_codec(void)
     return QTextCodec::codecForName(codec_name.toLocal8Bit());
 }
 //--------------------------------------------------------------------------------
-bool Log_options::get_flag_ReadOnly(void)
+bool Log_options::get_flag_ReadOnly()
 {
     return ui->cb_readOnly->isChecked();
 }
 //--------------------------------------------------------------------------------
-bool Log_options::get_flag_AcceptRichText(void)
+bool Log_options::get_flag_AcceptRichText()
 {
     return ui->cb_acceptRichText->isChecked();
 }
 //--------------------------------------------------------------------------------
-bool Log_options::get_flag_NoCRLF(void)
+bool Log_options::get_flag_NoCRLF()
 {
     return ui->cb_NoCRLF->isChecked();
 }
 //--------------------------------------------------------------------------------
-bool Log_options::get_flag_AddDateTime(void)
+bool Log_options::get_flag_AddDateTime()
 {
     return ui->cb_add_DateTime->isChecked();
 }
 //--------------------------------------------------------------------------------
-bool Log_options::get_flag_Color(void)
+bool Log_options::get_flag_Color()
 {
     return ui->cb_Color->isChecked();
 }
 //--------------------------------------------------------------------------------
-bool Log_options::get_flag_ErrorAsMessage(void)
+bool Log_options::get_flag_ErrorAsMessage()
 {
     return ui->cb_ErrorAsMessage->isChecked();
 }
 //--------------------------------------------------------------------------------
-bool Log_options::get_flag_TextIsWindows(void)
+bool Log_options::get_flag_TextIsWindows()
 {
     return ui->cb_Text_Is_Windows->isChecked();
 }
 //--------------------------------------------------------------------------------
-QString Log_options::get_file_AutoSave(void)
+QString Log_options::get_file_AutoSave()
 {
     return autosave_filename;
 }

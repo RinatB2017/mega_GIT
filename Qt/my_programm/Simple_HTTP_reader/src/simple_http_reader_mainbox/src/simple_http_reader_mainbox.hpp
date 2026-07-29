@@ -45,24 +45,24 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
-    bool test(void);
+    void choice_test();
+    bool test();
 
-    void f_run(void);
-    void f_update(void);
-    void f_host_to_ip(void);
+    void f_run();
+    void f_update();
+    void f_host_to_ip();
 
-    void read_data(void);
+    void read_data();
     void s_error(QAbstractSocket::SocketError err);
-    void f_connected(void);
-    void f_disconnected(void);
+    void f_connected();
+    void f_disconnected();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
 
     QPointer<MySplashScreen> splash;
@@ -75,20 +75,20 @@ private:
     QNetworkRequest request;
     QNetworkAccessManager networkManager;
 
-    QUrl get_url(void);
+    QUrl get_url();
 
-    bool f_connect(void);
-    void f_disconnect(void);
+    bool f_connect();
+    void f_disconnect();
 
-    void create_tcp_socket(void);
+    void create_tcp_socket();
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

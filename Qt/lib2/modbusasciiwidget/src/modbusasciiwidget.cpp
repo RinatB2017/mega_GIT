@@ -30,7 +30,7 @@ ModbusAsciiWidget::ModbusAsciiWidget(QWidget *parent) :
     init();
 }
 //--------------------------------------------------------------------------------
-void ModbusAsciiWidget::init(void)
+void ModbusAsciiWidget::init()
 {
     clean_data.clear();
 
@@ -105,7 +105,7 @@ void ModbusAsciiWidget::init(void)
     setLayout(hbox);
 }
 //--------------------------------------------------------------------------------
-void ModbusAsciiWidget::port_read(void)
+void ModbusAsciiWidget::port_read()
 {
     QByteArray ba;
     ba = serial->readAll();
@@ -129,7 +129,7 @@ void ModbusAsciiWidget::port_read(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool ModbusAsciiWidget::processing(void)
+bool ModbusAsciiWidget::processing()
 {
     if(((int)clean_data.size() % 8) == 0)
     {
@@ -165,7 +165,7 @@ void ModbusAsciiWidget::port_error(QSerialPort::SerialPortError serial_error)
     }
 }
 //--------------------------------------------------------------------------------
-void ModbusAsciiWidget::refresh(void)
+void ModbusAsciiWidget::refresh()
 {
     port_name->clear();
     foreach (const QSerialPortInfo &port, QSerialPortInfo::availablePorts())
@@ -174,7 +174,7 @@ void ModbusAsciiWidget::refresh(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool ModbusAsciiWidget::open(void)
+bool ModbusAsciiWidget::open()
 {
     if(serial->isOpen())
     {
@@ -201,28 +201,28 @@ bool ModbusAsciiWidget::open(void)
     return false;
 }
 //--------------------------------------------------------------------------------
-void ModbusAsciiWidget::close(void)
+void ModbusAsciiWidget::close()
 {
     emit info("close");
     serial->close();
 }
 //--------------------------------------------------------------------------------
-void ModbusAsciiWidget::updateText(void)
+void ModbusAsciiWidget::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool ModbusAsciiWidget::programm_is_exit(void)
+bool ModbusAsciiWidget::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void ModbusAsciiWidget::load_setting(void)
+void ModbusAsciiWidget::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void ModbusAsciiWidget::save_setting(void)
+void ModbusAsciiWidget::save_setting()
 {
 
 }

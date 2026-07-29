@@ -110,7 +110,7 @@ bool HistogramSettings::eventFilter(QObject *obj, QEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-void HistogramSettings::change_rubberband_color(void)
+void HistogramSettings::change_rubberband_color()
 {
     QColorDialog *dlg = new QColorDialog(this);
 
@@ -130,18 +130,18 @@ void HistogramSettings::change_rubberband_color(void)
     }
 }
 //--------------------------------------------------------------------------------
-QColor HistogramSettings::get_rubberband_color(void)
+QColor HistogramSettings::get_rubberband_color()
 {
     return rubberband_color->palette().window().color();
 }
 //--------------------------------------------------------------------------------
-QwtPicker::RubberBand HistogramSettings::get_rubberband(void)
+QwtPicker::RubberBand HistogramSettings::get_rubberband()
 {
     int ribber = rubberband_curve->currentData().toInt() - Qt::UserRole;
     return static_cast<QwtPicker::RubberBand>(ribber);
 }
 //--------------------------------------------------------------------------------
-void HistogramSettings::connect_log(void)
+void HistogramSettings::connect_log()
 {
     connect(this, SIGNAL(info(QString)),  parent(), SIGNAL(info(QString)));
     connect(this, SIGNAL(debug(QString)), parent(), SIGNAL(debug(QString)));

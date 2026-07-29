@@ -36,10 +36,10 @@ public:
     virtual ~Test();
 
 private slots:
-    void test_GUI(void);
-    void test_func(void);
-    void test_slider(void);
-    void test_mainbox(void);
+    void test_GUI();
+    void test_func();
+    void test_slider();
+    void test_mainbox();
 
 private:
     MainWindow *mw;

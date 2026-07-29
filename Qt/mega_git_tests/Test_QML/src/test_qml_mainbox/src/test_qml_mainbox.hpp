@@ -39,14 +39,14 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
+    void choice_test();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
     QList<CMD> commands;
 
@@ -55,21 +55,21 @@ private:
 
     QString filename = "main.qml";
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
-    bool test(void);
-    void add_menu(void);
-    void show_qml(void);
+    bool test();
+    void add_menu();
+    void show_qml();
 
-    void new_qml(void);
-    void load_qml(void);
-    void save_qml(void);
-    void save_qml_as(void);
+    void new_qml();
+    void load_qml();
+    void save_qml();
+    void save_qml_as();
 
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

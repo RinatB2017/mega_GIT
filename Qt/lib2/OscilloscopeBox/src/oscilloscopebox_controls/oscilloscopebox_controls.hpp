@@ -49,10 +49,10 @@ public:
     bool set_curve_pos(int min, int max, int value);
     bool set_curve_gain(int min, int max, int value);
 
-    int get_active_index(void);
+    int get_active_index();
 
 private slots:
-    void click_color(void);
+    void click_color();
     void click_select(bool state);
 
     void check_buttons(bool state);
@@ -71,8 +71,8 @@ private:
     QSlider *sl_pos = nullptr;
     QSlider *sl_gain = nullptr;
 
-    void init(void);
-    void update_curves(void);
+    void init();
+    void update_curves();
 };
 //--------------------------------------------------------------------------------
 #endif // COLOR_CURVE_HPP

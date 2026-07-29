@@ -60,7 +60,7 @@ AD9106_Box::~AD9106_Box()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::init(void)
+void AD9106_Box::init()
 {
     ui->setupUi(this);
 
@@ -172,52 +172,52 @@ void AD9106_Box::init(void)
     read_xml();
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::btn_open_click(void)
+void AD9106_Box::btn_open_click()
 {
      dev_open();
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::btn_read_all_click(void)
+void AD9106_Box::btn_read_all_click()
 {
     dev_read_all_registers();
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::btn_close_click(void)
+void AD9106_Box::btn_close_click()
 {
     dev_close();
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::btn_ApplySettings_click(void)
+void AD9106_Box::btn_ApplySettings_click()
 {
     ApplySettings();
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::btn_StopGeneration_click(void)
+void AD9106_Box::btn_StopGeneration_click()
 {
     StopGeneration();
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::btn_ManualReset_click(void)
+void AD9106_Box::btn_ManualReset_click()
 {
     ManualReset();
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::btn_read_xml_click(void)
+void AD9106_Box::btn_read_xml_click()
 {
     read_xml();
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::btn_convert_xml_click(void)
+void AD9106_Box::btn_convert_xml_click()
 {
     convert_xml();
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::btn_set_values_click(void)
+void AD9106_Box::btn_set_values_click()
 {
     set_values();
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::init_sl_registers(void)
+void AD9106_Box::init_sl_registers()
 {
     sl_registers.clear();
     sl_registers << "SPICONFIG";
@@ -289,7 +289,7 @@ void AD9106_Box::init_sl_registers(void)
     sl_registers << "CFG_ERROR";
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::createTestBar(void)
+void AD9106_Box::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -319,7 +319,7 @@ void AD9106_Box::createTestBar(void)
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::choice_test(void)
+void AD9106_Box::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
@@ -331,7 +331,7 @@ void AD9106_Box::choice_test(void)
     );
     if (cmd_it != commands.end())
     {
-        typedef void (AD9106_Box::*function)(void);
+        typedef void (AD9106_Box::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -393,7 +393,7 @@ void AD9106_Box::click(bool state)
     }
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::read_xml(void)
+void AD9106_Box::read_xml()
 {
     QString filename = ":/doc/RegistersProfiles_new.xml";
     bool ok = false;
@@ -507,7 +507,7 @@ void AD9106_Box::read_xml(void)
     //---
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::test(void)
+void AD9106_Box::test()
 {
     emit info("Test()");
     bool ok = false;
@@ -553,7 +553,7 @@ void AD9106_Box::test(void)
     emit info("test_0: OK");
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::dev_open(void)
+void AD9106_Box::dev_open()
 {
 #define MAX_STR 255
 
@@ -637,7 +637,7 @@ void AD9106_Box::dev_open(void)
     }
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::dev_close(void)
+void AD9106_Box::dev_close()
 {
     if(dev != nullptr)
     {
@@ -646,7 +646,7 @@ void AD9106_Box::dev_close(void)
     }
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::dev_read_all_registers(void)
+void AD9106_Box::dev_read_all_registers()
 {
     //TODO пока не надо
 #if 0
@@ -689,7 +689,7 @@ void AD9106_Box::dev_read_all_registers(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::dev_write_all_registers(void)
+void AD9106_Box::dev_write_all_registers()
 {
     if(dev == nullptr)
     {
@@ -906,7 +906,7 @@ bool AD9106_Box::ReadVoltage(int channel, double *voltage)
 }
 //--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
-void AD9106_Box::ApplySettings(void)
+void AD9106_Box::ApplySettings()
 {
     emit info("ApplySettings");
 
@@ -933,7 +933,7 @@ void AD9106_Box::ApplySettings(void)
     emit info("Применение настроек: OK");
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::ManualReset(void)
+void AD9106_Box::ManualReset()
 {
     emit info("ManualReset");
 
@@ -961,7 +961,7 @@ void AD9106_Box::ManualReset(void)
     emit info("Сброс: OK");
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::StopGeneration(void)
+void AD9106_Box::StopGeneration()
 {
     emit info("StopGeneration");
 
@@ -988,7 +988,7 @@ void AD9106_Box::StopGeneration(void)
     emit info("Остановка генерации: OK");
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::convert_xml(void)
+void AD9106_Box::convert_xml()
 {
     //---
     emit debug(QString("sl len = %1").arg(sl_registers.count()));
@@ -1064,7 +1064,7 @@ void AD9106_Box::convert_xml(void)
     emit info("Конвертирование XML: OK");
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::set_values(void)
+void AD9106_Box::set_values()
 {
     const float _Amplitude1mV = 7.142857142857143f;
     const float _Offset1mV = 28.0f;
@@ -1120,22 +1120,22 @@ void AD9106_Box::set_values(void)
     emit info("Запись регистров: OK");
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::updateText(void)
+void AD9106_Box::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool AD9106_Box::programm_is_exit(void)
+bool AD9106_Box::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::load_setting(void)
+void AD9106_Box::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void AD9106_Box::save_setting(void)
+void AD9106_Box::save_setting()
 {
 
 }

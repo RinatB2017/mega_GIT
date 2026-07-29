@@ -58,17 +58,17 @@ public:
     bool get_figure(Figures *figure, int x, int y);
 
     bool move(const QString &text);
-    void clear_figures(void);
+    void clear_figures();
 
 signals:
     void s_move(const QString &data);
 
 public slots:
-    void new_game(void);
+    void new_game();
 
 private slots:
-    void set_cursor(void);
-    void click(void);
+    void set_cursor();
+    void click();
 
 private:
     QPixmap w_bishop;
@@ -93,10 +93,10 @@ private:
 
     int state = STATE_1;
 
-    void init(void);
+    void init();
 
-    void create_chessboard(void);
-    void create_figures(void);
+    void create_chessboard();
+    void create_figures();
 
     QString return_figure_name(int figure);
     QString return_figure_position(int x, int y);
@@ -104,10 +104,10 @@ private:
     bool convert_simvol_to_int(int s, int *i_s);
     bool check_coordinate(const QString &coord, int *x, int *y);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // CHESSBOARD_HPP

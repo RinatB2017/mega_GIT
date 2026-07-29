@@ -40,7 +40,7 @@ CandleStick_Box::~CandleStick_Box()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::init(void)
+void CandleStick_Box::init()
 {
     setWindowTitle(ticket_name);
     //---
@@ -120,37 +120,37 @@ void CandleStick_Box::hovered_candle(bool state, QCandlestickSet *set)
 //    emit trace(Q_FUNC_INFO);
 //}
 //--------------------------------------------------------------------------------
-void CandleStick_Box::set_theme_light(void)
+void CandleStick_Box::set_theme_light()
 {
     chart->setTheme(QChart::ChartThemeLight);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::set_theme_dark(void)
+void CandleStick_Box::set_theme_dark()
 {
     chart->setTheme(QChart::ChartThemeDark);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::chart_test(void)
+void CandleStick_Box::chart_test()
 {
 
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::scroll_left(void)
+void CandleStick_Box::scroll_left()
 {
     chart->scroll(-1, 0);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::scroll_right(void)
+void CandleStick_Box::scroll_right()
 {
     chart->scroll(1, 0);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::scroll_up(void)
+void CandleStick_Box::scroll_up()
 {
     chart->scroll(0, -1);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::scroll_down(void)
+void CandleStick_Box::scroll_down()
 {
     chart->scroll(0, 1);
 }
@@ -192,12 +192,12 @@ bool CandleStick_Box::get_ticket_data(int index, QCandlestickSet *set, qreal *vo
     return true;
 }
 //--------------------------------------------------------------------------------
-int CandleStick_Box::get_max_index(void)
+int CandleStick_Box::get_max_index()
 {
     return candleSeries->count();
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::clear_data(void)
+void CandleStick_Box::clear_data()
 {
     Q_ASSERT(candleSeries);
     while(candleSeries->count() > 0)
@@ -208,7 +208,7 @@ void CandleStick_Box::clear_data(void)
     volumes.clear();
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::update_data(void)
+void CandleStick_Box::update_data()
 {
     axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
     axisX->setCategories(categories);
@@ -277,12 +277,12 @@ void CandleStick_Box::set_ticket_name(const QString &new_ticket_name)
     chart->setTitle(ticket_name);
 }
 //--------------------------------------------------------------------------------
-QString CandleStick_Box::get_ticket_name(void)
+QString CandleStick_Box::get_ticket_name()
 {
     return ticket_name;
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::move_left(void)
+void CandleStick_Box::move_left()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -296,7 +296,7 @@ void CandleStick_Box::move_left(void)
     }
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::move_right(void)
+void CandleStick_Box::move_right()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -310,7 +310,7 @@ void CandleStick_Box::move_right(void)
     }
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::move_up(void)
+void CandleStick_Box::move_up()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -318,7 +318,7 @@ void CandleStick_Box::move_up(void)
     Q_ASSERT(axisY);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::move_down(void)
+void CandleStick_Box::move_down()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -344,7 +344,7 @@ bool CandleStick_Box::get_index(QString key, int *index)
     return true;
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::test2(void)
+void CandleStick_Box::test2()
 {
     emit info(QString("min %1").arg(axisX->min()));
     emit info(QString("max %1").arg(axisX->max()));
@@ -369,7 +369,7 @@ void CandleStick_Box::test2(void)
     emit info(QString("max index %1").arg(categories.indexOf(axisX->max())));
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::test(void)
+void CandleStick_Box::test()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -447,22 +447,22 @@ void CandleStick_Box::resizeEvent(QResizeEvent *event)
 #endif
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::updateText(void)
+void CandleStick_Box::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool CandleStick_Box::programm_is_exit(void)
+bool CandleStick_Box::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::load_setting(void)
+void CandleStick_Box::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box::save_setting(void)
+void CandleStick_Box::save_setting()
 {
 
 }

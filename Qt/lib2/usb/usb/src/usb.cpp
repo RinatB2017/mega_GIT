@@ -35,7 +35,7 @@ Usb::~Usb()
     ctx = nullptr;
 }
 //--------------------------------------------------------------------------------
-bool Usb::f_list(void)
+bool Usb::f_list()
 {
     libusb_device **devs;
     int r;
@@ -79,7 +79,7 @@ bool Usb::f_open(uint16_t vid, uint16_t pid)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool Usb::f_test(void)
+bool Usb::f_test()
 {
     fail();
     return false;
@@ -234,7 +234,7 @@ bool Usb::f_write(QByteArray ba)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool Usb::f_close(void)
+bool Usb::f_close()
 {
     libusb_close(handle);
     handle = nullptr;
@@ -307,7 +307,7 @@ bool Usb::f_send_cmd(uint8_t cmd,
     return true;
 }
 //--------------------------------------------------------------------------------
-void Usb::print_info(void)
+void Usb::print_info()
 {
     if(handle == nullptr)
     {
@@ -439,7 +439,7 @@ void Usb::dev_open(uint16_t vid, uint16_t pid)
     }
 }
 //--------------------------------------------------------------------------------
-void Usb::dev_close(void)
+void Usb::dev_close()
 {
     if(dev != nullptr)
     {
@@ -689,22 +689,22 @@ void Usb::bulk_transfer_loop(libusb_device_handle *handle)
 #endif
 }
 //--------------------------------------------------------------------------------
-void Usb::updateText(void)
+void Usb::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool Usb::programm_is_exit(void)
+bool Usb::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Usb::load_setting(void)
+void Usb::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Usb::save_setting(void)
+void Usb::save_setting()
 {
 
 }

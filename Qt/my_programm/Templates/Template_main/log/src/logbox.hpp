@@ -40,26 +40,26 @@ public:
                     unsigned int min_height = 1);
     virtual ~LogBox();
 
-    void load_settings(void);
-    void save_settings(void);
+    void load_settings();
+    void save_settings();
 
-    void updateText(void);
+    void updateText();
 
 public slots:
     void append(const QString &);
     void bappend(const QByteArray &);
-    void clear(void);
+    void clear();
     void progress(int);
-    void clearProgress(void);
+    void clearProgress();
     void setVisibleProgressBar(bool);
     void setColorLog(bool state);
 #ifndef NO_LOG
     void  set_font(QFont font);
-    QFont get_font(void);
+    QFont get_font();
 #endif
 
-    void load_html(void);
-    void save_html(void);
+    void load_html();
+    void save_html();
 
     void infoLog(const QString &text);
     void debugLog(const QString &text);
@@ -71,8 +71,8 @@ public slots:
                    QString message);
 
 private slots:
-    void changeOptions(void);
-    void save_to(void);
+    void changeOptions();
+    void save_to();
 
     void popup(QPoint);
 
@@ -97,8 +97,8 @@ private:
     bool old_state_btn_show_Error = false;
     bool old_state_btn_show_Message = false;
 
-    void init(void);
-    void create_widgets(void);
+    void init();
+    void create_widgets();
 
     void save_log(const QString &);
 

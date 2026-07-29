@@ -41,7 +41,7 @@ Sender_syslog::~Sender_syslog()
 
 }
 //--------------------------------------------------------------------------------
-void Sender_syslog::init(void)
+void Sender_syslog::init()
 {
     cb_level = new QComboBox();
     cb_level->addItem("LOG_EMERG",      LOG_EMERG);
@@ -94,13 +94,13 @@ void Sender_syslog::init(void)
     init_timer();
 }
 //--------------------------------------------------------------------------------
-void Sender_syslog::init_timer(void)
+void Sender_syslog::init_timer()
 {
     timer = new QTimer(this);
     connect(timer,  SIGNAL(timeout()),  this,   SLOT(update()));
 }
 //--------------------------------------------------------------------------------
-void Sender_syslog::start(void)
+void Sender_syslog::start()
 {
     if(timer)
     {
@@ -111,7 +111,7 @@ void Sender_syslog::start(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Sender_syslog::stop(void)
+void Sender_syslog::stop()
 {
     if(timer)
     {
@@ -122,7 +122,7 @@ void Sender_syslog::stop(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Sender_syslog::update(void)
+void Sender_syslog::update()
 {
     int lvl = cb_level->itemData(cb_level->currentIndex(), Qt::UserRole).toInt();
     int src = sb_src->value();

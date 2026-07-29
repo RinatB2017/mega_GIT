@@ -47,17 +47,17 @@ private:
     Ui::Serial  *ui;
     QByteArray  data_rs232;
 
-    void init(void);
+    void init();
     void analize(char data);
     bool work(QByteArray clean_data);
 
     QString convert_data_to_ascii(uint8_t data);
     uint8_t convert_ascii_to_value(char hi, char lo);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // SERIAL_HPP

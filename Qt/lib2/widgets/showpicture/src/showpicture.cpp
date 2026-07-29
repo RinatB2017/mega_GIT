@@ -33,7 +33,7 @@ ShowPicture::~ShowPicture()
 
 }
 //--------------------------------------------------------------------------------
-void ShowPicture::init(void)
+void ShowPicture::init()
 {
 
 }
@@ -136,12 +136,12 @@ void ShowPicture::mouseMoveEvent(QMouseEvent *event)
     rubberBand->setGeometry(QRect(origin, static_cast<QMouseEvent *>(event)->pos()).normalized());
 }
 //--------------------------------------------------------------------------------
-QList<QRubberBand *> ShowPicture::get_rects(void)
+QList<QRubberBand *> ShowPicture::get_rects()
 {
     return l_bands;
 }
 //--------------------------------------------------------------------------------
-bool ShowPicture::clr_rects(void)
+bool ShowPicture::clr_rects()
 {
     l_bands.clear();
     return true;
@@ -156,7 +156,7 @@ bool ShowPicture::get_pixmap(uint x, uint y, uint w, uint h, QPixmap *pixmap)
     return true;
 }
 //--------------------------------------------------------------------------------
-void ShowPicture::test(void)
+void ShowPicture::test()
 {
     foreach (QRubberBand *band, l_bands)
     {

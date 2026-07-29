@@ -33,7 +33,7 @@ FileManager::~FileManager()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void FileManager::init(void)
+void FileManager::init()
 {
     ui->setupUi(this);
 
@@ -117,7 +117,7 @@ void FileManager::init(void)
 //    }
 }
 //--------------------------------------------------------------------------------
-void FileManager::choice_file(void)
+void FileManager::choice_file()
 {
     QString filename = model->filePath(ui->tv_filemanager->currentIndex());
     if(filename.right(extension.size()).toLower() == extension)
@@ -163,7 +163,7 @@ void FileManager::load_file(const QString &filename)
     file.close();
 }
 //--------------------------------------------------------------------------------
-void FileManager::save_file(void)
+void FileManager::save_file()
 {
     if(filename.isEmpty())
     {
@@ -188,7 +188,7 @@ void FileManager::save_file(void)
     ui->te_filemanager->document()->setModified(false);
 }
 //--------------------------------------------------------------------------------
-void FileManager::s_run(void)
+void FileManager::s_run()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -202,12 +202,12 @@ void FileManager::s_run(void)
     //ui->webEngineView->setHtml(temp);
 }
 //--------------------------------------------------------------------------------
-void FileManager::s_save(void)
+void FileManager::s_save()
 {
     save_file();
 }
 //--------------------------------------------------------------------------------
-void FileManager::s_save_as(void)
+void FileManager::s_save_as()
 {
     if(ui->te_filemanager->document()->isEmpty())
     {
@@ -229,7 +229,7 @@ void FileManager::s_save_as(void)
     }
 }
 //--------------------------------------------------------------------------------
-void FileManager::s_cancel(void)
+void FileManager::s_cancel()
 {
     emit debug(QString("%1").arg(ui->te_filemanager->document()->isModified() ? "true" : "false"));
     int btn = messagebox_question("Отмена", "Вы уверены, что хотите отменить изменения и загрузить файл снова?");
@@ -258,32 +258,32 @@ void FileManager::set_extension(QString value)
     }
 }
 //--------------------------------------------------------------------------------
-QString FileManager::get_data(void)
+QString FileManager::get_data()
 {
     return ui->te_filemanager->toPlainText();
 }
 //--------------------------------------------------------------------------------
-bool FileManager::isModified(void)
+bool FileManager::isModified()
 {
     return ui->te_filemanager->document()->isModified();
 }
 //--------------------------------------------------------------------------------
-void FileManager::updateText(void)
+void FileManager::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool FileManager::programm_is_exit(void)
+bool FileManager::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void FileManager::load_setting(void)
+void FileManager::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void FileManager::save_setting(void)
+void FileManager::save_setting()
 {
 
 }

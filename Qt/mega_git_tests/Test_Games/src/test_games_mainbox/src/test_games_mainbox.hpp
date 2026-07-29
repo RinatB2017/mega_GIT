@@ -41,27 +41,27 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
-    bool test_0(void);
-    bool test_1(void);
-    bool test_2(void);
-    bool test_3(void);
-    bool test_4(void);
-    bool test_5(void);
+    void choice_test();
+    bool test_0();
+    bool test_1();
+    bool test_2();
+    bool test_3();
+    bool test_4();
+    bool test_5();
 
-    void run_kmines(void);
-    void run_kpat(void);
-    void run_kdiamond(void);
+    void run_kmines();
+    void run_kpat();
+    void run_kdiamond();
 
     void run_program(const QString &program,
                      const QString &program_name,
                      const QStringList &arguments);
 
-    void find_kpat(void);
-    void find_kmines(void);
-    void find_kdiamond(void);
+    void find_kpat();
+    void find_kmines();
+    void find_kdiamond();
 
-    void started(void);
+    void started();
     void finished(int result, QProcess::ExitStatus exitStatus);
     void process_error(QProcess::ProcessError p_error);
 
@@ -70,7 +70,7 @@ private:
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
 
     QPointer<MySplashScreen> splash;
@@ -79,18 +79,18 @@ private:
     QPointer<QComboBox> cb_test;
     QList<CMD> commands;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
     bool find_window(const QString &programm_title,
                      int *x,
                      int *y,
                      int *width,
                      int *heigth);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

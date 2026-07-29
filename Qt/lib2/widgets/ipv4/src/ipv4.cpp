@@ -37,7 +37,7 @@ IPV4::~IPV4()
     if(port) delete port;
 }
 //--------------------------------------------------------------------------------
-void IPV4::init(void)
+void IPV4::init()
 {
     a = new QSpinBox(this);
     b = new QSpinBox(this);
@@ -114,12 +114,12 @@ void IPV4::setObjectName(const QString &name)
     QWidget::setObjectName(name);
 }
 //--------------------------------------------------------------------------------
-void IPV4::work(void)
+void IPV4::work()
 {
     emit s_get_url(get_url());
 }
 //--------------------------------------------------------------------------------
-QUrl IPV4::get_url(void)
+QUrl IPV4::get_url()
 {
     QUrl url;
     url.setHost(QString("%1.%2.%3.%4")
@@ -166,22 +166,22 @@ bool IPV4::eventFilter(QObject*, QEvent* event)
     return false;
 }
 //--------------------------------------------------------------------------------
-void IPV4::updateText(void)
+void IPV4::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool IPV4::programm_is_exit(void)
+bool IPV4::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void IPV4::load_setting(void)
+void IPV4::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void IPV4::save_setting(void)
+void IPV4::save_setting()
 {
 
 }

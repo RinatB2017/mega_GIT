@@ -34,7 +34,7 @@ Worker_fake::~Worker_fake()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Worker_fake::init(void)
+void Worker_fake::init()
 {
     ui->setupUi(this);
 
@@ -56,7 +56,7 @@ void Worker_fake::input(QByteArray data)
     ui->log_widget->infoLog(data);
 }
 //--------------------------------------------------------------------------------
-void Worker_fake::port_close(void)
+void Worker_fake::port_close()
 {
 
 }

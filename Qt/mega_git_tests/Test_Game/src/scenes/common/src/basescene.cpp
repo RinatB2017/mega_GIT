@@ -85,7 +85,7 @@ void BaseScene::add_background(QString filename)
     background = addPixmap(QPixmap(filename));
 }
 //--------------------------------------------------------------------------------
-void BaseScene::create_timer(void)
+void BaseScene::create_timer()
 {
     //qDebug() << "BaseScene::create_timer";
 
@@ -125,7 +125,7 @@ void BaseScene::keyReleaseEvent(QKeyEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-void BaseScene::start(void)
+void BaseScene::start()
 {
     if(timer)
     {
@@ -133,7 +133,7 @@ void BaseScene::start(void)
     }
 }
 //--------------------------------------------------------------------------------
-void BaseScene::stop(void)
+void BaseScene::stop()
 {
     if(timer)
     {

@@ -44,10 +44,10 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void test(void);
+    void test();
 
-    void clean(void);
-    void save(void);
+    void clean();
+    void save();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -56,21 +56,21 @@ private:
     QPointer<QTabWidget> tab;
     QList<QToolButton *> l_buttons;
 
-    void init(void);
+    void init();
     void add_icons(QTabWidget *page,
                    const QString &catalog_name,
                    int max_x = 30);
     void add_icons_from_theme(QTabWidget *page,
                               int max_x = 30);
 
-    void print_icon_name(void);
+    void print_icon_name();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

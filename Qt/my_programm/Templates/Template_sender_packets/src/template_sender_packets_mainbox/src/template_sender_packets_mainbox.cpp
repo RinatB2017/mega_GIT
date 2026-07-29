@@ -40,7 +40,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -59,12 +59,12 @@ void MainBox::init(void)
     setFixedHeight(sizeHint().height());
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_widgets(void)
+void MainBox::init_widgets()
 {
     ui->sb_timeout_ms->setRange(1000, 0xFFFF);
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_serial_fix(void)
+void MainBox::init_serial_fix()
 {
     ui->serial_widget->set_fix_baudrate(115200);
     connect(this,               static_cast<void (MainBox::*)(const QByteArray&)>(&MainBox::send),
@@ -73,7 +73,7 @@ void MainBox::init_serial_fix(void)
             this,               &MainBox::read_data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::connects(void)
+void MainBox::connects()
 {
     connect(ui->btn_get_ID,     &QPushButton::clicked,  this,   &MainBox::get_ID);
 }
@@ -112,7 +112,7 @@ void MainBox::read_data(QByteArray ba)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_test_bar(void)
+void MainBox::create_test_bar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -149,7 +149,7 @@ void MainBox::create_test_bar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_programm_bar(void)
+void MainBox::create_programm_bar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -187,7 +187,7 @@ void MainBox::create_programm_bar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -200,7 +200,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != test_commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -214,7 +214,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_programm(void)
+void MainBox::choice_programm()
 {
     bool ok = false;
     int cmd = cb_programm->itemData(cb_programm->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -227,7 +227,7 @@ void MainBox::choice_programm(void)
             );
     if (cmd_it != programm_commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -241,13 +241,13 @@ void MainBox::choice_programm(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::get_ID(void)
+bool MainBox::get_ID()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -413,12 +413,12 @@ void MainBox::wait_msec(int msec, bool waiting)
     emit debug(QString("Прошло %1 msec").arg(msec));
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     if(ui->serial_widget->isOpen())
     {
@@ -428,12 +428,12 @@ bool MainBox::programm_is_exit(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

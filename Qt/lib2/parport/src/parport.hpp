@@ -56,9 +56,9 @@ class Parport : public QObject
 public:
     explicit Parport(QObject *parent = nullptr);
     //---
-    bool open_parport(void);
-    void close_parport(void);
-    bool is_open(void);
+    bool open_parport();
+    void close_parport();
+    bool is_open();
     //---
     void set_read_on();
     void set_read_off();
@@ -73,15 +73,15 @@ public:
     void setData6(bool state);
     void setData7(bool state);
     //---
-    unsigned char getData(void);
-    bool getData0(void);
-    bool getData1(void);
-    bool getData2(void);
-    bool getData3(void);
-    bool getData4(void);
-    bool getData5(void);
-    bool getData6(void);
-    bool getData7(void);
+    unsigned char getData();
+    bool getData0();
+    bool getData1();
+    bool getData2();
+    bool getData3();
+    bool getData4();
+    bool getData5();
+    bool getData6();
+    bool getData7();
     //---
     void setStatusError(bool state);
     void setStatusSelect(bool state);
@@ -89,32 +89,32 @@ public:
     void setStatusACK(bool state);
     void setStatusBusy(bool state);
     //---
-    bool getStatusError(void);
-    bool getStatusSelect(void);
-    bool getStatusPaperOut(void);
-    bool getStatusACK(void);
-    bool getStatusBusy(void);
+    bool getStatusError();
+    bool getStatusSelect();
+    bool getStatusPaperOut();
+    bool getStatusACK();
+    bool getStatusBusy();
     //---
     void setSelectIn(bool state);
     void setInit(bool state);
     void setStrobe(bool state);
     void setAutoFt(bool state);
     //---
-    bool getSelectIn(void);
-    bool getInit(void);
-    bool getStrobe(void);
-    bool getAutoFt(void);
+    bool getSelectIn();
+    bool getInit();
+    bool getStrobe();
+    bool getAutoFt();
     //---
     void setDataDir(unsigned char data);
     //---
-    unsigned char get_control(void);
+    unsigned char get_control();
     void set_control(unsigned char data);
     //---
-    unsigned char get_status(void);
+    unsigned char get_status();
     void set_status(unsigned char data);
     //---
-    void set_all(void);
-    void clr_all(void);
+    void set_all();
+    void clr_all();
     //---
     void send_LED_on(unsigned char data);
     void send_LED_off(unsigned char data);
@@ -137,11 +137,11 @@ private:
     int address_LPT;
     unsigned char state;
 
-    void connect_log(void);
-    void load_setting(void);
+    void connect_log();
+    void load_setting();
     //---
     void write_data(unsigned char data);
-    unsigned char read_data(void);
+    unsigned char read_data();
     //---
 
 #ifdef Q_OS_UNIX

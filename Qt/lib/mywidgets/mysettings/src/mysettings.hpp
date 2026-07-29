@@ -89,22 +89,22 @@ public:
     void save_value(const QString &name, QVariant value);
 
     void beginGroup(const QString &prefix);
-    void endGroup(void);
+    void endGroup();
 
     void beginWriteArray(const QString &prefix, int size = -1);
     int  beginReadArray(const QString &prefix);
 
     QString get_full_objectName(QWidget *widget);
 
-    void endArray(void);
+    void endArray();
     void setArrayIndex(int i);
 
-    void clear_all(void);
+    void clear_all();
 
 private:
     QSettings *settings = nullptr;
 
-    void init(void);
+    void init();
 };
 //--------------------------------------------------------------------------------
 #endif

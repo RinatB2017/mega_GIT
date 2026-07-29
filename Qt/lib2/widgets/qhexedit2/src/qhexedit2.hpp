@@ -38,7 +38,7 @@ private:
     QFile file;
     bool isUntitled = true;
 
-    void init(void);
+    void init();
     void loadFile(const QString &fileName);
     void setCurrentFile(const QString &fileName);
 

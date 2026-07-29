@@ -52,16 +52,16 @@ public:
     virtual ~CandleStick_Box_adv();
 
     void append(QCandlestickSet *set, qreal volume);
-    void update_data(void);
-    void clear_data(void);
+    void update_data();
+    void clear_data();
 
     bool get_ticket_data(int index, QCandlestickSet *set, qreal *volume);
 
     void set_ticket_name(const QString &new_ticket_name);
-    QString get_ticket_name(void);
-    int get_max_index(void);
+    QString get_ticket_name();
+    int get_max_index();
 
-    void test(void);
+    void test();
 
 private:
     Ui::CandleStick_Box_adv *ui;
@@ -86,27 +86,27 @@ private:
     qreal temp_volume = 0;
 #endif
 
-    void init(void);
-    void init_candle_series(void);
-    void init_chart(void);
-    void init_rubberband(void);
-    void init_axis(void);
-    void init_icons(void);
-    void init_tooltips(void);
-    void connect_widgets(void);
+    void init();
+    void init_candle_series();
+    void init_chart();
+    void init_rubberband();
+    void init_axis();
+    void init_icons();
+    void init_tooltips();
+    void connect_widgets();
 
-    void zoom_in(void);
-    void zoom_out(void);
-    void zoom_reset(void);
+    void zoom_in();
+    void zoom_out();
+    void zoom_reset();
 
-    void move_left(void);
-    void move_right(void);
-    void move_up(void);
-    void move_down(void);
-    void move_reset(void);
+    void move_left();
+    void move_right();
+    void move_up();
+    void move_down();
+    void move_reset();
 
-    void set_theme_light(void);
-    void set_theme_dark(void);
+    void set_theme_light();
+    void set_theme_dark();
 
     bool get_index(QString key, int *index);
 
@@ -115,10 +115,10 @@ private:
     void hovered_candle(bool state, QCandlestickSet *set);
     void set_rubber_band(int index);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     void resizeEvent (QResizeEvent * event);

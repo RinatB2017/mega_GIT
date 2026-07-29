@@ -52,7 +52,7 @@ ADB_widget::~ADB_widget()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::init(void)
+void ADB_widget::init()
 {
     ui->setupUi(this);
 
@@ -173,7 +173,7 @@ void ADB_widget::f_get_data(const QByteArray &data)
     emit trace(data.data());
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::create_process(void)
+void ADB_widget::create_process()
 {
     myProcess = new QProcess(this);
     connect(myProcess,  &QProcess::started,                     this,   &ADB_widget::started);
@@ -198,7 +198,7 @@ void ADB_widget::run_program(const QString &program,
     myProcess->start(program, arguments);
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::readData(void)
+void ADB_widget::readData()
 {
     emit info(QString("==> bytesAvailable: %1").arg(myProcess->bytesAvailable()));
     if(binary_data == false)
@@ -226,7 +226,7 @@ void ADB_widget::readData(void)
     }
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::started(void)
+void ADB_widget::started()
 {
     block_interface(true);
     emit info("Процесс начат!");
@@ -279,7 +279,7 @@ void ADB_widget::process_error(QProcess::ProcessError p_error)
     }
 }
 //--------------------------------------------------------------------------------
-bool ADB_widget::f_devices(void)
+bool ADB_widget::f_devices()
 {
     QString program = PROG_PROCESS;
     QStringList arguments;
@@ -302,7 +302,7 @@ bool ADB_widget::f_devices(void)
     return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::f_create_screenshot(void)
+void ADB_widget::f_create_screenshot()
 {
     if(ui->cb_devices->currentText().isEmpty())
     {
@@ -362,7 +362,7 @@ bool ADB_widget::f_swipe(int x1, int y1, int x2, int y2, int delay)
     return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
-bool ADB_widget::f_test_swipe_LR(void)
+bool ADB_widget::f_test_swipe_LR()
 {
     return f_swipe(10,
                    s_height / 2,
@@ -371,7 +371,7 @@ bool ADB_widget::f_test_swipe_LR(void)
                    100);
 }
 //--------------------------------------------------------------------------------
-bool ADB_widget::f_test_swipe_RL(void)
+bool ADB_widget::f_test_swipe_RL()
 {
     return f_swipe(s_width / 2,
                    s_height / 2,
@@ -380,7 +380,7 @@ bool ADB_widget::f_test_swipe_RL(void)
                    100);
 }
 //--------------------------------------------------------------------------------
-bool ADB_widget::f_test_swipe_UD(void)
+bool ADB_widget::f_test_swipe_UD()
 {
     return f_swipe(s_width / 2,
                    10,
@@ -389,7 +389,7 @@ bool ADB_widget::f_test_swipe_UD(void)
                    100);
 }
 //--------------------------------------------------------------------------------
-bool ADB_widget::f_test_swipe_DU(void)
+bool ADB_widget::f_test_swipe_DU()
 {
     return f_swipe(s_width / 2,
                    s_height / 2,
@@ -398,7 +398,7 @@ bool ADB_widget::f_test_swipe_DU(void)
                    100);
 }
 //--------------------------------------------------------------------------------
-bool ADB_widget::f_adb(void)
+bool ADB_widget::f_adb()
 {
     if(ui->cb_devices->currentText().isEmpty())
     {
@@ -435,7 +435,7 @@ bool ADB_widget::f_adb(void)
     return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
-bool ADB_widget::f_test(void)
+bool ADB_widget::f_test()
 {
     QStringList arguments;
     QString device = ui->cb_devices->currentText();
@@ -493,17 +493,17 @@ bool ADB_widget::f_test(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::f_start(void)
+void ADB_widget::f_start()
 {
     server->createServerOnPort(QHostAddress::LocalHost, static_cast<quint16>(ui->sb_port->value()));
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::f_stop(void)
+void ADB_widget::f_stop()
 {
     server->closeServer();
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::f_1(void)
+void ADB_widget::f_1()
 {
     QStringList arguments;
 
@@ -516,7 +516,7 @@ void ADB_widget::f_1(void)
     test_run(arguments);
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::f_2(void)
+void ADB_widget::f_2()
 {
     QStringList arguments;
 
@@ -529,7 +529,7 @@ void ADB_widget::f_2(void)
     test_run(arguments);
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::f_3(void)
+void ADB_widget::f_3()
 {
     QStringList arguments;
 
@@ -552,7 +552,7 @@ void ADB_widget::f_3(void)
     test_run(arguments);
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::f_4(void)
+void ADB_widget::f_4()
 {
     QStringList arguments;
 
@@ -588,7 +588,7 @@ bool ADB_widget::test_run(const QStringList &arguments)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool ADB_widget::f_get_file_screeshot(void)
+bool ADB_widget::f_get_file_screeshot()
 {
     if(ui->cb_devices->currentText().isEmpty())
     {
@@ -611,7 +611,7 @@ bool ADB_widget::f_get_file_screeshot(void)
     return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::f_screen_tap(void)
+void ADB_widget::f_screen_tap()
 {
     f_tap(ui->sb_pos_x->value(),
           ui->sb_pos_y->value());
@@ -648,7 +648,7 @@ bool ADB_widget::f_tap(int pos_x, int pos_y)
     return (process_result == 0);
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::run_cmd(void)
+void ADB_widget::run_cmd()
 {
     if(ui->cb_devices->currentText().isEmpty())
     {
@@ -709,7 +709,7 @@ void ADB_widget::f_show_screeshot(QPixmap pixmap)
     emit set_pixmap(pixmap);
 }
 //--------------------------------------------------------------------------------
-bool ADB_widget::f_get_screeshot(void)
+bool ADB_widget::f_get_screeshot()
 {
     if(ui->cb_devices->currentText().isEmpty())
     {
@@ -764,17 +764,17 @@ bool ADB_widget::copy_file(const QString &src_filename,
     return true;
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::updateText(void)
+void ADB_widget::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool ADB_widget::programm_is_exit(void)
+bool ADB_widget::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::load_setting(void)
+void ADB_widget::load_setting()
 {
     ui->btn_devices->click();
 
@@ -800,7 +800,7 @@ void ADB_widget::load_setting(void)
     }
 }
 //--------------------------------------------------------------------------------
-void ADB_widget::save_setting(void)
+void ADB_widget::save_setting()
 {
     save_int(P_INTERVAL,    ui->sb_interval->value());
     save_int(P_POS_X,       ui->sb_pos_x->value());

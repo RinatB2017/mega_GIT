@@ -36,7 +36,7 @@ public:
     virtual ~MyFileDialog();
 
 public slots:
-    int exec(void);
+    int exec();
 
 private:
     QString gName;

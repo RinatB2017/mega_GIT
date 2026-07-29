@@ -38,20 +38,20 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void send(void);
+    void send();
 
 private:
     Ui::MainBox *ui;
     TCP_Client *client;
 
-    void init(void);
-    void init_widgets(void);
-    void init_client(void);
+    void init();
+    void init_widgets();
+    void init_client();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

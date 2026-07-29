@@ -34,7 +34,7 @@ public:
              QWidget *parent = nullptr);
 
 signals:
-    void clicked(void);
+    void clicked();
 
 private:
     bool state;

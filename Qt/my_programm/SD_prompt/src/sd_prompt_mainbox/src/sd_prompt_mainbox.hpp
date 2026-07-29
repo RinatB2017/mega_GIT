@@ -38,19 +38,19 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
-    void choice_programm(void);
-    bool test(void);
+    void choice_test();
+    void choice_programm();
+    bool test();
 
-    bool create_positive_prompt(void);
-    bool create_negative_prompt(void);
+    bool create_positive_prompt();
+    bool create_negative_prompt();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
     QList<CMD> test_commands;
     QList<CMD> programm_commands;
@@ -60,13 +60,13 @@ private:
     QPointer<QComboBox> cb_test;
     QPointer<QComboBox> cb_programm;
 
-    void init(void);
-    void create_test_bar(void);
-    void create_programm_bar(void);
+    void init();
+    void create_test_bar();
+    void create_programm_bar();
 
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

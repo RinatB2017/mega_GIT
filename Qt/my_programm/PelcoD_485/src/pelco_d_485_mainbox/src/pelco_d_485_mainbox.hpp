@@ -74,21 +74,21 @@ public slots:
     void f_move_up_right(uint8_t speed);
     void f_move_down_left(uint8_t speed);
     void f_move_down_right(uint8_t speed);
-    void f_zoom_in(void);
-    void f_zoom_out(void);
-    void f_move_stop(void);
+    void f_zoom_in();
+    void f_zoom_out();
+    void f_move_stop();
 
-    void f_video(void);
+    void f_video();
 
 private slots:
-    bool test(void);
+    bool test();
     void read_data(QByteArray ba);
 
-    void pressed(void);
-    void released(void);
+    void pressed();
+    void released();
 
-    void f_send(void);
-    void refresh(void);
+    void f_send();
+    void refresh();
 
     void f_error(QMediaPlayer::Error err);
 
@@ -98,13 +98,13 @@ private:
 
     QPointer<QMediaPlayer> player;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

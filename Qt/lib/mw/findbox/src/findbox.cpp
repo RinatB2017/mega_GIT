@@ -35,7 +35,7 @@ FindBox::~FindBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void FindBox::init(void)
+void FindBox::init()
 {
     ui->btn_close->setIcon(qApp->style()->standardIcon(QStyle::SP_DialogCloseButton));
     ui->btn_prev->setIcon(qApp->style()->standardIcon(QStyle::SP_ArrowUp));
@@ -48,12 +48,12 @@ void FindBox::init(void)
     connect(ui->le_find_str,    &QLineEdit::editingFinished,    this,   &FindBox::f_next);
 }
 //--------------------------------------------------------------------------------
-void FindBox::f_hide(void)
+void FindBox::f_hide()
 {
     hide();
 }
 //--------------------------------------------------------------------------------
-void FindBox::f_prev(void)
+void FindBox::f_prev()
 {
     QString text = ui->le_find_str->text();
     if(text.isEmpty())  return;
@@ -61,7 +61,7 @@ void FindBox::f_prev(void)
     emit find_prev(text);
 }
 //--------------------------------------------------------------------------------
-void FindBox::f_next(void)
+void FindBox::f_next()
 {
     QString text = ui->le_find_str->text();
     if(text.isEmpty())  return;

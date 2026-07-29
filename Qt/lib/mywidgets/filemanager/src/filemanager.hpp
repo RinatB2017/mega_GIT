@@ -38,22 +38,22 @@ class FileManager : public MyWidget
 
 signals:
     void set_data(const QString& html, const QUrl& baseUrl = QUrl());
-    void run(void);
+    void run();
 
 public:
     explicit FileManager(QWidget *parent = nullptr);
     virtual ~FileManager();
 
     void set_extension(QString value);
-    bool isModified(void);
-    QString get_data(void);
+    bool isModified();
+    QString get_data();
 
 private slots:
-    void choice_file(void);
-    void s_run(void);
-    void s_save(void);
-    void s_save_as(void);
-    void s_cancel(void);
+    void choice_file();
+    void s_run();
+    void s_save();
+    void s_save_as();
+    void s_cancel();
     void need_cancel(bool state);
 
 private:
@@ -63,14 +63,14 @@ private:
     QString extension = "txt";
     QString filename;
 
-    void init(void);
+    void init();
     void load_file(const QString &filename);
-    void save_file(void);
+    void save_file();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // FILEMANAGER_HPP

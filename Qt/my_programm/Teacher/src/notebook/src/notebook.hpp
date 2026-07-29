@@ -36,14 +36,14 @@ public:
     Notebook(QWidget *parent = nullptr);
     virtual ~Notebook();
 
-    void check_modified(void);
+    void check_modified();
 
 public slots:
-    void btn_click(void);
-    void save_all(void);
+    void btn_click();
+    void save_all();
 
 private:
-    void init(void);
+    void init();
 
     bool load_data(QString name, QStringList *data);
     bool save_data(QString name, QStringList *data);
@@ -52,10 +52,10 @@ private:
     QStackedWidget *sw;
     QPushButton *btn_save_all;
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif

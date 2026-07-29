@@ -33,7 +33,7 @@ public:
     Test();
 
 private slots:
-    void test_grapher(void);
+    void test_grapher();
 
 private:
     MainWindow *mw;

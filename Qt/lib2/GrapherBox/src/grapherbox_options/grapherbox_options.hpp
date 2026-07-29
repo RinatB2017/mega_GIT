@@ -52,19 +52,19 @@ public:
     virtual ~GrapherBox_Options();
 
     void set_type_device(GrapherBox_Options::Device device);
-    GrapherBox_Options::Device get_type_device(void);
+    GrapherBox_Options::Device get_type_device();
     void set_type_curve(GrapherBox_Options::TypeCurve type);
-    GrapherBox_Options::TypeCurve get_type_curve(void);
+    GrapherBox_Options::TypeCurve get_type_curve();
 
     void set_min_axis_X(int value);
     void set_max_axis_X(int value);
     void set_min_axis_Y(int value);
     void set_max_axis_Y(int value);
 
-    int get_min_axis_x(void);
-    int get_max_axis_x(void);
-    int get_min_axis_y(void);
-    int get_max_axis_y(void);
+    int get_min_axis_x();
+    int get_max_axis_x();
+    int get_min_axis_y();
+    int get_max_axis_y();
 
     void add_color_button(QColor color, QString text);
     bool get_color(int channel, QColor *color);
@@ -75,7 +75,7 @@ private:
     int cnt_channel = 0;
     QList<ColorButton *> color_buttons;
 
-    void init(void);
+    void init();
 };
 //--------------------------------------------------------------------------------
 #endif // GRAPHERBOX_OPTIONS_HPP

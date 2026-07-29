@@ -45,7 +45,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -60,7 +60,7 @@ void MainBox::init(void)
     //setFixedSize(640, 480);
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -78,7 +78,7 @@ void MainBox::createTestBar(void)
     connect(btn_test, SIGNAL(clicked()), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     //block_this_button(true);
     emit info("Test()");
@@ -131,7 +131,7 @@ bool MainBox::load_field(QPixmap *pixmap)
     return ok;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_labirint(void)
+void MainBox::load_labirint()
 {
     QXmlGet *xmlGet = new QXmlGet();
     bool ok = xmlGet->load(":/data/labirint.dat");
@@ -203,7 +203,7 @@ void MainBox::load_labirint(void)
     step = 10;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_images(void)
+void MainBox::load_images()
 {
     QPixmap comp;
     bool ok = comp.load(ICON_PROGRAMM);
@@ -238,7 +238,7 @@ void MainBox::load_images(void)
     step = 10;
 }
 //--------------------------------------------------------------------------------
-void MainBox::move_left(void)
+void MainBox::move_left()
 {
     if((x - step) < 0)
     {
@@ -249,7 +249,7 @@ void MainBox::move_left(void)
     update();
 }
 //--------------------------------------------------------------------------------
-void MainBox::move_right(void)
+void MainBox::move_right()
 {
     if((x + step + width()) > picture_width)
     {
@@ -260,7 +260,7 @@ void MainBox::move_right(void)
     update();
 }
 //--------------------------------------------------------------------------------
-void MainBox::move_up(void)
+void MainBox::move_up()
 {
     if((y - step) < 0)
     {
@@ -271,7 +271,7 @@ void MainBox::move_up(void)
     update();
 }
 //--------------------------------------------------------------------------------
-void MainBox::move_down(void)
+void MainBox::move_down()
 {
     if((y + step + height()) > picture_height)
     {
@@ -327,22 +327,22 @@ void MainBox::paintEvent(QPaintEvent *event)
     Q_UNUSED(event)
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

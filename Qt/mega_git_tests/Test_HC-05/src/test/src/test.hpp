@@ -33,8 +33,8 @@ public:
     Test();
 
 private slots:
-    void test_GUI(void);
-    void test_func(void);
+    void test_GUI();
+    void test_func();
     
 private:
     MainWindow *mw = 0;

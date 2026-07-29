@@ -112,7 +112,7 @@ void Tester::keyPressEvent(QKeyEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-void Tester::add_text(void)
+void Tester::add_text()
 {
     QPainter painter;
     QPicture picture;
@@ -195,7 +195,7 @@ void Tester::add_grid(int step)
     tab->addWidget(label);
 }
 //--------------------------------------------------------------------------------
-void Tester::add_circle(void)
+void Tester::add_circle()
 {
     int radius;
     QBrush black_brush(Qt::black);
@@ -219,7 +219,7 @@ void Tester::add_circle(void)
     tab->addWidget(label);
 }
 //--------------------------------------------------------------------------------
-void Tester::draw_test(void)
+void Tester::draw_test()
 {
     tab->setCurrentIndex(state);
     if(state < (tab->count() - 1)) state++;

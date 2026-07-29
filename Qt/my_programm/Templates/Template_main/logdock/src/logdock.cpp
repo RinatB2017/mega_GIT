@@ -43,7 +43,7 @@ LogDock::~LogDock()
 
 }
 //--------------------------------------------------------------------------------
-void LogDock::update(void)
+void LogDock::update()
 {
     if(is_busy) return;
     is_busy = true;

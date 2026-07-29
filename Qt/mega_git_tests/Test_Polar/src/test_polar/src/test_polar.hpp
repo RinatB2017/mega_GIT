@@ -48,29 +48,29 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void choice_test(void);
-    bool test(void);
+    void choice_test();
+    bool test();
 
-    bool s_create_orig_image(void);
-    bool s_load_orig_image(void);
-    void s_show_orig_image(void);
+    bool s_create_orig_image();
+    bool s_load_orig_image();
+    void s_show_orig_image();
 
-    bool s_create_new_image(void);
-    bool s_create_new_image_2(void);
-    void s_show_new_image(void);
+    bool s_create_new_image();
+    bool s_create_new_image_2();
+    void s_show_new_image();
 
     void set_pic_width(int value);
     void set_pic_height(int value);
 
-    void f_test(void);
-    void f_test_2(void);
+    void f_test();
+    void f_test_2();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
 
     QPointer<MySplashScreen> splash;
@@ -91,13 +91,13 @@ private:
                     int min_x,
                     int min_y);
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

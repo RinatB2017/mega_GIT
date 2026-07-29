@@ -55,18 +55,18 @@ private:
     QPointer<QTabWidget> tab;
     QPointer<Notebook> note;
 
-    void init(void);
+    void init();
 
-    void prepare_grids(void);
-    void prepare_tab(void);
-    void prepare_notebook(void);
+    void prepare_grids();
+    void prepare_tab();
+    void prepare_notebook();
 
-    void create_widgets(void);
+    void create_widgets();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

@@ -58,17 +58,17 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void onLoad(void);
-    void refreshHSV(void);
+    void onLoad();
+    void refreshHSV();
 
     void set_scaleFactor(int value);
     void set_scaleFactor(double value);
     void set_minNeighbors(int value);
 
-    void find_faces(void);
-    void find_polygons(void);
+    void find_faces();
+    void find_polygons();
 
-    void s_test(void);
+    void s_test();
 
 private:
     Ui::MainBox *ui;
@@ -78,7 +78,7 @@ private:
     QString m_lastLoadPath = ".";
 
     // ---> Face detectors
-    bool create_detectors(void);
+    bool create_detectors();
 
     cv::Mat grayFrames;
     cv::CascadeClassifier faceCade;
@@ -93,12 +93,12 @@ private:
     cv::CascadeClassifier mNoseDetector;
     // <--- Face detectors
 
-    void init(void);
+    void init();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

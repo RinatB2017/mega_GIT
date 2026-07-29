@@ -93,18 +93,18 @@ private:
     QTimer *timer2;
     void message(const QString &text);
     void set_enable(bool state);
-    void initKeyboard(void);
-    void initWidgets(void);
-    void initTimers(void);
+    void initKeyboard();
+    void initWidgets();
+    void initTimers();
 
-    void connects(void);
-    void set_timers(void);
-    int open_parport(void);
+    void connects();
+    void set_timers();
+    int open_parport();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif

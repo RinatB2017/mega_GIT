@@ -45,7 +45,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -89,7 +89,7 @@ void MainBox::lock_widgets(bool state)
     ui->btn_send_SL6087->setEnabled(state);
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_widgets(void)
+void MainBox::init_widgets()
 {
     sl_commands_SIM800.append( { 1, "", "test"});
     sl_commands_SIM800.append( { 2, "+AT2", "SIM800 cmd2"});
@@ -114,7 +114,7 @@ void MainBox::init_widgets(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -135,7 +135,7 @@ void MainBox::createTestBar(void)
     //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit info("Test");
     return true;
@@ -146,17 +146,17 @@ void MainBox::read_data(QByteArray ba)
     emit info(ba.data());
 }
 //--------------------------------------------------------------------------------
-void MainBox::send_command_SIM800(void)
+void MainBox::send_command_SIM800()
 {
     template_command(ui->cb_commands_SIM800, sl_commands_SIM800);
 }
 //--------------------------------------------------------------------------------
-void MainBox::send_command_SIM900(void)
+void MainBox::send_command_SIM900()
 {
     template_command(ui->cb_commands_SIM900, sl_commands_SIM900);
 }
 //--------------------------------------------------------------------------------
-void MainBox::send_command_SL6087(void)
+void MainBox::send_command_SL6087()
 {
     template_command(ui->cb_commands_SL6087, sl_commands_SL6087);
 }
@@ -192,22 +192,22 @@ void MainBox::template_command(T w, T2 sl)
     emit send(ba);
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

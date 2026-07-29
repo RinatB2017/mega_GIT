@@ -48,7 +48,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -61,13 +61,13 @@ void MainBox::init(void)
     init_display_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_serial_widget(void)
+void MainBox::init_serial_widget()
 {
     ui->serial_widget->set_fix_baudrate(9600);
     connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_adxl345(QByteArray)));
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_grapher_widget(void)
+void MainBox::init_grapher_widget()
 {
 #ifndef NO_GRAPHER
     ui->grapher_widget->setObjectName("GrapherBox");
@@ -96,7 +96,7 @@ void MainBox::init_grapher_widget(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_display_widgets(void)
+void MainBox::init_display_widgets()
 {
     display_widgets.append(ui->display_x_raw_accel);
     display_widgets.append(ui->display_y_raw_accel);
@@ -112,7 +112,7 @@ void MainBox::init_display_widgets(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -196,27 +196,27 @@ void MainBox::data_adxl345(QByteArray data)
     dirty_array.clear();
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     emit info("test");
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

@@ -40,11 +40,11 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void load(void);
-    void save(void);
-    void test(void);
+    void load();
+    void save();
+    void test();
 
-    void update(void);
+    void update();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -53,14 +53,14 @@ private:
     QTimer *main_timer = nullptr;
     int index = 0;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

@@ -37,8 +37,8 @@ public:
                         QWidget *parent = nullptr);
     virtual ~TestDialog();
 
-    int get_index(void);
-    int get_offset(void);
+    int get_index();
+    int get_offset();
 
 private:
     Ui::TestDialog *ui;
@@ -46,7 +46,7 @@ private:
     int max_index = 0;
     int max_offset = 0;
 
-    void init(void);
+    void init();
 };
 //--------------------------------------------------------------------------------
 #endif // TESTDIALOG_HPP

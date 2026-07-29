@@ -43,7 +43,7 @@ LCD_clock::~LCD_clock()
     delete settings;
 }
 //--------------------------------------------------------------------------------
-void LCD_clock::init(void)
+void LCD_clock::init()
 {
     timer = new QTimer(this);
     connect(timer,  &QTimer::timeout,
@@ -73,7 +73,7 @@ void LCD_clock::init(void)
     timer->start(1000);
 }
 //--------------------------------------------------------------------------------
-void LCD_clock::correct_time(void)
+void LCD_clock::correct_time()
 {
     QTime time = QTime::currentTime();
     hour = time.hour();
@@ -81,7 +81,7 @@ void LCD_clock::correct_time(void)
     sec  = time.second();
 }
 //--------------------------------------------------------------------------------
-void LCD_clock::timeout(void)
+void LCD_clock::timeout()
 {
     sec++;
     if(sec > 59)
@@ -118,7 +118,7 @@ void LCD_clock::timeout(void)
     emit s_show_message();
 }
 //--------------------------------------------------------------------------------
-void LCD_clock::show_message(void)
+void LCD_clock::show_message()
 {
     Timer_messagebox *msgbox = new Timer_messagebox(message);
     msgbox->setWindowTitle("Warning");
@@ -140,7 +140,7 @@ void LCD_clock::popup(QPoint)
     popup_menu->exec(QCursor::pos());
 }
 //--------------------------------------------------------------------------------
-void LCD_clock::open_option(void)
+void LCD_clock::open_option()
 {
     Timer_options *dlg = new Timer_options(this);
     dlg->set_message(message);
@@ -158,7 +158,7 @@ void LCD_clock::open_option(void)
     delete dlg;
 }
 //--------------------------------------------------------------------------------
-void LCD_clock::load_setting(void)
+void LCD_clock::load_setting()
 {
 #ifdef QT_DEBUG
     QString app_name = QString("%1(debug)").arg(APPNAME);
@@ -178,7 +178,7 @@ void LCD_clock::load_setting(void)
     t_sec  = settings->value(P_SEC).toInt();
 }
 //--------------------------------------------------------------------------------
-void LCD_clock::save_setting(void)
+void LCD_clock::save_setting()
 {
     settings->setValue(P_MESSAGE,   QVariant::fromValue(message));
     settings->setValue(P_HOUR,      QVariant::fromValue(t_hour));

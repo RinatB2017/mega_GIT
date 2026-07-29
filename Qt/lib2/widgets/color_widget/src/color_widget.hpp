@@ -34,7 +34,7 @@ public:
     explicit Color_widget(QWidget *parent = nullptr);
 
     void set_color(QColor color);
-    QColor get_color(void);
+    QColor get_color();
 
 private:
     QColor current_color = Qt::black;

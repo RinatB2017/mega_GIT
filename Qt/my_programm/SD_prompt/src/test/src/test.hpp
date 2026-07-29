@@ -33,9 +33,9 @@ public:
     Test();
 
 private slots:
-    void test_GUI(void);
-    void test_func(void);
-    void test_signals(void);
+    void test_GUI();
+    void test_func();
+    void test_signals();
 
 private:
     MainWindow *mw = nullptr;

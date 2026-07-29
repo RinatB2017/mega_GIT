@@ -51,15 +51,15 @@ public:
     bool add_menu(int index, const QString &title);
 
     bool set_baudRate(int value);
-    qint32 get_baudRate(void);
+    qint32 get_baudRate();
 
-    QSerialPort::DataBits       get_dataBits(void);
-    QSerialPort::Parity         get_parity(void);
-    QSerialPort::StopBits       get_stopBits(void);
-    QSerialPort::FlowControl    get_flowControl(void);
+    QSerialPort::DataBits       get_dataBits();
+    QSerialPort::Parity         get_parity();
+    QSerialPort::StopBits       get_stopBits();
+    QSerialPort::FlowControl    get_flowControl();
 
     void set_portname(const QString &portname);
-    QString get_portname(void);
+    QString get_portname();
 
     void set_caption(const QString &value);
 
@@ -78,7 +78,7 @@ private:
     //TODO
     bool p_test = false;
     void set_test(bool value);
-    bool get_test(void);
+    bool get_test();
 
 #ifndef RS232_NO_FRAME
     void add_frame_text(QFrame *parent,
@@ -89,13 +89,13 @@ private:
     SendBox5 *sendBox5;
 #endif
 
-    void init(void);
-    void init_timer(void);
-    void createWidgets(void);
-    void initEnumerator(void);
-    void initSerial(void);
-    void setOpenState(void);
-    void setCloseState(void);
+    void init();
+    void init_timer();
+    void createWidgets();
+    void initEnumerator();
+    void initSerial();
+    void setOpenState();
+    void setCloseState();
     QString ByteArrayToHex(const QByteArray &data);
 
 public slots:
@@ -108,21 +108,21 @@ public slots:
 private slots:
     void drawData(const QByteArray &data);
     void sendData(const QByteArray &sending_data);
-    void btnOpenPortClicked(void);
-    void refresh(void);
+    void btnOpenPortClicked();
+    void refresh();
     void set_baud_box(int index);
     void getStatus(const QString &status, QDateTime current);
-    void get_parameter(void);
-    void set_default(void);
+    void get_parameter();
+    void set_default();
 
-    void checkPorts(void);
+    void checkPorts();
 
     void change_icon(bool state);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // SERIALBOX_HPP

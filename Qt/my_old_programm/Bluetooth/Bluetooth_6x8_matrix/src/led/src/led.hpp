@@ -29,12 +29,12 @@ class Led : public QToolButton
 public:
     Led(QToolButton *parent = nullptr);
     void set_color(char color);
-    char get_color(void);
+    char get_color();
 
 signals:
 
 private slots:
-    void click(void);
+    void click();
 
 private:
     char color;

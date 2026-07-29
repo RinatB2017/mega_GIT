@@ -28,7 +28,7 @@ Test::Test()
 
 }
 //--------------------------------------------------------------------------------
-void Test::test_func(void)
+void Test::test_func()
 {
     Proto_NMEA_0183 *proto = new Proto_NMEA_0183();
     QCOMPARE(proto->test_GGA(), (int)Proto_NMEA_0183::E_NO_ERROR);

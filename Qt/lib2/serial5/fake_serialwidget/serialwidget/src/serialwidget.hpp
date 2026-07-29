@@ -35,10 +35,10 @@ class SerialWidget : public MyWidget
     Q_OBJECT
 
 signals:
-    void port_open(void);
-    void port_close(void);
-    void readyRead(void);
-    void readChannelFinished(void);
+    void port_open();
+    void port_close();
+    void readyRead();
+    void readChannelFinished();
     void output(const QByteArray &data);
     void port_is_active(bool);
 
@@ -55,8 +55,8 @@ public:
     explicit SerialWidget(QWidget *parent = nullptr);
     virtual ~SerialWidget();
 
-    bool serial_open(void);
-    bool serial_close(void);
+    bool serial_open();
+    bool serial_close();
 
     void setPortName(QString name);
     bool setBaudRate(qint32 value);
@@ -65,18 +65,18 @@ public:
     bool setStopBits(QSerialPort::StopBits value);
     bool setFlowControl(QSerialPort::FlowControl value);
 
-    QString portName(void);
-    int baudRate(void);
-    QSerialPort::DataBits dataBits(void);
-    QSerialPort::Parity parity(void);
-    QSerialPort::StopBits stopBits(void);
-    QSerialPort::FlowControl flowControl(void);
+    QString portName();
+    int baudRate();
+    QSerialPort::DataBits dataBits();
+    QSerialPort::Parity parity();
+    QSerialPort::StopBits stopBits();
+    QSerialPort::FlowControl flowControl();
 
-    QString errorString(void);
+    QString errorString();
 
-    bool isOpen(void);
-    QByteArray readAll(void);
-    qint64 bytesAvailable(void);
+    bool isOpen();
+    QByteArray readAll();
+    qint64 bytesAvailable();
 
     qint64 write(const char *data, qint64 len);
     qint64 write(const char *data);
@@ -84,7 +84,7 @@ public:
 
     void write_ba_output(QByteArray ba);
 
-    QStringList get_port_names(void);
+    QStringList get_port_names();
 
 private:
     bool f_port_open = false;
@@ -100,7 +100,7 @@ private:
     QSerialPort::StopBits port_StopBits = QSerialPort::OneStop;
     QSerialPort::FlowControl port_FlowControl = QSerialPort::NoFlowControl;
 
-    void init(void);
+    void init();
 
     void baudRateChanged(qint32 baudRate, QSerialPort::Directions directions);
     void breakEnabledChanged(bool set);

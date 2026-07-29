@@ -34,7 +34,7 @@ HLK_RM04_widget::~HLK_RM04_widget()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::init(void)
+void HLK_RM04_widget::init()
 {
     ui->setupUi(this);
 
@@ -174,7 +174,7 @@ void HLK_RM04_widget::init(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::init_widgets(void)
+void HLK_RM04_widget::init_widgets()
 {
     emit trace(Q_FUNC_INFO);
     ui->le_ssid->setText("Ssid");
@@ -205,7 +205,7 @@ void HLK_RM04_widget::init_widgets(void)
     ui->dhcpd_mask_widget->set_url(url);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::init_serial(void)
+void HLK_RM04_widget::init_serial()
 {
     ui->serial_widget->set_fix_baudrate(115200);
 
@@ -326,7 +326,7 @@ void HLK_RM04_widget::unlock_iface(bool state)
     !state ? lock_interface() : unlock_interface();
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::readChannelFinished(void)
+void HLK_RM04_widget::readChannelFinished()
 {
     emit error("readChannelFinished");
 }
@@ -359,7 +359,7 @@ void HLK_RM04_widget::wait_msec(int timeout_msec)
     }
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::choice_command(void)
+void HLK_RM04_widget::choice_command()
 {
     bool ok = false;
     int cmd = ui->cb_function->itemData(ui->cb_function->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -374,7 +374,7 @@ void HLK_RM04_widget::choice_command(void)
     );
     if (cmd_it != l_commands.end())
     {
-        typedef void (HLK_RM04_widget::*function)(void);
+        typedef void (HLK_RM04_widget::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -388,7 +388,7 @@ void HLK_RM04_widget::choice_command(void)
     }
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::choice_serial_to(void)
+void HLK_RM04_widget::choice_serial_to()
 {
     bool ok = false;
     int cmd = ui->cb_serial_to->itemData(ui->cb_serial_to->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -403,7 +403,7 @@ void HLK_RM04_widget::choice_serial_to(void)
     );
     if (cmd_it != l_commands.end())
     {
-        typedef void (HLK_RM04_widget::*function)(void);
+        typedef void (HLK_RM04_widget::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -417,7 +417,7 @@ void HLK_RM04_widget::choice_serial_to(void)
     }
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_test(void)
+void HLK_RM04_widget::s_test()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -463,7 +463,7 @@ void HLK_RM04_widget::s_test(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_info(void)
+void HLK_RM04_widget::s_info()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -518,7 +518,7 @@ void HLK_RM04_widget::s_info(void)
     }
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_scan(void)
+void HLK_RM04_widget::s_scan()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -558,7 +558,7 @@ void HLK_RM04_widget::s_scan(void)
     }
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_get_MAC(void)
+void HLK_RM04_widget::s_get_MAC()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -626,42 +626,42 @@ void HLK_RM04_widget::send_cmd(const QString &cmd,
               .arg(sl_read_data.at(default_cnt - 1)));
 }
 //--------------------------------------------------------------------------------
-QString HLK_RM04_widget::get_ssid(void)
+QString HLK_RM04_widget::get_ssid()
 {
     return ui->le_ssid->text();
 }
 //--------------------------------------------------------------------------------
-QString HLK_RM04_widget::get_password(void)
+QString HLK_RM04_widget::get_password()
 {
     return ui->le_password->text();
 }
 //--------------------------------------------------------------------------------
-QUrl HLK_RM04_widget::get_ip(void)
+QUrl HLK_RM04_widget::get_ip()
 {
     return ui->ip_widget->get_url();
 }
 //--------------------------------------------------------------------------------
-QUrl HLK_RM04_widget::get_remote_ip(void)
+QUrl HLK_RM04_widget::get_remote_ip()
 {
     return ui->remote_ip_widget->get_url();
 }
 //--------------------------------------------------------------------------------
-QUrl HLK_RM04_widget::get_mask(void)
+QUrl HLK_RM04_widget::get_mask()
 {
     return ui->mask_widget->get_url();
 }
 //--------------------------------------------------------------------------------
-QUrl HLK_RM04_widget::get_gate(void)
+QUrl HLK_RM04_widget::get_gate()
 {
     return ui->gate_widget->get_url();
 }
 //--------------------------------------------------------------------------------
-int HLK_RM04_widget::get_remote_port(void)
+int HLK_RM04_widget::get_remote_port()
 {
     return ui->sb_remote_port->value();
 }
 //--------------------------------------------------------------------------------
-QString HLK_RM04_widget::get_encrypt_type(void)
+QString HLK_RM04_widget::get_encrypt_type()
 {
     return ui->cb_encrypt_type->currentText();
 }
@@ -706,47 +706,47 @@ void HLK_RM04_widget::set_encrypt_type(QString encrypt_type)
     ui->cb_encrypt_type->setCurrentText(encrypt_type);
 }
 //--------------------------------------------------------------------------------
-QUrl HLK_RM04_widget::get_net_ip(void)
+QUrl HLK_RM04_widget::get_net_ip()
 {
     return ui->net_ip_widget->get_url();
 }
 //--------------------------------------------------------------------------------
-QUrl HLK_RM04_widget::get_net_mask(void)
+QUrl HLK_RM04_widget::get_net_mask()
 {
     return ui->net_mask_widget->get_url();
 }
 //--------------------------------------------------------------------------------
-QUrl HLK_RM04_widget::get_dhcpd_ip(void)
+QUrl HLK_RM04_widget::get_dhcpd_ip()
 {
     return ui->dhcpd_ip_widget->get_url();
 }
 //--------------------------------------------------------------------------------
-QUrl HLK_RM04_widget::get_dhcpd_mask(void)
+QUrl HLK_RM04_widget::get_dhcpd_mask()
 {
     return ui->dhcpd_mask_widget->get_url();
 }
 //--------------------------------------------------------------------------------
-QUrl HLK_RM04_widget::get_dhcpd_gate(void)
+QUrl HLK_RM04_widget::get_dhcpd_gate()
 {
     return ui->dhcpd_gate_widget->get_url();
 }
 //--------------------------------------------------------------------------------
-QUrl HLK_RM04_widget::get_dhcpd_dns(void)
+QUrl HLK_RM04_widget::get_dhcpd_dns()
 {
     return ui->dhcpd_dns_widget->get_url();
 }
 //--------------------------------------------------------------------------------
-QUrl HLK_RM04_widget::get_net_dns(void)
+QUrl HLK_RM04_widget::get_net_dns()
 {
     return ui->net_dns_widget->get_url();
 }
 //--------------------------------------------------------------------------------
-QUrl HLK_RM04_widget::get_net_gate(void)
+QUrl HLK_RM04_widget::get_net_gate()
 {
     return ui->net_gate_widget->get_url();
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_serial_to_ethernet_dynamic_ip(void)
+void HLK_RM04_widget::s_serial_to_ethernet_dynamic_ip()
 {
     QString temp;
     temp.append("at+netmode=1\r");
@@ -790,7 +790,7 @@ void HLK_RM04_widget::s_serial_to_ethernet_dynamic_ip(void)
     send_command(temp);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_serial_to_ethernet_static_ip(void)
+void HLK_RM04_widget::s_serial_to_ethernet_static_ip()
 {
     QString temp;
     temp.append("at+netmode=1\r");
@@ -844,7 +844,7 @@ void HLK_RM04_widget::s_serial_to_ethernet_static_ip(void)
     send_command(temp);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_serial_to_wifi_client(void)
+void HLK_RM04_widget::s_serial_to_wifi_client()
 {
     QString temp;
     temp.append("at+netmode=2\r");
@@ -889,7 +889,7 @@ void HLK_RM04_widget::s_serial_to_wifi_client(void)
     send_command(temp);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_serial_to_wifi_client_static(void)
+void HLK_RM04_widget::s_serial_to_wifi_client_static()
 {
     QString temp;
     temp.append("at+netmode=2\r");
@@ -943,7 +943,7 @@ void HLK_RM04_widget::s_serial_to_wifi_client_static(void)
     send_command(temp);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_serial_to_wifi_ap(void)
+void HLK_RM04_widget::s_serial_to_wifi_ap()
 {
     QString temp;
     temp.append("at+netmode=3\r");
@@ -1000,13 +1000,13 @@ void HLK_RM04_widget::s_serial_to_wifi_ap(void)
     send_command(temp);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_get_netmode(void)
+void HLK_RM04_widget::s_get_netmode()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+netmode=?", "get netmode");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_set_netmode(void)
+void HLK_RM04_widget::s_set_netmode()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd(QString("at+netmode=%1")
@@ -1014,7 +1014,7 @@ void HLK_RM04_widget::s_set_netmode(void)
              "set netmode");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_set_wifi_conf(void)
+void HLK_RM04_widget::s_set_wifi_conf()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd(QString("at+wifi_conf=%1,%2,%3")
@@ -1023,25 +1023,25 @@ void HLK_RM04_widget::s_set_wifi_conf(void)
              .arg(ui->le_password->text()), "wifi conf");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_get_wifi_conf(void)
+void HLK_RM04_widget::s_get_wifi_conf()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+wifi_conf=?", "wifi conf");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_channel(void)
+void HLK_RM04_widget::s_channel()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+Channel=?", "Channel");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_get_net_IP(void)
+void HLK_RM04_widget::s_get_net_IP()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+net_ip=?", "GET net ip");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_set_net_IP(void)
+void HLK_RM04_widget::s_set_net_IP()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd(QString("at+net_ip=%1,%2,%3\r")
@@ -1051,13 +1051,13 @@ void HLK_RM04_widget::s_set_net_IP(void)
              "SET net ip");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_get_net_DNS(void)
+void HLK_RM04_widget::s_get_net_DNS()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+net_dns=?", "get DNS");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_set_net_DNS(void)
+void HLK_RM04_widget::s_set_net_DNS()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd(QString("at+net_dns=%1")
@@ -1065,19 +1065,19 @@ void HLK_RM04_widget::s_set_net_DNS(void)
              "set DNS");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_dhcpd(void)
+void HLK_RM04_widget::s_dhcpd()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+dhcpd=?", "DHCPD");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_get_dhcpd_ip(void)
+void HLK_RM04_widget::s_get_dhcpd_ip()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+dhcpd_ip=?", "DHCPD IP");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_set_dhcpd_ip(void)
+void HLK_RM04_widget::s_set_dhcpd_ip()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd(QString("at+dhcpd_ip=%1")
@@ -1085,13 +1085,13 @@ void HLK_RM04_widget::s_set_dhcpd_ip(void)
              "DHCPD IP");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_get_dhcpd_dns(void)
+void HLK_RM04_widget::s_get_dhcpd_dns()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+dhcpd_dns=?", "get DHCPD DNS");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_set_dhcpd_dns(void)
+void HLK_RM04_widget::s_set_dhcpd_dns()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd(QString("at+dhcpd_dns=%1")
@@ -1099,13 +1099,13 @@ void HLK_RM04_widget::s_set_dhcpd_dns(void)
              "set DHCPD DNS");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_get_dhcpd_time(void)
+void HLK_RM04_widget::s_get_dhcpd_time()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+dhcpd_time=?", "get DHCPD TIME");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_set_dhcpd_time(void)
+void HLK_RM04_widget::s_set_dhcpd_time()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd(QString("at+dhcpd_time=%1")
@@ -1113,25 +1113,25 @@ void HLK_RM04_widget::s_set_dhcpd_time(void)
              "set DHCPD TIME");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_net_commit(void)
+void HLK_RM04_widget::s_net_commit()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+Net_commit=?", "Net commit");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_out_trans(void)
+void HLK_RM04_widget::s_out_trans()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+out_trans=?", "Out trans", 1);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_get_remote_IP(void)
+void HLK_RM04_widget::s_get_remote_IP()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+remoteip=?", "Get remote IP");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_set_remote_IP(void)
+void HLK_RM04_widget::s_set_remote_IP()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd(QString("at+remoteip=%1")
@@ -1139,13 +1139,13 @@ void HLK_RM04_widget::s_set_remote_IP(void)
              "Set remote IP");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_get_remote_port(void)
+void HLK_RM04_widget::s_get_remote_port()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+remoteport=?", "Get remote port");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_set_remote_port(void)
+void HLK_RM04_widget::s_set_remote_port()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd(QString("at+remoteport=%1")
@@ -1153,73 +1153,73 @@ void HLK_RM04_widget::s_set_remote_port(void)
              "Set remote port");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_remote_pro(void)
+void HLK_RM04_widget::s_remote_pro()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+remotepro=?", "Remote pro");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_timeout(void)
+void HLK_RM04_widget::s_timeout()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+timeout=?", "Timeout");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_mode(void)
+void HLK_RM04_widget::s_mode()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+mode=?", "Mode");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_uart(void)
+void HLK_RM04_widget::s_uart()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+uart=?", "Uart");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_uartpacklen(void)
+void HLK_RM04_widget::s_uartpacklen()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+uartpacklen=?", "Uartpacklen");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_uartpacktimeout(void)
+void HLK_RM04_widget::s_uartpacktimeout()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+uartpacktimeout=?", "Uartpacktimeout");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_escape(void)
+void HLK_RM04_widget::s_escape()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+escape=?", "Escape");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_tcp_auto(void)
+void HLK_RM04_widget::s_tcp_auto()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+tcp_auto=?", "Tcp auto");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_default(void)
+void HLK_RM04_widget::s_default()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+default=1", "Default", 1);
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_reboot(void)
+void HLK_RM04_widget::s_reboot()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+reboot=1", "Reboot");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::s_ver(void)
+void HLK_RM04_widget::s_ver()
 {
     emit trace(Q_FUNC_INFO);
     send_cmd("at+ver=?", "Ver");
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::send_text(void)
+void HLK_RM04_widget::send_text()
 {
     emit trace(Q_FUNC_INFO);
     send_command(ui->le_send->text());
@@ -1236,22 +1236,22 @@ bool HLK_RM04_widget::eventFilter(QObject*, QEvent* event)
     }
     return false;
 }//--------------------------------------------------------------------------------
-void HLK_RM04_widget::updateText(void)
+void HLK_RM04_widget::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool HLK_RM04_widget::programm_is_exit(void)
+bool HLK_RM04_widget::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::load_setting(void)
+void HLK_RM04_widget::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void HLK_RM04_widget::save_setting(void)
+void HLK_RM04_widget::save_setting()
 {
 
 }

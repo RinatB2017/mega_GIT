@@ -45,7 +45,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -59,15 +59,15 @@ void MainBox::init(void)
     connect(ui->btn_run_gcc,        &QToolButton::clicked,  this,   &MainBox::run_gcc);
     connect(ui->btn_run_kate,       &QToolButton::clicked,  this,   &MainBox::run_kate);
     connect(ui->btn_run_command,    &QToolButton::clicked,
-            this,                   static_cast<bool (MainBox::*)(void)>(&MainBox::run_command));
+            this,                   static_cast<bool (MainBox::*)()>(&MainBox::run_command));
 
     connect(ui->le_script_filename, &QLineEdit::editingFinished,    this,   &MainBox::run_sh);
     connect(ui->le_gcc_param,       &QLineEdit::editingFinished,    this,   &MainBox::run_gcc);
     connect(ui->le_kate_param,      &QLineEdit::editingFinished,    this,   &MainBox::run_kate);
     connect(ui->le_command,         &QLineEdit::editingFinished,
-            this,                   static_cast<bool (MainBox::*)(void)>(&MainBox::run_command));
+            this,                   static_cast<bool (MainBox::*)()>(&MainBox::run_command));
     connect(ui->le_param,           &QLineEdit::editingFinished,
-            this,                   static_cast<bool (MainBox::*)(void)>(&MainBox::run_command));
+            this,                   static_cast<bool (MainBox::*)()>(&MainBox::run_command));
 
     ui->btn_run_sh->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
     ui->btn_run_gcc->setIcon(qApp->style()->standardIcon(QStyle::SP_MediaPlay));
@@ -77,7 +77,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -115,7 +115,7 @@ void MainBox::createTestBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -130,7 +130,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -144,7 +144,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_QProcess(void)
+void MainBox::prepare_QProcess()
 {
     s_process = new Simple_process(this);
     Q_ASSERT(s_process);
@@ -156,7 +156,7 @@ void MainBox::prepare_QProcess(void)
     s_process->setProcessEnvironment(env);
 }
 //--------------------------------------------------------------------------------
-void MainBox::run_sh(void)
+void MainBox::run_sh()
 {
     if(ui->le_script_filename->text().isEmpty() == false)
     {
@@ -165,7 +165,7 @@ void MainBox::run_sh(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::run_gcc(void)
+void MainBox::run_gcc()
 {
     if(ui->le_gcc_param->text().isEmpty() == false)
     {
@@ -174,7 +174,7 @@ void MainBox::run_gcc(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::run_kate(void)
+void MainBox::run_kate()
 {
     if(ui->le_kate_param->text().isEmpty() == false)
     {
@@ -183,7 +183,7 @@ void MainBox::run_kate(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::run_command(void)
+bool MainBox::run_command()
 {
     QString command = ui->le_command->text();
     QString param = ui->le_param->text();
@@ -209,28 +209,28 @@ bool MainBox::run_command(const QString &command, const QString &param)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit info("Test()");
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

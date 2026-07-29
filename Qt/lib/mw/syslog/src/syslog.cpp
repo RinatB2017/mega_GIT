@@ -137,23 +137,23 @@ void SysLog::s_syslog(QDateTime dtime,
     ui->table->scrollToBottom();
 }
 //--------------------------------------------------------------------------------
-void SysLog::seek_first(void)
+void SysLog::seek_first()
 {
     //    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
-void SysLog::seek_prev(void)
+void SysLog::seek_prev()
 {
     //    emit trace(Q_FUNC_INFO);
 }
 //--------------------------------------------------------------------------------
-void SysLog::seek_next(void)
+void SysLog::seek_next()
 {
     //    emit trace(Q_FUNC_INFO);
     ui->table->setCurrentIndex(QModelIndex());
 }
 //--------------------------------------------------------------------------------
-void SysLog::seek_last(void)
+void SysLog::seek_last()
 {
     //    emit trace(Q_FUNC_INFO);
 }
@@ -191,7 +191,7 @@ void SysLog::add_test_data(int level)
     model->setData(model->index(index, 3, QModelIndex()), "no message");
 }
 //--------------------------------------------------------------------------------
-void SysLog::click(void)
+void SysLog::click()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -201,7 +201,7 @@ void SysLog::click(void)
     emit info(QString("%1").arg(btn->property(P_SYSLOG_VALUE).toInt()));
 }
 //--------------------------------------------------------------------------------
-void SysLog::test(void)
+void SysLog::test()
 {
     emit trace(Q_FUNC_INFO);
 

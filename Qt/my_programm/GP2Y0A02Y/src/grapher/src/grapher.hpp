@@ -37,7 +37,7 @@ public:
     Grapher(QWidget *parent = nullptr);
     virtual ~Grapher();
 
-    void clean_all(void);
+    void clean_all();
 
 public slots:
     bool set_value(int channel, int value);
@@ -46,12 +46,12 @@ private:
     Ui::Grapher *ui;
     int curves[8];
 
-    void init(void);
+    void init();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // GRAPHER_HPP

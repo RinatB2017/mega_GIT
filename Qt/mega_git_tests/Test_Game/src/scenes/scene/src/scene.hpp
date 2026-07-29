@@ -30,7 +30,7 @@ class Scene : public BaseScene
     Q_OBJECT
 
 public:
-    Scene(void);
+    Scene();
     virtual ~Scene();
 
 signals:
@@ -40,7 +40,7 @@ signals:
     void trace(const QString &);
 
 private slots:
-    void update(void);
+    void update();
 
 private:
     enum {

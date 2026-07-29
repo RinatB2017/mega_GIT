@@ -50,7 +50,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_browsers(void)
+void MainBox::prepare_browsers()
 {
     browser_site = new QWebEngineView(this);
     browser_translate_en_ru = new QWebEngineView(this);
@@ -62,7 +62,7 @@ void MainBox::prepare_browsers(void)
     browser_translate_ru_en->setUrl(QUrl(DEFAULT_TRANSLATE_RU_EN));
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_tab(void)
+void MainBox::prepare_tab()
 {
     QLabel *lbl_picture = new QLabel();
     lbl_picture->setPixmap(QPixmap(":/english_table.png"));
@@ -91,7 +91,7 @@ void MainBox::prepare_tab(void)
     tab->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_notebook(void)
+void MainBox::prepare_notebook()
 {
     note = new Notebook(this);
 
@@ -108,7 +108,7 @@ void MainBox::prepare_notebook(void)
     notebook_frame->setFixedWidth(notebook_frame->sizeHint().width());
 }
 //--------------------------------------------------------------------------------
-void MainBox::prepare_grids(void)
+void MainBox::prepare_grids()
 {
     QList<QStringList> lists;
     QStringList sl;
@@ -213,7 +213,7 @@ void MainBox::prepare_grids(void)
     //---
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_widgets(void)
+void MainBox::create_widgets()
 {
     prepare_browsers();
     prepare_grids();
@@ -267,7 +267,7 @@ void MainBox::create_widgets(void)
     setLayout(main_box);
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -279,7 +279,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -317,7 +317,7 @@ void MainBox::createTestBar(void)
     connect(btn_test, SIGNAL(clicked(bool)), this, SLOT(test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::set_address(void)
+void MainBox::set_address()
 {
     QString address = site_address->text();
     if(address.isEmpty())
@@ -340,12 +340,12 @@ void MainBox::set_address(void)
     browser_site->setUrl(QUrl(address));
 }
 //--------------------------------------------------------------------------------
-void MainBox::back(void)
+void MainBox::back()
 {
     browser_site->back();
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     QList<QSplitter *> allobj = findChildren<QSplitter *>();
 
@@ -355,22 +355,22 @@ void MainBox::test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

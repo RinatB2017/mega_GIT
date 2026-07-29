@@ -48,9 +48,9 @@ public:
 
     explicit AD9106(QObject *parent = nullptr);
 
-    uint16_t get_SRAM_StartAddress(void);
+    uint16_t get_SRAM_StartAddress();
     bool get_reg(QString name, reg_t *reg);
-    int get_cnt_registers(void);
+    int get_cnt_registers();
 
     bool get_sl_name_registers(QStringList *sl);
 
@@ -65,7 +65,7 @@ private:
 
     uint16_t SRAM_StartAddress = 0x6000;
 
-    void init(void);
+    void init();
 };
 //--------------------------------------------------------------------------------
 #endif

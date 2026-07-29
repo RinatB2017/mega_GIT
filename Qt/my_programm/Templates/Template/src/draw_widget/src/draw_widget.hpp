@@ -34,7 +34,7 @@ public:
     virtual ~Draw_widget();
 
 private:
-    void init(void);
+    void init();
 
 protected:
     void paintEvent(QPaintEvent *) override;

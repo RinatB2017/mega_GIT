@@ -45,25 +45,25 @@ public:
     virtual ~MODBUS_client();
 
 private slots:
-    void readReady(void);
+    void readReady();
     void errorOccurred(QModbusDevice::Error);
     void stateChanged(QModbusDevice::State state);
 
-    void connect_device(void);
-    void disconnect_device(void);
+    void connect_device();
+    void disconnect_device();
 
-    void connect_tcp_device(void);
-    void disconnect_tcp_device(void);
+    void connect_tcp_device();
+    void disconnect_tcp_device();
 
-    void refresh(void);
+    void refresh();
 
-    void test_write_coils(void);
-    void test_write_holding_registers(void);
+    void test_write_coils();
+    void test_write_holding_registers();
 
-    void test_read_discrete_inputs(void);
-    void test_read_coils(void);
-    void test_read_input_registers(void);
-    void test_read_holding_registers(void);
+    void test_read_discrete_inputs();
+    void test_read_coils();
+    void test_read_input_registers();
+    void test_read_holding_registers();
 
 private:
     Ui::MODBUS_client *ui;
@@ -74,12 +74,12 @@ private:
     QModbusDataUnit readRequest() const;
     QModbusDataUnit writeRequest() const;
 
-    void init(void);
+    void init();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif

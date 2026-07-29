@@ -81,7 +81,7 @@ void MySplashScreen::set_progress(int value)
     progress->setValue(current_progress);
 }
 //--------------------------------------------------------------------------------
-void MySplashScreen::add_progress(void)
+void MySplashScreen::add_progress()
 {
     if(current_progress > max_progress)
     {

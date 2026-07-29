@@ -52,7 +52,7 @@ MyFileDialog::~MyFileDialog()
     save_value("height", height());
 }
 //--------------------------------------------------------------------------------
-int MyFileDialog::exec(void)
+int MyFileDialog::exec()
 {
     QFileDialog::setDirectory(dir);
     int res = QFileDialog::exec();

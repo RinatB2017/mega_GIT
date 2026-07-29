@@ -42,7 +42,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_translations(void)
+void MainBox::load_translations()
 {
     bool res;
     QTranslator *sysTranslator;
@@ -55,7 +55,7 @@ void MainBox::load_translations(void)
     qApp->installTranslator(sysTranslator);
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_tree_widget(void)
+void MainBox::init_tree_widget()
 {
     tree_films = new TreeFilms(this);
     lblFilmPicture = new QLabel(this);
@@ -94,7 +94,7 @@ void MainBox::init_tree_widget(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -192,12 +192,12 @@ void MainBox::resizeEvent(QResizeEvent *event)
     Q_UNUSED(event);
 }
 //--------------------------------------------------------------------------------
-void MainBox::save(void)
+void MainBox::save()
 {
     tree_films->save();
 }
 //--------------------------------------------------------------------------------
-void MainBox::select_last_film(void)
+void MainBox::select_last_film()
 {
     if(last_film->text().isEmpty()) return;
 
@@ -212,7 +212,7 @@ void MainBox::select_last_film(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_menu(void)
+void MainBox::create_menu()
 {
     change_player_action = new QAction(this);
     change_player_action->setIcon(QIcon(QLatin1String(":/mainwindow/mplayer.png")));
@@ -239,7 +239,7 @@ void MainBox::create_menu(void)
     mw->add_filemenu_separator(5);
 }
 //--------------------------------------------------------------------------------
-void MainBox::change_player(void)
+void MainBox::change_player()
 {
     QFileDialog *dlg = new QFileDialog();
     dlg->setWindowTitle(QObject::tr("change player"));
@@ -256,7 +256,7 @@ void MainBox::change_player(void)
     if(fi.isExecutable() == false) return;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this); 
 
@@ -264,17 +264,17 @@ void MainBox::updateText(void)
     save_action->setText(QObject::tr("save"));
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

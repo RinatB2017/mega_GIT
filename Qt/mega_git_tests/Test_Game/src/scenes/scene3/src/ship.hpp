@@ -30,7 +30,7 @@ class Ship : public BaseItem
 {
 public:
     Ship(bool is_rand_index = true);
-    void animation(void);
+    void animation();
 
 private:
     QList<QPixmap> p_animation;

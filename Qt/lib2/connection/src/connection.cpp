@@ -84,42 +84,42 @@ void Connection::set_value(int32_t value)
     value_int32 = value;
 }
 //--------------------------------------------------------------------------------
-double Connection::get_double_value(void)
+double Connection::get_double_value()
 {
     return value_double;
 }
 //--------------------------------------------------------------------------------
-float Connection::get_float_value(void)
+float Connection::get_float_value()
 {
     return value_float;
 }
 //--------------------------------------------------------------------------------
-uint8_t Connection::get_uint8_value(void)
+uint8_t Connection::get_uint8_value()
 {
     return value_uint8;
 }
 //--------------------------------------------------------------------------------
-int8_t Connection::get_int8_value(void)
+int8_t Connection::get_int8_value()
 {
     return value_int8;
 }
 //--------------------------------------------------------------------------------
-uint16_t Connection::get_uint16_value(void)
+uint16_t Connection::get_uint16_value()
 {
     return value_uint16;
 }
 //--------------------------------------------------------------------------------
-int16_t Connection::get_int16_value(void)
+int16_t Connection::get_int16_value()
 {
     return value_int16;
 }
 //--------------------------------------------------------------------------------
-uint32_t Connection::get_uint32_value(void)
+uint32_t Connection::get_uint32_value()
 {
     return value_uint32;
 }
 //--------------------------------------------------------------------------------
-int32_t Connection::get_int32_value(void)
+int32_t Connection::get_int32_value()
 {
     return value_int32;
 }
@@ -129,7 +129,7 @@ void Connection::set_int_value(int value)
     value_int = value;
 }
 //--------------------------------------------------------------------------------
-int Connection::get_int_value(void)
+int Connection::get_int_value()
 {
     return value_int;
 }

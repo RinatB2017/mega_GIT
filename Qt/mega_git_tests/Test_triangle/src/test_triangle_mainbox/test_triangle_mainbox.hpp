@@ -38,14 +38,14 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void test(void);
+    void test();
 
 private:
     Ui::MainBox *ui;
     QWidget *parent;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
     bool check_triangle(double A, double B, double C);
     bool check_angle(const QString &angle_name, double angle_grad);
@@ -58,10 +58,10 @@ private:
 
     bool calc(double A, double B, double C, double angle_grad);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

@@ -35,7 +35,7 @@ GrapherBox_Options::~GrapherBox_Options()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void GrapherBox_Options::init(void)
+void GrapherBox_Options::init()
 {
     ui->setupUi(this);
 
@@ -73,7 +73,7 @@ void GrapherBox_Options::set_type_device(GrapherBox_Options::Device device)
     }
 }
 //--------------------------------------------------------------------------------
-GrapherBox_Options::Device GrapherBox_Options::get_type_device(void)
+GrapherBox_Options::Device GrapherBox_Options::get_type_device()
 {
     if(ui->rb_recorder->isChecked())
     {
@@ -104,7 +104,7 @@ void GrapherBox_Options::set_type_curve(GrapherBox_Options::TypeCurve type)
     }
 }
 //--------------------------------------------------------------------------------
-GrapherBox_Options::TypeCurve GrapherBox_Options::get_type_curve(void)
+GrapherBox_Options::TypeCurve GrapherBox_Options::get_type_curve()
 {
     if(ui->rb_dots->isChecked())
     {
@@ -141,22 +141,22 @@ void GrapherBox_Options::set_max_axis_Y(int value)
     ui->sb_maxY->setValue(value);
 }
 //--------------------------------------------------------------------------------
-int GrapherBox_Options::get_min_axis_x(void)
+int GrapherBox_Options::get_min_axis_x()
 {
     return ui->sb_minX->value();
 }
 //--------------------------------------------------------------------------------
-int GrapherBox_Options::get_max_axis_x(void)
+int GrapherBox_Options::get_max_axis_x()
 {
     return ui->sb_maxX->value();
 }
 //--------------------------------------------------------------------------------
-int GrapherBox_Options::get_min_axis_y(void)
+int GrapherBox_Options::get_min_axis_y()
 {
     return ui->sb_minY->value();
 }
 //--------------------------------------------------------------------------------
-int GrapherBox_Options::get_max_axis_y(void)
+int GrapherBox_Options::get_max_axis_y()
 {
     return ui->sb_maxY->value();
 }

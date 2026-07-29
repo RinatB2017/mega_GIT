@@ -44,7 +44,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -58,7 +58,7 @@ void MainBox::init(void)
     ui->tableView->setModel(model);
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -95,7 +95,7 @@ void MainBox::createTestBar(void)
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok) - Qt::UserRole;
@@ -107,7 +107,7 @@ void MainBox::choice_test(void)
     );
     if (cmd_it != commands.end())
     {
-        typedef void (MainBox::*function)(void);
+        typedef void (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -134,58 +134,58 @@ QString MainBox::convert_int_to_string(uint32_t value)
     return QString("%1").arg(value);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_0(void)
+void MainBox::test_0()
 {
     model->insertRow(0);
     model->setData(model->index(0, 0, QModelIndex()), "user_0");
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_1(void)
+void MainBox::test_1()
 {
     model->insertRow(0);
     model->setData(model->index(0, 0, QModelIndex()), "user_1");
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_2(void)
+void MainBox::test_2()
 {
     model->insertRow(0);
     model->setData(model->index(0, 0, QModelIndex()), "user_2");
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_3(void)
+void MainBox::test_3()
 {
     model->insertRow(0);
     model->setData(model->index(0, 0, QModelIndex()), "user_3");
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_4(void)
+void MainBox::test_4()
 {
     model->insertRow(0);
     model->setData(model->index(0, 0, QModelIndex()), "user_4");
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_5(void)
+void MainBox::test_5()
 {
     model->insertRow(0);
     model->setData(model->index(0, 0, QModelIndex()), "user_5");
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

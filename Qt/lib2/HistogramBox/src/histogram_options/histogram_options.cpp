@@ -42,7 +42,7 @@ Histogram_Options::~Histogram_Options()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Histogram_Options::init(void)
+void Histogram_Options::init()
 {
     ui->setupUi(this);
 
@@ -64,22 +64,22 @@ void Histogram_Options::init(void)
     connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 }
 //--------------------------------------------------------------------------------
-int Histogram_Options::get_min_axis_x(void)
+int Histogram_Options::get_min_axis_x()
 {
     return ui->sb_minX->value();
 }
 //--------------------------------------------------------------------------------
-int Histogram_Options::get_max_axis_x(void)
+int Histogram_Options::get_max_axis_x()
 {
     return ui->sb_maxX->value();
 }
 //--------------------------------------------------------------------------------
-int Histogram_Options::get_min_axis_y(void)
+int Histogram_Options::get_min_axis_y()
 {
     return ui->sb_minY->value();
 }
 //--------------------------------------------------------------------------------
-int Histogram_Options::get_max_axis_y(void)
+int Histogram_Options::get_max_axis_y()
 {
     return ui->sb_maxY->value();
 }

@@ -135,7 +135,7 @@ void CreatorWindow::changeEvent(QEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-bool CreatorWindow::check_exit(void)
+bool CreatorWindow::check_exit()
 {
     QWidgetList wl = qApp->allWidgets();
     foreach (QWidget *widget, wl)
@@ -209,7 +209,7 @@ void CreatorWindow::resizeEvent(QResizeEvent *event)
 }
 #endif
 //--------------------------------------------------------------------------------
-void CreatorWindow::init(void)
+void CreatorWindow::init()
 {
     flag_close = true;
 
@@ -304,7 +304,7 @@ void CreatorWindow::init(void)
     });
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::change_menu(void)
+void CreatorWindow::change_menu()
 {
     if (QGuiApplication::styleHints()->colorScheme() == Qt::ColorScheme::Dark)
     {
@@ -333,7 +333,7 @@ void CreatorWindow::change_menu(void)
 //            now.date().month()  >= DEMO_MONTH &&
 //            now.date().day()    >  DEMO_DAY)
 #if defined (DEMO) && defined (DEMO_YEAR) && defined (DEMO_MONTH) && defined (DEMO_DAY)
-void CreatorWindow::check_date(void)
+void CreatorWindow::check_date()
 {
     QDateTime now = QDateTime::currentDateTime();
     QDateTime xxx = QDateTime(QDate(DEMO_YEAR, DEMO_MONTH, DEMO_DAY));
@@ -354,7 +354,7 @@ void CreatorWindow::check_date(void)
 #endif
 //--------------------------------------------------------------------------------
 #if defined (DEMO) && defined (DEMO_YEAR) && defined (DEMO_MONTH) && defined (DEMO_DAY)
-void CreatorWindow::kill(void)
+void CreatorWindow::kill()
 {
     int a = 5;
     int b = 0;
@@ -365,7 +365,7 @@ void CreatorWindow::kill(void)
 #endif
 //--------------------------------------------------------------------------------
 #if defined (DEMO) && defined (DEMO_YEAR) && defined (DEMO_MONTH) && defined (DEMO_DAY)
-void CreatorWindow::kill2(void)
+void CreatorWindow::kill2()
 {
     QLabel *label = 0;
     label->show();
@@ -463,7 +463,7 @@ void CreatorWindow::choice_translator(QAction *menu)
     }
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::setMenuLanguage(void)
+void CreatorWindow::setMenuLanguage()
 {
 #ifndef ONLY_ENGLISH
     QAction* menu = static_cast<QAction *>(sender());
@@ -473,7 +473,7 @@ void CreatorWindow::setMenuLanguage(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::setToolBarLanguage(void)
+void CreatorWindow::setToolBarLanguage()
 {
 #ifndef ONLY_ENGLISH
     QAction* menu = qobject_cast<QAction*>(sender());
@@ -507,7 +507,7 @@ void CreatorWindow::alwaysOnTop(bool state)
     }
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::move_to_center(void)
+void CreatorWindow::move_to_center()
 {
     CreatorWindow *mw = qobject_cast<CreatorWindow *>(QApplication::activeWindow());
     if(mw)
@@ -538,7 +538,7 @@ void CreatorWindow::set_status2_text(const QString &data)
     statusLabel2->setText(data);
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::setToolBarStyles(void)
+void CreatorWindow::setToolBarStyles()
 {
     QPushButton *button = qobject_cast<QPushButton*>(sender());
     Q_ASSERT(button);
@@ -565,7 +565,7 @@ void CreatorWindow::setToolBarStyles(void)
     QApplication::setStyle(style);
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::createStatusBar(void)
+void CreatorWindow::createStatusBar()
 {
     statusLabel1 = new QLabel(this);
     statusLabel2 = new QLabel(this);
@@ -598,7 +598,7 @@ void CreatorWindow::createStatusBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::setStyles(void)
+void CreatorWindow::setStyles()
 {
     QAction* menu = static_cast<QAction *>(sender());
     Q_ASSERT(menu);
@@ -629,7 +629,7 @@ void CreatorWindow::setStyles(void)
     }
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::about(void)
+void CreatorWindow::about()
 {
     AboutBox *about = new AboutBox();
     Q_ASSERT(about);
@@ -646,7 +646,7 @@ void CreatorWindow::about(void)
     about->exec();
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::load_main(void)
+void CreatorWindow::load_main()
 {
 #ifdef QT_DEBUG
     qDebug() << "CreatorWindow::load_main";
@@ -732,7 +732,7 @@ void CreatorWindow::load_main(void)
     });
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::save_main(void)
+void CreatorWindow::save_main()
 {
 #ifdef QT_DEBUG
     qDebug() << "CreatorWindow::save_main";
@@ -762,7 +762,7 @@ void CreatorWindow::save_main(void)
     save_value(P_IS_MAXIMIZED, isMaximized());
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::load_setting(void)
+void CreatorWindow::load_setting()
 {
 #ifdef QT_DEBUG
     qDebug() << "CreatorWindow::load_setting";
@@ -770,7 +770,7 @@ void CreatorWindow::load_setting(void)
     load_main();
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::save_setting(void)
+void CreatorWindow::save_setting()
 {
 #ifdef QT_DEBUG
     qDebug() << "CreatorWindow::save_setting";
@@ -779,7 +779,7 @@ void CreatorWindow::save_setting(void)
 }
 //--------------------------------------------------------------------------------
 #ifndef NO_LOG
-void CreatorWindow::createLog(void)
+void CreatorWindow::createLog()
 {
     lb = new LogBox(this);
     Q_ASSERT(lb);
@@ -799,7 +799,7 @@ void CreatorWindow::createLog(void)
 }
 #endif
 //--------------------------------------------------------------------------------
-void CreatorWindow::createSysLog_dock(void)
+void CreatorWindow::createSysLog_dock()
 {
     w_syslog = new SysLog("syslog", this);
     Q_ASSERT(w_syslog);
@@ -818,7 +818,7 @@ void CreatorWindow::createSysLog_dock(void)
 }
 //--------------------------------------------------------------------------------
 #ifndef NO_STYLETOOLBAR
-void CreatorWindow::createStyleToolBar(void)
+void CreatorWindow::createStyleToolBar()
 {
     styletoolbar = new QToolBar(tr("styletoolbar"), this);
     Q_ASSERT(styletoolbar);
@@ -861,7 +861,7 @@ void CreatorWindow::createStyleToolBar(void)
 //--------------------------------------------------------------------------------
 #ifndef NO_STYLETOOLBAR
 #ifdef USE_CUSTOM_STYLE
-void CreatorWindow::set_norton_style(void)
+void CreatorWindow::set_norton_style()
 {
     QFile file(":/themes_qss/Norton Commander.qss");
     if(file.open(QIODevice::ReadOnly))
@@ -879,7 +879,7 @@ void CreatorWindow::set_norton_style(void)
 //--------------------------------------------------------------------------------
 #ifndef NO_STYLETOOLBAR
 #ifdef USE_CUSTOM_STYLE
-void CreatorWindow::createCustomStyleToolBar(void)
+void CreatorWindow::createCustomStyleToolBar()
 {
     // пробую самописные стили
     QToolBar *customStyletoolbar = new QToolBar(tr("customstyletoolbar"), this);
@@ -900,7 +900,7 @@ void CreatorWindow::createCustomStyleToolBar(void)
 #endif
 #endif
 //--------------------------------------------------------------------------------
-void CreatorWindow::help(void)
+void CreatorWindow::help()
 {
     QString help_filename = QString("%1.html").arg(APPNAME);
     if(QFile::exists(help_filename))
@@ -921,7 +921,7 @@ void CreatorWindow::setWindowTitle(const QString &title)
     QMainWindow::setWindowTitle(temp);
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::createTrayIcon(void)
+void CreatorWindow::createTrayIcon()
 {
     if (!QSystemTrayIcon::isSystemTrayAvailable())
     {
@@ -968,7 +968,7 @@ void CreatorWindow::showHide(QSystemTrayIcon::ActivationReason r)
     }
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::change_value(void)
+void CreatorWindow::change_value()
 {
     emit info(QString("change_value %1").arg(sender()->metaObject()->className()));
 }
@@ -999,7 +999,7 @@ bool CreatorWindow::add_separator(QMenu *menu,
     return false;
 }
 //--------------------------------------------------------------------------------
-bool CreatorWindow::add_mdi_sorting(void)
+bool CreatorWindow::add_mdi_sorting()
 {
     QList<QMdiSubWindow *> l_obj = findChildren<QMdiSubWindow *>();
     emit debug(QString("find %1 mdi").arg(l_obj.count()));
@@ -1040,7 +1040,7 @@ bool CreatorWindow::add_mdi_sorting(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::set_tileSubWindows(void)
+void CreatorWindow::set_tileSubWindows()
 {
     QList<QMdiArea *> l_obj = findChildren<QMdiArea *>();
     if(l_obj.count() <= 1)
@@ -1049,7 +1049,7 @@ void CreatorWindow::set_tileSubWindows(void)
     }
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::set_cascadeSubWindows(void)
+void CreatorWindow::set_cascadeSubWindows()
 {
     QList<QMdiArea *> l_obj = findChildren<QMdiArea *>();
     if(l_obj.count() <= 1)
@@ -1122,7 +1122,7 @@ QDockWidget * CreatorWindow::add_dock_widget(QString title,
     return dw;
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::tabify_all_docs(void)
+void CreatorWindow::tabify_all_docs()
 {
     QList<QDockWidget *> l_docs = findChildren<QDockWidget *>();
     bool find_first = false;
@@ -1163,7 +1163,7 @@ void CreatorWindow::log(const QString &data)
 #endif
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::set_app_font(void)
+void CreatorWindow::set_app_font()
 {
     bool ok = false;
     QFont font = QFontDialog::getFont(&ok);
@@ -1174,7 +1174,7 @@ void CreatorWindow::set_app_font(void)
 }
 //--------------------------------------------------------------------------------
 #ifndef NO_LOG
-void CreatorWindow::set_log_font(void)
+void CreatorWindow::set_log_font()
 {
     bool ok = false;
     QFont font = QFontDialog::getFont(&ok, lb->get_font());
@@ -1185,13 +1185,13 @@ void CreatorWindow::set_log_font(void)
 }
 #endif
 //--------------------------------------------------------------------------------
-void CreatorWindow::set_system_palette(void)
+void CreatorWindow::set_system_palette()
 {
     state_theme = SYSTEM_THEME;
     qApp->setPalette(style()->standardPalette());
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::set_blue_palette(void)
+void CreatorWindow::set_blue_palette()
 {
     //Blue
     QPalette palette;
@@ -1225,7 +1225,7 @@ void CreatorWindow::set_blue_palette(void)
     qApp->setPalette(palette);
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::set_dark_palette(void)
+void CreatorWindow::set_dark_palette()
 {
     //Dark
     QPalette palette;
@@ -1259,7 +1259,7 @@ void CreatorWindow::set_dark_palette(void)
     qApp->setPalette(palette);
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::set_light_palette(void)
+void CreatorWindow::set_light_palette()
 {
     //Light
     QPalette palette;
@@ -1293,7 +1293,7 @@ void CreatorWindow::set_light_palette(void)
     qApp->setPalette(palette);
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::set_mfc_palette(void)
+void CreatorWindow::set_mfc_palette()
 {
     //MFC
     QPalette palette;
@@ -1394,27 +1394,27 @@ bool CreatorWindow::add_new_action(QMenu   *parent,
     return action;
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::showMinimized(void)
+void CreatorWindow::showMinimized()
 {
     QMainWindow::showMinimized();
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::showMaximized(void)
+void CreatorWindow::showMaximized()
 {
     QMainWindow::showMaximized();
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::showNormal(void)
+void CreatorWindow::showNormal()
 {
     QMainWindow::showNormal();
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::quit(void)
+void CreatorWindow::quit()
 {
     qApp->quit();
 }
 //--------------------------------------------------------------------------------
-void CreatorWindow::dockwidget_updateText(void)
+void CreatorWindow::dockwidget_updateText()
 {
     QList<QDockWidget *> ldw = findChildren<QDockWidget *>();
     foreach (QDockWidget *dock, ldw)

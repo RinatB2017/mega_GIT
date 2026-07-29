@@ -66,7 +66,7 @@ LogBox::~LogBox()
     }
 }
 //--------------------------------------------------------------------------------
-void LogBox::init(void)
+void LogBox::init()
 {
     setObjectName("LogBox");
 
@@ -215,12 +215,12 @@ void LogBox::set_font(QFont font)
     logBox->setFont(font);
 }
 //--------------------------------------------------------------------------------
-QFont LogBox::get_font(void)
+QFont LogBox::get_font()
 {
     return logBox->font();
 }
 //--------------------------------------------------------------------------------
-void LogBox::create_widgets(void)
+void LogBox::create_widgets()
 {
     QFont font("Liberation Mono", 10);
     logBox = new QTextEdit(this);
@@ -638,7 +638,7 @@ void LogBox::syslogLog(int level,
     //---
 }
 //--------------------------------------------------------------------------------
-void LogBox::save_to(void)
+void LogBox::save_to()
 {
     MyFileDialog *dlg = new MyFileDialog("log_box");
     dlg->setAcceptMode(MyFileDialog::AcceptSave);
@@ -657,7 +657,7 @@ void LogBox::save_to(void)
     delete dlg;
 }
 //--------------------------------------------------------------------------------
-void LogBox::save_full_log_to(void)
+void LogBox::save_full_log_to()
 {
     MyFileDialog *dlg = new MyFileDialog("log_box");
     dlg->setAcceptMode(MyFileDialog::AcceptSave);
@@ -794,7 +794,7 @@ void LogBox::save_full_log(const QString &filename)
     file.close();
 }
 //--------------------------------------------------------------------------------
-void LogBox::changeOptions(void)
+void LogBox::changeOptions()
 {
     Log_options *optionsBox = new Log_options();
     Q_ASSERT(optionsBox);
@@ -839,7 +839,7 @@ void LogBox::changeOptions(void)
     delete optionsBox;
 }
 //--------------------------------------------------------------------------------
-void LogBox::update_log(void)
+void LogBox::update_log()
 {
     logBox->clear();
 
@@ -894,7 +894,7 @@ void LogBox::keyPressEvent(QKeyEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-void LogBox::updateText(void)
+void LogBox::updateText()
 {
     foreach (QAction *action, app_actions)
     {
@@ -904,12 +904,12 @@ void LogBox::updateText(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool LogBox::programm_is_exit(void)
+bool LogBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void LogBox::load_setting(void)
+void LogBox::load_setting()
 {
     beginGroup(get_full_objectName(this));
 
@@ -976,10 +976,10 @@ void LogBox::load_setting(void)
     endGroup();
 }
 //--------------------------------------------------------------------------------
-void LogBox::save_setting(void)
+void LogBox::save_setting()
 {
 #ifdef QT_DEBUG
-    qDebug() << "LogBox::save_setting(void)";
+    qDebug() << "LogBox::save_setting()";
 #endif
 
     //    QString text = o_name;

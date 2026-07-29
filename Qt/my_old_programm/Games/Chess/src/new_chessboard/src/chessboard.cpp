@@ -31,7 +31,7 @@ ChessBoard::ChessBoard(QWidget *parent) :
     init();
 }
 //--------------------------------------------------------------------------------
-void ChessBoard::create_figures(void)
+void ChessBoard::create_figures()
 {
     b_bishop.load(BISHOP_BLACK_PIC);
     b_king.load(KING_BLACK_PIC);
@@ -48,7 +48,7 @@ void ChessBoard::create_figures(void)
     w_rook.load(ROOK_WHITE_PIC);
 }
 //--------------------------------------------------------------------------------
-void ChessBoard::create_chessboard(void)
+void ChessBoard::create_chessboard()
 {
     chessboard_grid = new QGridLayout();
 
@@ -109,7 +109,7 @@ void ChessBoard::create_chessboard(void)
     chessboard_grid->addWidget(l_H, 9, 7);
 }
 //--------------------------------------------------------------------------------
-void ChessBoard::new_game(void)
+void ChessBoard::new_game()
 {
     for(int y=0; y<MAX_Y; y++)
     {
@@ -156,7 +156,7 @@ void ChessBoard::new_game(void)
     set_figure(ChessBoard::PAWN_BLACK, "H7");
 }
 //--------------------------------------------------------------------------------
-void ChessBoard::init(void)
+void ChessBoard::init()
 {
     create_figures();
     create_chessboard();
@@ -417,7 +417,7 @@ bool ChessBoard::move(const QString &text)
     return true;
 }
 //--------------------------------------------------------------------------------
-void ChessBoard::clear_figures(void)
+void ChessBoard::clear_figures()
 {
     for(int y=0; y<MAX_Y; y++)
     {
@@ -428,7 +428,7 @@ void ChessBoard::clear_figures(void)
     }
 }
 //--------------------------------------------------------------------------------
-void ChessBoard::set_cursor(void)
+void ChessBoard::set_cursor()
 {
     QToolButton *btn = (QToolButton *)sender();
     Q_ASSERT(btn);
@@ -446,7 +446,7 @@ void ChessBoard::set_cursor(void)
     }
 }
 //--------------------------------------------------------------------------------
-void ChessBoard::click(void)
+void ChessBoard::click()
 {
     QToolButton *btn = (QToolButton *)sender();
     if(!btn)
@@ -487,22 +487,22 @@ void ChessBoard::click(void)
     }
 }
 //--------------------------------------------------------------------------------
-void ChessBoard::updateText(void)
+void ChessBoard::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool ChessBoard::programm_is_exit(void)
+bool ChessBoard::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void ChessBoard::load_setting(void)
+void ChessBoard::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void ChessBoard::save_setting(void)
+void ChessBoard::save_setting()
 {
 
 }

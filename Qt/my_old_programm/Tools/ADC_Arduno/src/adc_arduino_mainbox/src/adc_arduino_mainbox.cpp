@@ -83,7 +83,7 @@ void MainBox::raw_data(QByteArray data)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::analize_packet(void)
+void MainBox::analize_packet()
 {
     clean_data.clear();
     clean_data = QByteArray::fromHex(dirty_data);
@@ -170,22 +170,22 @@ QString MainBox::convert_dec_to_ansi(unsigned char data)
     return QString("%1%2").arg(hi_str).arg(lo_str);
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

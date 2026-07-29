@@ -16,7 +16,7 @@ public:
     void set_color_on(QColor color);
     void set_color_off(QColor color);
 
-    bool get_state(void);
+    bool get_state();
 
 private:
     QString tooltip = "led";

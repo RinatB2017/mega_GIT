@@ -48,11 +48,11 @@ public:
     int xxx(int x);
 
 private slots:
-    void choice_test(void);
-    void test_0(void);
-    void test_1(void);
-    void test_2(void);
-    void test_3(void);
+    void choice_test();
+    void test_0();
+    void test_1();
+    void test_2();
+    void test_3();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -62,15 +62,15 @@ private:
 
     PCA10000 *sniffer;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
-    void create_sniffer(void);
+    void createTestBar();
+    void create_sniffer();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

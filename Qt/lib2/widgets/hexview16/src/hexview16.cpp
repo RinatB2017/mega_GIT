@@ -32,7 +32,7 @@ HexView16::~HexView16()
     if(model)   delete model;
 }
 //--------------------------------------------------------------------------------
-void HexView16::init(void)
+void HexView16::init()
 {
     QStringList h_sl;
     for(int n=0; n<0x10; n++)

@@ -39,7 +39,7 @@ CandleStick_Box_adv::~CandleStick_Box_adv()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::init(void)
+void CandleStick_Box_adv::init()
 {
     ui->setupUi(this);
 
@@ -92,7 +92,7 @@ void CandleStick_Box_adv::init(void)
     });
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::init_candle_series(void)
+void CandleStick_Box_adv::init_candle_series()
 {
     candleSeries = new QCandlestickSeries();
     candleSeries->setName(ticket_name);
@@ -102,7 +102,7 @@ void CandleStick_Box_adv::init_candle_series(void)
     connect(candleSeries,   &QCandlestickSeries::hovered,   this,   &CandleStick_Box_adv::hovered_candle);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::init_chart(void)
+void CandleStick_Box_adv::init_chart()
 {
     chart = new QChart();
     chart->addSeries(candleSeries);
@@ -117,7 +117,7 @@ void CandleStick_Box_adv::init_chart(void)
     ui->chartView->setRenderHint(QPainter::Antialiasing);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::init_rubberband(void)
+void CandleStick_Box_adv::init_rubberband()
 {
     //ui->chartView->setRubberBand(QChartView::RectangleRubberBand);
     ui->cb_rubberband->addItem("NoRubberBand", 0);
@@ -127,7 +127,7 @@ void CandleStick_Box_adv::init_rubberband(void)
     connect(ui->cb_rubberband,  static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),    this,   &CandleStick_Box_adv::set_rubber_band);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::init_axis(void)
+void CandleStick_Box_adv::init_axis()
 {
     axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
     axisX->setCategories(categories);
@@ -137,14 +137,14 @@ void CandleStick_Box_adv::init_axis(void)
     axisY->setMax(axisY->max() * 1.01);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::init_icons(void)
+void CandleStick_Box_adv::init_icons()
 {
     ui->btn_clear_data->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
     ui->btn_move_reset->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
     ui->btn_zoom_reset->setIcon(qApp->style()->standardIcon(QStyle::SP_TrashIcon));
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::init_tooltips(void)
+void CandleStick_Box_adv::init_tooltips()
 {
     ui->chartView->setToolTip("chart");
     ui->btn_theme_light->setToolTip("Light theme");
@@ -156,7 +156,7 @@ void CandleStick_Box_adv::init_tooltips(void)
     ui->btn_move_right->setToolTip("move right");
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::connect_widgets(void)
+void CandleStick_Box_adv::connect_widgets()
 {
     connect(ui->btn_move_left,  &QPushButton::clicked,  this,   &CandleStick_Box_adv::move_left);
     connect(ui->btn_move_right, &QPushButton::clicked,  this,   &CandleStick_Box_adv::move_right);
@@ -253,12 +253,12 @@ void CandleStick_Box_adv::append(QCandlestickSet *set, qreal volume)
     volumes.append(volume);
 }
 //--------------------------------------------------------------------------------
-int CandleStick_Box_adv::get_max_index(void)
+int CandleStick_Box_adv::get_max_index()
 {
     return candleSeries->count();
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::clear_data(void)
+void CandleStick_Box_adv::clear_data()
 {
     Q_ASSERT(candleSeries);
     while(candleSeries->count() > 0)
@@ -270,7 +270,7 @@ void CandleStick_Box_adv::clear_data(void)
     volumes.clear();
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::update_data(void)
+void CandleStick_Box_adv::update_data()
 {
     axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
     axisX->setCategories(categories);
@@ -346,31 +346,31 @@ void CandleStick_Box_adv::set_ticket_name(const QString &new_ticket_name)
     chart->setTitle(ticket_name);
 }
 //--------------------------------------------------------------------------------
-QString CandleStick_Box_adv::get_ticket_name(void)
+QString CandleStick_Box_adv::get_ticket_name()
 {
     return ticket_name;
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::zoom_in(void)
+void CandleStick_Box_adv::zoom_in()
 {
     emit trace(Q_FUNC_INFO);
     qreal k = ui->dsb_zoom->value();
     chart->zoom(1.0 - k);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::zoom_out(void)
+void CandleStick_Box_adv::zoom_out()
 {
     emit trace(Q_FUNC_INFO);
     qreal k = ui->dsb_zoom->value();
     chart->zoom(1.0 + k);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::zoom_reset(void)
+void CandleStick_Box_adv::zoom_reset()
 {
     chart->zoomReset();
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::move_left(void)
+void CandleStick_Box_adv::move_left()
 {
     emit trace(Q_FUNC_INFO);
     int delta = ui->sb_pos->value();
@@ -378,7 +378,7 @@ void CandleStick_Box_adv::move_left(void)
     chart->scroll(delta, 0);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::move_right(void)
+void CandleStick_Box_adv::move_right()
 {
     emit trace(Q_FUNC_INFO);
     int delta = ui->sb_pos->value();
@@ -386,7 +386,7 @@ void CandleStick_Box_adv::move_right(void)
     chart->scroll(-delta, 0);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::move_up(void)
+void CandleStick_Box_adv::move_up()
 {
     emit trace(Q_FUNC_INFO);
     int delta = ui->sb_pos->value();
@@ -394,7 +394,7 @@ void CandleStick_Box_adv::move_up(void)
     chart->scroll(0, -delta);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::move_down(void)
+void CandleStick_Box_adv::move_down()
 {
     emit trace(Q_FUNC_INFO);
     int delta = ui->sb_pos->value();
@@ -402,7 +402,7 @@ void CandleStick_Box_adv::move_down(void)
     chart->scroll(0, delta);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::move_reset(void)
+void CandleStick_Box_adv::move_reset()
 {
     chart->scroll(-dx, -dy);
     dx = 0;
@@ -434,17 +434,17 @@ void CandleStick_Box_adv::show_volumes(QMouseEvent *event)
 #endif
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::set_theme_light(void)
+void CandleStick_Box_adv::set_theme_light()
 {
     chart->setTheme(QChart::ChartThemeLight);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::set_theme_dark(void)
+void CandleStick_Box_adv::set_theme_dark()
 {
     chart->setTheme(QChart::ChartThemeDark);
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::test(void)
+void CandleStick_Box_adv::test()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -491,24 +491,24 @@ void CandleStick_Box_adv::resizeEvent(QResizeEvent *event)
 #endif
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::updateText(void)
+void CandleStick_Box_adv::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool CandleStick_Box_adv::programm_is_exit(void)
+bool CandleStick_Box_adv::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::load_setting(void)
+void CandleStick_Box_adv::load_setting()
 {
     int value = 0;
     load_int("chart_theme", &value);
     chart->setTheme(static_cast<QChart::ChartTheme>(value));
 }
 //--------------------------------------------------------------------------------
-void CandleStick_Box_adv::save_setting(void)
+void CandleStick_Box_adv::save_setting()
 {
     save_int("chart_theme", chart->theme());
 }

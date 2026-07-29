@@ -33,7 +33,7 @@ Led::Led(QToolButton *parent) :
     connect(this, SIGNAL(clicked(bool)), this, SLOT(click()));
 }
 //--------------------------------------------------------------------------------
-char Led::get_color(void)
+char Led::get_color()
 {
     return color;
 }
@@ -70,7 +70,7 @@ void Led::set_color(char color)
     }
 }
 //--------------------------------------------------------------------------------
-void Led::click(void)
+void Led::click()
 {
     switch(color)
     {

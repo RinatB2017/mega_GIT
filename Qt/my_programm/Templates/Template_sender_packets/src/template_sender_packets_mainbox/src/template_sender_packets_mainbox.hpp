@@ -50,11 +50,11 @@ signals:
     void send(const QByteArray&);
 
 private slots:
-    void choice_test(void);
-    void choice_programm(void);
+    void choice_test();
+    void choice_programm();
 
     void read_data(QByteArray ba);
-    bool test(void);
+    bool test();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -64,7 +64,7 @@ private:
     {
         int cmd;
         QString cmd_text;
-        bool (MainBox::*func)(void);
+        bool (MainBox::*func)();
     } CMD_t;
     QList<CMD> test_commands;
     QList<CMD> programm_commands;
@@ -79,11 +79,11 @@ private:
     bool data_is_ready = false;
     bool is_silence = false;
 
-    void init_widgets(void);
-    void connects(void);
-    void init_serial_fix(void);
+    void init_widgets();
+    void connects();
+    void init_serial_fix();
 
-    bool get_ID(void);
+    bool get_ID();
     void f_send(const QByteArray &data);
     void wait_msec(int msec, bool waiting = false);
 
@@ -92,14 +92,14 @@ private:
 
     uint8_t crc8(uint8_t *buf,uint8_t offset, uint8_t length);
 
-    void init(void);
-    void create_test_bar(void);
-    void create_programm_bar(void);
+    void init();
+    void create_test_bar();
+    void create_programm_bar();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

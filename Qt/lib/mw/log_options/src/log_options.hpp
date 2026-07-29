@@ -51,7 +51,7 @@ public:
     explicit Log_options(QWidget *parent = nullptr);
     virtual ~Log_options();
 
-    QTextCodec *get_text_codec(void);
+    QTextCodec *get_text_codec();
 
 private:
     Ui::Log_options *ui;
@@ -60,19 +60,19 @@ private:
 
     QString autosave_filename = "noname.log";
 
-    void init(void);
+    void init();
 
-    void findCodecs(void);
+    void findCodecs();
 
-    bool get_flag_ReadOnly(void);
-    bool get_flag_AcceptRichText(void);
+    bool get_flag_ReadOnly();
+    bool get_flag_AcceptRichText();
 
-    bool get_flag_NoCRLF(void);
-    bool get_flag_AddDateTime(void);
-    bool get_flag_Color(void);
-    bool get_flag_ErrorAsMessage(void);
-    bool get_flag_TextIsWindows(void);
-    QString get_file_AutoSave(void);
+    bool get_flag_NoCRLF();
+    bool get_flag_AddDateTime();
+    bool get_flag_Color();
+    bool get_flag_ErrorAsMessage();
+    bool get_flag_TextIsWindows();
+    QString get_file_AutoSave();
 
     void set_flag_ReadOnly(bool value);
     void set_flag_AcceptRichText(bool value);

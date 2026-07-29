@@ -46,11 +46,11 @@ public:
     int xxx(int x);
 
 private slots:
-    void choice_test(void);
-    void test_0(void);
-    void test_1(void);
-    void test_2(void);
-    void test_3(void);
+    void choice_test();
+    void test_0();
+    void test_1();
+    void test_2();
+    void test_3();
 
 private:
     QPointer<MySplashScreen> splash;
@@ -58,17 +58,17 @@ private:
 
     QPointer<QComboBox> cb_test;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
+    void createTestBar();
 
     void block_this_button(bool state);
     void block_interface(bool state);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     void paintEvent(QPaintEvent *);

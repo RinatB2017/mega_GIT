@@ -44,7 +44,7 @@ Test::~Test()
 
 }
 //--------------------------------------------------------------------------------
-void Test::test_GUI_network(void)
+void Test::test_GUI_network()
 {
     QLineEdit *le_ssid = mw->findChild<QLineEdit *>("le_ssid");
     QLineEdit *le_password = mw->findChild<QLineEdit *>("le_password");
@@ -55,7 +55,7 @@ void Test::test_GUI_network(void)
     QVERIFY(cb_encrypt_type);
 }
 //--------------------------------------------------------------------------------
-void Test::test_HLK_RM04_widget(void)
+void Test::test_HLK_RM04_widget()
 {
     QByteArray ba;
     ba.append("test");

@@ -98,7 +98,7 @@ void SerialBox5_lite::set_portname(const QString &portname)
     }
 }
 //--------------------------------------------------------------------------------
-QString SerialBox5_lite::get_portname(void)
+QString SerialBox5_lite::get_portname()
 {
     return ui->cb_PortBox->currentText();
 }
@@ -109,7 +109,7 @@ void SerialBox5_lite::set_caption(const QString &value)
     o_name = value;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::init(void)
+void SerialBox5_lite::init()
 {
     ui->setupUi(this);
 
@@ -130,14 +130,14 @@ void SerialBox5_lite::init(void)
     // load_setting();
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::init_timer(void)
+void SerialBox5_lite::init_timer()
 {
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout, this, &SerialBox5_lite::checkPorts);
     m_timer->start(5000);
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::checkPorts(void)
+void SerialBox5_lite::checkPorts()
 {
     QStringList sl_ports = get_port_names();
 
@@ -172,7 +172,7 @@ void SerialBox5_lite::checkPorts(void)
     }
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::createWidgets(void)
+void SerialBox5_lite::createWidgets()
 {
 #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
     ui->gridLayout->setMargin(0);
@@ -215,13 +215,13 @@ void SerialBox5_lite::add_frame_text(QFrame *parent,
 }
 #endif
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::refresh(void)
+void SerialBox5_lite::refresh()
 {
     ui->cb_PortBox->clear();
     ui->cb_PortBox->addItems(get_port_names());
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::initEnumerator(void)
+void SerialBox5_lite::initEnumerator()
 {
     refresh();
     //---
@@ -239,7 +239,7 @@ void SerialBox5_lite::initEnumerator(void)
     ui->cb_BaudBox->addItem("115200 baud",     QSerialPort::Baud115200);
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::initSerial(void)
+void SerialBox5_lite::initSerial()
 {
     ui->cb_PortBox->setProperty(NO_SAVE, true);
     ui->cb_BaudBox->setProperty(NO_SAVE, true);
@@ -289,7 +289,7 @@ void SerialBox5_lite::set_baud_box(int index)
     }
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::setCloseState(void)
+void SerialBox5_lite::setCloseState()
 {
     ui->btn_refresh->setEnabled(true);
     ui->cb_PortBox->setEnabled(true);
@@ -528,27 +528,27 @@ bool SerialBox5_lite::set_baudRate(int value)
     return ok;
 }
 //--------------------------------------------------------------------------------
-qint32 SerialBox5_lite::get_baudRate(void)
+qint32 SerialBox5_lite::get_baudRate()
 {
     return baudRate();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::DataBits   SerialBox5_lite::get_dataBits(void)
+QSerialPort::DataBits   SerialBox5_lite::get_dataBits()
 {
     return dataBits();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::Parity     SerialBox5_lite::get_parity(void)
+QSerialPort::Parity     SerialBox5_lite::get_parity()
 {
     return parity();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::StopBits   SerialBox5_lite::get_stopBits(void)
+QSerialPort::StopBits   SerialBox5_lite::get_stopBits()
 {
     return stopBits();
 }
 //--------------------------------------------------------------------------------
-QSerialPort::FlowControl    SerialBox5_lite::get_flowControl(void)
+QSerialPort::FlowControl    SerialBox5_lite::get_flowControl()
 {
     return flowControl();
 }
@@ -565,7 +565,7 @@ void SerialBox5_lite::set_flag_byte_by_byte(bool state)
     flag_byte_by_byte = state;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::set_default(void)
+void SerialBox5_lite::set_default()
 {
     if(isOpen())
     {
@@ -577,7 +577,7 @@ void SerialBox5_lite::set_default(void)
     }
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::get_parameter(void)
+void SerialBox5_lite::get_parameter()
 {
     if(isOpen() == false)
     {
@@ -600,13 +600,13 @@ void SerialBox5_lite::set_test(bool value)
     p_test = value;
 }
 //--------------------------------------------------------------------------------
-bool SerialBox5_lite::get_test(void)
+bool SerialBox5_lite::get_test()
 {
     emit error("Зачем жать куда попало?");
     return p_test;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::updateText(void)
+void SerialBox5_lite::updateText()
 {
 #ifdef RS232_SEND
     sendBox5->updateText();
@@ -614,17 +614,17 @@ void SerialBox5_lite::updateText(void)
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool SerialBox5_lite::programm_is_exit(void)
+bool SerialBox5_lite::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::load_setting(void)
+void SerialBox5_lite::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void SerialBox5_lite::save_setting(void)
+void SerialBox5_lite::save_setting()
 {
 
 }

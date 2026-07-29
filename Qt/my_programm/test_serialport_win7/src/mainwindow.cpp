@@ -56,7 +56,7 @@ void MainWindow::serial5_error(QSerialPort::SerialPortError err)
     }
 }
 
-void MainWindow::get_portname(void)
+void MainWindow::get_portname()
 {
     ui->cb_port->clear();
     foreach (QSerialPortInfo p_info, QSerialPortInfo::availablePorts())
@@ -65,7 +65,7 @@ void MainWindow::get_portname(void)
     }
 }
 
-void MainWindow::port_open(void)
+void MainWindow::port_open()
 {
     ui->te_log->append(QString("%1 open").arg(ui->cb_port->currentText()));
 
@@ -79,18 +79,18 @@ void MainWindow::port_open(void)
     serial->open(QIODevice::ReadWrite);
 }
 
-void MainWindow::port_close(void)
+void MainWindow::port_close()
 {
     ui->te_log->append("close");
     serial->close();
 }
 
-void MainWindow::port_send(void)
+void MainWindow::port_send()
 {
     ui->te_log->append(QString("send %1 bytes").arg(serial->write("test")));
 }
 
-void MainWindow::read_data(void)
+void MainWindow::read_data()
 {
     QByteArray ba = serial->readAll();
     ui->te_log->append(ba);

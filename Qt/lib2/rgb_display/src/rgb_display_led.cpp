@@ -77,27 +77,27 @@ void RGB_dislpay_led::set_B(int value)
     color_B = static_cast<uint8_t>(value);
 }
 //--------------------------------------------------------------------------------
-uint8_t RGB_dislpay_led::get_R(void)
+uint8_t RGB_dislpay_led::get_R()
 {
     return color_R;
 }
 //--------------------------------------------------------------------------------
-uint8_t RGB_dislpay_led::get_G(void)
+uint8_t RGB_dislpay_led::get_G()
 {
     return color_G;
 }
 //--------------------------------------------------------------------------------
-uint8_t RGB_dislpay_led::get_B(void)
+uint8_t RGB_dislpay_led::get_B()
 {
     return color_B;
 }
 //--------------------------------------------------------------------------------
-double RGB_dislpay_led::get_width(void)
+double RGB_dislpay_led::get_width()
 {
     return full_width;
 }
 //--------------------------------------------------------------------------------
-double RGB_dislpay_led::get_height(void)
+double RGB_dislpay_led::get_height()
 {
     return full_height;
 }

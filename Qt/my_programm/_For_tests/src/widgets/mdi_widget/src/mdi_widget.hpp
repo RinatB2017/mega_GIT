@@ -49,7 +49,7 @@ private:
     QPointer <QMdiSubWindow> w1;
     QPointer <QMdiSubWindow> w2;
 
-    void init(void);
+    void init();
 };
 //--------------------------------------------------------------------------------
 #endif // MDI_WIDGET_HPP

@@ -49,7 +49,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -121,7 +121,7 @@ void MainBox::init(void)
     });
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -163,7 +163,7 @@ void MainBox::createTestBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -178,7 +178,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -220,7 +220,7 @@ void MainBox::read_data(QByteArray data)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::move_ul(void)
+void MainBox::move_ul()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -236,7 +236,7 @@ void MainBox::move_ul(void)
     ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
-void MainBox::move_u(void)
+void MainBox::move_u()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -248,7 +248,7 @@ void MainBox::move_u(void)
     ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
-void MainBox::move_ur(void)
+void MainBox::move_ur()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -264,7 +264,7 @@ void MainBox::move_ur(void)
     ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
-void MainBox::move_l(void)
+void MainBox::move_l()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -276,7 +276,7 @@ void MainBox::move_l(void)
     ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
-void MainBox::move_r(void)
+void MainBox::move_r()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -288,7 +288,7 @@ void MainBox::move_r(void)
     ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
-void MainBox::move_dl(void)
+void MainBox::move_dl()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -304,7 +304,7 @@ void MainBox::move_dl(void)
     ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
-void MainBox::move_d(void)
+void MainBox::move_d()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -316,7 +316,7 @@ void MainBox::move_d(void)
     ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
-void MainBox::move_dr(void)
+void MainBox::move_dr()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -332,42 +332,42 @@ void MainBox::move_dr(void)
     ui->rgb_display->show_picture(begin_x, begin_y);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_0(void)
+bool MainBox::test_0()
 {
     emit info("Test_0()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_1(void)
+bool MainBox::test_1()
 {
     emit info("Test_1()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_2(void)
+bool MainBox::test_2()
 {
     emit info("Test_2()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_3(void)
+bool MainBox::test_3()
 {
     emit info("Test_3()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_4(void)
+bool MainBox::test_4()
 {
     emit info("Test_4()");
 
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test_5(void)
+bool MainBox::test_5()
 {
     emit info("Test_5()");
 
@@ -385,13 +385,13 @@ void MainBox::send_data(QString data)
     emit send(data.toLatin1());
 }
 //--------------------------------------------------------------------------------
-void MainBox::send_test_data(void)
+void MainBox::send_test_data()
 {
     ui->rgb_display->set_brightness(ui->sb_brightness->value());
     ui->rgb_display->send_test_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::set_param(void)
+void MainBox::set_param()
 {
     int cnt_led_x = ui->sb_max_x->value();
     int cnt_led_y = ui->sb_max_y->value();
@@ -412,7 +412,7 @@ void MainBox::set_param(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::get_param(void)
+void MainBox::get_param()
 {
     int cnt_led_x = 0;
     int cnt_led_y = 0;
@@ -440,7 +440,7 @@ void MainBox::get_param(void)
     ui->sb_led_up_border->setValue(u_border);
 }
 //--------------------------------------------------------------------------------
-void MainBox::set_default(void)
+void MainBox::set_default()
 {
     ui->sb_max_x->setValue(SCREEN_WIDTH);
     ui->sb_max_y->setValue(SCREEN_HEIGTH);
@@ -450,22 +450,22 @@ void MainBox::set_default(void)
     ui->sb_led_up_border->setValue(LED_BORDER_H_MM);
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

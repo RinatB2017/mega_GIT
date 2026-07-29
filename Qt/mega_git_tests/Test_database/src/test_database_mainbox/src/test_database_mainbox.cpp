@@ -45,7 +45,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -70,7 +70,7 @@ void MainBox::init(void)
     connect(ui->btn_append_data_item,       &QPushButton::clicked,  this,   &MainBox::f_append_data_item);
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -101,7 +101,7 @@ void MainBox::createTestBar(void)
     connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -114,7 +114,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -128,20 +128,20 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_open_database(void)
+bool MainBox::f_open_database()
 {
     db = new Database("QSQLITE", "test.db");
     //db = new Database("QPSQL", "test.db", this);
     return db->open("test.db");
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_close_database(void)
+bool MainBox::f_close_database()
 {
     db->close();
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit info("Test");
     block_interface(true);
@@ -170,7 +170,7 @@ bool MainBox::test(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_create_all_tables(void)
+bool MainBox::f_create_all_tables()
 {
     emit trace(Q_FUNC_INFO);
     block_interface(true);
@@ -193,7 +193,7 @@ bool MainBox::f_create_all_tables(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_create_inventory_table(void)
+bool MainBox::f_create_inventory_table()
 {
     emit trace(Q_FUNC_INFO);
     block_interface(true);
@@ -222,7 +222,7 @@ bool MainBox::f_create_inventory_table(void)
     return ok;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_create_item_table(void)
+bool MainBox::f_create_item_table()
 {
     emit trace(Q_FUNC_INFO);
     block_interface(true);
@@ -251,7 +251,7 @@ bool MainBox::f_create_item_table(void)
     return ok;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_drop_all_tables(void)
+bool MainBox::f_drop_all_tables()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -260,7 +260,7 @@ bool MainBox::f_drop_all_tables(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_drop_inventory_table(void)
+bool MainBox::f_drop_inventory_table()
 {
     block_interface(true);
 
@@ -286,7 +286,7 @@ bool MainBox::f_drop_inventory_table(void)
     return ok;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_drop_item_table(void)
+bool MainBox::f_drop_item_table()
 {
     block_interface(true);
 
@@ -312,7 +312,7 @@ bool MainBox::f_drop_item_table(void)
     return ok;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_view_inventory_table(void)
+bool MainBox::f_view_inventory_table()
 {
     emit trace(Q_FUNC_INFO);
     block_interface(true);
@@ -327,7 +327,7 @@ bool MainBox::f_view_inventory_table(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_view_item_table(void)
+bool MainBox::f_view_item_table()
 {
     emit trace(Q_FUNC_INFO);
     block_interface(true);
@@ -342,7 +342,7 @@ bool MainBox::f_view_item_table(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_append_data_inventory(void)
+bool MainBox::f_append_data_inventory()
 {
     QSqlQuery query;
     block_interface(true);
@@ -372,7 +372,7 @@ bool MainBox::f_append_data_inventory(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_append_data_item(void)
+bool MainBox::f_append_data_item()
 {
     QSqlQuery query;
     block_interface(true);
@@ -397,22 +397,22 @@ bool MainBox::f_append_data_item(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

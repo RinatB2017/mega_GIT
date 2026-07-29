@@ -55,14 +55,14 @@ public:
 
     bool set_fix_baudrate(int value);
 
-    qint32 get_baudRate(void);
-    QSerialPort::DataBits       get_dataBits(void);
-    QSerialPort::Parity         get_parity(void);
-    QSerialPort::StopBits       get_stopBits(void);
-    QSerialPort::FlowControl    get_flowControl(void);
+    qint32 get_baudRate();
+    QSerialPort::DataBits       get_dataBits();
+    QSerialPort::Parity         get_parity();
+    QSerialPort::StopBits       get_stopBits();
+    QSerialPort::FlowControl    get_flowControl();
 
     void set_portname(const QString &portname);
-    QString get_portname(void);
+    QString get_portname();
 
 private:
     Ui::SerialBox5_fix_baudrate *ui;
@@ -87,10 +87,10 @@ private:
     SendBox5 *sendBox5 = nullptr;
 #endif
 
-    void init(void);
-    void init_timer(void);
-    void createWidgets(void);
-    void initSerial(void);
+    void init();
+    void init_timer();
+    void createWidgets();
+    void initSerial();
     QString ByteArrayToHex(const QByteArray &data);
 
 public slots:
@@ -103,22 +103,22 @@ public slots:
 private slots:
     void drawData(const QByteArray &data);
     void sendData(const QByteArray &sending_data);
-    void btnOpenPortClicked(void);
-    void refresh(void);
+    void btnOpenPortClicked();
+    void refresh();
     void getStatus(const QString &status, QDateTime current);
-    void get_parameter(void);
+    void get_parameter();
 
     void change_icon(bool state);
 
-    void setOpenState(void);
-    void setCloseState(void);
+    void setOpenState();
+    void setCloseState();
 
-    void checkPorts(void);
+    void checkPorts();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // SERIALBOX_HPP

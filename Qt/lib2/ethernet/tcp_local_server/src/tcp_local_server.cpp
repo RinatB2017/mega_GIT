@@ -62,7 +62,7 @@ bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
     return true;
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::closeServer(void)
+void TCP_Server::closeServer()
 {
     if(tcpServer)
     {
@@ -79,7 +79,7 @@ void TCP_Server::closeServer(void)
     }
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::newConnect(void)
+void TCP_Server::newConnect()
 {
     clientConnection = tcpServer->nextPendingConnection();
     Q_ASSERT(clientConnection);
@@ -95,7 +95,7 @@ void TCP_Server::newConnect(void)
     }
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::clientReadyRead(void)
+void TCP_Server::clientReadyRead()
 {
     Q_ASSERT(clientConnection);
     if(clientConnection->bytesAvailable())
@@ -152,22 +152,22 @@ void TCP_Server::input(QByteArray data)
     }
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::clientDisconnected(void)
+void TCP_Server::clientDisconnected()
 {
     emit info("Клиент отключился");
 }
 //--------------------------------------------------------------------------------
-bool TCP_Server::is_open(void)
+bool TCP_Server::is_open()
 {
     return opened;
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::tcp_open(void)
+void TCP_Server::tcp_open()
 {
     createServerOnPort(address, port);
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::tcp_close(void)
+void TCP_Server::tcp_close()
 {
     closeServer();
 }
@@ -182,22 +182,22 @@ void TCP_Server::set_port(int new_port)
     port = new_port;
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::updateText(void)
+void TCP_Server::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool TCP_Server::programm_is_exit(void)
+bool TCP_Server::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::load_setting(void)
+void TCP_Server::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::save_setting(void)
+void TCP_Server::save_setting()
 {
 
 }

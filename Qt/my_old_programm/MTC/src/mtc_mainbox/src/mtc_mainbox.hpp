@@ -50,21 +50,21 @@ signals:
 
 private slots:
     void read_usb_modem(QByteArray ba);
-    void test(void);
+    void test();
 
 private:
     QPointer<MySplashScreen> splash;
     Ui::MainBox *ui;
     SerialBox5 *serialBox;
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
     int calc_SINR(int value);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

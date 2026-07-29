@@ -47,7 +47,7 @@ TreeFilms::~TreeFilms()
     }
 }
 //--------------------------------------------------------------------------------
-void TreeFilms::connect_log(void)
+void TreeFilms::connect_log()
 {
     if(topLevelWidget())
     {
@@ -58,7 +58,7 @@ void TreeFilms::connect_log(void)
     }
 }
 //--------------------------------------------------------------------------------
-void TreeFilms::init(void)
+void TreeFilms::init()
 {
     connect_log();
 
@@ -168,7 +168,7 @@ void TreeFilms::expand_item(QTreeWidgetItem *item, int column)
         expandItem(item);
 }
 //--------------------------------------------------------------------------------
-void TreeFilms::read(void)
+void TreeFilms::read()
 {
     doc = new QDomDocument("films");
     QFile file(FILMS_XML);
@@ -201,13 +201,13 @@ void TreeFilms::read(void)
     QTimer::singleShot(0, this, SLOT(update_status_text()));
 }
 //--------------------------------------------------------------------------------
-void TreeFilms::update_status_text(void)
+void TreeFilms::update_status_text()
 {
     QString temp = QString(QObject::tr("find %1 films").arg(file_count));
     emit set_status_text(temp);
 }
 //--------------------------------------------------------------------------------
-void TreeFilms::save(void)
+void TreeFilms::save()
 {
     is_modified = false;
     qDebug() << "save()";
@@ -246,7 +246,7 @@ void TreeFilms::scan_tree(QTreeWidgetItem *root_item)
     }
 }
 //--------------------------------------------------------------------------------
-void TreeFilms::double_click(void)
+void TreeFilms::double_click()
 {
     if(currentItem()->data(0, ROLE_IS_FOLDER).toBool() == false)
     {
@@ -501,7 +501,7 @@ void TreeFilms::scan(QDir dir)
     }
 }
 //--------------------------------------------------------------------------------
-void TreeFilms::clear_data(void)
+void TreeFilms::clear_data()
 {
     is_modified = true;
     clear();
@@ -558,7 +558,7 @@ void TreeFilms::popup(QPoint)
     popup_menu->exec(QCursor::pos());
 }
 //--------------------------------------------------------------------------------
-void TreeFilms::slot_add_folder(void)
+void TreeFilms::slot_add_folder()
 {
     bool ok;
     QString text = QInputDialog::getText(this,
@@ -573,7 +573,7 @@ void TreeFilms::slot_add_folder(void)
     }
 }
 //--------------------------------------------------------------------------------
-void TreeFilms::slot_del_folder(void)
+void TreeFilms::slot_del_folder()
 {
     QTreeWidgetItem *folder = currentItem();
     if(folder->data(0, ROLE_IS_FOLDER).toBool() == false)
@@ -604,7 +604,7 @@ void TreeFilms::slot_del_folder(void)
     del_folder(currentItem()->text(0));
 }
 //--------------------------------------------------------------------------------
-void TreeFilms::slot_add_film(void)
+void TreeFilms::slot_add_film()
 {
     QString filters;
 
@@ -628,7 +628,7 @@ void TreeFilms::slot_add_film(void)
              dlg->selectedFiles().at(0));
 }
 //--------------------------------------------------------------------------------
-void TreeFilms::slot_del_film(void)
+void TreeFilms::slot_del_film()
 {
     QTreeWidgetItem *folder = currentItem();
     if(folder->data(0, ROLE_IS_FOLDER).toBool() == true)
@@ -646,7 +646,7 @@ void TreeFilms::slot_del_film(void)
     del_film(currentItem()->text(0));
 }
 //--------------------------------------------------------------------------------
-void TreeFilms::slot_rename_action(void)
+void TreeFilms::slot_rename_action()
 {
     bool ok;
     QString text = QInputDialog::getText(this,
@@ -662,7 +662,7 @@ void TreeFilms::slot_rename_action(void)
     }
 }
 //--------------------------------------------------------------------------------
-void TreeFilms::slot_scan(void)
+void TreeFilms::slot_scan()
 {
     QFileDialog *dlg = new QFileDialog(this);
     dlg->setOption(QFileDialog::ShowDirsOnly, true);
@@ -705,7 +705,7 @@ void TreeFilms::slot_scan(void)
     scan(QDir(dlg->directory().absolutePath()));
 }
 //--------------------------------------------------------------------------------
-void TreeFilms::slot_clear_data(void)
+void TreeFilms::slot_clear_data()
 {
     clear_data();
 }
@@ -723,7 +723,7 @@ void TreeFilms::execute_player(const QString &player_name,
         QMessageBox::critical(this, QObject::tr("Error"), QObject::tr("Process cannot be started"));
 }
 //--------------------------------------------------------------------------------
-int TreeFilms::get_file_count(void)
+int TreeFilms::get_file_count()
 {
     return file_count;
 }

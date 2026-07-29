@@ -34,7 +34,7 @@ public:
 
 private slots:
 #ifndef NO_GRAPHER
-    void test_grapher(void);
+    void test_grapher();
 #endif
 
 private:

@@ -107,20 +107,20 @@ signals:
 private slots:
     void read_data(const QByteArray &data);
 
-    void set_color(void);
-    void update_frame_color(void);
+    void set_color();
+    void update_frame_color();
 
-    void test(void);
+    void test();
 
-    void command_set_color_R(void);
-    void command_set_color_G(void);
-    void command_set_color_B(void);
-    void command_set_color_W(void);
-    void command_set_color_all(void);
+    void command_set_color_R();
+    void command_set_color_G();
+    void command_set_color_B();
+    void command_set_color_W();
+    void command_set_color_all();
 
-    void command_run_motor_1(void);
-    void command_run_motor_2(void);
-    void command_run_motors(void);
+    void command_run_motor_1();
+    void command_run_motor_2();
+    void command_run_motors();
 
     void color_changed(int);
 
@@ -134,48 +134,48 @@ private:
     QByteArray received_array;
     bool data_is_ready = false;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    void clear_data(void);
+    void clear_data();
 
     void append_data(char *buf, int len);
-    void append_end_byte(void);
+    void append_end_byte();
 
-    void append_crc(void);
+    void append_crc();
 
-    void clear_sending_array(void);
-    void clear_receive_array(void);
+    void clear_sending_array();
+    void clear_receive_array();
     void wait_msec(int timeout_msec);
 
-    void send_data(void);
+    void send_data();
 
     unsigned char calculateCRC_8(char *pcBlock, uint len);
     unsigned int  calculateCRC_16(uchar *frame, uchar bufferSize);
 
     void prepare_modbus_command(unsigned short cmd);
 
-    void prepare_modbus_color_R(void);
-    void prepare_modbus_color_G(void);
-    void prepare_modbus_color_B(void);
-    void prepare_modbus_color_W(void);
-    void prepare_modbus_color_all(void);
+    void prepare_modbus_color_R();
+    void prepare_modbus_color_G();
+    void prepare_modbus_color_B();
+    void prepare_modbus_color_W();
+    void prepare_modbus_color_all();
 
-    void prepare_modbus_motor_1(void);
-    void prepare_modbus_motor_2(void);
-    void prepare_modbus_motor_all(void);
+    void prepare_modbus_motor_1();
+    void prepare_modbus_motor_2();
+    void prepare_modbus_motor_all();
 
-    void prepare_modbus_set_all(void);
+    void prepare_modbus_set_all();
 
     void set_color_frame(int color_R,
                          int color_G,
                          int color_B);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

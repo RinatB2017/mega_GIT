@@ -347,22 +347,22 @@ void ParportBox::on_powerButton_toggled(bool checked)
     }
 }
 //--------------------------------------------------------------------------------
-void ParportBox::updateText(void)
+void ParportBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool ParportBox::programm_is_exit(void)
+bool ParportBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void ParportBox::load_setting(void)
+void ParportBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void ParportBox::save_setting(void)
+void ParportBox::save_setting()
 {
 
 }

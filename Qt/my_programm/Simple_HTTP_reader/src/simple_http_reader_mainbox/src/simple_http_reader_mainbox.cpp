@@ -45,7 +45,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -63,7 +63,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -100,7 +100,7 @@ void MainBox::createTestBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -115,7 +115,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -129,7 +129,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::create_tcp_socket(void)
+void MainBox::create_tcp_socket()
 {
     tcpSocket = new QTcpSocket(this);
     connect(tcpSocket,  SIGNAL(readyRead()),    this,   SLOT(read_data()));
@@ -138,7 +138,7 @@ void MainBox::create_tcp_socket(void)
     connect(tcpSocket,  SIGNAL(disconnected()), this,   SLOT(f_disconnected()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_data(void)
+void MainBox::read_data()
 {
     QByteArray ba = tcpSocket->readAll();
 
@@ -180,18 +180,18 @@ void MainBox::s_error(QAbstractSocket::SocketError err)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_connected(void)
+void MainBox::f_connected()
 {
     emit debug("Connected");
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_disconnected(void)
+void MainBox::f_disconnected()
 {
     emit debug("Disconnected");
     f_disconnect();
 }
 //--------------------------------------------------------------------------------
-bool MainBox::f_connect(void)
+bool MainBox::f_connect()
 {
     QString ip = get_url().host();
     if(ip.isEmpty())
@@ -209,7 +209,7 @@ bool MainBox::f_connect(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_disconnect(void)
+void MainBox::f_disconnect()
 {
     if(tcpSocket->isOpen())
     {
@@ -218,13 +218,13 @@ void MainBox::f_disconnect(void)
     tcpSocket->disconnectFromHost();
 }
 //--------------------------------------------------------------------------------
-QUrl MainBox::get_url(void)
+QUrl MainBox::get_url()
 {
     QUrl url = ui->host_widget->get_url();
     return url;
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_run(void)
+void MainBox::f_run()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -262,7 +262,7 @@ void MainBox::f_run(void)
     //---
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_update(void)
+void MainBox::f_update()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -274,7 +274,7 @@ void MainBox::f_update(void)
     ui->le_question->append("Connection: close");
 }
 //--------------------------------------------------------------------------------
-void MainBox::f_host_to_ip(void)
+void MainBox::f_host_to_ip()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -302,29 +302,29 @@ void MainBox::f_host_to_ip(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit info("Test");
 
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

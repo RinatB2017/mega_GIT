@@ -33,7 +33,7 @@ public:
     Test();
 
 private slots:
-    void check_serial(void);
+    void check_serial();
 
 private:
     MainWindow *mw;

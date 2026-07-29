@@ -43,7 +43,7 @@ AboutBox::~AboutBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void AboutBox::init(void)
+void AboutBox::init()
 {
     ui->setupUi(this);
 
@@ -80,7 +80,7 @@ void AboutBox::init(void)
     ui->btn_env->setVisible(false);
 }
 //--------------------------------------------------------------------------------
-void AboutBox::show_env(void)
+void AboutBox::show_env()
 {
     QStringList sl = QProcessEnvironment::systemEnvironment().toStringList();
     QTextEdit *te = new QTextEdit();
@@ -96,47 +96,47 @@ void AboutBox::show_env(void)
     te->show();
 }
 //--------------------------------------------------------------------------------
-QString AboutBox::get_avatar(void)
+QString AboutBox::get_avatar()
 {
     return avatar;
 }
 //--------------------------------------------------------------------------------
-QString AboutBox::get_telegram_qr(void)
+QString AboutBox::get_telegram_qr()
 {
     return telegram_qr;
 }
 //--------------------------------------------------------------------------------
-QString AboutBox::get_orgName(void)
+QString AboutBox::get_orgName()
 {
     return orgName;
 }
 //--------------------------------------------------------------------------------
-QString AboutBox::get_programmName(void)
+QString AboutBox::get_programmName()
 {
     return programmName;
 }
 //--------------------------------------------------------------------------------
-QString AboutBox::get_version(void)
+QString AboutBox::get_version()
 {
     return version;
 }
 //--------------------------------------------------------------------------------
-QString AboutBox::get_email(void)
+QString AboutBox::get_email()
 {
     return email;
 }
 //--------------------------------------------------------------------------------
-QString AboutBox::get_author(void)
+QString AboutBox::get_author()
 {
     return author;
 }
 //--------------------------------------------------------------------------------
-QString AboutBox::get_telegram(void)
+QString AboutBox::get_telegram()
 {
     return telegram;
 }
 //--------------------------------------------------------------------------------
-QString AboutBox::get_github(void)
+QString AboutBox::get_github()
 {
     return github;
 }

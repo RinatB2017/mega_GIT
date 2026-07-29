@@ -19,7 +19,7 @@ UDP_Client::UDP_Client(QWidget *parent) :
     init();
 }
 //--------------------------------------------------------------------------------
-QString UDP_Client::getLocalAddress(void)
+QString UDP_Client::getLocalAddress()
 {
     QString ipAddress;
 
@@ -44,7 +44,7 @@ void UDP_Client::init()
     connect(udpSocket,  &QUdpSocket::readyRead, this,   &UDP_Client::readPendingDatagrams);
 }
 //--------------------------------------------------------------------------------
-void UDP_Client::readPendingDatagrams(void)
+void UDP_Client::readPendingDatagrams()
 {
     while (udpSocket->hasPendingDatagrams())
     {
@@ -119,22 +119,22 @@ QByteArray UDP_Client::send_data(const QByteArray &data)
     return tmp;
 }
 //--------------------------------------------------------------------------------
-void UDP_Client::updateText(void)
+void UDP_Client::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool UDP_Client::programm_is_exit(void)
+bool UDP_Client::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void UDP_Client::load_setting(void)
+void UDP_Client::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void UDP_Client::save_setting(void)
+void UDP_Client::save_setting()
 {
 
 }

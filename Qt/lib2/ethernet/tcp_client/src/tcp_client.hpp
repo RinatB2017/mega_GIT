@@ -42,15 +42,15 @@ public:
     void setPort(unsigned int);
 
     void connect_to_host(QString address, quint16 port);
-    void disconnect_from_host(void);
+    void disconnect_from_host();
     qint64 write_data(QByteArray data);
-    QTcpSocket::SocketState get_state(void);
-    QByteArray readAll(void);
-    QString get_errorString(void);
+    QTcpSocket::SocketState get_state();
+    QByteArray readAll();
+    QString get_errorString();
 
 signals:
-    void readyRead(void);
-    void disconnected(void);
+    void readyRead();
+    void disconnected();
     void socket_error(QAbstractSocket::SocketError);
     void state_changed(QAbstractSocket::SocketState);
     void output(const QByteArray &);
@@ -65,14 +65,14 @@ private:
     QPointer<QTcpSocket> tcpSocket;
     QString address;
     uint port = 0;
-    void init(void);
+    void init();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
-    void readyData(void);
+    void readyData();
 };
 //--------------------------------------------------------------------------------
 #endif

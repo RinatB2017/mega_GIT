@@ -33,7 +33,7 @@ SerialWidget::~SerialWidget()
 
 }
 //--------------------------------------------------------------------------------
-void SerialWidget::init(void)
+void SerialWidget::init()
 {
     worker_fake = new Worker_fake(this);
 
@@ -60,19 +60,19 @@ void SerialWidget::init(void)
     worker_fake->show();
 }
 //--------------------------------------------------------------------------------
-bool SerialWidget::isOpen(void)
+bool SerialWidget::isOpen()
 {
     return f_port_open;
 }
 //--------------------------------------------------------------------------------
-bool SerialWidget::serial_open(void)
+bool SerialWidget::serial_open()
 {
     f_port_open = true;
     emit port_open();
     return f_port_open;
 }
 //--------------------------------------------------------------------------------
-bool SerialWidget::serial_close(void)
+bool SerialWidget::serial_close()
 {
     f_port_open = false;
     emit port_close();
@@ -85,12 +85,12 @@ void SerialWidget::write_ba_output(QByteArray ba)
     ba_output.append(ba);
 }
 //--------------------------------------------------------------------------------
-QByteArray SerialWidget::readAll(void)
+QByteArray SerialWidget::readAll()
 {
     return ba_output;
 }
 //--------------------------------------------------------------------------------
-qint64 SerialWidget::bytesAvailable(void)
+qint64 SerialWidget::bytesAvailable()
 {
     return ba_output.size();
 }
@@ -131,32 +131,32 @@ bool SerialWidget::setFlowControl(QSerialPort::FlowControl value)
     return true;
 }
 //--------------------------------------------------------------------------------
-QString SerialWidget::portName(void)
+QString SerialWidget::portName()
 {
     return port_name;
 }
 //--------------------------------------------------------------------------------
-int SerialWidget::baudRate(void)
+int SerialWidget::baudRate()
 {
     return port_BaudRate;
 }
 //--------------------------------------------------------------------------------
-QSerialPort::DataBits SerialWidget::dataBits(void)
+QSerialPort::DataBits SerialWidget::dataBits()
 {
     return port_DataBits;
 }
 //--------------------------------------------------------------------------------
-QSerialPort::Parity SerialWidget::parity(void)
+QSerialPort::Parity SerialWidget::parity()
 {
     return port_Parity;
 }
 //--------------------------------------------------------------------------------
-QSerialPort::StopBits SerialWidget::stopBits(void)
+QSerialPort::StopBits SerialWidget::stopBits()
 {
     return port_StopBits;
 }
 //--------------------------------------------------------------------------------
-QSerialPort::FlowControl SerialWidget::flowControl(void)
+QSerialPort::FlowControl SerialWidget::flowControl()
 {
     return port_FlowControl;
 }
@@ -185,14 +185,14 @@ qint64 SerialWidget::write(const QByteArray &data)
     return true;
 }
 //--------------------------------------------------------------------------------
-QStringList SerialWidget::get_port_names(void)
+QStringList SerialWidget::get_port_names()
 {
     QStringList sl_ports;
     sl_ports.append(port_name);
     return sl_ports;
 }
 //--------------------------------------------------------------------------------
-QString SerialWidget::errorString(void)
+QString SerialWidget::errorString()
 {
     return "no error";
 }

@@ -31,22 +31,22 @@ Default_widget::~Default_widget()
 
 }
 //--------------------------------------------------------------------------------
-void Default_widget::updateText(void)
+void Default_widget::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool Default_widget::programm_is_exit(void)
+bool Default_widget::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Default_widget::load_setting(void)
+void Default_widget::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Default_widget::save_setting(void)
+void Default_widget::save_setting()
 {
 
 }

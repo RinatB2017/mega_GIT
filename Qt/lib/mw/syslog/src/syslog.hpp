@@ -64,18 +64,18 @@ public slots:
                   QString message);
 
 private slots:
-    void seek_first(void);
-    void seek_prev(void);
-    void seek_next(void);
-    void seek_last(void);
+    void seek_first();
+    void seek_prev();
+    void seek_next();
+    void seek_last();
 
     void syslog_info(const QString &text);
     void syslog_debug(const QString &text);
     void syslog_error(const QString &text);
     void syslog_trace(const QString &text);
 
-    void click(void);
-    void test(void);
+    void click();
+    void test();
 
 private:
     Ui::SysLog *ui;

@@ -99,43 +99,43 @@ public:
                  ushort mask);
     int check_message(QString data);
     int check_message_old(QString data);
-    void run_self_tests(void);
-    void test(void);
+    void run_self_tests();
+    void test();
 
     void print_error(QByteArray data, int err);
-    void test_cheksum(void);
+    void test_cheksum();
 
-    void print_variable(void);
+    void print_variable();
 
-    float get_latitude_grad(void);
-    float get_latitude_min(void);
-    QString get_latitude_dir(void);
-    QString get_latitude_string(void);
+    float get_latitude_grad();
+    float get_latitude_min();
+    QString get_latitude_dir();
+    QString get_latitude_string();
 
-    float get_longitude_grad(void);
-    float get_longitude_min(void);
-    QString get_longitude_dir(void);
-    QString get_longitude_string(void);
+    float get_longitude_grad();
+    float get_longitude_min();
+    QString get_longitude_dir();
+    QString get_longitude_string();
 
-    int get_observation_hour(void);
-    int get_observation_min(void);
-    int get_observation_sec(void);
-    QString get_observation_string(void);
+    int get_observation_hour();
+    int get_observation_min();
+    int get_observation_sec();
+    QString get_observation_string();
 
-    float get_height(void);
+    float get_height();
 
-    int test_GGA(void);
-    int test_GSA(void);
-    int test_GSV(void);
-    int test_RMC(void);
-    int test_VTG(void);
-    int test_GLL(void);
-    int test_ZDA(void);
+    int test_GGA();
+    int test_GSA();
+    int test_GSV();
+    int test_RMC();
+    int test_VTG();
+    int test_GLL();
+    int test_ZDA();
 
-    int test_PIREA(void);
-    int test_PIRFV(void);
-    int test_PIRGK(void);
-    int test_PIRRA(void);
+    int test_PIREA();
+    int test_PIRFV();
+    int test_PIRGK();
+    int test_PIRRA();
 
 signals:
     void info(const QString &);
@@ -203,7 +203,7 @@ private:
     int parse_message_PIRGK(const QString &data);
     int parse_message_PIRRA(const QString &data);
 
-    void init(void);
+    void init();
     int calc_time_UTC(const QString &data,
                       int *hour,
                       int *min,

@@ -35,7 +35,7 @@ MainBox_GUI::~MainBox_GUI()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox_GUI::init(void)
+void MainBox_GUI::init()
 {
     ui->setupUi(this);
 
@@ -45,7 +45,7 @@ void MainBox_GUI::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-QString MainBox_GUI::get_qml_text(void)
+QString MainBox_GUI::get_qml_text()
 {
     return ui->te_qml->toPlainText();
 }
@@ -55,7 +55,7 @@ void MainBox_GUI::set_qml_text(const QString &text)
     ui->te_qml->setPlainText(text);
 }
 //--------------------------------------------------------------------------------
-void MainBox_GUI::updateText(void)
+void MainBox_GUI::updateText()
 {
     ui->retranslateUi(this);
 }

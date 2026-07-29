@@ -44,7 +44,7 @@ MainWindow::~MainWindow()
 
 }
 //--------------------------------------------------------------------------------
-void MainWindow::create_menu(void)
+void MainWindow::create_menu()
 {
     QMenu *f_menu = menuBar()->addMenu("File");
 
@@ -59,7 +59,7 @@ void MainWindow::create_menu(void)
     f_menu->addAction(a_exit);
 }
 //--------------------------------------------------------------------------------
-void MainWindow::create_toolbars(void)
+void MainWindow::create_toolbars()
 {
     QToolBar *toolbar = new QToolBar("toolbar", this);
     Q_ASSERT(toolbar);
@@ -79,7 +79,7 @@ void MainWindow::create_toolbars(void)
     addToolBar(Qt::TopToolBarArea, toolbar);
 }
 //--------------------------------------------------------------------------------
-void MainWindow::create_central_widget(void)
+void MainWindow::create_central_widget()
 {
     MainWidget *mw = new MainWidget(this);
 
@@ -91,7 +91,7 @@ void MainWindow::create_central_widget(void)
     setCentralWidget(mw);
 }
 //--------------------------------------------------------------------------------
-void MainWindow::create_menu_dock(void)
+void MainWindow::create_menu_dock()
 {
     MenuDock *md = new MenuDock(this);
     md->setObjectName("md");
@@ -105,7 +105,7 @@ void MainWindow::create_menu_dock(void)
     addDockWidget(Qt::LeftDockWidgetArea, md);
 }
 //--------------------------------------------------------------------------------
-void MainWindow::create_log_dock(void)
+void MainWindow::create_log_dock()
 {
     LogDock *ld = new LogDock(this);
     ld->setObjectName("ld");
@@ -119,7 +119,7 @@ void MainWindow::create_log_dock(void)
     addDockWidget(Qt::BottomDockWidgetArea, ld);
 }
 //--------------------------------------------------------------------------------
-void MainWindow::test(void)
+void MainWindow::test()
 {
     emit info("test");
     emit debug("test");

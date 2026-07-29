@@ -67,7 +67,7 @@ CarefulMessageBox::CarefulMessageBox(const QString &caption,
     setWindowTitle(caption);
 }
 //--------------------------------------------------------------------------------
-void CarefulMessageBox::click(void)
+void CarefulMessageBox::click()
 {
     QPushButton *button = reinterpret_cast<QPushButton *>(sender());
     bool ok;

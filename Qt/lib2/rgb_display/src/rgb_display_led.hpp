@@ -42,12 +42,12 @@ public:
     void set_G(int value);
     void set_B(int value);
 
-    uint8_t get_R(void);
-    uint8_t get_G(void);
-    uint8_t get_B(void);
+    uint8_t get_R();
+    uint8_t get_G();
+    uint8_t get_B();
 
-    double get_width(void);
-    double get_height(void);
+    double get_width();
+    double get_height();
 
     bool set_size(double w_size_mm,
                   double h_size_mm,

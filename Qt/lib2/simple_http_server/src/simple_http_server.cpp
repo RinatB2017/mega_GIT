@@ -26,7 +26,7 @@ SimpleHttpServer::SimpleHttpServer(QObject *parent) :
     connect(this, &QTcpServer::newConnection, this, &SimpleHttpServer::handleNewConnection);
 }
 //--------------------------------------------------------------------------------
-void SimpleHttpServer::handleNewConnection(void)
+void SimpleHttpServer::handleNewConnection()
 {
     QTcpSocket *clientSocket = nextPendingConnection();
     connect(clientSocket, &QTcpSocket::readyRead, this, [this, clientSocket]() {

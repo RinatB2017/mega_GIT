@@ -64,7 +64,7 @@ signals:
 
 public slots:
     void set_value(int value);
-    int  get_value(void);
+    int  get_value();
 
     void block_interface(bool state);
     void unlock_interface(bool state);
@@ -83,7 +83,7 @@ private:
     int dip_value = 0;
     QList<DIP_button> buttons;
 
-    void init(void);
+    void init();
     bool check_pos(QRect rect, QPoint pos);
 
 protected:

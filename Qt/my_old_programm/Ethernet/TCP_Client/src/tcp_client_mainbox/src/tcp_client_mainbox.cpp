@@ -49,7 +49,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     init_widgets();
     init_client();
@@ -57,7 +57,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_widgets(void)
+void MainBox::init_widgets()
 {
     ui->le_data->setText("test");
 
@@ -67,7 +67,7 @@ void MainBox::init_widgets(void)
     ui->ipv4_widget->set_url(url);
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_client(void)
+void MainBox::init_client()
 {
     client = new TCP_Client(this);
     client->setAddress(QHostAddress(ui->ipv4_widget->get_url().host()));
@@ -77,27 +77,27 @@ void MainBox::init_client(void)
     connect(ui->btn_Send,   &QPushButton::clicked,      this,   &MainBox::send);
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::send(void)
+void MainBox::send()
 {
     QByteArray data;
     QByteArray res_data;

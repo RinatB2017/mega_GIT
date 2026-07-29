@@ -47,7 +47,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -62,7 +62,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -99,7 +99,7 @@ void MainBox::createTestBar(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::choice_test(void)
+void MainBox::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -114,7 +114,7 @@ void MainBox::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (MainBox::*function)(void);
+        typedef bool (MainBox::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -128,7 +128,7 @@ void MainBox::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_grapher_data(void)
+void MainBox::init_grapher_data()
 {
     grapher_data = new GrapherBox(this);
     grapher_data->set_title("Data");
@@ -164,7 +164,7 @@ void MainBox::init_grapher_data(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_grapher_profit(void)
+void MainBox::init_grapher_profit()
 {
     grapher_profit = new GrapherBox(this);
     grapher_profit->set_title("Profit");
@@ -200,7 +200,7 @@ void MainBox::init_grapher_profit(void)
 #endif
 }
 //--------------------------------------------------------------------------------
-void MainBox::init_widgets(void)
+void MainBox::init_widgets()
 {
     ui->sb_count->setRange(1e3, 1e6);
     ui->sb_price->setRange(1e3, 1e6);
@@ -217,7 +217,7 @@ void MainBox::init_widgets(void)
     connect(ui->btn_draw_calc,      SIGNAL(clicked()),  this,   SLOT(redraw_calc_data()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::generate(void)
+void MainBox::generate()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -279,7 +279,7 @@ void MainBox::generate(void)
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-void MainBox::calc(void)
+void MainBox::calc()
 {
     emit trace(Q_FUNC_INFO);
 
@@ -385,7 +385,7 @@ void MainBox::calc(void)
     emit info(QString("Profit <font style=\"color:red\">%1</font>").arg(end_price - begin_price));
 }
 //--------------------------------------------------------------------------------
-void MainBox::redraw_generate_data(void)
+void MainBox::redraw_generate_data()
 {
     block_interface(true);
 
@@ -431,7 +431,7 @@ void MainBox::redraw_generate_data(void)
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-void MainBox::redraw_calc_data(void)
+void MainBox::redraw_calc_data()
 {
     block_interface(true);
 
@@ -477,64 +477,64 @@ void MainBox::redraw_calc_data(void)
     block_interface(false);
 }
 //--------------------------------------------------------------------------------
-int MainBox::get_count(void)
+int MainBox::get_count()
 {
     return ui->sb_count->value();
 }
 //--------------------------------------------------------------------------------
-int MainBox::get_inc_price(void)
+int MainBox::get_inc_price()
 {
     return ui->sb_inc_price->value();
 }
 //--------------------------------------------------------------------------------
-int MainBox::get_price(void)
+int MainBox::get_price()
 {
     return ui->sb_price->value();
 }
 //--------------------------------------------------------------------------------
-int MainBox::get_order_up_profit(void)
+int MainBox::get_order_up_profit()
 {
     return ui->sb_order_up_profit->value();
 }
 //--------------------------------------------------------------------------------
-int MainBox::get_order_up_loss(void)
+int MainBox::get_order_up_loss()
 {
     return ui->sb_order_up_loss->value();
 }
 //--------------------------------------------------------------------------------
-int MainBox::get_order_down_profit(void)
+int MainBox::get_order_down_profit()
 {
     return ui->sb_order_down_profit->value();
 }
 //--------------------------------------------------------------------------------
-int MainBox::get_order_down_loss(void)
+int MainBox::get_order_down_loss()
 {
     return ui->sb_order_down_loss->value();
 }
 //--------------------------------------------------------------------------------
-bool MainBox::test(void)
+bool MainBox::test()
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

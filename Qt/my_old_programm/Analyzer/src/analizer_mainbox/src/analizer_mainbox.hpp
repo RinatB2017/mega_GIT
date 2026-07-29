@@ -44,10 +44,10 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void test(void);
+    void test();
 
-    void measuring_started(void);
-    void measuring_finished(void);
+    void measuring_started();
+    void measuring_finished();
 
     void draw_value(int x,unsigned short data);
 
@@ -60,18 +60,18 @@ private:
 
     unsigned char old_values[MAX_CHANNEL];
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
+    void createTestBar();
 
-    void create_grapher(void);
+    void create_grapher();
     void append_data(int x,
                      unsigned short data);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

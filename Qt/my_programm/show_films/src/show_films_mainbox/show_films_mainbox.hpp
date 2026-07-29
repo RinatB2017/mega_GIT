@@ -43,13 +43,13 @@ public:
     virtual ~MainBox();
 
 signals:
-    void double_click(void);
+    void double_click();
 
 private slots:
     void show_picture(const QString &data);
-    void change_player(void);
-    void save(void);
-    void select_last_film(void);
+    void change_player();
+    void save();
+    void select_last_film();
 
 private:
     Ui::MainBox *ui;
@@ -61,22 +61,22 @@ private:
     QPointer<QAction> save_action;
     QPointer<QAction> last_film;
 
-    void init(void);
+    void init();
 
     QPointer<TreeFilms> tree_films;
     QPointer<QLabel> lblFilmPicture;
     QPointer<QVBoxLayout> picture_vbox;
     QPointer<QHBoxLayout> picture_hbox;
 
-    void init_tree_widget(void);
+    void init_tree_widget();
 
-    void load_translations(void);
-    void create_menu(void);
+    void load_translations();
+    void create_menu();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);

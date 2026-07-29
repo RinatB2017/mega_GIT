@@ -35,7 +35,7 @@ CreatorMenus::~CreatorMenus()
 
 }
 //--------------------------------------------------------------------------------
-void CreatorMenus::init(void)
+void CreatorMenus::init()
 {
     app_mainBar = menuBar();
 
@@ -686,7 +686,7 @@ void CreatorMenus::app_menu_add_help(QMenu *menu)
     menu->addAction(help);
 }
 //--------------------------------------------------------------------------------
-void CreatorMenus::app_updateText(void)
+void CreatorMenus::app_updateText()
 {
     foreach (QMenu *menu, app_menus)
     {

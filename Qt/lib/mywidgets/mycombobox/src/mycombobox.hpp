@@ -32,23 +32,23 @@ class MyComboBox : public MyWidget
     Q_OBJECT
 
 signals:
-    void send_command(void);
+    void send_command();
 
 public:
     explicit MyComboBox(QWidget *parent = nullptr);
     virtual ~MyComboBox();
 
-    QString get_command(void);
+    QString get_command();
 
 private:
     Ui::MyComboBox *ui;
 
-    void init(void);
+    void init();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MYCOMBOBOX_HPP

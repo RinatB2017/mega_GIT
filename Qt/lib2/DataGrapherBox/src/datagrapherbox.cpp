@@ -67,7 +67,7 @@ void DataGrapherBox::update_curves(QList<QByteArray> sl)
     }
 }
 //--------------------------------------------------------------------------------
-void DataGrapherBox::clr_curves(void)
+void DataGrapherBox::clr_curves()
 {
     ui->grapher_widget->remove_all_curve();
     foreach(CURVES cur, curves)
@@ -98,7 +98,7 @@ bool DataGrapherBox::add_data(int curve_index, qreal value)
     return true;
 }
 //--------------------------------------------------------------------------------
-int DataGrapherBox::get_max_index(void)
+int DataGrapherBox::get_max_index()
 {
     return curves.count();
 }
@@ -124,7 +124,7 @@ bool DataGrapherBox::get_curve_data(int channel,
     return true;
 }
 //--------------------------------------------------------------------------------
-void DataGrapherBox::init(void)
+void DataGrapherBox::init()
 {
     ui->setupUi(this);
 
@@ -306,22 +306,22 @@ void DataGrapherBox::update_curve(int curve_index,
     ui->grapher_widget->set_curve_title(curve_index, curve_name);
 }
 //--------------------------------------------------------------------------------
-void DataGrapherBox::updateText(void)
+void DataGrapherBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool DataGrapherBox::programm_is_exit(void)
+bool DataGrapherBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void DataGrapherBox::load_setting(void)
+void DataGrapherBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void DataGrapherBox::save_setting(void)
+void DataGrapherBox::save_setting()
 {
 
 }

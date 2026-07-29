@@ -37,10 +37,10 @@ public:
     virtual ~Timer_options();
 
     void  set_time(const QTime &time);
-    QTime get_time(void);
+    QTime get_time();
 
     void set_message(const QString &message);
-    QString get_message(void);
+    QString get_message();
 
 private:
     Ui::Timer_options *ui;

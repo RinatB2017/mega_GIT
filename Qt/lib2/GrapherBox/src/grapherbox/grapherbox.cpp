@@ -376,7 +376,7 @@ void GrapherBox::remove_curve(int curve_ID)
     }
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::remove_all_curve(void)
+void GrapherBox::remove_all_curve()
 {
     while(curves.size())
     {
@@ -385,7 +385,7 @@ void GrapherBox::remove_all_curve(void)
     }
 }
 //--------------------------------------------------------------------------------
-int GrapherBox::get_curves_count(void)
+int GrapherBox::get_curves_count()
 {
     return curves.count();
 }
@@ -436,7 +436,7 @@ void GrapherBox::showCurve(QwtPlotItem *item, bool on)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::create_widgets(void)
+void GrapherBox::create_widgets()
 {
     QwtPlotGrid *grid = new QwtPlotGrid();
 
@@ -648,7 +648,7 @@ void GrapherBox::legend_off(int curve_ID)
     }
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::legends_all_on(void)
+void GrapherBox::legends_all_on()
 {
     foreach(GRAPHER_CURVE curve, curves)
     {
@@ -656,7 +656,7 @@ void GrapherBox::legends_all_on(void)
     }
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::legends_all_off(void)
+void GrapherBox::legends_all_off()
 {
     foreach(GRAPHER_CURVE curve, curves)
     {
@@ -673,7 +673,7 @@ void GrapherBox::legend_checked(const QVariant &itemInfo, bool on)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::clear(void)
+void GrapherBox::clear()
 {
     if(is_silence == false)
     {
@@ -707,7 +707,7 @@ void GrapherBox::clear(void)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::reset(void)
+void GrapherBox::reset()
 {
     QMessageBox msgBox;
     msgBox.setIcon(QMessageBox::Question);
@@ -730,7 +730,7 @@ void GrapherBox::reset(void)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::click_legend(void)
+void GrapherBox::click_legend()
 {
     emit info("click_legend");
 
@@ -748,7 +748,7 @@ void GrapherBox::setAxisScaleDraw( int axisId, QwtScaleDraw *scaleDraw )
     ui->qwtPlot->setAxisScaleDraw(axisId, scaleDraw);
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::clear_d_picker(void)
+void GrapherBox::clear_d_picker()
 {
     if(d_picker)
     {
@@ -762,7 +762,7 @@ void GrapherBox::set_d_picker(QwtPlotPicker *picker)
     d_picker = picker;
 }
 //--------------------------------------------------------------------------------
-QWidget *GrapherBox::get_qwtPlot_canvas(void)
+QWidget *GrapherBox::get_qwtPlot_canvas()
 {
     return ui->qwtPlot->canvas();
 }
@@ -1136,24 +1136,24 @@ bool GrapherBox::add_curve_array(int channel,
     return true;
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::updateGraphics(void)
+void GrapherBox::updateGraphics()
 {
     ui->qwtPlot->replot();
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::set_device_RECORDER(void)
+void GrapherBox::set_device_RECORDER()
 {
     flag_device_RECORDER = true;
     flag_device_OSCILLOSCOPE = false;
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::set_device_OSCILLOSCOPE(void)
+void GrapherBox::set_device_OSCILLOSCOPE()
 {
     flag_device_RECORDER = false;
     flag_device_OSCILLOSCOPE = true;
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::set_type_curve_DOTS(void)
+void GrapherBox::set_type_curve_DOTS()
 {
     flag_type_curve_DOTS = true;
     flag_type_curve_LINES = false;
@@ -1179,7 +1179,7 @@ void GrapherBox::set_type_curve_DOTS(void)
     set_horizontal_alignment(flag_h);
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::set_type_curve_LINES(void)
+void GrapherBox::set_type_curve_LINES()
 {
     flag_type_curve_DOTS = false;
     flag_type_curve_LINES = true;
@@ -1200,7 +1200,7 @@ void GrapherBox::set_type_curve_LINES(void)
     set_horizontal_alignment(flag_h);
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::set_type_curve_SPLINE_LINES(void)
+void GrapherBox::set_type_curve_SPLINE_LINES()
 {
     flag_type_curve_DOTS = false;
     flag_type_curve_LINES = false;
@@ -1225,7 +1225,7 @@ void GrapherBox::set_type_curve_SPLINE_LINES(void)
     set_horizontal_alignment(flag_h);
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::options(void)
+void GrapherBox::options()
 {
     GrapherBox_Options *dlg = new GrapherBox_Options();
     dlg->set_min_axis_X(static_cast<int>(axis_X_min));
@@ -1322,7 +1322,7 @@ void GrapherBox::options(void)
     }
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::load_curves(void)
+void GrapherBox::load_curves()
 {
     MyFileDialog *dlg = nullptr;
 
@@ -1347,7 +1347,7 @@ void GrapherBox::load_curves(void)
     delete dlg;
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::save_curves(void)
+void GrapherBox::save_curves()
 {
     if(curves.isEmpty())
     {
@@ -1610,19 +1610,19 @@ void GrapherBox::set_autoscroll(bool state)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::autoscroll(void)
+void GrapherBox::autoscroll()
 {
     axis_X_min ++;
     axis_X_max ++;
     ui->qwtPlot->setAxisScale(QwtPlot::xBottom, axis_X_min, axis_X_max);
 }
 //--------------------------------------------------------------------------------
-bool GrapherBox::get_vertical_alignment(void)
+bool GrapherBox::get_vertical_alignment()
 {
     return flag_vertical_alignment;
 }
 //--------------------------------------------------------------------------------
-bool GrapherBox::get_horizontal_alignment(void)
+bool GrapherBox::get_horizontal_alignment()
 {
     return  flag_horizontal_alignment;
 }
@@ -1650,7 +1650,7 @@ void GrapherBox::correct(int channel,
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::statistic(void)
+void GrapherBox::statistic()
 {
     emit info(tr("Статистика:"));
     for(int n=0; n<curves.count(); n++)
@@ -1706,7 +1706,7 @@ void GrapherBox::set_title_axis_Y(const QString &title)
     ui->qwtPlot->setAxisTitle(QwtPlot::yLeft, title);
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::check_visible_buttons(void)
+void GrapherBox::check_visible_buttons()
 {
     ui->btn_all_on->setVisible(flag_visible_btn_all_ON);
     ui->btn_all_off->setVisible(flag_visible_btn_all_OFF);
@@ -1819,7 +1819,7 @@ void GrapherBox::push_btn_Vertical(bool state)
     set_vertical_alignment(state);
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::test(void)
+void GrapherBox::test()
 {
     emit info("begin test");
 
@@ -1831,7 +1831,7 @@ void GrapherBox::test(void)
     emit info("end test");
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::test2(void)
+void GrapherBox::test2()
 {
     emit info("begin test2");
 
@@ -1843,7 +1843,7 @@ void GrapherBox::test2(void)
     emit info("end test2");
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::test_get_info(void)
+void GrapherBox::test_get_info()
 {
     //QwtPlotCanvas *canvas = new QwtPlotCanvas();
     //canvas->setFrameStyle(QFrame::Box | QFrame::Plain);
@@ -1888,7 +1888,7 @@ void GrapherBox::test_get_info(void)
     }
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::test_draw_circle(void)
+void GrapherBox::test_draw_circle()
 {
     emit info("test_draw_circle begin");
     curves[0].view_curve->clear();
@@ -1911,7 +1911,7 @@ void GrapherBox::test_draw_circle(void)
     emit info("test_draw_circle end");
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::test_sinus(void)
+void GrapherBox::test_sinus()
 {
     push_btn_Horizontal(false);
     push_btn_Vertical(false);
@@ -1974,7 +1974,7 @@ void GrapherBox::test_random_data(int index, int offset)
     push_btn_Vertical(true);
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::f_vertical_alignment(void)
+void GrapherBox::f_vertical_alignment()
 {
     if(curves.isEmpty())
     {
@@ -2002,7 +2002,7 @@ void GrapherBox::f_vertical_alignment(void)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::f_horizontal_alignment(void)
+void GrapherBox::f_horizontal_alignment()
 {
     if(curves.isEmpty())
     {
@@ -2027,7 +2027,7 @@ void GrapherBox::f_horizontal_alignment(void)
     updateGraphics();
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::f_autoscroll(void)
+void GrapherBox::f_autoscroll()
 {
 
 }
@@ -2037,7 +2037,7 @@ void GrapherBox::set_silense(bool state)
     is_silence = state;
 }
 //--------------------------------------------------------------------------------
-bool GrapherBox::get_silense(void)
+bool GrapherBox::get_silense()
 {
     return is_silence;
 }
@@ -2067,17 +2067,17 @@ void GrapherBox::updateText()
     }
 }
 //--------------------------------------------------------------------------------
-bool GrapherBox::programm_is_exit(void)
+bool GrapherBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::load_setting(void)
+void GrapherBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void GrapherBox::save_setting(void)
+void GrapherBox::save_setting()
 {
 
 }

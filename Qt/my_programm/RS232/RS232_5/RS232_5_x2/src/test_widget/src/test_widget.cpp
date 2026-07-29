@@ -40,7 +40,7 @@ TestWidget::~TestWidget()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void TestWidget::init(void)
+void TestWidget::init()
 {
     ui->setupUi(this);
 
@@ -71,7 +71,7 @@ void TestWidget::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void TestWidget::createTestBar(void)
+void TestWidget::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     Q_ASSERT(mw);
@@ -125,7 +125,7 @@ QToolButton *TestWidget::add_button(QToolBar *tool_bar,
     return tool_button;
 }
 //--------------------------------------------------------------------------------
-void TestWidget::choice_test(void)
+void TestWidget::choice_test()
 {
     bool ok = false;
     int cmd = cb_test->itemData(cb_test->currentIndex(), Qt::UserRole).toInt(&ok);
@@ -137,7 +137,7 @@ void TestWidget::choice_test(void)
             );
     if (cmd_it != commands.end())
     {
-        typedef bool (TestWidget::*function)(void);
+        typedef bool (TestWidget::*function)();
         function x;
         x = cmd_it->func;
         if(x)
@@ -151,19 +151,19 @@ void TestWidget::choice_test(void)
     }
 }
 //--------------------------------------------------------------------------------
-bool TestWidget::test(void)
+bool TestWidget::test()
 {
     emit trace(Q_FUNC_INFO);
     emit info("Test");
     return true;
 }
 //--------------------------------------------------------------------------------
-void TestWidget::updateText(void)
+void TestWidget::updateText()
 {
 
 }
 //--------------------------------------------------------------------------------
-bool TestWidget::programm_is_exit(void)
+bool TestWidget::programm_is_exit()
 {
     if(ui->serial_widget->isOpen() ||
         ui->serial_widget_2->isOpen())
@@ -174,12 +174,12 @@ bool TestWidget::programm_is_exit(void)
     return true;
 }
 //--------------------------------------------------------------------------------
-void TestWidget::load_setting(void)
+void TestWidget::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void TestWidget::save_setting(void)
+void TestWidget::save_setting()
 {
 
 }

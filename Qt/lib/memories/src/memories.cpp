@@ -78,7 +78,7 @@ void Memories::show_image(QImage image)
     label->show();
 }
 //--------------------------------------------------------------------------------
-void Memories::draw_sinus(void)
+void Memories::draw_sinus()
 {
     int w = 1920;
     int h = 700;
@@ -116,7 +116,7 @@ void Memories::draw_sinus(void)
     label->show();
 }
 //--------------------------------------------------------------------------------
-void Memories::name_filters(void)
+void Memories::name_filters()
 {
     QString filename;
     QStringList filters;
@@ -133,7 +133,7 @@ void Memories::name_filters(void)
     delete dlg;
 }
 //--------------------------------------------------------------------------------
-void Memories::set_directory(void)
+void Memories::set_directory()
 {
     QString filename;
 
@@ -148,7 +148,7 @@ void Memories::set_directory(void)
     delete dlg;
 }
 //--------------------------------------------------------------------------------
-void Memories::single_shot(void)
+void Memories::single_shot()
 {
     QTimer::singleShot(0, [this]{
         emit info("OK");

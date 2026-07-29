@@ -54,8 +54,8 @@ signals:
     void click_film(const QString &);
 
 public slots:
-    void double_click(void);
-    void save(void);
+    void double_click();
+    void save();
 
 private slots:
     void slot_click_film(QTreeWidgetItem*, int);
@@ -63,15 +63,15 @@ private slots:
     void expand_item(QTreeWidgetItem *item, int column);
     void popup(QPoint);
 
-    void update_status_text(void);
+    void update_status_text();
 
-    void slot_add_folder(void);
-    void slot_del_folder(void);
-    void slot_add_film(void);
-    void slot_del_film(void);
-    void slot_rename_action(void);
-    void slot_scan(void);
-    void slot_clear_data(void);
+    void slot_add_folder();
+    void slot_del_folder();
+    void slot_add_film();
+    void slot_del_film();
+    void slot_rename_action();
+    void slot_scan();
+    void slot_clear_data();
 
     void slot_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *);
     void slot_expand_item(QTreeWidgetItem *item, int);
@@ -99,10 +99,10 @@ private:
                                 QTreeWidgetItem *parentItem = nullptr);
     QHash<QTreeWidgetItem *, QDomElement> domElementForItem;
 
-    void connect_log(void);
+    void connect_log();
 
-    void init(void);
-    void read(void);
+    void init();
+    void read();
 
     void add_folder(const QString &name);
     void del_folder(const QString &name);
@@ -113,7 +113,7 @@ private:
                          const QString &dat);
     void rename(const QString &new_name);
     void scan(QDir dir);
-    void clear_data(void);
+    void clear_data();
 
     void dropEvent(QDropEvent *event);
 
@@ -122,7 +122,7 @@ private:
     void execute_player(const QString &player_name,
                         QStringList params);
 
-    int get_file_count(void);
+    int get_file_count();
 };
 //--------------------------------------------------------------------------------
 #endif // TREEFILMS_HPP

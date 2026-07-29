@@ -44,7 +44,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -63,7 +63,7 @@ void MainBox::init(void)
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -129,7 +129,7 @@ void MainBox::createTestBar(void)
     connect(btn_reset, SIGNAL(clicked()), this, SLOT(run()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::run(void)
+void MainBox::run()
 {
     emit debug(tr("run"));
 
@@ -212,14 +212,14 @@ QByteArray MainBox::get_command_string(const QString &cmd)
     return ba;
 }
 //--------------------------------------------------------------------------------
-void MainBox::show_data(void)
+void MainBox::show_data()
 {
     emit info(QString("%1 [%2]")
               .arg(data_rs232.data())
               .arg(data_rs232.toHex().data()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_AT(void)
+void MainBox::command_AT()
 {
     emit info("AT");
 
@@ -242,7 +242,7 @@ void MainBox::command_AT(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_RESET(void)
+void MainBox::command_RESET()
 {
     emit info("RESET");
 
@@ -260,7 +260,7 @@ void MainBox::command_RESET(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_VERSION(void)
+void MainBox::command_VERSION()
 {
     emit info("VERSION");
 
@@ -278,7 +278,7 @@ void MainBox::command_VERSION(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_ORGL(void)
+void MainBox::command_ORGL()
 {
     emit info("ORGL");
 
@@ -296,7 +296,7 @@ void MainBox::command_ORGL(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_ADDR(void)
+void MainBox::command_ADDR()
 {
     emit info("ADDR");
 
@@ -314,7 +314,7 @@ void MainBox::command_ADDR(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_NAME(void)
+void MainBox::command_NAME()
 {
     emit info("NAME");
 
@@ -338,7 +338,7 @@ void MainBox::command_NAME(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_RNAME(void)
+void MainBox::command_RNAME()
 {
     emit info("RNAME");
 
@@ -356,7 +356,7 @@ void MainBox::command_RNAME(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_ROLE(void)
+void MainBox::command_ROLE()
 {
     emit info("ROLE");
 
@@ -374,7 +374,7 @@ void MainBox::command_ROLE(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_CLASS(void)
+void MainBox::command_CLASS()
 {
     emit info("CLASS");
 
@@ -392,7 +392,7 @@ void MainBox::command_CLASS(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_IAC(void)
+void MainBox::command_IAC()
 {
     emit info("IAC");
 
@@ -410,7 +410,7 @@ void MainBox::command_IAC(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_INQM(void)
+void MainBox::command_INQM()
 {
     emit info("INQM");
 
@@ -428,7 +428,7 @@ void MainBox::command_INQM(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_PSWD(void)
+void MainBox::command_PSWD()
 {
     emit info("PSWD");
 
@@ -446,7 +446,7 @@ void MainBox::command_PSWD(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_UART(void)
+void MainBox::command_UART()
 {
     emit info("UART");
 
@@ -464,7 +464,7 @@ void MainBox::command_UART(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_CMODE(void)
+void MainBox::command_CMODE()
 {
     emit info("CMODE");
 
@@ -482,7 +482,7 @@ void MainBox::command_CMODE(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_BIND(void)
+void MainBox::command_BIND()
 {
     emit info("BIND");
 
@@ -500,7 +500,7 @@ void MainBox::command_BIND(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_POLAR(void)
+void MainBox::command_POLAR()
 {
     emit info("POLAR");
 
@@ -518,7 +518,7 @@ void MainBox::command_POLAR(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_PIO(void)
+void MainBox::command_PIO()
 {
     emit info("PIO");
 
@@ -536,7 +536,7 @@ void MainBox::command_PIO(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_MPIO(void)
+void MainBox::command_MPIO()
 {
     emit info("MPIO");
 
@@ -554,7 +554,7 @@ void MainBox::command_MPIO(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_IPSCAN(void)
+void MainBox::command_IPSCAN()
 {
     emit info("IPSCAN");
 
@@ -572,7 +572,7 @@ void MainBox::command_IPSCAN(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_SNIFF(void)
+void MainBox::command_SNIFF()
 {
     emit info("SNIFF");
 
@@ -590,7 +590,7 @@ void MainBox::command_SNIFF(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_SENM(void)
+void MainBox::command_SENM()
 {
     emit info("SENM");
 
@@ -608,7 +608,7 @@ void MainBox::command_SENM(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_PMSAD(void)
+void MainBox::command_PMSAD()
 {
     emit info("PMSAD");
 
@@ -626,7 +626,7 @@ void MainBox::command_PMSAD(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_RMAAD(void)
+void MainBox::command_RMAAD()
 {
     emit info("RMAAD");
 
@@ -644,7 +644,7 @@ void MainBox::command_RMAAD(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_FSAD(void)
+void MainBox::command_FSAD()
 {
     emit info("FSAD");
 
@@ -662,7 +662,7 @@ void MainBox::command_FSAD(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_ADCN(void)
+void MainBox::command_ADCN()
 {
     emit info("ADCN");
 
@@ -680,7 +680,7 @@ void MainBox::command_ADCN(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_MRAD(void)
+void MainBox::command_MRAD()
 {
     emit info("MRAD");
 
@@ -698,7 +698,7 @@ void MainBox::command_MRAD(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_STATE(void)
+void MainBox::command_STATE()
 {
     emit info("STATE");
 
@@ -716,7 +716,7 @@ void MainBox::command_STATE(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_INIT(void)
+void MainBox::command_INIT()
 {
     emit info("INIT");
 
@@ -734,7 +734,7 @@ void MainBox::command_INIT(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_INQ(void)
+void MainBox::command_INQ()
 {
     emit info("INQ");
 
@@ -752,7 +752,7 @@ void MainBox::command_INQ(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_INQC(void)
+void MainBox::command_INQC()
 {
     emit info("INQC");
 
@@ -770,7 +770,7 @@ void MainBox::command_INQC(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_PAIR(void)
+void MainBox::command_PAIR()
 {
     emit info("PAIR");
 
@@ -788,7 +788,7 @@ void MainBox::command_PAIR(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_LINK(void)
+void MainBox::command_LINK()
 {
     emit info("LINK");
 
@@ -806,7 +806,7 @@ void MainBox::command_LINK(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_DISC(void)
+void MainBox::command_DISC()
 {
     emit info("DISC");
 
@@ -824,7 +824,7 @@ void MainBox::command_DISC(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_ENSNIFF(void)
+void MainBox::command_ENSNIFF()
 {
     emit info("ENSNIFF");
 
@@ -842,7 +842,7 @@ void MainBox::command_ENSNIFF(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::command_EXSNIFF(void)
+void MainBox::command_EXSNIFF()
 {
     emit info("EXSNIFF");
 
@@ -860,22 +860,22 @@ void MainBox::command_EXSNIFF(void)
     show_data();
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

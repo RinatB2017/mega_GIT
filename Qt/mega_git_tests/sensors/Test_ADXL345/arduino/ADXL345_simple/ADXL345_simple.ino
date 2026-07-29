@@ -13,7 +13,7 @@
 
 ADXL345 accelerometer;
 
-void showRange(void)
+void showRange()
 {
   Serial.print("Selected measurement range: "); 
 
@@ -27,7 +27,7 @@ void showRange(void)
   }
 }
 
-void showDataRate(void)
+void showDataRate()
 {
   Serial.print("Selected data rate: "); 
 
@@ -53,7 +53,7 @@ void showDataRate(void)
   }
 }
 
-void setup(void) 
+void setup() 
 {
   Serial.begin(baudrate);
 
@@ -77,7 +77,7 @@ void setup(void)
   showDataRate();
 }
 
-void loop(void) 
+void loop() 
 {
   // Read normalized values
   Vector raw = accelerometer.readRaw();

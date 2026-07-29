@@ -46,7 +46,7 @@ public:
 private slots:
     void send_mail(QString link);
     void go_telegramm(QString link);
-    void show_env(void);
+    void show_env();
 
 private:
     Ui::AboutBox *ui;
@@ -60,15 +60,15 @@ private:
     QString telegram;
     QString github;
 
-    QString get_avatar(void);
-    QString get_telegram_qr(void);
-    QString get_orgName(void);
-    QString get_programmName(void);
-    QString get_version(void);
-    QString get_email(void);
-    QString get_author(void);
-    QString get_telegram(void);
-    QString get_github(void);
+    QString get_avatar();
+    QString get_telegram_qr();
+    QString get_orgName();
+    QString get_programmName();
+    QString get_version();
+    QString get_email();
+    QString get_author();
+    QString get_telegram();
+    QString get_github();
 
     void set_avatar(const QString &value);
     void set_telegram_qr(const QString &value);
@@ -80,7 +80,7 @@ private:
     void set_telegram(const QString &value);
     void set_github(const QString &value);
 
-    void init(void);
+    void init();
 
 };
 //--------------------------------------------------------------------------------

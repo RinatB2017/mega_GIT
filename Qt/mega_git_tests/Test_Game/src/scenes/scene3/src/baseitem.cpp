@@ -21,7 +21,7 @@
 #include "baseitem.hpp"
 #include "defines.hpp"
 //--------------------------------------------------------------------------------
-BaseItem::BaseItem(void)
+BaseItem::BaseItem()
 {
     angle = rand() % 180 + 1;
 }
@@ -42,7 +42,7 @@ void BaseItem::setPos(qreal ax, qreal ay)
     QGraphicsPixmapItem::setPos(ax, ay);
 }
 //--------------------------------------------------------------------------------
-void BaseItem::move(void)
+void BaseItem::move()
 {
     if((x<0) || (y<0) || (x>(WIDTH-w_item)) || (y>(HEIGHT-h_item)))
     {

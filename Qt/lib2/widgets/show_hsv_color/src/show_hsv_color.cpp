@@ -42,7 +42,7 @@ Show_HSV_color::~Show_HSV_color()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Show_HSV_color::init(void)
+void Show_HSV_color::init()
 {
     ui->setupUi(this);
 
@@ -102,7 +102,7 @@ void Show_HSV_color::init(void)
     });
 }
 //--------------------------------------------------------------------------------
-void Show_HSV_color::update_image(void)
+void Show_HSV_color::update_image()
 {
     int max_x = ui->color_label->width();
     int max_y = ui->color_label->height();
@@ -120,7 +120,7 @@ void Show_HSV_color::update_image(void)
     ui->color_label->setPixmap(QPixmap::fromImage(*image));
 }
 //--------------------------------------------------------------------------------
-void Show_HSV_color::update_color_HSV(void)
+void Show_HSV_color::update_color_HSV()
 {
     int h = ui->sl_H->value();
     int s = ui->sl_S->value();
@@ -135,7 +135,7 @@ void Show_HSV_color::update_color_HSV(void)
     ui->sl_B->setValue(color.blue());
 }
 //--------------------------------------------------------------------------------
-void Show_HSV_color::update_color_RGB(void)
+void Show_HSV_color::update_color_RGB()
 {
     QColor color = QColor::fromRgb(ui->sl_R->value(),
                                    ui->sl_G->value(),
@@ -171,7 +171,7 @@ void Show_HSV_color::set_color(QColor color)
     update_color_RGB();
 }
 //--------------------------------------------------------------------------------
-QColor Show_HSV_color::get_color(void)
+QColor Show_HSV_color::get_color()
 {
     return ui->color_widget->get_color();
 }
@@ -249,22 +249,22 @@ bool Show_HSV_color::eventFilter(QObject *obj, QEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-void Show_HSV_color::updateText(void)
+void Show_HSV_color::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool Show_HSV_color::programm_is_exit(void)
+bool Show_HSV_color::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void Show_HSV_color::load_setting(void)
+void Show_HSV_color::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void Show_HSV_color::save_setting(void)
+void Show_HSV_color::save_setting()
 {
 
 }

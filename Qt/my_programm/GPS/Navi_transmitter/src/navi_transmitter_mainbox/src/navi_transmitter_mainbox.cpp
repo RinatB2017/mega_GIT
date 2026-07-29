@@ -44,7 +44,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -95,7 +95,7 @@ void MainBox::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -116,12 +116,12 @@ void MainBox::createTestBar(void)
     //mw->add_windowsmenu_action(testbar, testbar->toggleViewAction());
 }
 //--------------------------------------------------------------------------------
-void MainBox::test(void)
+void MainBox::test()
 {
     emit error(tr("test"));
 }
 //--------------------------------------------------------------------------------
-void MainBox::read_fake_data(void)
+void MainBox::read_fake_data()
 {
     QFile file(":/test_data.txt");
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -144,7 +144,7 @@ void MainBox::read_data(QByteArray)
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::start(void)
+void MainBox::start()
 {
     if(timer)
     {
@@ -152,7 +152,7 @@ void MainBox::start(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::stop(void)
+void MainBox::stop()
 {
     if(timer)
     {
@@ -160,7 +160,7 @@ void MainBox::stop(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MainBox::update(void)
+void MainBox::update()
 {
     if(ui->serialWidget->isOpen() == false)
     {
@@ -203,7 +203,7 @@ QString MainBox::get_checksum(const QString &data)
     return QString("%1").arg(sum, 2, 16, QLatin1Char('0')).toUpper();
 }
 //--------------------------------------------------------------------------------
-QString MainBox::get_utc_string(void)
+QString MainBox::get_utc_string()
 {
     QString hour = QString("%1").arg(ui->sb_hour->value(),  2,  10,     QChar('0'));
     QString min = QString("%1").arg(ui->sb_min->value(),    2,  10,     QChar('0'));
@@ -212,7 +212,7 @@ QString MainBox::get_utc_string(void)
     return temp;
 }
 //--------------------------------------------------------------------------------
-QString MainBox::get_latitude_string(void)
+QString MainBox::get_latitude_string()
 {
     QString grad = QString("%1").arg(ui->sb_latitude_grad->value(),    2,  10,     QChar('0'));
     //QString min  = QString("%1").arg(ui->dsb_latitude_min->value(),    2,  'f',    4);
@@ -228,7 +228,7 @@ QString MainBox::get_latitude_string(void)
     return temp;
 }
 //--------------------------------------------------------------------------------
-QString MainBox::get_longitude_string(void)
+QString MainBox::get_longitude_string()
 {
     QString grad = QString("%1").arg(ui->sb_longitude_grad->value(),    2,  10,     QChar('0'));
     //QString min  = QString("%1").arg(ui->dsb_longitude_min->value(),    2,  'f',    4);
@@ -244,7 +244,7 @@ QString MainBox::get_longitude_string(void)
     return temp;
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_GGA(void)
+void MainBox::test_GGA()
 {
     QByteArray data;
     QString message;
@@ -290,7 +290,7 @@ void MainBox::test_GGA(void)
     emit info(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_GSA(void)
+void MainBox::test_GSA()
 {
     QByteArray data;
     QString message;
@@ -320,12 +320,12 @@ void MainBox::test_GSA(void)
     emit info(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_GSV(void)
+void MainBox::test_GSV()
 {
     emit error("test_GSV: пока не сделано");
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_RMC(void)
+void MainBox::test_RMC()
 {
     QByteArray data;
     QString message;
@@ -370,7 +370,7 @@ void MainBox::test_RMC(void)
     emit info(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_VTG(void)
+void MainBox::test_VTG()
 {
     QByteArray data;
     QString message;
@@ -403,7 +403,7 @@ void MainBox::test_VTG(void)
     emit info(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_GLL(void)
+void MainBox::test_GLL()
 {
     QByteArray data;
     QString message;
@@ -443,7 +443,7 @@ void MainBox::test_GLL(void)
     emit info(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_ZDA(void)
+void MainBox::test_ZDA()
 {
     QByteArray data;
     QString message;
@@ -476,7 +476,7 @@ void MainBox::test_ZDA(void)
     emit info(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_PIREA(void)
+void MainBox::test_PIREA()
 {
     QByteArray data;
     QString message;
@@ -500,7 +500,7 @@ void MainBox::test_PIREA(void)
     emit info(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_PIRFV(void)
+void MainBox::test_PIRFV()
 {
     QByteArray data;
     QString message;
@@ -524,7 +524,7 @@ void MainBox::test_PIRFV(void)
     emit info(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_PIRGK(void)
+void MainBox::test_PIRGK()
 {
     QByteArray data;
     QString message;
@@ -561,7 +561,7 @@ void MainBox::test_PIRGK(void)
     emit info(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::test_PIRRA(void)
+void MainBox::test_PIRRA()
 {
     QByteArray data;
     QString message;
@@ -589,22 +589,22 @@ void MainBox::test_PIRRA(void)
     emit info(data);
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

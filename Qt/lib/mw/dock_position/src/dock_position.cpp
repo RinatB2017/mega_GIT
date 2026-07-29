@@ -49,7 +49,7 @@ Dock_position::~Dock_position()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void Dock_position::show_dlg(void)
+void Dock_position::show_dlg()
 {
     MainWindow *mw = qobject_cast<MainWindow *>(QApplication::activeWindow());
     if(mw)

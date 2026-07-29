@@ -57,7 +57,7 @@ MODBUS_server::~MODBUS_server()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MODBUS_server::init(void)
+void MODBUS_server::init()
 {
     ui->setupUi(this);
 
@@ -67,7 +67,7 @@ void MODBUS_server::init(void)
     refresh();
 }
 //--------------------------------------------------------------------------------
-void MODBUS_server::init_modbusDevice(void)
+void MODBUS_server::init_modbusDevice()
 {
     //---
     ui->le_server_host->setText("127.0.0.1:1500");
@@ -80,7 +80,7 @@ void MODBUS_server::init_modbusDevice(void)
     connect(ui->btn_tcp_server_disconnect,  SIGNAL(clicked(bool)),  this,   SLOT(disconnect_tcp_device()));
 }
 //--------------------------------------------------------------------------------
-void MODBUS_server::init_tab_widget(void)
+void MODBUS_server::init_tab_widget()
 {
     while(ui->tabWidget->count())
     {
@@ -114,7 +114,7 @@ void MODBUS_server::stateChanged(QModbusDevice::State state)
     }
 }
 //--------------------------------------------------------------------------------
-void MODBUS_server::connect_device(void)
+void MODBUS_server::connect_device()
 {
     emit info("MODBUS_server::connect_device");
 
@@ -200,7 +200,7 @@ void MODBUS_server::updateWidgets(QModbusDataUnit::RegisterType table,
     }
 }
 //--------------------------------------------------------------------------------
-void MODBUS_server::disconnect_device(void)
+void MODBUS_server::disconnect_device()
 {
     if (modbusDevice->connectDevice())
     {
@@ -210,7 +210,7 @@ void MODBUS_server::disconnect_device(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MODBUS_server::connect_tcp_device(void)
+void MODBUS_server::connect_tcp_device()
 {
     emit info("MODBUS_server::connect_device");
 
@@ -250,7 +250,7 @@ void MODBUS_server::connect_tcp_device(void)
     emit info("OK");
 }
 //--------------------------------------------------------------------------------
-void MODBUS_server::disconnect_tcp_device(void)
+void MODBUS_server::disconnect_tcp_device()
 {
     if (modbusDevice->connectDevice())
     {
@@ -260,7 +260,7 @@ void MODBUS_server::disconnect_tcp_device(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MODBUS_server::refresh(void)
+void MODBUS_server::refresh()
 {
     ui->cb_port->clear();
     foreach (QSerialPortInfo port, QSerialPortInfo::availablePorts())
@@ -274,22 +274,22 @@ void MODBUS_server::refresh(void)
     }
 }
 //--------------------------------------------------------------------------------
-void MODBUS_server::updateText(void)
+void MODBUS_server::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MODBUS_server::programm_is_exit(void)
+bool MODBUS_server::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MODBUS_server::load_setting(void)
+void MODBUS_server::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MODBUS_server::save_setting(void)
+void MODBUS_server::save_setting()
 {
 
 }

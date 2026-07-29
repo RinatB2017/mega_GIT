@@ -43,15 +43,15 @@ public:
 private slots:
     void data_ADC(const QByteArray &ba);
 
-    void choice_test(void);
-    void test(void);
+    void choice_test();
+    void test();
 
 private:
     typedef struct CMD
     {
         int cmd;
         QString cmd_text;
-        void (MainBox::*func)(void);
+        void (MainBox::*func)();
     } CMD_t;
 
     QPointer<MySplashScreen> splash;
@@ -68,19 +68,19 @@ private:
 
     void analize_packet(QList<QByteArray> sl);
 
-    void init(void);
-    void createTestBar(void);
+    void init();
+    void createTestBar();
 
     void add_curves(QList<QByteArray> sl);
     void update_curves(QList<QByteArray> sl);
     void show_data_ADC(QList<QByteArray> sl);
 
-    void clr_curves(void);
+    void clr_curves();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

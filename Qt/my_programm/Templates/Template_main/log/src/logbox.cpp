@@ -82,7 +82,7 @@ LogBox::~LogBox()
     delete mainbox;
 }
 //--------------------------------------------------------------------------------
-void LogBox::init(void)
+void LogBox::init()
 {
     create_widgets();
     load_settings();
@@ -130,13 +130,13 @@ void LogBox::set_font(QFont font)
 #endif
 //--------------------------------------------------------------------------------
 #ifndef NO_LOG
-QFont LogBox::get_font(void)
+QFont LogBox::get_font()
 {
     return logBox->font();
 }
 #endif
 //--------------------------------------------------------------------------------
-void LogBox::create_widgets(void)
+void LogBox::create_widgets()
 {
     QFont font("Liberation Mono", 10);
     logBox = new QTextEdit(this);
@@ -362,7 +362,7 @@ void LogBox::syslogLog(int level,
     QCoreApplication::processEvents();
 }
 //--------------------------------------------------------------------------------
-void LogBox::save_to(void)
+void LogBox::save_to()
 {
     QFileDialog *dlg;
 
@@ -421,7 +421,7 @@ void LogBox::save_log(const QString &filename)
     file.close();
 }
 //--------------------------------------------------------------------------------
-void LogBox::changeOptions(void)
+void LogBox::changeOptions()
 {
     Log_options *optionsBox = new Log_options();
     optionsBox->set_flag_ReadOnly(logBox->isReadOnly());
@@ -486,7 +486,7 @@ void LogBox::setVisibleProgressBar(bool state)
     progressBar->setVisible(state);
 }
 //--------------------------------------------------------------------------------
-void LogBox::updateText(void)
+void LogBox::updateText()
 {
 
 }
@@ -505,7 +505,7 @@ void LogBox::changeEvent(QEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-void LogBox::load_html(void)
+void LogBox::load_html()
 {
     QString filename = "log.html";
     QFile file(filename);
@@ -525,7 +525,7 @@ void LogBox::load_html(void)
     file.close();
 }
 //--------------------------------------------------------------------------------
-void LogBox::save_html(void)
+void LogBox::save_html()
 {
     QString filename = "log.html";
     QFile file(filename);
@@ -541,10 +541,10 @@ void LogBox::save_html(void)
     file.close();
 }
 //--------------------------------------------------------------------------------
-void LogBox::load_settings(void)
+void LogBox::load_settings()
 {
 #ifdef QT_DEBUG
-    qDebug() << "LogBox::load_settings(void)";
+    qDebug() << "LogBox::load_settings()";
 #endif
 
 #ifndef SAVE_INI
@@ -593,10 +593,10 @@ void LogBox::load_settings(void)
     delete settings;
 }
 //--------------------------------------------------------------------------------
-void LogBox::save_settings(void)
+void LogBox::save_settings()
 {
 #ifdef QT_DEBUG
-    qDebug() << "LogBox::save_settings(void)";
+    qDebug() << "LogBox::save_settings()";
 #endif
 
 #ifndef SAVE_INI

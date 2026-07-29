@@ -57,7 +57,7 @@ FT2232H_thread::FT2232H_thread(QObject *parent) :
 {
 }
 //--------------------------------------------------------------------------------
-void FT2232H_thread::run(void)
+void FT2232H_thread::run()
 {
     BOOL ok = open(0);
     if(ok == FALSE)
@@ -114,7 +114,7 @@ void FT2232H_thread::run(void)
 }
 //--------------------------------------------------------------------------------
 //this routine is used to enable SPI device
-void FT2232H_thread::SPI_CSEnable(void)
+void FT2232H_thread::SPI_CSEnable()
 {
     for(int loop=0; loop<5; loop++) // one 0x80 command can keep 0.2us, do 5 times to stay in this situation for 1us
     {
@@ -125,7 +125,7 @@ void FT2232H_thread::SPI_CSEnable(void)
 }
 //--------------------------------------------------------------------------------
 //this routine is used to disable SPI device
-void FT2232H_thread::SPI_CSDisable(void)
+void FT2232H_thread::SPI_CSDisable()
 {
     for(int loop=0; loop<5; loop++) // one 0x80 command can keep 0.2us, do 5 times to stay in this situation for 1us
     {
@@ -296,7 +296,7 @@ BOOL FT2232H_thread::open(int deviceNumber)
     return TRUE;
 }
 //--------------------------------------------------------------------------------
-BOOL FT2232H_thread::close(void)
+BOOL FT2232H_thread::close()
 {
     FT_STATUS ftStatus = FT_OK;
     ftStatus = FT_Close(ftdiHandle);

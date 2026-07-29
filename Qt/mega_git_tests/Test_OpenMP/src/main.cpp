@@ -10,7 +10,7 @@
  *
 */
 
-int main(void)
+int main()
 {
     #pragma omp parallel
     qDebug() << "Hello, world.";

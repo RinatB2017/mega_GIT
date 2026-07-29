@@ -30,7 +30,7 @@ class Scene2 : public BaseScene
     Q_OBJECT
 
 public:
-    Scene2(void);
+    Scene2();
     virtual ~Scene2();
 
 signals:
@@ -40,14 +40,14 @@ signals:
     void trace(const QString &);
 
 public slots:
-    void update(void);
+    void update();
 
 private:
     QGraphicsPixmapItem *item;
     QGraphicsPixmapItem *tux;
     QGraphicsItemGroup *group;
 
-    void move(void);
+    void move();
 };
 //--------------------------------------------------------------------------------
 #endif

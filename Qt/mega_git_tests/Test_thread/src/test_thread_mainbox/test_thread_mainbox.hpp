@@ -42,10 +42,10 @@ public:
     virtual ~MainBox();
 
 private slots:
-    void thread_is_finished(void);
+    void thread_is_finished();
 
-    void set_time(void);
-    void stop(void);
+    void set_time();
+    void stop();
 
     void set_hour(unsigned char hour);
     void set_min(unsigned char min);
@@ -58,15 +58,15 @@ private:
     QThread *thread = nullptr;
     MyThread *worker = nullptr;
 
-    void init(void);
+    void init();
 
-    void createTestBar(void);
-    void thread_start(void);
+    void createTestBar();
+    void thread_start();
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

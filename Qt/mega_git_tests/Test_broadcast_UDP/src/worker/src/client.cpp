@@ -32,7 +32,7 @@ Client::~Client()
 
 }
 //--------------------------------------------------------------------------------
-void Client::f_process(void)
+void Client::f_process()
 {
     emit info("Client started!");
 

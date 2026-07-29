@@ -44,7 +44,7 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox::init(void)
+void MainBox::init()
 {
     ui->setupUi(this);
 
@@ -54,7 +54,7 @@ void MainBox::init(void)
     thread_start();
 }
 //--------------------------------------------------------------------------------
-void MainBox::createTestBar(void)
+void MainBox::createTestBar()
 {
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     Q_ASSERT(mw);
@@ -73,7 +73,7 @@ void MainBox::createTestBar(void)
     connect(btn_exit,       SIGNAL(clicked()), this, SLOT(stop()));
 }
 //--------------------------------------------------------------------------------
-void MainBox::thread_start(void)
+void MainBox::thread_start()
 {
     emit info("thread_is_started");
 
@@ -97,33 +97,33 @@ void MainBox::thread_start(void)
     thread->start();
 }
 //--------------------------------------------------------------------------------
-void MainBox::thread_is_finished(void)
+void MainBox::thread_is_finished()
 {
     emit info("thread_is_finished");
     qApp->exit();
 }
 //--------------------------------------------------------------------------------
-void MainBox::stop(void)
+void MainBox::stop()
 {
     worker->stop();
 }
 //--------------------------------------------------------------------------------
-void MainBox::updateText(void)
+void MainBox::updateText()
 {
     ui->retranslateUi(this);
 }
 //--------------------------------------------------------------------------------
-bool MainBox::programm_is_exit(void)
+bool MainBox::programm_is_exit()
 {
     return true;
 }
 //--------------------------------------------------------------------------------
-void MainBox::load_setting(void)
+void MainBox::load_setting()
 {
 
 }
 //--------------------------------------------------------------------------------
-void MainBox::save_setting(void)
+void MainBox::save_setting()
 {
 
 }

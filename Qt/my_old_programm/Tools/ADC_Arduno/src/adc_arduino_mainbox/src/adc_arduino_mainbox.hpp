@@ -89,7 +89,7 @@ public:
 
 private slots:
     void raw_data(QByteArray);
-    void analize_packet(void);
+    void analize_packet();
 
 private:
     Ui::MainBox *ui;
@@ -102,15 +102,15 @@ private:
     QByteArray dirty_data;
     QByteArray clean_data;
 
-    void init(void);
+    void init();
 
     unsigned char convert_ansi_to_dec(char data);
     QString convert_dec_to_ansi(unsigned char data);
 
-    void updateText(void);
-    bool programm_is_exit(void);
-    void load_setting(void);
-    void save_setting(void);
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_H

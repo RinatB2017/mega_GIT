@@ -35,7 +35,7 @@ MainBox_GUI::~MainBox_GUI()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-void MainBox_GUI::init(void)
+void MainBox_GUI::init()
 {
     ui->setupUi(this);
     connect(ui->btn_create_positive_prompt, &QPushButton::clicked,
@@ -45,7 +45,7 @@ void MainBox_GUI::init(void)
     load_widgets();
 }
 //--------------------------------------------------------------------------------
-QString MainBox_GUI::get_positive_prompt(void)
+QString MainBox_GUI::get_positive_prompt()
 {
     QString prompt;
 
@@ -108,7 +108,7 @@ QString MainBox_GUI::get_positive_prompt(void)
     return prompt;
 }
 //--------------------------------------------------------------------------------
-QString MainBox_GUI::get_negative_prompt(void)
+QString MainBox_GUI::get_negative_prompt()
 {
     QString prompt;
 
@@ -116,7 +116,7 @@ QString MainBox_GUI::get_negative_prompt(void)
     return prompt;
 }
 //--------------------------------------------------------------------------------
-void MainBox_GUI::updateText(void)
+void MainBox_GUI::updateText()
 {
     ui->retranslateUi(this);
 }

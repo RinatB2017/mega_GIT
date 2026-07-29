@@ -34,7 +34,7 @@ Ship::Ship(bool is_rand_index)
     setPixmap(p_animation.at(index));
 }
 //--------------------------------------------------------------------------------
-void Ship::animation(void)
+void Ship::animation()
 {
     corr++;
     if(corr < 10)

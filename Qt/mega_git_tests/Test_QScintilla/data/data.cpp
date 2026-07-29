@@ -7,8 +7,8 @@ class MainBox : public QWidget
        ~MainBox();
 
    private:
-       void init(void);
-       void function(void)
+       void init();
+       void function()
        {
            int x = 5;
        }

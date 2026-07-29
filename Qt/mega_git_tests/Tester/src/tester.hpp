@@ -43,11 +43,11 @@ private:
 
     QStackedWidget *tab;
 
-    void draw_test(void);
+    void draw_test();
     void add_grid(int step);
     void add_rect(QColor color);
-    void add_circle(void);
-    void add_text(void);
+    void add_circle();
+    void add_text();
 };
 //--------------------------------------------------------------------------------
 #endif

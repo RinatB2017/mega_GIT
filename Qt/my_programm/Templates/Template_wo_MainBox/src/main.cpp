@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     splash->finish(main_window);
 
 #ifdef SINGLE_APP
-    QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
+    QObject::connect(&app, &QtSingleApplication::messageReceived, main_window, &MainWindow::set_focus);
 #endif
 
 #ifdef SELF_TEST

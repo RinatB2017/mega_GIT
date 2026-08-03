@@ -49,10 +49,10 @@ void MainWindow::create_menu()
     QMenu *f_menu = menuBar()->addMenu("File");
 
     QAction *a_test = new QAction("test");
-    connect(a_test, SIGNAL(triggered(bool)),    this,   SLOT(test()));
+    connect(a_test, &QAction::triggered,    this,   &MainWindow::test);
 
     QAction *a_exit = new QAction("exit");
-    connect(a_exit, SIGNAL(triggered(bool)),    this,   SLOT(close()));
+    connect(a_exit, &QAction::triggered,    this,   &MainWindow::close);
 
     f_menu->addAction(a_test);
     f_menu->addSeparator();
@@ -72,7 +72,7 @@ void MainWindow::create_toolbars()
 
     QToolButton *btn_exit = new QToolButton(this);
     btn_exit->setIcon(QIcon(":/images/computer.ico"));
-    connect(btn_exit,   SIGNAL(clicked(bool)),  this,   SLOT(close()));
+    connect(btn_exit,   &QToolButton::clicked,  this,   &MainWindow::close);
 
     toolbar->addWidget(btn_exit);
 
@@ -83,10 +83,10 @@ void MainWindow::create_central_widget()
 {
     MainWidget *mw = new MainWidget(this);
 
-    connect(mw, SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(mw, SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(mw, SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(mw, SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+    connect(mw, &MainWidget::info,  this,   &MainWindow::info);
+    connect(mw, &MainWidget::debug, this,   &MainWindow::debug);
+    connect(mw, &MainWidget::error, this,   &MainWindow::error);
+    connect(mw, &MainWidget::trace, this,   &MainWindow::trace);
 
     setCentralWidget(mw);
 }
@@ -96,10 +96,10 @@ void MainWindow::create_menu_dock()
     MenuDock *md = new MenuDock(this);
     md->setObjectName("md");
 
-    connect(md, SIGNAL(info(QString)),  this,   SIGNAL(info(QString)));
-    connect(md, SIGNAL(debug(QString)), this,   SIGNAL(debug(QString)));
-    connect(md, SIGNAL(error(QString)), this,   SIGNAL(error(QString)));
-    connect(md, SIGNAL(trace(QString)), this,   SIGNAL(trace(QString)));
+    connect(md, &MenuDock::info,    this,   &MainWindow::info);
+    connect(md, &MenuDock::debug,   this,   &MainWindow::debug);
+    connect(md, &MenuDock::error,   this,   &MainWindow::error);
+    connect(md, &MenuDock::trace,   this,   &MainWindow::trace);
 
     md->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
     addDockWidget(Qt::LeftDockWidgetArea, md);
@@ -110,10 +110,10 @@ void MainWindow::create_log_dock()
     LogDock *ld = new LogDock(this);
     ld->setObjectName("ld");
 
-    connect(this,   SIGNAL(info(QString)),      ld, SLOT(infoLog(QString)));
-    connect(this,   SIGNAL(debug(QString)),     ld, SLOT(debugLog(QString)));
-    connect(this,   SIGNAL(error(QString)),     ld, SLOT(errorLog(QString)));
-    connect(this,   SIGNAL(trace(QString)),     ld, SLOT(traceLog(QString)));
+    connect(this,   &MainWindow::info,      ld, &LogDock::infoLog);
+    connect(this,   &MainWindow::debug,     ld, &LogDock::debugLog);
+    connect(this,   &MainWindow::error,     ld, &LogDock::errorLog);
+    connect(this,   &MainWindow::trace,     ld, &LogDock::traceLog);
 
     ld->setAllowedAreas(Qt::BottomDockWidgetArea | Qt::RightDockWidgetArea);
     addDockWidget(Qt::BottomDockWidgetArea, ld);

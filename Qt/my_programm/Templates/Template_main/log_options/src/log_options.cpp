@@ -41,8 +41,8 @@ Log_options::Log_options(QWidget *parent):
     ui->cb_CodecForCStrings->setCurrentIndex(ui->cb_CodecForCStrings->findText(QTextCodec::codecForCStrings()->name()));
 #endif
 
-    connect(ui->buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(ui->buttonBox,  &QDialogButtonBox::accepted,    this,   &Log_options::accept);
+    connect(ui->buttonBox,  &QDialogButtonBox::rejected,    this,   &Log_options::reject);
 
     setFixedSize(sizeHint());
 }

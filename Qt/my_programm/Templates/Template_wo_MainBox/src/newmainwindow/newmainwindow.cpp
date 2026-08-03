@@ -33,7 +33,7 @@ NewMainWindow::NewMainWindow(MainWindow *parent)
 
     QPushButton *btn = new QPushButton(this);
     btn->setText("PUSH");
-    connect(btn,    SIGNAL(clicked(bool)),  this,   SLOT(push()));
+    connect(btn,    &QPushButton::clicked,  this,   &NewMainWindow::push);
 
     add_dock_widget("RS232",        "serial",       Qt::LeftDockWidgetArea,     new SerialBox5(this));
     add_dock_widget("Grapher",      "grapher",      Qt::RightDockWidgetArea,    new GrapherBox(this));

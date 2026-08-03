@@ -34,12 +34,14 @@ SendBox5::SendBox5(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    if(parent)
+    MyWidget *parent_w = qobject_cast<MyWidget *>(parent);
+    Q_ASSERT(parent_w);
+    if(parent_w)
     {
-        connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
-        connect(this, SIGNAL(debug(QString)),   parent, SIGNAL(debug(QString)));
-        connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
-        connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
+        connect(this,   &SendBox5::info,    parent_w,   &MyWidget::info);
+        connect(this,   &SendBox5::debug,   parent_w,   &MyWidget::debug);
+        connect(this,   &SendBox5::error,   parent_w,   &MyWidget::error);
+        connect(this,   &SendBox5::trace,   parent_w,   &MyWidget::trace);
     }
 
     connect(ui->btn_text_commands,  &QPushButton::clicked,  this,   &SendBox5::send_text_command);

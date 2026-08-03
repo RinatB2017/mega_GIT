@@ -121,8 +121,6 @@ QtLocalPeer::QtLocalPeer(QObject* parent, const QString &appId)
     lockFile.open(QIODevice::ReadWrite);
 }
 
-
-
 bool QtLocalPeer::isClient()
 {
     if (lockFile.isLocked())
@@ -132,20 +130,24 @@ bool QtLocalPeer::isClient()
         return true;
 
     bool res = server->listen(socketName);
-#if defined(Q_OS_LINUX) && (QT_VERSION >= QT_VERSION_CHECK(4,5,0))
-    // ### Workaround
+
+#if defined(Q_OS_LINUX) || defined(Q_OS_UNIX)
     if (!res && server->serverError() == QAbstractSocket::AddressInUseError)
     {
-        QFile::remove(QDir::cleanPath(QDir::tempPath())+QLatin1Char('/')+socketName);
+        QFile::remove(QDir::cleanPath(QDir::tempPath()) + QLatin1Char('/') + socketName);
         res = server->listen(socketName);
     }
 #endif
+
     if (!res)
+    {
         qWarning("QtSingleCoreApplication: listen on local socket failed, %s", qPrintable(server->errorString()));
-    QObject::connect(server, SIGNAL(newConnection()), SLOT(receiveConnection()));
+    }
+
+    QObject::connect(server, &QLocalServer::newConnection, this, &QtLocalPeer::receiveConnection);
+
     return false;
 }
-
 
 bool QtLocalPeer::sendMessage(const QString &message, int timeout)
 {

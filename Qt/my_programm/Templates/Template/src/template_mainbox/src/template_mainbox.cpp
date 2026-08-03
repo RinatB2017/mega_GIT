@@ -195,8 +195,19 @@ void MainBox::choice_programm()
 //--------------------------------------------------------------------------------
 bool MainBox::test()
 {
+    emit info("Info");
+    emit debug("Debug");
+    emit error("Error");
+    emit trace("Trace");
+    emit colorLog("Color", Qt::yellow, Qt::black);
+
+    LogBox *lb = this->window()->findChild<LogBox*>();
+    Q_ASSERT(lb);
+
+#if 0
     Draw_widget *w = new Draw_widget();
     w->show();
+#endif
 
     return true;
 }

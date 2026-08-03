@@ -35,6 +35,21 @@ MyWidget::MyWidget(QWidget *parent) :
 #ifndef RS232_LOG
     // не надо тут условий. Родитель может быть и пустым, не надо приводить всё к toplevelwidget
     connect_log(parent);
+
+    // QTimer::singleShot(0, [this]{
+    //     LogBox *lb = this->window()->findChild<LogBox*>();
+    //     Q_ASSERT(lb);
+    //     if(lb)
+    //     {
+    //         connect(this,   &MyWidget::info,    lb, &LogBox::infoLog);
+    //         connect(this,   &MyWidget::debug,   lb, &LogBox::debugLog);
+    //         connect(this,   &MyWidget::error,   lb, &LogBox::errorLog);
+    //         connect(this,   &MyWidget::trace,   lb, &LogBox::traceLog);
+    //         connect(this,   &MyWidget::colorLog,
+    //                 lb,     &LogBox::colorLog);
+    //     }
+    // });
+
 #endif
 #ifdef QT_DEBUG
     //qDebug() << "MyWidget()";
@@ -89,56 +104,6 @@ void MyWidget::unlock_buttons()
     wbox->hide();
 }
 //--------------------------------------------------------------------------------
-#if 0
-//TODO надо проверить
-bool MyWidget::check_exists_signals(QWidget *parent)
-{
-    emit trace(Q_FUNC_INFO);
-
-    if (parent == nullptr) {
-        return false;
-    }
-
-    const QMetaObject *thisMeta   = this->metaObject();
-    const QMetaObject *parentMeta = parent->metaObject();
-
-    // 1. Ваш старый проверенный поиск индексов
-    int m_info     = parentMeta->indexOfSignal("info(QString)");
-    int m_debug    = parentMeta->indexOfSignal("debug(QString)");
-    int m_error    = parentMeta->indexOfSignal("error(QString)");
-    int m_trace    = parentMeta->indexOfSignal("trace(QString)");
-    int m_colorlog = parentMeta->indexOfSignal("colorLog(QString,QColor,QColor)");
-
-    if (m_info == -1 || m_debug == -1 || m_error == -1 || m_trace == -1 || m_colorlog == -1) {
-        return false;
-    }
-
-    // 2. Ищем индексы у самого себя (this)
-    int thisInfoIdx     = thisMeta->indexOfSignal("info(QString)");
-    int thisDebugIdx    = thisMeta->indexOfSignal("debug(QString)");
-    int thisErrorIdx    = thisMeta->indexOfSignal("error(QString)");
-    int thisTraceIdx    = thisMeta->indexOfSignal("trace(QString)");
-    int thisColorLogIdx = thisMeta->indexOfSignal("colorLog(QString,QColor,QColor)");
-    int thisClearLogIdx = thisMeta->indexOfSignal("clear_log()");
-
-    int parentClearIdx  = parentMeta->indexOfSignal("clear_log()");
-
-    // 3. СВЯЗЫВАЕМ СИГНАЛЫ (Штатное решение Qt6 без макросов SIGNAL)
-    // Мы собираем QMetaMethod напрямую из мета-объекта и индекса.
-    // Метод QObject::connect принимает их через низкоуровневый вызов без шаблонов C++.
-    QObject::connect(this,   thisMeta->method(thisInfoIdx),     parent, parentMeta->method(m_info));
-    QObject::connect(this,   thisMeta->method(thisDebugIdx),    parent, parentMeta->method(m_debug));
-    QObject::connect(this,   thisMeta->method(thisErrorIdx),    parent, parentMeta->method(m_error));
-    QObject::connect(this,   thisMeta->method(thisTraceIdx),    parent, parentMeta->method(m_trace));
-    QObject::connect(this,   thisMeta->method(thisColorLogIdx), parent, parentMeta->method(m_colorlog));
-
-    if (parentClearIdx != -1) {
-        QObject::connect(this, thisMeta->method(thisClearLogIdx), parent, parentMeta->method(parentClearIdx));
-    }
-
-    return true;
-}
-#else
 bool MyWidget::check_exists_signals(QWidget *parent)
 {
     emit trace(Q_FUNC_INFO);
@@ -153,78 +118,52 @@ bool MyWidget::check_exists_signals(QWidget *parent)
     int m_trace = parent->metaObject()->indexOfSignal("trace(QString)");
     int m_colorlog = parent->metaObject()->indexOfSignal("colorLog(QString,QColor,QColor)");
 
-    if(m_info == -1)    return false;
-    if(m_debug == -1)   return false;
-    if(m_error == -1)   return false;
-    if(m_trace == -1)   return false;
-    if(m_colorlog == -1)   return false;
-
-    connect(this,   SIGNAL(info(QString)),  parent, SIGNAL(info(QString)));
-    connect(this,   SIGNAL(debug(QString)), parent, SIGNAL(debug(QString)));
-    connect(this,   SIGNAL(error(QString)), parent, SIGNAL(error(QString)));
-    connect(this,   SIGNAL(trace(QString)), parent, SIGNAL(trace(QString)));
-
-    connect(this,   SIGNAL(clear_log()),    parent, SIGNAL(clear_log()));
-
-    connect(this,   SIGNAL(colorLog(QString, QColor, QColor)),
-            parent, SIGNAL(colorLog(QString, QColor, QColor)));
+    if(m_info == -1)        return false;
+    if(m_debug == -1)       return false;
+    if(m_error == -1)       return false;
+    if(m_trace == -1)       return false;
+    if(m_colorlog == -1)    return false;
 
     return true;
 }
-#endif
 //--------------------------------------------------------------------------------
 // основная функция
 void MyWidget::connect_log(QWidget *parent)
 {
 #ifdef NO_LOG
-    // connect(this, SIGNAL(info(QString)),    this, SLOT(log(QString)));
-    // connect(this, SIGNAL(debug(QString)),   this, SLOT(log(QString)));
-    // connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
-    // connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
-
-    if(parent == nullptr)
-    {
-#ifdef Q_DEBUG
-        qDebug() sl.append("parent is null";
-#endif
-        return;
-    }
-
-    int m_info  = parent->metaObject()->indexOfSignal("info(QString)");
-    int m_debug = parent->metaObject()->indexOfSignal("debug(QString)");
-    int m_error = parent->metaObject()->indexOfSignal("error(QString)");
-    int m_trace = parent->metaObject()->indexOfSignal("trace(QString)");
-
-    if(m_info != -1)    connect(this, SIGNAL(info(QString)),    parent, SIGNAL(info(QString)));
-    if(m_debug != -1)   connect(this, SIGNAL(debug(QString)),   parent, SIGNAL(debug(QString)));
-    if(m_error != -1)   connect(this, SIGNAL(error(QString)),   parent, SIGNAL(error(QString)));
-    if(m_trace != -1)   connect(this, SIGNAL(trace(QString)),   parent, SIGNAL(trace(QString)));
-
-    Q_UNUSED(parent)
+    connect(this,   &MyWidget::info,    this,   &MyWidget::log);
+    connect(this,   &MyWidget::debug,   this,   &MyWidget::log);
+    connect(this,   &MyWidget::error,   this,   &MyWidget::log);
+    connect(this,   &MyWidget::trace,   this,   &MyWidget::log);
+    connect(this,   &MyWidget::colorLog,
+            this,   &MyWidget::log);
+    return;
 #else
+    //TODO 03.08.26
     if(parent)
     {
-        if(!check_exists_signals(parent))
-        {
-            if(!check_exists_signals(topLevelWidget()))
+        QTimer::singleShot(0, [this]{
+            LogBox *lb = this->window()->findChild<LogBox*>();
+            Q_ASSERT(lb);
+            if(lb)
             {
-                connect(this, SIGNAL(info(QString)),    this, SLOT(log(QString)));
-                connect(this, SIGNAL(debug(QString)),   this, SLOT(log(QString)));
-                connect(this, SIGNAL(error(QString)),   this, SLOT(log(QString)));
-                connect(this, SIGNAL(trace(QString)),   this, SLOT(log(QString)));
-
-                connect(this,   SIGNAL(colorLog(QString, QColor, QColor)),   this, SLOT(log(QString)));
+                connect(this,   &MyWidget::info,    lb, &LogBox::infoLog);
+                connect(this,   &MyWidget::debug,   lb, &LogBox::debugLog);
+                connect(this,   &MyWidget::error,   lb, &LogBox::errorLog);
+                connect(this,   &MyWidget::trace,   lb, &LogBox::traceLog);
+                connect(this,   &MyWidget::colorLog,
+                        lb,     &LogBox::colorLog);
             }
-        }
+        });
     }
     else
     {
-        connect(this,   SIGNAL(info(QString)),      this,   SLOT(log(QString)));
-        connect(this,   SIGNAL(debug(QString)),     this,   SLOT(log(QString)));
-        connect(this,   SIGNAL(error(QString)),     this,   SLOT(log(QString)));
-        connect(this,   SIGNAL(trace(QString)),     this,   SLOT(log(QString)));
-
-        connect(this,   SIGNAL(colorLog(QString,    QColor, QColor)),   this, SLOT(log(QString)));
+        connect(this,   &MyWidget::info,    this,   &MyWidget::log);
+        connect(this,   &MyWidget::debug,   this,   &MyWidget::log);
+        connect(this,   &MyWidget::error,   this,   &MyWidget::log);
+        connect(this,   &MyWidget::trace,   this,   &MyWidget::log);
+        connect(this,   &MyWidget::colorLog,
+                this,   &MyWidget::log);
     }
 #endif
 }
@@ -247,11 +186,18 @@ bool MyWidget::connect_log_signals(QWidget *src, QWidget *dest)
     Q_ASSERT(dest->metaObject()->indexOfSignal("error(QString)") != -1);
     Q_ASSERT(dest->metaObject()->indexOfSignal("trace(QString)") != -1);
 
-    // надо переделать на современный стиль
-    connect(src,    SIGNAL(info(QString)),  dest,   SIGNAL(info(QString)));
-    connect(src,    SIGNAL(debug(QString)), dest,   SIGNAL(debug(QString)));
-    connect(src,    SIGNAL(error(QString)), dest,   SIGNAL(error(QString)));
-    connect(src,    SIGNAL(trace(QString)), dest,   SIGNAL(trace(QString)));
+    MyWidget *src_w = qobject_cast<MyWidget *>(src);
+    Q_ASSERT(src_w);
+
+    LogBox *dst_w = qobject_cast<LogBox *>(dest);
+    Q_ASSERT(dst_w);
+
+    connect(src_w,  &MyWidget::info,    dst_w,  &LogBox::infoLog);
+    connect(src_w,  &MyWidget::debug,   dst_w,  &LogBox::debugLog);
+    connect(src_w,  &MyWidget::error,   dst_w,  &LogBox::errorLog);
+    connect(src_w,  &MyWidget::trace,   dst_w,  &LogBox::traceLog);
+    connect(src_w,  &MyWidget::colorLog,
+            dst_w,  &LogBox::colorLog);
 
     return true;
 }
@@ -912,8 +858,8 @@ bool MyWidget::eventFilter(QObject*, QEvent* event)
     {
 #ifdef Q_DEBUG
         qDebug() sl.append("Wheel event blocked";
-#endif
-        return true;
+        #endif
+                return true;
     }
     return false;
 }

@@ -53,8 +53,6 @@ Game::Game(QWidget *parent) :
     alien_direction = GAME_RIGHT;
 
     init_timer();
-    //connect(QAbstractEventDispatcher::instance(), SIGNAL(aboutToBlock()), this, SLOT(animate()));
-    //connect(QAbstractEventDispatcher::instance(), SIGNAL(awake()), this, SLOT(animate()));
 
     setFixedSize(map->get_max_x()*32, map->get_max_y()*32);
 }
@@ -62,7 +60,7 @@ Game::Game(QWidget *parent) :
 void Game::init_timer()
 {
     timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(animate()));
+    connect(timer,  &QTimer::timeout,   this,   &Game::animate);
     timer->start(INTERVAL_TIMER);
 }
 //--------------------------------------------------------------------------------

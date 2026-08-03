@@ -34,7 +34,7 @@ LogDock::LogDock(QWidget *parent) :
     setWidget(le);
 
     timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+    connect(timer,  &QTimer::timeout,   this,   &LogDock::update);
     timer->start(0);
 }
 //--------------------------------------------------------------------------------

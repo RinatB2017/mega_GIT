@@ -39,7 +39,7 @@ MenuDock::MenuDock(QWidget *parent) :
     i_main_options->setText(0, "NAME_MAIN_OPTIONS");
 
     setWidget(tree);
-    connect(tree, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(itemClicked(QTreeWidgetItem*,int)));
+    connect(tree,   &QTreeWidget::itemClicked,  this,   &MenuDock::itemClicked);
 }
 //--------------------------------------------------------------------------------
 MenuDock::~MenuDock()

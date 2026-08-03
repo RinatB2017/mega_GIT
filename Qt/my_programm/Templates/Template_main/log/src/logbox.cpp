@@ -92,7 +92,7 @@ void LogBox::init()
     }
 
     logBox->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(logBox, SIGNAL(customContextMenuRequested(QPoint)),   this, SLOT(popup(QPoint)));
+    connect(logBox, &QTextEdit::customContextMenuRequested, this,   &LogBox::popup);
 }
 //--------------------------------------------------------------------------------
 void LogBox::popup(QPoint)
@@ -115,9 +115,9 @@ void LogBox::popup(QPoint)
     popup_menu->addAction(save_to_action);
     popup_menu->addAction(options_action);
 
-    connect(clear_action,   SIGNAL(triggered(bool)), this, SLOT(clear()));
-    connect(save_to_action, SIGNAL(triggered(bool)), this, SLOT(save_to()));
-    connect(options_action, SIGNAL(triggered(bool)), this, SLOT(changeOptions()));
+    connect(clear_action,   &QAction::triggered,    this,   &LogBox::clear);
+    connect(save_to_action, &QAction::triggered,    this,   &LogBox::save_to);
+    connect(options_action, &QAction::triggered,    this,   &LogBox::changeOptions);
 
     popup_menu->exec(QCursor::pos());
 }

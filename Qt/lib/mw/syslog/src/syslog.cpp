@@ -60,10 +60,13 @@ SysLog::SysLog(const QString &title,
 
     if(topLevelWidget())
     {
-        connect(topLevelWidget(),   SIGNAL(info(QString)),  this,   SLOT(syslog_info(QString)));
-        connect(topLevelWidget(),   SIGNAL(debug(QString)), this,   SLOT(syslog_debug(QString)));
-        connect(topLevelWidget(),   SIGNAL(error(QString)), this,   SLOT(syslog_error(QString)));
-        connect(topLevelWidget(),   SIGNAL(trace(QString)), this,   SLOT(syslog_trace(QString)));
+        MyWidget *src_w = qobject_cast<MyWidget *>(topLevelWidget());
+        Q_ASSERT(src_w);
+
+        connect(src_w,  &MyWidget::info,    this,  &SysLog::syslog_info);
+        connect(src_w,  &MyWidget::debug,   this,  &SysLog::syslog_debug);
+        connect(src_w,  &MyWidget::error,   this,  &SysLog::syslog_error);
+        connect(src_w,  &MyWidget::trace,   this,  &SysLog::syslog_trace);
     }
 }
 //--------------------------------------------------------------------------------

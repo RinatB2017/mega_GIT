@@ -35,25 +35,10 @@ MyWidget::MyWidget(QWidget *parent) :
 #ifndef RS232_LOG
     // не надо тут условий. Родитель может быть и пустым, не надо приводить всё к toplevelwidget
     connect_log(parent);
-
-    // QTimer::singleShot(0, [this]{
-    //     LogBox *lb = this->window()->findChild<LogBox*>();
-    //     Q_ASSERT(lb);
-    //     if(lb)
-    //     {
-    //         connect(this,   &MyWidget::info,    lb, &LogBox::infoLog);
-    //         connect(this,   &MyWidget::debug,   lb, &LogBox::debugLog);
-    //         connect(this,   &MyWidget::error,   lb, &LogBox::errorLog);
-    //         connect(this,   &MyWidget::trace,   lb, &LogBox::traceLog);
-    //         connect(this,   &MyWidget::colorLog,
-    //                 lb,     &LogBox::colorLog);
-    //     }
-    // });
-
 #endif
 #ifdef QT_DEBUG
     //qDebug() << "MyWidget()";
-    //QTimer::singleShot(0, this, SLOT(s_test()));
+    // QTimer::singleShot(0, this, &MyWidget::s_test);
 #endif
 
     sl_properties_of_widgets.append("isEnabled");

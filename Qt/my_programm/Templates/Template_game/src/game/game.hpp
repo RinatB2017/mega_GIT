@@ -99,8 +99,8 @@ protected:
     void initializeGL();
     void resizeGL(int w, int h);
     void setupViewport(int width, int height);
-    void mousePressEvent(QMouseEvent *event);
-    void keyPressEvent(QKeyEvent *event);
+    void mousePressEvent(QMouseEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
     void paintGL();
 };
 //--------------------------------------------------------------------------------

@@ -99,7 +99,7 @@ void Game::init_map(const QString &filename)
     map = new Map;
     int r = map->load(filename);
     if(r != NO_ERROR_ADV)
-        QTimer::singleShot(1000, qApp, SLOT(quit()));
+        QTimer::singleShot(1000, qApp, &QCoreApplication::quit);
 }
 //--------------------------------------------------------------------------------
 void Game::init_GL()
@@ -213,20 +213,17 @@ void Game::mousePressEvent(QMouseEvent *event)
     switch(event->button())
     {
     case Qt::LeftButton:
-#ifdef QT_DEBUG
-        qDebug() << "left press" << event->x() << ":" << event->y();
-#endif
+        qDebug() << "left press" << event->position().x() << ":" << event->position().y();
         break;
 
     case Qt::RightButton:
-#ifdef QT_DEBUG
-        qDebug() << "right press" << event->x() << ":" << event->y();
-#endif
+        qDebug() << "right press" << event->position().x() << ":" << event->position().y();
         break;
 
     default:
         break;
     }
+    QWidget::mousePressEvent(event);
 }
 //--------------------------------------------------------------------------------
 void Game::keyPressEvent(QKeyEvent *event)
@@ -234,31 +231,36 @@ void Game::keyPressEvent(QKeyEvent *event)
     switch(event->key())
     {
     case Qt::Key_Left:
+        qDebug() << "Key_Left";
         player->left();
         break;
 
     case Qt::Key_Right:
+        qDebug() << "Key_Right";
         player->right();
         break;
 
     case Qt::Key_Up:
+        qDebug() << "Key_Up";
         player->top();
         break;
 
     case Qt::Key_Down:
+        qDebug() << "Key_Down";
         player->bottom();
         break;
 
     case Qt::Key_Space:
-#ifdef QT_DEBUG
         qDebug() << "Key_Space";
-#endif
         break;
 
     case Qt::Key_Escape:
         qApp->quit();
         break;
     }
+
+    update();
+    QWidget::keyPressEvent(event);
 }
 //--------------------------------------------------------------------------------
 void Game::move_alien()

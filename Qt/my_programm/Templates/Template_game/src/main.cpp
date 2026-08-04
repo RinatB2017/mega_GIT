@@ -58,6 +58,7 @@ int main(int argc, char *argv[])
     main_window->show();
 #else
     Game *mainBox = new Game();
+    mainBox->setFocusPolicy(Qt::StrongFocus);
     mainBox->show();
 #endif
 

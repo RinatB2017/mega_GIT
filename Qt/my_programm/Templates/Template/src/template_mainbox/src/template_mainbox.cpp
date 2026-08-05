@@ -204,7 +204,7 @@ bool MainBox::test()
     LogBox *lb = this->window()->findChild<LogBox*>();
     Q_ASSERT(lb);
 
-#if 0
+#if 1
     Draw_widget *w = new Draw_widget();
     w->show();
 #endif

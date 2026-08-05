@@ -53,6 +53,8 @@ void Test::test_func()
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
+
+    // QCOMPARE(mb->test(), true);
 }
 //--------------------------------------------------------------------------------
 void Test::test_signals()

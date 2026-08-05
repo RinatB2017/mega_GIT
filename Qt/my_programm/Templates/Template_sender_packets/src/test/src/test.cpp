@@ -77,7 +77,7 @@ void Test::test_func()
 //--------------------------------------------------------------------------------
 void Test::test_signals()
 {
-    QTimer::singleShot(200, this, [this]() {
+    QTimer::singleShot(0, this, [this]() {
         QByteArray fakeResponse = ":0100010F96\n";
         QMetaObject::invokeMethod(serialWidget, "output", Q_ARG(QByteArray, fakeResponse));
     });

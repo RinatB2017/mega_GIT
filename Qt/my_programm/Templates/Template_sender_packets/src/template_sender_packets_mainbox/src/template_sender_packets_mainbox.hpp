@@ -100,6 +100,8 @@ private:
     bool programm_is_exit();
     void load_setting();
     void save_setting();
+
+    friend class Test; // Для работы QTest
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

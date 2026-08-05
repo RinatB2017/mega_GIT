@@ -35,5 +35,6 @@ DEFINES += NEED_CODEC
 DEFINES += USE_DOCK_WIDGETS
 
 CONFIG(debug, debug|release) {
+    DEFINES += SELF_TEST
     DEFINES += LOGGER_ON
 }

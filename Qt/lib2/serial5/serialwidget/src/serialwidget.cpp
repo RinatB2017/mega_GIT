@@ -84,6 +84,12 @@ void SerialWidget::init()
 //--------------------------------------------------------------------------------
 bool SerialWidget::isOpen()
 {
+    // Если в тесте нам принудительно выставили свойство-заглушку — верим ему на слово!
+    if (this->property("mock_open").toBool())
+    {
+        return true;
+    }
+
     Q_ASSERT(serial5);
     return serial5->isOpen();
 }

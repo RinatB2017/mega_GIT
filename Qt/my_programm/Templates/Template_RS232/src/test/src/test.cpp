@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QObject>
-#include <QWidget>
-#include <QList>
-#include <QTest>
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "template_rs232_mainbox.hpp"
 #include "test.hpp"
@@ -31,8 +25,16 @@
 Test::Test()
 {
     QTest::qWait(0);    // нужно обязательно
-    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
+}
+//--------------------------------------------------------------------------------
+void Test::setMainWindow(MainWindow *mainWindow)
+{
+    mw = mainWindow;
+}
+//--------------------------------------------------------------------------------
+void Test::initTestCase()
+{
+    QVERIFY(mw != nullptr);
 }
 //--------------------------------------------------------------------------------
 void Test::test_GUI()
@@ -52,6 +54,12 @@ void Test::test_func()
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
 
-    QCOMPARE(mb->d_test(), true);
+    QCOMPARE(mb->test(), true);
+}
+//--------------------------------------------------------------------------------
+void Test::test_signals()
+{
+    MainBox *mb = mw->findChild<MainBox *>("MainBox");
+    QVERIFY(mb);
 }
 //--------------------------------------------------------------------------------

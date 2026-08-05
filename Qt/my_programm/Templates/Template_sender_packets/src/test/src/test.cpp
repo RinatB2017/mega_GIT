@@ -18,12 +18,6 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QObject>
-#include <QWidget>
-#include <QList>
-#include <QTest>
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "template_sender_packets_mainbox.hpp"
 #include "test.hpp"
@@ -31,8 +25,39 @@
 Test::Test()
 {
     QTest::qWait(0);    // нужно обязательно
-    mw = dynamic_cast<MainWindow *>(qApp->activeWindow());
-    QVERIFY(mw);
+}
+//--------------------------------------------------------------------------------
+void Test::setMainWindow(MainWindow *mainWindow)
+{
+    mw = mainWindow;
+}
+//--------------------------------------------------------------------------------
+void Test::initTestCase()
+{
+    mb = mw->findChild<MainBox *>("MainBox");
+    QVERIFY(mb);
+}
+//--------------------------------------------------------------------------------
+void Test::init()
+{
+    serialWidget = mb->findChild<QWidget *>("serial_widget");
+    QVERIFY(serialWidget);
+
+    serialWidget->setProperty("mock_open", true);
+
+    spy = new QSignalSpy(mb, &MainBox::send);
+    QVERIFY(spy->isValid());
+}
+//--------------------------------------------------------------------------------
+void Test::cleanup()
+{
+    serialWidget->setProperty("mock_open", false);
+
+    if (spy)
+    {
+        delete spy;
+        spy = nullptr;
+    }
 }
 //--------------------------------------------------------------------------------
 void Test::test_GUI()
@@ -48,5 +73,19 @@ void Test::test_func()
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
+}
+//--------------------------------------------------------------------------------
+void Test::test_signals()
+{
+    mb->get_ID();
+    QCOMPARE(spy->count(), 1);
+    QList<QVariant> arguments = spy->takeFirst();
+    QString debugText = arguments.at(0).toString();
+    QCOMPARE(debugText, QString(":0100000D\n"));
+}
+//--------------------------------------------------------------------------------
+void Test::cleanupTestCase()
+{
+
 }
 //--------------------------------------------------------------------------------

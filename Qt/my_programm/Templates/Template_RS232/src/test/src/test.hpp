@@ -22,6 +22,7 @@
 #define TEST_HPP
 //--------------------------------------------------------------------------------
 #include <QObject>
+#include <QSignalSpy>
 #include <QTest>
 //--------------------------------------------------------------------------------
 class MainWindow;
@@ -32,12 +33,16 @@ class Test : public QObject {
 public:
     Test();
 
+    void setMainWindow(MainWindow *mainWindow);
+
 private slots:
+    void initTestCase();
     void test_GUI();
     void test_func();
+    void test_signals();
     
 private:
-    MainWindow *mw;
+    MainWindow *mw = nullptr;
 };
 //--------------------------------------------------------------------------------
 #endif

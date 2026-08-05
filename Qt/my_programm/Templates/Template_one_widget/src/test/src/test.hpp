@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2026                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -21,9 +21,10 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 //--------------------------------------------------------------------------------
-#include <QDialog>
 #include <QObject>
 #include <QTest>
+//--------------------------------------------------------------------------------
+#include "test.hpp"
 //--------------------------------------------------------------------------------
 class MainWindow;
 //--------------------------------------------------------------------------------
@@ -33,13 +34,16 @@ class Test : public QObject {
 public:
     Test();
 
+    void setMainWindow(MainWindow *mainWindow);
+
 private slots:
+    void initTestCase();
     void test_GUI();
     void test_func();
     void test_signals();
 
 private:
-
+    MainWindow *mw = nullptr;
 };
 //--------------------------------------------------------------------------------
 #endif

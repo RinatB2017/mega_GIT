@@ -21,7 +21,10 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 //--------------------------------------------------------------------------------
+#include "template_sender_packets_mainbox.hpp"
 #include <QObject>
+//--------------------------------------------------------------------------------
+#include <QSignalSpy>
 #include <QTest>
 //--------------------------------------------------------------------------------
 class MainWindow;
@@ -32,12 +35,25 @@ class Test : public QObject {
 public:
     Test();
 
+    void setMainWindow(MainWindow *mainWindow);
+
 private slots:
+    void initTestCase();
+    void cleanupTestCase();
+
+    void init();
+    void cleanup();
+
     void test_GUI();
     void test_func();
+    void test_signals();
     
 private:
     MainWindow *mw = nullptr;
+    MainBox *mb = nullptr;
+    QWidget *serialWidget = nullptr;
+
+    QSignalSpy *spy = nullptr;
 };
 //--------------------------------------------------------------------------------
 #endif

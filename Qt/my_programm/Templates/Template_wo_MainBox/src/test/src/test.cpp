@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2026                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -18,18 +18,22 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-#include <QApplication>
-#include <QObject>
-#include <QWidget>
-#include <QList>
-#include <QTest>
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "test.hpp"
 //--------------------------------------------------------------------------------
 Test::Test()
 {
     QTest::qWait(0);    // нужно обязательно
+}
+//--------------------------------------------------------------------------------
+void Test::initTestCase()
+{
+    QVERIFY(mw != nullptr);
+}
+//--------------------------------------------------------------------------------
+void Test::setMainWindow(MainWindow *mainWindow)
+{
+    mw = mainWindow;
 }
 //--------------------------------------------------------------------------------
 void Test::test_GUI()

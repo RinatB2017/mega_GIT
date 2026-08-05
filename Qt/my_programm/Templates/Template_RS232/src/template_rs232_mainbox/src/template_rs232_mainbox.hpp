@@ -42,10 +42,6 @@ public:
                      MySplashScreen *splash);
     virtual ~MainBox();
 
-#ifdef  QT_DEBUG
-    bool d_test();
-#endif
-
 signals:
     void send(const QByteArray&);
 
@@ -86,6 +82,8 @@ private:
     bool programm_is_exit();
     void load_setting();
     void save_setting();
+
+    friend class Test; // Для работы QTest
 };
 //--------------------------------------------------------------------------------
 #endif // MAINBOX_HPP

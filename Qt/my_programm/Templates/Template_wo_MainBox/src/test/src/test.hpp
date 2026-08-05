@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2026                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -33,9 +33,15 @@ class Test : public QObject
 public:
     Test();
 
+    void setMainWindow(MainWindow *mainWindow);
+
 private slots:
+    void initTestCase();
     void test_GUI();
     void test_func();
+
+private:
+    MainWindow *mw = nullptr;
 };
 //--------------------------------------------------------------------------------
 #endif

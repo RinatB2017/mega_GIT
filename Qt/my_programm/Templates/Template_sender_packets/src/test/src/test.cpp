@@ -40,7 +40,7 @@ void Test::initTestCase()
 //--------------------------------------------------------------------------------
 void Test::init()
 {
-    serialWidget = mb->findChild<QWidget *>("serial_widget");
+    serialWidget = mb->findChild<SerialWidget *>("serial_widget");
     QVERIFY(serialWidget);
 
     serialWidget->setProperty("mock_open", true);
@@ -77,11 +77,20 @@ void Test::test_func()
 //--------------------------------------------------------------------------------
 void Test::test_signals()
 {
+    QTimer::singleShot(200, this, [this]() {
+        QByteArray fakeResponse = ":0100010F96\n";
+        QMetaObject::invokeMethod(serialWidget, "output", Q_ARG(QByteArray, fakeResponse));
+    });
+
     mb->get_ID();
     QCOMPARE(spy->count(), 1);
     QList<QVariant> arguments = spy->takeFirst();
     QString debugText = arguments.at(0).toString();
     QCOMPARE(debugText, QString(":0100000D\n"));
+
+    QSpinBox *sbId = mb->findChild<QSpinBox *>("sb_id");
+    QVERIFY(sbId);
+    QCOMPARE(sbId->value(), 15);
 }
 //--------------------------------------------------------------------------------
 void Test::cleanupTestCase()

@@ -21,11 +21,13 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 //--------------------------------------------------------------------------------
-#include "template_sender_packets_mainbox.hpp"
 #include <QObject>
 //--------------------------------------------------------------------------------
 #include <QSignalSpy>
 #include <QTest>
+//--------------------------------------------------------------------------------
+#include "template_sender_packets_mainbox.hpp"
+#include "serialwidget.hpp"
 //--------------------------------------------------------------------------------
 class MainWindow;
 //--------------------------------------------------------------------------------
@@ -51,7 +53,7 @@ private slots:
 private:
     MainWindow *mw = nullptr;
     MainBox *mb = nullptr;
-    QWidget *serialWidget = nullptr;
+    SerialWidget *serialWidget = nullptr;
 
     QSignalSpy *spy = nullptr;
 };

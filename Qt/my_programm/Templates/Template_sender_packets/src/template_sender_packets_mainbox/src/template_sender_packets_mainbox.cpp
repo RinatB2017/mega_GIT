@@ -62,6 +62,7 @@ void MainBox::init()
 void MainBox::init_widgets()
 {
     ui->sb_timeout_ms->setRange(1000, 0xFFFF);
+    ui->sb_id->setRange(0, 0xFF);
 }
 //--------------------------------------------------------------------------------
 void MainBox::init_serial_fix()
@@ -286,6 +287,7 @@ bool MainBox::get_ID()
     Q_ASSERT(answer);
 
     emit info(QString("ID: %1").arg(answer->data.id));
+    ui->sb_id->setValue(answer->data.id);
     emit info("OK");
     return true;
 }

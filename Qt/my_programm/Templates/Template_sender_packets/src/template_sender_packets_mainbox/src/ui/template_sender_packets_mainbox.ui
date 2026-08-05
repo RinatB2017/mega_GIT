@@ -45,6 +45,9 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QSpinBox" name="sb_id"/>
+      </item>
      </layout>
     </widget>
    </item>

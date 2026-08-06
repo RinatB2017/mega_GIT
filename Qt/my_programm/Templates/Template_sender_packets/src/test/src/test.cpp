@@ -36,10 +36,7 @@ void Test::initTestCase()
 {
     mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
-}
-//--------------------------------------------------------------------------------
-void Test::init()
-{
+
     serialWidget = mb->findChild<SerialWidget *>("serial_widget");
     QVERIFY(serialWidget);
 
@@ -49,15 +46,14 @@ void Test::init()
     QVERIFY(spy->isValid());
 }
 //--------------------------------------------------------------------------------
+void Test::init()
+{
+    qDebug() << "<<< init";
+}
+//--------------------------------------------------------------------------------
 void Test::cleanup()
 {
-    serialWidget->setProperty("mock_open", false);
-
-    if (spy)
-    {
-        delete spy;
-        spy = nullptr;
-    }
+    qDebug() << "<<< cleanup";
 }
 //--------------------------------------------------------------------------------
 void Test::test_GUI()
@@ -95,6 +91,12 @@ void Test::test_signals()
 //--------------------------------------------------------------------------------
 void Test::cleanupTestCase()
 {
+    serialWidget->setProperty("mock_open", false);
 
+    if (spy)
+    {
+        delete spy;
+        spy = nullptr;
+    }
 }
 //--------------------------------------------------------------------------------

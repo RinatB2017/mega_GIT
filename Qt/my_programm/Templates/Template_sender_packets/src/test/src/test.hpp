@@ -41,15 +41,14 @@ public:
 
 private slots:
     void initTestCase();
-    void cleanupTestCase();
-
     void init();
+    void cleanupTestCase();
     void cleanup();
 
     void test_GUI();
     void test_func();
     void test_signals();
-    
+
 private:
     MainWindow *mw = nullptr;
     MainBox *mb = nullptr;

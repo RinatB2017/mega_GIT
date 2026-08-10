@@ -116,6 +116,7 @@ bool MyWidget::check_exists_signals(QWidget *parent)
 void MyWidget::connect_log(QWidget *parent)
 {
 #ifdef NO_LOG
+    Q_UNUSED(parent);
     connect(this,   &MyWidget::info,    this,   &MyWidget::log);
     connect(this,   &MyWidget::debug,   this,   &MyWidget::log);
     connect(this,   &MyWidget::error,   this,   &MyWidget::log);

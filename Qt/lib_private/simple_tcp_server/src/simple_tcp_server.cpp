@@ -42,13 +42,13 @@ bool SimpleRemoteConsole::startServer()
 
     if (!m_tcpServer->listen(QHostAddress::Any, m_port))
     {
-        qCritical() << "Не удалось открыть TCP порт:" << m_tcpServer->errorString();
+        // qCritical() << "Не удалось открыть TCP порт:" << m_tcpServer->errorString();
         delete m_tcpServer;
         m_tcpServer = nullptr;
         return false;
     }
 
-    qInfo() << "Удаленная консоль запущена на порту" << m_port;
+    // qDebug() << "Удаленная консоль запущена на порту" << m_port;
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ void SimpleRemoteConsole::stopServer()
         delete socket;
     }
     m_clients.clear();
-    qInfo() << "Сервер удаленной консоли остановлен.";
+    // qInfo() << "Сервер удаленной консоли остановлен.";
 }
 //--------------------------------------------------------------------------------
 void SimpleRemoteConsole::onNewConnection()

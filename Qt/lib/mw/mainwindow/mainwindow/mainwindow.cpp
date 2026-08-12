@@ -37,11 +37,11 @@ MainWindow::MainWindow(QWidget *parent) :
 #ifdef REMOTE_CONTROL
     if (m_remoteConsole.startServer())
     {
-        qDebug() << "Удаленная консоль успешно запущена.";
+        // qDebug() << "Удаленная консоль успешно запущена.";
     }
     else
     {
-        qDebug() << "Не удалось запустить сервер. Порт занят?";
+        // qDebug() << "Не удалось запустить сервер. Порт занят?";
     }
 #endif
 }

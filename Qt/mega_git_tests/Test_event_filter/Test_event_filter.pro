@@ -22,7 +22,7 @@ SOURCES += \
     scalepicker.cpp
 
 LIB_PATH = "$$PWD/../../lib"
-LIB_PATH2 = "$$PWD/../../lib2"
+LIB_PATH2 = "$$PWD/../../lib_private"
 
 include ($$LIB_PATH/turbo.pri)
 include ($$LIB_PATH2/qwt/qwt.pri)

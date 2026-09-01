@@ -46,14 +46,14 @@ HistogramSettings::HistogramSettings(QVector<HISTOGRAM_CURVE> curves,
 
     //int cmd = cb_Cmd->itemData(index, Qt::UserRole).toInt(&ok) - Qt::UserRole;
     rubberband_curve = new QComboBox(this);
-    rubberband_curve->addItem("NoRubberBand",       Qt::UserRole + QwtPicker::NoRubberBand);
-    rubberband_curve->addItem("HLineRubberBand",    Qt::UserRole + QwtPicker::HLineRubberBand);
-    rubberband_curve->addItem("VLineRubberBand",    Qt::UserRole + QwtPicker::VLineRubberBand);
-    rubberband_curve->addItem("CrossRubberBand",    Qt::UserRole + QwtPicker::CrossRubberBand);
-    rubberband_curve->addItem("RectRubberBand",     Qt::UserRole + QwtPicker::RectRubberBand);
-    rubberband_curve->addItem("EllipseRubberBand",  Qt::UserRole + QwtPicker::EllipseRubberBand);
-    rubberband_curve->addItem("PolygonRubberBand",  Qt::UserRole + QwtPicker::PolygonRubberBand);
-    rubberband_curve->addItem("UserRubberBand",     Qt::UserRole + QwtPicker::UserRubberBand);
+    rubberband_curve->addItem("NoRubberBand",       QwtPicker::NoRubberBand);
+    rubberband_curve->addItem("HLineRubberBand",    QwtPicker::HLineRubberBand);
+    rubberband_curve->addItem("VLineRubberBand",    QwtPicker::VLineRubberBand);
+    rubberband_curve->addItem("CrossRubberBand",    QwtPicker::CrossRubberBand);
+    rubberband_curve->addItem("RectRubberBand",     QwtPicker::RectRubberBand);
+    rubberband_curve->addItem("EllipseRubberBand",  QwtPicker::EllipseRubberBand);
+    rubberband_curve->addItem("PolygonRubberBand",  QwtPicker::PolygonRubberBand);
+    rubberband_curve->addItem("UserRubberBand",     QwtPicker::UserRubberBand);
     rubberband_curve->setCurrentIndex(picker->rubberBand());
 
     rubberband_color = new QLabel(this);
@@ -137,7 +137,7 @@ QColor HistogramSettings::get_rubberband_color()
 //--------------------------------------------------------------------------------
 QwtPicker::RubberBand HistogramSettings::get_rubberband()
 {
-    int ribber = rubberband_curve->currentData().toInt() - Qt::UserRole;
+    int ribber = rubberband_curve->currentData().toInt();
     return static_cast<QwtPicker::RubberBand>(ribber);
 }
 //--------------------------------------------------------------------------------

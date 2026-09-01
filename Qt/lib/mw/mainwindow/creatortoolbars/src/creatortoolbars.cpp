@@ -44,45 +44,45 @@ void CreatorToolBars::init()
 
     addToolBar(Qt::TopToolBarArea, toolbar);
 
-#ifndef DEF_DEF_NO_TOOLBAR_BUTTON_EXIT
+#ifndef DEF_DEF_DEF_NO_TOOLBAR_BUTTON_EXIT
     app_toolbar_add_exit();
-#ifndef DEF_DEF_NO_TOOLBAR_SEPARATORS
+#ifndef DEF_DEF_DEF_NO_TOOLBAR_SEPARATORS
     app_toolbar_add_separator();
 #endif
 #endif
 
-#ifndef DEF_DEF_NO_TOOLBAR_BUTTON_FONT
+#ifndef DEF_DEF_DEF_NO_TOOLBAR_BUTTON_FONT
 #ifndef DEF_NO_LOG
     app_toolbar_add_font();
 #endif
-#ifndef DEF_DEF_NO_TOOLBAR_SEPARATORS
+#ifndef DEF_DEF_DEF_NO_TOOLBAR_SEPARATORS
     app_toolbar_add_separator();
 #endif
 #endif
 
 #ifndef DEF_ONLY_ENGLISH
-#ifndef DEF_DEF_NO_TOOLBAR_BUTTON_LANG
+#ifndef DEF_DEF_DEF_NO_TOOLBAR_BUTTON_LANG
     app_toolbar_add_lang();
-#ifndef DEF_DEF_NO_TOOLBAR_SEPARATORS
+#ifndef DEF_DEF_DEF_NO_TOOLBAR_SEPARATORS
     app_toolbar_add_separator();
 #endif
 #endif
 #endif
 
-#ifndef DEF_DEF_NO_TOOLBAR_BUTTON_STYLE
+#ifndef DEF_DEF_DEF_NO_TOOLBAR_BUTTON_STYLE
     app_toolbar_add_style();
 #ifdef DEF_USE_CUSTOM_STYLE
     app_toolbar_add_custom_style();
 #endif
-#ifndef DEF_DEF_NO_TOOLBAR_SEPARATORS
+#ifndef DEF_DEF_DEF_NO_TOOLBAR_SEPARATORS
     app_toolbar_add_separator();
 #endif
 #endif
 
-#ifndef DEF_DEF_NO_TOOLBAR_BUTTON_ABOUT
+#ifndef DEF_DEF_DEF_NO_TOOLBAR_BUTTON_ABOUT
     app_toolbar_add_about();
 #endif
-#ifndef DEF_DEF_NO_TOOLBAR_BUTTON_HELP
+#ifndef DEF_DEF_DEF_NO_TOOLBAR_BUTTON_HELP
     app_toolbar_add_help();
 #endif
 

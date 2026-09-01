@@ -66,7 +66,7 @@ void QLongLongSpinBox::stepBy(int steps)
     setValue(new_value);
 }
 //--------------------------------------------------------------------------------
-#ifdef IN_DEC
+#ifdef DEF_IN_DEC
 QValidator::State QLongLongSpinBox::validate(QString &input, int &pos) const
 {
     Q_UNUSED(pos);
@@ -108,7 +108,7 @@ QValidator::State QLongLongSpinBox::validate(QString &input, int &pos) const
 }
 #endif
 //--------------------------------------------------------------------------------
-#ifdef IN_DEC
+#ifdef DEF_IN_DEC
 qlonglong QLongLongSpinBox::valueFromText(const QString &text) const
 {
     bool ok = false;
@@ -122,7 +122,7 @@ qlonglong QLongLongSpinBox::valueFromText(const QString &text) const
 }
 #endif
 //--------------------------------------------------------------------------------
-#ifdef IN_DEC
+#ifdef DEF_IN_DEC
 QString QLongLongSpinBox::textFromValue(qlonglong val) const
 {
     return QString::number(val);

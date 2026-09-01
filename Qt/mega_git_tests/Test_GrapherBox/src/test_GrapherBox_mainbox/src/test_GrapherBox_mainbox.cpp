@@ -62,7 +62,7 @@ void MainBox::init()
 
     createTestBar();
 
-#ifdef USE_SCALE_POINT_DATETIME
+#ifdef DEF_USE_SCALE_POINT_DATETIME
     //uint x = QDateTime::currentDateTime().toTime_t();
     ui->grapher_widget->set_title("тест");
     ui->grapher_widget->set_title_axis_X("X");
@@ -78,7 +78,7 @@ void MainBox::init()
 #endif
 
     ui->grapher_widget->set_axis_scale_y(-100, 100);
-#elif defined(USE_SCALE_POINT_TIME)
+#elif defined(DEF_USE_SCALE_POINT_TIME)
     uint x = (QTime::currentTime().hour() * 3600) + (QTime::currentTime().minute() * 60) + QTime::currentTime().second();
     ui->grapher_widget->set_title("тест");
     ui->grapher_widget->set_title_axis_X("X");
@@ -111,7 +111,7 @@ void MainBox::init()
     ui->grapher_widget->push_btn_Vertical(true);
     //---
 
-#ifdef USE_DOCK_WIDGETS
+#ifdef DEF_USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
     if(mw)
     {
@@ -297,7 +297,7 @@ void MainBox::test()
     }
 #endif
 
-#ifdef USE_SCALE_POINT_TIME
+#ifdef DEF_USE_SCALE_POINT_TIME
     //TODO тест QTime
     QTime t1 = QTime(0, 0, 0);
     QTime t2 = t1.addSecs(60);
@@ -320,7 +320,7 @@ void MainBox::test()
 #endif
 #endif
 
-#ifdef USE_SCALE_POINT_DATETIME
+#ifdef DEF_USE_SCALE_POINT_DATETIME
     //TODO тест QDateTime
     QDateTime dt1 = QDateTime(QDate(2020, 12, 1), QTime(0, 0, 0));
     //QDateTime(QDate(2020, 12, 3), QTime(0, 0, 0));

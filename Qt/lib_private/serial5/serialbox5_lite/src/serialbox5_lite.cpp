@@ -26,7 +26,7 @@
 #include "serialbox5_lite.hpp"
 #include "ui_serialbox5_lite.h"
 //--------------------------------------------------------------------------------
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
 #   include "sendbox5.hpp"
 #endif
 //--------------------------------------------------------------------------------
@@ -74,7 +74,7 @@ SerialBox5_lite::~SerialBox5_lite()
         delete m_timer;
     }
 
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     if(sendBox5)
     {
         disconnect(sendBox5, &SendBox5::sendData, this, &SerialBox5_lite::sendData);
@@ -191,14 +191,14 @@ void SerialBox5_lite::createWidgets()
 
     connect(this, &SerialBox5_lite::output, this, &SerialBox5_lite::drawData);
 
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     sendBox5 = new SendBox5(this);
     connect(sendBox5, &SendBox5::sendData, this, &SerialBox5_lite::sendData);
     ui->layout_SEND->addWidget(sendBox5);
 #endif
 }
 //--------------------------------------------------------------------------------
-#ifndef RS232_NO_FRAME
+#ifndef DEF_RS232_NO_FRAME
 void SerialBox5_lite::add_frame_text(QFrame *parent,
                                      const QString &text)
 {
@@ -295,7 +295,7 @@ void SerialBox5_lite::setCloseState()
     ui->cb_PortBox->setEnabled(true);
     ui->cb_BaudBox->setEnabled(true);
     ui->btn_power->setChecked(false);
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     sendBox5->block_interface(true);
 #endif
     ui->btn_power->setToolTip("Старт");
@@ -308,7 +308,7 @@ void SerialBox5_lite::setOpenState()
     ui->cb_PortBox->setEnabled(false);
     ui->cb_BaudBox->setEnabled(false);
     ui->btn_power->setChecked(true);
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     sendBox5->block_interface(false);
 #endif
     ui->btn_power->setToolTip("Стоп");
@@ -608,7 +608,7 @@ bool SerialBox5_lite::get_test()
 //--------------------------------------------------------------------------------
 void SerialBox5_lite::updateText()
 {
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     sendBox5->updateText();
 #endif
     ui->retranslateUi(this);

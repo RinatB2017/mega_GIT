@@ -10,8 +10,8 @@ INCLUDEPATH = $$DEPENDPATH
 HEADERS += aboutbox.hpp
 SOURCES += aboutbox.cpp
 
-contains(DEFINES, LOGO_GL) {
-    message (LOGO_GL)
+contains(DEFINES, DEF_LOGO_GL) {
+    message (DEF_LOGO_GL)
 
     greaterThan(QT_MAJOR_VERSION, 4) {
         include (glwidget/glwidget_qt5.pri)

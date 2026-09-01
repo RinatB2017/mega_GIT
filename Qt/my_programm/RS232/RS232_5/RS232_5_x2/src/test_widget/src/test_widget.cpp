@@ -51,7 +51,7 @@ void TestWidget::init()
     ui->serial_widget->set_caption("RS232");
     ui->serial_widget_2->set_caption("RS232");
 
-#ifdef USE_DOCK_WIDGETS
+#ifdef DEF_USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {

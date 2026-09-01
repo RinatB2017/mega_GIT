@@ -41,7 +41,7 @@ MyMainWindow::MyMainWindow(QWidget *parent) :
     //qInstallMsgHandler(messageHandler);
 #endif
 
-#ifndef NO_MENU
+#ifndef DEF_NO_MENU
     create_local_menus();
 #endif
     create_toolbars();
@@ -136,7 +136,7 @@ void MyMainWindow::create_local_menus()
     connect(options_action, &QAction::triggered,    this,   &MyMainWindow::options_action_click);
     connect(help_action,    &QAction::triggered,    this,   &MyMainWindow::help_action_click);
 
-#ifndef NO_MENU
+#ifndef DEF_NO_MENU
     add_filemenu_action(0,      file_action);
     add_optionsmenu_action(0,   options_action);
     add_helpmenu_action(0,      help_action);
@@ -168,7 +168,7 @@ void MyMainWindow::create_toolbars()
     }
 
     toolBar->setMovable(true);
-//#ifndef NO_MENU
+//#ifndef DEF_NO_MENU
 //    add_windowsmenu_action(toolBar, toolBar->toggleViewAction());
 //#endif
 
@@ -193,7 +193,7 @@ void MyMainWindow::create_toolbars()
     }
 
     toolBar2->setMovable(true);
-//#ifndef NO_MENU
+//#ifndef DEF_NO_MENU
 //    add_windowsmenu_action(toolBar2, toolBar2->toggleViewAction());
 //#endif
 }

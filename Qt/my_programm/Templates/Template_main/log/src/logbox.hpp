@@ -53,7 +53,7 @@ public slots:
     void clearProgress();
     void setVisibleProgressBar(bool);
     void setColorLog(bool state);
-#ifndef NO_LOG
+#ifndef DEF_NO_LOG
     void  set_font(QFont font);
     QFont get_font();
 #endif

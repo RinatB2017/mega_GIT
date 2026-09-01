@@ -56,7 +56,7 @@ SerialBox5::~SerialBox5()
         delete m_timer;
     }
 
-#ifdef RS232_LOG
+#ifdef DEF_RS232_LOG
     if(logBox)
     {
         disconnect(this,   &SerialBox5::info,  logBox, &LogBox::infoLog);
@@ -69,7 +69,7 @@ SerialBox5::~SerialBox5()
     }
 #endif
 
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     if(sendBox5)
     {
         disconnect(sendBox5,   &SendBox5::sendData, this, &SerialBox5::sendData);
@@ -102,7 +102,7 @@ void SerialBox5::init()
     initSerial();
     init_timer();
 
-#ifdef RS232_FIXED_SIZE
+#ifdef DEF_RS232_FIXED_SIZE
     setFixedSize(sizeHint());
 #endif
 
@@ -240,7 +240,7 @@ void SerialBox5::initSerial()
     ui->btn_refresh->setProperty(NO_BLOCK, true);
     ui->btn_refresh->setToolTip("Обновить список портов");
 
-#ifdef RS232_LOG
+#ifdef DEF_RS232_LOG
     logBox = new LogBox(o_name, this);
     ui->layout_right_LOG->addWidget(logBox);
 
@@ -250,7 +250,7 @@ void SerialBox5::initSerial()
     connect(this,   &SerialBox5::trace, logBox, &LogBox::traceLog);
 #endif
 
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     sendBox5 = new SendBox5(this);
     Q_ASSERT(sendBox5);
     connect(sendBox5,   &SendBox5::sendData, this, &SerialBox5::sendData);
@@ -300,7 +300,7 @@ void SerialBox5::setCloseState()
 
     ui->btn_default->setEnabled(false);
 
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     sendBox5->block_interface(true);
 #endif
     ui->btn_power->setToolTip("Старт");
@@ -320,7 +320,7 @@ void SerialBox5::setOpenState()
 
     ui->btn_default->setEnabled(true);
 
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     sendBox5->block_interface(false);
 #endif
     ui->btn_power->setToolTip("Стоп");
@@ -468,7 +468,7 @@ void SerialBox5::sendData(const QByteArray &sending_data)
 void SerialBox5::drawData(const QByteArray &data)
 {
     // qDebug() << "drawData[" << data << "]";
-#ifdef RS232_LOG
+#ifdef DEF_RS232_LOG
     logBox->infoLog(data.data());
 #else
     Q_UNUSED(data)
@@ -539,7 +539,7 @@ void SerialBox5::updateText()
 {
     ui->retranslateUi(this);
 
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     sendBox5->updateText();
 #endif
 }

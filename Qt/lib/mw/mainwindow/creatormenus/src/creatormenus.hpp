@@ -74,7 +74,7 @@ private:
     void app_menu_add_theme(QMenu *menu);
     void app_menu_add_lang(QMenu *menu);
     void app_menu_add_style(QMenu *menu);
-#ifdef USE_CUSTOM_STYLE
+#ifdef DEF_USE_CUSTOM_STYLE
     void app_menu_add_custom_style(QMenu *menu);
 #endif
     void app_menu_add_confirm_exit(QMenu *menu);

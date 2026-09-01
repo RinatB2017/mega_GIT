@@ -53,7 +53,7 @@ void MySettings::init()
     QString app_name = APPNAME;
 #endif
 
-#ifndef SAVE_INI
+#ifndef DEF_SAVE_INI
     settings = new QSettings(ORGNAME, app_name);
 #else
     settings = new QSettings(QString("%1%2")

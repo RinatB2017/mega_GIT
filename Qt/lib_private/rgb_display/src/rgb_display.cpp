@@ -316,7 +316,7 @@ void RGB_display::show_picture(int begin_x, int begin_y)
 //--------------------------------------------------------------------------------
 void RGB_display::load_leds()
 {
-#ifndef SAVE_INI
+#ifndef DEF_SAVE_INI
     QSettings *settings = new QSettings(ORGNAME, APPNAME);
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
@@ -341,7 +341,7 @@ void RGB_display::load_leds()
 //--------------------------------------------------------------------------------
 void RGB_display::save_leds()
 {
-#ifndef SAVE_INI
+#ifndef DEF_SAVE_INI
     QSettings *settings = new QSettings(ORGNAME, APPNAME);
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);

@@ -171,7 +171,7 @@ contains(MACHINE_ID, "b87537d2-72e1-438b-8667-d41b6a9c73dd") {
 ###############################################################################
 greaterThan(QT_MAJOR_VERSION, 5) {
     QT += core5compat
-    contains(DEFINES, LOGO_GL) {
+    contains(DEFINES, DEF_LOGO_GL) {
         QT += openglwidgets
     }
 

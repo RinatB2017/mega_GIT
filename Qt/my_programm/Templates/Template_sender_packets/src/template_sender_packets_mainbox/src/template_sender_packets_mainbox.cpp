@@ -271,7 +271,7 @@ bool MainBox::get_ID()
     f_send(packet);
 #endif
 
-#ifdef FAST_COMMAND
+#ifdef DEF_FAST_COMMAND
     wait_msec(ui->sb_timeout_ms->value());
 #else
     wait_msec(ui->sb_timeout_ms->value(), true);

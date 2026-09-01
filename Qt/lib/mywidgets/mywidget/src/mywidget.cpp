@@ -32,7 +32,7 @@ MyWidget::MyWidget(QWidget *parent) :
     QWidget(parent),
     MySettings()
 {
-#ifndef RS232_LOG
+#ifndef DEF_RS232_LOG
     // не надо тут условий. Родитель может быть и пустым, не надо приводить всё к toplevelwidget
     connect_log(parent);
 #endif
@@ -72,7 +72,7 @@ MyWidget::~MyWidget()
     {
         on = "no name";
     }
-#ifndef LOGGER_ON
+#ifndef DEF_LOGGER_ON
     qDebug() << "~MyWidget()" << on;
     //qDebug() << "~MyWidget()" << objectName();
 #endif
@@ -115,7 +115,7 @@ bool MyWidget::check_exists_signals(QWidget *parent)
 // основная функция
 void MyWidget::connect_log(QWidget *parent)
 {
-#ifdef NO_LOG
+#ifdef DEF_NO_LOG
     Q_UNUSED(parent);
     connect(this,   &MyWidget::info,    this,   &MyWidget::log);
     connect(this,   &MyWidget::debug,   this,   &MyWidget::log);
@@ -367,7 +367,7 @@ bool MyWidget::set_param(QString group_name, QString name, QVariant value)
     QString app_name = APPNAME;
 #endif
 
-#ifndef SAVE_INI
+#ifndef DEF_SAVE_INI
     QSettings *settings = new QSettings(ORGNAME, app_name);
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
@@ -398,7 +398,7 @@ bool MyWidget::get_param(QString group_name,
     QString app_name = APPNAME;
 #endif
 
-#ifndef SAVE_INI
+#ifndef DEF_SAVE_INI
     QSettings *settings = new QSettings(ORGNAME, app_name);
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);
@@ -422,7 +422,7 @@ QStringList MyWidget::get_all_param_name()
     QString app_name = APPNAME;
 #endif
 
-#ifndef SAVE_INI
+#ifndef DEF_SAVE_INI
     QSettings *settings = new QSettings(ORGNAME, app_name);
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(app_name).arg(".ini"), QSettings::IniFormat);

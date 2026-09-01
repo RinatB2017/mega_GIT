@@ -25,7 +25,7 @@
 CreatorMenus::CreatorMenus(QWidget *parent) :
     CreatorToolBars(parent)
 {
-#ifndef NO_MENU
+#ifndef DEF_NO_MENU
     init();
 #endif
 }
@@ -74,13 +74,13 @@ void CreatorMenus::init()
     app_menu_add_separator(m_app_optionsmenu);
     app_menu_add_theme(m_app_optionsmenu);
     app_menu_add_separator(m_app_optionsmenu);
-#ifndef ONLY_ENGLISH
+#ifndef DEF_ONLY_ENGLISH
     app_menu_add_lang(m_app_optionsmenu);
 #endif
     app_menu_add_style(m_app_optionsmenu);
     app_menu_add_separator(m_app_optionsmenu);
 
-#ifdef USE_CUSTOM_STYLE
+#ifdef DEF_USE_CUSTOM_STYLE
     app_menu_add_custom_style(m_app_optionsmenu);
     app_menu_add_separator(m_app_optionsmenu);
 #endif
@@ -423,7 +423,7 @@ void CreatorMenus::app_menu_add_fonts(QMenu *menu)
     connect(a_font_programm,    &QAction::triggered,    this,   &CreatorWindow::set_app_font);
     app_actions.append(a_font_programm);
 
-#ifndef NO_LOG
+#ifndef DEF_NO_LOG
     QAction *a_font_log = new QAction(m_fonts);
     a_font_log->setProperty(P_APP_ENG_TEXT, "Select the font logging");
     a_font_log->setText("Select the font logging");
@@ -560,7 +560,7 @@ void CreatorMenus::app_menu_add_style(QMenu *menu)
     }
 }
 //--------------------------------------------------------------------------------
-#ifdef USE_CUSTOM_STYLE
+#ifdef DEF_USE_CUSTOM_STYLE
 void CreatorMenus::app_menu_add_custom_style(QMenu *menu)
 {
     // пробую самописные стили

@@ -66,7 +66,7 @@ void MainBox::init()
     connect(ui->serial_widget,  &SerialBox5_fix_baudrate::output,
             this,               &MainBox::data_ADC);
 
-#ifdef USE_DOCK_WIDGETS
+#ifdef DEF_USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {

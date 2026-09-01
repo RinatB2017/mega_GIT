@@ -23,7 +23,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     CreatorMenus(parent)
 {
-#ifdef GET_SCREENSHOT
+#ifdef DEF_GET_SCREENSHOT
     if (server.listen(QHostAddress::Any, 8080))
     {
         // qDebug() << "Server started on port 8080";
@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 #endif
 
-#ifdef REMOTE_CONTROL
+#ifdef DEF_REMOTE_CONTROL
     if (m_remoteConsole.startServer())
     {
         // qDebug() << "Удаленная консоль успешно запущена.";

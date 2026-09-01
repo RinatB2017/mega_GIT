@@ -29,31 +29,31 @@ void myMessageOutput(QtMsgType type,
     switch (type)
     {
     case QtDebugMsg:
-#ifndef NO_LOG_QDEBUG
+#ifndef DEF_NO_LOG_QDEBUG
         if(logger) logger->sender_debug(msg);
 #endif
         break;
 
     case QtInfoMsg:
-#ifndef NO_LOG_QINFO
+#ifndef DEF_NO_LOG_QINFO
         if(logger) logger->sender_info(msg);
 #endif
         break;
 
     case QtWarningMsg:
-#ifndef NO_LOG_QTRACE
+#ifndef DEF_NO_LOG_QTRACE
         if(logger) logger->sender_warning(msg);
 #endif
         break;
 
     case QtCriticalMsg:
-#ifndef NO_LOG_QTRACE
+#ifndef DEF_NO_LOG_QTRACE
         if(logger) logger->sender_critical(msg);
         break;
 #endif
 
     case QtFatalMsg:
-#ifndef NO_LOG_QTRACE
+#ifndef DEF_NO_LOG_QTRACE
         if(logger) logger->sender_fatal(msg);
 #endif
         break;

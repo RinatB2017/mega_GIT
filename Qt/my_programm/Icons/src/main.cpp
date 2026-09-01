@@ -33,7 +33,7 @@
 int main(int argc, char *argv[])
 {
     set_codecs();
-#ifdef SINGLE_APP
+#ifdef DEF_SINGLE_APP
     // QtSingleApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     // QtSingleApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 

@@ -23,7 +23,7 @@ int main()
 #endif
 
     //---
-#ifdef SINGLE_APP
+#ifdef DEF_SINGLE_APP
     qDebug() << "это продлится примерно 40 секунд";
 
     QElapsedTimer timer;

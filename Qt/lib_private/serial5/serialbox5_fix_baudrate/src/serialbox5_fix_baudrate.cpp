@@ -63,7 +63,7 @@ SerialBox5_fix_baudrate::~SerialBox5_fix_baudrate()
         delete m_timer;
     }
 
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     if(sendBox5)
     {
         disconnect(sendBox5, &SendBox5::sendData, this, &SerialBox5_fix_baudrate::sendData);
@@ -191,14 +191,14 @@ void SerialBox5_fix_baudrate::createWidgets()
 
     connect(this, &SerialBox5_fix_baudrate::output, this, &SerialBox5_fix_baudrate::drawData);
 
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     sendBox5 = new SendBox5(this);
     connect(sendBox5, &SendBox5::sendData, this, &SerialBox5_fix_baudrate::sendData);
     ui->layout_SEND->addWidget(sendBox5);
 #endif
 }
 //--------------------------------------------------------------------------------
-#ifndef RS232_NO_FRAME
+#ifndef DEF_RS232_NO_FRAME
 void SerialBox5_fix_baudrate::add_frame_text(QFrame *parent,
                                              const QString &text)
 {
@@ -261,7 +261,7 @@ void SerialBox5_fix_baudrate::setCloseState()
     ui->btn_refresh->setEnabled(true);
     ui->cb_PortBox->setEnabled(true);
     ui->btn_power->setChecked(false);
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     sendBox5->block_interface(true);
 #endif
     ui->btn_power->setToolTip("Старт");
@@ -273,7 +273,7 @@ void SerialBox5_fix_baudrate::setOpenState()
     ui->btn_refresh->setEnabled(false);
     ui->cb_PortBox->setEnabled(false);
     ui->btn_power->setChecked(true);
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     sendBox5->block_interface(false);
 #endif
     ui->btn_power->setToolTip("Стоп");
@@ -534,7 +534,7 @@ QString SerialBox5_fix_baudrate::get_portname()
 //--------------------------------------------------------------------------------
 void SerialBox5_fix_baudrate::updateText()
 {
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     sendBox5->updateText();
 #endif
     ui->retranslateUi(this);

@@ -21,7 +21,7 @@
 #include "aboutbox.hpp"
 #include "ui_aboutbox.h"
 //--------------------------------------------------------------------------------
-#ifdef LOGO_GL
+#ifdef DEF_LOGO_GL
 #   include "glwidget.h"
 #endif
 //--------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ void AboutBox::init()
     connect(ui->lbl_email,      &QLabel::linkActivated, this,   &AboutBox::send_mail);
     connect(ui->lbl_telegram,   &QLabel::linkActivated, this,   &AboutBox::go_telegramm);
 
-#ifdef LOGO_GL
+#ifdef DEF_LOGO_GL
     GLWidget *glWidget = new GLWidget(this);
     QVBoxLayout *vbox = new QVBoxLayout();
     vbox->addWidget(glWidget);

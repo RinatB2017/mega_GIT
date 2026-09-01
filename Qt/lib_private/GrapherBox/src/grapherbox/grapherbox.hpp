@@ -77,9 +77,9 @@ class QwtPlotMagnifier;
 typedef struct
 {
     bool is_active;
-#ifdef USE_SCALE_POINT_DATETIME
+#ifdef DEF_USE_SCALE_POINT_DATETIME
     //nothing
-#elif defined USE_SCALE_POINT_TIME
+#elif defined DEF_USE_SCALE_POINT_TIME
     //nothing
 #endif
     long pos_x;

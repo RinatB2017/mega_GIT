@@ -29,7 +29,7 @@
 #include <QDate>
 #include <QTime>
 //--------------------------------------------------------------------------------
-#ifdef MESSAGE_AS_SPEECH
+#ifdef DEF_MESSAGE_AS_SPEECH
 #include <QTextToSpeech>
 #endif
 //--------------------------------------------------------------------------------
@@ -143,7 +143,7 @@ private:
     bool flag_is_shows_error = true;
     bool flag_is_shows_trace = true;
 
-#ifdef NEED_CODEC
+#ifdef DEF_NEED_CODEC
     QTextCodec *current_codec = nullptr;
 #endif
 

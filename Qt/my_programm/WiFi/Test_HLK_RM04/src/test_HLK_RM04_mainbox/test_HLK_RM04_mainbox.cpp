@@ -71,7 +71,7 @@ void MainBox::init()
 
     connect(ui->tcp_widget, &TCP_Server::output,    this,   &MainBox::info);
 
-#ifdef USE_DOCK_WIDGETS
+#ifdef DEF_USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {

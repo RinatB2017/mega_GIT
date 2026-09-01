@@ -36,7 +36,7 @@
 int main(int argc, char *argv[])
 {
     set_codecs();
-#ifdef SINGLE_APP
+#ifdef DEF_SINGLE_APP
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 
     splash->finish(main_window);
 
-#ifdef SELF_TEST
+#ifdef DEF_SELF_TEST
     int test_result = QTest::qExec(new Test(), argc, argv);
     if (test_result != EXIT_SUCCESS)
     {

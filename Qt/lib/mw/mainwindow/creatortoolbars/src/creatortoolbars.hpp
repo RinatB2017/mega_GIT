@@ -43,12 +43,12 @@ private:
 
     void app_toolbar_add_separator();
     void app_toolbar_add_exit();
-#ifndef NO_LOG
+#ifndef DEF_NO_LOG
     void app_toolbar_add_font();
 #endif
     void app_toolbar_add_lang();
     void app_toolbar_add_style();
-#ifdef USE_CUSTOM_STYLE
+#ifdef DEF_USE_CUSTOM_STYLE
     void app_toolbar_add_custom_style();
 #endif
     void app_toolbar_add_about();

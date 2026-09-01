@@ -94,7 +94,7 @@ void MainBox::init()
     //QWebEngineSettings::globalSettings()->setAttribute(QWebEngineSettings::PluginsEnabled, true); //FIXME Qt6
 
     //---
-#ifdef USE_DOCK_WIDGETS
+#ifdef DEF_USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {

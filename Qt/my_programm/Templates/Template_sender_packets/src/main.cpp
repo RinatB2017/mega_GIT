@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 {
     set_codecs();
 
-#ifdef SINGLE_APP
+#ifdef DEF_SINGLE_APP
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
@@ -76,11 +76,11 @@ int main(int argc, char *argv[])
 
     splash->finish(main_window);
 
-#ifdef SINGLE_APP
+#ifdef DEF_SINGLE_APP
     QObject::connect(&app, &QtSingleApplication::messageReceived, main_window, &MainWindow::set_focus);
 #endif
 
-#ifdef SELF_TEST
+#ifdef DEF_SELF_TEST
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));
 
     Test *test = new Test();

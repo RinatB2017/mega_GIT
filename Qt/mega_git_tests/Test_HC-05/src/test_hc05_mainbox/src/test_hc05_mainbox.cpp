@@ -283,7 +283,7 @@ void MainBox::port_read()
 //--------------------------------------------------------------------------------
 void MainBox::wait(int time_msec)
 {
-#ifdef FAKE
+#ifdef DEF_FAKE
     Q_UNUSED(time_msec)
 #else
     QElapsedTimer time;

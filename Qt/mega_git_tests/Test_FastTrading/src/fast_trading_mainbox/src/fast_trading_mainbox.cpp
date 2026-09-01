@@ -151,7 +151,7 @@ void MainBox::init_grapher_data()
 
     curve_data = grapher_data->add_curve("data");
 
-#ifdef USE_DOCK_WIDGETS
+#ifdef DEF_USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
@@ -187,7 +187,7 @@ void MainBox::init_grapher_profit()
 
     curve_profit = grapher_profit->add_curve("profit");
 
-#ifdef USE_DOCK_WIDGETS
+#ifdef DEF_USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {

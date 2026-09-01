@@ -27,7 +27,7 @@
 #include <QPushButton>
 //--------------------------------------------------------------------------------
 #include "serialwidget.hpp"
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
 #include "sendbox5.hpp"
 #endif
 #include "mywidget.hpp"
@@ -99,11 +99,11 @@ private:
     QTimer *m_timer = nullptr;
     QStringList m_portNames;
 
-#ifdef RS232_LOG
+#ifdef DEF_RS232_LOG
     LogBox  *logBox = nullptr;
 #endif
 
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     SendBox5 *sendBox5 = nullptr;
 #endif
 

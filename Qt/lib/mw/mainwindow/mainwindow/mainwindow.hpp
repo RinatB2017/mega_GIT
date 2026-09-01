@@ -34,11 +34,11 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     virtual ~MainWindow();
 
-#ifdef GET_SCREENSHOT
+#ifdef DEF_GET_SCREENSHOT
     SimpleHttpServer server;
 #endif
 
-#ifdef REMOTE_CONTROL
+#ifdef DEF_REMOTE_CONTROL
     SimpleRemoteConsole m_remoteConsole;
 #endif
 };

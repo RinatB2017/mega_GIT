@@ -39,7 +39,7 @@ include (src/rs232_5_bridge_mainbox/rs232_5_bridge_mainbox.pri)
 #----------------------------------------------
 CONFIG  += use_worker
 use_worker {
-    DEFINES += FAKE
+    DEFINES += DEF_FAKE
     include ($$LIB_PATH2/serial5/fake_serialwidget/serialwidget/serialwidget.pri)
     include (src/worker_fake/worker_fake.pri)
 } else {

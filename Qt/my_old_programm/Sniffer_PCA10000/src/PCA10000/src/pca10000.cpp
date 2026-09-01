@@ -37,7 +37,7 @@ void PCA10000::init()
 {
     connect(&serial, SIGNAL(readyRead()), this, SLOT(port_read()));
     //connect(&serial, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(port_error(QSerialPort::SerialPortError)));
-#ifdef FAKE
+#ifdef DEF_FAKE
     connect(&serial, SIGNAL(info(QString)),     this, SIGNAL(info(QString)));
     connect(&serial, SIGNAL(debug(QString)),    this, SIGNAL(debug(QString)));
     connect(&serial, SIGNAL(error(QString)),    this, SIGNAL(error(QString)));

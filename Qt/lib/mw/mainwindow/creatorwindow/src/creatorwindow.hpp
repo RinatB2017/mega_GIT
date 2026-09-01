@@ -207,7 +207,7 @@ public slots:
     void set_status2_text(const QString &data);
 
     void set_focus(const QString &);
-#ifndef NO_LOG
+#ifndef DEF_NO_LOG
     void set_log_font();
 #endif
 
@@ -242,8 +242,8 @@ public slots:
 
     void change_value();
 
-#ifndef NO_STYLETOOLBAR
-#ifdef USE_CUSTOM_STYLE
+#ifndef DEF_NO_STYLETOOLBAR
+#ifdef DEF_USE_CUSTOM_STYLE
     void set_norton_style();
 #endif
 #endif
@@ -273,7 +273,7 @@ private:
                         QString text,
                         QIcon   *icon,
                         b_saveSlot slot);
-#ifdef USE_CUSTOM_STYLE
+#ifdef DEF_USE_CUSTOM_STYLE
     void app_menu_add_custom_style(QMenu *menu);
 #endif
 
@@ -306,20 +306,20 @@ private:
     void set_tileSubWindows();
     void set_cascadeSubWindows();
 
-#ifndef NO_STYLETOOLBAR
+#ifndef DEF_NO_STYLETOOLBAR
     QToolBar *styletoolbar = nullptr;
     void createStyleToolBar();
-#ifdef USE_CUSTOM_STYLE
+#ifdef DEF_USE_CUSTOM_STYLE
     void createCustomStyleToolBar();
 #endif
 #endif
 
-#ifndef NO_LOG
+#ifndef DEF_NO_LOG
     LogBox *lb = nullptr;
 #endif
     SysLog *w_syslog = nullptr;
 
-#ifndef NO_LOG
+#ifndef DEF_NO_LOG
     void createLog();
 #endif
     void createSysLog_dock();
@@ -348,7 +348,7 @@ protected:
 
     void changeEvent(QEvent *event);
     virtual void closeEvent(QCloseEvent *event);
-#ifdef SHOW_SIZE
+#ifdef DEF_SHOW_SIZE
     void resizeEvent (QResizeEvent * event);
 #endif
 };

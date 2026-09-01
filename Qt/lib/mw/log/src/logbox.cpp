@@ -70,7 +70,7 @@ void LogBox::init()
 {
     setObjectName("LogBox");
 
-#ifdef NEED_CODEC
+#ifdef DEF_NEED_CODEC
 
 #if 1
     //TODO надо проверить
@@ -91,7 +91,7 @@ void LogBox::init()
     create_widgets();
 
     logBox->setContextMenuPolicy(Qt::CustomContextMenu);
-#ifndef NO_LOG_MENU
+#ifndef DEF_DEF_NO_LOG_MENU
     connect(logBox, &LogBox::customContextMenuRequested,
             this,   &LogBox::popup);
 #endif
@@ -122,7 +122,7 @@ void LogBox::popup(QPoint)
 
     popup_menu->addSeparator();
 
-#ifndef NO_LOG_INFO
+#ifndef DEF_NO_LOG_INFO
     QAction *show_info  = new QAction(popup_menu);
     Q_ASSERT(show_info);
     show_info->setProperty(P_APP_ENG_TEXT, "is_shows_info");
@@ -136,7 +136,7 @@ void LogBox::popup(QPoint)
     popup_menu->addAction(show_info);
 #endif
 
-#ifndef NO_LOG_DEBUG
+#ifndef DEF_NO_LOG_DEBUG
     QAction *show_debug = new QAction(popup_menu);
     Q_ASSERT(show_debug);
     show_debug->setProperty(P_APP_ENG_TEXT, "is_shows_debug");
@@ -150,7 +150,7 @@ void LogBox::popup(QPoint)
     popup_menu->addAction(show_debug);
 #endif
 
-#ifndef NO_LOG_ERROR
+#ifndef DEF_NO_LOG_ERROR
     QAction *show_error = new QAction(popup_menu);
     Q_ASSERT(show_error);
     show_error->setProperty(P_APP_ENG_TEXT, "is_shows_error");
@@ -164,7 +164,7 @@ void LogBox::popup(QPoint)
     popup_menu->addAction(show_error);
 #endif
 
-#ifndef NO_LOG_TRACE
+#ifndef DEF_NO_LOG_TRACE
     QAction *show_trace = new QAction(popup_menu);
     Q_ASSERT(show_trace);
     show_trace->setProperty(P_APP_ENG_TEXT, "is_shows_trace");
@@ -356,7 +356,7 @@ void LogBox::append_string(LOG_DATA log_data)
     flagColor ? logBox->setTextColor(log_data.color_text) : logBox->setTextColor(QColor(Qt::black));
     flagColor ? logBox->setTextBackgroundColor(log_data.background_color) : logBox->setTextBackgroundColor(QColor(Qt::white));
 
-#ifdef NEED_CODEC
+#ifdef DEF_NEED_CODEC
     QByteArray ba;
     ba.append(temp.toLocal8Bit());
 #endif
@@ -369,7 +369,7 @@ void LogBox::append_string(LOG_DATA log_data)
             bool ok = file.open(QIODevice::WriteOnly | QIODevice::Append);
             if(ok)
             {
-#ifdef NEED_CODEC
+#ifdef DEF_NEED_CODEC
                 file.write(ba);
 #else
                 QByteArray ba;
@@ -395,7 +395,7 @@ void LogBox::append_string(LOG_DATA log_data)
             qDebug() << "error";
         }
 
-#ifdef NEED_CODEC
+#ifdef DEF_NEED_CODEC
         logBox->setTextColor(log_data.color_text);
         logBox->insertPlainText(current_codec->toUnicode(ba));
 #else
@@ -404,7 +404,7 @@ void LogBox::append_string(LOG_DATA log_data)
     }
     else
     {
-#ifdef NEED_CODEC
+#ifdef DEF_NEED_CODEC
         // logBox->append(QString("Current codec is %1").arg(current_codec->name().data())); //FIXME потом убрать
         Q_ASSERT(current_codec);
         logBox->append(current_codec->toUnicode(ba));
@@ -436,13 +436,13 @@ void LogBox::infoLog(const QString &text)
     {
         l_log_data.append(log_data);
         append_string(log_data);
-#ifdef MESSAGE_AS_SPEECH
+#ifdef DEF_MESSAGE_AS_SPEECH
         QTextToSpeech *sp = new QTextToSpeech();
         sp->say(log_data.message);
 #endif
     }
 
-#ifdef FILENAME_LOG
+#ifdef DEF_FILENAME_LOG
     save_logfile(QDateTime::currentDateTime(),
                  L_INFO,
                  text);
@@ -465,13 +465,13 @@ void LogBox::debugLog(const QString &text)
     {
         l_log_data.append(log_data);
         append_string(log_data);
-#ifdef MESSAGE_AS_SPEECH
+#ifdef DEF_MESSAGE_AS_SPEECH
         // QTextToSpeech *sp = new QTextToSpeech();
         // sp->say(log_data.message);
 #endif
     }
 
-#ifdef FILENAME_LOG
+#ifdef DEF_FILENAME_LOG
     save_logfile(QDateTime::currentDateTime(),
                  L_DEBUG,
                  text);
@@ -494,16 +494,16 @@ void LogBox::errorLog(const QString &text)
     {
         l_log_data.append(log_data);
         append_string(log_data);
-#ifdef ERROR_AS_MESSAGEBOX
+#ifdef DEF_ERROR_AS_MESSAGEBOX
         messagebox_critical("Error", log_data.message);
 #endif
-#ifdef MESSAGE_AS_SPEECH
+#ifdef DEF_MESSAGE_AS_SPEECH
         QTextToSpeech *sp = new QTextToSpeech();
         sp->say(log_data.message);
 #endif
     }
 
-#ifdef FILENAME_LOG
+#ifdef DEF_FILENAME_LOG
     save_logfile(QDateTime::currentDateTime(),
                  L_ERROR,
                  text);
@@ -526,13 +526,13 @@ void LogBox::traceLog(const QString &text)
     {
         l_log_data.append(log_data);
         append_string(log_data);
-#ifdef MESSAGE_AS_SPEECH
+#ifdef DEF_MESSAGE_AS_SPEECH
         // QTextToSpeech *sp = new QTextToSpeech();
         // sp->say(log_data.message);
 #endif
     }
 
-#ifdef FILENAME_LOG
+#ifdef DEF_FILENAME_LOG
     save_logfile(QDateTime::currentDateTime(),
                  L_TRACE,
                  text);
@@ -558,7 +558,7 @@ void LogBox::colorLog(const QString &text,
         append_string(log_data);
     }
 
-#ifdef FILENAME_LOG
+#ifdef DEF_FILENAME_LOG
     save_logfile(QDateTime::currentDateTime(),
                  L_INFO,
                  text);
@@ -816,7 +816,7 @@ void LogBox::changeOptions()
     int res = optionsBox->exec();
     if(res == QDialog::Accepted)
     {
-#ifdef NEED_CODEC
+#ifdef DEF_NEED_CODEC
         current_codec = optionsBox->get_text_codec();
         QTextCodec::setCodecForLocale(current_codec);
         emit infoLog(QString("new codec is %1").arg(current_codec->name().data()));
@@ -918,10 +918,10 @@ void LogBox::load_setting()
     flag_is_shows_error = load_bool(P_FLAG_SHOW_ERROR,  true);
     flag_is_shows_trace = load_bool(P_FLAG_SHOW_TRACE,  true);
 
-#ifdef NO_LOG_DEBUG
+#ifdef DEF_NO_LOG_DEBUG
     flag_is_shows_debug = false;
 #endif
-#ifdef NO_LOG_TRACE
+#ifdef DEF_NO_LOG_TRACE
     flag_is_shows_trace = false;
 #endif
     //---
@@ -1011,14 +1011,14 @@ void LogBox::save_setting()
 
     save_bool(P_FLAG_SHOW_INFO,   flag_is_shows_info);
     save_bool(P_FLAG_SHOW_ERROR,  flag_is_shows_error);
-#ifndef NO_LOG_DEBUG
+#ifndef DEF_NO_LOG_DEBUG
     save_bool(P_FLAG_SHOW_DEBUG,  flag_is_shows_debug);
 #endif
-#ifndef NO_LOG_TRACE
+#ifndef DEF_NO_LOG_TRACE
     save_bool(P_FLAG_SHOW_TRACE,  flag_is_shows_trace);
 #endif
 
-#ifndef NO_LOG
+#ifndef DEF_NO_LOG
     QFont font = get_font();
     save_value(P_FONT_WEIGHT,  font.weight());
     save_value(P_FONT_SIZE,    font.pointSize());

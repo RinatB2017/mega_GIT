@@ -21,7 +21,7 @@
 #ifndef SERIALBOX5_FIX_BAUDRATE_HPP
 #define SERIALBOX5_FIX_BAUDRATE_HPP
 //--------------------------------------------------------------------------------
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
 #   include "sendbox5.hpp"
 #endif
 //--------------------------------------------------------------------------------
@@ -78,12 +78,12 @@ private:
 
     int fix_baudrate = 9600;
 
-#ifndef RS232_NO_FRAME
+#ifndef DEF_RS232_NO_FRAME
     void add_frame_text(QFrame *parent,
                         const QString &text);
 #endif
 
-#ifdef RS232_SEND
+#ifdef DEF_RS232_SEND
     SendBox5 *sendBox5 = nullptr;
 #endif
 

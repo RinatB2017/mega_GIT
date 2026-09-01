@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 #endif
     app.setWindowIcon(QIcon(QLatin1String(":/programm.png")));
 
-#ifdef SINGLE_APP
+#ifdef DEF_SINGLE_APP
     MainWindow *main_window = new MainWindow();
     Q_ASSERT(main_window);
 

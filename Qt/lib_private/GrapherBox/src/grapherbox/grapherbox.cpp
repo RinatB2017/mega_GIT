@@ -21,7 +21,7 @@
 #include "ui_grapherbox.h"
 #include "grapherbox.hpp"
 //--------------------------------------------------------------------------------
-#ifdef USE_SCALE_POINT_DATETIME
+#ifdef DEF_USE_SCALE_POINT_DATETIME
 class TimeScaleDraw: public QwtDateScaleDraw
 {
 public:
@@ -79,7 +79,7 @@ public:
     }
 };
 
-#elif defined(USE_SCALE_POINT_TIME)
+#elif defined(DEF_USE_SCALE_POINT_TIME)
 class TimeScaleDraw: public QwtScaleDraw
 {
 public:
@@ -260,8 +260,8 @@ int GrapherBox::add_curve(const QString &title,
     curve.title = title;
     // emit debug(QString("curves.count = %1").arg(curves.count()));
     curve.color = curve_colors[curves.count()];
-#ifdef USE_SCALE_POINT_DATETIME
-#elif defined(USE_SCALE_POINT_TIME)
+#ifdef DEF_USE_SCALE_POINT_DATETIME
+#elif defined(DEF_USE_SCALE_POINT_TIME)
 #else
     curve.pos_x = 0;
 #endif
@@ -321,8 +321,8 @@ bool GrapherBox::add_curve(const QString &title,
     curve.is_active = true;
     curve.title = title;
     curve.color = curve_colors[curves.count()];
-#ifdef USE_SCALE_POINT_DATETIME
-#elif defined(USE_SCALE_POINT_TIME)
+#ifdef DEF_USE_SCALE_POINT_DATETIME
+#elif defined(DEF_USE_SCALE_POINT_TIME)
 #else
     curve.pos_x = 0;
 #endif
@@ -468,7 +468,7 @@ void GrapherBox::create_widgets()
                 this,   &GrapherBox::legend_checked);
     }
 
-#ifdef USE_SCALE_POINT_DATETIME
+#ifdef DEF_USE_SCALE_POINT_DATETIME
     d_picker = new PlotPicker(QwtPlot::xBottom,
                               QwtPlot::yLeft,
                               QwtPlotPicker::CrossRubberBand,
@@ -480,7 +480,7 @@ void GrapherBox::create_widgets()
     d_picker->setTrackerPen(QColor(Qt::blue));
     d_picker->setStateMachine(new QwtPickerDragPointMachine());
 
-#elif defined(USE_SCALE_POINT_TIME)
+#elif defined(DEF_USE_SCALE_POINT_TIME)
     d_picker = new PlotPicker(QwtPlot::xBottom,
                               QwtPlot::yLeft,
                               QwtPlotPicker::CrossRubberBand,
@@ -508,9 +508,9 @@ void GrapherBox::create_widgets()
     //TODO цвет фона
     ui->qwtPlot->setCanvasBackground( Qt::white );
 
-#ifdef USE_SCALE_POINT_DATETIME
+#ifdef DEF_USE_SCALE_POINT_DATETIME
     ui->qwtPlot->setAxisScaleDraw(QwtPlot::xBottom, new TimeScaleDraw(QDateTime::currentDateTime()));
-#elif defined(USE_SCALE_POINT_TIME)
+#elif defined(DEF_USE_SCALE_POINT_TIME)
     ui->qwtPlot->setAxisScaleDraw(QwtPlot::xBottom, new TimeScaleDraw(QTime::currentTime()));
 #else
 #endif
@@ -696,9 +696,9 @@ void GrapherBox::clear()
         curves[n].real_data.clear();
         curves[n].view_curve->clear();
         curves[n].pos_x = 0;
-#ifdef USE_SCALE_POINT_DATETIME
+#ifdef DEF_USE_SCALE_POINT_DATETIME
         //nothing
-#elif defined(USE_SCALE_POINT_TIME)
+#elif defined(DEF_USE_SCALE_POINT_TIME)
         //nothing
 #else
 #endif
@@ -1007,7 +1007,7 @@ bool GrapherBox::add_curve_data(int channel,
         return false;
     }
 
-#ifdef USE_SCALE_POINT_DATETIME
+#ifdef DEF_USE_SCALE_POINT_DATETIME
     QDateTime dt;
     dt = QDateTime::currentDateTime();
 #if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
@@ -1018,7 +1018,7 @@ bool GrapherBox::add_curve_data(int channel,
     curves[channel].real_data.append(QPointF(x, data));
     curves[channel].view_curve->append(QPointF(x, data));
     curves[channel].pos_x++;
-#elif defined(USE_SCALE_POINT_TIME)
+#elif defined(DEF_USE_SCALE_POINT_TIME)
     QTime time;
     time = QTime::currentTime();
     qreal x = (time.hour() * 3600) + (time.minute() * 60) + time.second();
@@ -1096,14 +1096,14 @@ bool GrapherBox::add_curve_array(int channel,
     }
 
     curves[channel].pos_x = 0;  // это важно
-#ifdef USE_SCALE_POINT_DATETIME
+#ifdef DEF_USE_SCALE_POINT_DATETIME
     foreach (QPointF point, a_points)
     {
         curves[channel].real_data.append(point);
         curves[channel].view_curve->append(point);
         curves[channel].pos_x++;
     }
-#elif defined(USE_SCALE_POINT_TIME)
+#elif defined(DEF_USE_SCALE_POINT_TIME)
     foreach (QPointF point, a_points)
     {
         curves[channel].real_data.append(point);
@@ -1424,7 +1424,7 @@ void GrapherBox::f_load_curves(QString filename)
         QList<QStringList> str = csv->CSVRead();
         foreach (QStringList sl, str)
         {
-#ifdef USE_SCALE_POINT_DATETIME
+#ifdef DEF_USE_SCALE_POINT_DATETIME
             if(sl.count() == 8)
             {
                 bool ok = false;
@@ -1458,7 +1458,7 @@ void GrapherBox::f_load_curves(QString filename)
                 curves[channel].view_curve->append(QPointF(dt.toMSecsSinceEpoch() * 1000, value));
 #endif
                 curves[channel].pos_x++;
-#elif defined(USE_SCALE_POINT_TIME)
+#elif defined(DEF_USE_SCALE_POINT_TIME)
             if(sl.count() == 5)
             {
                 bool ok = false;
@@ -1518,7 +1518,7 @@ void GrapherBox::f_save_curves(QString filename)
     {
         for(int x=0; x<curves[channel].view_curve->samples().size(); x++)
         {
-#ifdef USE_SCALE_POINT_DATETIME
+#ifdef DEF_USE_SCALE_POINT_DATETIME
             quint32 pos_date = curves[channel].view_curve->sample(static_cast<size_t>(x)).x();
             qreal   value = curves[channel].view_curve->sample(static_cast<size_t>(x)).y();
 
@@ -1548,7 +1548,7 @@ void GrapherBox::f_save_curves(QString filename)
                     .arg(second)
                     .arg(value);
             file.write(temp.toLocal8Bit());
-#elif defined(USE_SCALE_POINT_TIME)
+#elif defined(DEF_USE_SCALE_POINT_TIME)
             quint32 pos_time = curves[channel].view_curve->sample(static_cast<size_t>(x)).x();
             qreal   value = curves[channel].view_curve->sample(static_cast<size_t>(x)).y();
 

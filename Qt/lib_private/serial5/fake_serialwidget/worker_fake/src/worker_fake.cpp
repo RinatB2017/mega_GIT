@@ -38,11 +38,11 @@ void Worker_fake::init()
 {
     ui->setupUi(this);
 
-#ifdef USE_DOCK_WIDGETS
+#ifdef DEF_USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {
-        mw->add_dock_widget("FAKE log", "fake_log_dock",  Qt::BottomDockWidgetArea, this);
+        mw->add_dock_widget("DEF_FAKE log", "fake_log_dock",  Qt::BottomDockWidgetArea, this);
     }
     else
     {

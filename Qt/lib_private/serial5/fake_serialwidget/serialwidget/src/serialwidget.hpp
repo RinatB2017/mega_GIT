@@ -18,7 +18,7 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
-// FAKE
+// DEF_FAKE
 //--------------------------------------------------------------------------------
 #ifndef FAKE_SERIALWIDGET_HPP
 #define FAKE_SERIALWIDGET_HPP
@@ -93,7 +93,7 @@ private:
 
     Worker_fake *worker_fake = nullptr;
 
-    QString port_name = "FAKE";
+    QString port_name = "DEF_FAKE";
     qint32 port_BaudRate = 9600;
     QSerialPort::DataBits port_DataBits = QSerialPort::Data8;
     QSerialPort::Parity port_Parity = QSerialPort::NoParity;

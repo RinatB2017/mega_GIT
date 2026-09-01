@@ -122,14 +122,14 @@ void LogBox::popup(QPoint)
     popup_menu->exec(QCursor::pos());
 }
 //--------------------------------------------------------------------------------
-#ifndef NO_LOG
+#ifndef DEF_NO_LOG
 void LogBox::set_font(QFont font)
 {
     logBox->setFont(font);
 }
 #endif
 //--------------------------------------------------------------------------------
-#ifndef NO_LOG
+#ifndef DEF_NO_LOG
 QFont LogBox::get_font()
 {
     return logBox->font();
@@ -547,7 +547,7 @@ void LogBox::load_settings()
     qDebug() << "LogBox::load_settings()";
 #endif
 
-#ifndef SAVE_INI
+#ifndef DEF_SAVE_INI
     QSettings *settings = new QSettings(ORGNAME, APPNAME);
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
@@ -599,7 +599,7 @@ void LogBox::save_settings()
     qDebug() << "LogBox::save_settings()";
 #endif
 
-#ifndef SAVE_INI
+#ifndef DEF_SAVE_INI
     QSettings *settings = new QSettings(ORGNAME, APPNAME);
 #else
     QSettings *settings = new QSettings(QString("%1%2").arg(APPNAME).arg(".ini"), QSettings::IniFormat);
@@ -617,7 +617,7 @@ void LogBox::save_settings()
     settings->setValue("ErrorAsMessage",(bool)flagErrorAsMessage);
     settings->setValue("TextIsWindows", (bool)flagTextIsWindows);
 
-#ifndef NO_LOG
+#ifndef DEF_NO_LOG
     QFont font = get_font();
     settings->setValue("FontWeight",  font.weight());
     settings->setValue("FontSize",    font.pointSize());

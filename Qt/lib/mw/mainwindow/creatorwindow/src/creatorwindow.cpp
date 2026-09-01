@@ -56,14 +56,14 @@ CreatorWindow::~CreatorWindow()
         widget->save_setting();
     }
 
-#ifndef NO_LOG
+#ifndef DEF_NO_LOG
     if(lb)
     {
         delete lb;
     }
 #endif
 
-#ifdef LOGGER_ON
+#ifdef DEF_LOGGER_ON
     if(logger)
     {
         QObject::disconnect(logger,    &MyLogger::info,    this,   &CreatorWindow::info);
@@ -88,7 +88,7 @@ void CreatorWindow::setCentralWidget(MyWidget *widget)
         w->load_setting();
     }
 
-#ifdef FIXED_SIZE
+#ifdef DEF_FIXED_SIZE
     setFixedSize(sizeHint());
 #endif
 }
@@ -99,7 +99,7 @@ void CreatorWindow::setCentralWidget(QWidget *widget)
 
     QMainWindow::setCentralWidget(widget);
 
-#ifdef FIXED_SIZE
+#ifdef DEF_FIXED_SIZE
     setFixedSize(sizeHint());
 #endif
 }
@@ -121,7 +121,7 @@ void CreatorWindow::changeEvent(QEvent *event)
     {
     case QEvent::LanguageChange:
         dockwidget_updateText();
-#ifndef NO_STYLETOOLBAR
+#ifndef DEF_NO_STYLETOOLBAR
         if(styletoolbar)
         {
             styletoolbar->setWindowTitle(tr("styletoolbar"));
@@ -195,11 +195,11 @@ void CreatorWindow::closeEvent(QCloseEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
-#ifdef SHOW_SIZE
+#ifdef DEF_SHOW_SIZE
 void CreatorWindow::resizeEvent(QResizeEvent *event)
 {
     Q_ASSERT(event);
-#ifndef NO_STATUSBAR
+#ifndef DEF_NO_STATUSBAR
     statusLabel1->setText(QString(QLatin1String("%1 %2"))
                               .arg(event->size().width())
                               .arg(event->size().height()));
@@ -235,7 +235,7 @@ void CreatorWindow::init()
 
     load_setting();
 
-#ifndef NO_LOG
+#ifndef DEF_NO_LOG
     createLog();
 #else
     connect(this, &CreatorWindow::info,    this, &CreatorWindow::log);
@@ -244,20 +244,20 @@ void CreatorWindow::init()
     connect(this, &CreatorWindow::trace,   this, &CreatorWindow::log);
 #endif
 
-#ifdef SYSLOG_LOG
+#ifdef DEF_SYSLOG_LOG
     createSysLog_dock();
 #endif
 
-#ifndef NO_STYLETOOLBAR
+#ifndef DEF_NO_STYLETOOLBAR
     createStyleToolBar();
-#ifdef USE_CUSTOM_STYLE
+#ifdef DEF_USE_CUSTOM_STYLE
     createCustomStyleToolBar();
 #endif
 #endif
-#ifndef NO_STATUSBAR
+#ifndef DEF_NO_STATUSBAR
     createStatusBar();
 #endif
-#ifndef NO_TRAYICON
+#ifndef DEF_NO_TRAYICON
     createTrayIcon();
 #endif
 
@@ -276,7 +276,7 @@ void CreatorWindow::init()
     }
     //---
 
-#ifdef LOGGER_ON
+#ifdef DEF_LOGGER_ON
     logger = new MyLogger();
 
     qInstallMessageHandler(myMessageOutput);
@@ -374,7 +374,7 @@ void CreatorWindow::kill2()
 //--------------------------------------------------------------------------------
 void CreatorWindow::load_translations()
 {
-#ifdef ONLY_ENGLISH
+#ifdef DEF_ONLY_ENGLISH
     return;
 #else
     translator_system = new QTranslator(this);
@@ -465,7 +465,7 @@ void CreatorWindow::choice_translator(QAction *menu)
 //--------------------------------------------------------------------------------
 void CreatorWindow::setMenuLanguage()
 {
-#ifndef ONLY_ENGLISH
+#ifndef DEF_ONLY_ENGLISH
     QAction* menu = static_cast<QAction *>(sender());
     Q_ASSERT(menu);
 
@@ -475,7 +475,7 @@ void CreatorWindow::setMenuLanguage()
 //--------------------------------------------------------------------------------
 void CreatorWindow::setToolBarLanguage()
 {
-#ifndef ONLY_ENGLISH
+#ifndef DEF_ONLY_ENGLISH
     QAction* menu = qobject_cast<QAction*>(sender());
     Q_ASSERT(menu);
 
@@ -570,7 +570,7 @@ void CreatorWindow::createStatusBar()
     statusLabel1 = new QLabel(this);
     statusLabel2 = new QLabel(this);
 
-#ifdef SHOW_IP
+#ifdef DEF_SHOW_IP
     QList<QNetworkInterface> interfaces = QNetworkInterface::allInterfaces();
     foreach (const QNetworkInterface &interface, interfaces)
     {
@@ -685,7 +685,7 @@ void CreatorWindow::load_main()
 
     style_name = load_value(P_STYLE_NAME,             "Breeze").toString();
 
-#ifdef ALWAYS_CONFIRM_EXIT
+#ifdef DEF_ALWAYS_CONFIRM_EXIT
     flag_close = false;
 #else
     flag_close = load_value(P_NO_ANSWER_FROM_EXIT,    true).toBool();
@@ -744,7 +744,7 @@ void CreatorWindow::save_main()
     save_value(P_FONT_SIZE,      QApplication::font().pointSize());
     save_value(P_STYLE_NAME,     style_name);
 
-#ifdef ALWAYS_CONFIRM_EXIT
+#ifdef DEF_ALWAYS_CONFIRM_EXIT
     save_value(P_NO_ANSWER_FROM_EXIT, false);
 #else
     save_value(P_NO_ANSWER_FROM_EXIT, flag_close);
@@ -778,7 +778,7 @@ void CreatorWindow::save_setting()
     save_main();
 }
 //--------------------------------------------------------------------------------
-#ifndef NO_LOG
+#ifndef DEF_NO_LOG
 void CreatorWindow::createLog()
 {
     lb = new LogBox(this);
@@ -817,7 +817,7 @@ void CreatorWindow::createSysLog_dock()
     add_dock_widget("syslog", "syslog", Qt::BottomDockWidgetArea, w_syslog);
 }
 //--------------------------------------------------------------------------------
-#ifndef NO_STYLETOOLBAR
+#ifndef DEF_NO_STYLETOOLBAR
 void CreatorWindow::createStyleToolBar()
 {
     styletoolbar = new QToolBar(tr("styletoolbar"), this);
@@ -838,7 +838,7 @@ void CreatorWindow::createStyleToolBar()
         connect(btnTemp, &QPushButton::clicked, this, &CreatorWindow::setToolBarStyles);
     }
 
-#ifdef TOOLBAR_ORIENTATION
+#ifdef DEF_TOOLBAR_ORIENTATION
     styletoolbar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     connect(styletoolbar, &QToolBar::orientationChanged, [this]()
             {
@@ -859,8 +859,8 @@ void CreatorWindow::createStyleToolBar()
 }
 #endif
 //--------------------------------------------------------------------------------
-#ifndef NO_STYLETOOLBAR
-#ifdef USE_CUSTOM_STYLE
+#ifndef DEF_NO_STYLETOOLBAR
+#ifdef DEF_USE_CUSTOM_STYLE
 void CreatorWindow::set_norton_style()
 {
     QFile file(":/themes_qss/Norton Commander.qss");
@@ -877,8 +877,8 @@ void CreatorWindow::set_norton_style()
 #endif
 #endif
 //--------------------------------------------------------------------------------
-#ifndef NO_STYLETOOLBAR
-#ifdef USE_CUSTOM_STYLE
+#ifndef DEF_NO_STYLETOOLBAR
+#ifdef DEF_USE_CUSTOM_STYLE
 void CreatorWindow::createCustomStyleToolBar()
 {
     // пробую самописные стили
@@ -893,7 +893,7 @@ void CreatorWindow::createCustomStyleToolBar()
     customStyletoolbar->addWidget(btnTemp);
 
     addToolBar(Qt::LeftToolBarArea, customStyletoolbar);
-    //#ifndef NO_MENU
+    //#ifndef DEF_NO_MENU
     //    add_windowsmenu_action(customStyletoolbar, customStyletoolbar->toggleViewAction());
     //#endif
 }
@@ -912,8 +912,8 @@ void CreatorWindow::help()
 void CreatorWindow::setWindowTitle(const QString &title)
 {
     QString temp = title;
-#ifdef TEST
-    temp += " TEST ";
+#ifdef DEF_TEST
+    temp += " DEF_TEST ";
 #endif
 #ifdef QT_DEBUG
     temp += " (DEBUG)";
@@ -1173,7 +1173,7 @@ void CreatorWindow::set_app_font()
     }
 }
 //--------------------------------------------------------------------------------
-#ifndef NO_LOG
+#ifndef DEF_NO_LOG
 void CreatorWindow::set_log_font()
 {
     bool ok = false;

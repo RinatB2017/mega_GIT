@@ -33,7 +33,7 @@
 int main(int argc, char *argv[])
 {
     set_codecs();
-#ifdef SINGLE_APP
+#ifdef DEF_SINGLE_APP
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     main_window->setCentralWidget(mainBox);
     main_window->show();
 
-#ifdef SINGLE_APP
+#ifdef DEF_SINGLE_APP
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
 #endif
 

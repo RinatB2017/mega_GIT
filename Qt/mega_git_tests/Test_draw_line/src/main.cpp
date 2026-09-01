@@ -29,7 +29,7 @@
 int main(int argc, char *argv[])
 {
     set_codecs();
-#ifdef SINGLE_APP
+#ifdef DEF_SINGLE_APP
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {

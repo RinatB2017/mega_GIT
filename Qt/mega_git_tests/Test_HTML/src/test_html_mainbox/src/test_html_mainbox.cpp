@@ -104,7 +104,7 @@ void MainBox::init()
 
     connect(new_page,   SIGNAL(loadFinished(bool)),         this,   SLOT(s_autorun_js()));
 
-#ifdef USE_DOCK_WIDGETS
+#ifdef DEF_USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
     if(mw)
     {

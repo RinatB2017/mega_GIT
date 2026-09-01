@@ -365,7 +365,7 @@ int Proto_NMEA_0183::calc_time_UTC(const QString &data,
                                    float *sec)
 {
     bool ok = false;
-    uint temp;
+    uint temp = 0;
     float f_temp = 0;
 
     emit debug(QString("calc_time_UTC: data [%1]").arg(data));

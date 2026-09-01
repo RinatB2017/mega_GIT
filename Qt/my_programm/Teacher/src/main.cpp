@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     set_signals();
 #endif
     set_codecs();
-#ifdef SINGLE_APP
+#ifdef DEF_SINGLE_APP
     QtSingleApplication app(argc, argv);
     if(app.isRunning())
     {
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 
     splash->finish(main_window);
 
-#ifdef SINGLE_APP
+#ifdef DEF_SINGLE_APP
     QObject::connect(&app, SIGNAL(messageReceived(const QString&)), main_window, SLOT(set_focus(QString)));
 #endif
     qDebug() << qPrintable(QString(QObject::tr("Starting application %1")).arg(APPNAME));

@@ -48,17 +48,17 @@ void MainBox_GUI::init()
     connect(ui->btn_1,  &QPushButton::clicked,  this,   &MainBox_GUI::btn_1_clicked);
     connect(ui->btn_2,  &QPushButton::clicked,  this,   &MainBox_GUI::btn_2_clicked);
 
-#ifdef USE_DOCK_WIDGETS
+#ifdef DEF_USE_DOCK_WIDGETS
     QTimer::singleShot(0, [this]{
         ui->gridLayout->setContentsMargins(20, 20, 20, 20);
 
         MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
         if(mw)
         {
-#ifndef NO_MENU
+#ifndef DEF_NO_MENU
             mw->add_mdi_sorting();
 #endif
-#ifdef TEST_DOCK
+#ifdef DEF_TEST_DOCK
             mw->add_dock_widget("test_dock",
                                 "test_dock",
                                 Qt::BottomDockWidgetArea,

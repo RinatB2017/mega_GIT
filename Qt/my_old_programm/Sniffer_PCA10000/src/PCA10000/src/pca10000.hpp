@@ -46,7 +46,7 @@ private slots:
     void port_error(QSerialPort::SerialPortError serial_error);
 
 private:
-#ifdef FAKE
+#ifdef DEF_FAKE
     PCA10000_test serial;
 #else
     QSerialPort serial;

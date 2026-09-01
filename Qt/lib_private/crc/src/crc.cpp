@@ -97,7 +97,7 @@ uint16_t CRC::java_crc16(uint8_t *pcBlock, uint8_t len)
         crc = (crc >> 8) ^ Crc16Table[(crc ^ pcBlock[n]) & 0xff];
         //qDebug() << (QString("CRC: %1").arg(crc));
     }
-#ifdef USE_HTONS
+#ifdef DEF_USE_HTONS
     return htons(crc);
 #else
     return crc;
@@ -114,7 +114,7 @@ uint16_t CRC::crc16(uint8_t *pcBlock, uint16_t len)
         for(int i=0; i<8; i++)
             crc = crc & 0x8000 ? (crc << 1) ^ 0x1021 : crc << 1;
     }
-#ifdef USE_HTONS
+#ifdef DEF_USE_HTONS
     return htons(crc);
 #else
     return crc;
@@ -177,7 +177,7 @@ uint16_t CRC::powersupply_crc16(uint8_t *pcBlock,
                 crc >>= 1;
         }
     }
-#ifdef USE_HTONS
+#ifdef DEF_USE_HTONS
     return htons(crc);
 #else
     return crc;
@@ -197,7 +197,7 @@ uint16_t CRC::multimeter_crc16(uint8_t *pcBlock, uint16_t len )
             crc = crc & 0x8000 ? (crc << 1) ^ 0x1021 : crc << 1;
     }
 
-#ifdef USE_HTONS
+#ifdef DEF_USE_HTONS
     return htons(crc);
 #else
     return crc;
@@ -217,7 +217,7 @@ uint16_t CRC::modbus_crc16(uint8_t *pcBlock, uint16_t len )
             crc = crc & 0x8000 ? (crc << 1) ^ 0x1021 : crc << 1;
     }
 
-#ifdef USE_HTONS
+#ifdef DEF_USE_HTONS
     return htons(crc);
 #else
     return crc;
@@ -244,7 +244,7 @@ uint16_t CRC::pet_crc16(uint8_t *pcBlock, uint16_t len)
                 crc >>= 1;
         }
     }
-#ifdef USE_HTONS
+#ifdef DEF_USE_HTONS
     return htons(crc);
 #else
     return crc;

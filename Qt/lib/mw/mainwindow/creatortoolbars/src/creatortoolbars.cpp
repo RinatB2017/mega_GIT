@@ -24,7 +24,7 @@
 CreatorToolBars::CreatorToolBars(QWidget *parent) :
     CreatorWindow(parent)
 {
-#ifndef NO_TOOLBAR
+#ifndef DEF_NO_TOOLBAR
     init();
 #endif
 }
@@ -44,49 +44,49 @@ void CreatorToolBars::init()
 
     addToolBar(Qt::TopToolBarArea, toolbar);
 
-#ifndef NO_TOOLBAR_BUTTON_EXIT
+#ifndef DEF_DEF_NO_TOOLBAR_BUTTON_EXIT
     app_toolbar_add_exit();
-#ifndef NO_TOOLBAR_SEPARATORS
+#ifndef DEF_DEF_NO_TOOLBAR_SEPARATORS
     app_toolbar_add_separator();
 #endif
 #endif
 
-#ifndef NO_TOOLBAR_BUTTON_FONT
-#ifndef NO_LOG
+#ifndef DEF_DEF_NO_TOOLBAR_BUTTON_FONT
+#ifndef DEF_NO_LOG
     app_toolbar_add_font();
 #endif
-#ifndef NO_TOOLBAR_SEPARATORS
+#ifndef DEF_DEF_NO_TOOLBAR_SEPARATORS
     app_toolbar_add_separator();
 #endif
 #endif
 
-#ifndef ONLY_ENGLISH
-#ifndef NO_TOOLBAR_BUTTON_LANG
+#ifndef DEF_ONLY_ENGLISH
+#ifndef DEF_DEF_NO_TOOLBAR_BUTTON_LANG
     app_toolbar_add_lang();
-#ifndef NO_TOOLBAR_SEPARATORS
+#ifndef DEF_DEF_NO_TOOLBAR_SEPARATORS
     app_toolbar_add_separator();
 #endif
 #endif
 #endif
 
-#ifndef NO_TOOLBAR_BUTTON_STYLE
+#ifndef DEF_DEF_NO_TOOLBAR_BUTTON_STYLE
     app_toolbar_add_style();
-#ifdef USE_CUSTOM_STYLE
+#ifdef DEF_USE_CUSTOM_STYLE
     app_toolbar_add_custom_style();
 #endif
-#ifndef NO_TOOLBAR_SEPARATORS
+#ifndef DEF_DEF_NO_TOOLBAR_SEPARATORS
     app_toolbar_add_separator();
 #endif
 #endif
 
-#ifndef NO_TOOLBAR_BUTTON_ABOUT
+#ifndef DEF_DEF_NO_TOOLBAR_BUTTON_ABOUT
     app_toolbar_add_about();
 #endif
-#ifndef NO_TOOLBAR_BUTTON_HELP
+#ifndef DEF_DEF_NO_TOOLBAR_BUTTON_HELP
     app_toolbar_add_help();
 #endif
 
-#ifdef TOOLBAR_ORIENTATION
+#ifdef DEF_TOOLBAR_ORIENTATION
     toolbar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     connect(toolbar, &QToolBar::orientationChanged, [this]()
     {
@@ -124,7 +124,7 @@ void CreatorToolBars::app_toolbar_add_exit()
     app_buttons.append(btnExit);
 }
 //--------------------------------------------------------------------------------
-#ifndef NO_LOG
+#ifndef DEF_NO_LOG
 void CreatorToolBars::app_toolbar_add_font()
 {
     QMenu *menu_fonts = new QMenu();
@@ -231,7 +231,7 @@ void CreatorToolBars::app_toolbar_add_style()
     app_buttons.append(btnStyle);
 }
 //--------------------------------------------------------------------------------
-#ifdef USE_CUSTOM_STYLE
+#ifdef DEF_USE_CUSTOM_STYLE
 void CreatorToolBars::app_toolbar_add_custom_style()
 {
     // пробую самописные стили

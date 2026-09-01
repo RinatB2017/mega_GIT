@@ -65,7 +65,7 @@ void MainBox::init()
     connect(ui->serial_widget_1,    &SerialBox5::output,    this,   &MainBox::serial_log);
 
     //---
-#ifdef FAKE
+#ifdef DEF_FAKE
     QTimer::singleShot(0, [this]{
         MainWindow *mw = dynamic_cast<MainWindow *>(parentWidget());
         if(mw)

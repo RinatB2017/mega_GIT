@@ -214,7 +214,7 @@ void clear_screen()
 //--------------------------------------------------------------------------------
 void draw_player()
 {
-#ifdef SINGLE_APP
+#ifdef DEF_SINGLE_APP
     if((player_x_old == player_x) && (player_y_old == player_y)) return;
 
     draw_image(player_old, player_x_old, player_y_old);

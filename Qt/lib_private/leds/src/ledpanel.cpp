@@ -19,7 +19,10 @@ LedPanel::LedPanel(QWidget *parent) :
         led[n] = new QLed();
         led[n]->set_size(32, 32);
         led[n]->set_tooltip(QString::number(n));
-        led[n]->set_color_on(Qt::green);
+        //TODO цвета диодов
+        led[n]->set_color_on(Qt::red);
+        // led[n]->set_color_on(Qt::green);
+        // led[n]->set_color_on(Qt::blue);
     }
     for(n=count; n>0; n--)
     {

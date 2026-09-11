@@ -48,8 +48,9 @@ MainWindow::MainWindow(QWidget *parent) :
 #ifdef QT_DEBUG
     qApp->setStyleSheet(
         "QPushButton, QToolButton, QLineEdit, QCheckBox, QGroupBox, QLabel, QSlider, QFrame, QSpinBox, QTextEdit, QComboBox {"
-        "   background-color: #FF9999;"
+        // "   background-color: #FF9999;"
         // "   border: 1px solid #000000;"
+        "   background-color: #26c85a;"
         "   color: white;"
         "}"
         );

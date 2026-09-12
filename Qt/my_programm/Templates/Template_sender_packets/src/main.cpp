@@ -63,6 +63,8 @@ int main(int argc, char *argv[])
 
     MySplashScreen *splash = new MySplashScreen(pixmap, 10);
     Q_ASSERT(splash);
+
+    splash->setAttribute(Qt::WA_DeleteOnClose);
     splash->show();    
 
     MainWindow *main_window = new MainWindow();
@@ -75,6 +77,7 @@ int main(int argc, char *argv[])
     main_window->show();
 
     splash->finish(main_window);
+    delete splash;
 
 #ifdef DEF_SINGLE_APP
     QObject::connect(&app, &QtSingleApplication::messageReceived, main_window, &MainWindow::set_focus);

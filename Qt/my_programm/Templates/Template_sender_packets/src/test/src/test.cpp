@@ -69,6 +69,9 @@ void Test::test_func()
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
+
+    VERIFY_PACKET(":0100010F96\n", ":0100000D\n", mb->get_ID());
+    // VERIFY_PACKET(":0100010F96\n", ":0100001D\n", mb->get_ID());
 }
 //--------------------------------------------------------------------------------
 void Test::test_signals()

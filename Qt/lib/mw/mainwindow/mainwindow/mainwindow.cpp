@@ -20,6 +20,17 @@
 **********************************************************************************/
 #include "mainwindow.hpp"
 //--------------------------------------------------------------------------------
+#ifdef QT_DEBUG
+#include <sanitizer/asan_interface.h>
+
+// ASan автоматически вызовет эту функцию до функции main()
+extern "C" const char* __asan_default_options() {
+    return "abort_on_error=1:detect_leaks=0";
+    // return "abort_on_error=1";
+}
+
+#endif
+//--------------------------------------------------------------------------------
 MainWindow::MainWindow(QWidget *parent) :
     CreatorMenus(parent)
 {

@@ -29,6 +29,19 @@
 #include "template_sender_packets_mainbox.hpp"
 #include "serialwidget.hpp"
 //--------------------------------------------------------------------------------
+#define VERIFY_PACKET(fakeResponse, expectedRequest, trigger_code) \
+do { \
+        QTimer::singleShot(0, this, [this]() { \
+                QByteArray _resp = fakeResponse; \
+                QMetaObject::invokeMethod(serialWidget, "output", Q_ARG(QByteArray, _resp)); \
+        }); \
+        trigger_code; \
+        QCOMPARE(spy->count(), 1); \
+        QList<QVariant> _args = spy->takeFirst(); \
+        QString _debugText = _args.at(0).toString(); \
+        QCOMPARE(_debugText, QString(expectedRequest)); \
+} while (false)
+//--------------------------------------------------------------------------------
 class MainWindow;
 //--------------------------------------------------------------------------------
 class Test : public QObject {

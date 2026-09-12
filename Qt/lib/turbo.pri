@@ -143,6 +143,20 @@ unix:!macx {
     #QMAKE_CXXFLAGS_WARN_ON -= -Wno-missing-braces -Wno-missing-field-initializers
 }
 ###############################################################################
+# AddressSanitizer
+# Для Linux (работает идеально)
+# unix:CONFIG(debug, debug|release) {
+#     QMAKE_CXXFLAGS += -fsanitize=address -fno-omit-frame-pointer
+#     QMAKE_LFLAGS   += -fsanitize=address
+# }
+
+# Для Windows + MSVC (требует аккуратности)
+win32-msvc*:CONFIG(debug, debug|release) {
+    # Включаем генерацию отладочных символов, но отключаем несовместимый Debug CRT
+    QMAKE_CXXFLAGS += /fsanitize=address /Zi
+    QMAKE_LFLAGS   += /fsanitize=address
+}
+###############################################################################
 linux {
 MACHINE_ID = $$system(cat /etc/machine-id)
 message("Текущий Machine ID: " $$MACHINE_ID)

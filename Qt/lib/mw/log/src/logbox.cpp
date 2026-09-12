@@ -49,6 +49,9 @@ LogBox::~LogBox()
     Q_ASSERT(progressBar);
     Q_ASSERT(fb);
 
+    // if(hbox) delete hbox;
+    // if(vbox) delete vbox;
+
     if(logBox)
     {
         disconnect(logBox, &LogBox::customContextMenuRequested,    this,   &LogBox::popup);
@@ -257,7 +260,7 @@ void LogBox::create_widgets()
     logBox->setTextInteractionFlags(Qt::NoTextInteraction);
 
 #ifndef LOG_READ_ONLY
-    hbox = new QHBoxLayout();
+    // hbox = new QHBoxLayout();
     hbox->addStretch(1);
     hbox->addWidget(progressBar);
 #endif

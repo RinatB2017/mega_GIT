@@ -39,7 +39,10 @@ void MainBox_GUI::init()
 {
     ui->setupUi(this);
 
-    connect_log_signals(ui->controls_widget, this);
+    connect(ui->controls_widget,    &Controls_widget::info,     this,   &MainBox_GUI::info);
+    connect(ui->controls_widget,    &Controls_widget::debug,    this,   &MainBox_GUI::debug);
+    connect(ui->controls_widget,    &Controls_widget::error,    this,   &MainBox_GUI::error);
+    connect(ui->controls_widget,    &Controls_widget::trace,    this,   &MainBox_GUI::trace);
 
     connect(ui->btn_show, &QPushButton::clicked, [this]() {
         emit info(ui->cw_calendar->selectedDate().toString("yyyy.MM.dd"));

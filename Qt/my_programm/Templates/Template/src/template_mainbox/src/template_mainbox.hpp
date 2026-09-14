@@ -23,6 +23,7 @@
 //--------------------------------------------------------------------------------
 #include "ui_template_mainbox.h"
 //--------------------------------------------------------------------------------
+#include <QElapsedTimer>
 #include <QPointer>
 //--------------------------------------------------------------------------------
 #include "mywaitsplashscreen.hpp"
@@ -75,6 +76,8 @@ private:
     void create_programm_bar();
 
     bool test();
+
+    void wait_msec(int timeout_msec);
 
     void updateText();
     bool programm_is_exit();

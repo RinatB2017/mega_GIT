@@ -81,6 +81,7 @@ int main(int argc, char *argv[])
     main_window->show();
 
     splash->finish(main_window);
+    delete splash;
 
 #ifdef DEF_SINGLE_APP
     QObject::connect(&app,  &QtSingleApplication::messageReceived,  main_window,    &MainWindow::set_focus);
@@ -93,6 +94,7 @@ int main(int argc, char *argv[])
     test->setMainWindow(main_window);
 
     int test_result = QTest::qExec(test, argc, argv);
+    delete test;
     if (test_result != EXIT_SUCCESS)
     {
         return test_result;

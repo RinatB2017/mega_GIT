@@ -212,6 +212,27 @@ bool MainBox::test()
     return true;
 }
 //--------------------------------------------------------------------------------
+void MainBox::wait_msec(int timeout_msec)
+{
+    QElapsedTimer time;
+
+    emit debug(QString("timeout %1").arg(timeout_msec));
+    if(timeout_msec < 1)
+    {
+        emit debug("timeout_msec < 1");
+        return;
+    }
+
+    emit debug(QString("pause: %1 msec")
+              .arg(timeout_msec));
+
+    time.start();
+    while(time.elapsed() < timeout_msec)
+    {
+        QCoreApplication::processEvents();
+    }
+}
+//--------------------------------------------------------------------------------
 void MainBox::updateText()
 {
     ui->retranslateUi(this);

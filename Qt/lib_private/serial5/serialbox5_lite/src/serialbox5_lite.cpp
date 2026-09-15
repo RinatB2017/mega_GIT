@@ -395,7 +395,7 @@ int SerialBox5_lite::input(const QByteArray &sending_data)
 //--------------------------------------------------------------------------------
 int SerialBox5_lite::input(const QString &data)
 {
-#ifdef Q_DEBUG
+#ifdef QT_DEBUG
     qDebug() << data;
 #endif
     if(!isOpen())

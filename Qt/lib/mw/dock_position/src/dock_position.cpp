@@ -90,7 +90,7 @@ void Dock_position::show_dlg()
     }
     else
     {
-#ifdef Q_DEBUG
+#ifdef QT_DEBUG
         qDebug() << "mw is null!";
 #endif
     }

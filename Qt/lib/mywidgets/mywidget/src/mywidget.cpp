@@ -842,7 +842,7 @@ bool MyWidget::eventFilter(QObject*, QEvent* event)
 {
     if(event->type() == QEvent::Wheel)
     {
-#ifdef Q_DEBUG
+#ifdef QT_DEBUG
         qDebug() sl.append("Wheel event blocked";
         #endif
                 return true;

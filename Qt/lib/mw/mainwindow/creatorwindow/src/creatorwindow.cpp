@@ -30,13 +30,13 @@ MyLogger *logger = nullptr;
 //--------------------------------------------------------------------------------
 CreatorWindow::CreatorWindow(QWidget *parent)
     : QMainWindow(parent),
-    orgName(ORGNAME),
-    appName(APPNAME),
-    appVersion(QString("%1.%2.%3.%4")
-                   .arg(VER_MAJOR)
-                   .arg(VER_MINOR)
-                   .arg(VER_PATCH)
-                   .arg(VER_BUILD))
+      orgName(ORGNAME),
+      appName(APPNAME),
+      appVersion(QString("%1.%2.%3.%4")
+                 .arg(VER_MAJOR)
+                 .arg(VER_MINOR)
+                 .arg(VER_PATCH)
+                 .arg(VER_BUILD))
 {
     init();
 }
@@ -46,7 +46,7 @@ CreatorWindow::~CreatorWindow()
     qInstallMessageHandler(0);
 
 #ifdef QT_DEBUG
-    qDebug() << "~CreatorWindow()";
+    emit debug("~CreatorWindow()");
 #endif
 
     QList<MyWidget *> l_widgets = findChildren<MyWidget *>();
@@ -201,8 +201,8 @@ void CreatorWindow::resizeEvent(QResizeEvent *event)
     Q_ASSERT(event);
 #ifndef DEF_NO_STATUSBAR
     statusLabel1->setText(QString(QLatin1String("%1 %2"))
-                              .arg(event->size().width())
-                              .arg(event->size().height()));
+                          .arg(event->size().width())
+                          .arg(event->size().height()));
 #else
     Q_UNUSED(event)
 #endif
@@ -229,8 +229,8 @@ void CreatorWindow::init()
 
     load_translations();
     setWindowTitle(QString("%1 (ver. %2)")
-                       .arg(appTitle)
-                       .arg(appVersion));
+                   .arg(appTitle)
+                   .arg(appVersion));
     setObjectName("CreatorWindow");
 
     load_setting();
@@ -323,9 +323,9 @@ void CreatorWindow::change_menu()
         // 4. Применяем свойство color ОДНОВРЕМЕННО для текста QMenu и панели QMenuBar
         qApp->setStyleSheet(QString("QMenu, QMenuBar { color: %1; }").arg(hexTextColor));
 
-        qDebug() << "Реальный фон меню:" << menuBg.name()
-                 << "| Яркость:" << brightness
-                 << "| Установлен контрастный шрифт для всех меню:" << hexTextColor;
+        emit debug(QString("Реальный фон меню: %1").arg(menuBg.name()));
+        emit debug(QString("Яркость: %1").arg(brightness));
+        emit debug(QString("Установлен контрастный шрифт для всех меню: %1").arg(hexTextColor));
     }
 }
 //--------------------------------------------------------------------------------
@@ -359,8 +359,6 @@ void CreatorWindow::kill()
     int a = 5;
     int b = 0;
     int c = a / b;
-
-    qDebug() << a << b << c;
 }
 #endif
 //--------------------------------------------------------------------------------
@@ -383,7 +381,7 @@ void CreatorWindow::load_translations()
     {
         QMessageBox::critical(nullptr, "Error", "sysTranslator not loaded");
 #ifdef QT_DEBUG
-        qDebug() << "translator_system not loaded!";
+        emit debug("translator_system not loaded!");
 #endif
     }
     else
@@ -417,10 +415,10 @@ void CreatorWindow::load_translations()
             QMessageBox::critical(nullptr,
                                   "Error",
                                   QString("appTranslator (%1) not loaded!")
-                                      .arg(translator.translator_file));
+                                  .arg(translator.translator_file));
 #ifdef QT_DEBUG
-            qDebug() << QString("appTranslator (%1) not loaded!")
-                            .arg(translator.translator_file);
+            emit debug(QString("appTranslator (%1) not loaded!")
+                       .arg(translator.translator_file));
 
 #endif
         }
@@ -428,7 +426,7 @@ void CreatorWindow::load_translations()
 
     QLocale locale = QLocale();
 #ifdef QT_DEBUG
-    qDebug() << "### locale" << locale.name();
+    emit debug(QString("### locale %1").arg(locale.name()));
 #endif
     foreach (TRANSLATOR translator, l_translators)
     {
@@ -452,10 +450,10 @@ void CreatorWindow::choice_translator(QAction *menu)
     QString p_lang = menu->property(P_LANG).toString();
 
     auto trans_it = std::find_if(
-        l_translators.begin(),
-        l_translators.end(),
-        [p_lang](TRANSLATOR trans){ return trans.property == p_lang; }
-        );
+                l_translators.begin(),
+                l_translators.end(),
+                [p_lang](TRANSLATOR trans){ return trans.property == p_lang; }
+            );
     if (trans_it != l_translators.end())
     {
         qApp->installTranslator(trans_it->translator_obj);
@@ -649,7 +647,7 @@ void CreatorWindow::about()
 void CreatorWindow::load_main()
 {
 #ifdef QT_DEBUG
-    qDebug() << "CreatorWindow::load_main";
+    emit debug("CreatorWindow::load_main");
 #endif
 
     QFont font = qApp->font();
@@ -735,7 +733,7 @@ void CreatorWindow::load_main()
 void CreatorWindow::save_main()
 {
 #ifdef QT_DEBUG
-    qDebug() << "CreatorWindow::save_main";
+    emit debug("CreatorWindow::save_main");
 #endif
 
     beginGroup(P_MAIN);
@@ -765,7 +763,7 @@ void CreatorWindow::save_main()
 void CreatorWindow::load_setting()
 {
 #ifdef QT_DEBUG
-    qDebug() << "CreatorWindow::load_setting";
+    emit debug("CreatorWindow::load_setting");
 #endif
     load_main();
 }
@@ -773,7 +771,7 @@ void CreatorWindow::load_setting()
 void CreatorWindow::save_setting()
 {
 #ifdef QT_DEBUG
-    qDebug() << "CreatorWindow::save_setting";
+    emit debug("CreatorWindow::save_setting");
 #endif
     save_main();
 }
@@ -842,17 +840,17 @@ void CreatorWindow::createStyleToolBar()
     styletoolbar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     connect(styletoolbar, &QToolBar::orientationChanged, [this]()
             {
-                switch(styletoolbar->orientation())
-                {
-                case Qt::Horizontal:
-                    styletoolbar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-                    break;
+        switch(styletoolbar->orientation())
+        {
+        case Qt::Horizontal:
+            styletoolbar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+            break;
 
-                case Qt::Vertical:
-                    styletoolbar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-                    break;
-                }
-            });
+        case Qt::Vertical:
+            styletoolbar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+            break;
+        }
+    });
 #endif
 
     addToolBar(Qt::LeftToolBarArea, styletoolbar);
@@ -954,7 +952,6 @@ void CreatorWindow::createTrayIcon()
 //--------------------------------------------------------------------------------
 void CreatorWindow::showHide(QSystemTrayIcon::ActivationReason r)
 {
-    //qDebug() sl.append("### showHide ###" << r;
     if (r == QSystemTrayIcon::Trigger)
     {
         if (!this->isVisible())
@@ -1059,10 +1056,10 @@ void CreatorWindow::set_cascadeSubWindows()
 }
 //--------------------------------------------------------------------------------
 QDockWidget * CreatorWindow::add_dock_widget(QString title,
-                                            QString objectname,
-                                            Qt::DockWidgetArea area,
-                                            QWidget *widget,
-                                            bool no_dock_position)
+                                             QString objectname,
+                                             Qt::DockWidgetArea area,
+                                             QWidget *widget,
+                                             bool no_dock_position)
 {
     Q_ASSERT(widget);
 
@@ -1143,7 +1140,6 @@ void CreatorWindow::tabify_all_docs()
 //--------------------------------------------------------------------------------
 void CreatorWindow::dockLocationChanged(Qt::DockWidgetArea area)
 {
-    //qDebug() << area;
     Q_UNUSED(area)
 }
 //--------------------------------------------------------------------------------

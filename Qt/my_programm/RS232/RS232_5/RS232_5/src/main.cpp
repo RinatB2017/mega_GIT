@@ -74,6 +74,7 @@ int main(int argc, char *argv[])
     main_window->show();
 
     splash->finish(main_window);
+    delete splash;
 
 #ifdef DEF_SELF_TEST
     int test_result = QTest::qExec(new Test(), argc, argv);

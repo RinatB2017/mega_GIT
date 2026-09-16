@@ -2,18 +2,18 @@
 #**                   Author: Bikbao Rinat Zinorovich                            **
 #**********************************************************************************
 
-#DEFINES += LOGO_GL
-#DEFINES += FIXED_SIZE
+#DEFINES += DEF_LOGO_GL
+#DEFINES += DEF_FIXED_SIZE
 
 DEFINES += DEF_NO_STYLETOOLBAR
 #DEFINES += DEF_NO_STATUSBAR
-#DEFINES += DEF_NO_TRAYICON
+DEFINES += DEF_NO_TRAYICON
 #DEFINES += DEF_NO_TOOLBAR
 #DEFINES += DEF_NO_MENU
 DEFINES += DEF_NO_LOG
 
-DEFINES += RS232_SEND
-DEFINES += RS232_LOG
+DEFINES += DEF_RS232_SEND
+DEFINES += DEF_RS232_LOG
 
 #DEFINES += DEF_SYSLOG_LOG
 

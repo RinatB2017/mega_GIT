@@ -823,6 +823,59 @@ void MyWidget::show_objectNames()
     }
 }
 //--------------------------------------------------------------------------------
+QList<QWidget*> MyWidget::focusableWidgets(QWidget *root)
+{
+    QList<QWidget*> result;
+    QWidget *rootWindow = root->window();      // главное окно
+
+    const auto all = root->findChildren<QWidget*>();
+    for (QWidget *w : all) {
+        if (w->isHidden())
+            continue;
+
+        // 1) внутренние компоненты составных виджетов
+        if (w->focusProxy() != nullptr)
+            continue;
+
+        // 2) виджеты из другого окна (popup, tooltip, отдельные QMenu и т.п.)
+        if (w->window() != rootWindow)
+            continue;
+
+        if (w->focusPolicy() & Qt::TabFocus)
+            result.append(w);
+    }
+    return result;
+}
+//--------------------------------------------------------------------------------
+// Вспомогательная функция: применяет порядок по геометрии
+void MyWidget::applyTabOrderByPosition(QWidget *root)
+{
+    QList<QWidget*> widgets = focusableWidgets(root);
+    if (widgets.size() < 2)
+        return;
+
+    // Сортируем: сначала по строке (y), затем по x.
+    // Допуск по y нужен, чтобы виджеты, стоящие в одной строке с
+    // небольшим вертикальным разбросом, считались "одной строкой".
+    const int rowTolerance = 10; // px, можно подстроить
+
+    std::sort(widgets.begin(), widgets.end(),
+              [root, rowTolerance](QWidget *a, QWidget *b) {
+                  const QPoint pa = a->mapTo(root, QPoint(0, 0));
+                  const QPoint pb = b->mapTo(root, QPoint(0, 0));
+
+                  // Если верхние границы отличаются меньше, чем на допуск,
+                  // считаем виджеты в одной строке и сортируем по X.
+                  if (std::abs(pa.y() - pb.y()) < rowTolerance)
+                      return pa.x() < pb.x();
+                  return pa.y() < pb.y();
+              });
+
+    // Применяем цепочку: w0 -> w1 -> w2 -> ...
+    for (int i = 0; i + 1 < widgets.size(); ++i)
+        QWidget::setTabOrder(widgets[i], widgets[i + 1]);
+}
+//--------------------------------------------------------------------------------
 void MyWidget::changeEvent(QEvent *event)
 {
     switch (event->type())

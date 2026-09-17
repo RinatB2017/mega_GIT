@@ -95,6 +95,9 @@ public:
     explicit MyWidget(QWidget *parent = nullptr);
     virtual ~MyWidget();
 
+    QList<QWidget*> focusableWidgets(QWidget *root);
+    void applyTabOrderByPosition(QWidget *root);
+
     void init_w_lists();
     void add_widget_to_w_lists(QWidget *widget);
     void lock_interface();

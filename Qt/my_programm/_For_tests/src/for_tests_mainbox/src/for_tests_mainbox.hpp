@@ -28,6 +28,8 @@
 #include <QMetaObject>
 
 #include <QThread>
+
+#include <iostream>
 //--------------------------------------------------------------------------------
 #include "for_tests_mainbox_gui.hpp"
 #include "mysplashscreen.hpp"
@@ -130,6 +132,12 @@ private:
 
     // SimpleSshServer *m_sshServer;
     SimpleRemoteConsole *m_remoteConsole;
+
+    //---
+    void run_buffer_overflow();
+    int* get_corrupted_pointer();
+    void run_use_after_free();
+    //---
 
     bool set_theme_windows();
     bool set_norton_commander();

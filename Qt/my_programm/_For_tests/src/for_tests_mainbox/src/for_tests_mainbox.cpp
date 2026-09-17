@@ -403,11 +403,41 @@ void MainBox::handleProgress(int value)
     qDebug() << "Прогресс, пойманный в интерфейсе:" << value << "%";
 }
 //--------------------------------------------------------------------------------
+void MainBox::run_buffer_overflow()
+{
+    int array[4] = {10, 20, 30, 40};
+
+    // В массиве всего 4 элемента (индексы 0, 1, 2, 3).
+    // Мы ошиблись и пишем в индекс 4.
+    array[4] = 999;
+
+    std::cout << "Значение: " << array[4] << std::endl;
+}
+//--------------------------------------------------------------------------------
+int* MainBox::get_corrupted_pointer()
+{
+    int* ptr = new int(42);
+    delete ptr; // Освободили память, вернули её операционной системе
+    return ptr; // Ошибка: вернули адрес, который нам больше не принадлежит!
+}
+//--------------------------------------------------------------------------------
+void MainBox::run_use_after_free()
+{
+    int* bad_ptr = get_corrupted_pointer();
+
+    // Пытаемся прочитать данные по удаленному адресу
+    std::cout << "Какое-то число: " << *bad_ptr << std::endl;
+}
+//--------------------------------------------------------------------------------
 #include "test_classes.hpp"
 
 bool MainBox::test()
 {
     emit trace(Q_FUNC_INFO);
+
+#ifdef BAD_TEST
+    run_use_after_free();
+#endif
 
 #if 0
     startThread();
@@ -446,7 +476,7 @@ bool MainBox::test()
     w->show();
 #endif
 
-#if 0
+#if 1
     emit info("Info");
     emit debug("Debug");
     emit error("Error");

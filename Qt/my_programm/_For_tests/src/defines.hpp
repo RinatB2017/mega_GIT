@@ -15,6 +15,8 @@
 
 #define M_WIDTH     320
 #define M_HEIGHT    200
+
+// #define BAD_TEST
 //--------------------------------------------------------------------------------
 #define ORGNAME "Home"
 #define APPNAME "_For_tests"

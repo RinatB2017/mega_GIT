@@ -145,10 +145,10 @@ unix:!macx {
 ###############################################################################
 # AddressSanitizer
 # Для Linux (работает идеально)
-unix:CONFIG(debug, debug|release) {
-    QMAKE_CXXFLAGS += -fsanitize=address -fno-omit-frame-pointer
-    QMAKE_LFLAGS   += -fsanitize=address
-}
+# unix:CONFIG(debug, debug|release) {
+#     QMAKE_CXXFLAGS += -fsanitize=address -fno-omit-frame-pointer
+#     QMAKE_LFLAGS   += -fsanitize=address
+# }
 
 # Для Windows + MSVC (требует аккуратности)
 win32-msvc*:CONFIG(debug, debug|release) {

@@ -87,7 +87,7 @@ void LogBox::init()
 #endif
 
 #ifdef QT_DEBUG
-    qDebug() << QString("Current codec is %1").arg(current_codec->name().data()); //FIXME потом убрать
+    // qDebug() << QString("Current codec is %1").arg(current_codec->name().data());
 #endif
 #endif
 
@@ -408,7 +408,7 @@ void LogBox::append_string(LOG_DATA log_data)
     else
     {
 #ifdef DEF_NEED_CODEC
-        // logBox->append(QString("Current codec is %1").arg(current_codec->name().data())); //FIXME потом убрать
+        // logBox->append(QString("Current codec is %1").arg(current_codec->name().data()));
         Q_ASSERT(current_codec);
         logBox->append(current_codec->toUnicode(ba));
 #else

@@ -145,25 +145,15 @@ unix:!macx {
 ###############################################################################
 # AddressSanitizer
 # Для Linux (работает идеально)
-# unix:CONFIG(debug, debug|release) {
-#     QMAKE_CXXFLAGS += -fsanitize=address -fno-omit-frame-pointer
-#     QMAKE_LFLAGS   += -fsanitize=address
-# }
+unix:CONFIG(debug, debug|release) {
+    QMAKE_CXXFLAGS += -fsanitize=address -fno-omit-frame-pointer
+    QMAKE_LFLAGS   += -fsanitize=address
+}
 
 # Для Windows + MSVC (требует аккуратности)
 win32-msvc*:CONFIG(debug, debug|release) {
-    # Включаем генерацию отладочных символов, но отключаем несовместимый Debug CRT
-    # QMAKE_CXXFLAGS += /fsanitize=address /Zi
-    # QMAKE_LFLAGS   += /fsanitize=address
-
-    # 1. Компилятору отдаем санитайзер и генерацию PDB-символов (/Zi)
     QMAKE_CXXFLAGS += /fsanitize=address /Zi
-
-    # 2. Линковщику отдаем ТОЛЬКО генерацию отладки (/DEBUG).
-    # Никаких /fsanitize=address здесь быть не должно!
     QMAKE_LFLAGS   += /DEBUG
-
-    # 3. Отключаем инкрементальную линковку (MSVC ASan её аппаратно не поддерживает)
     QMAKE_LFLAGS   += /INCREMENTAL:NO
 }
 ###############################################################################

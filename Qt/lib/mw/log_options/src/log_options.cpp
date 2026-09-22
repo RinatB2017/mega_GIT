@@ -43,7 +43,7 @@ void Log_options::init()
 
     findCodecs();
 
-#if 1
+#if 0
     //TODO надо проверить
     QTextCodec *codec = QTextCodec::codecForLocale();
 #else

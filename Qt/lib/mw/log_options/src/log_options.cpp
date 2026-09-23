@@ -43,15 +43,11 @@ void Log_options::init()
 
     findCodecs();
 
-#if 0
-    //TODO надо проверить
-    QTextCodec *codec = QTextCodec::codecForLocale();
-#else
 #ifdef Q_OS_WIN
-    QTextCodec *codec = QTextCodec::codecForName("windows-1251");   // костыль для винды
+    //TODO костыль для винды, не надо это менять
+    QTextCodec *codec = QTextCodec::codecForName("windows-1251");
 #else
     QTextCodec *codec = QTextCodec::codecForLocale();
-#endif
 #endif
 
     for(int n=0; n<ui->cb_CodecForCStrings->count(); n++)

@@ -53,7 +53,15 @@ public:
     void update_curves(QList<QByteArray> sl);
 
     void clr_curves();
+
+    bool add_curve_data(int channel,
+                        QTime v_t,
+                        qreal value);
+    void add_curve_data_points(int channel,
+                               QVector<QPointF> *points);
+
     bool add_data(int curve_index, qreal value);
+
     int get_max_index();
     bool get_curve_data(int channel,
                         int index,

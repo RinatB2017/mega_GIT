@@ -22,7 +22,13 @@
 #define MAINBOX_HPP
 //--------------------------------------------------------------------------------
 #include <QPointer>
+//--------------------------------------------------------------------------------
+#include "mywaitsplashscreen.hpp"
 #include "datagrapherbox.hpp"
+#include "mysplashscreen.hpp"
+#include "mainwindow.hpp"
+#include "grapherbox.hpp"
+#include "defines.hpp"
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
 namespace Ui {
@@ -62,6 +68,8 @@ private:
 
     QByteArray ba_data;
 
+    QList<int> l_curves;
+
     bool flag_good_data = false;
 
     QVariant convert_string(QString str_value);
@@ -76,6 +84,8 @@ private:
     void show_data_ADC(QList<QByteArray> sl);
 
     void clr_curves();
+
+    void read_data(const QString &filename);
 
     void updateText();
     bool programm_is_exit();

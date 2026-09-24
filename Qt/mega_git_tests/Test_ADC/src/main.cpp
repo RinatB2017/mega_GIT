@@ -72,6 +72,7 @@ int main(int argc, char *argv[])
     main_window->show();
 
     splash->finish(main_window);
+    delete splash;
 
 #ifdef QT_DEBUG
     qDebug() << QString(QObject::tr("Starting application %1")).arg(APPNAME);

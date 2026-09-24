@@ -23,13 +23,7 @@
 #endif
 //--------------------------------------------------------------------------------
 #include "ui_test_ADC_mainbox.h"
-//--------------------------------------------------------------------------------
-#include "mywaitsplashscreen.hpp"
 #include "test_ADC_mainbox.hpp"
-#include "datagrapherbox.hpp"
-#include "mysplashscreen.hpp"
-#include "mainwindow.hpp"
-#include "defines.hpp"
 //--------------------------------------------------------------------------------
 MainBox::MainBox(QWidget *parent,
                  MySplashScreen *splash) :
@@ -46,7 +40,6 @@ MainBox::~MainBox()
     delete ui;
 }
 //--------------------------------------------------------------------------------
-#include "grapherbox.hpp"
 void MainBox::init()
 {
     ui->setupUi(this);
@@ -59,11 +52,12 @@ void MainBox::init()
     for(int n=0; n<NUM_CURVES; n++)
     {
         QString curve_name = QString("A%1").arg(n);
-        ui->data_widget->add_curve(curve_name);
+        int curve = ui->data_widget->add_curve(curve_name);
+        l_curves.append(curve);
     }
 
     ui->serial_widget->set_fix_baudrate(57600);
-    connect(ui->serial_widget,  SIGNAL(output(QByteArray)),  this,   SLOT(data_ADC(QByteArray)));
+    connect(ui->serial_widget,  &SerialBox5_fix_baudrate::output,   this,   &MainBox::data_ADC);
 
 #ifdef DEF_USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());
@@ -119,7 +113,7 @@ void MainBox::createTestBar()
                                                   "choice_test");
         btn_choice_test->setObjectName("btn_choice_test");
 
-        connect(btn_choice_test, SIGNAL(clicked()), this, SLOT(choice_test()));
+        connect(btn_choice_test,    &QToolButton::clicked,  this,   &MainBox::choice_test);
     }
     else
     {
@@ -201,13 +195,13 @@ void MainBox::analize_packet(QList<QByteArray> sl)
 //--------------------------------------------------------------------------------
 void MainBox::add_curves(QList<QByteArray> sl)
 {
-    // emit trace(Q_FUNC_INFO);
+    emit trace(Q_FUNC_INFO);
     ui->data_widget->add_curves(sl);
 }
 //--------------------------------------------------------------------------------
 void MainBox::update_curves(QList<QByteArray> sl)
 {
-    // emit trace(Q_FUNC_INFO);
+    emit trace(Q_FUNC_INFO);
     ui->data_widget->update_curves(sl);
 }
 //--------------------------------------------------------------------------------
@@ -296,9 +290,88 @@ void MainBox::choice_test()
     }
 }
 //--------------------------------------------------------------------------------
+void MainBox::read_data(const QString &filename)
+{
+    int cnt = 0;
+
+    QFile file(filename);
+    if ( !file.open(QFile::ReadOnly | QFile::Text) )
+    {
+        emit error(QString("File %1 not exists").arg(filename));
+    }
+    else
+    {
+        QTextStream in(&file);
+        while (!in.atEnd())
+        {
+            QString line = in.readLine();
+            QStringList sl = line.split("|");
+            bool ok;
+            if(sl.count() != 4)
+            {
+                emit error(QString("File %1 BAD").arg(filename));
+                file.close();
+                return;
+            }
+            QString data = sl.at(0);
+            QString time = sl.at(1);
+            int curve = sl.at(2).toInt(&ok);
+            if(!ok) continue;
+            qreal curve_data = sl.at(3).toDouble(&ok);
+            if(!ok) continue;
+
+            emit info(QString("%1 %2")
+                      .arg(curve)
+                      .arg(curve_data));
+            // ui->data_widget->add_data(l_curves.at(curve), curve_data);
+            if(curve == 0)
+            {
+                QTime t;
+                t = QTime::fromString(time, "hh:mm:ss");
+                if(t.isValid())
+                {
+                    ui->data_widget->add_curve_data(l_curves.at(curve), t, curve_data);
+                }
+            }
+            if(cnt < 100)
+            {
+                cnt++;
+            }
+            else
+            {
+                file.close();
+                return;
+            }
+        }
+        file.close();
+    }
+}
+//--------------------------------------------------------------------------------
 void MainBox::test()
 {
-    emit trace(Q_FUNC_INFO);
+    emit info("Test");
+
+#if 0
+    for(int n=0; n<100; n++)
+    {
+        ui->data_widget->add_data(l_curves.at(0), (qreal)n * 1.2);
+    }
+#endif
+
+#if 1
+    MyFileDialog *dlg = new MyFileDialog("adc_box");
+    dlg->setNameFilter("CSV files (*.csv)");
+    dlg->setDefaultSuffix("CSV");
+    dlg->setOption(MyFileDialog::DontUseNativeDialog, false);
+    dlg->setDirectory(".");
+    if(dlg->exec())
+    {
+        QStringList files = dlg->selectedFiles();
+        QString filename = files.at(0);
+        read_data(filename);
+    }
+    delete dlg;
+#endif
 }
 //--------------------------------------------------------------------------------
 void MainBox::updateText()

@@ -107,11 +107,6 @@ void Worker_fake::port_close(void)
     }
 }
 //--------------------------------------------------------------------------------
-void Worker_fake::readyRead(void)
-{
-    emit trace(Q_FUNC_INFO);
-}
-//--------------------------------------------------------------------------------
 void Worker_fake::start(void)
 {
     emit trace(Q_FUNC_INFO);

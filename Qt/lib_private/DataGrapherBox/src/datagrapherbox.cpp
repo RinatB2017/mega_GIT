@@ -77,6 +77,17 @@ void DataGrapherBox::clr_curves()
     curves.clear();
 }
 //--------------------------------------------------------------------------------
+bool DataGrapherBox::add_curve_data(int channel, QTime v_t, qreal value)
+{
+    Q_ASSERT(v_t.isValid());
+    ui->grapher_widget->add_curve_data(channel, v_t, value);
+}
+//--------------------------------------------------------------------------------
+void DataGrapherBox::add_curve_data_points(int channel, QVector<QPointF> *points)
+{
+    ui->grapher_widget->add_curve_data_points(channel, points);
+}
+//--------------------------------------------------------------------------------
 bool DataGrapherBox::add_data(int curve_index, qreal value)
 {
     if(curve_index < 0)

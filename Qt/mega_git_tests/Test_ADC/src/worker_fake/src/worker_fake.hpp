@@ -33,6 +33,7 @@ class Worker_fake : public MyWidget
 
 signals:
     void output(QByteArray text);
+    void readyRead(void);
 
 public:
     explicit Worker_fake(QWidget *parent = nullptr);
@@ -41,8 +42,6 @@ public:
     void input(QByteArray data);
     void port_open(void);
     void port_close(void);
-
-    void readyRead(void);
 
 private slots:
     void update(void);

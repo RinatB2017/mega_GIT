@@ -144,18 +144,16 @@ unix:!macx {
 }
 ###############################################################################
 # AddressSanitizer
-# Для Linux (работает идеально)
-unix:CONFIG(debug, debug|release) {
-    QMAKE_CXXFLAGS += -fsanitize=address -fno-omit-frame-pointer
-    QMAKE_LFLAGS   += -fsanitize=address
-}
+# unix:CONFIG(debug, debug|release) {
+#     QMAKE_CXXFLAGS += -fsanitize=address -fno-omit-frame-pointer
+#     QMAKE_LFLAGS   += -fsanitize=address
+# }
 
-# Для Windows + MSVC (требует аккуратности)
-win32-msvc*:CONFIG(debug, debug|release) {
-    QMAKE_CXXFLAGS += /fsanitize=address /Zi
-    QMAKE_LFLAGS   += /DEBUG
-    QMAKE_LFLAGS   += /INCREMENTAL:NO
-}
+# win32-msvc*:CONFIG(debug, debug|release) {
+#     QMAKE_CXXFLAGS += /fsanitize=address /Zi
+#     QMAKE_LFLAGS   += /DEBUG
+#     QMAKE_LFLAGS   += /INCREMENTAL:NO
+# }
 ###############################################################################
 linux {
 MACHINE_ID = $$system(cat /etc/machine-id)

@@ -154,54 +154,30 @@ QString TCP_Client::get_errorString()
 //--------------------------------------------------------------------------------
 void TCP_Client::send_info(QString text)
 {
-    QByteArray data;
-
-    setAddress(address);
-    setPort(port);
-
-    data.clear();
-    data.append(text.toLocal8Bit());
-
-    input(data);
+    QString temp = QString("INFO|%1")
+                       .arg(text);
+    input(temp.toLocal8Bit());
 }
 //--------------------------------------------------------------------------------
 void TCP_Client::send_debug(QString text)
 {
-    QByteArray data;
-
-    setAddress(address);
-    setPort(port);
-
-    data.clear();
-    data.append(text.toLocal8Bit());
-
-    input(data);
+    QString temp = QString("DEBUG|%1")
+    .arg(text);
+    input(temp.toLocal8Bit());
 }
 //--------------------------------------------------------------------------------
 void TCP_Client::send_error(QString text)
 {
-    QByteArray data;
-
-    setAddress(address);
-    setPort(port);
-
-    data.clear();
-    data.append(text.toLocal8Bit());
-
-    input(data);
+    QString temp = QString("ERROR|%1")
+    .arg(text);
+    input(temp.toLocal8Bit());
 }
 //--------------------------------------------------------------------------------
 void TCP_Client::send_trace(QString text)
 {
-    QByteArray data;
-
-    setAddress(address);
-    setPort(port);
-
-    data.clear();
-    data.append(text.toLocal8Bit());
-
-    input(data);
+    QString temp = QString("TRACE|%1")
+    .arg(text);
+    input(temp.toLocal8Bit());
 }
 //--------------------------------------------------------------------------------
 QTcpSocket::SocketState TCP_Client::get_state()

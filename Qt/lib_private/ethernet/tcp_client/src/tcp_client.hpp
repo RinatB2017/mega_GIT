@@ -38,6 +38,12 @@ signals:
     void error(const QString &);
     void trace(const QString &);
 
+    void readyRead();
+    void disconnected();
+    void socket_error(QAbstractSocket::SocketError);
+    void state_changed(QAbstractSocket::SocketState);
+    void output(const QByteArray &);
+
 public:
     explicit TCP_Client(QObject* parent = nullptr);
     virtual ~TCP_Client();
@@ -52,26 +58,24 @@ public:
     QByteArray readAll();
     QString get_errorString();
 
-signals:
-    void readyRead();
-    void disconnected();
-    void socket_error(QAbstractSocket::SocketError);
-    void state_changed(QAbstractSocket::SocketState);
-    void output(const QByteArray &);
-
 public slots:
-    QByteArray input(const QByteArray &data);
+    void send_info(QString text);
+    void send_debug(QString text);
+    void send_error(QString text);
+    void send_trace(QString text);
 
 private slots:
     QByteArray send_data(const QByteArray &);
 
 private:
     QPointer<QTcpSocket> tcpSocket;
-    QString address;
+    QHostAddress address;
     uint port = 0;
 
     void init();
     void readyData();
+
+    QByteArray input(const QByteArray &data);
 };
 //--------------------------------------------------------------------------------
 #endif

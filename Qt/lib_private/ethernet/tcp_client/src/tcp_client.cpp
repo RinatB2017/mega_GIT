@@ -59,7 +59,7 @@ void TCP_Client::setAddress(const QHostAddress &address)
 #ifdef DEBUG
     emit debug(QString("set address %1").arg(address.toString()));
 #endif
-    this->address = address.toString();
+    this->address = address;
 }
 //--------------------------------------------------------------------------------
 void TCP_Client::setPort(unsigned int port)
@@ -75,7 +75,9 @@ QByteArray TCP_Client::send_data(const QByteArray &block)
     QByteArray tmp;
 
     tmp.clear();
-    emit info(QString("connect to host %1:%2").arg(address).arg(port));
+    emit info(QString("connect to host %1:%2")
+                  .arg(address.toString())
+                  .arg(port));
     tcpSocket->connectToHost(address,
                              static_cast<quint16>(port));
     if (!tcpSocket->waitForConnected(3000))
@@ -92,41 +94,6 @@ QByteArray TCP_Client::send_data(const QByteArray &block)
     {
         emit error(tr("Данные передать не удалось!"));
     }
-
-#if 0
-    QElapsedTimer timer;
-    timer.start();
-    while(timer.elapsed() < 3000)
-    {
-        QCoreApplication::processEvents();
-        QByteArray t_ba = tcpSocket->readAll();
-        if(!t_ba.isEmpty())
-        {
-            tmp = t_ba;
-            break;
-        }
-    }
-    if(tmp.isNull() == false)
-    {
-        emit info(tr("Данные получены!"));
-    }
-    else
-    {
-        emit error(tr("Данные получить не удалось!"));
-    }
-#endif
-
-#if 0
-    if(tcpSocket->waitForReadyRead (3000))
-    {
-        tmp = tcpSocket->readAll();
-        emit info(tr("Данные получены!"));
-    }
-    else
-    {
-        emit error(tr("Данные получить не удалось!"));
-    }
-#endif
 
     tcpSocket->disconnectFromHost();
     return tmp;
@@ -183,6 +150,58 @@ QString TCP_Client::get_errorString()
         return tcpSocket->errorString();
     }
     return "tcpSocket not open";
+}
+//--------------------------------------------------------------------------------
+void TCP_Client::send_info(QString text)
+{
+    QByteArray data;
+
+    setAddress(address);
+    setPort(port);
+
+    data.clear();
+    data.append(text.toLocal8Bit());
+
+    input(data);
+}
+//--------------------------------------------------------------------------------
+void TCP_Client::send_debug(QString text)
+{
+    QByteArray data;
+
+    setAddress(address);
+    setPort(port);
+
+    data.clear();
+    data.append(text.toLocal8Bit());
+
+    input(data);
+}
+//--------------------------------------------------------------------------------
+void TCP_Client::send_error(QString text)
+{
+    QByteArray data;
+
+    setAddress(address);
+    setPort(port);
+
+    data.clear();
+    data.append(text.toLocal8Bit());
+
+    input(data);
+}
+//--------------------------------------------------------------------------------
+void TCP_Client::send_trace(QString text)
+{
+    QByteArray data;
+
+    setAddress(address);
+    setPort(port);
+
+    data.clear();
+    data.append(text.toLocal8Bit());
+
+    input(data);
 }
 //--------------------------------------------------------------------------------
 QTcpSocket::SocketState TCP_Client::get_state()

@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2026                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -28,29 +28,28 @@
 //--------------------------------------------------------------------------------
 #include "mywidget.hpp"
 //--------------------------------------------------------------------------------
-class Processor;
-class QTcpServer;
-class QTcpSocket;
-//--------------------------------------------------------------------------------
-class TCP_Server : public MyWidget
+class TCP_Server : public QObject
 {
     Q_OBJECT
 
+signals:
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
+
 public:
-    explicit TCP_Server(QWidget *parent = nullptr);
+    explicit TCP_Server(QObject *parent = nullptr);
     virtual ~TCP_Server();
 
     bool is_opened();
 
 signals:
-    void output(const QByteArray &);
     void server_is_open(bool);
-    void newConnection();
 
 public slots:    
     bool createServerOnPort(const QHostAddress address, quint16 port);
     void closeServer();
-    void input(const QByteArray &data);
 
 private slots:
     void newConnect();
@@ -59,14 +58,9 @@ private slots:
 
 private:
     QTcpServer *tcpServer = nullptr;
-    QTcpSocket *clientConnection = nullptr;
-
     bool is_open = false;
 
-    void updateText();
-    bool programm_is_exit();
-    void load_setting();
-    void save_setting();
+    void print_error(QAbstractSocket::SocketError socketError);
 };
 //--------------------------------------------------------------------------------
 #endif

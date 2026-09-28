@@ -149,11 +149,11 @@ unix:!macx {
 #     QMAKE_LFLAGS   += -fsanitize=address
 # }
 
-# win32-msvc*:CONFIG(debug, debug|release) {
-#     QMAKE_CXXFLAGS += /fsanitize=address /Zi
-#     QMAKE_LFLAGS   += /DEBUG
-#     QMAKE_LFLAGS   += /INCREMENTAL:NO
-# }
+win32-msvc*:CONFIG(debug, debug|release) {
+    QMAKE_CXXFLAGS += /fsanitize=address /Zi
+    QMAKE_LFLAGS   += /DEBUG
+    QMAKE_LFLAGS   += /INCREMENTAL:NO
+}
 ###############################################################################
 linux {
 MACHINE_ID = $$system(cat /etc/machine-id)

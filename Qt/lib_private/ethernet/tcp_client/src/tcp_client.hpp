@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2026                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -21,23 +21,27 @@
 #ifndef TCP_CLIENT_HPP
 #define TCP_CLIENT_HPP
 //--------------------------------------------------------------------------------
+#include <QCoreApplication>
+#include <QElapsedTimer>
 #include <QPointer>
 
 #include <QHostAddress>
 #include <QTcpSocket>
 //--------------------------------------------------------------------------------
-#include "mywidget.hpp"
-//--------------------------------------------------------------------------------
-class QTcpSocket;
-class QByteArray;
-class QWidget;
-//--------------------------------------------------------------------------------
-class TCP_Client : public MyWidget
+class TCP_Client : public QObject
 {
     Q_OBJECT
 
+signals:
+    void info(const QString &);
+    void debug(const QString &);
+    void error(const QString &);
+    void trace(const QString &);
+
 public:
-    explicit TCP_Client(QWidget* parent = nullptr);
+    explicit TCP_Client(QObject* parent = nullptr);
+    virtual ~TCP_Client();
+
     void setAddress(const QHostAddress &);
     void setPort(unsigned int);
 
@@ -65,13 +69,8 @@ private:
     QPointer<QTcpSocket> tcpSocket;
     QString address;
     uint port = 0;
+
     void init();
-
-    void updateText();
-    bool programm_is_exit();
-    void load_setting();
-    void save_setting();
-
     void readyData();
 };
 //--------------------------------------------------------------------------------

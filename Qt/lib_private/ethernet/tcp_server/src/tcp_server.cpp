@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2026                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -20,21 +20,22 @@
 **********************************************************************************/
 #include "tcp_server.hpp"
 //--------------------------------------------------------------------------------
-TCP_Server::TCP_Server(QWidget *parent) :
-    MyWidget(parent)
+TCP_Server::TCP_Server(QObject *parent) :
+    QObject(parent)
 {
     is_open = false;
 
     QTimer::singleShot(0, [this]{
         emit server_is_open(is_open);
     });
-
-    setVisible(false);
 }
 //--------------------------------------------------------------------------------
 TCP_Server::~TCP_Server()
 {
-    delete tcpServer;
+    if(tcpServer)
+    {
+        delete tcpServer;
+    }
 }
 //--------------------------------------------------------------------------------
 bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
@@ -48,6 +49,8 @@ bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
     }
 
     tcpServer = new QTcpServer(this);
+    connect(tcpServer,  &QTcpServer::acceptError,   this,   &TCP_Server::print_error);
+
     if (!tcpServer->listen(address, port))
     {
         emit error(QString("Ошибка: %1").arg(tcpServer->errorString()));
@@ -70,11 +73,6 @@ void TCP_Server::closeServer()
     {
         tcpServer->close();
     }
-    if(clientConnection)
-    {
-        delete clientConnection;
-        clientConnection = nullptr;
-    }
 
     is_open = false;
     emit server_is_open(is_open);
@@ -82,64 +80,56 @@ void TCP_Server::closeServer()
 //--------------------------------------------------------------------------------
 void TCP_Server::newConnect()
 {
-    clientConnection = tcpServer->nextPendingConnection();
-    emit info(QString("Клиент подключился: %1:%2")
-              .arg(clientConnection->peerAddress().toString())
-              .arg(clientConnection->peerPort()));
-    connect(clientConnection,   &QTcpSocket::disconnected,  this,   &TCP_Server::clientDisconnected);
-    connect(clientConnection,   &QTcpSocket::readyRead,     this,   &TCP_Server::clientReadyRead);
-}
-//--------------------------------------------------------------------------------
-void TCP_Server::clientReadyRead()
-{
-    if(clientConnection->bytesAvailable())
+    while(tcpServer->hasPendingConnections())
     {
-        QByteArray read_block;
+        QTcpSocket *clientSocket = tcpServer->nextPendingConnection();
+        if (!clientSocket) continue;
 
-        emit info("Получены данные");
+        emit info(QString("Клиент подключился: %1:%2")
+                  .arg(clientSocket->peerAddress().toString())
+                  .arg(clientSocket->peerPort()));
 
-        read_block = clientConnection->readAll();
-        //emit trace(read_block);
-        emit debug(read_block.toHex().toUpper());
-        emit output(read_block);
-        // возвращаем ответ
-        //clientConnection->write(read_block);
+        // Подписываемся на события конкретного сокета
+        connect(clientSocket, &QTcpSocket::readyRead,           this, &TCP_Server::clientReadyRead);
+        connect(clientSocket, &QAbstractSocket::errorOccurred,  this, &TCP_Server::print_error);
+        connect(clientSocket, &QTcpSocket::disconnected,        this, &TCP_Server::clientDisconnected);
     }
-}
-//--------------------------------------------------------------------------------
-void TCP_Server::input(const QByteArray &data)
-{
-    clientConnection->write(data);
 }
 //--------------------------------------------------------------------------------
 void TCP_Server::clientDisconnected()
 {
-    emit info("Клиент отключился");
-    delete clientConnection;
+    QTcpSocket *clientSocket = qobject_cast<QTcpSocket*>(sender());
+    if (!clientSocket) return;
+
+    emit info(QString("Клиент %1 отключился").arg(clientSocket->peerAddress().toString()));
+    clientSocket->deleteLater();
+}
+//--------------------------------------------------------------------------------
+void TCP_Server::clientReadyRead()
+{
+    QTcpSocket *clientSocket = qobject_cast<QTcpSocket*>(sender());
+    if (!clientSocket) return;
+
+    QByteArray data = clientSocket->readAll();
+    emit info(QString("Принято от %1:%2")
+              .arg(clientSocket->peerAddress().toString())
+              .arg(data.trimmed()));
+}
+//--------------------------------------------------------------------------------
+void TCP_Server::print_error(QAbstractSocket::SocketError socketError)
+{
+    QTcpSocket *clientSocket = qobject_cast<QTcpSocket*>(sender());
+    if (!clientSocket) return;
+
+    if (socketError != QAbstractSocket::RemoteHostClosedError) {
+        emit error(QString("Ошибка сокета для IP %1:%2")
+                   .arg(clientSocket->peerAddress().toString())
+                   .arg(clientSocket->errorString()));
+    }
 }
 //--------------------------------------------------------------------------------
 bool TCP_Server::is_opened()
 {
     return is_open;
-}
-//--------------------------------------------------------------------------------
-void TCP_Server::updateText()
-{
-
-}
-//--------------------------------------------------------------------------------
-bool TCP_Server::programm_is_exit()
-{
-    return true;
-}
-//--------------------------------------------------------------------------------
-void TCP_Server::load_setting()
-{
-
-}
-//--------------------------------------------------------------------------------
-void TCP_Server::save_setting()
-{
-
 }
 //--------------------------------------------------------------------------------

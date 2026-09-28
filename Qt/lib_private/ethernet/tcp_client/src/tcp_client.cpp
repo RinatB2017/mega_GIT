@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2012                                                       **
+**     Copyright (C) 2026                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -26,10 +26,18 @@
 #   include <QDebug>
 #endif
 //--------------------------------------------------------------------------------
-TCP_Client::TCP_Client(QWidget* parent)
-    : MyWidget(parent)
+TCP_Client::TCP_Client(QObject *parent)
+    : QObject(parent)
 {
     init();
+}
+//--------------------------------------------------------------------------------
+TCP_Client::~TCP_Client()
+{
+    if(tcpSocket)
+    {
+        delete tcpSocket;
+    }
 }
 //--------------------------------------------------------------------------------
 void TCP_Client::init()
@@ -37,8 +45,8 @@ void TCP_Client::init()
     tcpSocket = new QTcpSocket();
     connect(tcpSocket,  &QTcpSocket::readyRead,     this,   &TCP_Client::readyData);
     connect(tcpSocket,  &QTcpSocket::disconnected,  this,   &TCP_Client::disconnected);
-    connect(tcpSocket,  SIGNAL(error(QAbstractSocket::SocketError)),        this,   SIGNAL(socket_error(QAbstractSocket::SocketError)));
-    connect(tcpSocket,  SIGNAL(stateChanged(QAbstractSocket::SocketState)), this,   SIGNAL(state_changed(QAbstractSocket::SocketState)));
+    connect(tcpSocket,  &QTcpSocket::errorOccurred, this,   &TCP_Client::socket_error);
+    connect(tcpSocket,  &QTcpSocket::stateChanged,  this,   &TCP_Client::state_changed);
 }
 //--------------------------------------------------------------------------------
 void TCP_Client::readyData()
@@ -62,9 +70,6 @@ void TCP_Client::setPort(unsigned int port)
     this->port = port;
 }
 //--------------------------------------------------------------------------------
-#include <QElapsedTimer>
-#include <QCoreApplication>
-
 QByteArray TCP_Client::send_data(const QByteArray &block)
 {
     QByteArray tmp;
@@ -88,8 +93,7 @@ QByteArray TCP_Client::send_data(const QByteArray &block)
         emit error(tr("Данные передать не удалось!"));
     }
 
-    //FIXME надо нормально сделать
-#if 1
+#if 0
     QElapsedTimer timer;
     timer.start();
     while(timer.elapsed() < 3000)
@@ -110,7 +114,9 @@ QByteArray TCP_Client::send_data(const QByteArray &block)
     {
         emit error(tr("Данные получить не удалось!"));
     }
-#else
+#endif
+
+#if 0
     if(tcpSocket->waitForReadyRead (3000))
     {
         tmp = tcpSocket->readAll();
@@ -187,25 +193,5 @@ QTcpSocket::SocketState TCP_Client::get_state()
 QByteArray TCP_Client::input(const QByteArray &data)
 {
     return send_data(data);
-}
-//--------------------------------------------------------------------------------
-void TCP_Client::updateText()
-{
-
-}
-//--------------------------------------------------------------------------------
-bool TCP_Client::programm_is_exit()
-{
-    return true;
-}
-//--------------------------------------------------------------------------------
-void TCP_Client::load_setting()
-{
-
-}
-//--------------------------------------------------------------------------------
-void TCP_Client::save_setting()
-{
-
 }
 //--------------------------------------------------------------------------------

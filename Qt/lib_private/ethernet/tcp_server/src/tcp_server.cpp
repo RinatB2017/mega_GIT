@@ -85,9 +85,9 @@ void TCP_Server::newConnect()
         QTcpSocket *clientSocket = tcpServer->nextPendingConnection();
         if (!clientSocket) continue;
 
-        emit info(QString("Клиент подключился: %1:%2")
-                  .arg(clientSocket->peerAddress().toString())
-                  .arg(clientSocket->peerPort()));
+        // emit info(QString("Клиент подключился: %1:%2")
+        //           .arg(clientSocket->peerAddress().toString())
+        //           .arg(clientSocket->peerPort()));
 
         // Подписываемся на события конкретного сокета
         connect(clientSocket, &QTcpSocket::readyRead,           this, &TCP_Server::clientReadyRead);
@@ -101,7 +101,7 @@ void TCP_Server::clientDisconnected()
     QTcpSocket *clientSocket = qobject_cast<QTcpSocket*>(sender());
     if (!clientSocket) return;
 
-    emit info(QString("Клиент %1 отключился").arg(clientSocket->peerAddress().toString()));
+    // emit info(QString("Клиент %1 отключился").arg(clientSocket->peerAddress().toString()));
     clientSocket->deleteLater();
 }
 //--------------------------------------------------------------------------------
@@ -111,9 +111,19 @@ void TCP_Server::clientReadyRead()
     if (!clientSocket) return;
 
     QByteArray data = clientSocket->readAll();
-    emit info(QString("Принято от %1:%2")
-              .arg(clientSocket->peerAddress().toString())
-              .arg(data.trimmed()));
+    QList<QByteArray> sl = data.split('|');
+    int cnt = sl.count();
+    if(cnt == 2)
+    {
+        if(sl.at(0) == "INFO")  emit info(sl.at(1));
+        if(sl.at(0) == "DEBUG") emit debug(sl.at(1));
+        if(sl.at(0) == "ERROR") emit error(sl.at(1));
+        if(sl.at(0) == "TRACE") emit trace(sl.at(1));
+    }
+    else
+    {
+        emit error(QString("Bad count: %1").arg(cnt));
+    }
 }
 //--------------------------------------------------------------------------------
 void TCP_Server::print_error(QAbstractSocket::SocketError socketError)

@@ -75,24 +75,24 @@ QByteArray TCP_Client::send_data(const QByteArray &block)
     QByteArray tmp;
 
     tmp.clear();
-    emit info(QString("connect to host %1:%2")
-                  .arg(address.toString())
-                  .arg(port));
+    // emit info(QString("connect to host %1:%2")
+    //               .arg(address.toString())
+    //               .arg(port));
     tcpSocket->connectToHost(address,
                              static_cast<quint16>(port));
     if (!tcpSocket->waitForConnected(3000))
     {
-        emit error(tr("Сервер не отвечает!"));
+        // emit error(tr("Сервер не отвечает!"));
         return nullptr;
     }
     tcpSocket->write(block);
     if (tcpSocket->waitForBytesWritten(3000))
     {
-        emit info(tr("Данные переданы!"));
+        // emit info(tr("Данные переданы!"));
     }
     else
     {
-        emit error(tr("Данные передать не удалось!"));
+        // emit error(tr("Данные передать не удалось!"));
     }
 
     tcpSocket->disconnectFromHost();
@@ -101,7 +101,7 @@ QByteArray TCP_Client::send_data(const QByteArray &block)
 //--------------------------------------------------------------------------------
 void TCP_Client::connect_to_host(QString address, quint16 port)
 {
-    emit info(QString("connect to host %1:%2").arg(address).arg(port));
+    // emit info(QString("connect to host %1:%2").arg(address).arg(port));
     if(tcpSocket)
     {
         tcpSocket->connectToHost(address, port);
@@ -112,7 +112,7 @@ void TCP_Client::disconnect_from_host()
 {
     if(tcpSocket)
     {
-        emit info("disconnect_from_host");
+        // emit info("disconnect_from_host");
         tcpSocket->disconnectFromHost();
     }
 }

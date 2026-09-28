@@ -33,11 +33,6 @@ class TCP_Client : public QObject
     Q_OBJECT
 
 signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
     void readyRead();
     void disconnected();
     void socket_error(QAbstractSocket::SocketError);

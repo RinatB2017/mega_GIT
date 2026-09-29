@@ -80,13 +80,13 @@ QByteArray TCP_Client::send_data(const QByteArray &block)
     //               .arg(port));
     tcpSocket->connectToHost(address,
                              static_cast<quint16>(port));
-    if (!tcpSocket->waitForConnected(3000))
+    if (!tcpSocket->waitForConnected(100))
     {
         // emit error(tr("Сервер не отвечает!"));
         return nullptr;
     }
     tcpSocket->write(block);
-    if (tcpSocket->waitForBytesWritten(3000))
+    if (tcpSocket->waitForBytesWritten(100))
     {
         // emit info(tr("Данные переданы!"));
     }

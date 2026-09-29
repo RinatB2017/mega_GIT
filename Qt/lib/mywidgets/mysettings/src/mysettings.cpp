@@ -289,7 +289,7 @@ bool MySettings::load_property(QWidget *widget, const QString &property_name)
         return false;
     }
 
-    bool ok = widget->setProperty(property_name.toLocal8Bit(), property);
+    bool ok = widget->setProperty(property_name.toUtf8(), property);
     return ok;
 }
 //--------------------------------------------------------------------------------
@@ -316,7 +316,7 @@ bool MySettings::save_property(QWidget *widget, const QString &property_name)
     }
     //---
 
-    QVariant property = widget->property(property_name.toLocal8Bit());
+    QVariant property = widget->property(property_name.toUtf8());
     if(property.isValid() == false)
     {
         return false;
@@ -531,7 +531,7 @@ bool MySettings::compare_name(const char *widget_name, QString class_name)
 {
     Q_ASSERT(widget_name);
     int res = strncmp(widget_name,
-                      class_name.toLocal8Bit(),
+                      class_name.toUtf8(),
                       static_cast<size_t>(class_name.length()));    //count
     return (res == 0);
 }

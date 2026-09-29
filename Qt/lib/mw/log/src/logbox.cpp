@@ -80,14 +80,19 @@ void LogBox::init()
     current_codec = QTextCodec::codecForLocale();
 #else
 #ifdef Q_OS_WIN
-    current_codec = QTextCodec::codecForName("windows-1251");   // костыль для винды
+    //FIXME костыль для винды
+    current_codec = QTextCodec::codecForName("windows-1251");
 #else
     current_codec = QTextCodec::codecForLocale();
 #endif
 #endif
 
+    QTimer::singleShot(0, [this]{
+        emit info(QString("Current codec is %1").arg(current_codec->name().data()));
+    });
+
 #ifdef QT_DEBUG
-    // qDebug() << QString("Current codec is %1").arg(current_codec->name().data());
+    qDebug() << QString("Current codec is %1").arg(current_codec->name().data());
 #endif
 #endif
 
@@ -361,7 +366,7 @@ void LogBox::append_string(LOG_DATA log_data)
 
 #ifdef DEF_NEED_CODEC
     QByteArray ba;
-    ba.append(temp.toLocal8Bit());
+    ba.append(temp.toUtf8());
 #endif
 
     if(flagAutoSave)
@@ -410,6 +415,13 @@ void LogBox::append_string(LOG_DATA log_data)
 #ifdef DEF_NEED_CODEC
         // logBox->append(QString("Current codec is %1").arg(current_codec->name().data()));
         Q_ASSERT(current_codec);
+
+#ifdef Q_OS_WIN
+        //TODO костыль для винды
+        QString cleanString = QString::fromUtf8(ba);
+        ba = cleanString.toLocal8Bit();
+#endif
+
         logBox->append(current_codec->toUnicode(ba));
 #else
         logBox->append(temp);
@@ -711,7 +723,7 @@ void LogBox::save_logfile(const QDateTime &dt,
     temp.append(QString("%1\n")
                     .arg(log));
 
-    file.write(temp.toLocal8Bit());
+    file.write(temp.toUtf8());
     file.close();
 }
 //--------------------------------------------------------------------------------
@@ -750,7 +762,7 @@ void LogBox::save_log(const QString &filename)
                         .arg(static_cast<uchar>(ld.background_color.blue()),  2, 16, QChar('0')));
         temp.append(QString("%1\n").arg(ld.message));
 
-        file.write(temp.toLocal8Bit());
+        file.write(temp.toUtf8());
     }
 
     file.close();
@@ -791,7 +803,7 @@ void LogBox::save_full_log(const QString &filename)
                         .arg(static_cast<uchar>(ld.background_color.blue()),  2, 16, QChar('0')));
         temp.append(QString("%1\n").arg(ld.message));
 
-        file.write(temp.toLocal8Bit());
+        file.write(temp.toUtf8());
     }
 
     file.close();
@@ -901,9 +913,9 @@ void LogBox::updateText()
 {
     foreach (QAction *action, app_actions)
     {
-        action->setText(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
-        action->setToolTip(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
-        action->setStatusTip(tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
+        action->setText(tr(action->property(P_APP_ENG_TEXT).toString().toUtf8()));
+        action->setToolTip(tr(action->property(P_APP_ENG_TEXT).toString().toUtf8()));
+        action->setStatusTip(tr(action->property(P_APP_ENG_TEXT).toString().toUtf8()));
     }
 }
 //--------------------------------------------------------------------------------

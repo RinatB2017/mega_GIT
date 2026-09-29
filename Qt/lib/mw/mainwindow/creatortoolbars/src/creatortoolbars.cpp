@@ -286,14 +286,14 @@ void CreatorToolBars::app_updateText()
 {
     foreach (QAbstractButton *btn, app_buttons)
     {
-        QString text = tr(btn->property(P_APP_ENG_TEXT).toString().toLocal8Bit());
+        QString text = tr(btn->property(P_APP_ENG_TEXT).toString().toUtf8());
         btn->setText(text);
         btn->setToolTip(text);
         btn->setStatusTip(text);
     }
     foreach (QAction *action, app_actions)
     {
-        QString text = tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit());
+        QString text = tr(action->property(P_APP_ENG_TEXT).toString().toUtf8());
         action->setText(text);
         action->setToolTip(text);
         action->setStatusTip(text);

@@ -1078,7 +1078,7 @@ QDockWidget * CreatorWindow::add_dock_widget(QString title,
     Q_ASSERT(dw);
 
     dw->setObjectName(objectname);
-    dw->setWindowTitle(tr(title.toLocal8Bit()));
+    dw->setWindowTitle(tr(title.toUtf8()));
     dw->setProperty(P_DOCKWIDGET_ENG_TEXT, title);
 
     if(no_dock_position == false)
@@ -1415,7 +1415,7 @@ void CreatorWindow::dockwidget_updateText()
     QList<QDockWidget *> ldw = findChildren<QDockWidget *>();
     foreach (QDockWidget *dock, ldw)
     {
-        dock->setWindowTitle(tr(dock->property(P_DOCKWIDGET_ENG_TEXT).toString().toLocal8Bit()));
+        dock->setWindowTitle(tr(dock->property(P_DOCKWIDGET_ENG_TEXT).toString().toUtf8()));
     }
 }
 //--------------------------------------------------------------------------------

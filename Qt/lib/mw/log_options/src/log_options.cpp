@@ -90,7 +90,7 @@ QTextCodec *Log_options::get_text_codec()
     {
         return QTextCodec::codecForMib(QTextCodec::availableMibs().first());
     }
-    return QTextCodec::codecForName(codec_name.toLocal8Bit());
+    return QTextCodec::codecForName(codec_name.toUtf8());
 }
 //--------------------------------------------------------------------------------
 bool Log_options::get_flag_ReadOnly()

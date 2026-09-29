@@ -157,27 +157,27 @@ win32-msvc*:CONFIG(debug, debug|release) {
 ###############################################################################
 linux {
 MACHINE_ID = $$system(cat /etc/machine-id)
-message("Текущий Machine ID: " $$MACHINE_ID)
+message("Current Machine ID: " $$MACHINE_ID)
 
 contains(MACHINE_ID, "918ac8770c47e05955e6ac056282aa3a") {
     DEFINES += IS_MACHINE_HOME
-    message("--- Сборка для ДОМА ---")
+    message("--- HOME ---")
 } else {
     DEFINES += IS_MACHINE_WORK
-    message("--- Сборка для РАБОТЫ ---")
+    message("--- WORK ---")
 }
 }
 
 win32 {
     MACHINE_ID = $$system(powershell -Command "(Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Cryptography').MachineGuid")
-    message("Текущий Machine ID: " $$MACHINE_ID)
+    message("Current Machine ID: " $$MACHINE_ID)
 
 contains(MACHINE_ID, "b87537d2-72e1-438b-8667-d41b6a9c73dd") {
     DEFINES += IS_MACHINE_HOME
-    message("--- Сборка для ДОМА ---")
+    message("--- HOME ---")
 } else {
     DEFINES += IS_MACHINE_WORK
-    message("--- Сборка для РАБОТЫ ---")
+    message("--- WORK ---")
 }
 }
 ###############################################################################

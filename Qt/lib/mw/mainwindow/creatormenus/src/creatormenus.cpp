@@ -690,11 +690,11 @@ void CreatorMenus::app_updateText()
 {
     foreach (QMenu *menu, app_menus)
     {
-        menu->setTitle(tr(menu->property(P_APP_ENG_TEXT).toString().toLocal8Bit()));
+        menu->setTitle(tr(menu->property(P_APP_ENG_TEXT).toString().toUtf8()));
     }
     foreach (QAction *action, app_actions)
     {
-        QString text = tr(action->property(P_APP_ENG_TEXT).toString().toLocal8Bit());
+        QString text = tr(action->property(P_APP_ENG_TEXT).toString().toUtf8());
         action->setText(text);
         action->setToolTip(text);
         action->setStatusTip(text);

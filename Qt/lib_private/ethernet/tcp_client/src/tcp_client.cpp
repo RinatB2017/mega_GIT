@@ -156,28 +156,28 @@ void TCP_Client::send_info(QString text)
 {
     QString temp = QString("INFO|%1")
                        .arg(text);
-    input(temp.toLocal8Bit());
+    input(temp.toUtf8());
 }
 //--------------------------------------------------------------------------------
 void TCP_Client::send_debug(QString text)
 {
     QString temp = QString("DEBUG|%1")
     .arg(text);
-    input(temp.toLocal8Bit());
+    input(temp.toUtf8());
 }
 //--------------------------------------------------------------------------------
 void TCP_Client::send_error(QString text)
 {
     QString temp = QString("ERROR|%1")
     .arg(text);
-    input(temp.toLocal8Bit());
+    input(temp.toUtf8());
 }
 //--------------------------------------------------------------------------------
 void TCP_Client::send_trace(QString text)
 {
     QString temp = QString("TRACE|%1")
     .arg(text);
-    input(temp.toLocal8Bit());
+    input(temp.toUtf8());
 }
 //--------------------------------------------------------------------------------
 QTcpSocket::SocketState TCP_Client::get_state()

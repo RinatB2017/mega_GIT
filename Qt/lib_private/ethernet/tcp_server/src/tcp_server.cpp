@@ -18,16 +18,15 @@
 **********************************************************************************
 **                   Author: Bikbao Rinat Zinorovich                            **
 **********************************************************************************/
+#include "ui_tcp_server.h"
+//--------------------------------------------------------------------------------
 #include "tcp_server.hpp"
 //--------------------------------------------------------------------------------
-TCP_Server::TCP_Server(QObject *parent) :
-    QObject(parent)
+TCP_Server::TCP_Server(QWidget *parent) :
+    MyWidget(parent),
+    ui(new Ui::TCP_Server)
 {
-    is_open = false;
-
-    QTimer::singleShot(0, [this]{
-        emit server_is_open(is_open);
-    });
+    init();
 }
 //--------------------------------------------------------------------------------
 TCP_Server::~TCP_Server()
@@ -36,6 +35,7 @@ TCP_Server::~TCP_Server()
     {
         delete tcpServer;
     }
+    delete ui;
 }
 //--------------------------------------------------------------------------------
 bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
@@ -63,7 +63,7 @@ bool TCP_Server::createServerOnPort(const QHostAddress address, quint16 port)
     is_open = true;
     emit server_is_open(is_open);
 
-    connect(tcpServer,  &QTcpServer::newConnection, this,   &TCP_Server::newConnect);
+    connect(tcpServer,  &QTcpServer::newConnection, this,   &TCP_Server::new_connect);
     return true;
 }
 //--------------------------------------------------------------------------------
@@ -78,25 +78,53 @@ void TCP_Server::closeServer()
     emit server_is_open(is_open);
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::newConnect()
+void TCP_Server::new_connect()
 {
     while(tcpServer->hasPendingConnections())
     {
         QTcpSocket *clientSocket = tcpServer->nextPendingConnection();
         if (!clientSocket) continue;
 
-        // emit info(QString("Клиент подключился: %1:%2")
-        //           .arg(clientSocket->peerAddress().toString())
-        //           .arg(clientSocket->peerPort()));
+        emit info(QString("Клиент подключился: %1:%2")
+                  .arg(clientSocket->peerAddress().toString())
+                  .arg(clientSocket->peerPort()));
+
+        bool client_exist = false;
+        foreach (CLIENT client, l_clients) {
+            if(client.address == clientSocket->peerAddress())
+            {
+                client_exist = true;
+            }
+        }
+        if(client_exist == false)
+        {
+            // новый клиент
+            QWidget *client_widget = new QWidget();
+
+            LogBox *log = new LogBox(client_widget);
+
+            CLIENT client;
+            client.name = clientSocket->peerAddress().toString();
+            client.address = clientSocket->peerAddress();
+            client.log = log;
+
+            l_clients.append(client);
+
+            QVBoxLayout *vbox = new QVBoxLayout();
+            vbox->addWidget(log);
+            client_widget->setLayout(vbox);
+
+            ui->tw_clients->addTab(client_widget, clientSocket->peerAddress().toString());
+        }
 
         // Подписываемся на события конкретного сокета
-        connect(clientSocket, &QTcpSocket::readyRead,           this, &TCP_Server::clientReadyRead);
+        connect(clientSocket, &QTcpSocket::readyRead,           this, &TCP_Server::client_ready_read);
         connect(clientSocket, &QAbstractSocket::errorOccurred,  this, &TCP_Server::print_error);
-        connect(clientSocket, &QTcpSocket::disconnected,        this, &TCP_Server::clientDisconnected);
+        connect(clientSocket, &QTcpSocket::disconnected,        this, &TCP_Server::client_disconnected);
     }
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::clientDisconnected()
+void TCP_Server::client_disconnected()
 {
     QTcpSocket *clientSocket = qobject_cast<QTcpSocket*>(sender());
     if (!clientSocket) return;
@@ -105,7 +133,52 @@ void TCP_Server::clientDisconnected()
     clientSocket->deleteLater();
 }
 //--------------------------------------------------------------------------------
-void TCP_Server::clientReadyRead()
+void TCP_Server::f_connect()
+{
+    QString ipAddress;
+    QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
+    for (int i = 0; i < ipAddressesList.size(); ++i)
+    {
+        if (ipAddressesList.at(i) != QHostAddress::LocalHost && ipAddressesList.at(i).toIPv4Address())
+        {
+            ipAddress = ipAddressesList.at(i).toString();
+            break;
+        }
+    }
+    if (ipAddress.isEmpty())
+    {
+        ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
+    }
+
+    createServerOnPort(QHostAddress(ipAddress), 1234);
+}
+//--------------------------------------------------------------------------------
+void TCP_Server::f_disconnect()
+{
+    emit trace(Q_FUNC_INFO);
+    closeServer();
+}
+//--------------------------------------------------------------------------------
+void TCP_Server::init()
+{
+    ui->setupUi(this);
+
+    is_open = false;
+    connects();
+
+    ui->tw_clients->clear();
+
+    QTimer::singleShot(0, [this]{
+        emit server_is_open(is_open);
+    });
+}
+//--------------------------------------------------------------------------------
+void TCP_Server::connects()
+{
+    connect(ui->btn_create,     &QPushButton::clicked,  this,   &TCP_Server::f_connect);
+}
+//--------------------------------------------------------------------------------
+void TCP_Server::client_ready_read()
 {
     QTcpSocket *clientSocket = qobject_cast<QTcpSocket*>(sender());
     if (!clientSocket) return;
@@ -115,10 +188,16 @@ void TCP_Server::clientReadyRead()
     int cnt = sl.count();
     if(cnt == 2)
     {
-        if(sl.at(0) == "INFO")  emit info(sl.at(1));
-        if(sl.at(0) == "DEBUG") emit debug(sl.at(1));
-        if(sl.at(0) == "ERROR") emit error(sl.at(1));
-        if(sl.at(0) == "TRACE") emit trace(sl.at(1));
+        foreach (CLIENT client, l_clients) {
+            if(client.address == clientSocket->peerAddress())
+            {
+                if(sl.at(0) == "INFO")  client.log->infoLog(sl.at(1));
+                if(sl.at(0) == "DEBUG") client.log->debugLog(sl.at(1));
+                if(sl.at(0) == "ERROR") client.log->errorLog(sl.at(1));
+                if(sl.at(0) == "TRACE") client.log->traceLog(sl.at(1));
+                return;
+            }
+        }
     }
     else
     {
@@ -141,5 +220,25 @@ void TCP_Server::print_error(QAbstractSocket::SocketError socketError)
 bool TCP_Server::is_opened()
 {
     return is_open;
+}
+//--------------------------------------------------------------------------------
+void TCP_Server::updateText()
+{
+    ui->retranslateUi(this);
+}
+//--------------------------------------------------------------------------------
+bool TCP_Server::programm_is_exit()
+{
+    return true;
+}
+//--------------------------------------------------------------------------------
+void TCP_Server::load_setting()
+{
+
+}
+//--------------------------------------------------------------------------------
+void TCP_Server::save_setting()
+{
+
 }
 //--------------------------------------------------------------------------------

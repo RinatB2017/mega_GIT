@@ -26,20 +26,20 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 //--------------------------------------------------------------------------------
+#include "logbox.hpp"
 #include "mywidget.hpp"
+#include "defines.hpp"
 //--------------------------------------------------------------------------------
-class TCP_Server : public QObject
+namespace Ui {
+    class TCP_Server;
+}
+//--------------------------------------------------------------------------------
+class TCP_Server : public MyWidget
 {
     Q_OBJECT
 
-signals:
-    void info(const QString &);
-    void debug(const QString &);
-    void error(const QString &);
-    void trace(const QString &);
-
 public:
-    explicit TCP_Server(QObject *parent = nullptr);
+    explicit TCP_Server(QWidget *parent = nullptr);
     virtual ~TCP_Server();
 
     bool is_opened();
@@ -52,15 +52,36 @@ public slots:
     void closeServer();
 
 private slots:
-    void newConnect();
-    void clientReadyRead();
-    void clientDisconnected();
+    void new_connect();
+    void client_ready_read();
+    void client_disconnected();
+
+    void f_connect();
+    void f_disconnect();
 
 private:
+    Ui::TCP_Server *ui;
     QTcpServer *tcpServer = nullptr;
     bool is_open = false;
 
-    void print_error(QAbstractSocket::SocketError socketError);
+    typedef struct CLIENT
+    {
+        QString name;
+        QHostAddress address;
+        LogBox *log;
+    } CLIENT_t;
+
+    QList<CLIENT> l_clients;
+
+    void init();
+    void connects();
+
+    void print_error(QAbstractSocket::SocketError socketError);    
+
+    void updateText();
+    bool programm_is_exit();
+    void load_setting();
+    void save_setting();
 };
 //--------------------------------------------------------------------------------
 #endif

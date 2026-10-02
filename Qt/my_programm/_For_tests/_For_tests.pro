@@ -9,6 +9,7 @@ include (conf/conf.pri)
 
 QT  += concurrent
 QT  += texttospeech
+QT  += dbus
 
 PROGRAMM_PATH  += \
     $$PWD/src \

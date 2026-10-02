@@ -429,11 +429,37 @@ void MainBox::run_use_after_free()
     std::cout << "Какое-то число: " << *bad_ptr << std::endl;
 }
 //--------------------------------------------------------------------------------
+#include <QtDBus/QDBusInterface>
+#include <QtDBus/QDBusMessage>
+
 #include "test_classes.hpp"
 
 bool MainBox::test()
 {
     emit trace(Q_FUNC_INFO);
+
+#if 1
+    // Создаем интерфейс к сервису хранителя экрана freedesktop
+    QDBusInterface interface(
+        "org.freedesktop.ScreenSaver",
+        "/org/freedesktop/ScreenSaver",
+        "org.freedesktop.ScreenSaver",
+        QDBusConnection::sessionBus()
+        );
+
+    if (interface.isValid()) {
+        // Вызываем метод Lock
+        QDBusMessage reply = interface.call("Lock");
+
+        if (reply.type() == QDBusMessage::ErrorMessage) {
+            qWarning() << "Ошибка вызова Lock:" << reply.errorMessage();
+        } else {
+            qDebug() << "Команда блокировки успешно отправлена.";
+        }
+    } else {
+        qWarning() << "Не удалось подключиться к интерфейсу ScreenSaver D-Bus.";
+    }
+#endif
 
 #ifdef BAD_TEST
     run_use_after_free();
@@ -476,7 +502,7 @@ bool MainBox::test()
     w->show();
 #endif
 
-#if 1
+#if 0
     emit info("Info");
     emit debug("Debug");
     emit error("Error");

@@ -70,8 +70,8 @@ void ADB_widget::init()
     ui->sb_port->setRange(0, 0xFFFF);
 
     server = new TCP_Server(this);
-    connect(server, &TCP_Server::output,
-            this,   &ADB_widget::f_get_data);
+    // connect(server, &TCP_Server::output,
+    //         this,   &ADB_widget::f_get_data);
     connect(ui->btn_start,  &QPushButton::clicked,  this,   &ADB_widget::f_start);
     connect(ui->btn_stop,   &QPushButton::clicked,  this,   &ADB_widget::f_stop);
     //---

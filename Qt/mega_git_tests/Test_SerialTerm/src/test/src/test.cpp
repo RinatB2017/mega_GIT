@@ -24,7 +24,7 @@
 #include <QList>
 #include <QTest>
 //--------------------------------------------------------------------------------
-#define private public
+
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "test_serialterm_mainbox.hpp"

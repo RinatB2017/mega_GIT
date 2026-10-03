@@ -21,7 +21,7 @@
 #include <QSignalSpy>
 #include <QTest>
 //--------------------------------------------------------------------------------
-#define private public
+
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "test_SerialBox5_mainbox.hpp"

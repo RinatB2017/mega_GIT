@@ -24,8 +24,6 @@
 #include <QList>
 #include <QTest>
 //--------------------------------------------------------------------------------
-#define private public
-//--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "fast_trading_mainbox.hpp"
 #include "test.hpp"

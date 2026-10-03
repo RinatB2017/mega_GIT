@@ -21,7 +21,7 @@
 #include <QTest>
 #include "test.hpp"
 //--------------------------------------------------------------------------------
-#define private public
+
 
 #include "mainwindow.hpp"
 #include "test_qdbus_mainbox.hpp"

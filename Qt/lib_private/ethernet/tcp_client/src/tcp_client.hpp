@@ -53,6 +53,8 @@ public:
     QByteArray readAll();
     QString get_errorString();
 
+    QByteArray input(const QByteArray &data);
+
 public slots:
     void send_info(QString text);
     void send_debug(QString text);
@@ -69,8 +71,6 @@ private:
 
     void init();
     void readyData();
-
-    QByteArray input(const QByteArray &data);
 };
 //--------------------------------------------------------------------------------
 #endif

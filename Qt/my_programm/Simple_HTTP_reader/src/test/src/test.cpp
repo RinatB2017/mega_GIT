@@ -24,7 +24,7 @@
 #include <QList>
 #include <QTest>
 //--------------------------------------------------------------------------------
-#define private public
+
 //--------------------------------------------------------------------------------
 #include "simple_http_reader_mainbox.hpp"
 #include "mainwindow.hpp"

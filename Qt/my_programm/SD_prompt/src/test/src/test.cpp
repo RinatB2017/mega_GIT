@@ -24,7 +24,7 @@
 #include <QList>
 #include <QTest>
 //--------------------------------------------------------------------------------
-#define private public
+
 //--------------------------------------------------------------------------------
 #include "mainwindow.hpp"
 #include "sd_prompt_mainbox.hpp"

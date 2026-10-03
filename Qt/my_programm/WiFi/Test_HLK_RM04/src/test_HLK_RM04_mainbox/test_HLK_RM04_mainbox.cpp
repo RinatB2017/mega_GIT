@@ -69,7 +69,7 @@ void MainBox::init()
     //main_layout->addWidget(frame_2);
     //main_layout->addWidget(frame_3);
 
-    connect(ui->tcp_widget, &TCP_Server::output,    this,   &MainBox::info);
+    // connect(ui->tcp_widget, &TCP_Server::output,    this,   &MainBox::info);
 
 #ifdef DEF_USE_DOCK_WIDGETS
     MainWindow *mw = dynamic_cast<MainWindow *>(topLevelWidget());

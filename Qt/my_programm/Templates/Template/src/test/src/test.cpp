@@ -1,6 +1,6 @@
 /*********************************************************************************
 **                                                                              **
-**     Copyright (C) 2015                                                       **
+**     Copyright (C) 2026                                                       **
 **                                                                              **
 **     This program is free software: you can redistribute it and/or modify     **
 **     it under the terms of the GNU General Public License as published by     **
@@ -24,12 +24,13 @@
 //--------------------------------------------------------------------------------
 Test::Test()
 {
-    QTest::qWait(0);    // нужно обязательно
+
 }
 //--------------------------------------------------------------------------------
 void Test::initTestCase()
 {
     QVERIFY(mw != nullptr);
+    QVERIFY(QTest::qWaitForWindowExposed(mw, 1000));
 }
 //--------------------------------------------------------------------------------
 void Test::setMainWindow(MainWindow *mainWindow)
@@ -53,8 +54,6 @@ void Test::test_func()
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
-
-    // QCOMPARE(mb->test(), true);
 }
 //--------------------------------------------------------------------------------
 void Test::test_signals()

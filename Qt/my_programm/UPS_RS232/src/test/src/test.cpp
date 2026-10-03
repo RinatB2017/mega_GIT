@@ -25,7 +25,7 @@
 #include <QList>
 #include <QTest>
 //--------------------------------------------------------------------------------
-#define private public
+
 //--------------------------------------------------------------------------------
 #include "serialbox5_fix_baudrate.hpp"
 #include "mainwindow.hpp"

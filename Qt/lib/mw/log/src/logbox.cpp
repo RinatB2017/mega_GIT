@@ -87,10 +87,6 @@ void LogBox::init()
 #endif
 #endif
 
-    QTimer::singleShot(0, [this]{
-        emit info(QString("Current codec is %1").arg(current_codec->name().data()));
-    });
-
 #ifdef QT_DEBUG
     qDebug() << QString("Current codec is %1").arg(current_codec->name().data());
 #endif

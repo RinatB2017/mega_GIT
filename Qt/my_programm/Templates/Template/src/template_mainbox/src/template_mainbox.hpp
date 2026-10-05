@@ -77,6 +77,8 @@ private:
 
     bool test();
 
+    void testSplittedFile();
+
     void wait_msec(int timeout_msec);
 
     void updateText();

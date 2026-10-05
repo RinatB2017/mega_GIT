@@ -25,16 +25,16 @@
 #endif
 //--------------------------------------------------------------------------------
 MySplashScreen::MySplashScreen(const QPixmap &pixmap,
-                               int max_progress) :
+                               int max_progr) :
     QSplashScreen(),
-    max_progress(max_progress)
+    max_progress(max_progr)
 {
     progress = new QProgressBar(this);
     progress->setValue(0);
     progress->setMaximum(max_progress);
     progress->setEnabled(true);
 
-    QVBoxLayout *vbox = new QVBoxLayout();
+    QVBoxLayout *vbox = new QVBoxLayout(this);
 
     QLabel *label = new QLabel(this);
     label->setPixmap(pixmap);

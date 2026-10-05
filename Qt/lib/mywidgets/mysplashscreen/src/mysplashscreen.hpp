@@ -36,7 +36,7 @@ class MySplashScreen : public QSplashScreen
     Q_OBJECT
 public:
     explicit MySplashScreen(const QPixmap &pixmap,
-                            int max_progress = 100);
+                            int max_progr = 100);
     virtual ~MySplashScreen();
 
     void set_progress(int value);

@@ -478,7 +478,7 @@ void SerialBox5::drawData(const QByteArray &data)
 void SerialBox5::setBaudBox(int index)
 {
     bool ok = false;
-    int value = ui->cb_BaudBox->itemData(index, Qt::UserRole).toInt(&ok);
+    int value = ui->cb_BaudBox->itemData(index).toInt(&ok);
     if(!ok) return;
     if(value < 0) return;
 
@@ -490,7 +490,7 @@ void SerialBox5::setBaudBox(int index)
 void SerialBox5::setDataBox(int index)
 {
     bool ok = false;
-    int value = ui->cb_DataBitsBox->itemData(index, Qt::UserRole).toInt(&ok);
+    int value = ui->cb_DataBitsBox->itemData(index).toInt(&ok);
     if(!ok) return;
     if(value < 0) return;
 
@@ -502,7 +502,7 @@ void SerialBox5::setDataBox(int index)
 void SerialBox5::setParityBox(int index)
 {
     bool ok = false;
-    int value = ui->cb_ParityBox->itemData(index, Qt::UserRole).toInt(&ok);
+    int value = ui->cb_ParityBox->itemData(index).toInt(&ok);
     if(!ok) return;
     if(value < 0) return;
 
@@ -514,7 +514,7 @@ void SerialBox5::setParityBox(int index)
 void SerialBox5::setStopBox(int index)
 {
     bool ok = false;
-    int value = ui->cb_StopBitsBox->itemData(index, Qt::UserRole).toInt(&ok);
+    int value = ui->cb_StopBitsBox->itemData(index).toInt(&ok);
     if(!ok) return;
     if(value < 0) return;
 
@@ -526,7 +526,7 @@ void SerialBox5::setStopBox(int index)
 void SerialBox5::setFlowBox(int index)
 {
     bool ok = false;
-    int value = ui->cb_FlowBox->itemData(index, Qt::UserRole).toInt(&ok);
+    int value = ui->cb_FlowBox->itemData(index).toInt(&ok);
     if(!ok) return;
     if(value < 0) return;
 

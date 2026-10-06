@@ -277,7 +277,7 @@ void SerialBox5_lite::getStatus(const QString &status, QDateTime current)
 void SerialBox5_lite::set_baud_box(int index)
 {
     bool ok = false;
-    int value = ui->cb_BaudBox->itemData(index, Qt::UserRole).toInt(&ok);
+    int value = ui->cb_BaudBox->itemData(index).toInt(&ok);
     if(!ok) return;
     if(value < 0) return;
 
@@ -339,7 +339,7 @@ void SerialBox5_lite::btnOpenPortClicked()
         setPortName(text);
 
         bool ok = false;
-        int value = ui->cb_BaudBox->itemData(ui->cb_BaudBox->currentIndex(), Qt::UserRole).toInt(&ok);
+        int value = ui->cb_BaudBox->itemData(ui->cb_BaudBox->currentIndex()).toInt(&ok);
         if(ok)
         {
             setBaudRate(value);

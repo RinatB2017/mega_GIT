@@ -662,7 +662,7 @@ void MyWidget::check_tooltips()
 //--------------------------------------------------------------------------------
 bool MyWidget::fail(const QString &text)
 {
-    //emit trace(Q_FUNC_INFO);
+    // Q_FUNC_INFO
     emit error(text);
     return false;
 }

@@ -24,6 +24,8 @@ public:
     void set_u8_value(uint8_t value);
     uint8_t get_u8_value();
 
+    void set_tool_tips(const QStringList &sl);
+
 signals:
     void log(const QString &);
 

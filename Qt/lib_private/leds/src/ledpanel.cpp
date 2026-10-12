@@ -116,6 +116,22 @@ uint8_t LedPanel::get_u8_value()
     return u8.value;
 }
 //--------------------------------------------------------------------------------
+void LedPanel::set_tool_tips(const QStringList &sl)
+{
+    if(sl.isEmpty())
+    {
+        return;
+    }
+    if(sl.count() != count)
+    {
+        return;
+    }
+    for(int n=(int)count-1; n>=0; n--)
+    {
+        led[n]->setToolTip(sl.at(n));
+    }
+}
+//--------------------------------------------------------------------------------
 int LedPanel::setLedToolTip(unsigned int position, const QString &string)
 {
     if(position > count)

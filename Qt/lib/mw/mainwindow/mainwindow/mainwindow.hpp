@@ -41,6 +41,16 @@ public:
 #ifdef DEF_REMOTE_CONTROL
     SimpleRemoteConsole m_remoteConsole;
 #endif
+
+protected:
+#ifdef Q_OS_WIN
+    bool eventFilter(QObject *obj, QEvent *event) override;
+#endif
+
+private slots:
+#ifdef Q_OS_WIN
+    void ensureOnScreen();
+#endif
 };
 //--------------------------------------------------------------------------------
 #endif // MAINWINDOW_HPP

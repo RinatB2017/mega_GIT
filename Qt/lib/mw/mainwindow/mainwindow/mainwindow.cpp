@@ -67,10 +67,53 @@ MainWindow::MainWindow(QWidget *parent) :
         );
 #endif
 #endif
+
+#ifdef Q_OS_WIN
+    installEventFilter(this);
+#endif
 }
 //--------------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
 
 }
+//--------------------------------------------------------------------------------
+#ifdef Q_OS_WIN
+bool MainWindow::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == this)
+    {
+        if (event->type() == QEvent::Move ||
+                event->type() == QEvent::Resize)
+        {
+            // Откладываем проверку, чтобы сработала после всех внутренних пересчётов Qt
+            QTimer::singleShot(0, this, &MainWindow::ensureOnScreen);
+        }
+    }
+    return QMainWindow::eventFilter(obj, event);
+}
+#endif
+//--------------------------------------------------------------------------------
+#ifdef Q_OS_WIN
+void MainWindow::ensureOnScreen()
+{
+    const QRect winRect = frameGeometry();
+    bool visible = false;
+    for (QScreen *s : QGuiApplication::screens())
+    {
+        if (s->availableGeometry().intersects(winRect))
+        {
+            visible = true;
+            break;
+        }
+    }
+    if (!visible)
+    {
+        // Возвращаем в центр основного экрана
+        QScreen *primary = QGuiApplication::primaryScreen();
+        QRect sg = primary->availableGeometry();
+        move(sg.center() - rect().center());
+    }
+}
+#endif
 //--------------------------------------------------------------------------------

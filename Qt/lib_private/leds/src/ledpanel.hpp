@@ -25,6 +25,7 @@ public:
     uint8_t get_u8_value();
 
     void set_tool_tips(const QStringList &sl);
+    void set_other_color(uint8_t mask_value);
 
 signals:
     void log(const QString &);

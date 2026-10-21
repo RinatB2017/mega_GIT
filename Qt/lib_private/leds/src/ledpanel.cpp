@@ -132,6 +132,22 @@ void LedPanel::set_tool_tips(const QStringList &sl)
     }
 }
 //--------------------------------------------------------------------------------
+void LedPanel::set_other_color(uint8_t mask_value)
+{
+    U_8 mask;
+    QColor other_color = Qt::yellow;
+
+    mask.value = mask_value;
+    if(mask.bites.bit0) led[0]->set_color_on(other_color);
+    if(mask.bites.bit1) led[1]->set_color_on(other_color);
+    if(mask.bites.bit2) led[2]->set_color_on(other_color);
+    if(mask.bites.bit3) led[3]->set_color_on(other_color);
+    if(mask.bites.bit4) led[4]->set_color_on(other_color);
+    if(mask.bites.bit5) led[5]->set_color_on(other_color);
+    if(mask.bites.bit6) led[6]->set_color_on(other_color);
+    if(mask.bites.bit7) led[7]->set_color_on(other_color);
+}
+//--------------------------------------------------------------------------------
 int LedPanel::setLedToolTip(unsigned int position, const QString &string)
 {
     if(position > count)

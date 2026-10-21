@@ -132,10 +132,10 @@ void LedPanel::set_tool_tips(const QStringList &sl)
     }
 }
 //--------------------------------------------------------------------------------
-void LedPanel::set_other_color(uint8_t mask_value)
+void LedPanel::set_other_color(uint8_t mask_value,
+                               QColor other_color)
 {
     U_8 mask;
-    QColor other_color = Qt::yellow;
 
     mask.value = mask_value;
     if(mask.bites.bit0) led[0]->set_color_on(other_color);

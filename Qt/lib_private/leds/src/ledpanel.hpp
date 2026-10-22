@@ -26,7 +26,8 @@ public:
 
     void set_tool_tips(const QStringList &sl);
     void set_other_color(uint8_t mask_value,
-                         QColor other_color);
+                         QColor other_color_on,
+                         QColor other_color_off);
 
 signals:
     void log(const QString &);

@@ -24,9 +24,9 @@ class QLongLongSpinBox : public QAbstractSpinBox
 
     Q_PROPERTY(qlonglong value READ value WRITE setValue NOTIFY valueChanged USER true)
 
-    qlonglong m_minimum;
-    qlonglong m_maximum;
-    qlonglong m_value;
+    qlonglong m_minimum = 0;
+    qlonglong m_maximum = 0;
+    qlonglong m_value   = 0;
 
 public:
     explicit QLongLongSpinBox(QWidget *parent = nullptr);

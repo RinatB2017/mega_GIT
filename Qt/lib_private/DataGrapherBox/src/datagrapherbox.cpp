@@ -81,6 +81,7 @@ bool DataGrapherBox::add_curve_data(int channel, QTime v_t, qreal value)
 {
     Q_ASSERT(v_t.isValid());
     ui->grapher_widget->add_curve_data(channel, v_t, value);
+    return true;
 }
 //--------------------------------------------------------------------------------
 void DataGrapherBox::add_curve_data_points(int channel, QVector<QPointF> *points)

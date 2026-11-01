@@ -27,6 +27,13 @@ bool QLed::get_state()
     return led_state;
 }
 //--------------------------------------------------------------------------------
+void QLed::set_rect_mode()
+{
+    mode = MODE_RECT;
+
+    setFixedSize(32, 16);
+}
+//--------------------------------------------------------------------------------
 void QLed::set_size(int w, int h)
 {
     setFixedSize(w, h);
@@ -61,9 +68,23 @@ void QLed::paintEvent(QPaintEvent *)
     Q_ASSERT(height() != 0);
 
     QPainter painter(this);
-    painter.fillRect(0, 0, width(), height(), Qt::transparent);
-    painter.setPen(QPen(Qt::black));
-    painter.setBrush(QBrush(current_color));
-    painter.drawEllipse(QPointF(width() / 2.0, height() / 2.0), width() / 2.0 - 1.0, height() / 2.0 - 1.0);
+    switch (mode) {
+    case MODE_CIRCLE:
+        painter.fillRect(0, 0, width(), height(), Qt::transparent);
+        painter.setPen(QPen(Qt::black));
+        painter.setBrush(QBrush(current_color));
+        painter.drawEllipse(QPointF(width() / 2.0, height() / 2.0), width() / 2.0 - 1.0, height() / 2.0 - 1.0);
+        break;
+
+    case MODE_RECT:
+        painter.fillRect(0, 0, width(), height(), Qt::transparent);
+        painter.setPen(QPen(Qt::black));
+        painter.setBrush(QBrush(current_color));
+        painter.drawRect(2, 2, width() - 2, height() - 2);
+        break;
+
+    default:
+        break;
+    }
 }
 //--------------------------------------------------------------------------------

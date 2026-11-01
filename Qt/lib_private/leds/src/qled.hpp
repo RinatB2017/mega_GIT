@@ -4,6 +4,11 @@
 //--------------------------------------------------------------------------------
 #include <QFrame>
 //--------------------------------------------------------------------------------
+enum {
+    MODE_CIRCLE = 0,
+    MODE_RECT
+};
+//--------------------------------------------------------------------------------
 class QLed : public QWidget
 {
     Q_OBJECT
@@ -18,11 +23,15 @@ public:
 
     bool get_state();
 
+    void set_rect_mode();
+
 private:
     QString tooltip = "led";
     QColor color_off = Qt::gray;
     QColor color_on = Qt::red;
     QColor current_color = Qt::gray;
+
+    int mode = MODE_CIRCLE;
 
     bool led_state = false;
 

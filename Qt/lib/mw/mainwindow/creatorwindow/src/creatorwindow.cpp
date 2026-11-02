@@ -647,7 +647,7 @@ void CreatorWindow::about()
 void CreatorWindow::load_main()
 {
 #ifdef QT_DEBUG
-    emit debug("CreatorWindow::load_main");
+    // emit debug("CreatorWindow::load_main");
 #endif
 
     QFont font = qApp->font();
@@ -763,7 +763,7 @@ void CreatorWindow::save_main()
 void CreatorWindow::load_setting()
 {
 #ifdef QT_DEBUG
-    emit debug("CreatorWindow::load_setting");
+    // emit debug("CreatorWindow::load_setting");
 #endif
     load_main();
 }

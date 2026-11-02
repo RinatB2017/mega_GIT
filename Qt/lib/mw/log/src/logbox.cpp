@@ -88,7 +88,7 @@ void LogBox::init()
 #endif
 
 #ifdef QT_DEBUG
-    qDebug() << QString("Current codec is %1").arg(current_codec->name().data());
+    // qDebug() << QString("Current codec is %1").arg(current_codec->name().data());
 #endif
 #endif
 

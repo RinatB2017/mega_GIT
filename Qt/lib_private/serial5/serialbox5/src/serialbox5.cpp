@@ -108,7 +108,7 @@ void SerialBox5::init()
 
     connect(ui->btn_default,    &QPushButton::clicked,  this,   &SerialBox5::set_default);
 
-    QTimer::singleShot(100, [this]{
+    QTimer::singleShot(0, [this]{ //TODO было 100
         setCloseState();
     });
     updateText();

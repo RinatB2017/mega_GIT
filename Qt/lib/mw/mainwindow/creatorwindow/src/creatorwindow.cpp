@@ -135,6 +135,16 @@ void CreatorWindow::changeEvent(QEvent *event)
     }
 }
 //--------------------------------------------------------------------------------
+void CreatorWindow::showEvent(QShowEvent *event)
+{
+    QMainWindow::showEvent(event);
+    if (m_firstShow)
+    {
+        m_firstShow = false;
+        load_setting();
+    }
+}
+//--------------------------------------------------------------------------------
 bool CreatorWindow::check_exit()
 {
     QWidgetList wl = qApp->allWidgets();
@@ -233,7 +243,7 @@ void CreatorWindow::init()
                    .arg(appVersion));
     setObjectName("CreatorWindow");
 
-    load_setting();
+    // load_setting();  //TODO перенесено в showEvent
 
 #ifndef DEF_NO_LOG
     createLog();
@@ -720,6 +730,15 @@ void CreatorWindow::load_main()
 
     endGroup();
 
+    //TODO пробуен showEvent
+#if 1
+    restoreGeometry(load_value(P_GEOMETRY).toByteArray());
+    restoreState(load_value(P_WINDOW_STATE).toByteArray());
+    if(load_value(P_IS_MAXIMIZED).toBool())
+    {
+        showMaximized();
+    }
+#else
     QTimer::singleShot(100, [this]() {
         restoreGeometry(load_value(P_GEOMETRY).toByteArray());
         restoreState(load_value(P_WINDOW_STATE).toByteArray());
@@ -728,6 +747,7 @@ void CreatorWindow::load_main()
             showMaximized();
         }
     });
+#endif
 }
 //--------------------------------------------------------------------------------
 void CreatorWindow::save_main()

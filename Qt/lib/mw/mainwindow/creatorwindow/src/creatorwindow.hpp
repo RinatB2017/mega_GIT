@@ -347,7 +347,11 @@ protected:
     QList<TRANSLATOR> l_translators;
 
     void changeEvent(QEvent *event);
-    virtual void closeEvent(QCloseEvent *event);
+
+    void showEvent(QShowEvent *event) override;
+    bool m_firstShow = true;
+
+    void closeEvent(QCloseEvent *event);
 #ifdef DEF_SHOW_SIZE
     void resizeEvent (QResizeEvent * event);
 #endif

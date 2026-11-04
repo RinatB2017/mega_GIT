@@ -129,7 +129,7 @@ void SerialBox5_fix_baudrate::init()
     //setFixedWidth(sizeHint().width());
     //setFixedHeight(sizeHint().height());
 
-    QTimer::singleShot(100, [this]{
+    QTimer::singleShot(0, [this]{   //TODO было 100
         setCloseState();
     });
 }

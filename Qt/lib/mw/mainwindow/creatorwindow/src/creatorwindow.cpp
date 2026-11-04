@@ -802,7 +802,7 @@ void CreatorWindow::load_main()
 
     endGroup();
 
-    //TODO пробуен showEvent
+    //TODO пробуем showEvent
 #if 1
     restoreGeometry(load_value(P_GEOMETRY).toByteArray());
     restoreState(load_value(P_WINDOW_STATE).toByteArray());

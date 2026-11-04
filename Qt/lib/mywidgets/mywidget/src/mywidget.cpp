@@ -878,16 +878,29 @@ void MyWidget::applyTabOrderByPosition(QWidget *root)
 //--------------------------------------------------------------------------------
 void MyWidget::changeEvent(QEvent *event)
 {
+    Q_ASSERT(event);
     switch (event->type())
     {
     case QEvent::LanguageChange:
         updateText();
         break;
 
+    case QEvent::ApplicationFontChange:
+        emit debug("ApplicationFontChange");
+        break;
+
+    case QEvent::ApplicationPaletteChange:
+        emit debug("ApplicationPaletteChange");
+        break;
+
+    case QEvent::StyleChange:
+        emit debug("StyleChange");
+        break;
+
     default:
-        QWidget::changeEvent(event);
         break;
     }
+    QWidget::changeEvent(event);
 }
 //--------------------------------------------------------------------------------
 #ifdef BLOCK_WHEEL

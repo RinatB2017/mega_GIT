@@ -346,14 +346,14 @@ protected:
     QTranslator *translator_system = nullptr;
     QList<TRANSLATOR> l_translators;
 
-    void changeEvent(QEvent *event);
+    void changeEvent(QEvent *event) override;
 
     void showEvent(QShowEvent *event) override;
     bool m_firstShow = true;
 
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
 #ifdef DEF_SHOW_SIZE
-    void resizeEvent (QResizeEvent * event);
+    void resizeEvent (QResizeEvent * event) override;
 #endif
 };
 //--------------------------------------------------------------------------------

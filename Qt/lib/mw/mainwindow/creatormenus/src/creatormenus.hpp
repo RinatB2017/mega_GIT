@@ -87,7 +87,7 @@ private:
     void app_updateText();
 
 protected:
-    void changeEvent(QEvent *event);
+    void changeEvent(QEvent *event) override;
 };
 //--------------------------------------------------------------------------------
 #endif // CREATORMENUS

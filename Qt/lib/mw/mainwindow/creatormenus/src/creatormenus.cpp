@@ -703,11 +703,7 @@ void CreatorMenus::app_updateText()
 //--------------------------------------------------------------------------------
 void CreatorMenus::changeEvent(QEvent *event)
 {
-    if(event == nullptr)
-    {
-        return;
-    }
-
+    Q_ASSERT(event);
     switch (event->type())
     {
     case QEvent::LanguageChange:
@@ -715,9 +711,9 @@ void CreatorMenus::changeEvent(QEvent *event)
         break;
 
     default:
-        QWidget::changeEvent(event);
         break;
     }
-    CreatorToolBars::changeEvent(event);
+    QWidget::changeEvent(event);
+    // CreatorToolBars::changeEvent(event);
 }
 //--------------------------------------------------------------------------------

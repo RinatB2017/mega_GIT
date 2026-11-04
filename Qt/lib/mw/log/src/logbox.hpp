@@ -184,8 +184,8 @@ private:
     void save_setting();
 
 protected:
-    void changeEvent(QEvent *event);
-    void keyPressEvent(QKeyEvent *event);
+    void changeEvent(QEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 };
 //--------------------------------------------------------------------------------
 #endif // LOGBOX_HPP

@@ -202,9 +202,9 @@ private:
     Waiting_box *wbox = nullptr;
 
 protected:
-    void changeEvent(QEvent *event);
+    void changeEvent(QEvent *event) override;
 #ifdef BLOCK_WHEEL
-    bool eventFilter(QObject*, QEvent* event);
+    bool eventFilter(QObject*, QEvent* event) override;
 #endif
     virtual void closeEvent(QCloseEvent *);
 };

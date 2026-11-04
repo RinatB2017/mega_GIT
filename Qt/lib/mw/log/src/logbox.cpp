@@ -883,6 +883,7 @@ void LogBox::setVisibleProgressBar(bool state)
 //--------------------------------------------------------------------------------
 void LogBox::changeEvent(QEvent *event)
 {
+    Q_ASSERT(event);
     switch (event->type())
     {
     case QEvent::LanguageChange:
@@ -890,19 +891,18 @@ void LogBox::changeEvent(QEvent *event)
         break;
 
     default:
-        QWidget::changeEvent(event);
         break;
     }
+    QWidget::changeEvent(event);
 }
 //--------------------------------------------------------------------------------
 void LogBox::keyPressEvent(QKeyEvent *event)
 {
-    QWidget::keyPressEvent(event);
-
     if (event->key() == Qt::Key_F && event->modifiers() == Qt::ControlModifier)
     {
         fb->show();
     }
+    QWidget::keyPressEvent(event);
 }
 //--------------------------------------------------------------------------------
 void LogBox::updateText()

@@ -94,6 +94,7 @@ void HelpBrowser::showPage(const QString &page,
 //--------------------------------------------------------------------------------
 void HelpBrowser::changeEvent(QEvent *event)
 {
+    Q_ASSERT(event);
     switch (event->type())
     {
     case QEvent::LanguageChange:
@@ -103,8 +104,8 @@ void HelpBrowser::changeEvent(QEvent *event)
         break;
 
     default:
-        QWidget::changeEvent(event);
         break;
     }
+    QWidget::changeEvent(event);
 }
 //--------------------------------------------------------------------------------

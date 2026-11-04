@@ -54,7 +54,7 @@ private:
     void setCaption(const QString &caption);
 
 protected:
-    void changeEvent(QEvent *event);
+    void changeEvent(QEvent *event) override;
 };
 //--------------------------------------------------------------------------------
 #endif //HELPBROWSER_HPP

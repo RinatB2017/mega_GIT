@@ -112,11 +112,7 @@ void CreatorWindow::set_c_widget(MyWidget *widget)
 //--------------------------------------------------------------------------------
 void CreatorWindow::changeEvent(QEvent *event)
 {
-    if(event == nullptr)
-    {
-        return;
-    }
-
+    Q_ASSERT(event);
     switch (event->type())
     {
     case QEvent::LanguageChange:
@@ -130,9 +126,9 @@ void CreatorWindow::changeEvent(QEvent *event)
         break;
 
     default:
-        QWidget::changeEvent(event);
         break;
     }
+    QWidget::changeEvent(event);
 }
 //--------------------------------------------------------------------------------
 void CreatorWindow::showEvent(QShowEvent *event)
@@ -380,6 +376,80 @@ void CreatorWindow::kill2()
 }
 #endif
 //--------------------------------------------------------------------------------
+//TODO исправлено 04.11.26
+#if 1
+void CreatorWindow::load_translations()
+{
+#ifdef DEF_ONLY_ENGLISH
+    return;
+#else
+    translator_system = new QTranslator(this);
+
+    TRANSLATOR translator_ru;
+    translator_ru.translator_obj = new QTranslator(this);
+    translator_ru.translator_file = ":/lang/lang_ru.qm";
+    translator_ru.locale_name = "ru_RU";
+    translator_ru.language = "Russian";
+    translator_ru.property = P_RU;
+    translator_ru.icon_name = P_ICON_RU;
+    l_translators.append(translator_ru);
+
+    TRANSLATOR translator_it;
+    translator_it.translator_obj = new QTranslator(this);
+    translator_it.translator_file = ":/lang/lang_it.qm";
+    translator_it.locale_name = "it_IT";
+    translator_it.language = "Italiano";
+    translator_it.property = P_IT;
+    translator_it.icon_name = P_ICON_IT;
+    l_translators.append(translator_it);
+
+    bool res;
+    foreach (TRANSLATOR translator, l_translators)
+    {
+        res = translator.translator_obj->load(translator.translator_file);
+        if(!res)
+        {
+            QMessageBox::critical(nullptr,
+                                  "Error",
+                                  QString("appTranslator (%1) not loaded!")
+                                      .arg(translator.translator_file));
+#ifdef QT_DEBUG
+            emit debug(QString("appTranslator (%1) not loaded!")
+                           .arg(translator.translator_file));
+#endif
+        }
+    }
+
+    QLocale locale = QLocale();
+#ifdef QT_DEBUG
+    emit debug(QString("### locale %1").arg(locale.name()));
+#endif
+    foreach (TRANSLATOR translator, l_translators)
+    {
+        if(locale.name() == translator.locale_name)
+        {
+            const QString qtFile = ":/system/qt_" + translator.locale_name.left(2) + ".qm";
+            res = translator_system->load(qtFile);
+            if(!res)
+            {
+                QMessageBox::critical(nullptr, "Error", "sysTranslator not loaded");
+#ifdef QT_DEBUG
+                emit debug("translator_system not loaded!");
+#endif
+            }
+            else
+            {
+                qApp->installTranslator(translator_system);
+            }
+
+            qApp->installTranslator(translator.translator_obj);
+            emit updateLanguage();
+            break;
+        }
+    }
+#endif
+}
+#else
 void CreatorWindow::load_translations()
 {
 #ifdef DEF_ONLY_ENGLISH
@@ -394,10 +464,10 @@ void CreatorWindow::load_translations()
         emit debug("translator_system not loaded!");
 #endif
     }
-    else
-    {
-        qApp->installTranslator(translator_system);
-    }
+    // else
+    // {
+    //     qApp->installTranslator(translator_system);
+    // }
     //---
     TRANSLATOR translator_ru;
     translator_ru.translator_obj = new QTranslator(this);
@@ -419,7 +489,7 @@ void CreatorWindow::load_translations()
 
     foreach (TRANSLATOR translator, l_translators)
     {
-        res = translator.translator_obj->load(QLocale(), translator.translator_file);
+        res = translator.translator_obj->load(translator.translator_file);
         if(!res)
         {
             QMessageBox::critical(nullptr,
@@ -442,12 +512,14 @@ void CreatorWindow::load_translations()
     {
         if(locale.name() == translator.locale_name)
         {
+            qApp->installTranslator(translator_system);
             qApp->installTranslator(translator.translator_obj);
             emit updateLanguage();
         }
     }
 #endif
 }
+#endif
 //--------------------------------------------------------------------------------
 void CreatorWindow::choice_translator(QAction *menu)
 {

@@ -31,11 +31,42 @@ void Test::initTestCase()
 {
     QVERIFY(mw != nullptr);
     QVERIFY(QTest::qWaitForWindowExposed(mw, 1000));
+
+    l_btn = mw->findChildren<QAbstractButton*>();
+    QVERIFY2(!l_btn.isEmpty(), "Список кнопок пуст");
 }
 //--------------------------------------------------------------------------------
 void Test::setMainWindow(MainWindow *mainWindow)
 {
     mw = mainWindow;
+}
+//--------------------------------------------------------------------------------
+void Test::check_pause(int delay_msec)
+{
+#ifdef DEF_NO_WAIT
+    Q_UNUSED(delay_msec);
+#else
+    QTest::qWait(delay_msec);
+#endif
+}
+//--------------------------------------------------------------------------------
+void Test::check_btn_click(const QString &name)
+{
+    for (QAbstractButton *btn : l_btn)
+    {
+        if (btn->text() == name)
+        {
+            QPoint center = btn->rect().center();
+            QTest::mousePress(btn, Qt::LeftButton, Qt::NoModifier, center);
+            QTest::qSleep(delay_ms);
+            QTest::mouseRelease(btn, Qt::LeftButton, Qt::NoModifier, center);
+            QTest::qSleep(delay_ms);
+            check_pause(300);
+            return;
+        }
+    }
+    QString msg = QString("Кнопка '%1' НЕ найдена!").arg(name);
+    QFAIL(qPrintable(msg));
 }
 //--------------------------------------------------------------------------------
 void Test::test_GUI()
@@ -54,6 +85,16 @@ void Test::test_func()
 {
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
+
+    int max_click = 100;
+    for(int n=0; n<max_click; n++)
+    {
+        check_btn_click("test");
+    }
+    QString msg = QString("Кнопка нажата %1 раз (%2)")
+                      .arg(mb->test_cnt)
+                      .arg(max_click);
+    QVERIFY2(mb->test_cnt == (max_click + 1), qPrintable(msg));
 }
 //--------------------------------------------------------------------------------
 void Test::test_signals()

@@ -68,6 +68,9 @@ private:
     QPointer<QComboBox> cb_test;
     QPointer<QComboBox> cb_programm;
 
+    // для самотеста
+    int test_cnt = 0;
+
     void init();
     void init_widgets();
     void connects();
@@ -76,6 +79,7 @@ private:
     void create_programm_bar();
 
     bool test();
+    bool test_draw_widget();
 
     void testSplittedFile();
 

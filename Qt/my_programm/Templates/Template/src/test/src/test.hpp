@@ -21,6 +21,7 @@
 #ifndef TEST_HPP
 #define TEST_HPP
 //--------------------------------------------------------------------------------
+#include <QAbstractButton>
 #include <QObject>
 #include <QTest>
 //--------------------------------------------------------------------------------
@@ -42,6 +43,11 @@ private slots:
 
 private:
     MainWindow *mw = nullptr;
+    QList<QAbstractButton*> l_btn;
+    int delay_ms = 0;
+
+    void check_btn_click(const QString &name);
+    void check_pause(int delay_msec);
 };
 //--------------------------------------------------------------------------------
 #endif

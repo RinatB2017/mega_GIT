@@ -20,6 +20,7 @@
 **********************************************************************************/
 #include "mainwindow.hpp"
 #include "dock_position.hpp"
+#include "mymessages.hpp"
 #include "ui_dock_position.h"
 //--------------------------------------------------------------------------------
 Dock_position::Dock_position(const QString &doc_name, QWidget *parent) :
@@ -33,6 +34,7 @@ Dock_position::Dock_position(const QString &doc_name, QWidget *parent) :
 #ifndef NORMAL_BUTTONS
     int size = 24;
     ui->btn_show->setFixedSize(size, size);
+    ui->btn_get_area->setFixedSize(size, size);
 
     ui->buttons_layout->setContentsMargins(0, 0, 0, 0);
     ui->buttons_layout->setSpacing(0);
@@ -40,8 +42,13 @@ Dock_position::Dock_position(const QString &doc_name, QWidget *parent) :
 
     ui->btn_show->setToolTip(QObject::tr("Show buttons"));
 
-    connect(ui->btn_show,   &QToolButton::clicked,
-            this,           &Dock_position::show_dlg);
+    ui->btn_show->setText("✥");
+    ui->btn_get_area->setText("?");
+
+    connect(ui->btn_show,       &QToolButton::clicked,
+            this,               &Dock_position::show_dlg);
+    connect(ui->btn_get_area,   &QToolButton::clicked,
+            this,               &Dock_position::get_area);
 }
 //--------------------------------------------------------------------------------
 Dock_position::~Dock_position()
@@ -93,6 +100,46 @@ void Dock_position::show_dlg()
 #ifdef QT_DEBUG
         qDebug() << "mw is null!";
 #endif
+    }
+}
+//--------------------------------------------------------------------------------
+void Dock_position::get_area()
+{
+    MainWindow *mw = qobject_cast<MainWindow *>(QApplication::activeWindow());
+    if(mw)
+    {
+        QString message;
+        QDockWidget *dw = mw->findChild<QDockWidget *>(dock_name);
+        if(dw)
+        {
+            Qt::DockWidgetArea location = dw->dockLocation();
+            switch (location) {
+            case Qt::LeftDockWidgetArea:
+                message = "LeftDockWidgetArea";
+                break;
+            case Qt::RightDockWidgetArea:
+                message = "RightDockWidgetArea";
+                break;
+            case Qt::TopDockWidgetArea:
+                message = "TopDockWidgetArea";
+                break;
+            case Qt::BottomDockWidgetArea:
+                message = "BottomDockWidgetArea";
+                break;
+            case Qt::DockWidgetArea_Mask:
+                message = "DockWidgetArea_Mask";
+                break;
+            case Qt::NoDockWidgetArea:
+                message = "NoDockWidgetArea";
+                break;
+
+            default:
+                message = "Unknown area";
+                break;
+            }
+        }
+
+        MyMessages::messagebox_info("Area", message);
     }
 }
 //--------------------------------------------------------------------------------

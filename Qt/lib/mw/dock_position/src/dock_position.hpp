@@ -46,6 +46,7 @@ private:
     QString dock_name = "dock_name";
 
     void show_dlg();
+    void get_area();
 };
 //--------------------------------------------------------------------------------
 #endif // DOCK_POSITION_HPP

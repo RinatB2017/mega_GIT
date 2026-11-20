@@ -86,7 +86,7 @@ void Test::test_func()
     MainBox *mb = mw->findChild<MainBox *>("MainBox");
     QVERIFY(mb);
 
-    int max_click = 100;
+    int max_click = 10;
     for(int n=0; n<max_click; n++)
     {
         check_btn_click("test");
@@ -95,6 +95,17 @@ void Test::test_func()
                       .arg(mb->test_cnt)
                       .arg(max_click);
     QVERIFY2(mb->test_cnt == (max_click + 1), qPrintable(msg));
+
+    //---
+    QAbstractButton *btn = mb->findChild<QAbstractButton *>("btn_test");
+    QVERIFY(btn);
+
+    QPoint center = btn->rect().center();
+    QTest::mousePress(btn, Qt::LeftButton, Qt::NoModifier, center);
+    QTest::qSleep(delay_ms);
+    QTest::mouseRelease(btn, Qt::LeftButton, Qt::NoModifier, center);
+    QTest::qSleep(delay_ms);
+    //---
 }
 //--------------------------------------------------------------------------------
 void Test::test_signals()

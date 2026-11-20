@@ -44,7 +44,7 @@ private slots:
 private:
     MainWindow *mw = nullptr;
     QList<QAbstractButton*> l_btn;
-    int delay_ms = 0;
+    int delay_ms = 10;
 
     void check_btn_click(const QString &name);
     void check_pause(int delay_msec);

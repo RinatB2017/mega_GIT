@@ -80,7 +80,7 @@ void LogBox::init()
     current_codec = QTextCodec::codecForLocale();
 #else
 #ifdef Q_OS_WIN
-    //FIXME костыль для винды
+    //TODO костыль для винды
     current_codec = QTextCodec::codecForName("windows-1251");
 #else
     current_codec = QTextCodec::codecForLocale();
